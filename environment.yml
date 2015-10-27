@@ -1,0 +1,39 @@
+name: sira_env
+dependencies:
+- decorator=4.0.4=py27_0
+- freetype=2.5.2=2
+- libpng=1.6.17=0
+- matplotlib=1.4.3=np110py27_3
+- networkx=1.10=py27_0
+- numpy=1.10.1=py27_0
+- openssl=1.0.1k=1
+- pandas=0.17.0=np110py27_0
+- pip=7.1.2=py27_0
+- pyparsing=2.0.3=py27_0
+- pyqt=4.11.4=py27_0
+- python=2.7.10=1
+- python-dateutil=2.4.2=py27_0
+- pytz=2015.6=py27_0
+- qt=4.8.7=1
+- readline=6.2=2
+- scipy=0.16.0=np110py27_1
+- seaborn=0.6.0=np110py27_0
+- setuptools=18.4=py27_0
+- sip=4.16.9=py27_0
+- six=1.10.0=py27_0
+- sqlite=3.8.4.1=1
+- tk=8.5.18=0
+- wheel=0.26.0=py27_1
+- zlib=1.2.8=0
+- pip:
+  - actdiag==0.5.1
+  - funcparserlib==0.3.6
+  - ipython==1.2.0
+  - nwdiag==1.0.0
+  - seqdiag==0.9.0
+  - sphinxcontrib-actdiag==0.6.0
+  - sphinxcontrib-blockdiag==1.3.0
+  - sphinxcontrib-nwdiag==0.7.0
+  - sphinxcontrib-seqdiag==0.6.0
+  - wsgiref==0.1.2
+

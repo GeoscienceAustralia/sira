@@ -1,0 +1,9 @@
+numpy
+scipy
+seaborn
+matplotlib
+prettyplotlib
+colorama
+networkx
+igraph
+pandas
