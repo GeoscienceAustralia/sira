@@ -1,4 +1,27 @@
 __author__ = 'sudipta'
+import getopt
+from colorama import Fore
+
+def main(argv):
+    setup_file = ''
+    msg = ''
+    try:
+        opts, args = getopt.getopt(argv, "s:", ["setup="])
+    except getopt.GetoptError:
+        usage()
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt in ("-s", "--setup"):
+            setup_file = arg
+
+    if setup_file == '':
+        setup_file = "setup.conf"
+        msg = "(using default conf filename)"
+
+    print("\n" + "Setup file: " + Fore.YELLOW + setup_file + Fore.RESET + msg)
+    return setup_file
+
 # -----------------------------------------------------------------------------
 # Simulation Parameters
 # -----------------------------------------------------------------------------

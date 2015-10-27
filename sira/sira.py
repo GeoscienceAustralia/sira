@@ -37,7 +37,7 @@ import numpy as np
 
 
 # init()
-from sira.utils import read_input_data
+from utils import read_input_data
 
 
 # import brewer2mpl
@@ -167,28 +167,6 @@ def compute_output_given_ds(cp_func):
 # READ in SETUP data
 # -----------------------------------------------------------------------------
 
-
-def main(argv):
-    setup_file = ''
-    msg = ''
-    try:
-        opts, args = getopt.getopt(argv, "s:", ["setup="])
-    except getopt.GetoptError:
-        usage()
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt in ("-s", "--setup"):
-            setup_file = arg
-
-    if setup_file == '':
-        setup_file = "setup.conf"
-        msg = "(using default conf filename)"
-
-    print("\n" + "Setup file: " + Fore.YELLOW + setup_file + Fore.RESET + msg)
-    return setup_file
-
-
 def check_types_with_db():
     # check to ensure component types match with DB
     cp_types_in_system = list(np.unique(COMP_DF['component_type'].tolist()))
@@ -213,6 +191,7 @@ def list_for_calcs(cp_types_in_system, uncosted_comptypes):
     return
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 def something_else():
     nominal_production = SYSOUT_SETUP['Capacity'].sum()
     hazard_transfer_label = HAZARD_TRANSFER_PARAM+' ('+HAZARD_TRANSFER_UNIT+')'
@@ -297,7 +276,6 @@ if __name__ == "__main__":
     RESTORE_PCT_CHKPOINTS = config["RESTORE_PCT_CHKPOINTS"]
     RESTORE_TIME_UPPER = config["RESTORE_TIME_UPPER"]
     RESTORE_TIME_MAX = config["RESTORE_TIME_MAX"]
-2
     INPUT_DIR_NAME = config["INPUT_DIR_NAME"]
     OUTPUT_DIR_NAME = config["OUTPUT_DIR_NAME"]
 
@@ -325,7 +303,8 @@ if __name__ == "__main__":
     # Read in INPUT data files
     NODE_CONN_DF, COMP_DF, SYSOUT_SETUP, SYSINP_SETUP, FRAGILITIES = read_input_data(config_file=SYS_CONFIG_FILE)
 
-
+    print read_input_data(config_file=SYS_CONFIG_FILE)
     cp_types_in_system, cp_types_in_db = check_types_with_db()
     uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
+
 
