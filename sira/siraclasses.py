@@ -309,7 +309,9 @@ class Facility(object):
                                'DS3 Extensive',
                                'DS4 Complete']
 
-        # self.sys = self.setup_system_data()
+        self.comp_df = pd.DataFrame()
+        self.node_conn_df = pd.DataFrame()
+        self.setup_system_data()
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -328,8 +330,8 @@ class Facility(object):
         self.node_conn_df = self.data.node_conn_df
 
         # Configuration of output nodes (sinks)
-        self.sysout_setup = self.data.sysout_setup
-        self.sysout_setup = self.sysout_setup.sort('Priority', ascending=True)
+        sysout_setup = self.data.sysout_setup
+        self.sysout_setup = sysout_setup.sort('Priority', ascending=True)
 
         # Configuration of input nodes supplying 'commodities' into the system
         self.sysinp_setup = self.data.sysinp_setup

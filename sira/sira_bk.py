@@ -379,7 +379,7 @@ if __name__ == "__main__":
 
 
 if not SETUPFILE:  # used for running test case
-    SETUPFILE = 'simulation_setup/config_ps_X_test.conf'
+    SETUPFILE = 'tests/config_ps_X_test.conf'
     print ('using default test setupfile')
 
 discard = {}
