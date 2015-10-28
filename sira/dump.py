@@ -454,7 +454,7 @@ for j in range(num_hazard_pts):
 if SAVE_VARS_NPY:
     np.save(os.path.join(RAW_OUTPUT_DIR, 'economic_loss_array.npy'),
             economic_loss_array)
-    np.save(os.path.join(RAW_OUTPUT_DIR, 'calculated_output_array.npy'),
+    np.save(os.path.join(RAW_OUTPUT_DIR, 'calculated_output_array_bk.npy'),
             calculated_output_array)
     np.save(os.path.join(RAW_OUTPUT_DIR, 'output_array_given_recovery.npy'),
             output_array_given_recovery)

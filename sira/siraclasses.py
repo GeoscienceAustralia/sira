@@ -52,7 +52,6 @@ class IoDataGetter(object):
         self.input_path = None
         self.output_path = None
         self.raw_output_dir = None
-
         self.set_io_dirs()
 
     def set_io_dirs(self):
@@ -103,16 +102,17 @@ class FacilityDataGetter(object):
     """
     def __init__(self, setup_file):
         self.setup = readfile(setup_file)
+        self.system_classes = self.setup["SYSTEM_CLASSES"]
         self.system_class = self.setup["SYSTEM_CLASS"]
         self.commodity_flow_types = self.setup["COMMODITY_FLOW_TYPES"]
         self.sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
+        self.input_dir_name = self.setup["INPUT_DIR_NAME"]
 
         self.sys_config_file = None
         self.fragility_data = pd.DataFrame()
         self.sysinp_setup = pd.DataFrame()
         self.node_conn_df = pd.DataFrame()
         self.sysout_setup = pd.DataFrame()
-
         self.assign_infrastructure_data()
 
     def assign_infrastructure_data(self):

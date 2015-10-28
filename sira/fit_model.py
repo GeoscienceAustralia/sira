@@ -66,7 +66,7 @@ economic_loss_array\
     = np.load(os.path.join(raw_output_dir, 'economic_loss_array.npy'))
 
 calculated_output_array\
-    = np.load(os.path.join(raw_output_dir, 'calculated_output_array.npy'))
+    = np.load(os.path.join(raw_output_dir, 'calculated_output_array_bk.npy'))
 
 output_array_given_recovery\
     = np.load(os.path.join(raw_output_dir, 'output_array_given_recovery.npy'))
