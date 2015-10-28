@@ -45,7 +45,7 @@ import matplotlib.pyplot as plt
 import prettyplotlib as ppl
 import brewer2mpl
 from colorama import Fore, Back, Style, init
-init()
+import parmap
 
 import systemlayout
 import siraplot as spl
@@ -54,7 +54,7 @@ import siraplot as spl
 # Helper functions
 # -----------------------------------------------------------------------------
 
-np.random.seed(100)
+np.random.seed(100)  # add seed for reproducibility
 
 def plot_comp_frag(fragilities, costed_comptypes, hazard_levels, output_path):
     '''
@@ -125,7 +125,7 @@ def plot_comp_frag(fragilities, costed_comptypes, hazard_levels, output_path):
 
         plt.xlabel('PGA (g)', size=7, labelpad=8)
         plt.ylabel('Probability of Exceedence', size=7, labelpad=8)
-        plt.yticks(linspace(0.0, 1.0, 11))
+        plt.yticks(np.linspace(0.0, 1.0, 11))
 
         ax.tick_params(
             axis='both',
@@ -254,6 +254,190 @@ def compute_output_given_ds(cp_func):
     return sys_out_capacity_list
 
 
+def multi_process_enabling_loop(idxPGA, nPGA):
+    print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
+
+    # compute pe and determine ds for each component
+    ids_comp = np.zeros((num_samples, no_elements), dtype=int)
+
+    # index of damage state of components: from 0 to nds+1
+    for j, comp in enumerate(nodes_all):
+        ids_comp[:, j] = np.sum(
+            cal_pe_ds(comp, float(PGA), compdict, fragdict)
+            > rnd[:, j][:, np.newaxis], axis=1
+            )
+
+        # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
+
+    component_loss_tmp = {c: [] for c in nodes_all}
+    component_func_tmp = {c: [] for c in nodes_all}
+
+    # system output and economic loss
+    for i in range(num_samples):
+        loss_list_all_comp = []
+        cp_func = []
+        cp_func_given_time = []
+
+        for j, comp_name in enumerate(nodes_all):
+            # ........................................................
+            comp_type = compdict['component_type'][comp_name]
+            ids = ids_comp[i, j]     # index for component damage state
+            ds = dmg_states[ids]   # damage state name
+            cf = compdict['cost_fraction'][comp_name]
+            dr = fragdict['damage_ratio'][comp_type][ds]
+            fn = fragdict['functionality'][comp_type][ds]
+            loss = dr * cf
+            loss_list_all_comp.append(loss)
+
+            # ........................................................
+            # component functionality for calculated damage state:
+            cp_func.append(fn)
+            cp_func_given_time.append(
+                calc_recov_time_given_comp_ds(comp_name, ids))
+
+            comp_loss_dict[comp_name][i, idxPGA] = loss
+            component_loss_tmp[comp_name].append(loss)
+            component_func_tmp[comp_name].append(fn)
+            # ........................................................
+
+        economic_loss_array[i, idxPGA] = sum(loss_list_all_comp)
+
+        outputlist = compute_output_given_ds(cp_func)
+        calculated_output_array[i, idxPGA] = sum(outputlist)
+
+        sys_output_list_given_pga[PGA][i, :] = outputlist
+
+        # restoration status of components over the range of time
+        # (num elements X num specified time units)
+        cp_func_given_time = np.array(cp_func_given_time)
+        for t in range(num_time_steps):
+            output_array_given_recovery[i, idxPGA, t]\
+                = sum(compute_output_given_ds(cp_func_given_time[:, t]))
+
+    ids_comp_vs_haz[PGA] = ids_comp
+
+    for j, comp_name in enumerate(nodes_all):
+        component_resp_dict[PGA][(comp_name, 'loss_mean')]\
+            = np.mean(component_loss_tmp[comp_name])
+
+        component_resp_dict[PGA][(comp_name, 'loss_std')]\
+            = np.std(component_loss_tmp[comp_name])
+
+        component_resp_dict[PGA][(comp_name, 'func_mean')]\
+            = np.mean(component_func_tmp[comp_name])
+
+        component_resp_dict[PGA][(comp_name, 'func_std')]\
+            = np.std(component_func_tmp[comp_name])
+
+        component_resp_dict[PGA][(comp_name, 'num_failures')]\
+            = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
+
+    for onx, onode in enumerate(out_node_list):
+        sys_output_dict[PGA][onode]\
+            = np.mean(sys_output_list_given_pga[PGA][:, onx])
+    # print(comp_loss_dict)
+    # print(sys_output_dict[PGA])
+    print(component_resp_dict[PGA])
+
+
+def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_array_given_recovery):
+
+    print("\nCalculating system response to hazard transfer parameters...")
+    component_resp_dict = component_resp_df.to_dict()
+    sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
+    ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
+    print(PGA_str)
+
+    if PARALLEL:
+        print (PARALLEL)
+    else:
+        for idxPGA, PGA in enumerate(PGA_str):
+            print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
+
+            # compute pe and determine ds for each component
+            ids_comp = np.zeros((num_samples, no_elements), dtype=int)
+
+            # index of damage state of components: from 0 to nds+1
+            for j, comp in enumerate(nodes_all):
+                ids_comp[:, j] = np.sum(
+                    cal_pe_ds(comp, float(PGA), compdict, fragdict)
+                    > rnd[:, j][:, np.newaxis], axis=1
+                    )
+
+                # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
+
+            component_loss_tmp = {c: [] for c in nodes_all}
+            component_func_tmp = {c: [] for c in nodes_all}
+
+            # system output and economic loss
+            for i in range(num_samples):
+                loss_list_all_comp = []
+                cp_func = []
+                cp_func_given_time = []
+
+                for j, comp_name in enumerate(nodes_all):
+                    # ........................................................
+                    comp_type = compdict['component_type'][comp_name]
+                    ids = ids_comp[i, j]     # index for component damage state
+                    ds = dmg_states[ids]   # damage state name
+                    cf = compdict['cost_fraction'][comp_name]
+                    dr = fragdict['damage_ratio'][comp_type][ds]
+                    fn = fragdict['functionality'][comp_type][ds]
+                    loss = dr * cf
+                    loss_list_all_comp.append(loss)
+
+                    # ........................................................
+                    # component functionality for calculated damage state:
+                    cp_func.append(fn)
+                    cp_func_given_time.append(
+                        calc_recov_time_given_comp_ds(comp_name, ids))
+
+                    comp_loss_dict[comp_name][i, idxPGA] = loss
+                    component_loss_tmp[comp_name].append(loss)
+                    component_func_tmp[comp_name].append(fn)
+                    # ........................................................
+
+                economic_loss_array[i, idxPGA] = sum(loss_list_all_comp)
+
+                outputlist = compute_output_given_ds(cp_func)
+                calculated_output_array[i, idxPGA] = sum(outputlist)
+
+                sys_output_list_given_pga[PGA][i, :] = outputlist
+
+                # restoration status of components over the range of time
+                # (num elements X num specified time units)
+                cp_func_given_time = np.array(cp_func_given_time)
+                for t in range(num_time_steps):
+                    output_array_given_recovery[i, idxPGA, t]\
+                        = sum(compute_output_given_ds(cp_func_given_time[:, t]))
+
+            ids_comp_vs_haz[PGA] = ids_comp
+
+            for j, comp_name in enumerate(nodes_all):
+                component_resp_dict[PGA][(comp_name, 'loss_mean')]\
+                    = np.mean(component_loss_tmp[comp_name])
+
+                component_resp_dict[PGA][(comp_name, 'loss_std')]\
+                    = np.std(component_loss_tmp[comp_name])
+
+                component_resp_dict[PGA][(comp_name, 'func_mean')]\
+                    = np.mean(component_func_tmp[comp_name])
+
+                component_resp_dict[PGA][(comp_name, 'func_std')]\
+                    = np.std(component_func_tmp[comp_name])
+
+                component_resp_dict[PGA][(comp_name, 'num_failures')]\
+                    = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
+
+            for onx, onode in enumerate(out_node_list):
+                sys_output_dict[PGA][onode]\
+                    = np.mean(sys_output_list_given_pga[PGA][:, onx])
+            # print(comp_loss_dict)
+            # print(sys_output_dict[PGA])
+            print(component_resp_dict[PGA])
+    return ids_comp_vs_haz, sys_output_dict, component_resp_dict
+
+
 if __name__ == "__main__":
 
     SETUPFILE = sys.argv[1]
@@ -289,6 +473,9 @@ if __name__ == "__main__":
     FIT_PE_DATA = config["FIT_PE_DATA"]
     FIT_RESTORATION_DATA = config["FIT_RESTORATION_DATA"]
     SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
+
+    # Multiprocess or not
+    PARALLEL = config['MULTIPROCESS']
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Define input files, output location, scenario inputs
@@ -513,7 +700,7 @@ for x in comps_costed:
     )
 mindex = pd.MultiIndex.from_tuples(tp_cp, names=['component_id', 'response'])
 component_resp_df = pd.DataFrame(index=mindex, columns=[PGA_str])
-component_resp_dict = component_resp_df.to_dict()
+
 
 ###############################################################################
 # simulation of damage of each component
@@ -531,7 +718,7 @@ output_array_given_recovery = np.zeros((num_samples, nPGA, num_time_steps))
 rnd = stats.uniform.rvs(loc=0, scale=1, size=(num_samples, no_elements))
 np.save(os.path.join(raw_output_dir, 'rnd_samples_x_elements.npy'), rnd)
 
-sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
+
 
 # List of output values at output_nodes:
 sys_output_list_given_pga = {k: np.zeros((num_samples, len(out_node_list)))
@@ -540,104 +727,7 @@ sys_output_list_given_pga = {k: np.zeros((num_samples, len(out_node_list)))
 comp_dsix_given_pga = {k: np.zeros((num_samples, len(nodes_all)))
                        for k in PGA_str}
 
-ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
-
-def calc_loss_arrays(rnd,
-                     calculated_output_array,
-                     economic_loss_array,
-                     output_array_given_recovery):
-
-    print("\nCalculating system response to hazard transfer parameters...")
-
-    for idxPGA, PGA in enumerate(PGA_str):
-        print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
-
-        # compute pe and determine ds for each component
-        ids_comp = np.zeros((num_samples, no_elements), dtype=int)
-
-        # index of damage state of components: from 0 to nds+1
-        for j, comp in enumerate(nodes_all):
-            ids_comp[:, j] = np.sum(
-                cal_pe_ds(comp, float(PGA), compdict, fragdict)
-                > rnd[:, j][:, np.newaxis], axis=1
-                )
-
-            # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
-
-        component_loss_tmp = {c: [] for c in nodes_all}
-        component_func_tmp = {c: [] for c in nodes_all}
-
-        # system output and economic loss
-        for i in range(num_samples):
-            loss_list_all_comp = []
-            cp_func = []
-            cp_func_given_time = []
-
-            for j, comp_name in enumerate(nodes_all):
-                # ........................................................
-                comp_type = compdict['component_type'][comp_name]
-                ids = ids_comp[i, j]     # index for component damage state
-                ds = dmg_states[ids]   # damage state name
-                cf = compdict['cost_fraction'][comp_name]
-                dr = fragdict['damage_ratio'][comp_type][ds]
-                fn = fragdict['functionality'][comp_type][ds]
-                loss = dr * cf
-                loss_list_all_comp.append(loss)
-
-                # ........................................................
-                # component functionality for calculated damage state:
-                cp_func.append(fn)
-                cp_func_given_time.append(
-                    calc_recov_time_given_comp_ds(comp_name, ids))
-
-                comp_loss_dict[comp_name][i, idxPGA] = loss
-                component_loss_tmp[comp_name].append(loss)
-                component_func_tmp[comp_name].append(fn)
-                # ........................................................
-
-            economic_loss_array[i, idxPGA] = sum(loss_list_all_comp)
-
-            outputlist = compute_output_given_ds(cp_func)
-            calculated_output_array[i, idxPGA] = sum(outputlist)
-
-            sys_output_list_given_pga[PGA][i, :] = outputlist
-
-            # restoration status of components over the range of time
-            # (num elements X num specified time units)
-            cp_func_given_time = np.array(cp_func_given_time)
-            for t in range(num_time_steps):
-                output_array_given_recovery[i, idxPGA, t]\
-                    = sum(compute_output_given_ds(cp_func_given_time[:, t]))
-
-        ids_comp_vs_haz[PGA] = ids_comp
-
-        for j, comp_name in enumerate(nodes_all):
-            component_resp_dict[PGA][(comp_name, 'loss_mean')]\
-                = np.mean(component_loss_tmp[comp_name])
-
-            component_resp_dict[PGA][(comp_name, 'loss_std')]\
-                = np.std(component_loss_tmp[comp_name])
-
-            component_resp_dict[PGA][(comp_name, 'func_mean')]\
-                = np.mean(component_func_tmp[comp_name])
-
-            component_resp_dict[PGA][(comp_name, 'func_std')]\
-                = np.std(component_func_tmp[comp_name])
-
-            component_resp_dict[PGA][(comp_name, 'num_failures')]\
-                = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
-
-        for onx, onode in enumerate(out_node_list):
-            sys_output_dict[PGA][onode]\
-                = np.mean(sys_output_list_given_pga[PGA][:, onx])
-        print(comp_loss_dict)
-        print(sys_output_dict)
-    return ids_comp_vs_haz, sys_output_dict
-
-
-
-
-calc_loss_arrays(rnd,
+ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(rnd,
                  calculated_output_array,
                  economic_loss_array,
                  output_array_given_recovery)
@@ -865,309 +955,5 @@ if SAVE_VARS_NPY:
             required_time)
     np.save(os.path.join(raw_output_dir, 'pe_sys_econloss.npy'),
             pe_sys_econloss)
-
-# -----------------------------------------------------------------------------
-# Write analytical outputs to file
-# -----------------------------------------------------------------------------
-
-# ---< Output File >--- summary output ---
-# outfile_sys_response = os.path.join(output_path, 'system_response.csv')
-# out_cols = ['PGA', 'Economic Loss', 'Mean Output', 'Days to Full Recovery']
-# outdat = {out_cols[0]: PGA_levels,
-#           out_cols[1]: np.mean(economic_loss_array, axis=0),
-#           out_cols[2]: np.mean(calculated_output_array, axis=0),
-#           out_cols[3]: required_time}
-# df = pd.DataFrame(outdat)
-# df.to_csv(outfile_sys_response, sep=',', index=False, columns=out_cols)
-#
-# # ---< Output File >--- response of each COMPONENT to hazard ---
-# outfile_comp_resp = os.path.join(output_path, 'component_response.csv')
-# component_resp_df = pd.DataFrame(component_resp_dict)
-# component_resp_df.index.names = ['component_id', 'response']
-# component_resp_df.to_csv(outfile_comp_resp, sep=',',
-#                          index_label=['component_id', 'response'])
-#
-# # ---< Output File >--- mean loss of component ---
-# outfile_comp_loss = os.path.join(output_path, 'component_meanloss.csv')
-# component_loss_df = component_resp_df.iloc[
-#     component_resp_df.index.get_level_values(1) == 'loss_mean']
-# component_loss_df.reset_index(level='response', inplace=True)
-# component_loss_df = component_loss_df.drop('response', axis=1)
-# component_loss_df.to_csv(outfile_comp_loss, sep=',',
-#                          index_label=['component_id'])
-#
-# # ---< Output File >--- response of each COMPONENT TYPE to hazard ---
-# outfile_comptype_resp = os.path.join(output_path, 'comp_type_response.csv')
-# comptype_resp_df = pd.DataFrame(comptype_resp_dict)
-# comptype_resp_df.index.names = ['component_type', 'response']
-# comptype_resp_df.to_csv(outfile_comptype_resp, sep=',',
-#                         index_label=['component_type', 'response'])
-#
-# # ---< Output File >--- mean loss of component type ---
-# outfile_comptype_loss = os.path.join(output_path, 'comp_type_meanloss.csv')
-# comptype_loss_df = comptype_resp_df.iloc[
-#     comptype_resp_df.index.get_level_values(1) == 'loss_mean']
-# comptype_loss_df.reset_index(level='response', inplace=True)
-# comptype_loss_df = comptype_loss_df.drop('response', axis=1)
-# comptype_loss_df.to_csv(outfile_comptype_loss, sep=',',
-#                         index_label=['component_type'])
-#
-# # ---< Output File >--- mean failures for component types ---
-# outfile_comptype_failures = os.path.join(output_path,
-#                                          'comp_type_meanfailures.csv')
-# comptype_failure_df = comptype_resp_df.iloc[
-#     comptype_resp_df.index.get_level_values(1) == 'num_failures']
-# comptype_failure_df.reset_index(level='response', inplace=True)
-# comptype_failure_df = comptype_failure_df.drop('response', axis=1)
-# comptype_failure_df.to_csv(outfile_comptype_failures, sep=',',
-#                            index_label=['component_type'])
-#
-# # ---< Output File >--- DataFrame with mean failures per component CLASS ---
-# outfile_compclass_failures = os.path.join(output_path,
-#                                           'comp_class_meanfailures.csv')
-# compclass_failure_df.to_csv(outfile_compclass_failures, sep=',',
-#                         index_label=['component_class'])
-
-# # ---< Output File >--- probabiility of exceedence per component
-# outfile_comp_pe = os.path.join(output_path, 'component_pe.csv')
-# component_pe_df = pd.DataFrame(comp_pe)
-# component_pe_df = component_pe_df.iloc[
-#                     component_pe_df.index.get_level_values(1)!='DS0 None']
-# component_pe_df.to_csv(outfile_comp_pe, sep=',')
-
-# # -----------------------------------------------------------------------------
-# # For plots
-# # -----------------------------------------------------------------------------
-#
-# labels = dmg_states[1:]
-# markers = ['+', 'o', 's', '^', 'D', '$\\times$']
-# xt_step = 0.1   # x-tick spacing
-#
-# # -----------------------------------------------------------------------------
-# # BOX PLOT :: MEAN ECONOMIC LOSS
-#
-# fig = plt.figure(figsize=(9, 5), facecolor='white')
-# ax = fig.add_subplot(111, axisbg='white')
-# ax.spines['bottom'].set_position(('axes', -0.05))
-#
-# ppl.boxplot(ax, economic_loss_array, widths=0.35)
-# xt_pos, xt_val = spl.calc_tick_pos(xt_step, PGA_levels, PGA_str,
-#                                    plot_type='box')
-#
-# figfile = os.path.join(output_path, 'fig_lossratio_boxplot.png')
-# spl.format_fig(
-#     ax,
-#     figtitle='Boxplot of loss ratio vs. PGA',
-#     figfile=figfile,
-#     x_lab=hazard_transfer_label,
-#     y_lab='Loss Ratio',
-#     x_tick_pos=xt_pos,
-#     x_tick_val=xt_val,
-#     x_grid=False,
-#     y_grid=True,
-#     x_margin=0.05,
-#     y_margin=None,
-# )
-#
-# plt.close(fig)
-#
-# # -----------------------------------------------------------------------------
-# # PLOT :: MEAN ECONOMIC LOSS VS SHAKING INTENSITY
-#
-# fig = plt.figure(figsize=(9, 5), facecolor='white')
-# ax = fig.add_subplot(111, axisbg='white')
-#
-# ax.plot(PGA_levels, np.mean(economic_loss_array, axis=0),
-#         label='Simulation', clip_on=False,
-#         linestyle='-', marker='o', markersize=5,
-#         markeredgecolor=spl.COLR_DARK2[2], color=spl.COLR_DARK2[2])
-#
-# ax.plot(PGA_levels, np.sum(exp_damage_ratio, axis=0),
-#         label='Expected', clip_on=False,
-#         linestyle='-', marker='x', markersize=5,
-#         markeredgecolor=spl.COLR_DARK2[1], color=spl.COLR_DARK2[1])
-#
-# xt_pos, xt_val = spl.calc_tick_pos(xt_step, PGA_levels, PGA_str,
-#                                    plot_type='line')
-#
-# figfile = os.path.join(output_path, 'fig_lossratio_lineplot.png')
-# spl.format_fig(
-#     ax,
-#     figtitle='Economic Loss Ratio',
-#     figfile=figfile,
-#     x_lab=hazard_transfer_label,
-#     y_lab='Loss Ratio',
-#     x_tick_pos=xt_pos,
-#     y_tick_pos=None,
-#     x_tick_val=xt_val,
-#     y_tick_val=None,
-#     x_grid=False,
-#     y_grid=True,
-#     x_margin=0.05,
-#     y_margin=None,
-#     add_legend=True,
-#     legend_title=' ',
-# )
-#
-# plt.close(fig)
-#
-# # -----------------------------------------------------------------------------
-# # PLOT :: PROBABILITY OF EXCEEDENCE : ECONOMIC LOSS
-#
-# import seaborn as sns
-# sns.set_style('whitegrid')
-# sns.set_context('paper')
-#
-# fig = plt.figure(figsize=(9, 5))
-# ax = fig.add_subplot(111)
-#
-# for i in range(1, len(sys_dmg_states)):
-#     ax.plot(PGA_levels, pe_sys_econloss[i], label=sys_dmg_states[i],
-#             linestyle='--', linewidth=0.8, color=spl.COLR_DS[i], alpha=0.4,
-#             marker=markers[i], markersize=4, markeredgecolor=spl.COLR_DS[i],
-#             clip_on=False)
-#
-# figfile = os.path.join(output_path, 'fig_pr_ex_econloss.png')
-# figtitle = 'System Fragility Based on Economic Loss'
-# legend_title = 'Damage States'
-#
-# xt_pos, xt_val = spl.calc_tick_pos(xt_step, PGA_levels, PGA_str,
-#                                    plot_type='line')
-# yt_pos = [0.00, 0.25, 0.50, 0.75, 1.00]
-#
-# ax.grid(True, which="major", linestyle='-', linewidth=0.5)
-# spines_to_keep = ['bottom', 'left', 'top', 'right']
-# for spine in spines_to_keep:
-#     ax.spines[spine].set_visible(True)
-#     ax.spines[spine].set_linewidth(0.7)
-#
-# ax.set_xticks(xt_val)
-# ax.set_yticks(yt_pos)
-#
-# ax.set_xlabel(hazard_transfer_label)
-# ax.set_ylabel('Pr [ $D_s > d_s$ | PGA ]')
-#
-# ax.set_title(figtitle, loc='center', y=1.04, size=10)
-# ax.legend(title=legend_title, loc='upper left',
-#           ncol=1, bbox_to_anchor=(1.02, 1.0),
-#           frameon=0, prop={'size': 8})
-# ax.get_legend().get_title().set_fontsize('10')
-#
-# plt.savefig(figfile, format='png', bbox_inches='tight', dpi=300)
-# plt.close(fig)
-#
-# # -----------------------------------------------------------------------------
-# # PLOT :: PROBABILITY OF EXCEEDENCE : COMPONENT CLASS FAILURE RATES
-#
-# if SYSTEM_CLASS == 'Substation':
-#
-#     sns.set_style('whitegrid')
-#     sns.set_context('paper')
-#
-#     fig = plt.figure(figsize=(9, 5))
-#     ax = fig.add_subplot(111)
-#
-#     for i in range(1, len(sys_dmg_states)):
-#         ax.plot(PGA_levels, pe_sys_cpfailrate[i], label=sys_dmg_states[i],
-#                 linestyle='--', linewidth=1, color=spl.COLR_DS[i], alpha=0.4,
-#                 marker=markers[i], markersize=5,
-#                 markeredgecolor=spl.COLR_DS[i], clip_on=False)
-#
-#     figfile = os.path.join(output_path, 'fig_pr_ex_compfailrate.png')
-#     figtitle = 'System Fragility Based on Component Failure Rates'
-#     legend_title = 'Damage States'
-#
-#     xt_pos, xt_val = spl.calc_tick_pos(xt_step, PGA_levels, PGA_str,
-#                                        plot_type='line')
-#     yt_pos = [0.00, 0.25, 0.50, 0.75, 1.00]
-#
-#     ax.grid(True, which="major", linestyle='-', linewidth=0.5)
-#     spines_to_keep = ['bottom', 'left', 'top', 'right']
-#     for spine in spines_to_keep:
-#         ax.spines[spine].set_visible(True)
-#         ax.spines[spine].set_linewidth(0.7)
-#
-#     ax.set_xticks(xt_val)
-#     ax.set_yticks(yt_pos)
-#
-#     ax.set_xlabel(hazard_transfer_label)
-#     ax.set_ylabel('Pr[ $D_s > d_s$ | PGA ]')
-#
-#     ax.set_title(figtitle, loc='center', y=1.04, size=10)
-#     ax.legend(title=legend_title, loc='upper left',
-#               ncol=1, bbox_to_anchor=(1.02, 1.0),
-#               frameon=0, prop={'size': 8})
-#
-#     plt.savefig(figfile, format='png', bbox_inches='tight', dpi=300)
-#     plt.close(fig)
-#
-# # -----------------------------------------------------------------------------
-# # BOX PLOT :: mean output vs shaking intensity
-#
-# fig = plt.figure(figsize=(9, 5), facecolor='white')
-# ax = fig.add_subplot(111, axisbg='white')
-# ax.spines['bottom'].set_position(('axes', -0.05))
-#
-# ppl.boxplot(ax, calculated_output_array, widths=0.35)
-# xt_pos, xt_val = spl.calc_tick_pos(xt_step, PGA_levels, PGA_str,
-#                                    plot_type='box')
-#
-# figfile = os.path.join(output_path, 'fig_system_output.png')
-# spl.format_fig(
-#     ax,
-#     figtitle='% Mean Output vs Shaking Intensity',
-#     figfile=figfile,
-#     x_lab=hazard_transfer_label,
-#     y_lab='System Output',
-#     x_tick_pos=xt_pos,
-#     y_tick_pos=None,
-#     x_tick_val=xt_val,
-#     y_tick_val=None,
-#     x_grid=False,
-#     y_grid=True,
-#     x_margin=0.05,
-#     y_margin=None,
-# )
-#
-# plt.close(fig)
-#
-# # -----------------------------------------------------------------------------
-# # PLOT :: RECOVERY TIME TO FULL CAPACITY
-#
-# fig = plt.figure(figsize=(9, 5), facecolor='white')
-# ax = fig.add_subplot(111, axisbg='white')
-#
-# ppl.plot(ax, PGA_levels, required_time, label='Restoration Time',
-#          linestyle='-', color=spl.COLR_RDYLGN[2],
-#          marker='o', markeredgecolor=spl.COLR_RDYLGN[2],
-#          clip_on=False)
-#
-# xt_pos, xt_val = spl.calc_tick_pos(xt_step, PGA_levels, PGA_str,
-#                                    plot_type='line')
-#
-# figfile = os.path.join(output_path, 'fig_restoration_time_vs_haz.png')
-# spl.format_fig(
-#     ax,
-#     figtitle='Required Time for Full Recovery',
-#     figfile=figfile,
-#     x_lab=hazard_transfer_label,
-#     y_lab='Restoration Time ('+timeunit+')',
-#     x_tick_pos=xt_pos,
-#     y_tick_pos=None,
-#     x_tick_val=xt_val,
-#     y_tick_val=None,
-#     # y_lim=[0, restore_time_max],
-#     x_grid=False,
-#     y_grid=True,
-#     x_margin=0.05,
-#     y_margin=None,
-#     add_legend=True,
-# )
-#
-# plt.close(fig)
-
-# *****************************************************************************
-# # Plot and save fragilities of all componements:
-# plot_comp_frag(fragilities, costed_comptypes, PGA_levels, output_path)
 
 print("\nOutputs saved in: " + Fore.GREEN + output_path)
