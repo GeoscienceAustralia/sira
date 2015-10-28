@@ -346,12 +346,11 @@ def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_a
     component_resp_dict = component_resp_df.to_dict()
     sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
     ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
-    print(PGA_str)
 
     if PARALLEL:
         print (PARALLEL)
     else:
-        for idxPGA, PGA in enumerate(PGA_str):
+        for idxPGA, _PGA in enumerate(PGA_str):
             print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
 
             # compute pe and determine ds for each component
@@ -360,7 +359,7 @@ def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_a
             # index of damage state of components: from 0 to nds+1
             for j, comp in enumerate(nodes_all):
                 ids_comp[:, j] = np.sum(
-                    cal_pe_ds(comp, float(PGA), compdict, fragdict)
+                    cal_pe_ds(comp, float(_PGA), compdict, fragdict)
                     > rnd[:, j][:, np.newaxis], axis=1
                     )
 
@@ -402,7 +401,7 @@ def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_a
                 outputlist = compute_output_given_ds(cp_func)
                 calculated_output_array[i, idxPGA] = sum(outputlist)
 
-                sys_output_list_given_pga[PGA][i, :] = outputlist
+                sys_output_list_given_pga[_PGA][i, :] = outputlist
 
                 # restoration status of components over the range of time
                 # (num elements X num specified time units)
@@ -411,30 +410,30 @@ def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_a
                     output_array_given_recovery[i, idxPGA, t]\
                         = sum(compute_output_given_ds(cp_func_given_time[:, t]))
 
-            ids_comp_vs_haz[PGA] = ids_comp
+            ids_comp_vs_haz[_PGA] = ids_comp
 
             for j, comp_name in enumerate(nodes_all):
-                component_resp_dict[PGA][(comp_name, 'loss_mean')]\
+                component_resp_dict[_PGA][(comp_name, 'loss_mean')]\
                     = np.mean(component_loss_tmp[comp_name])
 
-                component_resp_dict[PGA][(comp_name, 'loss_std')]\
+                component_resp_dict[_PGA][(comp_name, 'loss_std')]\
                     = np.std(component_loss_tmp[comp_name])
 
-                component_resp_dict[PGA][(comp_name, 'func_mean')]\
+                component_resp_dict[_PGA][(comp_name, 'func_mean')]\
                     = np.mean(component_func_tmp[comp_name])
 
-                component_resp_dict[PGA][(comp_name, 'func_std')]\
+                component_resp_dict[_PGA][(comp_name, 'func_std')]\
                     = np.std(component_func_tmp[comp_name])
 
-                component_resp_dict[PGA][(comp_name, 'num_failures')]\
+                component_resp_dict[_PGA][(comp_name, 'num_failures')]\
                     = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
 
             for onx, onode in enumerate(out_node_list):
-                sys_output_dict[PGA][onode]\
-                    = np.mean(sys_output_list_given_pga[PGA][:, onx])
+                sys_output_dict[_PGA][onode]\
+                    = np.mean(sys_output_list_given_pga[_PGA][:, onx])
             # print(comp_loss_dict)
             # print(sys_output_dict[PGA])
-            print(component_resp_dict[PGA])
+            print(component_resp_dict[_PGA])
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 
 

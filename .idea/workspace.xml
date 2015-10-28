@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56b4fca5-f294-4cef-93eb-524690e53db3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sira/test_sira.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/sira/project/ps_x/input/sys_config_ps_sd0.35g.xlsx" afterPath="$PROJECT_DIR$/sira/project/ps_x/input/sys_config_ps_sd0.35g_test_case.xlsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf" afterPath="$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sira/sira_bk.py" afterPath="$PROJECT_DIR$/sira/sira_bk.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -82,13 +79,12 @@
       <file leaf-file-name="sira_bk.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3133998">
-              <caret line="341" column="0" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.393134">
+              <caret line="265" column="35" selection-start-line="265" selection-start-column="35" selection-end-line="265" selection-end-column="35" />
               <folding>
                 <element signature="e#1008#1045#0" expanded="true" />
                 <element signature="e#5395#7072#0" expanded="true" />
-                <element signature="e#9222#12526#0" expanded="true" />
-                <element signature="e#12636#16921#0" expanded="true" />
+                <element signature="e#12636#16914#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -675,7 +671,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445990716416</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Starting to introducing parallel computation.">
+      <created>1445993514341</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1445993514341</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -751,7 +753,8 @@
     <MESSAGE value="handed over by maruf" />
     <MESSAGE value="temp checkin&#10;" />
     <MESSAGE value="added working sira_bk.py, the non-oo version.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="added working sira_bk.py, the non-oo version.&#10;" />
+    <MESSAGE value="Starting to introducing parallel computation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Starting to introducing parallel computation." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1045,13 +1048,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3133998">
-          <caret line="341" column="0" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.393134">
+          <caret line="265" column="35" selection-start-line="265" selection-start-column="35" selection-end-line="265" selection-end-column="35" />
           <folding>
             <element signature="e#1008#1045#0" expanded="true" />
             <element signature="e#5395#7072#0" expanded="true" />
-            <element signature="e#9222#12526#0" expanded="true" />
-            <element signature="e#12636#16921#0" expanded="true" />
+            <element signature="e#12636#16914#0" expanded="true" />
           </folding>
         </state>
       </provider>
