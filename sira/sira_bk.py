@@ -344,17 +344,17 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
     for onx, onode in enumerate(out_node_list):
         sys_out_dict[onode]\
             = np.mean(sys_output_list_given_pga[_PGA][:, onx])
-    return (ids_comp, sys_out_dict, comp_resp_dict)
+    return ids_comp, sys_out_dict, comp_resp_dict
 
 
-def calc_loss_arrays():
+def calc_loss_arrays(parallel_or_serial):
 
     print("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
     sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
     ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
 
-    if PARALLEL:
+    if parallel_or_serial:
         parallel_return \
             = parmap.map(multiprocess_enabling_loop, range(len(PGA_str)), PGA_str, nPGA)
 
@@ -378,9 +378,9 @@ if __name__ == "__main__":
     SETUPFILE = sys.argv[1]
 
 
-if not SETUPFILE:
-    SETUPFILE = 'simulation_setup/config_ps_X.conf'
-    print ('using default setupfile')
+if not SETUPFILE:  # used for running test case
+    SETUPFILE = 'simulation_setup/config_ps_X_test.conf'
+    print ('using default test setupfile')
 
 discard = {}
 config = {}
@@ -416,6 +416,7 @@ SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
 
 # Multiprocess or not
 PARALLEL = config['MULTIPROCESS']
+print(PARALLEL)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define input files, output location, scenario inputs
@@ -667,7 +668,11 @@ sys_output_list_given_pga = {k: np.zeros((num_samples, len(out_node_list)))
 comp_dsix_given_pga = {k: np.zeros((num_samples, len(nodes_all)))
                        for k in PGA_str}
 
-ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays()
+#################################################################################################
+######################## monte carlo compuration ################################################
+#################################################################################################
+
+ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(parallel_or_serial=PARALLEL)
 
 idshaz = os.path.join(raw_output_dir, 'ids_comp_vs_haz.pickle')
 with open(idshaz, 'w') as handle:
