@@ -257,7 +257,12 @@ def compute_output_given_ds(cp_func):
     return sys_out_capacity_list
 
 
-def multiprocess_enabling_loop(ids_comp_vs_haz, sys_output_dict, component_resp_dict, idxPGA, _PGA, nPGA):
+def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
+
+    if isinstance(_PGA_dummy, list):
+        _PGA = _PGA_dummy[idxPGA]
+    else:
+        _PGA = _PGA_dummy
     print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
 
     # compute pe and determine ds for each component
@@ -317,32 +322,29 @@ def multiprocess_enabling_loop(ids_comp_vs_haz, sys_output_dict, component_resp_
             output_array_given_recovery[i, idxPGA, t]\
                 = sum(compute_output_given_ds(cp_func_given_time[:, t]))
 
-    ids_comp_vs_haz[_PGA] = ids_comp
+    comp_resp_dict = dict()
 
     for j, comp_name in enumerate(nodes_all):
-        component_resp_dict[_PGA][(comp_name, 'loss_mean')]\
+        comp_resp_dict[(comp_name, 'loss_mean')]\
             = np.mean(component_loss_tmp[comp_name])
 
-        component_resp_dict[_PGA][(comp_name, 'loss_std')]\
+        comp_resp_dict[(comp_name, 'loss_std')]\
             = np.std(component_loss_tmp[comp_name])
 
-        component_resp_dict[_PGA][(comp_name, 'func_mean')]\
+        comp_resp_dict[(comp_name, 'func_mean')]\
             = np.mean(component_func_tmp[comp_name])
 
-        component_resp_dict[_PGA][(comp_name, 'func_std')]\
+        comp_resp_dict[(comp_name, 'func_std')]\
             = np.std(component_func_tmp[comp_name])
 
-        component_resp_dict[_PGA][(comp_name, 'num_failures')]\
+        comp_resp_dict[(comp_name, 'num_failures')]\
             = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
 
+    sys_out_dict = dict()
     for onx, onode in enumerate(out_node_list):
-        sys_output_dict[_PGA][onode]\
+        sys_out_dict[onode]\
             = np.mean(sys_output_list_given_pga[_PGA][:, onx])
-    # print(comp_loss_dict)
-    # print(sys_output_dict[PGA])
-    print(component_resp_dict[_PGA])
-
-    return ids_comp_vs_haz, sys_output_dict, component_resp_dict
+    return (ids_comp, sys_out_dict, comp_resp_dict)
 
 
 def calc_loss_arrays():
@@ -353,14 +355,21 @@ def calc_loss_arrays():
     ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
 
     if PARALLEL:
-        print ('Parallel run enabled')
+        parallel_return \
+            = parmap.map(multiprocess_enabling_loop, range(len(PGA_str)), PGA_str, nPGA)
+
+        for idxPGA, _PGA in enumerate(PGA_str):
+            ids_comp_vs_haz[_PGA] = parallel_return[idxPGA][0]
+            sys_output_dict[_PGA] = parallel_return[idxPGA][1]
+            component_resp_dict[_PGA] = parallel_return[idxPGA][2]
     else:
         for idxPGA, _PGA in enumerate(PGA_str):
-            ids_comp_vs_haz, sys_output_dict, component_resp_dict = \
-                multiprocess_enabling_loop(ids_comp_vs_haz, sys_output_dict, component_resp_dict,
-                                            idxPGA=idxPGA, _PGA=_PGA, nPGA=nPGA)
-    cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
-    cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
+            ids_comp_vs_haz[_PGA], sys_output_dict[_PGA], component_resp_dict[_PGA] = \
+                multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=nPGA)
+
+    # saving for test cases
+    # cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
+    # cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
 
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 

@@ -23,7 +23,5 @@ class MyTestCase(unittest.TestCase):
         for k in sys_output_dict:
             np.testing.assert_array_equal(sys_output_dict[k], test_sys_output_dict[k], 'arrays not equal', verbose=True)
 
-
-
 if __name__ == '__main__':
     unittest.main()
