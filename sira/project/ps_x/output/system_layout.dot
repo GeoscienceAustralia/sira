@@ -92,9 +92,6 @@ conv_
 		supply_conv_3 -> supply_conv_4		 [capacity=1,
 			distance=1,
 			weight=1];
-		supply_conv_4 -> supply_conv_1		 [capacity=1,
-			distance=1,
-			weight=1];
 		supply_conv_4 -> supply_conv_3		 [capacity=1,
 			distance=1,
 			weight=1];
@@ -107,7 +104,7 @@ conv_
 		feed_conv_1		 [label="feed_
 conv_
 1"];
-		feed_conv_2 -> feed_conv_1		 [capacity=1,
+		feed_conv_1 -> feed_conv_2		 [capacity=1,
 			distance=1,
 			weight=1];
 	}
