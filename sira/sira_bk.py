@@ -46,9 +46,12 @@ import prettyplotlib as ppl
 import brewer2mpl
 from colorama import Fore, Back, Style, init
 import parmap
+import cPickle
 
 import systemlayout
 import siraplot as spl
+SETUPFILE = None
+
 
 # -----------------------------------------------------------------------------
 # Helper functions
@@ -254,7 +257,7 @@ def compute_output_given_ds(cp_func):
     return sys_out_capacity_list
 
 
-def multi_process_enabling_loop(idxPGA, nPGA):
+def multiprocess_enabling_loop(ids_comp_vs_haz, sys_output_dict, component_resp_dict, idxPGA, _PGA, nPGA):
     print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
 
     # compute pe and determine ds for each component
@@ -263,7 +266,7 @@ def multi_process_enabling_loop(idxPGA, nPGA):
     # index of damage state of components: from 0 to nds+1
     for j, comp in enumerate(nodes_all):
         ids_comp[:, j] = np.sum(
-            cal_pe_ds(comp, float(PGA), compdict, fragdict)
+            cal_pe_ds(comp, float(_PGA), compdict, fragdict)
             > rnd[:, j][:, np.newaxis], axis=1
             )
 
@@ -305,7 +308,7 @@ def multi_process_enabling_loop(idxPGA, nPGA):
         outputlist = compute_output_given_ds(cp_func)
         calculated_output_array[i, idxPGA] = sum(outputlist)
 
-        sys_output_list_given_pga[PGA][i, :] = outputlist
+        sys_output_list_given_pga[_PGA][i, :] = outputlist
 
         # restoration status of components over the range of time
         # (num elements X num specified time units)
@@ -314,33 +317,35 @@ def multi_process_enabling_loop(idxPGA, nPGA):
             output_array_given_recovery[i, idxPGA, t]\
                 = sum(compute_output_given_ds(cp_func_given_time[:, t]))
 
-    ids_comp_vs_haz[PGA] = ids_comp
+    ids_comp_vs_haz[_PGA] = ids_comp
 
     for j, comp_name in enumerate(nodes_all):
-        component_resp_dict[PGA][(comp_name, 'loss_mean')]\
+        component_resp_dict[_PGA][(comp_name, 'loss_mean')]\
             = np.mean(component_loss_tmp[comp_name])
 
-        component_resp_dict[PGA][(comp_name, 'loss_std')]\
+        component_resp_dict[_PGA][(comp_name, 'loss_std')]\
             = np.std(component_loss_tmp[comp_name])
 
-        component_resp_dict[PGA][(comp_name, 'func_mean')]\
+        component_resp_dict[_PGA][(comp_name, 'func_mean')]\
             = np.mean(component_func_tmp[comp_name])
 
-        component_resp_dict[PGA][(comp_name, 'func_std')]\
+        component_resp_dict[_PGA][(comp_name, 'func_std')]\
             = np.std(component_func_tmp[comp_name])
 
-        component_resp_dict[PGA][(comp_name, 'num_failures')]\
+        component_resp_dict[_PGA][(comp_name, 'num_failures')]\
             = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
 
     for onx, onode in enumerate(out_node_list):
-        sys_output_dict[PGA][onode]\
-            = np.mean(sys_output_list_given_pga[PGA][:, onx])
+        sys_output_dict[_PGA][onode]\
+            = np.mean(sys_output_list_given_pga[_PGA][:, onx])
     # print(comp_loss_dict)
     # print(sys_output_dict[PGA])
-    print(component_resp_dict[PGA])
+    print(component_resp_dict[_PGA])
+
+    return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 
 
-def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_array_given_recovery):
+def calc_loss_arrays():
 
     print("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
@@ -348,176 +353,103 @@ def calc_loss_arrays(rnd, calculated_output_array, economic_loss_array, output_a
     ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
 
     if PARALLEL:
-        print (PARALLEL)
+        print ('Parallel run enabled')
     else:
         for idxPGA, _PGA in enumerate(PGA_str):
-            print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
+            ids_comp_vs_haz, sys_output_dict, component_resp_dict = \
+                multiprocess_enabling_loop(ids_comp_vs_haz, sys_output_dict, component_resp_dict,
+                                            idxPGA=idxPGA, _PGA=_PGA, nPGA=nPGA)
+    cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
+    cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
 
-            # compute pe and determine ds for each component
-            ids_comp = np.zeros((num_samples, no_elements), dtype=int)
-
-            # index of damage state of components: from 0 to nds+1
-            for j, comp in enumerate(nodes_all):
-                ids_comp[:, j] = np.sum(
-                    cal_pe_ds(comp, float(_PGA), compdict, fragdict)
-                    > rnd[:, j][:, np.newaxis], axis=1
-                    )
-
-                # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
-
-            component_loss_tmp = {c: [] for c in nodes_all}
-            component_func_tmp = {c: [] for c in nodes_all}
-
-            # system output and economic loss
-            for i in range(num_samples):
-                loss_list_all_comp = []
-                cp_func = []
-                cp_func_given_time = []
-
-                for j, comp_name in enumerate(nodes_all):
-                    # ........................................................
-                    comp_type = compdict['component_type'][comp_name]
-                    ids = ids_comp[i, j]     # index for component damage state
-                    ds = dmg_states[ids]   # damage state name
-                    cf = compdict['cost_fraction'][comp_name]
-                    dr = fragdict['damage_ratio'][comp_type][ds]
-                    fn = fragdict['functionality'][comp_type][ds]
-                    loss = dr * cf
-                    loss_list_all_comp.append(loss)
-
-                    # ........................................................
-                    # component functionality for calculated damage state:
-                    cp_func.append(fn)
-                    cp_func_given_time.append(
-                        calc_recov_time_given_comp_ds(comp_name, ids))
-
-                    comp_loss_dict[comp_name][i, idxPGA] = loss
-                    component_loss_tmp[comp_name].append(loss)
-                    component_func_tmp[comp_name].append(fn)
-                    # ........................................................
-
-                economic_loss_array[i, idxPGA] = sum(loss_list_all_comp)
-
-                outputlist = compute_output_given_ds(cp_func)
-                calculated_output_array[i, idxPGA] = sum(outputlist)
-
-                sys_output_list_given_pga[_PGA][i, :] = outputlist
-
-                # restoration status of components over the range of time
-                # (num elements X num specified time units)
-                cp_func_given_time = np.array(cp_func_given_time)
-                for t in range(num_time_steps):
-                    output_array_given_recovery[i, idxPGA, t]\
-                        = sum(compute_output_given_ds(cp_func_given_time[:, t]))
-
-            ids_comp_vs_haz[_PGA] = ids_comp
-
-            for j, comp_name in enumerate(nodes_all):
-                component_resp_dict[_PGA][(comp_name, 'loss_mean')]\
-                    = np.mean(component_loss_tmp[comp_name])
-
-                component_resp_dict[_PGA][(comp_name, 'loss_std')]\
-                    = np.std(component_loss_tmp[comp_name])
-
-                component_resp_dict[_PGA][(comp_name, 'func_mean')]\
-                    = np.mean(component_func_tmp[comp_name])
-
-                component_resp_dict[_PGA][(comp_name, 'func_std')]\
-                    = np.std(component_func_tmp[comp_name])
-
-                component_resp_dict[_PGA][(comp_name, 'num_failures')]\
-                    = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
-
-            for onx, onode in enumerate(out_node_list):
-                sys_output_dict[_PGA][onode]\
-                    = np.mean(sys_output_list_given_pga[_PGA][:, onx])
-            # print(comp_loss_dict)
-            # print(sys_output_dict[PGA])
-            print(component_resp_dict[_PGA])
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 
 
 if __name__ == "__main__":
-
     SETUPFILE = sys.argv[1]
 
-    discard = {}
-    config = {}
-    execfile(SETUPFILE, discard, config)
 
-    SYSTEM_CLASSES = config["SYSTEM_CLASSES"]
-    SYSTEM_CLASS = config["SYSTEM_CLASS"]
-    COMMODITY_FLOW_TYPES = config["COMMODITY_FLOW_TYPES"]
+if not SETUPFILE:
+    SETUPFILE = 'simulation_setup/config_ps_X.conf'
+    print ('using default setupfile')
 
-    pga_min = config["PGA_MIN"]
-    pga_max = config["PGA_MAX"]
-    pga_step = config["PGA_STEP"]
-    num_samples = config["NUM_SAMPLES"]
+discard = {}
+config = {}
+execfile(SETUPFILE, discard, config)
 
-    hazard_transfer_param = config["HAZARD_TRANSFER_PARAM"]
-    hazard_transfer_unit = config["HAZARD_TRANSFER_UNIT"]
+SYSTEM_CLASSES = config["SYSTEM_CLASSES"]
+SYSTEM_CLASS = config["SYSTEM_CLASS"]
+COMMODITY_FLOW_TYPES = config["COMMODITY_FLOW_TYPES"]
 
-    timeunit = config["TIME_UNIT"]
-    restore_time_step = config["RESTORE_TIME_UPPER"]
-    restore_pct_chkpoints = config["RESTORE_PCT_CHKPOINTS"]
-    restore_time_upper = config["RESTORE_TIME_STEP"]
-    restore_time_max = config["RESTORE_TIME_MAX"]
+pga_min = config["PGA_MIN"]
+pga_max = config["PGA_MAX"]
+pga_step = config["PGA_STEP"]
+num_samples = config["NUM_SAMPLES"]
 
-    input_dir_name = config["INPUT_DIR_NAME"]
-    output_dir_name = config["OUTPUT_DIR_NAME"]
+hazard_transfer_param = config["HAZARD_TRANSFER_PARAM"]
+hazard_transfer_unit = config["HAZARD_TRANSFER_UNIT"]
 
-    ifile_name_sys_conf = config["SYS_CONF_FILE_NAME"]
+timeunit = config["TIME_UNIT"]
+restore_time_step = config["RESTORE_TIME_UPPER"]
+restore_pct_chkpoints = config["RESTORE_PCT_CHKPOINTS"]
+restore_time_upper = config["RESTORE_TIME_STEP"]
+restore_time_max = config["RESTORE_TIME_MAX"]
 
-    USE_ENDPOINT = config["USE_ENDPOINT"]
-    FIT_PE_DATA = config["FIT_PE_DATA"]
-    FIT_RESTORATION_DATA = config["FIT_RESTORATION_DATA"]
-    SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
+input_dir_name = config["INPUT_DIR_NAME"]
+output_dir_name = config["OUTPUT_DIR_NAME"]
 
-    # Multiprocess or not
-    PARALLEL = config['MULTIPROCESS']
+ifile_name_sys_conf = config["SYS_CONF_FILE_NAME"]
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Define input files, output location, scenario inputs
+USE_ENDPOINT = config["USE_ENDPOINT"]
+FIT_PE_DATA = config["FIT_PE_DATA"]
+FIT_RESTORATION_DATA = config["FIT_RESTORATION_DATA"]
+SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
 
-    input_path = os.path.join(os.getcwd(), input_dir_name)
-    ifile_sys_config = os.path.join(input_path, ifile_name_sys_conf)
+# Multiprocess or not
+PARALLEL = config['MULTIPROCESS']
 
-    if not os.path.exists(output_dir_name):
-        os.makedirs(output_dir_name)
-    output_path = os.path.join(os.getcwd(), output_dir_name)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Define input files, output location, scenario inputs
 
-    raw_output_dir = os.path.join(os.getcwd(), output_dir_name, 'raw_output')
-    if not os.path.exists(raw_output_dir):
-        os.makedirs(raw_output_dir)
+input_path = os.path.join(os.getcwd(), input_dir_name)
+ifile_sys_config = os.path.join(input_path, ifile_name_sys_conf)
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Read in INPUT data files
+if not os.path.exists(output_dir_name):
+    os.makedirs(output_dir_name)
+output_path = os.path.join(os.getcwd(), output_dir_name)
 
-    ndf = pd.read_excel(ifile_sys_config, 'component_connections',
-                        index_col=None,
-                        skiprows=3, skipinitialspace=True)
+raw_output_dir = os.path.join(os.getcwd(), output_dir_name, 'raw_output')
+if not os.path.exists(raw_output_dir):
+    os.makedirs(raw_output_dir)
 
-    comp_df = pd.read_excel(
-        ifile_sys_config, 'comp_list',
-        index_col='component_id',
-        skiprows=3, skipinitialspace=True)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Read in INPUT data files
 
-    sysout_setup = pd.read_excel(
-        ifile_sys_config, 'output_setup',
-        index_col='OutputNode',
-        skiprows=3, skipinitialspace=True)
-    sysout_setup = sysout_setup.sort('Priority', ascending=True)
-                        # ^ Prioritised list of output nodes
+ndf = pd.read_excel(ifile_sys_config, 'component_connections',
+                    index_col=None,
+                    skiprows=3, skipinitialspace=True)
 
-    sysinp_setup = pd.read_excel(
-        ifile_sys_config, 'supply_setup',
-        index_col='InputNode',
-        skiprows=3, skipinitialspace=True)
+comp_df = pd.read_excel(
+    ifile_sys_config, 'comp_list',
+    index_col='component_id',
+    skiprows=3, skipinitialspace=True)
 
-    fragilities = pd.read_excel(
-        ifile_sys_config, 'comp_type_dmg_algo',
-        index_col=['component_type', 'damage_state'],
-        skiprows=3, skipinitialspace=True)
+sysout_setup = pd.read_excel(
+    ifile_sys_config, 'output_setup',
+    index_col='OutputNode',
+    skiprows=3, skipinitialspace=True)
+sysout_setup = sysout_setup.sort('Priority', ascending=True)
+                    # ^ Prioritised list of output nodes
+
+sysinp_setup = pd.read_excel(
+    ifile_sys_config, 'supply_setup',
+    index_col='InputNode',
+    skiprows=3, skipinitialspace=True)
+
+fragilities = pd.read_excel(
+    ifile_sys_config, 'comp_type_dmg_algo',
+    index_col=['component_type', 'damage_state'],
+    skiprows=3, skipinitialspace=True)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -726,10 +658,7 @@ sys_output_list_given_pga = {k: np.zeros((num_samples, len(out_node_list)))
 comp_dsix_given_pga = {k: np.zeros((num_samples, len(nodes_all)))
                        for k in PGA_str}
 
-ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(rnd,
-                 calculated_output_array,
-                 economic_loss_array,
-                 output_array_given_recovery)
+ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays()
 
 idshaz = os.path.join(raw_output_dir, 'ids_comp_vs_haz.pickle')
 with open(idshaz, 'w') as handle:
