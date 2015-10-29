@@ -4,16 +4,12 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56b4fca5-f294-4cef-93eb-524690e53db3" name="Default" comment="successfully parallelised">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dictionaries/marufr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/sira.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+    <list default="true" id="56b4fca5-f294-4cef-93eb-524690e53db3" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sira/project/ps_x/output/system_layout.png" afterPath="$PROJECT_DIR$/sira/project/ps_x/output/system_layout.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sira/sira.py" afterPath="$PROJECT_DIR$/sira/sira.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sira/siraclasses.py" afterPath="$PROJECT_DIR$/sira/siraclasses.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sira.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,9 +23,10 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/sira$sira_bk.coverage" NAME="sira_bk Coverage Results" MODIFIED="1446006076649" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira" />
-    <SUITE FILE_PATH="coverage/sira$sira.coverage" NAME="sira Coverage Results" MODIFIED="1445990369538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira" />
-    <SUITE FILE_PATH="coverage/sira$Unittests_in_test_sira.coverage" NAME="Unittests in test_sira Coverage Results" MODIFIED="1446006091947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira" />
+    <SUITE FILE_PATH="coverage/sira$sira_bk.coverage" NAME="sira_bk Coverage Results" MODIFIED="1446147873396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira" />
+    <SUITE FILE_PATH="coverage/sira$Unittests_in_test_sira.coverage" NAME="Unittests in test_sira Coverage Results" MODIFIED="1446096040377" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira" />
+    <SUITE FILE_PATH="coverage/sira$Unittest_MyTestCase_test_calc_loss_arrays_parallel.coverage" NAME="Unittest MyTestCase.test_calc_loss_arrays_parallel Coverage Results" MODIFIED="1446073125487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira/tests" />
+    <SUITE FILE_PATH="coverage/sira$sira.coverage" NAME="sira Coverage Results" MODIFIED="1446158815112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sira" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -49,37 +46,68 @@
         <entry file="file://$PROJECT_DIR$/sira/siraclasses.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="104" column="35" selection-start-line="104" selection-start-column="35" selection-end-line="104" selection-end-column="35" />
+              <caret line="105" column="37" selection-start-line="105" selection-start-column="37" selection-end-line="105" selection-end-column="37" />
               <folding>
+                <element signature="e#62#99#0" expanded="true" />
                 <element signature="e#417#896#0" expanded="true" />
                 <element signature="e#1120#1467#0" expanded="true" />
-                <element signature="e#3371#3970#0" expanded="true" />
-                <element signature="e#4022#8273#0" expanded="true" />
-                <element signature="e#8495#9111#0" expanded="true" />
-                <element signature="e#9235#9957#0" expanded="true" />
-                <element signature="e#10005#10865#0" expanded="true" />
-                <element signature="e#14737#15414#0" expanded="true" />
-                <element signature="e#18911#21103#0" expanded="true" />
-                <element signature="e#21409#22102#0" expanded="true" />
+                <element signature="e#1504#1988#0" expanded="true" />
+                <element signature="e#2332#2922#0" expanded="true" />
+                <element signature="e#4455#5406#0" expanded="true" />
+                <element signature="e#5450#6485#0" expanded="true" />
+                <element signature="e#6538#6905#0" expanded="true" />
+                <element signature="e#7023#7697#0" expanded="true" />
+                <element signature="e#7850#8789#0" expanded="true" />
+                <element signature="e#8942#10121#0" expanded="true" />
+                <element signature="e#10292#11790#0" expanded="true" />
+                <element signature="e#11837#12400#0" expanded="true" />
+                <element signature="e#12449#13068#0" expanded="true" />
+                <element signature="e#13116#13391#0" expanded="true" />
+                <element signature="e#16034#16727#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sira.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sira.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sira/sira.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="25" selection-start-line="84" selection-start-column="25" selection-end-line="84" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.543943">
+              <caret line="521" column="100" selection-start-line="521" selection-start-column="100" selection-end-line="521" selection-end-column="100" />
               <folding>
-                <element signature="e#1071#1081#0" expanded="true" />
-                <element signature="e#1527#1830#0" expanded="true" />
-                <element signature="e#1864#2157#0" expanded="true" />
-                <element signature="e#2248#2783#0" expanded="true" />
-                <element signature="e#2815#3869#0" expanded="true" />
-                <element signature="e#3905#5123#0" expanded="true" />
-                <element signature="e#5151#6509#0" expanded="true" />
+                <element signature="e#1071#1108#0" expanded="true" />
+                <element signature="e#1927#3613#0" expanded="true" />
+                <element signature="e#6715#7769#0" expanded="true" />
+                <element signature="e#7805#8833#0" expanded="true" />
+                <element signature="e#10242#11373#0" expanded="true" />
+                <element signature="e#11401#12487#0" expanded="true" />
+                <element signature="e#12512#15024#0" expanded="true" />
+                <element signature="e#15090#18451#0" expanded="true" />
+                <element signature="e#18501#19759#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sira/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -88,26 +116,15 @@
         <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="270" column="48" selection-start-line="270" selection-start-column="48" selection-end-line="270" selection-end-column="48" />
+              <caret line="497" column="0" selection-start-line="497" selection-start-column="0" selection-end-line="497" selection-end-column="0" />
               <folding>
                 <element signature="e#1008#1045#0" expanded="true" />
-                <element signature="e#1797#5375#0" expanded="true" />
                 <element signature="e#5428#7105#0" expanded="true" />
-                <element signature="e#7127#7411#0" expanded="true" />
                 <element signature="e#7464#7841#0" expanded="true" />
                 <element signature="e#7886#9201#0" expanded="true" />
-                <element signature="e#12627#13765#0" expanded="true" />
+                <element signature="e#9267#12593#0" expanded="true" />
+                <element signature="e#12643#13893#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5815832">
-              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -116,30 +133,21 @@
         <entry file="file://$PROJECT_DIR$/sira/tests/test_sira.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+              <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
               <folding>
-                <element signature="e#24#39#0" expanded="true" />
-                <element signature="e#200#953#0" expanded="true" />
+                <element signature="e#322#1337#0" expanded="true" />
+                <element signature="e#1393#2414#0" expanded="true" />
+                <element signature="e#2497#3509#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config_ps_X_test.conf" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X_test.conf">
+      <file leaf-file-name="config_ps_X.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+              <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -168,16 +176,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/sira/utils.py" />
+        <option value="$PROJECT_DIR$/sira/test_sira.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/sira/__init__.py" />
+        <option value="$PROJECT_DIR$/sira/simulation_setup/config_ps_X_test.conf" />
         <option value="$PROJECT_DIR$/sira/dump.py" />
+        <option value="$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf" />
+        <option value="$PROJECT_DIR$/sira/sira_bk.py" />
+        <option value="$PROJECT_DIR$/sira/tests/test_sira.py" />
+        <option value="$PROJECT_DIR$/sira/utils.py" />
         <option value="$PROJECT_DIR$/sira/siraclasses.py" />
         <option value="$PROJECT_DIR$/sira/sira.py" />
-        <option value="$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf" />
-        <option value="$PROJECT_DIR$/sira/test_sira.py" />
-        <option value="$PROJECT_DIR$/sira/tests/test_sira.py" />
-        <option value="$PROJECT_DIR$/sira/sira_bk.py" />
-        <option value="$PROJECT_DIR$/sira/simulation_setup/config_ps_X_test.conf" />
-        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -190,8 +199,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="-4" />
-    <option name="width" value="1920" />
-    <option name="height" value="1084" />
+    <option name="width" value="2560" />
+    <option name="height" value="1444" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -238,7 +247,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -257,18 +265,139 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simulation_setup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ps_x" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ps_x" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="input" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="output" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sira" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ps_x" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistoryKey" value="facility&#9;null&#9;null" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/sira/tests" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="ignore_missing_gitignore" value="true" />
@@ -281,10 +410,11 @@
       <recent name="$PROJECT_DIR$/sira/bak" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sira/tests/" />
       <recent name="$PROJECT_DIR$/sira/tests" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in test_sira">
+  <component name="RunManager" selected="Python.sira">
     <configuration default="false" name="sira" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -299,7 +429,7 @@
       <module name="sira" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sira/sira.py" />
-      <option name="PARAMETERS" value="simulation_setup/config_ps_X_test.conf" />
+      <option name="PARAMETERS" value="simulation_setup/config_ps_X.conf" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -317,7 +447,7 @@
       <module name="sira" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sira/sira_bk.py" />
-      <option name="PARAMETERS" value="simulation_setup/config_ps_X_test.conf" />
+      <option name="PARAMETERS" value="simulation_setup/config_ps_X.conf" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -344,6 +474,29 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
+    <configuration default="false" name="Unittest MyTestCase.test_calc_loss_arrays_parallel" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sira/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="sira" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sira/tests/test_sira.py" />
+      <option name="CLASS_NAME" value="MyTestCase" />
+      <option name="METHOD_NAME" value="test_calc_loss_arrays_parallel" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="BashConfigurationType" factoryName="Bash">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
@@ -353,6 +506,14 @@
       <option name="PARAMETERS" value="" />
       <module name="" />
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CabalRunConfiguration" factoryName="Haskell">
+      <module name="" />
+      <setting name="executableName" value="" />
+      <setting name="parameters" value="" />
+      <setting name="workingDir" value="" />
+      <environmetVariables />
       <method />
     </configuration>
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -375,7 +536,30 @@
       <option name="OPTIONS" value="" />
       <method />
     </configuration>
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoRunFileConfiguration" factoryName="Go Single File">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="DIRECTORY" />
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
@@ -543,16 +727,18 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.sira" />
       <item index="1" class="java.lang.String" itemvalue="Python.sira_bk" />
       <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in test_sira" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest MyTestCase.test_calc_loss_arrays_parallel" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in test_sira" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.sira" />
         <item index="1" class="java.lang.String" itemvalue="Python.sira_bk" />
-        <item index="2" class="java.lang.String" itemvalue="Python.sira" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in test_sira" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest MyTestCase.test_calc_loss_arrays_parallel" />
       </list>
     </recent_temporary>
   </component>
@@ -621,7 +807,37 @@
       <option name="project" value="LOCAL" />
       <updated>1446007959701</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="successfully parallelised">
+      <created>1446008270194</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1446008270194</updated>
+    </task>
+    <task id="LOCAL-00011" summary="parallel test pass now.">
+      <created>1446012594133</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1446012594133</updated>
+    </task>
+    <task id="LOCAL-00012" summary="improved tests and started using siraclasses.">
+      <created>1446073058729</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1446073058729</updated>
+    </task>
+    <task id="LOCAL-00013" summary="non-working sira: improvied/fixed some classes.">
+      <created>1446087383435</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1446087383435</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Working sira with classes. TODO: remove all dependencies of all sira functions from the variables in main.">
+      <created>1446100556626</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1446100556626</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView">
@@ -634,49 +850,51 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
+    <frame x="0" y="-4" width="2560" height="1444" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299363" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32971016" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32971016" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30439442" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39967984" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42422625" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15101388" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42422625" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32971016" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27009645" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="GhcMod" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299363" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Cabal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1849642" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32971016" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40930787" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29244113" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29244113" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299363" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38853502" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299363" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22973925" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299363" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22973925" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38853502" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout-to-restore>
   </component>
   <component name="UnknownFeatures">
@@ -701,30 +919,191 @@
     <MESSAGE value="temp checkin" />
     <MESSAGE value="Wrote basic test." />
     <MESSAGE value="successfully parallelised" />
-    <option name="LAST_COMMIT_MESSAGE" value="successfully parallelised" />
+    <MESSAGE value="parallel test pass now." />
+    <MESSAGE value="improved tests and started using siraclasses." />
+    <MESSAGE value="non-working sira: improvied/fixed some classes." />
+    <MESSAGE value="Working sira with classes. TODO: remove all dependencies of all sira functions from the variables in main." />
+    <option name="LAST_COMMIT_MESSAGE" value="Working sira with classes. TODO: remove all dependencies of all sira functions from the variables in main." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/sira/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="64" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="730" column="42" selection-start-line="730" selection-start-column="42" selection-end-line="730" selection-end-column="42" />
+          <folding>
+            <element signature="e#1008#1045#0" expanded="true" />
+            <element signature="e#5428#7105#0" expanded="true" />
+            <element signature="e#7464#7841#0" expanded="true" />
+            <element signature="e#7886#9201#0" expanded="true" />
+            <element signature="e#9267#12593#0" expanded="true" />
+            <element signature="e#12643#13893#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/tests/test_sira.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding>
+            <element signature="e#322#1337#0" expanded="true" />
+            <element signature="e#1393#2414#0" expanded="true" />
+            <element signature="e#2497#3509#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sira/siraclasses.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="78" column="8" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
+          <caret line="149" column="8" selection-start-line="149" selection-start-column="8" selection-end-line="150" selection-end-column="104" />
           <folding>
+            <element signature="e#62#99#0" expanded="true" />
             <element signature="e#417#896#0" expanded="true" />
             <element signature="e#1120#1467#0" expanded="true" />
-            <element signature="e#3371#3970#0" expanded="true" />
-            <element signature="e#4022#8273#0" expanded="true" />
-            <element signature="e#8495#9111#0" expanded="true" />
-            <element signature="e#9235#9957#0" expanded="true" />
-            <element signature="e#10005#10865#0" expanded="true" />
-            <element signature="e#14737#15414#0" expanded="true" />
-            <element signature="e#18911#21103#0" expanded="true" />
-            <element signature="e#21409#22102#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/sira.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="523" column="76" selection-start-line="523" selection-start-column="76" selection-end-line="523" selection-end-column="76" />
+          <folding>
+            <element signature="e#1071#1108#0" expanded="true" />
+            <element signature="e#1927#3613#0" expanded="true" />
+            <element signature="e#6715#7769#0" expanded="true" />
+            <element signature="e#7805#8833#0" expanded="true" />
+            <element signature="e#10242#11373#0" expanded="true" />
+            <element signature="e#11401#12487#0" expanded="true" />
+            <element signature="e#12512#15024#0" expanded="true" />
+            <element signature="e#15090#18451#0" expanded="true" />
+            <element signature="e#18501#19759#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/dump.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="599" column="18" selection-start-line="599" selection-start-column="18" selection-end-line="599" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="730" column="42" selection-start-line="730" selection-start-column="42" selection-end-line="730" selection-end-column="42" />
+          <folding>
+            <element signature="e#1008#1045#0" expanded="true" />
+            <element signature="e#5428#7105#0" expanded="true" />
+            <element signature="e#7464#7841#0" expanded="true" />
+            <element signature="e#7886#9201#0" expanded="true" />
+            <element signature="e#9267#12593#0" expanded="true" />
+            <element signature="e#12643#13893#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/tests/test_sira.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding>
+            <element signature="e#322#1337#0" expanded="true" />
+            <element signature="e#1393#2414#0" expanded="true" />
+            <element signature="e#2497#3509#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/tests/config_ps_X_test.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/siraclasses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="54" selection-start-line="105" selection-start-column="54" selection-end-line="105" selection-end-column="54" />
+          <folding>
+            <element signature="e#62#99#0" expanded="true" />
+            <element signature="e#417#896#0" expanded="true" />
+            <element signature="e#1120#1467#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -734,22 +1113,116 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1071#1081#0" expanded="true" />
-            <element signature="e#1527#1830#0" expanded="true" />
-            <element signature="e#1864#2157#0" expanded="true" />
-            <element signature="e#2248#2783#0" expanded="true" />
-            <element signature="e#2815#3869#0" expanded="true" />
-            <element signature="e#3905#5123#0" expanded="true" />
-            <element signature="e#5151#6509#0" expanded="true" />
+            <element signature="e#1071#1108#0" expanded="true" />
+            <element signature="e#1927#3613#0" expanded="true" />
+            <element signature="e#6715#7769#0" expanded="true" />
+            <element signature="e#7805#8833#0" expanded="true" />
+            <element signature="e#10242#11373#0" expanded="true" />
+            <element signature="e#11401#12487#0" expanded="true" />
+            <element signature="e#12512#15024#0" expanded="true" />
+            <element signature="e#15090#18451#0" expanded="true" />
+            <element signature="e#18501#19759#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/dump.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="158" column="55" selection-start-line="158" selection-start-column="55" selection-end-line="158" selection-end-column="55" />
+          <folding>
+            <element signature="e#1008#1045#0" expanded="true" />
+            <element signature="e#5428#7105#0" expanded="true" />
+            <element signature="e#7464#7841#0" expanded="true" />
+            <element signature="e#7886#9201#0" expanded="true" />
+            <element signature="e#9267#12593#0" expanded="true" />
+            <element signature="e#12643#13893#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/tests/test_sira.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="48" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
+          <folding>
+            <element signature="e#322#1337#0" expanded="true" />
+            <element signature="e#1393#2414#0" expanded="true" />
+            <element signature="e#2497#3509#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/tests/config_ps_X_test.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/siraclasses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="8" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
+          <folding>
+            <element signature="e#62#99#0" expanded="true" />
+            <element signature="e#417#896#0" expanded="true" />
+            <element signature="e#1120#1467#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/sira.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#1071#1108#0" expanded="true" />
+            <element signature="e#1927#3613#0" expanded="true" />
+            <element signature="e#6715#7769#0" expanded="true" />
+            <element signature="e#7805#8833#0" expanded="true" />
+            <element signature="e#10242#11373#0" expanded="true" />
+            <element signature="e#11401#12487#0" expanded="true" />
+            <element signature="e#12512#15024#0" expanded="true" />
+            <element signature="e#15090#18451#0" expanded="true" />
+            <element signature="e#18501#19759#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -766,16 +1239,22 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#62#99#0" expanded="true" />
             <element signature="e#417#896#0" expanded="true" />
             <element signature="e#1120#1467#0" expanded="true" />
-            <element signature="e#3371#3970#0" expanded="true" />
-            <element signature="e#4022#8273#0" expanded="true" />
-            <element signature="e#8495#9111#0" expanded="true" />
-            <element signature="e#9235#9957#0" expanded="true" />
-            <element signature="e#10005#10865#0" expanded="true" />
-            <element signature="e#14737#15414#0" expanded="true" />
-            <element signature="e#18911#21103#0" expanded="true" />
-            <element signature="e#21409#22102#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -785,22 +1264,16 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="321" column="1" selection-start-line="321" selection-start-column="1" selection-end-line="321" selection-end-column="1" />
           <folding>
-            <element signature="e#1071#1081#0" expanded="true" />
-            <element signature="e#1527#1830#0" expanded="true" />
-            <element signature="e#1864#2157#0" expanded="true" />
-            <element signature="e#2248#2783#0" expanded="true" />
-            <element signature="e#2815#3869#0" expanded="true" />
-            <element signature="e#3905#5123#0" expanded="true" />
-            <element signature="e#5151#6509#0" expanded="true" />
+            <element signature="e#1071#1108#0" expanded="true" />
+            <element signature="e#1927#3613#0" expanded="true" />
+            <element signature="e#6715#7769#0" expanded="true" />
+            <element signature="e#7805#8833#0" expanded="true" />
+            <element signature="e#10242#11373#0" expanded="true" />
+            <element signature="e#11401#12487#0" expanded="true" />
+            <element signature="e#12512#15024#0" expanded="true" />
+            <element signature="e#15090#18451#0" expanded="true" />
+            <element signature="e#18501#19759#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -817,16 +1290,22 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="91" column="58" selection-start-line="91" selection-start-column="58" selection-end-line="91" selection-end-column="58" />
           <folding>
+            <element signature="e#62#99#0" expanded="true" />
             <element signature="e#417#896#0" expanded="true" />
             <element signature="e#1120#1467#0" expanded="true" />
-            <element signature="e#3371#3970#0" expanded="true" />
-            <element signature="e#4022#8273#0" expanded="true" />
-            <element signature="e#8495#9111#0" expanded="true" />
-            <element signature="e#9235#9957#0" expanded="true" />
-            <element signature="e#10005#10865#0" expanded="true" />
-            <element signature="e#14737#15414#0" expanded="true" />
-            <element signature="e#18911#21103#0" expanded="true" />
-            <element signature="e#21409#22102#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -844,16 +1323,22 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="330" column="50" selection-start-line="330" selection-start-column="50" selection-end-line="330" selection-end-column="50" />
           <folding>
+            <element signature="e#62#99#0" expanded="true" />
             <element signature="e#417#896#0" expanded="true" />
             <element signature="e#1120#1467#0" expanded="true" />
-            <element signature="e#3371#3970#0" expanded="true" />
-            <element signature="e#4022#8273#0" expanded="true" />
-            <element signature="e#8495#9111#0" expanded="true" />
-            <element signature="e#9235#9957#0" expanded="true" />
-            <element signature="e#10005#10865#0" expanded="true" />
-            <element signature="e#14737#15414#0" expanded="true" />
-            <element signature="e#18911#21103#0" expanded="true" />
-            <element signature="e#21409#22102#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -871,16 +1356,22 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#62#99#0" expanded="true" />
             <element signature="e#417#896#0" expanded="true" />
             <element signature="e#1120#1467#0" expanded="true" />
-            <element signature="e#3371#3970#0" expanded="true" />
-            <element signature="e#4022#8273#0" expanded="true" />
-            <element signature="e#8495#9111#0" expanded="true" />
-            <element signature="e#9235#9957#0" expanded="true" />
-            <element signature="e#10005#10865#0" expanded="true" />
-            <element signature="e#14737#15414#0" expanded="true" />
-            <element signature="e#18911#21103#0" expanded="true" />
-            <element signature="e#21409#22102#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -892,21 +1383,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sira/systemlayout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4124669">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#21#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sira/siraplot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5517242">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -917,70 +1397,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-1247972723/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45293465">
           <caret line="204" column="48" selection-start-line="204" selection-start-column="48" selection-end-line="204" selection-end-column="48" />
-          <folding>
-            <element signature="e#14439#14819#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sira/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sira/siraclasses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="104" column="35" selection-start-line="104" selection-start-column="35" selection-end-line="104" selection-end-column="35" />
-          <folding>
-            <element signature="e#417#896#0" expanded="true" />
-            <element signature="e#1120#1467#0" expanded="true" />
-            <element signature="e#3371#3970#0" expanded="true" />
-            <element signature="e#4022#8273#0" expanded="true" />
-            <element signature="e#8495#9111#0" expanded="true" />
-            <element signature="e#9235#9957#0" expanded="true" />
-            <element signature="e#10005#10865#0" expanded="true" />
-            <element signature="e#14737#15414#0" expanded="true" />
-            <element signature="e#18911#21103#0" expanded="true" />
-            <element signature="e#21409#22102#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sira/sira.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="25" selection-start-line="84" selection-start-column="25" selection-end-line="84" selection-end-column="25" />
-          <folding>
-            <element signature="e#1071#1081#0" expanded="true" />
-            <element signature="e#1527#1830#0" expanded="true" />
-            <element signature="e#1864#2157#0" expanded="true" />
-            <element signature="e#2248#2783#0" expanded="true" />
-            <element signature="e#2815#3869#0" expanded="true" />
-            <element signature="e#3905#5123#0" expanded="true" />
-            <element signature="e#5151#6509#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -989,7 +1409,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -997,25 +1416,72 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="14" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sira/tests/test_sira.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
           <folding>
-            <element signature="e#24#39#0" expanded="true" />
-            <element signature="e#200#953#0" expanded="true" />
+            <element signature="e#322#1337#0" expanded="true" />
+            <element signature="e#1393#2414#0" expanded="true" />
+            <element signature="e#2497#3509#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X_test.conf">
+    <entry file="file://$PROJECT_DIR$/sira/systemlayout.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#21#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/tests/config_ps_X_test.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/dump.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="599" column="18" selection-start-line="599" selection-start-column="18" selection-end-line="599" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13953489">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/simulation_setup/config_ps_X.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
           <folding />
         </state>
       </provider>
@@ -1023,24 +1489,77 @@
     <entry file="file://$PROJECT_DIR$/sira/sira_bk.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="270" column="48" selection-start-line="270" selection-start-column="48" selection-end-line="270" selection-end-column="48" />
+          <caret line="497" column="0" selection-start-line="497" selection-start-column="0" selection-end-line="497" selection-end-column="0" />
           <folding>
             <element signature="e#1008#1045#0" expanded="true" />
-            <element signature="e#1797#5375#0" expanded="true" />
             <element signature="e#5428#7105#0" expanded="true" />
-            <element signature="e#7127#7411#0" expanded="true" />
             <element signature="e#7464#7841#0" expanded="true" />
             <element signature="e#7886#9201#0" expanded="true" />
-            <element signature="e#12627#13765#0" expanded="true" />
+            <element signature="e#9267#12593#0" expanded="true" />
+            <element signature="e#12643#13893#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5815832">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/siraclasses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="37" selection-start-line="105" selection-start-column="37" selection-end-line="105" selection-end-column="37" />
+          <folding>
+            <element signature="e#62#99#0" expanded="true" />
+            <element signature="e#417#896#0" expanded="true" />
+            <element signature="e#1120#1467#0" expanded="true" />
+            <element signature="e#1504#1988#0" expanded="true" />
+            <element signature="e#2332#2922#0" expanded="true" />
+            <element signature="e#4455#5406#0" expanded="true" />
+            <element signature="e#5450#6485#0" expanded="true" />
+            <element signature="e#6538#6905#0" expanded="true" />
+            <element signature="e#7023#7697#0" expanded="true" />
+            <element signature="e#7850#8789#0" expanded="true" />
+            <element signature="e#8942#10121#0" expanded="true" />
+            <element signature="e#10292#11790#0" expanded="true" />
+            <element signature="e#11837#12400#0" expanded="true" />
+            <element signature="e#12449#13068#0" expanded="true" />
+            <element signature="e#13116#13391#0" expanded="true" />
+            <element signature="e#16034#16727#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sira/sira.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.543943">
+          <caret line="521" column="100" selection-start-line="521" selection-start-column="100" selection-end-line="521" selection-end-column="100" />
+          <folding>
+            <element signature="e#1071#1108#0" expanded="true" />
+            <element signature="e#1927#3613#0" expanded="true" />
+            <element signature="e#6715#7769#0" expanded="true" />
+            <element signature="e#7805#8833#0" expanded="true" />
+            <element signature="e#10242#11373#0" expanded="true" />
+            <element signature="e#11401#12487#0" expanded="true" />
+            <element signature="e#12512#15024#0" expanded="true" />
+            <element signature="e#15090#18451#0" expanded="true" />
+            <element signature="e#18501#19759#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

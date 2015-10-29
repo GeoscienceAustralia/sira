@@ -171,8 +171,8 @@ def pe2pb(pe):
 
 def check_types_with_db():
     # check to ensure component types match with DB
-    cp_types_in_system = list(np.unique(COMP_DF['component_type'].tolist()))
-    cp_types_in_db = list(FRAGILITIES.index.levels[0])
+    cp_types_in_system = list(np.unique(comp_df['component_type'].tolist()))
+    cp_types_in_db = list(fragilities.index.levels[0])
     assert set(cp_types_in_system).issubset(cp_types_in_db) == True
     return cp_types_in_system, cp_types_in_db
 
@@ -184,7 +184,7 @@ def list_of_components_for_cost_calculation(cp_types_in_system, uncosted_comptyp
     costed_comptypes = sorted(list(set(cp_types_in_system) -
                                    set(uncosted_comptypes)))
 
-    cpmap = {c: sorted(COMP_DF[COMP_DF['component_type'] == c].index.tolist())
+    cpmap = {c: sorted(comp_df[comp_df['component_type'] == c].index.tolist())
              for c in cp_types_in_system}
     comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
 
@@ -197,25 +197,25 @@ def convert_df_to_dict():
     # -----------------------------------------------------------------------------
 
     cpdict = {}
-    for i in list(COMP_DF.index):
-        cpdict[i] = COMP_DF.ix[i].to_dict()
+    for i in list(comp_df.index):
+        cpdict[i] = comp_df.ix[i].to_dict()
 
     output_dict = {}
-    for k1 in list(np.unique(SYSOUT_SETUP.index.get_level_values('OutputNode'))):
+    for k1 in list(np.unique(sysout_setup.index.get_level_values('OutputNode'))):
         output_dict[k1] = {}
-        output_dict[k1] = SYSOUT_SETUP.ix[k1].to_dict()
+        output_dict[k1] = sysout_setup.ix[k1].to_dict()
 
     input_dict = {}
-    for k1 in list(np.unique(SYSINP_SETUP.index.get_level_values('InputNode'))):
+    for k1 in list(np.unique(sysinp_setup.index.get_level_values('InputNode'))):
         input_dict[k1] = {}
-        input_dict[k1] = SYSINP_SETUP.ix[k1].to_dict()
+        input_dict[k1] = sysinp_setup.ix[k1].to_dict()
         # input_dict[k1]['AvlCapacity'] = input_dict[k1]['Capacity']
 
     nodes_by_commoditytype = {}
-    for i in np.unique(SYSINP_SETUP['CommodityType']):
+    for i in np.unique(sysinp_setup['CommodityType']):
         nodes_by_commoditytype[i] \
-            = [x for x in SYSINP_SETUP.index
-               if SYSINP_SETUP.ix[x]['CommodityType'] == i]
+            = [x for x in sysinp_setup.index
+               if sysinp_setup.ix[x]['CommodityType'] == i]
 
     return cpdict, output_dict, input_dict, nodes_by_commoditytype
 
@@ -224,7 +224,7 @@ def simulation_parameters():
     # -----------------------------------------------------------------------------
     # Simulation Parameters
     # -----------------------------------------------------------------------------
-    dmg_states = sorted([str(d) for d in FRAGILITIES.index.levels[1]])
+    dmg_states = sorted([str(d) for d in fragilities.index.levels[1]])
     restoration_time_range, time_step =\
         np.linspace(0, sc.restore_time_upper, num= sc.restore_time_upper + 1,
                     endpoint=sc.use_end_point, retstep=True)
@@ -243,21 +243,21 @@ def fragility_dict():
     # --- Fragility data ---
 
     # add 'DS0 None' damage state
-    for comp in FRAGILITIES.index.levels[0]:
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'damage_function'] = 'Lognormal'
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'damage_median'] = np.inf
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'damage_logstd'] = 1.0
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'damage_lambda'] = 0.01
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'damage_ratio'] = 0.0
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'recovery_mean'] = -np.inf
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'recovery_std'] = 1.0
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'functionality'] = 1.0
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'mode'] = 1
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'minimum'] = -np.inf
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'sigma_1'] = 'NA'
-        FRAGILITIES.loc[(comp, 'DS0 None'), 'sigma_2'] = 'NA'
+    for comp in fragilities.index.levels[0]:
+        fragilities.loc[(comp, 'DS0 None'), 'damage_function'] = 'Lognormal'
+        fragilities.loc[(comp, 'DS0 None'), 'damage_median'] = np.inf
+        fragilities.loc[(comp, 'DS0 None'), 'damage_logstd'] = 1.0
+        fragilities.loc[(comp, 'DS0 None'), 'damage_lambda'] = 0.01
+        fragilities.loc[(comp, 'DS0 None'), 'damage_ratio'] = 0.0
+        fragilities.loc[(comp, 'DS0 None'), 'recovery_mean'] = -np.inf
+        fragilities.loc[(comp, 'DS0 None'), 'recovery_std'] = 1.0
+        fragilities.loc[(comp, 'DS0 None'), 'functionality'] = 1.0
+        fragilities.loc[(comp, 'DS0 None'), 'mode'] = 1
+        fragilities.loc[(comp, 'DS0 None'), 'minimum'] = -np.inf
+        fragilities.loc[(comp, 'DS0 None'), 'sigma_1'] = 'NA'
+        fragilities.loc[(comp, 'DS0 None'), 'sigma_2'] = 'NA'
 
-    fgdt = FRAGILITIES.to_dict()
+    fgdt = fragilities.to_dict()
     fragdict = {}
     for key, val in fgdt.iteritems():
         elemdict = {}
@@ -279,25 +279,25 @@ def network():
     # Define the system as a network, with components as nodes
     # -----------------------------------------------------------------------------
 
-    nodes_all = sorted(COMP_DF.index)
+    nodes_all = sorted(comp_df.index)
     num_elements = len(nodes_all)
 
     #                    ------
     # Network setup with igraph (for analysis)
     #                    ------
     G = igraph.Graph(directed=True)
-    nodes = COMP_DF.index.tolist()
+    nodes = comp_df.index.tolist()
 
     G.add_vertices(len(nodes))
     G.vs["name"] = nodes
-    G.vs["component_type"] = list(COMP_DF['component_type'].values)
-    G.vs["cost_fraction"] = list(COMP_DF['cost_fraction'].values)
-    G.vs["node_type"] = list(COMP_DF['node_type'].values)
-    G.vs["node_cluster"] = list(COMP_DF['node_cluster'].values)
+    G.vs["component_type"] = list(comp_df['component_type'].values)
+    G.vs["cost_fraction"] = list(comp_df['cost_fraction'].values)
+    G.vs["node_type"] = list(comp_df['node_type'].values)
+    G.vs["node_cluster"] = list(comp_df['node_cluster'].values)
     G.vs["capacity"] = 1.0
     G.vs["functionality"] = 1.0
 
-    for index, row in NODE_CONN_DF.iterrows():
+    for index, row in node_conn_df.iterrows():
         G.add_edge(row['Orig'], row['Dest'],
                    capacity=G.vs.find(row['Orig'])["capacity"],
                    weight=row['Weight'],
@@ -310,21 +310,21 @@ def network_setup():
     # Network setup with NetworkX (for drawing graph)
     #                    --------
     X = nx.DiGraph()
-    for index, row in NODE_CONN_DF.iterrows():
+    for index, row in node_conn_df.iterrows():
         X.add_edge(row['Orig'], row['Dest'],
                    capacity=row['Capacity'],
                    weight=row['Weight'],
                    distance=row['Distance'])
-    systemlayout.draw_sys_layout(X, COMP_DF, out_dir=OUTPUT_PATH,
+    systemlayout.draw_sys_layout(X, comp_df, out_dir=OUTPUT_PATH,
                                  graph_label="System Component Layout")
     # -----------------------------------------------------------------------------
     # List of tagged nodes with special roles:
     sup_node_list = [str(k) for k in
-                     list(COMP_DF.ix[COMP_DF['node_type'] == 'supply'].index)]
+                     list(comp_df.ix[comp_df['node_type'] == 'supply'].index)]
     dep_node_list = [str(k) for k in
-                     list(COMP_DF.ix[COMP_DF['node_type'] == 'dependency'].index)]
+                     list(comp_df.ix[comp_df['node_type'] == 'dependency'].index)]
     src_node_list = [k for (k, v)in X.in_degree().iteritems() if v == 0]
-    out_node_list = list(SYSOUT_SETUP.index.get_level_values('OutputNode'))
+    out_node_list = list(sysout_setup.index.get_level_values('OutputNode'))
 
     return sup_node_list, dep_node_list, src_node_list, out_node_list
 
@@ -502,8 +502,8 @@ if __name__ == "__main__":
     discard = {}
     config = {}
     execfile(SETUPFILE, discard, config)
-    fc = Facility(SETUPFILE)
     sc = Scenario(SETUPFILE)
+    fc = Facility(SETUPFILE)
 
     # Define input files, output location, scenario inputs
     INPUT_PATH = os.path.join(os.getcwd(), sc.input_dir_name)
@@ -519,23 +519,15 @@ if __name__ == "__main__":
         os.makedirs(RAW_OUTPUT_DIR)
 
     # Read in INPUT data files
-    NODE_CONN_DF, COMP_DF, SYSOUT_SETUP, SYSINP_SETUP, FRAGILITIES = read_input_data(config_file=SYS_CONFIG_FILE)
-
-    # COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF = fc.assign_infrastructure_data()
-    # COMP_DF = fc.comp_df
-    # FRAGILITIES = fc.fragility_data
-    # SYSOUT_SETUP = fc.sysout_setup
-    # SYSINP_SETUP = fc.sysinp_setup
-    # NODE_CONN_DF = fc.node_conn_df
-
+    comp_df, fragilities, sysinp_setup, sysout_setup, node_conn_df = fc.assign_infrastructure_data()
 
     cp_types_in_system, cp_types_in_db = check_types_with_db()
     uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
     costed_comptypes, comps_costed = list_of_components_for_cost_calculation(cp_types_in_system, uncosted_comptypes)
-    nominal_production = SYSOUT_SETUP['Capacity'].sum()
+    nominal_production = sysout_setup['Capacity'].sum()
     hazard_transfer_label = sc.hazard_transfer_param + ' (' + sc.hazard_transfer_unit+ ')'
 
-    comp_dict = COMP_DF.to_dict()
+    comp_dict = comp_df.to_dict()
     cpdict, output_dict, input_dict, nodes_by_commoditytype = convert_df_to_dict()
 
     fragdict = fragility_dict()
@@ -545,7 +537,7 @@ if __name__ == "__main__":
     nodes, num_elements, G = network()
     sup_node_list, dep_node_list, src_node_list, out_node_list = network_setup()
 
-    nodes_all = sorted(COMP_DF.index)
+    nodes_all = sorted(comp_df.index)
     no_elements = len(nodes_all)
 
     PGA_str, calculated_output_array, component_resp_df, economic_loss_array, comp_loss_array, comp_loss_dict, \

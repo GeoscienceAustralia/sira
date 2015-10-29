@@ -94,52 +94,22 @@ class FacilityDataGetter(object):
             config_file, 'component_connections',
             index_col=None, skiprows=3, skipinitialspace=True)
 
-        NODE_CONN_DF = NODE_CONN_DF.rename(
-            columns={'Orig': 'Origin',
-                     'Dest': 'Destination',
-                     'Capacity': 'Capacity',
-                     'Weight': 'Weight',
-                     'Distance': 'Distance'
-                     })
+        # NODE_CONN_DF = NODE_CONN_DF.rename(
+        #     columns={'Orig': 'Origin',
+        #              'Dest': 'Destination',
+        #              'Capacity': 'Capacity',
+        #              'Weight': 'Weight',
+        #              'Distance': 'Distance'
+        #              })
 
         COMP_DF = pd.read_excel(
             config_file, 'comp_list',
             index_col='component_id',
             skiprows=3, skipinitialspace=True)
 
-        COMP_DF = COMP_DF.rename(
-            columns={'component_id': 'component_id', 'component_type': 'component_type',
-                     'component_class': 'component_class', 'cost_fraction': 'cost_fraction',
-                     'node_type': 'node_type', 'node_cluster': 'node_cluster', 'op_capacity': 'op_capacity'
-                     })
-
-        COMP_DF = COMP_DF.rename(
-            index={'component_type': 'component_type',
-                   'damage_state': 'damage_state'
-                   },
-            columns={'damage_function': 'damage_function',
-                     'function_mode': 'function_mode',
-                     'damage_median': 'damage_median',
-                     'damage_logstd': 'damage_logstd',
-                     'damage_ratio': 'damage_ratio',
-                     'functionality': 'functionality',
-                     'minimum': 'minimum',
-                     'sigma_1': 'sigma_1',
-                     'sigma_2': 'sigma_2',
-                     'recovery_mean': 'recovery_mean',
-                     'recovery_std': 'recovery_std',
-                     'fragility_source': 'fragility_source'
-                     })
-
         SYSOUT_SETUP = pd.read_excel(config_file, 'output_setup', index_col='OutputNode',
                                      skiprows=3, skipinitialspace=True)
         SYSOUT_SETUP = SYSOUT_SETUP.sort('Priority', ascending=True)
-        print ('in class', SYSOUT_SETUP)
-
-        SYSOUT_SETUP = SYSOUT_SETUP.rename(
-            columns={'OutputNode': 'Output Node', 'ProductionNode': 'Production Node',
-                     'Capacity': 'Capacity', 'CapFraction': 'Capacity Fraction', 'Priority': 'Priority'
-                     })
 
         SYSINP_SETUP = pd.read_excel(
             config_file, 'supply_setup',
@@ -209,8 +179,8 @@ class Facility(FacilityDataGetter, IoDataGetter):
 
         for _, row in self.node_conn_df.iterrows():
             sys.add_edge(
-                row['Origin'], row['Destination'],
-                capacity=sys.vs.find(row['Origin'])['capacity'],
+                row['Orig'], row['Dest'],
+                capacity=sys.vs.find(row['Orig'])['capacity'],
                 weight=row['Weight'],
                 distance=row['Distance'])
         return sys
