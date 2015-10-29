@@ -68,6 +68,94 @@ from utils import read_input_data
 # Helper functions
 # -----------------------------------------------------------------------------
 
+def cal_pe_ds(comp, PGA, compdict, fragdict):
+    '''
+    Computes prob. of exceedence of component given PGA
+    '''
+    ct = compdict['component_type'][comp]
+    ds_list = sorted(fragdict['damage_median'][ct].keys())
+    ds_list.remove('DS0 None')
+    pe_ds = np.zeros(len(ds_list))
+    for i, ds in enumerate(ds_list):
+        m = fragdict['damage_median'][ct][ds]
+        b = fragdict['damage_logstd'][ct][ds]
+        algo = fragdict['damage_function'][ct][ds].lower()
+        mode = int(fragdict['mode'][ct][ds])
+        # pe_ds[i] = stats.lognorm.cdf(PGA,b,scale=m)
+        if algo == 'lognormal' and mode == 1:
+            pe_ds[i] = stats.lognorm.cdf(PGA, b, scale=m)
+        elif algo == 'lognormal' and mode == 2:
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            lower_lim = fragdict['minimum'][ct][ds]
+            minpos = min(range(len(hazard_intensity_vals)),
+                         key=lambda i: abs(hazard_intensity_vals[i] - lower_lim))
+            zl = [0.0] * (minpos + 1)
+            ol = [1] * (len(hazard_intensity_vals) - (minpos + 1))
+            stepfn = zl + ol
+            stepv = stepfn[minpos]
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            m = 0.25
+            s1 = np.exp(fragdict['sigma_1'][ct][ds])
+            s2 = np.exp(fragdict['sigma_2'][ct][ds])
+            w1 = 0.5
+            w2 = 0.5
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            pe_ds[i] = (w1 * stats.lognorm.cdf(PGA, s1, loc=0.0, scale=m) +
+                        w2 * stats.lognorm.cdf(PGA, s2, loc=0.0, scale=m)) * stepv
+            # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    return np.sort(pe_ds)
+
+
+def calc_recov_time_given_comp_ds(comp, ids):
+    '''
+    Calculates the recovery time of a component, given damage state index
+    '''
+    ds = dmg_states[ids]
+    ct = comp_dict['component_type'][comp]
+    m = fragdict['recovery_mean'][ct][ds]
+    s = fragdict['recovery_std'][ct][ds]
+    fn = fragdict['functionality'][ct][ds]
+    cdf = stats.norm.cdf(restoration_time_range, loc=m, scale=s)
+    return cdf + (1.0 - cdf) * fn
+
+
+def compute_output_given_ds(cp_func):
+    '''
+    Computes system output given list of component functional status
+    '''
+    for t in G.get_edgelist():
+        eid = G.get_eid(*t)
+        origin = G.vs[t[0]]['name']
+        destin = G.vs[t[1]]['name']
+        if cpdict[origin]['node_type'] == 'dependency':
+            cp_func[nodes.index(destin)] *= cp_func[nodes.index(origin)]
+        cap = cp_func[nodes.index(origin)]
+        G.es[eid]["capacity"] = cap
+
+    sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
+
+    for onode in out_node_list:
+        for sup_node_list in nodes_by_commoditytype.values():
+            total_available_flow_list = []
+            avl_sys_flow_by_src = []
+            for inode in sup_node_list:
+                avl_sys_flow_by_src.append(
+                    G.maxflow_value(G.vs.find(inode).index,
+                                    G.vs.find(onode).index,
+                                    G.es["capacity"])
+                    * input_dict[inode]['CapFraction']
+                )
+
+            total_available_flow_list.append(sum(avl_sys_flow_by_src))
+
+        total_available_flow = min(total_available_flow_list)
+        sys_out_capacity_list.append(
+            min(total_available_flow, output_dict[onode]['CapFraction'])
+            * nominal_production
+        )
+
+    return sys_out_capacity_list
+
 def pe2pb(pe):
     """
     Convert probablity of exceedence of damage states, to
@@ -139,11 +227,6 @@ def simulation_parameters():
 
     dmg_states = sorted([str(d) for d in FRAGILITIES.index.levels[1]])
 
-    # max_recoverytimes_dict = {}
-    # for x in cp_types_in_system:
-    #     max_recoverytimes_dict[x] =\
-    #         FRAGILITIES.ix[x, dmg_states[len(dmg_states) - 1]]['recovery_mean']
-
     restoration_time_range, time_step =\
         np.linspace(0, RESTORE_TIME_UPPER, num=RESTORE_TIME_UPPER+1,
                     endpoint=USE_ENDPOINT, retstep=True)
@@ -151,17 +234,16 @@ def simulation_parameters():
     restoration_chkpoints, restoration_pct_steps =\
         np.linspace(0.0, 1.0, RESTORE_PCT_CHKPOINTS, retstep=True)
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     hazard_data_points = int(round((PGA_MAX - PGA_MIN) / float(PGA_STEP) + 1))
 
-    hazard_intensity_vals = np.linspace(PGA_MIN, PGA_MAX,
-                             num=hazard_data_points)
+    hazard_intensity_vals = np.linspace(PGA_MIN, PGA_MAX, num=hazard_data_points)
 
     num_hazard_pts = len(hazard_intensity_vals)
     num_time_steps = len(restoration_time_range)
 
-    return dmg_states, restoration_chkpoints, restoration_pct_steps, hazard_intensity_vals, num_hazard_pts, num_time_steps
+    return restoration_time_range, dmg_states, restoration_chkpoints, restoration_pct_steps, hazard_intensity_vals, \
+           num_hazard_pts, num_time_steps
+
 
 def fragility_dict():
     # --- Fragility data ---
@@ -197,6 +279,7 @@ def fragility_dict():
 
     return fragdict
 
+
 def network():
     # -----------------------------------------------------------------------------
     # Define the system as a network, with components as nodes
@@ -225,7 +308,8 @@ def network():
                    capacity=G.vs.find(row['Orig'])["capacity"],
                    weight=row['Weight'],
                    distance=row['Distance'])
-    return num_elements, G
+    return nodes, num_elements, G
+
 
 def network_setup():
     #                    --------
@@ -304,7 +388,7 @@ def power_calc():
 
     ids_comp_vs_haz = {p: np.zeros((NUM_SAMPLES, num_elements)) for p in PGA_str}
 
-    return component_resp_df, economic_loss_array, comp_loss_array, comp_loss_dict, \
+    return PGA_str, calculated_output_array, component_resp_df, economic_loss_array, comp_loss_array, comp_loss_dict, \
            output_array_given_recovery, sys_output_dict, sys_output_list_given_pga, comp_dsix_given_pga, ids_comp_vs_haz
 
 
@@ -323,7 +407,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
 
     # index of damage state of components: from 0 to nds+1
     for j, comp in enumerate(nodes_all):
-        ids_comp[:, j] = np.sum(cal_pe_ds(comp, float(_PGA), compdict, fragdict) > rnd[:, j][:, np.newaxis], axis=1)
+        ids_comp[:, j] = np.sum(cal_pe_ds(comp, float(_PGA), comp_dict, fragdict) > rnd[:, j][:, np.newaxis], axis=1)
         # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
 
     component_loss_tmp = {c: [] for c in nodes_all}
@@ -337,10 +421,10 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
 
         for j, comp_name in enumerate(nodes_all):
             # ........................................................
-            comp_type = compdict['component_type'][comp_name]
+            comp_type = comp_dict['component_type'][comp_name]
             ids = ids_comp[i, j]     # index for component damage state
             ds = dmg_states[ids]   # damage state name
-            cf = compdict['cost_fraction'][comp_name]
+            cf = comp_dict['cost_fraction'][comp_name]
             dr = fragdict['damage_ratio'][comp_type][ds]
             fn = fragdict['functionality'][comp_type][ds]
             loss = dr * cf
@@ -349,8 +433,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
             # ........................................................
             # component functionality for calculated damage state:
             cp_func.append(fn)
-            cp_func_given_time.append(
-                calc_recov_time_given_comp_ds(comp_name, ids))
+            cp_func_given_time.append(calc_recov_time_given_comp_ds(comp_name, ids))
 
             comp_loss_dict[comp_name][i, idxPGA] = loss
             component_loss_tmp[comp_name].append(loss)
@@ -401,11 +484,10 @@ def calc_loss_arrays(parallel_or_serial):
     print("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
     sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
-    ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
+    ids_comp_vs_haz = {p: np.zeros((NUM_SAMPLES, no_elements)) for p in PGA_str}
 
     if parallel_or_serial:
-        parallel_return \
-            = parmap.map(multiprocess_enabling_loop, range(len(PGA_str)), PGA_str, nPGA)
+        parallel_return = parmap.map(multiprocess_enabling_loop, range(len(PGA_str)), PGA_str, num_hazard_pts)
 
         for idxPGA, _PGA in enumerate(PGA_str):
             ids_comp_vs_haz[_PGA] = parallel_return[idxPGA][0]
@@ -414,7 +496,7 @@ def calc_loss_arrays(parallel_or_serial):
     else:
         for idxPGA, _PGA in enumerate(PGA_str):
             ids_comp_vs_haz[_PGA], sys_output_dict[_PGA], component_resp_dict[_PGA] = \
-                multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=nPGA)
+                multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=num_hazard_pts)
 
     # saving for test cases
     # cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
@@ -486,21 +568,18 @@ if __name__ == "__main__":
 
     fragdict = fragility_dict()
 
-    dmg_states, restoration_chkpoints, restoration_pct_steps, hazard_intensity_vals, \
-        num_hazard_pts, num_time_steps = simulation_parameters()
-    num_elements, G = network()
+    restoration_time_range, dmg_states, restoration_chkpoints, restoration_pct_steps, hazard_intensity_vals, \
+           num_hazard_pts, num_time_steps = simulation_parameters()
+    nodes, num_elements, G = network()
     sup_node_list, dep_node_list, src_node_list, out_node_list = network_setup()
 
     nodes_all = sorted(COMP_DF.index)
     no_elements = len(nodes_all)
 
-    component_resp_df, economic_loss_array, comp_loss_array, comp_loss_dict, \
+    PGA_str, calculated_output_array, component_resp_df, economic_loss_array, comp_loss_array, comp_loss_dict, \
            output_array_given_recovery, sys_output_dict, sys_output_list_given_pga, \
             comp_dsix_given_pga, ids_comp_vs_haz = power_calc()
 
-    rnd = stats.uniform.rvs(loc=0, scale=1, size=(NUM_SAMPLES, num_elements))
-    print (rnd)
-    print (rnd.shape)
-
+    ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(parallel_or_serial=1)
 
 

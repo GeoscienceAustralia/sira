@@ -355,6 +355,7 @@ def calc_loss_arrays(parallel_or_serial):
     ids_comp_vs_haz = {p: np.zeros((num_samples, no_elements)) for p in PGA_str}
 
     if parallel_or_serial:
+        print('\n===================>>>>>multiprocessor computation on <<<<========================')
         parallel_return \
             = parmap.map(multiprocess_enabling_loop, range(len(PGA_str)), PGA_str, nPGA)
 

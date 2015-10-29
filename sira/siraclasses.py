@@ -71,34 +71,11 @@ class IoDataGetter(object):
             os.makedirs(self.raw_output_dir)
 
 
-class ScenarioDataGetter(object):
-    """
-    Class for reading in simulation scenario parameters
-    """
-    def __init__(self, setup_file):
-        self.setup = readfile(setup_file)
-        self.fit_pe_data = self.setup["FIT_PE_DATA"]
-        self.fit_restoration_data = self.setup["FIT_RESTORATION_DATA"]
-        self.save_vars_npy = self.setup["SAVE_VARS_NPY"]
-        self.hazard_transfer_param = self.setup["HAZARD_TRANSFER_PARAM"]
-        self.hazard_transfer_unit = self.setup["HAZARD_TRANSFER_UNIT"]
-        self.haz_param_min = self.setup["PGA_MIN"]
-        self.haz_param_max = self.setup["PGA_MAX"]
-        self.haz_param_step = self.setup["PGA_STEP"]
-        self.num_samples = self.setup["NUM_SAMPLES"]
-        self.time_unit = self.setup["TIME_UNIT"]
-        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
-        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
-        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
-
-
 class FacilityDataGetter(object):
     """
-    Module for reading in scenario setup information
-    It is a wrapper to protect the core classes from being affected by
-    changes to variable names (e.g. if new units for hazard intensity
-    are introduced), and changes to input file formats.
+    Module for reading in scenario setup information.
+    It is a wrapper to protect the core classes from being affected by changes to variable names
+    (e.g. if new units for hazard intensity are introduced), and changes to input file formats.
     """
     def __init__(self, setup_file):
         self.setup = readfile(setup_file)
@@ -213,95 +190,29 @@ class FacilityDataGetter(object):
                      'fragility_source': 'fragility_source'
                      })
 
-
 # =============================================================================
 
-class Scenario(object):
-    """
-    Defines the scenario for hazard impact modelling
-    """
 
-    def __init__(self, setup_file):
-        self.data = ScenarioDataGetter(setup_file)
-        self.io = IoDataGetter(setup_file)
-
-        self.input_dir_name = self.io.input_dir_name
-        self.output_dir_name = self.io.output_dir_name
-        # self.fit_pe_data = self.data.fit_pe_data
-        # self.fit_restoration_data = self.data.fit_restoration_data
-        # self.save_vars_npy = self.data.save_vars_npy
-
-        self.input_path = self.io.input_path
-        self.output_path = self.io.output_path
-        self.raw_output_dir = self.io.raw_output_dir
-
-        # self.set_io_dirs()
-        self.set_hazard_params()
-        self.set_restoration_params()
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    def set_hazard_params(self):
-        """
-        Set up parameters for simulating hazard impact
-        """
-        self.hazard_transfer_param = self.data.hazard_transfer_param
-        self.hazard_transfer_unit = self.data.hazard_transfer_unit
-
-        self.pga_min = self.data.haz_param_min
-        self.pga_max = self.data.haz_param_max
-        self.pga_step = self.data.haz_param_step
-        self.num_samples = self.data.num_samples
-
-        self.num_hazard_pts = int(round((self.pga_max - self.pga_min) /
-                                        float(self.pga_step) + 1))
-
-        # FORMERLY: PGA_levels
-        self.hazard_intensity_vals = np.linspace(self.pga_min, self.pga_max,
-                                                 num=self.num_hazard_pts)
-
-    def set_restoration_params(self):
-        """
-        Set up parameters for simulating recovery from hazard impact
-        """
-        self.time_unit = self.data.time_unit
-        self.restore_time_step = self.data.restore_time_step
-        self.restore_pct_chkpoints = self.data.restore_pct_chkpoints
-        self.restore_time_upper = self.data.restore_time_upper
-        self.restore_time_max = self.data.restore_time_max
-
-        self.restoration_time_range, self.time_step = \
-            np.linspace(0, self.restore_time_upper,
-                        num=self.restore_time_upper + 1,
-                        endpoint=True, retstep=True)
-
-        self.num_time_steps = len(self.restoration_time_range)
-
-        self.restoration_chkpoints, self.restoration_pct_steps = \
-            np.linspace(0.0, 1.0,
-                        num=self.restore_pct_chkpoints,
-                        retstep=True)
-
-
-# =============================================================================
-
-class Facility(object):
+class Facility(FacilityDataGetter, IoDataGetter):
     """
     Defines an Critical Infrastructure Facility and its parameters
     """
 
     def __init__(self, setup_file):
+        FacilityDataGetter.__init__(self, setup_file)
+        IoDataGetter.__init__(self, setup_file)
+        # super(Facility, self).__init__(setup_file)
         # self.setup = readfile(setup_file)
-        self.io = IoDataGetter(setup_file)
-        self.data = FacilityDataGetter(setup_file)
+        # self.io = IoDataGetter(setup_file)
+        # self.data = FacilityDataGetter(setup_file)
 
-        self.system_class = self.data.system_class
-        self.commodity_flow_types = self.data.commodity_flow_types
+        # self.system_class = self.system_class
+        # self.commodity_flow_types = self.data.commodity_flow_types
 
         self.sys_config_file = os.path.join(
             os.getcwd(),
-            self.io.input_dir_name,
-            self.data.sys_config_file_name)
+            self.input_dir_name,
+            self.sys_config_file_name)
 
         self.sys_dmg_states = ['DS0 None',
                                'DS1 Slight',
@@ -313,9 +224,8 @@ class Facility(object):
         self.node_conn_df = pd.DataFrame()
         self.setup_system_data()
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def setup_system_data(self):
         """
         Set up data for:
         [1] system configuration data
@@ -324,25 +234,26 @@ class Facility(object):
         """
 
         # List of components in the system, with specified attributes
-        self.comp_df = self.data.comp_df
+        # self.comp_df = self.data.comp_df
 
         # Connections between the components (nodes), with edge attributes
-        self.node_conn_df = self.data.node_conn_df
+        # self.node_conn_df = self.data.node_conn_df
 
         # Configuration of output nodes (sinks)
-        sysout_setup = self.data.sysout_setup
-        self.sysout_setup = sysout_setup.sort('Priority', ascending=True)
+        # sysout_setup = self.data.sysout_setup
+
+        self.sysout_setup = self.sysout_setup.sort('Priority', ascending=True)
 
         # Configuration of input nodes supplying 'commodities' into the system
-        self.sysinp_setup = self.data.sysinp_setup
+        # self.sysinp_setup = self.data.sysinp_setup
 
         # Component fragility and recovery algorithms, by component type
-        self.fragility_data = self.data.fragility_data
+        # self.fragility_data = self.data.fragility_data
 
         self.comp_names = sorted(self.comp_df.index.tolist())
         self.num_elements = len(self.comp_names)
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        self.sys = self.build_system_model()
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     def build_system_model(self):
         """
@@ -350,31 +261,31 @@ class Facility(object):
         Uses igraph for generating the system config as a graph/network.
         igraph was used for speed as it is written in C.
         """
-        self.sys = igraph.Graph(directed=True)
-        self.sys.add_vertices(len(self.comp_names))
-        self.sys.vs["name"] = self.comp_names
+        sys = igraph.Graph(directed=True)
 
-        self.sys.vs["component_type"] = \
+        sys.add_vertices(len(self.comp_names))
+        sys.vs["name"] = self.comp_names
+
+        sys.vs["component_type"] = \
             list(self.comp_df['component_type'].values)
-        self.sys.vs["cost_fraction"] = \
+        sys.vs["cost_fraction"] = \
             list(self.comp_df['cost_fraction'].values)
 
-        self.sys.vs["node_type"] = \
+        sys.vs["node_type"] = \
             list(self.comp_df['node_type'].values)
-        self.sys.vs["node_cluster"] = \
+        sys.vs["node_cluster"] = \
             list(self.comp_df['node_cluster'].values)
 
-        self.sys.vs["capacity"] = 1.0
-        self.sys.vs["functionality"] = 1.0
+        sys.vs["capacity"] = 1.0
+        sys.vs["functionality"] = 1.0
 
         for _, row in self.node_conn_df.iterrows():
-            self.sys.add_edge(
+            sys.add_edge(
                 row['Origin'], row['Destination'],
                 capacity=self.sys.vs.find(row['Origin'])['capacity'],
                 weight=row['Weight'],
                 distance=row['Distance'])
-
-            # return self.sys
+        return sys
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -397,7 +308,7 @@ class Facility(object):
         the system configuration
         The directed graph is generated with NetworkX
         """
-        out_dir = self.io.output_path
+        out_dir = self.output_path
         grx = nx.DiGraph()
         for _, row in self.node_conn_df.iterrows():
             grx.add_edge(row['Origin'], row['Destination'],
@@ -410,6 +321,69 @@ class Facility(object):
             out_file="system_layout",
             graph_label="System Component Layout")
 
+
+#========================================================================
+
+class ScenarioDataGetter(object):
+    """
+    Class for reading in simulation scenario parameters
+    """
+    def __init__(self, setup_file):
+        self.setup = readfile(setup_file)
+        self.fit_pe_data = self.setup["FIT_PE_DATA"]
+        self.fit_restoration_data = self.setup["FIT_RESTORATION_DATA"]
+        self.save_vars_npy = self.setup["SAVE_VARS_NPY"]
+        self.hazard_transfer_param = self.setup["HAZARD_TRANSFER_PARAM"]
+        self.hazard_transfer_unit = self.setup["HAZARD_TRANSFER_UNIT"]
+        self.haz_param_min = self.setup["PGA_MIN"]
+        self.haz_param_max = self.setup["PGA_MAX"]
+        self.haz_param_step = self.setup["PGA_STEP"]
+        self.num_samples = self.setup["NUM_SAMPLES"]
+        self.time_unit = self.setup["TIME_UNIT"]
+        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
+        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
+        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
+        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
+
+# =============================================================================
+
+
+class Scenario(ScenarioDataGetter):
+    """
+    Defines the scenario for hazard impact modelling
+    """
+
+    def __init__(self, setup_file):
+        super(Scenario, self).__init__(setup_file)
+        self.io = IoDataGetter(setup_file)
+
+        self.input_dir_name = self.io.input_dir_name
+        self.output_dir_name = self.io.output_dir_name
+
+        self.input_path = self.io.input_path
+        self.output_path = self.io.output_path
+        self.raw_output_dir = self.io.raw_output_dir
+
+        """
+        Set up parameters fo2r simulating hazard impact
+        """
+        self.num_hazard_pts = int(round((self.haz_param_max - self.haz_param_min) /
+                                        float(self.haz_param_step) + 1))
+
+        # FORMERLY: PGA_levels
+        self.hazard_intensity_vals = np.linspace(self.haz_param_min, self.haz_param_max,
+                                                 num=self.num_hazard_pts)
+
+        """
+        Set up parameters for simulating recovery from hazard impact
+        """
+        self.restoration_time_range, self.time_step = np.linspace(
+            0, self.restore_time_upper, num=self.restore_time_upper + 1, endpoint=True, retstep=True)
+
+        self.num_time_steps = len(self.restoration_time_range)
+
+        self.restoration_chkpoints, self.restoration_pct_steps = np.linspace(
+            0.0, 1.0, num=self.restore_pct_chkpoints, retstep=True)
 
 # =============================================================================
 
