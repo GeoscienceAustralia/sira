@@ -82,50 +82,19 @@ class FacilityDataGetter(object):
         self.system_classes = self.setup["SYSTEM_CLASSES"]
         self.system_class = self.setup["SYSTEM_CLASS"]
         self.commodity_flow_types = self.setup["COMMODITY_FLOW_TYPES"]
-        self.sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
+        sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
         self.input_dir_name = self.setup["INPUT_DIR_NAME"]
-
-        self.sys_config_file = None
-        self.fragility_data = pd.DataFrame()
-        self.sysinp_setup = pd.DataFrame()
-        self.node_conn_df = pd.DataFrame()
-        self.sysout_setup = pd.DataFrame()
-        self.assign_infrastructure_data()
+        self.sys_config_file = os.path.join(os.getcwd(), self.input_dir_name, sys_config_file_name)
+        self.comp_df, self.fragility_data, self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
+            self.assign_infrastructure_data()
 
     def assign_infrastructure_data(self):
-        """
-        Assign parameters that define the fragility and restoration
-        of components that constitute the infrastructure facility
-        that is the subject of the simulation
-        """
-        self.sys_config_file = os.path.join(
-            os.getcwd(), self.input_dir_name,
-            self.sys_config_file_name)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # List of components in the system, with specified attributes
-        self.comp_df = pd.read_excel(
-            self.sys_config_file, 'comp_list',
-            index_col='component_id',
-            skiprows=3, skipinitialspace=True)
-
-        self.comp_df = self.comp_df.rename(
-            columns={'component_id': 'component_id',
-                     'component_type': 'component_type',
-                     'component_class': 'component_class',
-                     'cost_fraction': 'cost_fraction',
-                     'node_type': 'node_type',
-                     'node_cluster': 'node_cluster',
-                     'op_capacity': 'op_capacity'
-                     })
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Connections between the components (nodes), with edge attributes
-        self.node_conn_df = pd.read_excel(
-            self.sys_config_file, 'component_connections',
+        config_file = self.sys_config_file
+        NODE_CONN_DF = pd.read_excel(
+            config_file, 'component_connections',
             index_col=None, skiprows=3, skipinitialspace=True)
 
-        self.node_conn_df = self.node_conn_df.rename(
+        NODE_CONN_DF = NODE_CONN_DF.rename(
             columns={'Orig': 'Origin',
                      'Dest': 'Destination',
                      'Capacity': 'Capacity',
@@ -133,46 +102,18 @@ class FacilityDataGetter(object):
                      'Distance': 'Distance'
                      })
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Configuration of output nodes (sinks)
-        self.sysout_setup = pd.read_excel(
-            self.sys_config_file, 'output_setup',
-            index_col='OutputNode',
+        COMP_DF = pd.read_excel(
+            config_file, 'comp_list',
+            index_col='component_id',
             skiprows=3, skipinitialspace=True)
 
-        self.sysout_setup = self.sysout_setup.rename(
-            columns={'OutputNode': 'Output Node',
-                     'ProductionNode': 'Production Node',
-                     'Capacity': 'Capacity',
-                     'CapFraction': 'Capacity Fraction',
-                     'Priority': 'Priority'
-                     })
-        self.sysout_setup = self.sysout_setup.sort(
-            'Priority', ascending=True)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Configuration of input nodes
-        # i.e. supply of 'commodities' into the system
-        self.sysinp_setup = pd.read_excel(
-            self.sys_config_file, 'supply_setup',
-            index_col='InputNode',
-            skiprows=3, skipinitialspace=True)
-
-        self.sysinp_setup = self.sysinp_setup.rename(
-            columns={'InputNode': 'Input Node',
-                     'Capacity': 'Capacity',
-                     'CapFraction': 'Capacity Fraction',
-                     'CommodityType': 'Commodity Type'
+        COMP_DF = COMP_DF.rename(
+            columns={'component_id': 'component_id', 'component_type': 'component_type',
+                     'component_class': 'component_class', 'cost_fraction': 'cost_fraction',
+                     'node_type': 'node_type', 'node_cluster': 'node_cluster', 'op_capacity': 'op_capacity'
                      })
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Component fragility and recovery algorithms, by component type
-        self.fragility_data = pd.read_excel(
-            self.sys_config_file, 'comp_type_dmg_algo',
-            index_col=['component_type', 'damage_state'],
-            skiprows=3, skipinitialspace=True)
-
-        self.comp_df = self.comp_df.rename(
+        COMP_DF = COMP_DF.rename(
             index={'component_type': 'component_type',
                    'damage_state': 'damage_state'
                    },
@@ -190,8 +131,27 @@ class FacilityDataGetter(object):
                      'fragility_source': 'fragility_source'
                      })
 
-# =============================================================================
+        SYSOUT_SETUP = pd.read_excel(config_file, 'output_setup', index_col='OutputNode',
+                                     skiprows=3, skipinitialspace=True)
+        SYSOUT_SETUP = SYSOUT_SETUP.sort('Priority', ascending=True)
+        print ('in class', SYSOUT_SETUP)
 
+        SYSOUT_SETUP = SYSOUT_SETUP.rename(
+            columns={'OutputNode': 'Output Node', 'ProductionNode': 'Production Node',
+                     'Capacity': 'Capacity', 'CapFraction': 'Capacity Fraction', 'Priority': 'Priority'
+                     })
+
+        SYSINP_SETUP = pd.read_excel(
+            config_file, 'supply_setup',
+            index_col='InputNode',
+            skiprows=3, skipinitialspace=True)
+
+        FRAGILITIES = pd.read_excel(
+            config_file, 'comp_type_dmg_algo',
+            index_col=['component_type', 'damage_state'],
+            skiprows=3, skipinitialspace=True)
+
+        return COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF
 
 class Facility(FacilityDataGetter, IoDataGetter):
     """
@@ -201,18 +161,7 @@ class Facility(FacilityDataGetter, IoDataGetter):
     def __init__(self, setup_file):
         FacilityDataGetter.__init__(self, setup_file)
         IoDataGetter.__init__(self, setup_file)
-        # super(Facility, self).__init__(setup_file)
-        # self.setup = readfile(setup_file)
-        # self.io = IoDataGetter(setup_file)
-        # self.data = FacilityDataGetter(setup_file)
-
-        # self.system_class = self.system_class
-        # self.commodity_flow_types = self.data.commodity_flow_types
-
-        self.sys_config_file = os.path.join(
-            os.getcwd(),
-            self.input_dir_name,
-            self.sys_config_file_name)
+        self.sys_config_file = os.path.join(os.getcwd(), self.input_dir_name, self.sys_config_file_name)
 
         self.sys_dmg_states = ['DS0 None',
                                'DS1 Slight',
@@ -220,40 +169,19 @@ class Facility(FacilityDataGetter, IoDataGetter):
                                'DS3 Extensive',
                                'DS4 Complete']
 
-        self.comp_df = pd.DataFrame()
-        self.node_conn_df = pd.DataFrame()
-        self.setup_system_data()
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+        # self.comp_df = pd.DataFrame()
+        # self.node_conn_df = pd.DataFrame()
         """
         Set up data for:
         [1] system configuration data
         [2] component fragility algorithms
         Input data tables expected in the form of PANDAS DataFrames
         """
-
-        # List of components in the system, with specified attributes
-        # self.comp_df = self.data.comp_df
-
-        # Connections between the components (nodes), with edge attributes
-        # self.node_conn_df = self.data.node_conn_df
-
-        # Configuration of output nodes (sinks)
-        # sysout_setup = self.data.sysout_setup
-
-        self.sysout_setup = self.sysout_setup.sort('Priority', ascending=True)
-
-        # Configuration of input nodes supplying 'commodities' into the system
-        # self.sysinp_setup = self.data.sysinp_setup
-
-        # Component fragility and recovery algorithms, by component type
-        # self.fragility_data = self.data.fragility_data
+        # self.sysout_setup = self.sysout_setup.sort('Priority', ascending=True)
 
         self.comp_names = sorted(self.comp_df.index.tolist())
         self.num_elements = len(self.comp_names)
         self.sys = self.build_system_model()
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     def build_system_model(self):
         """
@@ -282,12 +210,10 @@ class Facility(FacilityDataGetter, IoDataGetter):
         for _, row in self.node_conn_df.iterrows():
             sys.add_edge(
                 row['Origin'], row['Destination'],
-                capacity=self.sys.vs.find(row['Origin'])['capacity'],
+                capacity=sys.vs.find(row['Origin'])['capacity'],
                 weight=row['Weight'],
                 distance=row['Distance'])
         return sys
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     def add_component(self, component_id):
         """
@@ -322,8 +248,6 @@ class Facility(FacilityDataGetter, IoDataGetter):
             graph_label="System Component Layout")
 
 
-#========================================================================
-
 class ScenarioDataGetter(object):
     """
     Class for reading in simulation scenario parameters
@@ -339,13 +263,12 @@ class ScenarioDataGetter(object):
         self.haz_param_max = self.setup["PGA_MAX"]
         self.haz_param_step = self.setup["PGA_STEP"]
         self.num_samples = self.setup["NUM_SAMPLES"]
+        self.use_end_point = self.setup['USE_ENDPOINT']
         self.time_unit = self.setup["TIME_UNIT"]
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
         self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
-
-# =============================================================================
 
 
 class Scenario(ScenarioDataGetter):
@@ -364,19 +287,13 @@ class Scenario(ScenarioDataGetter):
         self.output_path = self.io.output_path
         self.raw_output_dir = self.io.raw_output_dir
 
-        """
-        Set up parameters fo2r simulating hazard impact
-        """
+        """Set up parameters fo2r simulating hazard impact"""
         self.num_hazard_pts = int(round((self.haz_param_max - self.haz_param_min) /
                                         float(self.haz_param_step) + 1))
 
-        # FORMERLY: PGA_levels
         self.hazard_intensity_vals = np.linspace(self.haz_param_min, self.haz_param_max,
                                                  num=self.num_hazard_pts)
-
-        """
-        Set up parameters for simulating recovery from hazard impact
-        """
+        """Set up parameters for simulating recovery from hazard impact"""
         self.restoration_time_range, self.time_step = np.linspace(
             0, self.restore_time_upper, num=self.restore_time_upper + 1, endpoint=True, retstep=True)
 
@@ -384,8 +301,6 @@ class Scenario(ScenarioDataGetter):
 
         self.restoration_chkpoints, self.restoration_pct_steps = np.linspace(
             0.0, 1.0, num=self.restore_pct_chkpoints, retstep=True)
-
-# =============================================================================
 
 
 class ComponentType(object):

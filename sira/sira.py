@@ -56,8 +56,8 @@ import cPickle
 import systemlayout
 import siraplot as spl
 SETUPFILE = None
-from siraclasses import ScenarioDataGetter
 from utils import read_input_data
+from siraclasses import Scenario, Facility
 
 
 # import brewer2mpl
@@ -224,20 +224,14 @@ def simulation_parameters():
     # -----------------------------------------------------------------------------
     # Simulation Parameters
     # -----------------------------------------------------------------------------
-
     dmg_states = sorted([str(d) for d in FRAGILITIES.index.levels[1]])
-
     restoration_time_range, time_step =\
-        np.linspace(0, RESTORE_TIME_UPPER, num=RESTORE_TIME_UPPER+1,
-                    endpoint=USE_ENDPOINT, retstep=True)
-
+        np.linspace(0, sc.restore_time_upper, num= sc.restore_time_upper + 1,
+                    endpoint=sc.use_end_point, retstep=True)
     restoration_chkpoints, restoration_pct_steps =\
-        np.linspace(0.0, 1.0, RESTORE_PCT_CHKPOINTS, retstep=True)
-
-    hazard_data_points = int(round((PGA_MAX - PGA_MIN) / float(PGA_STEP) + 1))
-
-    hazard_intensity_vals = np.linspace(PGA_MIN, PGA_MAX, num=hazard_data_points)
-
+        np.linspace(0.0, 1.0, sc.restore_pct_chkpoints, retstep=True)
+    hazard_data_points = int(round((sc.haz_param_max - sc.haz_param_min) / float(sc.haz_param_step) + 1))
+    hazard_intensity_vals = np.linspace(sc.haz_param_min, sc.haz_param_max, num=hazard_data_points)
     num_hazard_pts = len(hazard_intensity_vals)
     num_time_steps = len(restoration_time_range)
 
@@ -321,7 +315,6 @@ def network_setup():
                    capacity=row['Capacity'],
                    weight=row['Weight'],
                    distance=row['Distance'])
-
     systemlayout.draw_sys_layout(X, COMP_DF, out_dir=OUTPUT_PATH,
                                  graph_label="System Component Layout")
     # -----------------------------------------------------------------------------
@@ -364,15 +357,15 @@ def power_calc():
     ###############################################################################
     # simulation of damage of each component
 
-    calculated_output_array = np.zeros((NUM_SAMPLES, num_hazard_pts))
+    calculated_output_array = np.zeros((sc.num_samples, num_hazard_pts))
     economic_loss_array = np.zeros_like(calculated_output_array)
 
-    comp_loss_array = np.zeros((NUM_SAMPLES, num_hazard_pts))
-    comp_loss_dict = {c: np.zeros((NUM_SAMPLES, num_hazard_pts)) for c in nodes_all}
+    comp_loss_array = np.zeros((sc.num_samples, num_hazard_pts))
+    comp_loss_dict = {c: np.zeros((sc.num_samples, num_hazard_pts)) for c in nodes_all}
 
     # Record output for:
     # <samples> vs <hazard parameter index> vs <time step index>
-    output_array_given_recovery = np.zeros((NUM_SAMPLES, num_hazard_pts, num_time_steps))
+    output_array_given_recovery = np.zeros((sc.num_samples, num_hazard_pts, num_time_steps))
 
     # rnd = stats.uniform.rvs(loc=0, scale=1, size=(NUM_SAMPLES, num_elements))
     # np.save(os.path.join(RAW_OUTPUT_DIR, 'rnd_samples_x_elements.npy'), rnd)
@@ -380,13 +373,13 @@ def power_calc():
     sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
 
     # List of output values at output_nodes:
-    sys_output_list_given_pga = {k: np.zeros((NUM_SAMPLES, len(out_node_list)))
+    sys_output_list_given_pga = {k: np.zeros((sc.num_samples, len(out_node_list)))
                                  for k in PGA_str}
 
-    comp_dsix_given_pga = {k: np.zeros((NUM_SAMPLES, len(nodes_all)))
+    comp_dsix_given_pga = {k: np.zeros((sc.num_samples, len(nodes_all)))
                            for k in PGA_str}
 
-    ids_comp_vs_haz = {p: np.zeros((NUM_SAMPLES, num_elements)) for p in PGA_str}
+    ids_comp_vs_haz = {p: np.zeros((sc.num_samples, num_elements)) for p in PGA_str}
 
     return PGA_str, calculated_output_array, component_resp_df, economic_loss_array, comp_loss_array, comp_loss_dict, \
            output_array_given_recovery, sys_output_dict, sys_output_list_given_pga, comp_dsix_given_pga, ids_comp_vs_haz
@@ -401,9 +394,9 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
     print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
 
     # compute pe and determine ds for each component
-    ids_comp = np.zeros((NUM_SAMPLES, no_elements), dtype=int)
+    ids_comp = np.zeros((sc.num_samples, no_elements), dtype=int)
 
-    rnd = stats.uniform.rvs(loc=0, scale=1, size=(NUM_SAMPLES, num_elements))
+    rnd = stats.uniform.rvs(loc=0, scale=1, size=(sc.num_samples, num_elements))
 
     # index of damage state of components: from 0 to nds+1
     for j, comp in enumerate(nodes_all):
@@ -414,7 +407,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
     component_func_tmp = {c: [] for c in nodes_all}
 
     # system output and economic loss
-    for i in range(NUM_SAMPLES):
+    for i in range(sc.num_samples):
         loss_list_all_comp = []
         cp_func = []
         cp_func_given_time = []
@@ -484,9 +477,10 @@ def calc_loss_arrays(parallel_or_serial):
     print("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
     sys_output_dict = {k: {o: 0 for o in out_node_list} for k in PGA_str}
-    ids_comp_vs_haz = {p: np.zeros((NUM_SAMPLES, no_elements)) for p in PGA_str}
+    ids_comp_vs_haz = {p: np.zeros((sc.num_samples, no_elements)) for p in PGA_str}
 
     if parallel_or_serial:
+        print('\n===================>>>>>multiprocessor computation on <<<<========================')
         parallel_return = parmap.map(multiprocess_enabling_loop, range(len(PGA_str)), PGA_str, num_hazard_pts)
 
         for idxPGA, _PGA in enumerate(PGA_str):
@@ -501,7 +495,6 @@ def calc_loss_arrays(parallel_or_serial):
     # saving for test cases
     # cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
     # cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
-
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 
 if __name__ == "__main__":
@@ -509,59 +502,38 @@ if __name__ == "__main__":
     discard = {}
     config = {}
     execfile(SETUPFILE, discard, config)
-    from siraclasses import FacilityDataGetter
+    fc = Facility(SETUPFILE)
+    sc = Scenario(SETUPFILE)
 
-    scenario_data = ScenarioDataGetter(SETUPFILE)
-    facility_data = FacilityDataGetter(SETUPFILE)
-
-    SYSTEM_CLASSES = facility_data.system_classes  # config["SYSTEM_CLASSES"]
-    SYSTEM_CLASS = facility_data.system_class  # config["SYSTEM_CLASS"]
-    COMMODITY_FLOW_TYPES = config["COMMODITY_FLOW_TYPES"]
-
-    PGA_MIN = config["PGA_MIN"]
-    PGA_MAX = config["PGA_MAX"]
-    PGA_STEP = config["PGA_STEP"]
-    NUM_SAMPLES = config["NUM_SAMPLES"]
-
-    HAZARD_TRANSFER_PARAM = config["HAZARD_TRANSFER_PARAM"]
-    HAZARD_TRANSFER_UNIT = config["HAZARD_TRANSFER_UNIT"]
-
-    TIME_UNIT = config["TIME_UNIT"]
-    RESTORE_TIME_STEP = config["RESTORE_TIME_STEP"]
-    RESTORE_PCT_CHKPOINTS = config["RESTORE_PCT_CHKPOINTS"]
-    RESTORE_TIME_UPPER = config["RESTORE_TIME_UPPER"]
-    RESTORE_TIME_MAX = config["RESTORE_TIME_MAX"]
-    INPUT_DIR_NAME = config["INPUT_DIR_NAME"]
-    OUTPUT_DIR_NAME = config["OUTPUT_DIR_NAME"]
-
-    SYS_CONF_FILE_NAME = config["SYS_CONF_FILE_NAME"]
-
-    USE_ENDPOINT = config["USE_ENDPOINT"]
-    FIT_PE_DATA = config["FIT_PE_DATA"]
-    FIT_RESTORATION_DATA = config["FIT_RESTORATION_DATA"]
-    SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Define input files, output location, scenario inputs
-    INPUT_PATH = os.path.join(os.getcwd(), INPUT_DIR_NAME)
-    SYS_CONFIG_FILE = os.path.join(INPUT_PATH, SYS_CONF_FILE_NAME)
+    INPUT_PATH = os.path.join(os.getcwd(), sc.input_dir_name)
+    SYS_CONFIG_FILE = os.path.join(INPUT_PATH, fc.sys_config_file_name)
 
-    if not os.path.exists(OUTPUT_DIR_NAME):
-        os.makedirs(OUTPUT_DIR_NAME)
-    OUTPUT_PATH = os.path.join(os.getcwd(), OUTPUT_DIR_NAME)
+    if not os.path.exists(sc.output_dir_name):
+        os.makedirs(sc.output_dir_name)
 
-    RAW_OUTPUT_DIR = os.path.join(os.getcwd(), OUTPUT_DIR_NAME, 'raw_output')
+    OUTPUT_PATH = os.path.join(os.getcwd(), sc.output_dir_name)
+    RAW_OUTPUT_DIR = os.path.join(os.getcwd(), sc.output_dir_name, 'raw_output')
+
     if not os.path.exists(RAW_OUTPUT_DIR):
         os.makedirs(RAW_OUTPUT_DIR)
 
     # Read in INPUT data files
     NODE_CONN_DF, COMP_DF, SYSOUT_SETUP, SYSINP_SETUP, FRAGILITIES = read_input_data(config_file=SYS_CONFIG_FILE)
 
+    # COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF = fc.assign_infrastructure_data()
+    # COMP_DF = fc.comp_df
+    # FRAGILITIES = fc.fragility_data
+    # SYSOUT_SETUP = fc.sysout_setup
+    # SYSINP_SETUP = fc.sysinp_setup
+    # NODE_CONN_DF = fc.node_conn_df
+
+
     cp_types_in_system, cp_types_in_db = check_types_with_db()
     uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
     costed_comptypes, comps_costed = list_of_components_for_cost_calculation(cp_types_in_system, uncosted_comptypes)
     nominal_production = SYSOUT_SETUP['Capacity'].sum()
-    hazard_transfer_label = HAZARD_TRANSFER_PARAM+' ('+HAZARD_TRANSFER_UNIT+')'
+    hazard_transfer_label = sc.hazard_transfer_param + ' (' + sc.hazard_transfer_unit+ ')'
 
     comp_dict = COMP_DF.to_dict()
     cpdict, output_dict, input_dict, nodes_by_commoditytype = convert_df_to_dict()
@@ -581,5 +553,3 @@ if __name__ == "__main__":
             comp_dsix_given_pga, ids_comp_vs_haz = power_calc()
 
     ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(parallel_or_serial=1)
-
-

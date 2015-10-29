@@ -28,7 +28,6 @@ def read_input_data(config_file):
         index_col='OutputNode',
         skiprows=3, skipinitialspace=True)
     SYSOUT_SETUP = SYSOUT_SETUP.sort('Priority', ascending=True)
-                        # ^ Prioritised list of output nodes
 
     SYSINP_SETUP = pd.read_excel(
         config_file, 'supply_setup',
@@ -40,4 +39,4 @@ def read_input_data(config_file):
         index_col=['component_type', 'damage_state'],
         skiprows=3, skipinitialspace=True)
 
-    return NODE_CONN_DF, COMP_DF, SYSOUT_SETUP, SYSINP_SETUP,FRAGILITIES
+    return NODE_CONN_DF, COMP_DF, SYSOUT_SETUP, SYSINP_SETUP, FRAGILITIES
