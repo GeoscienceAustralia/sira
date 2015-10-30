@@ -59,16 +59,13 @@ SETUPFILE = None
 from utils import read_input_data
 from siraclasses import Scenario, Facility
 
-
-# import brewer2mpl
-# import operator
-# import functools
+np.random.seed(100)  # add seed for reproducibility
 
 # -----------------------------------------------------------------------------
 # Helper functions
 # -----------------------------------------------------------------------------
 
-def cal_pe_ds(comp, PGA, compdict, fragdict):
+def cal_pe_ds(comp, PGA, compdict, fragdict, sc):
     '''
     Computes prob. of exceedence of component given PGA
     '''
@@ -87,10 +84,10 @@ def cal_pe_ds(comp, PGA, compdict, fragdict):
         elif algo == 'lognormal' and mode == 2:
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             lower_lim = fragdict['minimum'][ct][ds]
-            minpos = min(range(len(hazard_intensity_vals)),
-                         key=lambda i: abs(hazard_intensity_vals[i] - lower_lim))
+            minpos = min(range(len(sc.hazard_intensity_vals)),
+                         key=lambda i: abs(sc.hazard_intensity_vals[i] - lower_lim))
             zl = [0.0] * (minpos + 1)
-            ol = [1] * (len(hazard_intensity_vals) - (minpos + 1))
+            ol = [1] * (len(sc.hazard_intensity_vals) - (minpos + 1))
             stepfn = zl + ol
             stepv = stepfn[minpos]
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,16 +103,16 @@ def cal_pe_ds(comp, PGA, compdict, fragdict):
     return np.sort(pe_ds)
 
 
-def calc_recov_time_given_comp_ds(comp, ids, comp_dict, fragdict):
+def calc_recov_time_given_comp_ds(comp, ids, comp_dict, fragdict, fc, sc):
     '''
     Calculates the recovery time of a component, given damage state index
     '''
-    ds = dmg_states[ids]
+    ds = fc.sys_dmg_states[ids]
     ct = comp_dict['component_type'][comp]
     m = fragdict['recovery_mean'][ct][ds]
     s = fragdict['recovery_std'][ct][ds]
     fn = fragdict['functionality'][ct][ds]
-    cdf = stats.norm.cdf(restoration_time_range, loc=m, scale=s)
+    cdf = stats.norm.cdf(sc.restoration_time_range, loc=m, scale=s)
     return cdf + (1.0 - cdf) * fn
 
 
@@ -130,7 +127,7 @@ def compute_output_given_ds(cp_func, fc):
         eid = G.get_eid(*t)
         origin = G.vs[t[0]]['name']
         destin = G.vs[t[1]]['name']
-        if cpdict[origin]['node_type'] == 'dependency':
+        if fc.cpdict[origin]['node_type'] == 'dependency':
             cp_func[nodes.index(destin)] *= cp_func[nodes.index(origin)]
         cap = cp_func[nodes.index(origin)]
         G.es[eid]["capacity"] = cap
@@ -138,26 +135,25 @@ def compute_output_given_ds(cp_func, fc):
     sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
 
     for onode in fc.network.out_node_list:
-        for sup_node_list in nodes_by_commoditytype.values():
+        for sup_node_list in fc.nodes_by_commoditytype.values():
             total_available_flow_list = []
             avl_sys_flow_by_src = []
             for inode in sup_node_list:
                 avl_sys_flow_by_src.append(
-                    G.maxflow_value(G.vs.find(inode).index,
-                                    G.vs.find(onode).index,
-                                    G.es["capacity"])
-                    * input_dict[inode]['CapFraction']
+                    G.maxflow_value(G.vs.find(inode).index, G.vs.find(onode).index, G.es["capacity"])
+                    * fc.input_dict[inode]['CapFraction']
                 )
 
             total_available_flow_list.append(sum(avl_sys_flow_by_src))
 
         total_available_flow = min(total_available_flow_list)
         sys_out_capacity_list.append(
-            min(total_available_flow, output_dict[onode]['CapFraction'])
-            * nominal_production
+            min(total_available_flow, fc.output_dict[onode]['CapFraction'])
+            * fc.nominal_production
         )
 
     return sys_out_capacity_list
+
 
 def pe2pb(pe):
     """
@@ -170,67 +166,6 @@ def pe2pb(pe):
     pb = np.append(tmp, pex[-1])
     pb = np.insert(pb, 0, 1 - pex[0])
     return pb
-
-
-# def list_of_components_for_cost_calculation(comp_df, cp_types_in_system, uncosted_comptypes):
-#     # get list of only those components that are included in cost calculations
-#     cp_types_costed = [x for x in cp_types_in_system if x not in uncosted_comptypes]
-#     costed_comptypes = sorted(list(set(cp_types_in_system) - set(uncosted_comptypes)))
-#     cpmap = {c: sorted(comp_df[comp_df['component_type'] == c].index.tolist()) for c in cp_types_in_system}
-#     comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
-#     return costed_comptypes, comps_costed
-
-
-def convert_df_to_dict(fc):
-    # -----------------------------------------------------------------------------
-    # Convert Dataframes to Dicts for lookup efficiency
-    # -----------------------------------------------------------------------------
-    comp_df = fc.comp_df
-    sysout_setup = fc.sysout_setup
-    sysinp_setup = fc.sysinp_setup
-
-    cpdict = {}
-    for i in list(comp_df.index):
-        cpdict[i] = comp_df.ix[i].to_dict()
-
-    output_dict = {}
-    for k1 in list(np.unique(sysout_setup.index.get_level_values('OutputNode'))):
-        output_dict[k1] = {}
-        output_dict[k1] = sysout_setup.ix[k1].to_dict()
-
-    input_dict = {}
-    for k1 in list(np.unique(sysinp_setup.index.get_level_values('InputNode'))):
-        input_dict[k1] = {}
-        input_dict[k1] = sysinp_setup.ix[k1].to_dict()
-        # input_dict[k1]['AvlCapacity'] = input_dict[k1]['Capacity']
-
-    nodes_by_commoditytype = {}
-    for i in np.unique(sysinp_setup['CommodityType']):
-        nodes_by_commoditytype[i] \
-            = [x for x in sysinp_setup.index
-               if sysinp_setup.ix[x]['CommodityType'] == i]
-
-    return cpdict, output_dict, input_dict, nodes_by_commoditytype
-
-
-def simulation_parameters(fc, sc):
-    # -----------------------------------------------------------------------------
-    # Simulation Parameters
-    # -----------------------------------------------------------------------------
-    fragilities = fc.fragility_data
-    dmg_states = sorted([str(d) for d in fragilities.index.levels[1]])
-    restoration_time_range, time_step =\
-        np.linspace(0, sc.restore_time_upper, num= sc.restore_time_upper + 1,
-                    endpoint=sc.use_end_point, retstep=True)
-    restoration_chkpoints, restoration_pct_steps =\
-        np.linspace(0.0, 1.0, sc.restore_pct_chkpoints, retstep=True)
-    hazard_data_points = int(round((sc.haz_param_max - sc.haz_param_min) / float(sc.haz_param_step) + 1))
-    hazard_intensity_vals = np.linspace(sc.haz_param_min, sc.haz_param_max, num=hazard_data_points)
-    num_hazard_pts = len(hazard_intensity_vals)
-    num_time_steps = len(restoration_time_range)
-
-    return restoration_time_range, dmg_states, restoration_chkpoints, restoration_pct_steps, hazard_intensity_vals, \
-           num_hazard_pts, num_time_steps
 
 
 def power_calc(fc, sc):
@@ -291,7 +226,8 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     rnd = stats.uniform.rvs(loc=0, scale=1, size=(sc.num_samples, fc.num_elements))
     # index of damage state of components: from 0 to nds+1
     for j, comp in enumerate(nodes_all):
-        ids_comp[:, j] = np.sum(cal_pe_ds(comp, float(_PGA), comp_dict, fragdict) > rnd[:, j][:, np.newaxis], axis=1)
+        ids_comp[:, j] = np.sum(cal_pe_ds(comp, float(_PGA), comp_dict, fragdict, sc) >
+                                rnd[:, j][:, np.newaxis], axis=1)
         # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
 
     component_loss_tmp = {c: [] for c in nodes_all}
@@ -307,7 +243,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             # ........................................................
             comp_type = comp_dict['component_type'][comp_name]
             ids = ids_comp[i, j]   # index for component damage state
-            ds = dmg_states[ids]   # damage state name
+            ds = fc.sys_dmg_states[ids]   # damage state name
             cf = comp_dict['cost_fraction'][comp_name]
             dr = fragdict['damage_ratio'][comp_type][ds]
             fn = fragdict['functionality'][comp_type][ds]
@@ -317,7 +253,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             # ........................................................
             # component functionality for calculated damage state:
             cp_func.append(fn)
-            cp_func_given_time.append(calc_recov_time_given_comp_ds(comp_name, ids, comp_dict, fragdict))
+            cp_func_given_time.append(calc_recov_time_given_comp_ds(comp_name, ids, comp_dict, fragdict, fc, sc))
 
             comp_loss_dict[comp_name][i, idxPGA] = loss
             component_loss_tmp[comp_name].append(loss)
@@ -334,7 +270,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
         # restoration status of components over the range of time
         # (num elements X num specified time units)
         cp_func_given_time = np.array(cp_func_given_time)
-        for t in range(num_time_steps):
+        for t in range(sc.num_time_steps):
             output_array_given_recovery[i, idxPGA, t]\
                 = sum(compute_output_given_ds(cp_func_given_time[:, t], fc))
 
@@ -354,7 +290,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             = np.std(component_func_tmp[comp_name])
 
         comp_resp_dict[(comp_name, 'num_failures')]\
-            = np.mean(ids_comp[:, j] >= (len(dmg_states) - 1))
+            = np.mean(ids_comp[:, j] >= (len(fc.sys_dmg_states) - 1))
 
     sys_out_dict = dict()
     for onx, onode in enumerate(fc.network.out_node_list):
@@ -404,22 +340,10 @@ if __name__ == "__main__":
     if not os.path.exists(sc.output_dir_name):
         os.makedirs(sc.output_dir_name)
 
-    # cp_types_in_system, cp_types_in_db = check_types_with_db(fc)
-    # costed_comptypes, comps_costed = list_of_components_for_cost_calculation(fc.comp_df, fc.cp_types_in_system)
-
-    nominal_production = fc.sysout_setup['Capacity'].sum()
     hazard_transfer_label = sc.hazard_transfer_param + ' (' + sc.hazard_transfer_unit+ ')'
 
-    cpdict, output_dict, input_dict, nodes_by_commoditytype = convert_df_to_dict(fc)
-
-    restoration_time_range, dmg_states, restoration_chkpoints, restoration_pct_steps, hazard_intensity_vals, \
-           num_hazard_pts, num_time_steps = simulation_parameters(fc, sc)
-
-    # nodes_all = sorted(fc.comp_df.index)
-    # no_elements = len(nodes_all)
-
+    # cpdict, output_dict, input_dict, nodes_by_commoditytype = convert_df_to_dict(fc)
     component_resp_df = power_calc(fc, sc)
-
     ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(fc, sc,
                                                     component_resp_df, parallel_or_serial=sc.parallel_or_serial)
 

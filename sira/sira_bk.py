@@ -269,6 +269,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
     ids_comp = np.zeros((num_samples, no_elements), dtype=int)
 
     # index of damage state of components: from 0 to nds+1
+    rnd = stats.uniform.rvs(loc=0, scale=1, size=(num_samples, no_elements))
     for j, comp in enumerate(nodes_all):
         ids_comp[:, j] = np.sum(
             cal_pe_ds(comp, float(_PGA), compdict, fragdict)
@@ -369,8 +370,9 @@ def calc_loss_arrays(parallel_or_serial):
                 multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=nPGA)
 
     # saving for test cases
-    # cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
-    # cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
+    cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
+    cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
+    cPickle.dump(component_resp_dict, open('tests/component_resp_dict.pick', 'wb'))
 
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 
@@ -657,8 +659,8 @@ comp_loss_dict = {c: np.zeros((num_samples, nPGA)) for c in nodes_all}
 # <samples> vs <hazard parameter index> vs <time step index>
 output_array_given_recovery = np.zeros((num_samples, nPGA, num_time_steps))
 
-rnd = stats.uniform.rvs(loc=0, scale=1, size=(num_samples, no_elements))
-np.save(os.path.join(raw_output_dir, 'rnd_samples_x_elements.npy'), rnd)
+
+# np.save(os.path.join(raw_output_dir, 'rnd_samples_x_elements.npy'), rnd)
 
 
 

@@ -87,6 +87,25 @@ class FacilityDataGetter(object):
         self.sys_config_file = os.path.join(os.getcwd(), self.input_dir_name, sys_config_file_name)
         self.comp_df, self.fragility_data, self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
             self.assign_infrastructure_data()
+        self.nominal_production = self.sysout_setup['Capacity'].sum()
+
+        self.sys_dmg_states = ['DS0 None',
+                               'DS1 Slight',
+                               'DS2 Moderate',
+                               'DS3 Extensive',
+                               'DS4 Complete']
+
+        # self.comp_df = pd.DataFrame()
+        # self.node_conn_df = pd.DataFrame()
+        """
+        Set up data for:
+        [1] system configuration data
+        [2] component fragility algorithms
+        Input data tables expected in the form of PANDAS DataFrames
+        """
+
+        self.comp_names = sorted(self.comp_df.index.tolist())
+        self.num_elements = len(self.comp_names)
 
     def assign_infrastructure_data(self):
         config_file = self.sys_config_file
@@ -122,7 +141,6 @@ class Network(object):
         self.nodes, self.num_elements, self.G = self.return_network(facility)
         self.sup_node_list, self.dep_node_list, self.src_node_list, self.out_node_list = self.network_setup(facility)
 
-
     @staticmethod
     def return_network(facility):
         # -----------------------------------------------------------------------------
@@ -154,7 +172,6 @@ class Network(object):
                        weight=row['Weight'],
                        distance=row['Distance'])
         return nodes, num_elements, G
-
 
     @staticmethod
     def network_setup(facility):
@@ -191,33 +208,13 @@ class Facility(FacilityDataGetter, IoDataGetter):
     def __init__(self, setup_file):
         FacilityDataGetter.__init__(self, setup_file)
         IoDataGetter.__init__(self, setup_file)
-        self.sys_config_file = os.path.join(os.getcwd(), self.input_dir_name, self.sys_config_file_name)
-
-        self.sys_dmg_states = ['DS0 None',
-                               'DS1 Slight',
-                               'DS2 Moderate',
-                               'DS3 Extensive',
-                               'DS4 Complete']
-
-        # self.comp_df = pd.DataFrame()
-        # self.node_conn_df = pd.DataFrame()
-        """
-        Set up data for:
-        [1] system configuration data
-        [2] component fragility algorithms
-        Input data tables expected in the form of PANDAS DataFrames
-        """
-        # self.sysout_setup = self.sysout_setup.sort('Priority', ascending=True)
-
-        self.comp_names = sorted(self.comp_df.index.tolist())
-        self.num_elements = len(self.comp_names)
+        self.cp_types_in_system, self.cp_types_in_db = self.check_types_with_db()
+        self.costed_comptypes, self.comps_costed = self.list_of_components_for_cost_calculation()
+        self.cpdict, self.output_dict, self.input_dict, self.nodes_by_commoditytype = self.convert_df_to_dict()
         self.sys = self.build_system_model()
         self.fragdict = self.fragility_dict()
         self.compdict = self.comp_df.to_dict()
-        self.cp_types_in_system, self.cp_types_in_db = self.check_types_with_db()
-        self.costed_comptypes, self.comps_costed = self.list_of_components_for_cost_calculation()
         self.network = Network(self)
-
 
     def build_system_model(self):
         """
@@ -250,6 +247,37 @@ class Facility(FacilityDataGetter, IoDataGetter):
                 weight=row['Weight'],
                 distance=row['Distance'])
         return sys
+
+    def convert_df_to_dict(self):
+        # -----------------------------------------------------------------------------
+        # Convert Dataframes to Dicts for lookup efficiency
+        # -----------------------------------------------------------------------------
+        comp_df = self.comp_df
+        sysout_setup = self.sysout_setup
+        sysinp_setup = self.sysinp_setup
+
+        cpdict = {}
+        for i in list(comp_df.index):
+            cpdict[i] = comp_df.ix[i].to_dict()
+
+        output_dict = {}
+        for k1 in list(np.unique(sysout_setup.index.get_level_values('OutputNode'))):
+            output_dict[k1] = {}
+            output_dict[k1] = sysout_setup.ix[k1].to_dict()
+
+        input_dict = {}
+        for k1 in list(np.unique(sysinp_setup.index.get_level_values('InputNode'))):
+            input_dict[k1] = {}
+            input_dict[k1] = sysinp_setup.ix[k1].to_dict()
+            # input_dict[k1]['AvlCapacity'] = input_dict[k1]['Capacity']
+
+        nodes_by_commoditytype = {}
+        for i in np.unique(sysinp_setup['CommodityType']):
+            nodes_by_commoditytype[i] \
+                = [x for x in sysinp_setup.index
+                   if sysinp_setup.ix[x]['CommodityType'] == i]
+
+        return cpdict, output_dict, input_dict, nodes_by_commoditytype
 
     def add_component(self, component_id):
         """
