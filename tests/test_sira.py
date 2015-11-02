@@ -59,5 +59,34 @@ class TestSira(unittest.TestCase):
         for k in sys_output_dict:
             np.testing.assert_array_equal(sys_output_dict[k], test_sys_output_dict[k], 'arrays not equal', verbose=True)
 
+
+    def test_extreme_values(self):
+
+        # sys_output_dict # should be full when 0, and 0 when hazard level 10
+
+        scenario = Scenario('tests/config_ps_X_test_extremes.conf')
+        facility = Facility('tests/config_ps_X_test_extremes.conf')
+        component_resp_df = power_calc(facility, scenario)
+
+        ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(facility, scenario,
+                                                    component_resp_df, parallel_or_serial=1)
+
+        for k, v in component_resp_dict.iteritems():
+            for kk, vv in v.iteritems():
+                if k == scenario.PGA_str[0] and kk[1] == 'func_mean':
+                    #print k, kk, vv, '<<<-----------------------'
+                    self.assertEqual(vv, 1.0)
+                if k == scenario.PGA_str[0] and kk[1] == 'loss_mean':
+                    #print k, kk, vv, '<<<-----------------------'
+                    self.assertEqual(vv, 0.0)
+                # if k == scenario.PGA_str[1] and kk[1] == 'func_mean':
+                #     print k, kk, vv, '<<<-----------------------'
+                #     self.assertEqual(vv, 0.0, 'test for {} failed for PGA Level: {}'.format(kk[0], k))
+                # if k == scenario.PGA_str[1] and kk[1] == 'loss_mean':
+                #     print k, kk, vv, '<<<-----------------------'
+                #     self.assertAlmostEqual(vv, 1.0)
+
+
+
 if __name__ == '__main__':
     unittest.main()

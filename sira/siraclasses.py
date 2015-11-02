@@ -380,7 +380,7 @@ class ScenarioDataGetter(object):
         self.time_unit = self.setup["TIME_UNIT"]
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
+        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]  # same as sira_bk
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
         self.parallel_or_serial = self.setup["MULTIPROCESS"]
         self.env = self.setup["ENV"]
@@ -411,7 +411,7 @@ class Scenario(ScenarioDataGetter, IoDataGetter):
         self.PGA_str = [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
         """Set up parameters for simulating recovery from hazard impact"""
         self.restoration_time_range, self.time_step = np.linspace(
-            0, self.restore_time_upper, num=self.restore_time_upper + 1, endpoint=True, retstep=True)
+            0, self.restore_time_upper, num=self.restore_time_upper + 1, endpoint=self.use_end_point, retstep=True)
 
         self.num_time_steps = len(self.restoration_time_range)
 

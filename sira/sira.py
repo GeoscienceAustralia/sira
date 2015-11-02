@@ -302,7 +302,4 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
             ids_comp_vs_haz[_PGA], sys_output_dict[_PGA], component_resp_dict[_PGA] = \
                 multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=sc.num_hazard_pts, fc=fc, sc=sc)
 
-    # saving for test cases
-    # cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
-    # cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict

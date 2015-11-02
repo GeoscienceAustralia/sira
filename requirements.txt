@@ -2,10 +2,9 @@ brewer2mpl==1.4.1
 colorama==0.3.3
 cycler==0.9.0
 decorator==4.0.4
-igraph==0.1.8
 ipython==4.0.0
 ipython-genutils==0.1.0
-matplotlib==1.5.0
+# matplotlib==1.5.0
 networkx==1.10
 numpy==1.10.1
 pandas==0.16.0
@@ -13,7 +12,7 @@ parmap==1.2.3
 path.py==8.1.2
 pexpect==4.0.1
 pickleshare==0.5
-prettyplotlib==0.1.7
+# prettyplotlib==0.1.7
 ptyprocess==0.5
 pygraphviz==1.3.1
 pyparsing==2.0.5
@@ -21,7 +20,7 @@ python-dateutil==2.4.2
 python-igraph==0.7.1.post6
 pytz==2015.7
 scipy==0.16.1
-seaborn==0.6.0
+# seaborn==0.6.0
 simplegeneric==0.8.1
 six==1.10.0
 traitlets==4.0.0

@@ -372,9 +372,9 @@ def calc_loss_arrays(parallel_or_serial):
                 multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=nPGA)
 
     # saving for test cases
-    cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
-    cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
-    cPickle.dump(component_resp_dict, open('tests/component_resp_dict.pick', 'wb'))
+    # cPickle.dump(ids_comp_vs_haz, open('tests/ids_comp_vs_haz.pick', 'wb'))
+    # cPickle.dump(sys_output_dict, open('tests/sys_output_dict.pick', 'wb'))
+    # cPickle.dump(component_resp_dict, open('tests/component_resp_dict.pick', 'wb'))
 
     return ids_comp_vs_haz, sys_output_dict, component_resp_dict
 
@@ -406,9 +406,9 @@ hazard_transfer_param = config["HAZARD_TRANSFER_PARAM"]
 hazard_transfer_unit = config["HAZARD_TRANSFER_UNIT"]
 
 timeunit = config["TIME_UNIT"]
-restore_time_step = config["RESTORE_TIME_UPPER"]
+restore_time_step = config["RESTORE_TIME_STEP"]
 restore_pct_chkpoints = config["RESTORE_PCT_CHKPOINTS"]
-restore_time_upper = config["RESTORE_TIME_STEP"]
+restore_time_upper = config["RESTORE_TIME_UPPER"]
 restore_time_max = config["RESTORE_TIME_MAX"]
 
 input_dir_name = config["INPUT_DIR_NAME"]
