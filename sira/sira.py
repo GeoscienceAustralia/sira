@@ -223,13 +223,12 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     ids_comp = np.zeros((sc.num_samples, fc.num_elements), dtype=int)
 
     # index of damage state of components: from 0 to nds+1
-    print (sc.env)
     if sc.env:  # test run
-        np.random.RandomState(idxPGA)
+        prng = np.random.RandomState(idxPGA)
     else:
-        np.random.RandomState()
+        prng = np.random.RandomState()
 
-    rnd = stats.uniform.rvs(loc=0, scale=1, size=(sc.num_samples, fc.num_elements))
+    rnd = prng.uniform(size=(sc.num_samples, fc.num_elements))
     # index of damage state of components: from 0 to nds+1
     for j, comp in enumerate(nodes_all):
         ids_comp[:, j] = np.sum(cal_pe_ds(comp, float(_PGA), comp_dict, fragdict, sc) >

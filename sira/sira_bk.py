@@ -57,8 +57,6 @@ SETUPFILE = None
 # Helper functions
 # -----------------------------------------------------------------------------
 
-np.random.seed(100)  # add seed for reproducibility
-
 def plot_comp_frag(fragilities, costed_comptypes, hazard_levels, output_path):
     '''
     Generates fragility plots of given component types, and
@@ -270,11 +268,10 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
 
     # index of damage state of components: from 0 to nds+1
     if ENV:  # test run
-        np.random.RandomState(idxPGA)
+        prng = np.random.RandomState(idxPGA)
     else:
-        np.random.RandomState()
-
-    rnd = stats.uniform.rvs(loc=0, scale=1, size=(num_samples, no_elements))
+        prng = np.random.RandomState()
+    rnd = prng.uniform(size=(num_samples, no_elements))
     for j, comp in enumerate(nodes_all):
         ids_comp[:, j] = np.sum(
             cal_pe_ds(comp, float(_PGA), compdict, fragdict)
@@ -385,9 +382,7 @@ def calc_loss_arrays(parallel_or_serial):
 if __name__ == "__main__":
     SETUPFILE = sys.argv[1]
 
-# test or normal run
 ENV = 0
-
 if not SETUPFILE:  # used for running test case
     SETUPFILE = 'tests/config_ps_X_test.conf'
     SETUPFILE = os.path.join(os.getcwd(), SETUPFILE)
@@ -428,7 +423,9 @@ SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
 
 # Multiprocess or not
 PARALLEL = config['MULTIPROCESS']
-
+# test or normal run
+if not ENV:
+    ENV = config['ENV']
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define input files, output location, scenario inputs
 

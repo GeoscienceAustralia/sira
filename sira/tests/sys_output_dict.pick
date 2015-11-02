@@ -19,13 +19,13 @@ S'<'
 NNNI-1
 I-1
 I0
-tbS'\xcd\xcc\xcc\xcc\xcc\xcc\x1c@'
+tbS'\x00\x00\x00\x00\x00\x00(@'
 tRp8
 sVoutput_1
 p9
 g5
 (g7
-S'333333#@'
+S'\x9a\x99\x99\x99\x99\x99%@'
 tRp10
 ssS'1.000'
 p11
