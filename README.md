@@ -6,7 +6,7 @@ Running the sira code is simple. First
 
 Then one can run the object oriented `sira.py` as     
     
-    python sira/sira_bk.py simulation_setup/config_ps_X.conf
+    python -m sira simulation_setup/config_ps_X.conf
 
 Or the procedural `sira_bk.py` as
 
