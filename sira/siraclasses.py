@@ -383,6 +383,7 @@ class ScenarioDataGetter(object):
         self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
         self.parallel_or_serial = self.setup["MULTIPROCESS"]
+        self.env = self.setup["ENV"]
 
 
 class Scenario(ScenarioDataGetter, IoDataGetter):

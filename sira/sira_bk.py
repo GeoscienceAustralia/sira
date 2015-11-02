@@ -269,6 +269,11 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA):
     ids_comp = np.zeros((num_samples, no_elements), dtype=int)
 
     # index of damage state of components: from 0 to nds+1
+    if ENV:  # test run
+        np.random.RandomState(idxPGA)
+    else:
+        np.random.RandomState()
+
     rnd = stats.uniform.rvs(loc=0, scale=1, size=(num_samples, no_elements))
     for j, comp in enumerate(nodes_all):
         ids_comp[:, j] = np.sum(
@@ -380,10 +385,14 @@ def calc_loss_arrays(parallel_or_serial):
 if __name__ == "__main__":
     SETUPFILE = sys.argv[1]
 
+# test or normal run
+ENV = 0
 
 if not SETUPFILE:  # used for running test case
     SETUPFILE = 'tests/config_ps_X_test.conf'
+    SETUPFILE = os.path.join(os.getcwd(), SETUPFILE)
     print ('using default test setupfile')
+    ENV = 1
 
 discard = {}
 config = {}
@@ -419,7 +428,6 @@ SAVE_VARS_NPY = config["SAVE_VARS_NPY"]
 
 # Multiprocess or not
 PARALLEL = config['MULTIPROCESS']
-print(PARALLEL)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define input files, output location, scenario inputs

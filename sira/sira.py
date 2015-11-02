@@ -50,7 +50,7 @@ import brewer2mpl
 from colorama import Fore, Back, Style, init
 import parmap
 import cPickle
-
+from numpy.random import RandomState
 
 # custom imports
 import systemlayout
@@ -59,7 +59,6 @@ SETUPFILE = None
 from utils import read_input_data
 from siraclasses import Scenario, Facility
 
-np.random.seed(100)  # add seed for reproducibility
 
 # -----------------------------------------------------------------------------
 # Helper functions
@@ -223,6 +222,13 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     # compute pe and determine ds for each component
     ids_comp = np.zeros((sc.num_samples, fc.num_elements), dtype=int)
 
+    # index of damage state of components: from 0 to nds+1
+    print (sc.env)
+    if sc.env:  # test run
+        np.random.RandomState(idxPGA)
+    else:
+        np.random.RandomState()
+
     rnd = stats.uniform.rvs(loc=0, scale=1, size=(sc.num_samples, fc.num_elements))
     # index of damage state of components: from 0 to nds+1
     for j, comp in enumerate(nodes_all):
@@ -316,6 +322,7 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
             sys_output_dict[_PGA] = parallel_return[idxPGA][1]
             component_resp_dict[_PGA] = parallel_return[idxPGA][2]
     else:
+        print('\n==================>>>>>single processor computation on <<<<=======================')
         for idxPGA, _PGA in enumerate(sc.PGA_str):
             ids_comp_vs_haz[_PGA], sys_output_dict[_PGA], component_resp_dict[_PGA] = \
                 multiprocess_enabling_loop(idxPGA=idxPGA, _PGA_dummy=_PGA, nPGA=sc.num_hazard_pts, fc=fc, sc=sc)
