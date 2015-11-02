@@ -352,5 +352,3 @@ if __name__ == "__main__":
     component_resp_df = power_calc(fc, sc)
     ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(fc, sc,
                                                     component_resp_df, parallel_or_serial=sc.parallel_or_serial)
-
-
