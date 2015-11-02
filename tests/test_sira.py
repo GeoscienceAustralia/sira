@@ -74,10 +74,8 @@ class TestSira(unittest.TestCase):
         for k, v in component_resp_dict.iteritems():
             for kk, vv in v.iteritems():
                 if k == scenario.PGA_str[0] and kk[1] == 'func_mean':
-                    #print k, kk, vv, '<<<-----------------------'
                     self.assertEqual(vv, 1.0)
                 if k == scenario.PGA_str[0] and kk[1] == 'loss_mean':
-                    #print k, kk, vv, '<<<-----------------------'
                     self.assertEqual(vv, 0.0)
                 # if k == scenario.PGA_str[1] and kk[1] == 'func_mean':
                 #     print k, kk, vv, '<<<-----------------------'
