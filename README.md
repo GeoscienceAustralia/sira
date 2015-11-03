@@ -28,7 +28,7 @@ Or the procedural `sira_bk.py` as
     python sira/sira_bk.py simulation_setup/config_ps_X.conf
 
 #### Run tests
-To run tests one case use either `nose` or unittest like the following from the first level `sira` directory:
+To run tests one can use either `nose` or `unittest` like the following from the first level `sira` directory:
     
     cd sira  # and not cd sira/sira
     python -m unittest discover tests

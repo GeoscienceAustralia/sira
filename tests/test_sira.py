@@ -61,7 +61,6 @@ class TestSira(unittest.TestCase):
         for k in sys_output_dict:
             np.testing.assert_array_equal(sys_output_dict[k], test_sys_output_dict[k], 'arrays not equal', verbose=True)
 
-
     def test_extreme_values(self):
         # sys_output_dict # should be full when 0, and 0 when hazard level 10
 
@@ -73,19 +72,20 @@ class TestSira(unittest.TestCase):
             economic_loss_array, output_array_given_recovery \
             = calc_loss_arrays(facility, scenario, component_resp_df, parallel_or_serial=1)
 
+        # print facility.comp_df['cost_fraction']
         for k, v in component_resp_dict.iteritems():
             for kk, vv in v.iteritems():
+                component_cost_fraction = facility.comp_df['cost_fraction']['component_id'==kk[0]]
                 if k == scenario.hazard_intensity_str[0] and kk[1] == 'func_mean':
                     self.assertEqual(vv, 1.0)
                 if k == scenario.hazard_intensity_str[0] and kk[1] == 'loss_mean':
                     self.assertEqual(vv, 0.0)
-                # if k == scenario.PGA_str[1] and kk[1] == 'func_mean':
-                #     print k, kk, vv, '<<<-----------------------'
-                #     self.assertEqual(vv, 0.0, 'test for {} failed for PGA Level: {}'.format(kk[0], k))
-                # if k == scenario.PGA_str[1] and kk[1] == 'loss_mean':
-                #     print k, kk, vv, '<<<-----------------------'
-                #     self.assertAlmostEqual(vv, 1.0)
-
+                if k == scenario.hazard_intensity_str[1] and kk[1] == 'func_mean':
+                    if component_cost_fraction > 1e-3:
+                        self.assertEqual(vv, 0.0, 'test for {} failed for PGA Level: {}'.format(kk[0], k))
+                if k == scenario.hazard_intensity_str[1] and kk[1] == 'loss_mean':
+                    if component_cost_fraction > 1e-3:
+                        self.assertEqual(vv, 1.0, 'test for {} failed for PGA Level: {}'.format(kk[0], k))
 
 
 if __name__ == '__main__':
