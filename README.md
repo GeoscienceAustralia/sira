@@ -3,14 +3,15 @@ It is recommeneded that you create a virtualenv to run the sira code. These reco
 
     sudo pip install virtualenv
     sudo apt-get -y build-dep matplotlib  # then endter you root password
-    virtualenv -p python2.7 ~/sira 
-    source ~/sira/bin/activate
-    cd sira # and not cd sira/sira, this is where the requirements.txt exists
+    virtualenv -p python2.7 ~/sira_venv
+    source ~/sira_venv/bin/activate
+
+Note in the above, the first commadn `sudo apt-get -y build-dep matplotlib` installs all the build dependencies for matplotlib.
+
+Once inside the virtualenv, navigate to the `sira` code:
+    
+    cd sira # and not cd sira/sira. This is where the requirements.txt exists
     pip install -r requirements.txt
-
-Note in the above, the first commadn `sudo apt-get -y build-dep matplotlib` installs all the build dependencies 
-for matplotlib.
-
 
 #### How to run the SIRA code
 

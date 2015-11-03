@@ -3,7 +3,7 @@ __author__ = 'Sudipta Basak'
 
 import sys, os
 from siraclasses import Scenario, Facility
-from sira import power_calc, calc_loss_arrays
+from sira import power_calc, calc_loss_arrays, post_porcessing
 
 
 if __name__ == "__main__":
@@ -25,7 +25,11 @@ if __name__ == "__main__":
 
     # cpdict, output_dict, input_dict, nodes_by_commoditytype = convert_df_to_dict(fc)
     component_resp_df = power_calc(fc, sc)
-    ids_comp_vs_haz, sys_output_dict, component_resp_dict = calc_loss_arrays(fc, sc,
-                                                    component_resp_df, parallel_or_serial=sc.parallel_or_serial)
+    ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array, \
+        economic_loss_array, output_array_given_recovery \
+            = calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial=sc.parallel_or_serial)
+
+    post_porcessing(fc, sc, ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array,
+                    economic_loss_array, output_array_given_recovery)
 
 

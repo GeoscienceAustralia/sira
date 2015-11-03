@@ -138,7 +138,7 @@ class FacilityDataGetter(object):
 class Network(object):
 
     def __init__(self, facility):
-        self.nodes, self.num_elements, self.G = self.return_network(facility)
+        self.nodes, self.num_elements, self.G, self.nodes_all = self.return_network(facility)
         self.sup_node_list, self.dep_node_list, self.src_node_list, self.out_node_list = self.network_setup(facility)
 
     @staticmethod
@@ -171,7 +171,7 @@ class Network(object):
                        capacity=G.vs.find(row['Orig'])["capacity"],
                        weight=row['Weight'],
                        distance=row['Distance'])
-        return nodes, num_elements, G
+        return nodes, num_elements, G, nodes_all
 
     @staticmethod
     def network_setup(facility):
@@ -209,7 +209,9 @@ class Facility(FacilityDataGetter, IoDataGetter):
         FacilityDataGetter.__init__(self, setup_file)
         IoDataGetter.__init__(self, setup_file)
         self.cp_types_in_system, self.cp_types_in_db = self.check_types_with_db()
-        self.costed_comptypes, self.comps_costed = self.list_of_components_for_cost_calculation()
+        self.uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
+        self.cp_types_costed, self.cpmap, self.costed_comptypes, self.comps_costed = \
+            self.list_of_components_for_cost_calculation()
         self.cpdict, self.output_dict, self.input_dict, self.nodes_by_commoditytype = self.convert_df_to_dict()
         self.sys = self.build_system_model()
         self.fragdict = self.fragility_dict()
@@ -332,14 +334,13 @@ class Facility(FacilityDataGetter, IoDataGetter):
         return cp_types_in_system, cp_types_in_db
 
     def list_of_components_for_cost_calculation(self):
-        uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
         # get list of only those components that are included in cost calculations
-        cp_types_costed = [x for x in self.cp_types_in_system if x not in uncosted_comptypes]
-        costed_comptypes = sorted(list(set(self.cp_types_in_system) - set(uncosted_comptypes)))
+        cp_types_costed = [x for x in self.cp_types_in_system if x not in self.uncosted_comptypes]
+        costed_comptypes = sorted(list(set(self.cp_types_in_system) - set(self.uncosted_comptypes)))
         cpmap = {c: sorted(self.comp_df[self.comp_df['component_type'] == c].index.tolist())
                  for c in self.cp_types_in_system}
         comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
-        return costed_comptypes, comps_costed
+        return cp_types_costed, cpmap, costed_comptypes, comps_costed
 
     def draw_layout(self):
         """
@@ -395,20 +396,13 @@ class Scenario(ScenarioDataGetter, IoDataGetter):
         ScenarioDataGetter.__init__(self, setup_file)
         IoDataGetter.__init__(self, setup_file)
 
-        self.input_dir_name = self.input_dir_name
-        self.output_dir_name = self.output_dir_name
-
-        self.input_path = self.input_path
-        self.output_path = self.output_path
-        self.raw_output_dir = self.raw_output_dir
-
         """Set up parameters fo2r simulating hazard impact"""
         self.num_hazard_pts = int(round((self.haz_param_max - self.haz_param_min) /
                                         float(self.haz_param_step) + 1))
 
         self.hazard_intensity_vals = np.linspace(self.haz_param_min, self.haz_param_max,
                                                  num=self.num_hazard_pts)
-        self.PGA_str = [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
+        self.hazard_intensity_str = [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
         """Set up parameters for simulating recovery from hazard impact"""
         self.restoration_time_range, self.time_step = np.linspace(
             0, self.restore_time_upper, num=self.restore_time_upper + 1, endpoint=self.use_end_point, retstep=True)

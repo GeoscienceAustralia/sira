@@ -907,3 +907,8 @@ if SAVE_VARS_NPY:
             pe_sys_econloss)
 
 print("\nOutputs saved in: " + Fore.GREEN + output_path)
+
+print (economic_loss_array.shape)
+print(PGA_str)
+print(PGA_levels)
+print (economic_loss_array[:, -1])
