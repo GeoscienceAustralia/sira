@@ -16,8 +16,8 @@ Or the procedural `sira_bk.py` as
 The requirements can be installed using the following steps.
 
     sudo apt-get -y build-dep matplotlib  # then endter you root password
-    virtualenv -p python2.7 /home/sudipta/Dropbox/GA/CODE/igraphtest
-    source /home/sudipta/Dropbox/GA/CODE/igraphtest/bin/activate
+    virtualenv -p python2.7 ~/sira 
+    source ~/sira/bin/activate
 
 Note in the above, the first commadn `sudo apt-get -y build-dep matplotlib` installs all the build dependencies 
 for matplotlib.
