@@ -35,7 +35,6 @@ import parmap
 import os, sys
 import cPickle
 from colorama import Fore
-
 from siraclasses import Scenario, Facility
 
 SETUPFILE = None

@@ -1,19 +1,18 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
+from itertools import ifilter
+from os import path
+from ast import parse
 
-config = {
-    'description': 'A System for Infrastructure Earthquake Risk Analysis',
-    'author': 'Maruf Rahman',
-    'url': 'URL to get it at.',
-    'download_url': 'Where to download it.',
-    'author_email': 'maruf.rahman@ga.gov.au',
-    'version': '0.1.0',
-    'install_requires': ['nose'],
-    'packages': ['NAME'],
-    'scripts': [],
-    'name': 'sira'
-}
+if __name__ == '__main__':
+    package_name = 'sira'
+    with open(path.join(package_name, '__init__.py')) as f:
+        __version__ = parse(next(ifilter(lambda line: line.startswith('__version__'), f))).body[0].value.s
 
-setup(**config)
+    setup(
+        name=package_name,
+        author='Sudipta Basak, Maruf Rahman',
+        version=__version__,
+        test_suite='.tests',
+        packages=find_packages(),
+        package_dir={package_name: package_name}
+    )
