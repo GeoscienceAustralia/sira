@@ -59,4 +59,9 @@ docs/_build/
 # PyBuilder
 target/
 
+# project specific files
+project/ps_x/output/
+
 # Created by .ignore support plugin (hsz.mobi)
+
+
