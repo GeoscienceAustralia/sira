@@ -65,4 +65,6 @@ project/ps_x/output/
 
 # Created by .ignore support plugin (hsz.mobi)
 
+# OS X hidden files
+.DS_Store
 
