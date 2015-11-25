@@ -1,4 +1,4 @@
-name: sira_env_test
+name: sira_env
 dependencies:
 - anaconda-client=1.1.2=py27_0
 - appnope=0.1.0=py27_0
@@ -25,6 +25,7 @@ dependencies:
 - pip=7.1.2=py27_0
 - ptyprocess=0.5=py27_0
 - pydot=1.0.28=py27_0
+- pygraphviz=1.3rc2=py27_0
 - pyparsing=2.0.3=py27_0
 - pyqt=4.11.4=py27_0
 - python=2.7.10=2
@@ -52,11 +53,11 @@ dependencies:
 - zlib=1.2.8=0
 - pip:
   - actdiag==0.5.1
+  - brewer2mpl==1.4.1
   - funcparserlib==0.3.6
-  - ipython-genutils==0.1.0
   - nwdiag==1.0.0
   - parmap==1.2.3
-  - pygraphviz==1.3rc2
+  - prettyplotlib==0.1.7
   - python-igraph==0.7.1.post6
   - seqdiag==0.9.0
   - sphinxcontrib-actdiag==0.6.0
