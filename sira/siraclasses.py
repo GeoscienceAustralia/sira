@@ -110,26 +110,29 @@ class FacilityDataGetter(object):
     def assign_infrastructure_data(self):
         config_file = self.sys_config_file
         NODE_CONN_DF = pd.read_excel(
-            config_file, 'component_connections',
-            index_col=None, skiprows=3, skipinitialspace=True)
-
-        COMP_DF = pd.read_excel(
-            config_file, 'comp_list',
-            index_col='component_id',
+            config_file, sheetname='component_connections',
+            index_col=None, header=0,
             skiprows=3, skipinitialspace=True)
 
-        SYSOUT_SETUP = pd.read_excel(config_file, 'output_setup', index_col='OutputNode',
-                                     skiprows=3, skipinitialspace=True)
-        SYSOUT_SETUP = SYSOUT_SETUP.sort('Priority', ascending=True)
+        COMP_DF = pd.read_excel(
+            config_file, sheetname='comp_list',
+            index_col='component_id', header=0,
+            skiprows=3, skipinitialspace=True)
+
+        SYSOUT_SETUP = pd.read_excel(
+            config_file, sheetname='output_setup',
+            index_col='OutputNode', header=0,
+            skiprows=3, skipinitialspace=True)
+        SYSOUT_SETUP = SYSOUT_SETUP.sort_values(by='Priority', ascending=True)
 
         SYSINP_SETUP = pd.read_excel(
-            config_file, 'supply_setup',
-            index_col='InputNode',
+            config_file, sheetname='supply_setup',
+            index_col='InputNode', header=0,
             skiprows=3, skipinitialspace=True)
 
         FRAGILITIES = pd.read_excel(
-            config_file, 'comp_type_dmg_algo',
-            index_col=['component_type', 'damage_state'],
+            config_file, sheetname='comp_type_dmg_algo',
+            index_col=[0,1], header=0,
             skiprows=3, skipinitialspace=True)
 
         return COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF

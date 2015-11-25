@@ -10,9 +10,13 @@ if __name__ == '__main__':
 
     setup(
         name=package_name,
-        author='Sudipta Basak, Maruf Rahman',
         version=__version__,
+        url='https://github.com/GeoscienceAustralia/sira',
+        license='',
+        author='Maruf Rahman, Sudipta Basak',
         test_suite='.tests',
+        tests_require=['nose'],
+        install_requires=['graphviz'],
         packages=find_packages(),
         package_dir={package_name: package_name}
     )

@@ -287,7 +287,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
 
 def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
 
-    print("\nCalculating system response to hazard transfer parameters...")
+    # print("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
     sys_output_dict = {k: {o: 0 for o in fc.network.out_node_list} for k in sc.hazard_intensity_str}
     ids_comp_vs_haz = {p: np.zeros((sc.num_samples, fc.num_elements)) for p in sc.hazard_intensity_str}
@@ -297,7 +297,8 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
     output_array_given_recovery = np.zeros((sc.num_samples, sc.num_hazard_pts, sc.num_time_steps))
 
     if parallel_or_serial:
-        print('\n===================>>>>>multiprocessor computation on <<<<========================')
+        print('\nInitiating computation of loss arrays...')
+        print(Fore.YELLOW + 'using parallel processing\n' + Fore.RESET)
         parallel_return = parmap.map(multiprocess_enabling_loop, range(len(sc.hazard_intensity_str)),
                                      sc.hazard_intensity_str, sc.num_hazard_pts, fc, sc)
 
@@ -309,7 +310,8 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
             economic_loss_array[:, idxPGA] = parallel_return[idxPGA][4]
             output_array_given_recovery[:, idxPGA, :] = parallel_return[idxPGA][5]
     else:
-        print('\n==================>>>>>single processor computation on <<<<=======================')
+        print('\nInitiating computation of loss arrays...')
+        print(Fore.RED + 'not using parallel processing\n' + Fore.RESET)
         for idxPGA, _PGA in enumerate(sc.hazard_intensity_str):
             ids_comp_vs_haz[_PGA], sys_output_dict[_PGA], component_resp_dict[_PGA], \
                 calculated_output_array[:, idxPGA], economic_loss_array[:, idxPGA], \
@@ -536,4 +538,5 @@ def post_porcessing(fc, sc, ids_comp_vs_haz, sys_output_dict, component_resp_dic
         np.save(os.path.join(sc.raw_output_dir, 'pe_sys_econloss.npy'),
                 pe_sys_econloss)
 
-    print("\nOutputs saved in: " + Fore.GREEN + sc.output_path)
+    print("\nOutputs saved in: " +
+          Fore.GREEN + sc.output_path + Fore.RESET + '\n')
