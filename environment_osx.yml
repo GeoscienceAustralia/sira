@@ -55,6 +55,7 @@ dependencies:
   - actdiag==0.5.1
   - brewer2mpl==1.4.1
   - funcparserlib==0.3.6
+  - lmfit==0.9.2
   - nwdiag==1.0.0
   - parmap==1.2.3
   - prettyplotlib==0.1.7
