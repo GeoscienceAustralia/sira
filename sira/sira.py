@@ -26,7 +26,6 @@ A tool for seismic performace analysis of electrical power infrastructure
 ----------------------------------------------------------------------------
 """
 
-# from __future__ import print_function
 from __future__ import print_function
 import numpy as np
 import scipy.stats as stats
@@ -393,27 +392,26 @@ def post_porcessing(fc, sc, ids_comp_vs_haz, sys_output_dict, component_resp_dic
     #   Complete: 0.8 to 1.0
     #
     # -----------------------------------------------------------------------------
-    sys_dmg_states = ['DS0 None',
-                      'DS1 Slight',
-                      'DS2 Moderate',
-                      'DS3 Extensive',
-                      'DS4 Complete']
-
-    ds_bounds = [0.01, 0.15, 0.4, 0.8, 1.0]
+    # sys_dmg_states = ['DS0 None',
+    #                   'DS1 Slight',
+    #                   'DS2 Moderate',
+    #                   'DS3 Extensive',
+    #                   'DS4 Complete']
+    #
+    # ds_bounds = [0.01, 0.15, 0.4, 0.8, 1.0]
     # ds_bounds = [0.04, 0.30, 0.75, 0.99, 1.10]
 
     # --- System fragility ---
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
-
     for j in range(sc.num_hazard_pts):
         for i in range(sc.num_samples):
             # system output and economic loss
-            sys_frag[i, j] = np.sum(economic_loss_array[i, j] > ds_bounds, dtype=np.bool)
+            sys_frag[i, j] = np.sum(economic_loss_array[i, j] > fc.dmg_scale_bounds)  # dtype=np.bool
 
     # --- Probability of Exceedence ---
-    pe_sys_econloss = np.zeros((len(sys_dmg_states), sc.num_hazard_pts))
+    pe_sys_econloss = np.zeros((len(fc.sys_dmg_states), sc.num_hazard_pts))
     for j in range(sc.num_hazard_pts):
-        for i in range(len(sys_dmg_states)):
+        for i in range(len(fc.sys_dmg_states)):
             pe_sys_econloss[i, j] = np.sum(sys_frag[:, j] >= i)/float(sc.num_samples)
 
     # -----------------------------------------------------------------------------
@@ -459,9 +457,9 @@ def post_porcessing(fc, sc, ids_comp_vs_haz, sys_output_dict, component_resp_dic
                         np.sum(comp_class_failures[compclass][i, j] > ds_lims_compclasses[compclass])
 
         # --- Probability of Exceedence - Based on Failure of Component Classes ---
-        pe_sys_cpfailrate = np.zeros((len(sys_dmg_states), sc.num_hazard_pts))
+        pe_sys_cpfailrate = np.zeros((len(fc.sys_dmg_states), sc.num_hazard_pts))
         for p in range(sc.num_hazard_pts):
-            for d in range(len(sys_dmg_states)):
+            for d in range(len(fc.sys_dmg_states)):
                 ds_ss_ix = []
                 for compclass in cp_classes_costed:
                     ds_ss_ix.append(np.sum(comp_class_frag[compclass][:, p] >= d) / float(sc.num_samples))
