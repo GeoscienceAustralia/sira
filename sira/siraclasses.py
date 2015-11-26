@@ -81,6 +81,7 @@ class FacilityDataGetter(object):
         self.setup = readfile(setup_file)
         self.system_classes = self.setup["SYSTEM_CLASSES"]
         self.system_class = self.setup["SYSTEM_CLASS"]
+        self.system_subclass = self.setup["SYSTEM_SUBCLASS"]
         self.commodity_flow_types = self.setup["COMMODITY_FLOW_TYPES"]
         sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
         self.input_dir_name = self.setup["INPUT_DIR_NAME"]
@@ -399,7 +400,7 @@ class Scenario(ScenarioDataGetter, IoDataGetter):
         ScenarioDataGetter.__init__(self, setup_file)
         IoDataGetter.__init__(self, setup_file)
 
-        """Set up parameters fo2r simulating hazard impact"""
+        """Set up parameters for simulating hazard impact"""
         self.num_hazard_pts = int(round((self.haz_param_max - self.haz_param_min) /
                                         float(self.haz_param_step) + 1))
 
@@ -580,11 +581,12 @@ class PowerStation(Facility):
     the Critical Infrastructure Facility class
     """
 
-    def __init__(self, setup_file, generation_tech=''):
+    def __init__(self, setup_file):
         super(PowerStation, self).__init__(setup_file)
 
         self.asset_type = 'Power Station'
         self.name = ''
+        generation_tech = self.system_subclass
 
         self.sys_dmg_states = ['DS0 None',
                                'DS1 Slight',
