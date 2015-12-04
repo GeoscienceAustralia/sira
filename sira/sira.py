@@ -555,7 +555,7 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
 
     # ------------------------------------------------------------------------
 
-    if fc.system_class == 'Power Station (Coal Fired)':
+    if fc.system_class == 'PowerStation':
         uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
         ds_lims_compclasses = {
             'Boiler':                       [0.0, 0.05, 0.40, 0.70, 1.00],
