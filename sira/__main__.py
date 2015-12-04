@@ -3,14 +3,13 @@ __author__ = 'Sudipta Basak'
 
 import sys, os
 from siraclasses import Scenario, Facility, PowerStation
-from sira import power_calc, calc_loss_arrays, post_porcessing
+from sira import power_calc, calc_loss_arrays, post_processing
 
 
 if __name__ == "__main__":
     SETUPFILE = sys.argv[1]
     discard = {}
     config = {}
-    # execfile(SETUPFILE, discard, config)
 
     exec (open(SETUPFILE).read(), discard, config)
     FacilityObj = eval(config["SYSTEM_CLASS"])
@@ -33,10 +32,11 @@ if __name__ == "__main__":
     ids_comp_vs_haz, sys_output_dict, \
         component_resp_dict, calculated_output_array, \
         economic_loss_array, output_array_given_recovery \
-        = calc_loss_arrays(fc, sc, component_resp_df,
+        = calc_loss_arrays(fc, sc,
+                           component_resp_df,
                            parallel_or_serial=sc.parallel_or_serial)
 
-    post_porcessing(fc, sc,
+    post_processing(fc, sc,
                     ids_comp_vs_haz,
                     sys_output_dict,
                     component_resp_dict,
