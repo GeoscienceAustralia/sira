@@ -142,7 +142,7 @@ class FacilityDataGetter(object):
 class Network(object):
 
     def __init__(self, facility):
-        self.nodes, self.num_elements, self.G, self.nodes_all = self.return_network(facility)
+        self.num_elements, self.G, self.nodes_all = self.return_network(facility)
         self.sup_node_list, self.dep_node_list, self.src_node_list, self.out_node_list = self.network_setup(facility)
 
     @staticmethod
@@ -153,16 +153,16 @@ class Network(object):
         comp_df = facility.comp_df
         node_conn_df = facility.node_conn_df
         nodes_all = sorted(comp_df.index)
+        # nodes = comp_df.index.tolist()
         num_elements = len(nodes_all)
 
         #                    ------
         # Network setup with igraph (for analysis)
         #                    ------
         G = igraph.Graph(directed=True)
-        nodes = comp_df.index.tolist()
 
-        G.add_vertices(len(nodes))
-        G.vs["name"] = nodes
+        G.add_vertices(len(nodes_all))
+        G.vs["name"] = nodes_all
         G.vs["component_type"] = list(comp_df['component_type'].values)
         G.vs["cost_fraction"] = list(comp_df['cost_fraction'].values)
         G.vs["node_type"] = list(comp_df['node_type'].values)
@@ -175,7 +175,7 @@ class Network(object):
                        capacity=G.vs.find(row['Orig'])["capacity"],
                        weight=row['Weight'],
                        distance=row['Distance'])
-        return nodes, num_elements, G, nodes_all
+        return num_elements, G, nodes_all
 
     @staticmethod
     def network_setup(facility):
@@ -409,7 +409,8 @@ class Scenario(ScenarioDataGetter, IoDataGetter):
         self.hazard_intensity_str = [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
         """Set up parameters for simulating recovery from hazard impact"""
         self.restoration_time_range, self.time_step = np.linspace(
-            0, self.restore_time_upper, num=self.restore_time_upper + 1, endpoint=self.use_end_point, retstep=True)
+            0, self.restore_time_upper, num=self.restore_time_upper + 1,
+            endpoint=self.use_end_point, retstep=True)
 
         self.num_time_steps = len(self.restoration_time_range)
 
