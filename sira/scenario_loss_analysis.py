@@ -91,7 +91,9 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
         steps[0, -1] = vertices[0, -1]
         steps[1:, 0::2], steps[1:, 1::2] = vertices[1:, :], vertices[1:, :]
     else:
-        raise RuntimeError("should never hit end of if-elif block for validated input")
+        raise RuntimeError(
+            "should never hit end of if-elif block for validated input"
+        )
 
     # un-pack
     xx, yy1, yy2 = steps
@@ -449,7 +451,8 @@ def vis_restoration_process(scenario,
     y = range(1, len(comps)+1)
     xstep = 10
     # xmax  = int(xstep * np.ceil(max(rst_setup_df['RstEnd'])/np.float(xstep)))
-    xmax = int(xstep * np.ceil(1.05*max(rst_setup_df['RstEnd'])/np.float(xstep)))
+    xmax = \
+        int(xstep * np.ceil(1.05*max(rst_setup_df['RstEnd'])/np.float(xstep)))
     if xmax < xstep:
         xstep = 1
     elif xmax == 0:
@@ -784,12 +787,18 @@ def draw_component_loss_barchart_v2(scenario,
     #   - Contribution to % loss of total system, by components type
     #   - Percentage econ loss for all components of a specific type
 
-    axes.barh(pos-bar_width-bar_offset, ctype_loss_vals_tot, bar_width,
-              color=bar_clr_1, alpha=0.85, edgecolor='bisque',
-              label="Percentage loss of total system value (by component type)")
-    axes.barh(pos+bar_offset*2, ctype_loss_by_type, bar_width,
-              color=bar_clr_2, alpha=0.85, edgecolor='bisque',
-              label="Percentage loss for component type")
+    axes.barh(
+        pos-bar_width-bar_offset, ctype_loss_vals_tot, bar_width,
+        color=bar_clr_1, alpha=0.85, edgecolor='bisque',
+        label="Percentage loss of total system value (by component type)"
+    )
+
+    axes.barh(
+        pos+bar_offset*2, ctype_loss_by_type, bar_width,
+        color=bar_clr_2, alpha=0.85, edgecolor='bisque',
+        label="Percentage loss for component type"
+    )
+
     axes.tick_params(top='off', bottom='off', left='on', right='off')
 
     axes.set_xlim(0, max(ctype_loss_by_type))
@@ -1106,7 +1115,7 @@ cp_types_costed = [x for x in facility.cp_types_in_system
 
 # Get list of only those components that are included in cost calculations:
 
-cpmap = {c:sorted(facility.comp_df[facility.comp_df['component_type']==c]\
+cpmap = {c:sorted(facility.comp_df[facility.comp_df['component_type'] == c]
                   .index.tolist())
         for c in facility.cp_types_in_system}
 comps_costed = [v for x in cp_types_costed for v in cpmap[x]]

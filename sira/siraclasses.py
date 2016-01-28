@@ -74,8 +74,9 @@ class IoDataGetter(object):
 class FacilityDataGetter(object):
     """
     Module for reading in scenario setup information.
-    It is a wrapper to protect the core classes from being affected by changes to variable names
-    (e.g. if new units for hazard intensity are introduced), and changes to input file formats.
+    It is a wrapper to protect the core classes from being affected by
+    changes to variable names (e.g. if new units for hazard intensity
+    are introduced), and changes to input file formats.
     """
     def __init__(self, setup_file):
         self.setup = readfile(setup_file)
@@ -85,9 +86,13 @@ class FacilityDataGetter(object):
         self.commodity_flow_types = self.setup["COMMODITY_FLOW_TYPES"]
         sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
         self.input_dir_name = self.setup["INPUT_DIR_NAME"]
-        self.sys_config_file = os.path.join(os.getcwd(), self.input_dir_name, sys_config_file_name)
-        self.comp_df, self.fragility_data, self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
+        self.sys_config_file = os.path.join(os.getcwd(),
+                                            self.input_dir_name,
+                                            sys_config_file_name)
+        self.comp_df, self.fragility_data,\
+        self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
             self.assign_infrastructure_data()
+
         self.nominal_production = self.sysout_setup['Capacity'].sum()
 
         self.sys_dmg_states = ['DS0 None',
@@ -142,14 +147,17 @@ class FacilityDataGetter(object):
 class Network(object):
 
     def __init__(self, facility):
-        self.num_elements, self.G, self.nodes_all = self.return_network(facility)
-        self.sup_node_list, self.dep_node_list, self.src_node_list, self.out_node_list = self.network_setup(facility)
+        self.num_elements, self.G, self.nodes_all = \
+            self.return_network(facility)
+
+        self.sup_node_list, self.dep_node_list, \
+        self.src_node_list, self.out_node_list = self.network_setup(facility)
 
     @staticmethod
     def return_network(facility):
-        # -----------------------------------------------------------------------------
+        # ---------------------------------------------------------------------
         # Define the system as a network, with components as nodes
-        # -----------------------------------------------------------------------------
+        # ---------------------------------------------------------------------
         comp_df = facility.comp_df
         node_conn_df = facility.node_conn_df
         nodes_all = sorted(comp_df.index)
@@ -190,16 +198,21 @@ class Network(object):
                        capacity=row['Capacity'],
                        weight=row['Weight'],
                        distance=row['Distance'])
-        systemlayout.draw_sys_layout(sys, comp_df, out_dir=facility.output_path,
-                                     graph_label="System Component Layout")
-        # -----------------------------------------------------------------------------
+        systemlayout.draw_sys_layout(
+            sys, comp_df, out_dir=facility.output_path,
+            graph_label="System Component Layout"
+        )
+        # ---------------------------------------------------------------------
         # List of tagged nodes with special roles:
         sup_node_list = [str(k) for k in
-                         list(comp_df.ix[comp_df['node_type'] == 'supply'].index)]
+                         list(comp_df.ix[comp_df['node_type'] ==
+                                         'supply'].index)]
         dep_node_list = [str(k) for k in
-                         list(comp_df.ix[comp_df['node_type'] == 'dependency'].index)]
+                         list(comp_df.ix[comp_df['node_type'] ==
+                                         'dependency'].index)]
         src_node_list = [k for (k, v)in sys.in_degree().iteritems() if v == 0]
-        out_node_list = list(facility.sysout_setup.index.get_level_values('OutputNode'))
+        out_node_list = \
+            list(facility.sysout_setup.index.get_level_values('OutputNode'))
 
         return sup_node_list, dep_node_list, src_node_list, out_node_list
 
@@ -212,11 +225,16 @@ class Facility(FacilityDataGetter, IoDataGetter):
     def __init__(self, setup_file):
         FacilityDataGetter.__init__(self, setup_file)
         IoDataGetter.__init__(self, setup_file)
-        self.cp_types_in_system, self.cp_types_in_db = self.check_types_with_db()
-        self.uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
-        self.cp_types_costed, self.cpmap, self.costed_comptypes, self.comps_costed = \
+        self.cp_types_in_system, self.cp_types_in_db = \
+            self.check_types_with_db()
+        self.uncosted_comptypes = \
+            ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
+        self.cp_types_costed, self.cpmap,\
+            self.costed_comptypes, self.comps_costed = \
             self.list_of_components_for_cost_calculation()
-        self.cpdict, self.output_dict, self.input_dict, self.nodes_by_commoditytype = self.convert_df_to_dict()
+        self.cpdict, self.output_dict,\
+            self.input_dict, self.nodes_by_commoditytype = \
+            self.convert_df_to_dict()
         self.sys = self.build_system_model()
         self.fragdict = self.fragility_dict()
         self.compdict = self.comp_df.to_dict()
@@ -255,9 +273,9 @@ class Facility(FacilityDataGetter, IoDataGetter):
         return sys
 
     def convert_df_to_dict(self):
-        # -----------------------------------------------------------------------------
+        # ---------------------------------------------------------------------
         # Convert Dataframes to Dicts for lookup efficiency
-        # -----------------------------------------------------------------------------
+        # ---------------------------------------------------------------------
         comp_df = self.comp_df
         sysout_setup = self.sysout_setup
         sysinp_setup = self.sysinp_setup
@@ -267,12 +285,18 @@ class Facility(FacilityDataGetter, IoDataGetter):
             cpdict[i] = comp_df.ix[i].to_dict()
 
         output_dict = {}
-        for k1 in list(np.unique(sysout_setup.index.get_level_values('OutputNode'))):
+        outputnodes = \
+            list(np.unique(sysout_setup.index.get_level_values('OutputNode')))
+
+        for k1 in outputnodes:
             output_dict[k1] = {}
             output_dict[k1] = sysout_setup.ix[k1].to_dict()
 
         input_dict = {}
-        for k1 in list(np.unique(sysinp_setup.index.get_level_values('InputNode'))):
+        inputnodes = \
+            list(np.unique(sysinp_setup.index.get_level_values('InputNode')))
+
+        for k1 in inputnodes:
             input_dict[k1] = {}
             input_dict[k1] = sysinp_setup.ix[k1].to_dict()
             # input_dict[k1]['AvlCapacity'] = input_dict[k1]['Capacity']
@@ -332,17 +356,21 @@ class Facility(FacilityDataGetter, IoDataGetter):
         comp_df = self.comp_df
         fragilities = self.fragility_data
         # check to ensure component types match with DB
-        cp_types_in_system = list(np.unique(comp_df['component_type'].tolist()))
+        cp_types_in_system = \
+            list(np.unique(comp_df['component_type'].tolist()))
         cp_types_in_db = list(fragilities.index.levels[0])
         assert set(cp_types_in_system).issubset(cp_types_in_db) == True
         return cp_types_in_system, cp_types_in_db
 
     def list_of_components_for_cost_calculation(self):
-        # get list of only those components that are included in cost calculations
-        cp_types_costed = [x for x in self.cp_types_in_system if x not in self.uncosted_comptypes]
-        costed_comptypes = sorted(list(set(self.cp_types_in_system) - set(self.uncosted_comptypes)))
-        cpmap = {c: sorted(self.comp_df[self.comp_df['component_type'] == c].index.tolist())
-                 for c in self.cp_types_in_system}
+        # get list of only those components that are included in
+        # cost calculations
+        cp_types_costed = [x for x in self.cp_types_in_system
+                           if x not in self.uncosted_comptypes]
+        costed_comptypes = sorted(list(set(self.cp_types_in_system) -
+                                       set(self.uncosted_comptypes)))
+        cpmap = {c: sorted(self.comp_df[self.comp_df['component_type'] == c].
+                           index.tolist()) for c in self.cp_types_in_system}
         comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
         return cp_types_costed, cpmap, costed_comptypes, comps_costed
 
@@ -388,7 +416,7 @@ class ScenarioDataGetter(object):
         self.env = self.setup["ENV"]
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]  # same as sira_bk
+        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
         self.restoration_streams = self.setup["RESTORATION_STREAMS"]
 
@@ -401,7 +429,7 @@ class RestorationDataGetter(object):
         self.setup = readfile(setup_file)
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]  # same as sira_bk
+        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
         self.restoration_streams = self.setup["RESTORATION_STREAMS"]
 
@@ -416,21 +444,25 @@ class Scenario(ScenarioDataGetter, IoDataGetter):
         IoDataGetter.__init__(self, setup_file)
 
         """Set up parameters for simulating hazard impact"""
-        self.num_hazard_pts = int(round((self.haz_param_max - self.haz_param_min) /
-                                        float(self.haz_param_step) + 1))
+        self.num_hazard_pts = \
+            int(round((self.haz_param_max - self.haz_param_min) /
+                      float(self.haz_param_step) + 1))
 
-        self.hazard_intensity_vals = np.linspace(self.haz_param_min, self.haz_param_max,
-                                                 num=self.num_hazard_pts)
-        self.hazard_intensity_str = [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
-        """Set up parameters for simulating recovery from hazard impact"""
+        self.hazard_intensity_vals = \
+            np.linspace(self.haz_param_min, self.haz_param_max,
+                        num=self.num_hazard_pts)
+        self.hazard_intensity_str = \
+            [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
+
+        # Set up parameters for simulating recovery from hazard impact
         self.restoration_time_range, self.time_step = np.linspace(
             0, self.restore_time_upper, num=self.restore_time_upper + 1,
             endpoint=self.use_end_point, retstep=True)
 
         self.num_time_steps = len(self.restoration_time_range)
 
-        self.restoration_chkpoints, self.restoration_pct_steps = np.linspace(
-            0.0, 1.0, num=self.restore_pct_chkpoints, retstep=True)
+        self.restoration_chkpoints, self.restoration_pct_steps = \
+            np.linspace(0.0, 1.0, num=self.restore_pct_chkpoints, retstep=True)
 
 
 class ComponentType(object):
@@ -450,7 +482,7 @@ class ComponentType(object):
                        'sigma_1', 'sigma_2',
                        'recovery_mean', 'recovery_std']
 
-        ct_fragility_df = fragility_data.loc[(self.type,), dmg_headers]. \
+        ct_fragility_df = fragility_data.loc[(self.type,), dmg_headers].\
             query("damage_state!='DS0 None'")
 
         # for elem in ct_fragility_df.index.tolist():
