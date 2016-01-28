@@ -4,7 +4,7 @@ import scipy.stats as stats
 import pandas as pd
 import igraph
 
-import sys, getopt, os
+import sys, os
 import copy
 import itertools
 from colorama import Fore, init
@@ -23,13 +23,13 @@ sns.set(style='whitegrid', palette='coolwarm')
 
 def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
     ''' 
+    Fills between a step plot and x-axis
+
     ********************************************************************
     Source:        https://github.com/matplotlib/matplotlib/issues/643
     From post by:  tacaswell
     Post date:     Nov 20, 2014
     ********************************************************************
-
-    fill between a step plot and 
 
     Parameters
     ----------
@@ -102,34 +102,35 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
 # ============================================================================
 
 
-def comp_recovery_given_haz(compname, hazval, t, compdict, fragdict, 
-                            dmg_states, component_response, 
+def comp_recovery_given_haz(facility, compname, hazval, t,
+                            comptype_dmg_states, component_response,
                             comps_avl_for_int_replacement, 
                             threshold = 0.99):
     """
-    Calculates level of recovery of component, given time t after impact
-    of hazard with intensity 'hazval'.
+    Calculates level of recovery of component at time t after impact
 
     Currently implemented for earthquake only.
     Hazard transfer parameter is PGA.
 
     TEST PARAMETERS:
-    ----------------------------------------------------------------------------
     Example from HAZUS MH MR3, Technical Manual, Ch.8, p8-73
     t = 3
-    dmg_states = ['DS0 None',
-                  'DS1 Slight', 'DS2 Moderate', 'DS3 Extensive', 'DS4 Complete']
+    comptype_dmg_states = ['DS0 None', 'DS1 Slight', 'DS2 Moderate',
+        'DS3 Extensive', 'DS4 Complete']
     m   = [np.inf, 0.15, 0.25, 0.35, 0.70]
     b   = [   1.0, 0.60, 0.50, 0.40, 0.40]
     rmu = [-np.inf, 1.0, 3.0, 7.0, 30.0]
     rsd = [    1.0, 0.5, 1.5, 3.5, 15.0]
-    ----------------------------------------------------------------------------
+    --------------------------------------------------------------------------
     """
-    
+
+    compdict = facility.compdict
+    fragdict = facility.fragdict
+
     ct = compdict['component_type'][compname]
     
-    m = [fragdict['damage_median'][ct][ds] for ds in dmg_states]
-    b = [fragdict['damage_logstd'][ct][ds] for ds in dmg_states]
+    m = [fragdict['damage_median'][ct][ds] for ds in comptype_dmg_states]
+    b = [fragdict['damage_logstd'][ct][ds] for ds in comptype_dmg_states]
     # fn  = sorted(fragdict['functionality'][ct].values(), reverse=True)
     comp_fn = component_response.loc[(compname, 'func_mean'), ('%0.3f'% hazval)]
     
@@ -137,14 +138,14 @@ def comp_recovery_given_haz(compname, hazval, t, compdict, fragdict,
     if ct not in uncosted_comptypes \
         and comps_avl_for_int_replacement >= 1:
         # Parameters for Temporary Restoration:
-        rmu = [fragdict['tmp_rst_mean'][ct][ds] for ds in dmg_states]
-        rsd = [fragdict['tmp_rst_std'][ct][ds] for ds in dmg_states]
+        rmu = [fragdict['tmp_rst_mean'][ct][ds] for ds in comptype_dmg_states]
+        rsd = [fragdict['tmp_rst_std'][ct][ds] for ds in comptype_dmg_states]
     else:
         # Parameters for Full Restoration: 
-        rmu = [fragdict['recovery_mean'][ct][ds] for ds in dmg_states]
-        rsd = [fragdict['recovery_std'][ct][ds] for ds in dmg_states]
+        rmu = [fragdict['recovery_mean'][ct][ds] for ds in comptype_dmg_states]
+        rsd = [fragdict['recovery_std'][ct][ds] for ds in comptype_dmg_states]
 
-    nd = len(dmg_states)
+    nd = len(comptype_dmg_states)
     ptmp = []
     pe = np.array(np.zeros(nd))
     pb = np.array(np.zeros(nd))
@@ -163,7 +164,7 @@ def comp_recovery_given_haz(compname, hazval, t, compdict, fragdict,
         elif d == nd-1:
             pb[d] = pe[d]
     
-    for d, ds in enumerate(dmg_states):
+    for d, ds in enumerate(comptype_dmg_states):
         if ds == 'DS0 None':
             recov[d] = 1.0
             reqtime[d] = 0.00
@@ -181,18 +182,22 @@ def comp_recovery_given_haz(compname, hazval, t, compdict, fragdict,
 # ============================================================================
 
 
-def prep_repair_list(G, weight_criteria, sc_haz_val_str, 
-                     out_node_list, nodes_by_commoditytype, 
+def prep_repair_list(facility_obj,
+                     weight_criteria, sc_haz_val_str,
                      component_meanloss, comp_fullrst_time):
     """
-    **************************************************************************
-    Identify the shortest paths that need to be repaired in order to
-    restore supply to each of the output nodes.
+    Identify the shortest component repair list to restore supply to output
+
     This is done based on:
        [1] the priority assigned to the output line
        [2] a weighting criterion applied to each node in the system
-    **************************************************************************
     """
+    G = facility_obj.network.G
+    input_dict = facility_obj.input_dict
+    output_dict = facility_obj.output_dict
+    nodes_by_commoditytype = facility_obj.nodes_by_commoditytype
+    out_node_list = facility_obj.network.out_node_list
+
     w = 'weight'
     for tp in G.get_edgelist():
         eid = G.get_eid(*tp)
@@ -235,7 +240,7 @@ def prep_repair_list(G, weight_criteria, sc_haz_val_str,
                 LEN_CHK = np.inf
                 
                 sp_dep = []
-                for dnode in dep_node_list:
+                for dnode in facility_obj.network.dep_node_list:
                     sp_dep.extend(G.get_shortest_paths(
                         G.vs.find(dnode), to=G.vs.find(onode),
                         weights=w, mode='OUT')[0]
@@ -270,20 +275,57 @@ def prep_repair_list(G, weight_criteria, sc_haz_val_str,
 
 def calc_restoration_setup(out_node_list, repair_list_combined, 
                            rst_stream, rst_offset, sc_haz_val_str, 
-                           uncosted_comptypes, comp_fullrst_time):
-    
+                           comps_costed, comp_fullrst_time, output_path,
+                           haztag,
+                           buffer_time_to_commission=0.00):
+    """
+    Calculates the timeline for full repair of all output lines of the system
+
+    Depends on the given the hazard/restoration scenario specified through
+    the parameters
+    --------------------------------------------------------------------------
+    :param out_node_list:
+            list of output nodes
+    :param repair_list_combined:
+            dict with output nodes as keys, with list of nodes needing repair
+            for each output node as values
+    :param rst_stream:
+            maximum number of components that can be repaired concurrently
+    :param rst_offset:
+            time delay from hazard impact to start of repair
+    :param sc_haz_val_str:
+            hazard intensity value for scenario, given as a string
+    :param comps_costed:
+            list of all system components for which costs are modelled
+    :param comp_fullrst_time:
+            dataframe with components names as indices, and time required to
+            restore those components
+    :param output_path:
+            directory path for saving output
+    :param haztag:
+            tag to add to the outputs produced
+    :param buffer_time_to_commission:
+            buffer time between completion of one repair task and
+            commencement of the next repair task
+    --------------------------------------------------------------------------
+    :return: rst_setup_df: PANDAS DataFrame with:
+                - The components to repaired as indices
+                - Time required to repair each component
+                - Repair start time for each component
+                - Repair end time for each component
+    --------------------------------------------------------------------------
+    """
     cols = ['NodesToRepair', 'OutputNode', 'RestorationTimes', 
             'RstStart', 'RstEnd', 'DeltaTC', 'RstSeq', 'Fin', 'EconLoss']
 
 
-    Buffer_Test_Commission = 0.00
     fixed_asset_list = []
     restore_time_each_node = {}
     # restore_time_aggregate = {}
     # rst_setup_dict = {col:{n:[] for n in out_node_list} for col in cols}
     
     rst_setup_df = pd.DataFrame(columns=cols)
-    df = pd.DataFrame(columns=cols)
+    # df = pd.DataFrame(columns=cols)
     
     for onode in out_node_list:
     
@@ -304,19 +346,9 @@ def calc_restoration_setup(out_node_list, repair_list_combined,
              'RestorationTimes': restore_time_each_node[onode],
              'Fin': 0
              })
-        df = df.sort(['RestorationTimes'], ascending=[0])
+        df = df.sort_values(by=['RestorationTimes'], ascending=[0])
         rst_setup_df = rst_setup_df.append(df)
-    
-    # ************************************************************************
-    # get list of only those components that are included in cost calculations
-    cp_types_costed = [x for x in facility.cp_types_in_system
-                       if x not in uncosted_comptypes]
-    
-    cpmap = {c:sorted(comp_df[comp_df['component_type']==c].index.tolist())
-            for c in facility.cp_types_in_system}
-    comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
-    # ************************************************************************
-    
+
     uncosted_comps = set(facility.network.nodes_all).difference(comps_costed)
     comps_to_drop = set(rst_setup_df.index.values.tolist()).\
                         intersection(uncosted_comps)
@@ -325,7 +357,7 @@ def calc_restoration_setup(out_node_list, repair_list_combined,
     rst_setup_df = rst_setup_df[rst_setup_df['RestorationTimes']!=0]
     rst_setup_df = rst_setup_df.set_index('NodesToRepair')[cols[1:]]
     rst_setup_df['DeltaTC'] = pd.Series(
-        rst_setup_df['RestorationTimes'].values*Buffer_Test_Commission,
+        rst_setup_df['RestorationTimes'].values * buffer_time_to_commission,
         index=rst_setup_df.index
     )
 
@@ -333,7 +365,7 @@ def calc_restoration_setup(out_node_list, repair_list_combined,
         oldlist = repair_path[k]
         repair_path[k] = [v for v in oldlist if v not in uncosted_comps]
 
-    rst_seq    = []
+    rst_seq = []
     num = len(rst_setup_df.index)
     for i in range(1, 1+int(np.ceil(num/float(rst_stream)))):
         rst_seq.extend([i]*rst_stream)
@@ -371,7 +403,7 @@ def calc_restoration_setup(out_node_list, repair_list_combined,
 
     # add a column for 'component_meanloss'
     rst_setup_df.to_csv(
-        os.path.join(output_path, 'restoration_setup'+haztag+'.csv'),
+        os.path.join(output_path, 'restoration_setup_'+haztag+'.csv'),
         index_label=['NodesToRepair'], sep=','
     )
 
@@ -380,12 +412,16 @@ def calc_restoration_setup(out_node_list, repair_list_combined,
 # ============================================================================
 
 
-def vis_restoration_process(rst_setup_df,
+def vis_restoration_process(scenario,
+                            facility,
+                            rst_setup_df,
                             rst_stream,
-                            out_node_list,
-                            repair_path):
+                            repair_path,
+                            haztag):
     """
-    **************************************************************************
+    Plots restoration timeline of components and supply to output nodes
+
+    --------------------------------------------------------------------------
     Outputs:
     [1] Plot of restored capacity, as step functions
         - Restoration displayed as percentage of pre-disasater
@@ -394,23 +430,26 @@ def vis_restoration_process(rst_setup_df,
           'output streams' or 'production lines'
         - Restoration is prioritised in accordance with line priorities
           defined in input file
-    [2] Simple Gantt chart of component restoration
-    [3] Array of restored line capacity for each time step simulated
-    [2] Dict with LINES as keys, and TIME to full restoration as values
-    **************************************************************************
+    [2] A simple Gantt chart of component restoration
+    [3] rst_time_line:
+        Array of restored line capacity for each time step simulated
+    [2] line_rst_times:
+        Dict with LINES as keys, and TIME to full restoration as values
+    --------------------------------------------------------------------------
     """
-    import seaborn as sns
     sns.set(style='white')
     
-    gainsboro  = "#DCDCDC"
+    gainsboro = "#DCDCDC"
     whitesmoke = "#F5F5F5"
     lineht = 10
-    
+
+    out_node_list = facility.network.out_node_list
+
     comps = rst_setup_df.index.values.tolist()
-    y     = range(1, len(comps)+1)
+    y = range(1, len(comps)+1)
     xstep = 10
     # xmax  = int(xstep * np.ceil(max(rst_setup_df['RstEnd'])/np.float(xstep)))
-    xmax  = int(xstep * np.ceil(1.05*max(rst_setup_df['RstEnd'])/np.float(xstep)))
+    xmax = int(xstep * np.ceil(1.05*max(rst_setup_df['RstEnd'])/np.float(xstep)))
     if xmax < xstep:
         xstep = 1
     elif xmax == 0:
@@ -436,7 +475,7 @@ def vis_restoration_process(rst_setup_df,
     ax1.hlines(y, rst_setup_df['RstStart'], rst_setup_df['RstEnd'],
                linewidth=lineht, color=spl.COLR_SET2[2])
     ax1.set_title('Component Restoration Timeline: '+str(rst_stream)+
-                ' Simultaneous Repairs', loc='left', y=1.01, size=18)
+                  ' Simultaneous Repairs', loc='left', y=1.01, size=18)
     ax1.set_xlim([0, xmax-1])
     ax1.set_ylim([0.5,max(y)+0.5])
     ax1.set_yticks(y)
@@ -462,14 +501,14 @@ def vis_restoration_process(rst_setup_df,
     ax2.tick_params(axis='x', which="major", bottom='on', length=4) 
     ax2.set_xticks(xtiks);
     ax2.set_xticklabels(range(0, xmax+1, xstep), size=14)
-    ax2.set_xlabel('Restoration Time ('+timeunit+')', size=16)
+    ax2.set_xlabel('Restoration Time ('+scenario.time_unit+')', size=16)
     ax2.set_ylabel('System Capacity (%)', size=16)
     
     rst_time_line = np.zeros((len(out_node_list), xmax))
     line_rst_times = {}
     ypos = 0
     for x, onode in enumerate(out_node_list): 
-        ypos += 100.0*output_dict[onode]['CapFraction']
+        ypos += 100.0 * facility.output_dict[onode]['CapFraction']
         
         # line_rst_times[onode] = \
         #     max(rst_setup_df[rst_setup_df['OutputNode']==onode]['RstEnd'])
@@ -485,7 +524,7 @@ def vis_restoration_process(rst_setup_df,
                      fontname='Open Sans', size=12, color='k', 
                      annotation_clip=False)    
         rst_time_line[x, :] = \
-            100. * output_dict[onode]['CapFraction'] * \
+            100. * facility.output_dict[onode]['CapFraction'] * \
             np.array(list(np.zeros(int(line_rst_times[onode]))) +
                      list(np.ones(xmax - int(line_rst_times[onode])))
                      )
@@ -497,8 +536,8 @@ def vis_restoration_process(rst_setup_df,
                        alpha=0.25, color=spl.COLR_SET1[2])
     
     fig.savefig(
-        os.path.join(output_path, 'fig' + haztag +
-                     'str' + str(rst_stream) + '_restoration.png'),
+        os.path.join(scenario.output_path, 'fig_' + haztag + '_str' +
+                     str(rst_stream) + '_restoration.png'),
         format='png', bbox_inches='tight', dpi=300
     )
 
@@ -509,84 +548,113 @@ def vis_restoration_process(rst_setup_df,
 # ============================================================================
 
 
-def component_criticality(ctype_scenario_outcomes, output_path, haztag):
+def component_criticality(facility, scenario,
+                          ctype_scenario_outcomes,
+                          sc_haz_val_str,
+                          haztag):
     """
-    ****************************************************************
+    Plots criticality of components based on cost & time of reparation
+
+    **************************************************************************
     REQUIRED IMPROVEMENTS:
      1. implement a criticality ranking
      2. use the criticality ranking as the label
      3. remove label overlap
-    ****************************************************************
+    **************************************************************************
     """
-    
-    import seaborn as sns
-    sns.set_style('darkgrid')
-    fig = plt.figure(figsize=(7,7))
+
+    # sns.set(style="ticks",
+    #         rc={"axes.facecolor": '#EAEAF2',
+    #             "axes.linewidth": 0.75,
+    #             "grid.color": 'white',
+    #             "grid.linestyle": '-',
+    #             "grid.linewidth": 1.5,
+    #             "xtick.major.size": 8,
+    #             "ytick.major.size": 8})
+
+    sns.set(style="darkgrid",
+            rc={"axes.edgecolor": '0.15',
+                "axes.linewidth": 0.75,
+                "grid.color": 'white',
+                "grid.linestyle": '-',
+                "grid.linewidth": 1.5,
+                "xtick.major.size": 8,
+                "ytick.major.size": 8})
+
+    fig = plt.figure(figsize=(7, 7))
     ax = fig.add_subplot(111)
-    
-    rt  = ctype_scenario_outcomes['restoration_time']
+
+    rt = ctype_scenario_outcomes['restoration_time']
     pctloss_sys = ctype_scenario_outcomes['loss_tot']
     pctloss_ntype = ctype_scenario_outcomes['loss_per_type']*15
-    
-    nt_names  = ctype_scenario_outcomes.index.tolist()
-    nt_ids    = range(1, len(nt_names)+1)
-    # nt_labels = [str(m)+'  '+n for m,n in zip(nt_ids, nt_names)]
-    
-    clrmap = [plt.cm.autumn(1.2*x/float(len(ctype_scenario_outcomes.index)))
-               for x in range(len(ctype_scenario_outcomes.index))]
-    
+
+    nt_names = ctype_scenario_outcomes.index.tolist()
+    nt_ids = range(1, len(nt_names)+1)
+
+    clrmap = [plt.cm.autumn(1.2 * x/float(len(ctype_scenario_outcomes.index)))
+              for x in range(len(ctype_scenario_outcomes.index))]
+
     ax.scatter(rt, pctloss_sys, s=pctloss_ntype, 
             c=clrmap, label=nt_ids,
             marker='o', edgecolor='bisque', lw=1.5,
             clip_on=False)
-    
+
     for cid, name, i, j in zip(nt_ids, nt_names, rt, pctloss_sys):
         plt.annotate(
             cid, 
-            xy = (i, j), xycoords='data', 
-            xytext = (-20, 20), textcoords='offset points', 
-            ha = 'center', va = 'bottom', rotation=0,
-            size=13, fontweight='bold', color='dodgerblue', annotation_clip=False, 
-            bbox = dict(boxstyle = 'round,pad=0.2', fc = 'yellow', alpha = 0.0),
-            arrowprops = dict(arrowstyle = '-|>', 
-                              shrinkA=5.0,
-                              shrinkB=5.0,
-                              connectionstyle = 'arc3,rad=0.0',
-                              color='dodgerblue', 
-                              alpha=0.8,
-                              linewidth=0.5),)
+            xy=(i, j), xycoords='data',
+            xytext=(-20, 20), textcoords='offset points',
+            ha='center', va='bottom', rotation=0,
+            size=13, fontweight='bold', color='dodgerblue',
+            annotation_clip=False,
+            bbox=dict(boxstyle='round, pad=0.2', fc='yellow', alpha=0.0),
+            arrowprops=dict(arrowstyle = '-|>',
+                            shrinkA=5.0,
+                            shrinkB=5.0,
+                            connectionstyle = 'arc3,rad=0.0',
+                            color='dodgerblue',
+                            alpha=0.8,
+                            linewidth=0.5),)
         
         plt.annotate(
             "{0:>2.0f}   {1:<s}".format(cid, name), 
-            xy = (1.05, 0.95-0.035*cid), xycoords=('axes fraction', 'axes fraction'),
+            xy = (1.05, 0.95-0.035*cid),
+            xycoords=('axes fraction', 'axes fraction'),
             ha = 'left', va = 'top', rotation=0,
             size=9)
     
     ax.text(1.05, 0.995, 
-        'Facility:  '+ SYSTEM_CLASS + '\n'
-        'Hazard:  '+'Earthquake '+sc_haz_val_str+hazard_transfer_unit+' '+hazard_transfer_param,
-        ha = 'left', va = 'top', rotation=0,
-        fontsize=11, clip_on=False, transform=ax.transAxes)
+            'Facility:  '+facility.system_class+'\n'+
+                'Hazard:  '+'Earthquake '+
+                sc_haz_val_str+scenario.hazard_transfer_unit+' '+
+                scenario.hazard_transfer_param,
+            ha = 'left', va = 'top', rotation=0,
+            fontsize=11, clip_on=False, transform=ax.transAxes)
     
     ylim = [0, int(max(pctloss_sys)+1)]
     ax.set_ylim(ylim)
     ax.set_yticks([0, max(ylim)*0.5, max(ylim)])
-    ax.set_yticklabels(['%0.2f' %y for y in [0, max(ylim)*0.5, max(ylim)]], size=12)
+    ax.set_yticklabels(['%0.2f' %y for y in [0, max(ylim)*0.5, max(ylim)]],
+                       size=12)
     
     xlim = [0, np.ceil(max(rt)/10.0)*10]
     ax.set_xlim(xlim)
     ax.set_xticks([0, max(xlim)*0.5, max(xlim)])
-    ax.set_xticklabels([int(x) for x in [0, max(xlim)*0.5, max(xlim)]], size=12)
+    ax.set_xticklabels([int(x) for x in [0, max(xlim)*0.5, max(xlim)]],
+                       size=12)
     
-    plt.grid(linewidth=3.0)
+    # plt.grid(linewidth=3.0)
     ax.set_title('Component Criticality', size=13, y=1.04)
-    ax.set_xlabel('Time to Restoration (' +timeunit+')', size=13, labelpad=14)
+    ax.set_xlabel('Time to Restoration (' +scenario.time_unit+')',
+                  size=13, labelpad=14)
     ax.set_ylabel('System Loss (%)', size=13, labelpad=14)
 
-    figfile = os.path.join(output_path,
-                           'fig' + haztag + 'component_criticality.png')
+    sns.despine(left=False, bottom=False, right=True, top=True,
+                offset=12, trim=True)
+
+    figfile = os.path.join(scenario.output_path,
+                           'fig_' + haztag + '_component_criticality.png')
     fig.savefig(figfile, format='png', bbox_inches='tight', dpi=300)
-    
     plt.close(fig)
 
 # ============================================================================
@@ -598,18 +666,14 @@ def draw_component_loss_barchart_v1(scenario,
                                     ctype_lossbytype_rank,
                                     sc_haz_val_str,
                                     fig_name):
+    """ Plots bar charts of direct economic losses for components types """
+
     # Set color maps:
     clrmap1 = [plt.cm.autumn(1.2*x/float(len(ctype_loss_vals_tot)))
                for x in range(len(ctype_loss_vals_tot))]
     clrmap2 = [clrmap1[int(i)] for i in ctype_lossbytype_rank]
 
-    ##########################################################################
-    #
-    # Component Type contribution to overall system loss
-    #
-    ##########################################################################
-
-    a = 0.7     # transparency
+    a = 1.0     # transparency
     bar_width = 0.7
     yadjust = bar_width/2.0
     subplot_spacing = 0.6
@@ -626,8 +690,9 @@ def draw_component_loss_barchart_v1(scenario,
     # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     # Economic loss contributed by all components of a specific type,
     # as a percentage of the value of the system
-    ax1.barh(pos, ctype_loss_vals_tot,
-             bar_width, color=clrmap1, edgecolor='bisque')
+
+    ax1.barh(pos, ctype_loss_vals_tot, bar_width,
+             color=clrmap1, edgecolor='bisque', alpha=a)
     ax1.set_xlim(0, max(ctype_loss_by_type))
     ax1.set_ylim(pos.max()+bar_width, pos.min()-bar_width)
     # ax1.grid(False)
@@ -645,13 +710,13 @@ def draw_component_loss_barchart_v1(scenario,
                      annotation_clip=False)
 
     ax1.xaxis.set_ticks_position('none')
-    # ax1.set_xticklabels([])
     ax1.set_axis_off()
 
     # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     # Aggregated economic loss for all components of a specific type
-    ax2.barh(pos, ctype_loss_by_type,
-             bar_width, color=clrmap2, edgecolor='bisque')
+
+    ax2.barh(pos, ctype_loss_by_type, bar_width,
+             color=clrmap2, edgecolor='bisque', alpha=a)
     ax2.set_xlim(0, max(ctype_loss_by_type))
     ax2.set_ylim(pos.max()+bar_width, pos.min()-bar_width)
     ax2.tick_params(top='off', bottom='off', left='on', right='off')
@@ -695,260 +760,29 @@ def draw_component_loss_barchart_v1(scenario,
 
 # ============================================================================
 
-if __name__ == "__main__":
 
-    # ------------------------------------------------------------------------
-    # READ in SETUP data
-    # The first argument is the full path to the config file
-    SETUPFILE = sys.argv[1]
-    discard = {}
-    config = {}
-
-    # Read in config file and define Scenario & Facility objects
-    exec (open(SETUPFILE).read(), discard, config)
-    FacilityObj = eval(config["SYSTEM_CLASS"])
-    scenario = Scenario(SETUPFILE)
-    facility = FacilityObj(SETUPFILE)
-
-    # Define input files, output location, scenario inputs
-    INPUT_PATH = os.path.join(os.getcwd(), scenario.input_dir_name)
-    SYS_CONFIG_FILE = os.path.join(INPUT_PATH, facility.sys_config_file_name)
-    RAW_OUTPUT_DIR = scenario.raw_output_dir
-    RESTORATION_TIME_RANGE = scenario.restoration_time_range
-    SYS_DS = facility.sys_dmg_states
-
-    haz_vals_str = [('%0.3f' % np.float(x))
-                    for x in scenario.hazard_intensity_vals]
-
-
-    # ------------------------------------------------------------------------
-    # READ in raw output files from prior analysis of system fragility
-
-    economic_loss_array = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'economic_loss_array.npy'))
-
-    calculated_output_array = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
-
-    output_array_given_recovery = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'output_array_given_recovery.npy'))
-
-    exp_damage_ratio = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
-
-    sys_frag = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'sys_frag.npy'))
-
-    required_time = \
-        np.load(os.path.join(RAW_OUTPUT_DIR, 'required_time.npy'))
-
-    if facility.system_class == 'PowerStation':
-        pe_sys = \
-            np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
-    elif facility.system_class == 'Substation':
-        pe_sys = \
-            np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
-
-    # ------------------------------------------------------------------------
-    # Read in SIMULATED HAZARD RESPONSE - for <COMPONENT TYPES>
-
-    comptype_resp_df = \
-        pd.read_csv(os.path.join(scenario.output_path,
-                                 'comp_type_response.csv'),
-                    index_col=['component_type', 'response'],
-                    skipinitialspace=True)
-    comptype_resp_df.columns = [haz_vals_str]
-
-    ct_resp_flat = comptype_resp_df.reset_index('response')
-
-    ctype_loss_mean = \
-        ct_resp_flat[ct_resp_flat['response'] == 'loss_mean'].\
-        drop('response', axis=1)
-
-    ctype_loss_tot = \
-        ct_resp_flat[ct_resp_flat['response'] == 'loss_tot'].\
-        drop('response', axis=1)
-
-    ctype_loss_std = \
-        ct_resp_flat[ct_resp_flat['response'] == 'loss_std'].\
-        drop('response', axis=1)
-
-    ctype_func_mean = \
-        ct_resp_flat[ct_resp_flat['response'] == 'func_mean'].\
-        drop('response', axis=1)
-
-    ctype_func_std = \
-        ct_resp_flat[ct_resp_flat['response'] == 'func_std'].\
-        drop('response', axis=1)
-
-    ctype_failure_mean = \
-        ct_resp_flat[ct_resp_flat['response'] == 'num_failures'].\
-        drop('response', axis=1)
-
-    # Nodes not considered in the loss calculations
-    DROP_NODES = ['CONN_NODE', 'SYSTEM_INPUT','SYSTEM_OUTPUT',
-                    'Bus', 'Bus 230kV', 'Bus 69kV',
-                    'Generator', 'Grounding']
-
-    uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT',
-                          'Bus', 'Bus 230kV', 'Bus 69kV',
-                          'Generator', 'Grounding']
-
-    cp_types_costed = [x for x in facility.cp_types_in_system
-                       if x not in uncosted_comptypes]
-
-    # Value of component types relative to system value
-    comptype_value = []
-    for k in sorted(cp_types_costed):
-        v = comp_df[comp_df['component_type']==k]['cost_fraction'].sum(axis=0)
-        n = comp_df[comp_df['component_type']==k].index.size
-        comptype_value.append(v/n)
-
-    # Read in SIMULATED HAZARD RESPONSE - for <COMPONENT INSTANCES>
-    component_response = \
-        pd.read_csv(os.path.join(output_path, 'component_response.csv'),
-                    index_col=['component_id', 'response'],
-                    skiprows=0, skipinitialspace=True)
-
-    component_meanloss = \
-        component_response.query('response == "loss_mean"').\
-            reset_index('response').drop('response', axis=1)
-
-    # Read in the <SYSTEM FRAGILITY MODEL> fitted to simulated data
-    system_fragility_mdl = \
-        pd.read_csv(os.path.join(output_path, 'System_Fragility_Model.csv'),
-                    index_col=0)
-
-    system_fragility_mdl.index.name = "Damage States"
-
-# ------------------------------------------------------------------------------
-# Define the system as a network, with components as nodes
-# ------------------------------------------------------------------------------
-
-nodes_all = facility.network.nodes_all
-
-#                    ------
-# Network setup with igraph (for analysis)
-#                    ------
-
-G = facility.network.G
-# G = igraph.Graph(directed=True)
-# nodes = comp_df.index.tolist()
-
-
-# G.add_vertices(len(nodes))
-# G.vs["name"] = nodes
-# G.vs["component_type"] = list(comp_df['component_type'].values)
-# G.vs["cost_fraction"] = list(comp_df['cost_fraction'].values)
-# G.vs["node_type"] = list(comp_df['node_type'].values)
-# G.vs["node_cluster"] = list(comp_df['node_cluster'].values)
-# G.vs["capacity"] = 1.0
-# G.vs["functionality"] = 1.0
-#
-# for index, row in ndf.iterrows():
-#     G.add_edge(row['Orig'], row['Dest'],
-#                capacity = G.vs.find(row['Orig'])["capacity"],
-#                weight = row['Weight'],
-#                distance = row['Distance'])
-
-# ******************************************************************************
-# Setting up scenario specific values
-# ******************************************************************************
-
-# haz_val_RP500 = 0.560
-# haz_val_RP1000 = 0.720
-
-# *** read in from SETUP file ***
-# SCENARIO_HAZARD_VALUES = [0.56, 0.72]
-
-RST_THRESHOLD = 0.98
-
-# The number of simulataneous components to work on.
-# This represent resource application towards the restoration process.
-# *** read in from SETUP file ***
-# RESTORATION_STREAMS = [12, 20, 30]
-
-# Restoration time starts x time units after hazard impact:
-# This represents lead up time for damage and safety assessments
-rst_offset = 1
-
-# Set weighting criteria for edges: 
-# This influences the path chosen for restoration
-# Options are: 
-#   [1] None
-#   [2] 'MIN_COST'
-#   [3] 'MIN_TIME'
-weight_criteria = 'MIN_COST'
-
-# *****************************************************************************
-col_tp = []
-for h in SCENARIO_HAZARD_VALUES:
-    col_tp.extend(zip([h]*len(RESTORATION_STREAMS), RESTORATION_STREAMS))
-mcols = pd.MultiIndex.from_tuples(
-            col_tp, names=['Hazard', 'Restoration Streams'])
-line_rst_times_df = pd.DataFrame(index=out_node_list, columns=mcols)
-line_rst_times_df.index.name = 'Output Lines'
-
-
-for h in SCENARIO_HAZARD_VALUES:
-    sc_haz_val = h
-    sc_haz_val_str = '%0.3f' % np.float(sc_haz_val)
-    haztag = '_SC_'+('%0.2f' % np.float(sc_haz_val))+'g_'
-
-    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    # Extract scenario-specific values from the 'hazard response' dataframe
-    #
-    # Scenario response: by component type
-    ctype_resp_scenario = comptype_resp_df[sc_haz_val_str].unstack(level=-1)
-    ctype_resp_scenario = ctype_resp_scenario.sort_index()
-    ctype_resp_scenario['loss_per_type'] = \
-        ctype_resp_scenario['loss_mean']/comptype_value
-    ctype_resp_scenario = \
-        ctype_resp_scenario.loc[ctype_resp_scenario['loss_per_type']>=0]
-    ctype_resp_sorted = ctype_resp_scenario.sort(['loss_tot'], ascending=[0])
-
-    ctype_loss_vals_tot = ctype_resp_sorted['loss_tot'].values * 100
-    ctype_loss_by_type = ctype_resp_sorted['loss_per_type'].values * 100
-    ctype_lossbytype_rank = \
-        len(ctype_loss_by_type) - \
-        stats.rankdata(ctype_loss_by_type, method='dense').astype(int)
-
-    ##########################################################################
-
-    fig_name = 'fig'+haztag+'loss_sys_vs_comptype_v1.png'
-    draw_component_loss_barchart_v1(scenario,
+def draw_component_loss_barchart_v2(scenario,
                                     ctype_loss_vals_tot,
                                     ctype_loss_by_type,
-                                    ctype_lossbytype_rank,
                                     sc_haz_val_str,
-                                    fig_name)
-
-
-    ##########################################################################
+                                    fig_name):
+    """ Plots bar charts of direct economic losses for components types """
 
     bar_width = 0.3
     bar_offset = 0.03
-    yadjust = bar_width/2.0
-    subplot_spacing = 0.6
     bar_clr_1 = spl.COLR_SET1[0]
     bar_clr_2 = spl.COLR_SET1[1]
-    
+
     cpt = [spl.split_long_label(x,delims=[' ', '_'], max_chars_per_line=22)
            for x in ctype_resp_sorted.index.tolist()]
-    pos = np.arange(0,len(cpt))
+    pos = np.arange(0, len(cpt))
 
-    fig = plt.figure(figsize=(4.5,len(pos)*0.6), facecolor='white')
+    fig = plt.figure(figsize=(4.5, len(pos)*0.6), facecolor='white')
     axes = fig.add_subplot(111, axisbg='white')
 
-    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    # Economic loss: 
-    #     - Contribution to % loss of total system, by components type
-    #     - Percentage econ loss for all components of a specific type
+    # Economic loss:
+    #   - Contribution to % loss of total system, by components type
+    #   - Percentage econ loss for all components of a specific type
 
     axes.barh(pos-bar_width-bar_offset, ctype_loss_vals_tot, bar_width,
               color=bar_clr_1, alpha=0.85, edgecolor='bisque',
@@ -994,7 +828,8 @@ for h in SCENARIO_HAZARD_VALUES:
         fontname='Open Sans', size=12, color='k', weight='bold',
         annotation_clip=False);
     axes.annotate(
-        'Hazard Event: Earthquake '+sc_haz_val_str+' '+hazard_transfer_param,
+        'Hazard Event: Earthquake ' + sc_haz_val_str + ' ' +
+            scenario.hazard_transfer_param,
         xy=(0.0, -1.1), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
         fontname='Open Sans', size=12, color='grey', weight='bold',
@@ -1003,42 +838,47 @@ for h in SCENARIO_HAZARD_VALUES:
     axes.legend(loc=9, ncol=1, bbox_to_anchor=(0.46, -0.01),
                 frameon=0, prop={'size':10})
 
-    fig.savefig(os.path.join(output_path, 'fig'+haztag+'loss_sys_vs_comptype_v2.png'), 
-                format='png', bbox_inches='tight', dpi=300)
+    fig.savefig(
+        os.path.join(scenario.output_path, fig_name),
+        format='png', bbox_inches='tight', dpi=300
+    )
 
     plt.close(fig)
 
+# ============================================================================
 
-    ##########################################################################
-    #
-    # Failure percentage of component types
-    #
-    ##########################################################################
 
-    comp_type_fail_sorted = ctype_failure_mean.sort([sc_haz_val_str], ascending=[0])
-    
-    for x in DROP_NODES:
+def draw_component_failure_barchart(uncosted_comptypes,
+                                    ctype_failure_mean,
+                                    sc_haz_val_str,
+                                    output_path,
+                                    figname):
+
+    comp_type_fail_sorted = \
+        ctype_failure_mean.sort_values(by=[sc_haz_val_str], ascending=[0])
+
+    for x in uncosted_comptypes:
         if x in comp_type_fail_sorted.index.tolist():
             comp_type_fail_sorted = comp_type_fail_sorted.drop(x, axis=0)
-        
+
     cptypes = comp_type_fail_sorted.index.tolist()
-    cpt = [spl.split_long_label(x,delims=[' ', '_'],max_chars_per_line=22) 
+    cpt = [spl.split_long_label(x,delims=[' ', '_'],max_chars_per_line=22)
            for x in cptypes]
     pos = np.arange(len(cptypes))
     cpt_failure_vals = comp_type_fail_sorted[sc_haz_val_str].values * 100
 
-    fig = plt.figure(figsize=(10,len(pos)*0.6), facecolor='white')
+    fig = plt.figure(figsize=(10, len(pos)*0.6), facecolor='white')
     ax = fig.add_subplot(111, axisbg='white')
-    bar_width = 0.7
-    bar_clr = spl.COLR_SET3[4] # dodgerblue
+    bar_width = 0.6
+    bar_clr = spl.COLR_SET3[4]    # dodgerblue
 
-    cptype_barh = ax.barh(pos, cpt_failure_vals, bar_width, 
-                          color=bar_clr, edgecolor="bisque")
+    ax.barh(pos, cpt_failure_vals, bar_width,
+            color=bar_clr, edgecolor="bisque")
 
     # add the numbers to the side of each bar
     for p, c, cv in zip(pos, cptypes, cpt_failure_vals):
-        plt.annotate(('%0.1f' % cv)+'%', xy=(cv+1.0, p+bar_width/2.0), 
-                    va='center', size=11, color='k')
+        plt.annotate(('%0.1f' % cv)+'%', xy=(cv+0.3, p+bar_width/2.0),
+                     va='center', size=11, color='k')
 
     spines_to_remove = ['left', 'top', 'right', 'bottom']
     for spine in spines_to_remove:
@@ -1057,33 +897,39 @@ for h in SCENARIO_HAZARD_VALUES:
     plt.xlim(0, max(cpt_failure_vals)+5.0)
     plt.ylim(pos.max() + 1.0, pos.min() - 1.0)
 
-    ax.annotate('Percentage Loss: \nNumber of Components by Type', 
-                 xy=(0.0, -1.6), xycoords=('axes fraction', 'data'), 
-                 ha='left', va='top', 
-                 fontname='Open Sans', size=12, color='k', weight='bold', 
-                 annotation_clip=False);
-    ax.annotate('Hazard Event: Earthquake '+sc_haz_val_str+' '+hazard_transfer_param, 
-                 xy=(0.0, -0.7), xycoords=('axes fraction', 'data'), 
-                 ha='left', va='top', 
-                 fontname='Open Sans', size=12, color='darkgrey', weight='bold', 
-                 annotation_clip=False);
+    ax.annotate('Percentage Loss: Number of Components by Type',
+                xy=(0.0, -1.3), xycoords=('axes fraction', 'data'),
+                ha='left', va='top', annotation_clip=False,
+                fontname='Open Sans', size=12, weight='bold', color='k');
+    ax.annotate('Hazard Event: Earthquake ' + sc_haz_val_str + ' ' +
+                    scenario.hazard_transfer_param,
+                xy=(0.0, -0.8), xycoords=('axes fraction', 'data'),
+                ha='left', va='top', annotation_clip=False,
+                fontname='Open Sans', size=12, weight='bold',
+                color='darkgrey');
 
-    fig.savefig(os.path.join(output_path, 'fig'+haztag+'comptype_failures.png'), 
-                format='png', bbox_inches='tight', dpi=300)
-                    
+    fig.savefig(
+        os.path.join(output_path, figname),
+        format='png', bbox_inches='tight', dpi=300
+    )
+
     plt.close(fig)
 
-    ##########################################################################
-    #
-    # RESTORATION PROGNOSIS for specified scenarios
-    # 
-    ##########################################################################
+# ============================================================================
 
+
+def calc_comptype_damage_scenario_given_hazard(facility,
+                                               cp_types_costed,
+                                               comptype_resp_df):
     comptype_num = {
-        x:comp_df[comp_df['component_type']==x]['component_type'].count()
+        x:facility.comp_df[facility.comp_df['component_type']==x]\
+            ['component_type'].count()
         for x in facility.cp_types_in_system
         }
     comptype_used = {x:0 for x in facility.cp_types_in_system}
+
+    # ------------------------------------------------------------------------
+    # Logic for internal component replacement / scavenging
 
     comptype_for_internal_replacement = {}
     for x in facility.cp_types_in_system:
@@ -1097,82 +943,339 @@ for h in SCENARIO_HAZARD_VALUES:
         else:
             comptype_for_internal_replacement[x] = 0
 
-    # Using the HAZUS method: 
     # ------------------------------------------------------------------------
-    comp_rst = {t:{n:0 for n in nodes_all} for t in restoration_time_range}
+    # Using the HAZUS method:
+
+    comp_rst = {t: {n: 0 for n in nodes_all}
+                for t in scenario.restoration_time_range}
     for c in nodes_all:
 
-        ct = compdict['component_type'][c]
+        ct = facility.compdict['component_type'][c]
         comptype_used[ct] += 1
         comps_avl_for_int_replacement = \
             comptype_for_internal_replacement[ct] - comptype_used[ct]
 
-        for t in restoration_time_range:
+        for t in scenario.restoration_time_range:
             comp_rst[t][c] = comp_recovery_given_haz(
-                c, sc_haz_val, t,
-                compdict, fragdict, dmg_states,
+                facility, c, sc_haz_val, t,
+                COMP_TYPE_DS,
                 component_response,
                 comps_avl_for_int_replacement=0,
                 threshold=RST_THRESHOLD)[0]
     comp_rst_df = pd.DataFrame(comp_rst,
                                index=nodes_all,
-                               columns=restoration_time_range)
+                               columns=scenario.restoration_time_range)
 
     comp_rst_time_given_haz = \
-        [np.round(
-            comp_rst_df.columns[comp_rst_df.loc[c] >= RST_THRESHOLD][0], 0
-        )
+        [np.round(comp_rst_df.columns[comp_rst_df.loc[c]
+                                      >= RST_THRESHOLD][0], 0)
          for c in nodes_all]
-   
+
     # ------------------------------------------------------------------------
 
-    comp_fullrst_time = pd.DataFrame(
-                        {'Full Restoration Time': comp_rst_time_given_haz}, 
+    component_fullrst_time = pd.DataFrame(
+                        {'Full Restoration Time': comp_rst_time_given_haz},
                         index=nodes_all)
-    comp_fullrst_time.index.names=['component_id']
+    component_fullrst_time.index.names=['component_id']
 
     # ------------------------------------------------------------------------
 
     ctype_scenario_outcomes = copy.deepcopy(
-        100*ctype_resp_sorted.drop(['func_mean', 'func_std'], axis=1))
+        100 * ctype_resp_sorted.drop(['func_mean', 'func_std'], axis=1)
+    )
 
     rtimes = []
     for x in ctype_scenario_outcomes.index:
-        rtimes.append(np.mean(comp_fullrst_time.loc[cpmap[x]].values))
+        rtimes.append(np.mean(component_fullrst_time.loc[cpmap[x]].values))
     ctype_scenario_outcomes['restoration_time'] = rtimes
 
-    component_criticality(ctype_scenario_outcomes, output_path, haztag)
+    return component_fullrst_time, ctype_scenario_outcomes
 
-    # ------------------------------------------------------------------------
+# ============================================================================
+# READ in SETUP data
+# The first argument is the full path to the config file
+# ============================================================================
 
-    # All the nodes that need to be fixed for each output node
-    repair_list_combined = prep_repair_list(
-        G, weight_criteria, sc_haz_val_str,
-        out_node_list, nodes_by_commoditytype,
-        component_meanloss, comp_fullrst_time
-    )
-                                     
+# --- BEGIN SETUP ---
+
+SETUPFILE = sys.argv[1]
+discard = {}
+config = {}
+
+# Read in config file and define Scenario & Facility objects
+exec (open(SETUPFILE).read(), discard, config)
+FacilityObj = eval(config["SYSTEM_CLASS"])
+scenario = Scenario(SETUPFILE)
+facility = FacilityObj(SETUPFILE)
+
+# Define input files, output location, scenario inputs
+INPUT_PATH = scenario.input_path
+OUTPUT_PATH = scenario.output_path
+RAW_OUTPUT_DIR = scenario.raw_output_dir
+SYS_CONFIG_FILE = os.path.join(INPUT_PATH, facility.sys_config_file_name)
+
+RESTORATION_TIME_RANGE = scenario.restoration_time_range
+RESTORATION_STREAMS = scenario.restoration_streams
+SCENARIO_HAZARD_VALUES = scenario.scenario_hazard_values
+SYS_DS = facility.sys_dmg_states
+COMP_TYPE_DS = sorted(list(facility.fragility_data.index.\
+                           get_level_values('damage_state').unique()))
+
+haz_vals_str = [('%0.3f' % np.float(x))
+                for x in scenario.hazard_intensity_vals]
+
+# ------------------------------------------------------------------------
+# READ in raw output files from prior analysis of system fragility
+
+economic_loss_array = \
+    np.load(os.path.join(
+        RAW_OUTPUT_DIR, 'economic_loss_array.npy'))
+
+calculated_output_array = \
+    np.load(os.path.join(
+        RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
+
+output_array_given_recovery = \
+    np.load(os.path.join(
+        RAW_OUTPUT_DIR, 'output_array_given_recovery.npy'))
+
+exp_damage_ratio = \
+    np.load(os.path.join(
+        RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
+
+sys_frag = \
+    np.load(os.path.join(
+        RAW_OUTPUT_DIR, 'sys_frag.npy'))
+
+required_time = \
+    np.load(os.path.join(RAW_OUTPUT_DIR, 'required_time.npy'))
+
+if facility.system_class == 'PowerStation':
+    pe_sys = \
+        np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
+elif facility.system_class == 'Substation':
+    pe_sys = \
+        np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
+
+# ------------------------------------------------------------------------
+# Read in SIMULATED HAZARD RESPONSE for <COMPONENT TYPES>
+
+comptype_resp_df = \
+    pd.read_csv(os.path.join(scenario.output_path,
+                             'comp_type_response.csv'),
+                index_col=['component_type', 'response'],
+                skipinitialspace=True)
+comptype_resp_df.columns = [haz_vals_str]
+
+ct_resp_flat = comptype_resp_df.reset_index('response')
+
+ctype_loss_mean = \
+    ct_resp_flat[ct_resp_flat['response'] == 'loss_mean'].\
+    drop('response', axis=1)
+
+ctype_loss_tot = \
+    ct_resp_flat[ct_resp_flat['response'] == 'loss_tot'].\
+    drop('response', axis=1)
+
+ctype_loss_std = \
+    ct_resp_flat[ct_resp_flat['response'] == 'loss_std'].\
+    drop('response', axis=1)
+
+ctype_func_mean = \
+    ct_resp_flat[ct_resp_flat['response'] == 'func_mean'].\
+    drop('response', axis=1)
+
+ctype_func_std = \
+    ct_resp_flat[ct_resp_flat['response'] == 'func_std'].\
+    drop('response', axis=1)
+
+ctype_failure_mean = \
+    ct_resp_flat[ct_resp_flat['response'] == 'num_failures'].\
+    drop('response', axis=1)
+
+# ****************************************************************************
+# Nodes not considered in the loss calculations
+# NEED TO MOVE THESE TO A MORE LOGICAL PLACE
+
+uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT',
+                      'Bus', 'Bus 230kV', 'Bus 69kV',
+                      'Generation Source', 'Grounding']
+
+cp_types_costed = [x for x in facility.cp_types_in_system
+                   if x not in uncosted_comptypes]
+
+# Get list of only those components that are included in cost calculations:
+
+cpmap = {c:sorted(facility.comp_df[facility.comp_df['component_type']==c]\
+                  .index.tolist())
+        for c in facility.cp_types_in_system}
+comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
+
+# ****************************************************************************
+
+# Value of component types relative to system value
+comptype_value = []
+for k in sorted(cp_types_costed):
+    v = facility.comp_df[facility.comp_df['component_type']==k]\
+        ['cost_fraction'].sum(axis=0)
+    n = facility.comp_df[facility.comp_df['component_type']==k].index.size
+    comptype_value.append(v/n)
+
+# Read in SIMULATED HAZARD RESPONSE - for <COMPONENT INSTANCES>
+component_response = \
+    pd.read_csv(os.path.join(OUTPUT_PATH, 'component_response.csv'),
+                index_col=['component_id', 'response'],
+                skiprows=0, skipinitialspace=True)
+
+component_meanloss = \
+    component_response.query('response == "loss_mean"').\
+        reset_index('response').drop('response', axis=1)
+
+# Read in the <SYSTEM FRAGILITY MODEL> fitted to simulated data
+system_fragility_mdl = \
+    pd.read_csv(os.path.join(OUTPUT_PATH, 'Model_System_Fragility.csv'),
+                index_col=0)
+
+system_fragility_mdl.index.name = "Damage States"
+
+# Define the system as a network, with components as nodes
+# Network setup with igraph
+
+G = facility.network.G
+nodes_all = facility.network.nodes_all
+
+# -- END SETUP ---
+
+# ****************************************************************************
+# Configuration values that can be adjusted for specific scenarios:
+
+RST_THRESHOLD = 0.98
+
+# Restoration time starts x time units after hazard impact:
+# This represents lead up time for damage and safety assessments
+rst_offset = 1
+
+# Set weighting criteria for edges: 
+# This influences the path chosen for restoration
+# Options are: 
+#   [1] None
+#   [2] 'MIN_COST'
+#   [3] 'MIN_TIME'
+weight_criteria = 'MIN_COST'
+
+# ****************************************************************************
+
+col_tp = []
+for h in SCENARIO_HAZARD_VALUES:
+    col_tp.extend(zip([h]*len(RESTORATION_STREAMS), RESTORATION_STREAMS))
+mcols = pd.MultiIndex.from_tuples(
+            col_tp, names=['Hazard', 'Restoration Streams'])
+line_rst_times_df = \
+    pd.DataFrame(index=facility.network.out_node_list, columns=mcols)
+line_rst_times_df.index.name = 'Output Lines'
+
+
+for h in SCENARIO_HAZARD_VALUES:
+    sc_haz_val = h
+    sc_haz_val_str = '%0.3f' % np.float(sc_haz_val)
+    haztag = 'SC_'+('%0.2f' % np.float(sc_haz_val))+'g'
+
+    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    # Extract scenario-specific values from the 'hazard response' dataframe
+    # Scenario response: by component type
+
+    ctype_resp_scenario = comptype_resp_df[sc_haz_val_str].unstack(level=-1)
+    ctype_resp_scenario = ctype_resp_scenario.sort_index()
+    ctype_resp_scenario['loss_per_type'] = \
+        ctype_resp_scenario['loss_mean']/comptype_value
+    ctype_resp_scenario = \
+        ctype_resp_scenario.loc[ctype_resp_scenario['loss_per_type']>=0]
+    ctype_resp_sorted = ctype_resp_scenario.sort_values(by=['loss_tot'],
+                                                        ascending=[0])
+
+    ctype_loss_vals_tot = ctype_resp_sorted['loss_tot'].values * 100
+    ctype_loss_by_type = ctype_resp_sorted['loss_per_type'].values * 100
+    ctype_lossbytype_rank = \
+        len(ctype_loss_by_type) - \
+        stats.rankdata(ctype_loss_by_type, method='dense').astype(int)
+
+    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    # Economic loss percentage for component types
+
+    fig_name = 'fig_'+haztag+'_loss_sys_vs_comptype_v1.png'
+    draw_component_loss_barchart_v1(scenario,
+                                    ctype_loss_vals_tot,
+                                    ctype_loss_by_type,
+                                    ctype_lossbytype_rank,
+                                    sc_haz_val_str,
+                                    fig_name)
+
+    fig_name = 'fig_'+haztag+'_loss_sys_vs_comptype_v2.png'
+    draw_component_loss_barchart_v2(scenario,
+                                    ctype_loss_vals_tot,
+                                    ctype_loss_by_type,
+                                    sc_haz_val_str,
+                                    fig_name)
+
+    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    # Failure percentage of component types
+
+    figname = 'fig_'+haztag+'_comptype_failures.png'
+    draw_component_failure_barchart(uncosted_comptypes,
+                                    ctype_failure_mean,
+                                    sc_haz_val_str,
+                                    OUTPUT_PATH,
+                                    figname)
+
+    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    # RESTORATION PROGNOSIS for specified scenarios
+
+    component_fullrst_time, ctype_scenario_outcomes = \
+        calc_comptype_damage_scenario_given_hazard(facility,
+                                                   cp_types_costed,
+                                                   comptype_resp_df)
+
+    # All the nodes that need to be fixed for each output node:
+    repair_list_combined = prep_repair_list(facility,
+                                            weight_criteria,
+                                            sc_haz_val_str,
+                                            component_meanloss,
+                                            component_fullrst_time)
+
     repair_path = copy.deepcopy(repair_list_combined)
 
-    ##########################################################################
-    
     for RS in RESTORATION_STREAMS:
         rst_setup_df = calc_restoration_setup(
-            out_node_list, repair_list_combined,
+            facility.network.out_node_list, repair_list_combined,
             RS, rst_offset, sc_haz_val_str,
-            uncosted_comptypes, comp_fullrst_time
+            comps_costed, component_fullrst_time,
+            scenario.output_path,
+            haztag
         )
 
         rst_time_line, line_rst_times = vis_restoration_process(
-            rst_setup_df, RS, out_node_list, repair_path
+            scenario,
+            facility,
+            rst_setup_df,
+            RS,
+            repair_path,
+            haztag
         )
 
-        line_rst_times_df[(h, RS)] = [line_rst_times[x]
-                                      for x in out_node_list]
+        line_rst_times_df[(h, RS)] = \
+            [line_rst_times[x] for x in facility.network.out_node_list]
         
+    # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+    component_criticality(facility, scenario,
+                          ctype_scenario_outcomes,
+                          sc_haz_val_str,
+                          haztag)
+
+    ##########################################################################
     # --- END FOR LOOP ---
 
-line_rst_times_csv = os.path.join(output_path,
+line_rst_times_csv = os.path.join(OUTPUT_PATH,
                                   'line_restoration_prognosis.csv')
 line_rst_times_df.to_csv(line_rst_times_csv, sep=',')
                         

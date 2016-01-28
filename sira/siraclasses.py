@@ -383,12 +383,27 @@ class ScenarioDataGetter(object):
         self.num_samples = self.setup["NUM_SAMPLES"]
         self.use_end_point = self.setup['USE_ENDPOINT']
         self.time_unit = self.setup["TIME_UNIT"]
+        self.parallel_or_serial = self.setup["MULTIPROCESS"]
+        self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
+        self.env = self.setup["ENV"]
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
         self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]  # same as sira_bk
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
-        self.parallel_or_serial = self.setup["MULTIPROCESS"]
-        self.env = self.setup["ENV"]
+        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
+
+
+class RestorationDataGetter(object):
+    """
+    Class for reading in restoration scenario parameters
+    """
+    def __init__(self, setup_file):
+        self.setup = readfile(setup_file)
+        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
+        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
+        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]  # same as sira_bk
+        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
+        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
 
 
 class Scenario(ScenarioDataGetter, IoDataGetter):
