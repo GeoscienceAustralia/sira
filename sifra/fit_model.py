@@ -13,8 +13,8 @@ import sys
 import os
 # import getopt
 
-import siraplot as spl
-from siraclasses import Scenario, Facility, PowerStation
+import sifraplot as spl
+from sifraclasses import Scenario, Facility, PowerStation
 
 import brewer2mpl
 from colorama import Fore, Style, init

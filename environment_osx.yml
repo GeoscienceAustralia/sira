@@ -1,4 +1,4 @@
-name: sira_env
+name: sifra_env
 dependencies:
 - anaconda-client=1.1.2=py27_0
 - appnope=0.1.0=py27_0

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Class definitions for sira.py
+Class definitions for sifra.py
 """
 
 from __future__ import print_function

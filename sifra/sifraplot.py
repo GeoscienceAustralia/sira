@@ -1,5 +1,5 @@
 '''
-siraplot.py
+sifraplot.py
 This module provides easy access to selected colours from the Brewer
 palettes, and functions for customising and improving plot aesthetics
 '''

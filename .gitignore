@@ -24,7 +24,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-sira/.idea/
+sifra/.idea/
 .idea/
 
 # PyInstaller

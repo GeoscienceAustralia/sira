@@ -10,8 +10,8 @@ import itertools
 from colorama import Fore, init
 init()
 
-from siraclasses import Scenario, Facility, PowerStation
-import siraplot as spl
+from sifraclasses import Scenario, Facility, PowerStation
+import sifraplot as spl
 
 import matplotlib.pyplot as plt
 from matplotlib import gridspec

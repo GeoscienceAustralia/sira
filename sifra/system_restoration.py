@@ -1,14 +1,11 @@
 from __future__ import print_function
 import os
 import itertools
-import operator, functools
 import copy
 
 import numpy as np
 import scipy.stats as stats
 import pandas as pd
-
-import networkx as nx
 import igraph
 
 import matplotlib.pyplot as plt
@@ -16,7 +13,7 @@ from matplotlib import gridspec
 import seaborn as sns
 sns.set_style('whitegrid')
 
-import siraplot as spl
+import sifraplot as spl
 
 ################################################################################
 

@@ -5,9 +5,9 @@ import cPickle
 import os
 import numpy as np
 
-from sira.sira import calc_loss_arrays
-from sira.siraclasses import ScenarioDataGetter, Facility, Scenario
-from sira.sira import power_calc
+from sifra.sifra import calc_loss_arrays
+from sifra.sifraclasses import ScenarioDataGetter, Facility, Scenario
+from sifra.sifra import power_calc
 
 
 class TestSira(unittest.TestCase):

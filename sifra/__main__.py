@@ -2,8 +2,8 @@
 __author__ = 'Sudipta Basak'
 
 import sys, os
-from siraclasses import Scenario, Facility, PowerStation
-from sira import power_calc, calc_loss_arrays, post_processing
+from sifraclasses import Scenario, Facility, PowerStation
+from sifra import power_calc, calc_loss_arrays, post_processing
 
 
 if __name__ == "__main__":

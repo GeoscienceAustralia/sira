@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-sira.py
+sifra.py
 
 A tool for seismic performace analysis of electrical power infrastructure
 ----------------------------------------------------------------------------
@@ -163,8 +163,8 @@ def pe2pb(pe):
 def power_calc(fc, sc):
     """
     Power output and economic loss calculations for each component
-    fc: Facility object, from siraclasses
-    sc: Scenario object, from siraclasses
+    fc: Facility object, from sifraclasses
+    sc: Scenario object, from sifraclasses
     :returns:
         pandas dataframe with following values for each system component
         - mean of simulated loss
