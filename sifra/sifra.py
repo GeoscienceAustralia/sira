@@ -3,7 +3,9 @@
 """
 sifra.py
 
-A tool for seismic performace analysis of electrical power infrastructure
+System for Infrastructure Facility Resilience Analysis
+A tool for seismic performance analysis of infrastructure facilities
+
 ----------------------------------------------------------------------------
 
     INPUTS
