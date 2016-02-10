@@ -21,8 +21,9 @@ Next, choose the the environment specification *.yml file relevant to your OS. f
 
 Then acivate the newly created environment:
 
-OS X, Linux:    source activate sifra_env
-Windows:        activate sifra_env
+OS X, Linux:    `source activate sifra_env`
+
+Windows:        `activate sifra_env`
 
 
 #### Running SIFRA
