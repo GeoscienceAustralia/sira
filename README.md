@@ -1,5 +1,7 @@
 #### Setting Up the Environment
 
+It is good practice to set up a virtual environment for working with developing code. This gives us the tools to manage the package dependencies and requirements in a transparent manner, and impact of dependency changes on software behaviour.
+
 We recommend using `conda` for managing virtual environments and packages required for running `sifra`.
 
 For the sake of simplicity, we recommend using `Anaconda`. It is a free Python distribution,
@@ -46,6 +48,7 @@ To simulate the `component type` loss analysis, restoration prognosis, and gener
 
 
 #### Testing the Code
+
 To run tests use either `nose` or `unittest`.
 Example (from the first level `sifra` directory):
     
@@ -55,3 +58,5 @@ Example (from the first level `sifra` directory):
 or, simply:
 
     nosetest
+
+This project needs to be set up with a more comprehensive test suitew.
