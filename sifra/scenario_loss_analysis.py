@@ -1287,5 +1287,9 @@ for h in SCENARIO_HAZARD_VALUES:
 line_rst_times_csv = os.path.join(OUTPUT_PATH,
                                   'line_restoration_prognosis.csv')
 line_rst_times_df.to_csv(line_rst_times_csv, sep=',')
-                        
+
 ##############################################################################
+
+print(Fore.YELLOW + "\nScenario loss analysis complete." + Fore.RESET)
+print("Outputs saved in: \n" +
+      Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
