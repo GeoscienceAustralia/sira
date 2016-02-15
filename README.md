@@ -1,62 +1,123 @@
-#### Setting Up the Environment
+Overview
+==========
+SIFRA stands for **System for Infrastructure Facility Resilience
+Analysis**. It was developed in [Geoscience Australia]
+(http://www.ga.gov.au/).
+SIFRA comprises a method and software tools that provide a framework
+for simulating the fragility of infrastructure facilities to natural
+hazards, based on assessment of the fragilities and configuration of
+components that comprises the facility. Currently the system is
+designed to work with earthquake hazards only.
 
-It is good practice to set up a virtual environment for working with developing code. This gives us the tools to manage the package dependencies and requirements in a transparent manner, and impact of dependency changes on software behaviour.
+The following are some key features of this tool:
 
-We recommend using `conda` for managing virtual environments and packages required for running `sifra`.
+- Written in Python: It is written in Python, and there is no
+  dependency on proprietary tools. It should run on OS X, Windows, and
+  Linux platforms.
+- Flexible Facility Model: ``Facility`` data model is based on network
+  theory, allowing the user to develop arbitrarily complex custom
+  facility models for simulation.
+- Extensible Component Library: User can define new ``component types``
+  (the building blocks of a facility) and link it to existing or
+  custom fragility algorithms.
+- Component Criticality: Scenario Analysis tools allow users to
+  identify the cost of restoration for chosen scenarios, expected
+  restoration times, and which component upgrades can most benefit
+  the system.
+- Restoration Prognosis: User can experiment with different levels of
+  hazards and post-disaster resource allocation to gauge restoration
+  times for facility operations.
 
-For the sake of simplicity, we recommend using `Anaconda`. It is a free Python distribution,
-and comes with the `conda` tool which is both a package manager and environment manager.
-Instructions for installing `Anaconda` are here: http://docs.continuum.io/anaconda/install
 
-Some packages we need are not hosted in the main `conda` package repository. In such cases we will host them in our own user channel. We suggest adding the following channels to the default:
+Set Up Instructions
+=======================
+It is good practice to set up a virtual environment for working with
+developing code. This gives us the tools to manage the package
+dependencies and requirements in a transparent manner, and impact of
+dependency changes on software behaviour.
+
+
+Preparing the Run Environment
+------------------------------
+We recommend using ``conda`` for managing virtual environments and
+packages required for running ``sifra``.
+
+For the sake of simplicity, we recommend using ``Anaconda``. It is a
+free Python distribution, and comes with the ``conda`` tool which is
+both a package manager and environment manager. Instructions for
+installing ``Anaconda`` are here:
+<http://docs.continuum.io/anaconda/install>
+
+Some packages we need are not hosted in the main ``conda`` package
+repository. In such cases we will host them in our own user channel.
+We suggest adding the following channels to the default::
 
     conda config --add channels https://conda.anaconda.org/anaconda
     conda config --add channels https://conda.anaconda.org/marufr
 
-Run the following command to confirm the additional channels have been added:
+Run the following command to confirm the additional channels have
+been added:
 
     conda config --get channels
 
-Next, choose the the environment specification *.yml file relevant to your OS. for OS X run the following command:
+Next, choose the the environment specification *.yml file relevant
+to your OS. For OS X run the following command:
 
     conda env create -f environment_osx.yml
 
-Then acivate the newly created environment:
+To use the newly created environment, you will need to activate it.
 
-OS X, Linux:    `source activate sifra_env`
+For OS X and Linux, enter:  ``source activate sifra_env``
 
-Windows:        `activate sifra_env`
+For Windows, enter:  ``activate sifra_env``
 
 
-#### Running SIFRA
+Running SIFRA
+----------------
+*For the purposes of this discussion, we will assume that this
+repository has been cloned in the user home directory.*
 
 First move into the root directory for the `SIFRA` code:
-    
+
+```
     cd sifra    # and not cd sifra/sifra
+```
 
-Run the `sifra` code as
-    
+Run the `sifra` code as:
+
+```
     python -m sifra simulation_setup/config_file.conf
+```
 
-To fit a system fragility for the facility to the simulated data generated in the previous step, and a simple normal restoration model, run the command:
+To fit a system fragility for the facility to the simulated data
+generated in the previous step, and a simple normal restoration
+model, run the command:
 
+```
     python sifra/fit_model.py simulation_setup/config_file.conf
+```
 
-To simulate the `component type` loss analysis, restoration prognosis, and generate the component criticality plot, run the command:
+To simulate the `component type` loss analysis, restoration prognosis,
+and generate the component criticality plot, run the command:
 
+```
     python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
+```
 
+Testing the Code
+------------------
+To run tests use either ``nose`` or ``unittest``.
+Example (from the first level 'sifra' directory):
 
-#### Testing the Code
-
-To run tests use either `nose` or `unittest`.
-Example (from the first level `sifra` directory):
-    
+```
     cd sifra  # and not cd sifra/sifra
     python -m unittest discover tests
+```
 
-or, simply:
+or, simply run:
 
+```
     nosetest
+```
 
-This project needs to be set up with a more comprehensive test suitew.
+NOTE: Project needs a more comprehensive test suite.
