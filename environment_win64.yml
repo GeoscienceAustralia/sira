@@ -43,7 +43,6 @@ dependencies:
 - zlib=1.2.8
 - pip:
   - actdiag==0.5.1
-  - appnope==0.1.0
   - alabaster==0.7.7
   - babel==2.2.0
   - blockdiag==1.5.3
