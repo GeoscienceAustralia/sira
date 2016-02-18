@@ -47,6 +47,19 @@ both a package manager and environment manager. Instructions for
 installing ``Anaconda`` are here:
 <http://docs.continuum.io/anaconda/install>
 
+**Prerequisites:** You will need to install ``Graphviz`` for the 
+drawing the system diagram through networkx and pygraphviz. 
+Please visit: <http://www.graphviz.org/> 
+and download the appropriate version for your operating system. 
+Please follow the posted download instructions carefully. 
+After installation you may need to update the PATH variable 
+with the location of the Graphviz binaries.
+
+For windows systems you will need to install 
+Microsoft Visual C++ Compiler for Python 2.7:
+<https://www.microsoft.com/en-us/download/details.aspx?id=44266>
+
+
 Some packages we need are not hosted in the main ``conda`` package
 repository. In such cases we will host them in our own user channel.
 We suggest adding the following channels to the default::
