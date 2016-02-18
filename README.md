@@ -1,8 +1,7 @@
 Overview
 ==========
 SIFRA stands for **System for Infrastructure Facility Resilience
-Analysis**. It was developed in [Geoscience Australia]
-(http://www.ga.gov.au/).
+Analysis**.
 SIFRA comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
@@ -14,7 +13,7 @@ The following are some key features of this tool:
 - Written in Python: It is written in Python, and there is no
   dependency on proprietary tools. It should run on OS X, Windows, and
   Linux platforms.
-- Flexible Facility Model: ``Facility`` data model is based on network
+- Flexible Facility Model: ``facility`` data model is based on network
   theory, allowing the user to develop arbitrarily complex custom
   facility models for simulation.
 - Extensible Component Library: User can define new ``component types``
