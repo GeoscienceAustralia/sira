@@ -28,7 +28,7 @@ The following are some key features of this tool:
   times for facility operations.
 
 
-Set Up Instructions
+Setup Instructions
 =======================
 It is good practice to set up a virtual environment for working with
 developing code. This gives us the tools to manage the package
@@ -57,8 +57,7 @@ with the location of the Graphviz binaries.
 
 For windows systems you will need to install 
 Microsoft Visual C++ Compiler for Python 2.7:
-<https://www.microsoft.com/en-us/download/details.aspx?id=44266>
-
+<http://aka.ms/vcpython27>
 
 Some packages we need are not hosted in the main ``conda`` package
 repository. In such cases we will host them in our own user channel.
@@ -72,64 +71,78 @@ been added:
 
     conda config --get channels
 
-Next, choose the the environment specification *.yml file relevant
-to your OS. For OS X run the following command:
+**For OS X and Linux-64 systems:** It should be possible to set up a
+full run environment solely through the *.yml environment specification
+file. For OS X run the following commands:
 
     conda env create -f environment_osx.yml
+    source activate sifra_env
 
-To use the newly created environment, you will need to activate it.
+For Linux-64 systems, the commands are identical, you will just need
+to use the environment specification file for Linux.
 
-For OS X and Linux, enter:  ``source activate sifra_env``
+**For Windows systems**, a similar process needs to be followed, with
+some exceptions. First run:
 
-For Windows, enter:  ``activate sifra_env``
+    conda env create -f environment_win64.yml
+    activate sifra_env
+
+This will install most requirements except for ``igraph`` and
+``pygraphviz``. Compiling these packages under windows can be very
+challenging. The simplest and most reliable options is to download
+the the appropriate wheels from Christoph Gohlke's unofficial page
+of Windows binaries:
+<http://www.lfd.uci.edu/~gohlke/pythonlibs/>
+
+For Win-64 systems, you will need these files:
+python_igraph-0.7.1.post6-cp27-none-win_amd64.whl
+pygraphviz-1.3.1-cp27-none-win_amd64.whl
+
+Install the downloaded ``wheels`` with pip:
+
+    pip install <pkg_name>.whl
 
 
 Running SIFRA
 ----------------
 *For the purposes of this discussion, we will assume that this
-repository has been cloned in the user home directory.*
+repository has been cloned in the user's home directory.*
 
 First move into the root directory for the `SIFRA` code:
 
-```
     cd sifra    # and not cd sifra/sifra
-```
 
-Run the `sifra` code as:
+Run the `sifra` code as a module, with the requisite configuration
+file:
 
-```
     python -m sifra simulation_setup/config_file.conf
-```
+
+Depending on the scale of the model, and simulation paramters chosen,
+it may take between a few minutes and a few days to complete a run.
 
 To fit a system fragility for the facility to the simulated data
 generated in the previous step, and a simple normal restoration
 model, run the command:
 
-```
     python sifra/fit_model.py simulation_setup/config_file.conf
-```
 
 To simulate the `component type` loss analysis, restoration prognosis,
 and generate the component criticality plot, run the command:
 
-```
     python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
-```
 
-Testing the Code
-------------------
+
+Running Code Tests
+--------------------
 To run tests use either ``nose`` or ``unittest``.
 Example (from the first level 'sifra' directory):
 
-```
     cd sifra  # and not cd sifra/sifra
     python -m unittest discover tests
-```
 
 or, simply run:
 
-```
     nosetest
-```
 
-NOTE: Project needs a more comprehensive test suite.
+
+:grey_exclamation: NOTE: Project needs a more comprehensive test suite.
