@@ -51,22 +51,22 @@ class IoDataGetter(object):
         self.sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
         self.input_path = None
         self.output_path = None
+        self.root_dir = os.path.dirname(
+            os.path.dirname(os.path.abspath(__file__)))
         self.raw_output_dir = None
         self.set_io_dirs()
 
     def set_io_dirs(self):
-        self.input_path = os.path.join(os.getcwd(), self.input_dir_name)
+        self.input_path = os.path.join(self.root_dir,
+                                       self.input_dir_name)
+        self.output_path = os.path.join(self.root_dir,
+                                        self.output_dir_name)
+        self.raw_output_dir = os.path.join(self.root_dir,
+                                           self.output_dir_name,
+                                           'raw_output')
 
-        if not os.path.exists(self.output_dir_name):
-            os.makedirs(self.output_dir_name)
-
-        self.output_path = \
-            os.path.join(os.getcwd(), self.output_dir_name)
-
-        self.raw_output_dir = \
-            os.path.join(os.getcwd(), self.output_dir_name,
-                         'raw_output')
-
+        if not os.path.exists(self.output_path):
+            os.makedirs(self.output_path)
         if not os.path.exists(self.raw_output_dir):
             os.makedirs(self.raw_output_dir)
 
