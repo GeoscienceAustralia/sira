@@ -56,7 +56,6 @@ dependencies:
   - nwdiag==1.0.0
   - parmap==1.2.3
   - pexpect==4.0.1
-  - prettyplotlib==0.1.7
   - pydot==1.0.2
   - pygments==2.1
   - pyparsing==1.5.7
