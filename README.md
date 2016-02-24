@@ -94,11 +94,13 @@ the the appropriate wheels from Christoph Gohlke's unofficial page
 of Windows binaries:
 <http://www.lfd.uci.edu/~gohlke/pythonlibs/>
 
-For Win-64 systems, you will need these files:
-python_igraph-0.7.1.post6-cp27-none-win_amd64.whl
-pygraphviz-1.3.1-cp27-none-win_amd64.whl
+For Windows 64 bit systems, you will need to download the ``wheels`` for
+[``python-igraph``](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph)
+and [``pygraphviz``](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz):
+- ``python_igraph-0.7.1.post6-cp27-none-win_amd64.whl``
+- ``pygraphviz-1.3.1-cp27-none-win_amd64.whl``
 
-Install the downloaded ``wheels`` with pip:
+Install these downloaded ``wheels`` with pip:
 
     pip install <pkg_name>.whl
 
@@ -108,7 +110,7 @@ Running SIFRA
 *For the purposes of this discussion, we will assume that this
 repository has been cloned in the user's home directory.*
 
-First move into the root directory for the `SIFRA` code:
+First move into the root directory for the ``SIFRA`` code:
 
     cd sifra    # and not cd sifra/sifra
 
