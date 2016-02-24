@@ -4,8 +4,6 @@ This module provides easy access to selected colours from the Brewer
 palettes, and functions for customising and improving plot aesthetics
 '''
 
-# import matplotlib
-# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 mpl.rcParams['legend.numpoints'] = 2
