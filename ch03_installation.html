@@ -174,7 +174,7 @@ installing <code class="docutils literal"><span class="pre">Anaconda</span></cod
 <p>Some packages we need are not hosted in the main <code class="docutils literal"><span class="pre">conda</span></code> package
 repository. In such cases we will host them in our own user channel.
 We suggest adding the following channels to the default:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda config --add channels https://conda.anaconda.org/anaconda
+<div class="highlight-python"><div class="highlight"><pre>conda config --add channels https://conda.anaconda.org/anaconda
 conda config --add channels https://conda.anaconda.org/marufr
 </pre></div>
 </div>
@@ -185,7 +185,7 @@ been added:</p>
 <p><strong>For OS X and Linux-64 systems:</strong> It should be possible to set up a full run
 environment solely through the <a href="#id1"><span class="problematic" id="id2">*</span></a>.yml environment specification file. For OS X
 run the following commands:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda env create -f environment_osx.yml
+<div class="highlight-python"><div class="highlight"><pre>conda env create -f environment_osx.yml
 source activate sifra_env
 </pre></div>
 </div>
@@ -193,7 +193,7 @@ source activate sifra_env
 the environment specification file for Linux.</p>
 <p><strong>For Windows systems</strong>, a similar process needs to be followed, with some
 exceptions. First run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda env create -f environment_win64.yml
+<div class="highlight-python"><div class="highlight"><pre>conda env create -f environment_win64.yml
 activate sifra_env
 </pre></div>
 </div>
@@ -207,7 +207,7 @@ Christoph Gohlke&#8217;s unofficial page of Windows binaries:
 - pygraphviz-1.3.1-cp27-none-win_amd64.whl</p>
 <p>To install these binaries, activate the virtual environment for SIFRA, using
 the instructions provided earlier. Then run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pip install &lt;pkg_name&gt;.whl
+<div class="highlight-python"><div class="highlight"><pre>pip install &lt;pkg_name&gt;.whl
 </pre></div>
 </div>
 </div>
@@ -219,7 +219,7 @@ the instructions provided earlier. Then run:</p>
 </li>
 <li><p class="first">Change to the directory that has the <code class="docutils literal"><span class="pre">sifra</span></code> code. If the code is in the
 directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra</span></code>, then run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd ~/sifra/
+<div class="highlight-python"><div class="highlight"><pre>cd ~/sifra/
 </pre></div>
 </div>
 </li>
@@ -227,7 +227,7 @@ directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra
 We assume that same configuration file is stored in
 <code class="docutils literal"><span class="pre">/Users/personx/sifra/simulation_setup/</span></code>, and the configuration file is
 names <code class="docutils literal"><span class="pre">config_ps.conf</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>python -m sifra simulation_setup/config_ps.conf
+<div class="highlight-python"><div class="highlight"><pre>python -m sifra simulation_setup/config_ps.conf
 </pre></div>
 </div>
 </li>
@@ -242,12 +242,12 @@ time it is run.</p>
 <h2>Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
 <p>To run tests use either <code class="docutils literal"><span class="pre">nose</span></code> or <code class="docutils literal"><span class="pre">unittest</span></code>.
 Example (from the first level &#8216;sifra&#8217; directory):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd sifra  # and not cd sifra/sifra
+<div class="highlight-python"><div class="highlight"><pre>cd sifra  # and not cd sifra/sifra
 python -m unittest discover tests
 </pre></div>
 </div>
 <p>or, simply run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">nosetest</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">nosetest</span>
 </pre></div>
 </div>
 </div>

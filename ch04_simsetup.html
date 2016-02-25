@@ -151,72 +151,23 @@
 <p>These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the
 remaining of this Section:</p>
-<p>├── LICENSE
+<div class="highlight-python"><div class="highlight"><pre>.
+├── LICENSE
 ├── README.md
 ├── data
-│   └── ps_coal
-│       ├── input
-│       │   ├── sys_config_coal_pwrstn.xlsx
-│       │   ├── sys_config_ps_sd0.35g.xlsx
-│       │   ├── sys_config_ps_sd0.35g_test_case.xlsx
-│       │   └── sys_config_ss_230kv.xlsx
-│       └── output
-│           ├── Model_System_Fragility.csv
-│           ├── Model_System_Restoration__mode1.csv
-│           ├── comp_type_meanfailures.csv
-│           ├── comp_type_meanloss.csv
-│           ├── comp_type_response.csv
-│           ├── component_meanloss.csv
-│           ├── component_response.csv
-│           ├── fig_MODEL_sys_pb_exceed.png
-│           ├── fig_MODEL_sys_rst_mode1.png
-│           ├── fig_MODEL_sys_rst_mode2.png
-│           ├── fig_SC_0.50g_component_criticality.png
-│           ├── fig_SC_0.50g_comptype_failures.png
-│           ├── fig_SC_0.50g_loss_sys_vs_comptype_v1.png
-│           ├── fig_SC_0.50g_loss_sys_vs_comptype_v2.png
-│           ├── fig_SC_0.50g_str10_restoration.png
-│           ├── fig_SC_0.50g_str20_restoration.png
-│           ├── fig_SC_0.50g_str5_restoration.png
-│           ├── line_restoration_prognosis.csv
-│           ├── raw_output
-│           │   ├── ...
-│           │   ├── ...
-│           │   └── ...
-│           ├── restoration_setup_SC_0.50g.csv
-│           ├── system_layout.dot
-│           ├── system_layout.png
-│           ├── system_output_given_haz_param.csv
-│           ├── system_output_vs_hazparam.csv
-│           ├── system_response.csv
-│           └── system_restoration_profile.csv
-├── environment_linux64.yml
-├── environment_osx.yml
-├── environment_win64.yml
-├── requirements.txt
-├── setup.py
+│   └── ps_coal
+│       ├── input
+│       └── output
+│           └── raw_output
+├── docs
+│   └── source
+│       ├── _static
+│       └── _templates
 ├── sifra
-│   ├── __init__.py
-│   ├── __main__.py
-│   ├── fit_model.py
-│   ├── scenario_loss_analysis.py
-│   ├── sifra.py
-│   ├── sifraclasses.py
-│   ├── sifraplot.py
-│   ├── siraplot.pyc
-│   └── systemlayout.py
 ├── simulation_setup
-│   ├── config_ps_X.ini
-│   └── config_ps_coal_600MW.conf
-│
-└── tests</p>
-<blockquote>
-<div>├── __init__.py
-├── config_ps_X_test.conf
-├── config_ps_X_test_extremes.conf
-├── ...
-├── ...
-└── test_sira.py</div></blockquote>
+└── tests
+</pre></div>
+</div>
 <div class="section" id="scenario-definition-file">
 <span id="scenario-config-file"></span><h2>Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
 <p>The simulation &#8216;scenario&#8217; definition file is located in the following directory
