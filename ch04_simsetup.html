@@ -86,15 +86,6 @@
 <li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">SIFRA Installation and Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Simulation Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">Scenario Definition File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#facility-definition-files">Facility Definition Files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#data-representation-facility-csv">Data Representation: &#8216;facility.csv&#8217;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-representation-component-types-csv">Data Representation: &#8216;component_types.csv&#8217;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-representation-components-csv">Data Representation: &#8216;components.csv&#8217;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-representation-damage-levels-csv">Data Representation: &#8216;damage_levels.csv&#8217;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-representation-subsystems-csv">Data Representation: &#8216;subsystems.csv&#8217;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-representation-facility-prod-lines-csv">Data Representation: &#8216;facility_prod_lines.csv&#8217;</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -150,55 +141,37 @@
 </ul>
 <p>These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the
-remaining of this Section:</p>
+remainder of this Section. In the course of the discussion it should be useful
+to the keep the directory structure of the code in mind:</p>
 <div class="highlight-python"><div class="highlight"><pre>.
-├── LICENSE
-├── README.md
+├── LICENSE                 &lt;-- License file: Apache 2
+├── README.md               &lt;-- Summary documentation
 ├── data
-│   └── ps_coal
-│       ├── input
-│       └── output
-│           └── raw_output
+│   └── ps_coal             &lt;-- Dir stating the facility type
+│       ├── input           &lt;-- Facility definition file resides here
+│       └── output          &lt;-- The simulation results are here
+│           └── raw_output  &lt;-- Raw data/binary outputs for provenance
 ├── docs
-│   └── source
+│   └── source              &lt;-- Sphinx documentation ReST files
 │       ├── _static
 │       └── _templates
-├── sifra
-├── simulation_setup
-└── tests
+├── sifra                   &lt;-- The MODULES/SCRIPTS
+├── simulation_setup        &lt;-- Scenario config files
+└── tests                   &lt;-- Test scripts
 </pre></div>
 </div>
 <div class="section" id="scenario-definition-file">
 <span id="scenario-config-file"></span><h2>Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
 <p>The simulation &#8216;scenario&#8217; definition file is located in the following directory
-(relative to the source code):</p>
-<blockquote>
-<div><code class="docutils literal"><span class="pre">./data/Sector/&lt;sector&gt;/&lt;facility_type&gt;</span></code></div></blockquote>
-<p>The directory <code class="docutils literal"><span class="pre">&lt;facility_definition_dir&gt;</span></code> as shown in the second row, is the
-location of the six <a class="reference internal" href="#simulation-facility-files"><span>input csv files</span></a> that are
-used to define the configuration and fragility of the facility to be simulated.
-Please note that the scenario difinition table has no header row.</p>
+(relative to the root dir of source code):</p>
+<div class="highlight-python"><div class="highlight"><pre>``./simulation_setup``
+</pre></div>
 </div>
-<div class="section" id="facility-definition-files">
-<span id="simulation-facility-files"></span><h2>Facility Definition Files<a class="headerlink" href="#facility-definition-files" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="data-representation-facility-csv">
-<span id="input-facility"></span><h3>Data Representation: &#8216;facility.csv&#8217;<a class="headerlink" href="#data-representation-facility-csv" title="Permalink to this headline">¶</a></h3>
+<p>while the file that defines a facility resides under:</p>
+<div class="highlight-python"><div class="highlight"><pre>``./data/&lt;facility_type&gt;/input``
+</pre></div>
 </div>
-<div class="section" id="data-representation-component-types-csv">
-<span id="input-component-types"></span><h3>Data Representation: &#8216;component_types.csv&#8217;<a class="headerlink" href="#data-representation-component-types-csv" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="data-representation-components-csv">
-<span id="input-components"></span><h3>Data Representation: &#8216;components.csv&#8217;<a class="headerlink" href="#data-representation-components-csv" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="data-representation-damage-levels-csv">
-<span id="input-damage-levels"></span><h3>Data Representation: &#8216;damage_levels.csv&#8217;<a class="headerlink" href="#data-representation-damage-levels-csv" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="data-representation-subsystems-csv">
-<span id="input-subsystems"></span><h3>Data Representation: &#8216;subsystems.csv&#8217;<a class="headerlink" href="#data-representation-subsystems-csv" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="data-representation-facility-prod-lines-csv">
-<span id="input-prod-lines"></span><h3>Data Representation: &#8216;facility_prod_lines.csv&#8217;<a class="headerlink" href="#data-representation-facility-prod-lines-csv" title="Permalink to this headline">¶</a></h3>
-</div>
+<p>&lt;<strong>to be continued</strong>&gt;</p>
 </div>
 </div>
 

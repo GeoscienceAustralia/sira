@@ -11,23 +11,24 @@ Setting a simulation requires populating two different sets of inputs:
 
 These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the 
-remaining of this Section::
+remainder of this Section. In the course of the discussion it should be useful
+to the keep the directory structure of the code in mind::
 
     .
-    ├── LICENSE
-    ├── README.md
+    ├── LICENSE                 <-- License file: Apache 2
+    ├── README.md               <-- Summary documentation
     ├── data
-    │   └── ps_coal
-    │       ├── input
-    │       └── output
-    │           └── raw_output
+    │   └── ps_coal             <-- Dir stating the facility type
+    │       ├── input           <-- Facility definition file resides here
+    │       └── output          <-- The simulation results are here
+    │           └── raw_output  <-- Raw data/binary outputs for provenance
     ├── docs
-    │   └── source
+    │   └── source              <-- Sphinx documentation ReST files
     │       ├── _static
     │       └── _templates
-    ├── sifra
-    ├── simulation_setup
-    └── tests
+    ├── sifra                   <-- The MODULES/SCRIPTS
+    ├── simulation_setup        <-- Scenario config files
+    └── tests                   <-- Test scripts
 
 
 .. _scenario-config-file:
@@ -36,207 +37,12 @@ Scenario Definition File
 ==========================
 
 The simulation 'scenario' definition file is located in the following directory 
-(relative to the source code):
+(relative to the root dir of source code)::
 
-	``./data/Sector/<sector>/<facility_type>``
-	
-The directory ``<facility_definition_dir>`` as shown in the second row, is the 
-location of the six :ref:`input csv files <simulation-facility-files>` that are 
-used to define the configuration and fragility of the facility to be simulated.
-Please note that the scenario difinition table has no header row.
+    ``./simulation_setup``
 
-.. figtable::
-    :label: table-input-scenario-def
-    :caption: Input parameters for the simulation scenario definition file
-    :alt: Scenario Definition Input Parameters
-    :spec: r l
-    :nofig:
+while the file that defines a facility resides under::
 
-    =================  ==================================================
-    Parameter Name     Example Value
-    =================  ==================================================
-    num_iters          1
-    facility_folder    ./data/Sector/Electric/<facility_definition_dir>
-    motion_model       Gaull_1990_WA
-    soil_class         C
-    Distance_start     11009.1743
-    Distance_end       120000
-    Distance_steps     15
-    Magnitude_start    3.5
-    Magnitude_end      8
-    Magnitude_steps    15
-    Depth_start        0
-    Depth_end          26.6055
-    Depth_steps        15
-    azimuth            0
-    dip                0
-    =================  ==================================================
+	``./data/<facility_type>/input``
 
-
-.. _simulation-facility-files:
-
-Facility Definition Files
-===========================
-
-.. _input-facility:
-
-Data Representation: 'facility.csv'
--------------------------------------------------
-
-.. figtable::
-    :label: table-input-facility
-    :caption: Data layout for 'facility.csv' input file
-    :alt: Data Layout for Facility Input File
-    :spec: >{\raggedright\arraybackslash}p{0.15\linewidth} 
-           >{\raggedright\arraybackslash}p{0.15\linewidth} 
-           >{\raggedright\arraybackslash}p{0.15\linewidth} 
-           >{\raggedright\arraybackslash}p{0.15\linewidth} 
-           >{\raggedright\arraybackslash}p{0.15\linewidth}
-    :nofig:
-
-    +-----------+-----------+---------------+--------------+--------------+
-    | Facility  | Capacity  | Rebuild Cost  | Repair Cost  | Operational  |
-    | Name      |           | Loading       | Loading      | Fraction     |
-    +===========+===========+===============+==============+==============+
-    | ...       | ...       | ...           | ...          | ...          |
-    +-----------+-----------+---------------+--------------+--------------+
-    | ...       | ...       | ...           | ...          | ...          |
-    +-----------+-----------+---------------+--------------+--------------+
-
-
-.. _input-component-types:
-
-Data Representation: 'component_types.csv'
--------------------------------------------------
-
-.. figtable::
-    :label: table-input-component-type
-    :caption: Data layout for 'component_types.csv' input file
-    :alt: Data Layout for Component Type Facility Input File
-    :spec: p{0.2\linewidth} p{0.15\linewidth} p{0.1\linewidth} p{0.1\linewidth} p{0.1\linewidth} p{0.1\linewidth}
-    :nofig:
-    
-    .. csv-table::
-        :header: "Component Type", "Spectral Type", "Natural Period", "Cost Fraction", "Repair Mean", "Repair Beta"
-        :widths: 20, 15, 10, 10, 10, 10
-        
-        "Ash System","SA",0.1,0.432,41,5.5
-        "Coal Bunker","SA",0.1,0.215,9.5,2.2
-        "Generation Unit","SA",0.1,0.107,9.5,2.2
-        "Cooling Tower","SA",0.1,0.021,9.5,2.2
-    
-
-.. _input-components:
-
-Data Representation: 'components.csv'
--------------------------------------------------
-  
-.. figtable::
-    :label: table-input-components
-    :caption: Data layout for 'components.csv' input file
-    :alt: Data Layout for Components Input File
-    :spec: l l l p{5cm}
-    :nofig:
-    
-    .. csv-table::
-        :header: "Component ID", "Component Type", "Comment"
-        :widths: 15, 15, 30
-        
-        "AshSystem1","Ash System"," "
-        "Bunker1","Coal Bunker","for testing assign 'unbreakable' fragility to this"
-        "GenUnit1","Generation Unit",
-        "GenUnit2","Generation Unit",        
-        "CoolingTower1","Cooling Tower",
-        "CoolingTower2","Cooling Tower",
-
-
-.. _input-damage-levels:
-
-Data Representation: 'damage_levels.csv'
--------------------------------------------------
-
-.. figtable::
-    :label: table-input-damage-levels
-    :caption: Data layout for 'damage_levels.csv' input file
-    :alt: Data Layout for Damamge Levels Input File
-    :spec: p{0.2\linewidth} 
-           p{0.12\linewidth} 
-           p{0.09\linewidth} 
-           p{0.09\linewidth} 
-           p{0.09\linewidth} 
-           p{0.09\linewidth} 
-           p{0.09\linewidth}
-    :nofig:
-
-    .. csv-table::
-        :header: Component Type,Damage Level,Spectral Mean,Spectral Median Sigma,Spectral Sigma,Spectral Sigma Sigma,Damage Fraction
-        :widths: 10, 10, 5, 5, 5, 5, 5
-
-        Ash System,Slight,0.27,0,0.6,0,0.15
-        Ash System,Moderate,0.58,0,0.6,0,0.35
-        Ash System,Extensive,1.6,0,0.6,0,0.65
-        Ash System,Complete,3.12,0,0.6,0,1
-        Coal Bunker,Slight,0.12,0,0.64,0,0.15
-        Coal Bunker,Moderate,0.17,0,0.64,0,0.35
-        Coal Bunker,Extensive,0.3,0,0.64,0,0.65
-        Coal Bunker,Complete,0.64,0,0.64,0,1
-        Generation Unit,Slight,0.15,0,0.6,0,0.15
-        Generation Unit,Moderate,0.25,0,0.6,0,0.35
-        Generation Unit,Extensive,0.53,0,0.6,0,0.65
-        Generation Unit,Complete,1,0,0.6,0,1
-        Cooling Tower,Slight,0.15,0,0.7,0,0.15
-        Cooling Tower,Moderate,0.35,0,0.7,0,0.35
-        Cooling Tower,Extensive,0.68,0,0.7,0,0.65
-        Cooling Tower,Complete,0.95,0,0.7,0,1
-
-
-.. _input-subsystems:
-
-Data Representation: 'subsystems.csv'
--------------------------------------------------
-
-.. figtable::
-    :label: table-input-subsystems
-    :caption: Data layout for 'subsystems.csv' input file
-    :alt: Data Layout for Subsystems Input File
-    :spec:  >{\footnotesize\raggedright\arraybackslash}p{0.2\linewidth} 
-            >{\footnotesize\raggedright\arraybackslash}p{0.12\linewidth} 
-            >{\footnotesize\raggedright\arraybackslash}p{0.12\linewidth} 
-            >{\footnotesize\raggedright\arraybackslash}p{0.12\linewidth} 
-            >{\footnotesize\raggedright\arraybackslash}p{0.12\linewidth} 
-            >{\footnotesize\raggedright\arraybackslash}p{0.12\linewidth} 
-    :nofig:
-
-    .. csv-table::
-        :header: "Subsystem ID", "Entity Relationship", "Entities"
-        :widths: 15, 15, 10, 10, 10, 10
-
-        "CleanWaterDelivery1", "SERIES", "DeminPlant1", "PL1", "Dam1", "AshSystem1"
-        "CleanWaterDelivery2", "SERIES", "DeminPlant2", "PL1", "Dam1", "AshSystem1"
-        "Stack1_Subsys_A", "SERIES", "Stack1", "CoolingTower1", "CleanWaterDelivery1",
-        "Stack1_Subsys_B", "SERIES", "Stack1", "CoolingTower2", "CleanWaterDelivery1",
-        "Stack1_Subsys", "PARALLEL", "Stack1_SSA", "Stack1_SSB", , 
-        "Stack2_Subsys", "SERIES", "Stack2", "CoolingTower3", "CoolingTower4", "CleanWaterDelivery1"
-        "GenSubsystem1", "SERIES", "GenUnit1", "GasBriqSupply1", "Stack1_SS", "BrownCoalDelivery"
-        "GenSubsystem2", "SERIES", "GenUnit2", "GasBriqSupply1", "Stack1_SS", "BrownCoalDelivery"
-    
-
-.. _input-prod-lines:
-
-Data Representation: 'facility_prod_lines.csv'
--------------------------------------------------
-
-.. figtable::
-    :label: table-input-prod-lines
-    :caption: Data layout for 'facility_prod_lines.csv' input file
-    :alt: Data Layout for Production Lines Input File
-    :spec: l l l l l l
-    :nofig:
-    
-    .. csv-table::
-        :header: "Production Line ID", "Line Capacity", "Subsystems",,,
-        
-        Line1,  100,    SubSys_A,   SubSys_B,, 
-        Line2,  250,    SubSys_C,   SubSys_D,   SubSys_E,
-        "...",  "...",  "...",      "...",      "...",          "..."
-
+<**to be continued**>
