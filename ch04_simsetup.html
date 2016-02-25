@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Simulation Setup &mdash; SIFRA 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="SIFRA 0.1.0 documentation" href="index.html"/>
+        <link rel="prev" title="SIFRA Installation and Usage" href="ch03_installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SIFRA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">Discussion on the Concept and Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">SIFRA Installation and Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">Scenario Definition File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#facility-definition-files">Facility Definition Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-representation-facility-csv">Data Representation: &#8216;facility.csv&#8217;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-representation-component-types-csv">Data Representation: &#8216;component_types.csv&#8217;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-representation-components-csv">Data Representation: &#8216;components.csv&#8217;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-representation-damage-levels-csv">Data Representation: &#8216;damage_levels.csv&#8217;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-representation-subsystems-csv">Data Representation: &#8216;subsystems.csv&#8217;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-representation-facility-prod-lines-csv">Data Representation: &#8216;facility_prod_lines.csv&#8217;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">SIFRA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Simulation Setup</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/ch04_simsetup.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simulation-setup">
+<span id="simulation-inputs"></span><h1>Simulation Setup<a class="headerlink" href="#simulation-setup" title="Permalink to this headline">¶</a></h1>
+<p>Setting a simulation requires populating two different sets of inputs:</p>
+<ul class="simple">
+<li>Scenario configuration</li>
+<li>Facility system configuration</li>
+</ul>
+<p>These two sets of input data are contained in two separate files. These files,
+their parameters, data layout, and sample input data are presented in the
+remaining of this Section.</p>
+<p>├── LICENSE
+├── README.md
+├── data
+│   └── ps_coal
+│       ├── input
+│       │   ├── sys_config_coal_pwrstn.xlsx
+│       │   ├── sys_config_ps_sd0.35g.xlsx
+│       │   ├── sys_config_ps_sd0.35g_test_case.xlsx
+│       │   └── sys_config_ss_230kv.xlsx
+│       └── output
+│           ├── Model_System_Fragility.csv
+│           ├── Model_System_Restoration__mode1.csv
+│           ├── comp_type_meanfailures.csv
+│           ├── comp_type_meanloss.csv
+│           ├── comp_type_response.csv
+│           ├── component_meanloss.csv
+│           ├── component_response.csv
+│           ├── fig_MODEL_sys_pb_exceed.png
+│           ├── fig_MODEL_sys_rst_mode1.png
+│           ├── fig_MODEL_sys_rst_mode2.png
+│           ├── fig_SC_0.50g_component_criticality.png
+│           ├── fig_SC_0.50g_comptype_failures.png
+│           ├── fig_SC_0.50g_loss_sys_vs_comptype_v1.png
+│           ├── fig_SC_0.50g_loss_sys_vs_comptype_v2.png
+│           ├── fig_SC_0.50g_str10_restoration.png
+│           ├── fig_SC_0.50g_str20_restoration.png
+│           ├── fig_SC_0.50g_str5_restoration.png
+│           ├── line_restoration_prognosis.csv
+│           ├── raw_output
+│           │   ├── ...
+│           │   ├── ...
+│           │   └── ...
+│           ├── restoration_setup_SC_0.50g.csv
+│           ├── system_layout.dot
+│           ├── system_layout.png
+│           ├── system_output_given_haz_param.csv
+│           ├── system_output_vs_hazparam.csv
+│           ├── system_response.csv
+│           └── system_restoration_profile.csv
+├── environment_linux64.yml
+├── environment_osx.yml
+├── environment_win64.yml
+├── requirements.txt
+├── setup.py
+├── sifra
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── fit_model.py
+│   ├── scenario_loss_analysis.py
+│   ├── sifra.py
+│   ├── sifraclasses.py
+│   ├── sifraplot.py
+│   ├── siraplot.pyc
+│   └── systemlayout.py
+├── simulation_setup
+│   ├── config_ps_X.ini
+│   └── config_ps_coal_600MW.conf
+│
+└── tests</p>
+<blockquote>
+<div>├── __init__.py
+├── config_ps_X_test.conf
+├── config_ps_X_test_extremes.conf
+├── ...
+├── ...
+└── test_sira.py</div></blockquote>
+<div class="section" id="scenario-definition-file">
+<span id="scenario-config-file"></span><h2>Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
+<p>The simulation &#8216;scenario&#8217; definition file is located in the following directory
+(relative to the source code):</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">./data/Sector/&lt;sector&gt;/&lt;facility_type&gt;</span></code></div></blockquote>
+<p>The directory <code class="docutils literal"><span class="pre">&lt;facility_definition_dir&gt;</span></code> as shown in the second row, is the
+location of the six <a class="reference internal" href="#simulation-facility-files"><span>input csv files</span></a> that are
+used to define the configuration and fragility of the facility to be simulated.
+Please note that the scenario difinition table has no header row.</p>
+</div>
+<div class="section" id="facility-definition-files">
+<span id="simulation-facility-files"></span><h2>Facility Definition Files<a class="headerlink" href="#facility-definition-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-representation-facility-csv">
+<span id="input-facility"></span><h3>Data Representation: &#8216;facility.csv&#8217;<a class="headerlink" href="#data-representation-facility-csv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="data-representation-component-types-csv">
+<span id="input-component-types"></span><h3>Data Representation: &#8216;component_types.csv&#8217;<a class="headerlink" href="#data-representation-component-types-csv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="data-representation-components-csv">
+<span id="input-components"></span><h3>Data Representation: &#8216;components.csv&#8217;<a class="headerlink" href="#data-representation-components-csv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="data-representation-damage-levels-csv">
+<span id="input-damage-levels"></span><h3>Data Representation: &#8216;damage_levels.csv&#8217;<a class="headerlink" href="#data-representation-damage-levels-csv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="data-representation-subsystems-csv">
+<span id="input-subsystems"></span><h3>Data Representation: &#8216;subsystems.csv&#8217;<a class="headerlink" href="#data-representation-subsystems-csv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="data-representation-facility-prod-lines-csv">
+<span id="input-prod-lines"></span><h3>Data Representation: &#8216;facility_prod_lines.csv&#8217;<a class="headerlink" href="#data-representation-facility-prod-lines-csv" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="ch03_installation.html" class="btn btn-neutral" title="SIFRA Installation and Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Geoscience Australia.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
