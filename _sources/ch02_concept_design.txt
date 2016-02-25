@@ -134,9 +134,9 @@ states used in the model and the estimated recovery at time t for the
 components based of the restoration model:
 
 .. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i | PGA=x] \times R_i[t]
-   :label: eqn-recovery-time
+    :label: eqn-recovery-time
 
-where, \mathit{i} is the index of the damage state, 
+where, *i* is the index of the damage state, 
 :math:`{i \in \mathbb{Z} | 0 \ge i \ge S}`. 
 The 'None' damage state is *i=0*, and *i=S* is the complete or highest 
 modelled damage state. :math:`R_i[t]` is the likely level of restoration of 
