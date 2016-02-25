@@ -1,8 +1,8 @@
 .. _intro-page:
 
-**************
+************
 Introduction
-**************
+************
 
 Critical infrastructure facilities typically comprise a number of 
 interconnected components that work in concert to deliver a service. 
