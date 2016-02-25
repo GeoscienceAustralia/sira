@@ -11,7 +11,7 @@ Setting a simulation requires populating two different sets of inputs:
 
 These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the 
-remaining of this Section.
+remaining of this Section::
 
 ├── LICENSE
 ├── README.md
