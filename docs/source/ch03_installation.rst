@@ -1,14 +1,13 @@
-.. _installation:
 
-********************************
+****************************
 SIFRA Installation and Usage
-********************************
+****************************
 
 
 .. _system-requirements:
 
 Requirements
-==============================================================================
+============
 
 **SIFRA** is built in Python 2.7. Python hardware requirements are fairly 
 minimal. Most modern systems based on x86 architecture should be able to run 
@@ -39,7 +38,7 @@ for Python 2.7: <http://aka.ms/vcpython27>
 .. _setup-dev-environ:
 
 Setting Up a Development Environment
-==============================================================================
+====================================
 
 We recommend using ``conda`` for managing virtual environments and
 packages required for running ``sifra``.
@@ -97,7 +96,7 @@ the instructions provided earlier. Then run::
 .. _running-sifra:
 
 Running the Code
-==============================================================================
+================
 
 To run the software, follow the following simple steps:
 
@@ -124,7 +123,7 @@ time it is run.
 
 
 Running Code Tests
-==============================================================================
+==================
 
 To run tests use either ``nose`` or ``unittest``.
 Example (from the first level 'sifra' directory)::

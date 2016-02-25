@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to SIFRA documentation
-=================================
+******************************
 
 SIFRA stands for **System for Infrastructure Facility Resilience
 Analysis**.
@@ -16,24 +16,25 @@ designed to work with earthquake hazards only.
 
 The following are some key features of this tool:
 
-- Written in Python: It is written in Python, and there is no
+- *Written in Python*: It is written in Python, and there is no
   dependency on proprietary tools. It should run on OS X, Windows, and
   Linux platforms.
-- Flexible Facility Model: ``facility`` data model is based on network
+- *Flexible Facility Model*: ``facility`` data model is based on network
   theory, allowing the user to develop arbitrarily complex custom
   facility models for simulation.
-- Extensible Component Library: User can define new ``component types``
-  (the building blocks of a facility) and link it to existing or
-  custom fragility algorithms.
-- Component Criticality: Scenario Analysis tools allow users to
+- *Extensible Component Library*: User can define new instances of
+  ``component_type`` (the building blocks of a facility) and link it
+  to existing or custom fragility algorithms.
+- *Component Criticality*: Scenario Analysis tools allow users to
   identify the cost of restoration for chosen scenarios, expected
   restoration times, and which component upgrades can most benefit
   the system.
-- Restoration Prognosis: User can experiment with different levels of
+- *Restoration Prognosis*: User can experiment with different levels of
   hazards and post-disaster resource allocation to gauge restoration
   times for facility operations.
 
-Contents:
+Contents
+========
 
 .. toctree::
    :maxdepth: 2

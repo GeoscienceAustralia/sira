@@ -1,8 +1,8 @@
 .. _simulation-inputs:
 
-******************
+****************
 Simulation Setup
-******************
+****************
 
 Setting a simulation requires populating two different sets of inputs:
 
@@ -34,15 +34,15 @@ to the keep the directory structure of the code in mind::
 .. _scenario-config-file:
 
 Scenario Definition File
-==========================
+========================
 
 The simulation 'scenario' definition file is located in the following directory 
 (relative to the root dir of source code)::
 
-    ``./simulation_setup``
+    ./simulation_setup
 
 while the file that defines a facility resides under::
 
-	``./data/<facility_type>/input``
+	./data/<facility_type>/input
 
 <**to be continued**>
