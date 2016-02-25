@@ -159,25 +159,28 @@ the Synerg-G program (Pitilakis et al. 2014), and align with the definition
 of subsystems and systems as defined in (Rinaldi et al. 2001). Under this
 scheme, the components are represented as nodes. Based on their role within
 the system, these nodes, or components, are classified in four categories:</p>
-<p>1. <em>Supply nodes</em>: These nodes represent thr entry points into the system
+<ol class="arabic simple">
+<li><em>Supply nodes</em>: These nodes represent thr entry points into the system
 for required inputs or commodities. As for example, coal and water can be
 the required ‘commodities’ into a thermal power station. In the case of
 the substation, required input is electricity from power stations or other
-substations.</p>
-<p>2. <em>Output nodes</em>: These nodes represent the exit points for the output of
+substations.</li>
+<li><em>Output nodes</em>: These nodes represent the exit points for the output of
 the system. For example, in the case of the power station, the output nodes
 act as dummy loads - representing the energy consumers - connected to each
-of the step-up transformers. The sum of flow through the network measured at
-the output nodes represented the effective production (or operational)
-capacity of the facility.</p>
-<p>3. <em>Dependency nodes</em>: These nodes represent the components that do not
+of the step-up transformers. The sum of flow through the network measured
+at the output nodes represented the effective production (or operational)
+capacity of the facility.</li>
+<li><em>Dependency nodes</em>: These nodes represent the components that do not
 directly participate in the production process of the system, or in the
 handling of system inputs, but are critical for system operations in some
 other capacity, e.g. system management or monitoring. The control building
-of a substation is an example of this.</p>
-<p>4. <em>Transhipment nodes</em>: These are nodes that transform, transport, or store
-system inputs to give effect to processes that produces the outputs required
-of the system. Majority of the nodes within a system fall into this category.</p>
+of a substation is an example of this.</li>
+<li><em>Transhipment nodes</em>: These are nodes that transform, transport, or store
+system inputs to give effect to processes that produces the outputs
+required of the system. Majority of the nodes within a system fall into
+this category.</li>
+</ol>
 <p>The component configuration and redundancies are captured as edges connecting
 the nodes. Constraints on flow through specific paths, or sets of nodes, can
 be represented as capacities of edges connecting those nodes. Figure 2.1
@@ -246,13 +249,14 @@ modelled damage state. <span class="math">R_i[t]</span> is the likely level of r
 functionality at time <span class="math">t</span>. Restoration level <span class="math">R_i</span> can take on
 any value in the unit interval [0,1].</p>
 <p>The simulation of the restoration prognosis is conducted based on a set of
-inputs and assumptions. The required data inputs to this process are:
-- The system configuration
-- The modelled scenario - seismic intensity value
-- Impact simulation results - system component losses
-- Restoration priority list - the order at which output lines should</p>
-<blockquote>
-<div>be recovered</div></blockquote>
+inputs and assumptions. The required data inputs to this process are:</p>
+<ul class="simple">
+<li>The system configuration</li>
+<li>The modelled scenario - seismic intensity value</li>
+<li>Impact simulation results - system component losses</li>
+<li>Restoration priority list - the order at which output lines should
+be recovered</li>
+</ul>
 <p>The process assumes that restoration is undertaken in stages, subject to
 the level of resources that can be made available and the order of repairs.
 In regard to this, the concept of &#8216;<em>Restoration Streams</em>&#8216; is used&#8211;the
