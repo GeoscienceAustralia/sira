@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. SIFRA Installation and Usage &mdash; SIFRA 0.1.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="SIFRA 0.1.1 documentation" href="index.html"/>
+        <link rel="next" title="4. Simulation Setup" href="ch04_simsetup.html"/>
+        <link rel="prev" title="2. Concept and Design" href="ch02_concept_design.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SIFRA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">2. Concept and Design</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">3. SIFRA Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">3.1. Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-development-environment">3.2. Setting Up a Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-code">3.3. Running the Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-code-tests">3.4. Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4. Simulation Setup</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+<ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">SIFRA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>3. SIFRA Installation and Usage</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sifra-installation-and-usage">
+<h1>3. SIFRA Installation and Usage<a class="headerlink" href="#sifra-installation-and-usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<span id="system-requirements"></span><h2>3.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><strong>SIFRA</strong> is built in Python 2.7. Python hardware requirements are fairly
+minimal. Most modern systems based on x86 architecture should be able to run
+this software.</p>
+<p>SIFRA has been tested on the following operating systems:</p>
+<ul class="simple">
+<li>OS X 10.11</li>
+<li>Ubuntu 14.04 (64 bit)</li>
+<li>Windows 10</li>
+</ul>
+<p>The code should work on most other versions of these operating systems,
+though the environment setup process will likely have some differences.
+Windows systems that are not based on the NT-platform are not supported. This
+restriction is due to the fact that from version 2.6 onwards Python has not
+supported non-NT Windows platforms.</p>
+<p>You will need to install <code class="docutils literal"><span class="pre">Graphviz</span></code> for the drawing the system diagram
+through networkx and pygraphviz. Please visit: &lt;<a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a>&gt;
+and download the appropriate version for your operating system. Follow the
+posted download instructions carefully. After installation you may need to
+update the PATH variable with the location of the Graphviz binaries.</p>
+<p>For windows systems you will need to install Microsoft Visual C++ Compiler
+for Python 2.7: &lt;<a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>&gt;</p>
+</div>
+<div class="section" id="setting-up-a-development-environment">
+<span id="setup-dev-environ"></span><h2>3.2. Setting Up a Development Environment<a class="headerlink" href="#setting-up-a-development-environment" title="Permalink to this headline">¶</a></h2>
+<p>We recommend using <code class="docutils literal"><span class="pre">conda</span></code> for managing virtual environments and
+packages required for running <code class="docutils literal"><span class="pre">sifra</span></code>.</p>
+<p>For the sake of simplicity, we recommend using <code class="docutils literal"><span class="pre">Anaconda</span></code>. It is a
+free Python distribution, and comes with the <code class="docutils literal"><span class="pre">conda</span></code> tool which is
+both a package manager and environment manager. Instructions for
+installing <code class="docutils literal"><span class="pre">Anaconda</span></code> are here:
+&lt;<a class="reference external" href="http://docs.continuum.io/anaconda/install">http://docs.continuum.io/anaconda/install</a>&gt;</p>
+<p>Some packages we need are not hosted in the main <code class="docutils literal"><span class="pre">conda</span></code> package
+repository. In such cases we will host them in our own user channel.
+We suggest adding the following channels to the default:</p>
+<div class="highlight-python"><div class="highlight"><pre>conda config --add channels https://conda.anaconda.org/anaconda
+conda config --add channels https://conda.anaconda.org/marufr
+</pre></div>
+</div>
+<p>Run the following command to confirm the additional channels have
+been added:</p>
+<blockquote>
+<div>conda config &#8211;get channels</div></blockquote>
+<p><strong>For OS X and Linux-64 systems:</strong> It should be possible to set up a full run
+environment solely through the <a href="#id1"><span class="problematic" id="id2">*</span></a>.yml environment specification file. For OS X
+run the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>conda env create -f environment_osx.yml
+source activate sifra_env
+</pre></div>
+</div>
+<p>For Linux-64 systems, the commands are identical, you will just need to use
+the environment specification file for Linux.</p>
+<p><strong>For Windows systems</strong>, a similar process needs to be followed, with some
+exceptions. First run:</p>
+<div class="highlight-python"><div class="highlight"><pre>conda env create -f environment_win64.yml
+activate sifra_env
+</pre></div>
+</div>
+<p>This will install most requirements except for <code class="docutils literal"><span class="pre">igraph</span></code> and <code class="docutils literal"><span class="pre">pygraphviz</span></code>.
+Compiling these packages under windows can be very challenging. The simplest
+and most reliable options is to download the the appropriate wheels from
+Christoph Gohlke&#8217;s unofficial page of Windows binaries:
+&lt;<a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a>&gt;</p>
+<p>For Win-64 systems, you will need these files:
+- python_igraph-0.7.1.post6-cp27-none-win_amd64.whl
+- pygraphviz-1.3.1-cp27-none-win_amd64.whl</p>
+<p>To install these binaries, activate the virtual environment for SIFRA, using
+the instructions provided earlier. Then run:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install &lt;pkg_name&gt;.whl
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-the-code">
+<span id="running-sifra"></span><h2>3.3. Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline">¶</a></h2>
+<p>To run the software, follow the following simple steps:</p>
+<ul>
+<li><p class="first">Open a command terminal</p>
+</li>
+<li><p class="first">Change to the directory that has the <code class="docutils literal"><span class="pre">sifra</span></code> code. If the code is in the
+directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra</span></code>, then run:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ~/sifra/
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the primary fragility characterisarion module from the command line.
+We assume that same configuration file is stored in
+<code class="docutils literal"><span class="pre">/Users/personx/sifra/simulation_setup/</span></code>, and the configuration file is
+names <code class="docutils literal"><span class="pre">config_ps.conf</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>python -m sifra simulation_setup/config_ps.conf
+</pre></div>
+</div>
+</li>
+</ul>
+<p>When the software is started for te first time,
+or if it cannot find a <span class="xref std std-ref">scenario file</span>, the
+user will be prompted to select a scenario file. If a scenario file has been
+loaded previously, SIFRA attempts to load that same scenario file then next
+time it is run.</p>
+</div>
+<div class="section" id="running-code-tests">
+<h2>3.4. Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
+<p>To run tests use either <code class="docutils literal"><span class="pre">nose</span></code> or <code class="docutils literal"><span class="pre">unittest</span></code>.
+Example (from the first level &#8216;sifra&#8217; directory):</p>
+<div class="highlight-python"><div class="highlight"><pre>cd sifra  # and not cd sifra/sifra
+python -m unittest discover tests
+</pre></div>
+</div>
+<p>or, simply run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">nosetest</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ch04_simsetup.html" class="btn btn-neutral float-right" title="4. Simulation Setup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ch02_concept_design.html" class="btn btn-neutral" title="2. Concept and Design" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Geoscience Australia.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
