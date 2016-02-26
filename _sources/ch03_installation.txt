@@ -3,7 +3,6 @@
 SIFRA Installation and Usage
 ****************************
 
-
 .. _system-requirements:
 
 Requirements
@@ -26,7 +25,7 @@ restriction is due to the fact that from version 2.6 onwards Python has not
 supported non-NT Windows platforms. 
 
 You will need to install ``Graphviz`` for the drawing the system diagram 
-through networkx and pygraphviz. Please visit: <http://www.graphviz.org/> 
+through networkx and pygraphviz. Please visit: `<http://www.graphviz.org/>`_
 and download the appropriate version for your operating system. Follow the 
 posted download instructions carefully. After installation you may need to 
 update the PATH variable with the location of the Graphviz binaries.
@@ -46,8 +45,8 @@ packages required for running ``sifra``.
 For the sake of simplicity, we recommend using ``Anaconda``. It is a
 free Python distribution, and comes with the ``conda`` tool which is
 both a package manager and environment manager. Instructions for
-installing ``Anaconda`` are here:
-<http://docs.continuum.io/anaconda/install>
+installing ``Anaconda`` are
+`here <http://docs.continuum.io/anaconda/install>`_.
 
 Some packages we need are not hosted in the main ``conda`` package
 repository. In such cases we will host them in our own user channel.
@@ -80,18 +79,18 @@ exceptions. First run::
 This will install most requirements except for ``igraph`` and ``pygraphviz``. 
 Compiling these packages under windows can be very challenging. The simplest 
 and most reliable options is to download the the appropriate wheels from 
-Christoph Gohlke's unofficial page of Windows binaries:
-<http://www.lfd.uci.edu/~gohlke/pythonlibs/>
+`Christoph Gohlke's unofficial page of Windows binaries
+<http://www.lfd.uci.edu/~gohlke/pythonlibs/>`_.
 
-For Win-64 systems, you will need these files:
-- python_igraph-0.7.1.post6-cp27-none-win_amd64.whl
-- pygraphviz-1.3.1-cp27-none-win_amd64.whl
+For Windows 64 bit systems, you will need to download the ``wheels`` for
+`python-igraph <http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph>`_
+and `pygraphviz <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz>`_:
+- ``python_igraph-0.7.1.post6-cp27-none-win_amd64.whl``
+- ``pygraphviz-1.3.1-cp27-none-win_amd64.whl``
 
-To install these binaries, activate the virtual environment for SIFRA, using 
-the instructions provided earlier. Then run::
+Install these downloaded ``wheels`` with pip::
 
     pip install <pkg_name>.whl
-
 
 .. _running-sifra:
 

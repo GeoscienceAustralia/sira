@@ -62,10 +62,10 @@ illustrates this concept for a thermal power station.
 
 .. _pwrstn_schematic_diagram:
 
-.. figure:: _static/pwrstn_schematic_diagram.png
-    :alt: Power station schematic
-    :align: center
-    :width: 98%
+.. figure:: images/pwrstn_schematic_diagram.png
+   :alt: Power station schematic
+   :align: center
+   :width: 98%
    
     Figure 2.1  Schematic representation of a coal-fired power station
 
@@ -103,10 +103,10 @@ values. This Process is shown in Figure 2.2.
 
 .. _fig_hazard_loss_link:
 
-.. figure:: _static/hazard_loss_link.png
-    :alt: Linking hazard to damage and loss
-    :align: center
-    :width: 98%
+.. figure:: images/hazard_loss_link.png
+   :alt: Linking hazard to damage and loss
+   :align: center
+   :width: 98%
    
     Figure 2.2  Schematic of process linking component damage assessment to 
     loss projection
@@ -136,7 +136,7 @@ components based of the restoration model:
 .. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i | PGA=x] \times R_i[t]
     :label: eqn-recovery-time
 
-where, *i* is the index of the damage state, 
+where, \mathit{i} is the index of the damage state,
 :math:`{i \in \mathbb{Z} | 0 \ge i \ge S}`. 
 The 'None' damage state is *i=0*, and *i=S* is the complete or highest 
 modelled damage state. :math:`R_i[t]` is the likely level of restoration of 
