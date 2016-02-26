@@ -62,7 +62,7 @@ illustrates this concept for a thermal power station.
 
 .. _pwrstn_schematic_diagram:
 
-.. figure:: images/pwrstn_schematic_diagram.png
+.. figure:: _static/images/pwrstn_schematic_diagram.png
    :alt: Power station schematic
    :align: center
    :width: 98%
@@ -103,7 +103,7 @@ values. This Process is shown in Figure 2.2.
 
 .. _fig_hazard_loss_link:
 
-.. figure:: images/hazard_loss_link.png
+.. figure:: _static/images/hazard_loss_link.png
    :alt: Linking hazard to damage and loss
    :align: center
    :width: 98%
