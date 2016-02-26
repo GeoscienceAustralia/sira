@@ -1,0 +1,67 @@
+:orphan:
+
+Glossary
+==========
+
+..  glossary::
+    :sorted:
+
+    vulnerability
+        definition TBA
+
+        
+    fragility curves
+        definition TBA
+		
+        
+    simulation buckets
+        definition TBA
+    
+    
+    Acceleration
+        Rate of change of velocity with time.
+
+        
+    Acceleration Response Spectrum
+        A graphical plot of the maximum acceleration that structures having 
+        different characteristics will experience when subjected to a specific 
+        earthquake ground motion.
+
+        
+    Addition 
+        An increase in the aggregate floor area, height, or number of stories 
+        of a structure.
+
+        
+    Alteration
+        Any construction or renovation to an existing structure other than an addition.
+
+        
+    Appendage 
+        An architectural component such as a canopy, marquee, ornamental balcony, 
+        or statuary.
+
+        
+    Amplification 
+        A relative increase in the magnitude of a quantity, such as ground motion 
+        or building shaking. 
+
+        
+    Amplitude 
+        The maximum value of a time-varying quantity.
+
+        
+    Architectural Components 
+        Components such as exterior cladding, ceilings, partitions, and finishes.
+
+        
+    Base 
+        The level at which the horizontal seismic ground motions are considered to be 
+        imparted to a structure.
+
+        
+    Base Shear Force 
+        A term used in linear structural analysis techniques to describe the vector 
+        sum of the lateral forces that are applied to the structure to represent 
+        the effects of earthquake shaking.
+        
