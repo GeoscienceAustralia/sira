@@ -210,4 +210,3 @@ gh-pages:
 	git commit -m "Updated gh-pages" && \
 	git push origin gh-pages
 	cd ${CURDIR}
-	git checkout master
