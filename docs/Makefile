@@ -201,12 +201,16 @@ pseudoxml:
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
 
 gh-pages:
+	CURDIR=${pwd}
+	cd $(BUILDDIR)/html
+	rm -rf ./_images ./_sources ./_static .buildinfo
+	rm -rf *.html
+	cd ${CURDIR}
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
-	CURDIR="$(pwd)"
 	cd $(BUILDDIR)/html
-	git add .
-	git commit -m "Updated gh-pages" && \
+	git add -A
+	git commit -m "Updated gh-pages"
 	git push origin gh-pages
-	cd ${CURDIR}
+	cd $(CURDIR)
