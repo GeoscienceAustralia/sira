@@ -206,7 +206,7 @@ gh-pages:
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 	CURDIR="$(pwd)"
 	cd $(BUILDDIR)/html
-	git add -A
+	git add .
 	git commit -m "Updated gh-pages" && \
 	git push origin gh-pages
 	cd ${CURDIR}
