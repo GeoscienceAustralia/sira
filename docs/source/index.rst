@@ -6,15 +6,20 @@
 Welcome to SIFRA documentation
 ******************************
 
+Version: |release|
+
 SIFRA stands for **System for Infrastructure Facility Resilience
 Analysis**.
 SIFRA comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
 components that comprises the facility. Currently the system is
-designed to work with earthquake hazards only.
+designed to work with earthquake hazards only. SIFRA was developed in
+`Geoscience Australia (GA) <http://www.ga.gov.au/>`_ in support of the
+agency's vision to contribute to enhancing the resilience of communities
+in Australia and its region.
 
-The following are some key features of this tool:
+The following are some key features of SIFRA:
 
 - *Written in Python*: It is written in Python, and there is no
   dependency on proprietary tools. It should run on OS X, Windows, and
@@ -36,19 +41,22 @@ The following are some key features of this tool:
 Contents
 ========
 
+.. include:: toc_chapters.txt
+
 .. toctree::
-   :maxdepth: 2
 
-   ch01_intro
-   ch02_concept_design
-   ch03_installation
-   ch04_simsetup
+    bibliography
+    reportglossary
 
+.. toctree::
+    :hidden:
 
-Indices and tables
-==================
+    copyrightnotice_html
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. raw:: html
 
+    <div style="width: 100%; height: 1px;
+    background: #dddddd;
+    margin: 2em 0 2em 0; overflow: hidden;"> </div>
+
+.. include:: copyrightnotice_html.rst

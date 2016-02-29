@@ -13,9 +13,11 @@ This approach affords three key advantages:
 
 (1) it allows for modelling the effect of impaired or destroyed components 
     on the operational capacity of the system, 
+    
 (2) it allows for using graph theory to assess the graduated capacity 
     degradation, and restoration, through modelling flow through the 
     network, and 
+    
 (3) it allows for detection of the most efficient 'paths', or sets of 
     components, through the network that need to be restored in order to 
     establish a link between input and output nodes, i.e. to restore the 
@@ -30,27 +32,28 @@ scheme, the components are represented as nodes. Based on their role within
 the system, these nodes, or components, are classified in four categories:
 
 1. *Supply nodes*: These nodes represent thr entry points into the system 
-for required inputs or commodities. As for example, coal and water can be 
-the required ‘commodities’ into a thermal power station. In the case of 
-the substation, required input is electricity from power stations or other 
-substations.
+   for required inputs or commodities. As for example, coal and water can be 
+   the required ‘commodities’ into a thermal power station. In the case of 
+   the substation, required input is electricity from power stations or other 
+   substations.
 
 2. *Output nodes*: These nodes represent the exit points for the output of 
-the system. For example, in the case of the power station, the output nodes 
-act as dummy loads - representing the energy consumers - connected to each 
-of the step-up transformers. The sum of flow through the network measured at 
-the output nodes represented the effective production (or operational) 
-capacity of the facility.
+   the system. For example, in the case of the power station, the output nodes 
+   act as dummy loads - representing the energy consumers - connected to each 
+   of the step-up transformers. The sum of flow through the network measured 
+   at the output nodes represented the effective production (or operational) 
+   capacity of the facility.
 
 3. *Dependency nodes*: These nodes represent the components that do not 
-directly participate in the production process of the system, or in the 
-handling of system inputs, but are critical for system operations in some 
-other capacity, e.g. system management or monitoring. The control building
-of a substation is an example of this.
+   directly participate in the production process of the system, or in the 
+   handling of system inputs, but are critical for system operations in some 
+   other capacity, e.g. system management or monitoring. The control building
+   of a substation is an example of this.
 
 4. *Transhipment nodes*: These are nodes that transform, transport, or store 
-system inputs to give effect to processes that produces the outputs required 
-of the system. Majority of the nodes within a system fall into this category.
+   system inputs to give effect to processes that produces the outputs 
+   required of the system. Majority of the nodes within a system fall into 
+   this category.
 
 The component configuration and redundancies are captured as edges connecting 
 the nodes. Constraints on flow through specific paths, or sets of nodes, can 
@@ -59,10 +62,10 @@ illustrates this concept for a thermal power station.
 
 .. _pwrstn_schematic_diagram:
 
-.. figure:: pwrstn_schematic_diagram.png
-    :alt: Power station schematic
-    :align: center
-    :width: 98%
+.. figure:: _static/images/pwrstn_schematic_diagram.png
+   :alt: Power station schematic
+   :align: center
+   :width: 98%
    
     Figure 2.1  Schematic representation of a coal-fired power station
 
@@ -100,10 +103,10 @@ values. This Process is shown in Figure 2.2.
 
 .. _fig_hazard_loss_link:
 
-.. figure:: hazard_loss_link.png
-    :alt: Linking hazard to damage and loss
-    :align: center
-    :width: 98%
+.. figure:: _static/images/hazard_loss_link.png
+   :alt: Linking hazard to damage and loss
+   :align: center
+   :width: 98%
    
     Figure 2.2  Schematic of process linking component damage assessment to 
     loss projection
@@ -131,9 +134,9 @@ states used in the model and the estimated recovery at time t for the
 components based of the restoration model:
 
 .. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i | PGA=x] \times R_i[t]
-   :label: eqn-recovery-time
+    :label: eqn-recovery-time
 
-where, \mathit{i} is the index of the damage state, 
+where, \mathit{i} is the index of the damage state,
 :math:`{i \in \mathbb{Z} | 0 \ge i \ge S}`. 
 The 'None' damage state is *i=0*, and *i=S* is the complete or highest 
 modelled damage state. :math:`R_i[t]` is the likely level of restoration of 
@@ -142,6 +145,7 @@ any value in the unit interval [0,1].
 
 The simulation of the restoration prognosis is conducted based on a set of 
 inputs and assumptions. The required data inputs to this process are:
+
 - The system configuration
 - The modelled scenario - seismic intensity value
 - Impact simulation results - system component losses
@@ -166,13 +170,16 @@ Given a set of restoration parameters and the restoration plan, the consequent r
 1. Test if there is any available path between the set of required input 
    nodes (i.e. supply nodes) and the output node assigned the highest 
    priority to meet the demand at that node.
+   
 2. If no functional path is found, then identify the least expensive path(s) 
    that needs to be restored to meet demand at the output node. Within each 
    path, identify the functional status of the nodes (components), and 
    generate a repair list.
+   
 3. Iterate through the ordered output list, repeating steps 1 and 2 above. 
    Update the component repair list and produce a complete prioritised list 
    of components to repair or replace.
+   
 4. Simulate an ordered restoration process based on the above list and 
    user-specified resource constraints. If the process is using x resource 
    constraints, then whenever a component is restored (and the number of 
@@ -205,8 +212,10 @@ expedite the restoration of the high priority lines.
 The outputs from the restoration model are: 
 
 (a) a simple Gantt chart with each component needing repair, 
+
 (b) restoration plot for each output line over time and the associated 
     percentage of total system capacity rehabilitated, and 
+
 (c) total restoration time for each output line for a given restoration 
     scheme.
 
