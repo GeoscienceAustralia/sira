@@ -201,7 +201,7 @@ pseudoxml:
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
 
 gh-pages:
-	CURDIR=${pwd}
+	CURDIR="${pwd}"
 	cd $(BUILDDIR)/html
 	rm -rf ./_images ./_sources ./_static .buildinfo
 	rm -rf *.html
