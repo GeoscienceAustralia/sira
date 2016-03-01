@@ -15,20 +15,20 @@ remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind::
 
     .
-    ├── LICENSE                 <-- License file: Apache 2
-    ├── README.md               <-- Summary documentation
+    ├── LICENSE                   <-- License file: Apache 2
+    ├── README.md                 <-- Summary documentation
     ├── data
-    │   └── ps_coal             <-- Directory for specified facility type
-    │       ├── input           <-- Facility definition file resides here
-    │       └── output          <-- The simulation results are here
-    │           └── raw_output  <-- Raw data/binary outputs for provenance
+    │   └── ps_coal               <-- Directory for specified facility type
+    │       ├── input             <-- Facility definition file resides here
+    │       └── output            <-- The simulation results are here
+    │           └── raw_output    <-- Raw data/binary outputs for provenance
     ├── docs
-    │   └── source              <-- ReST files for Sphinx documentation
+    │   └── source                <-- ReST files for Sphinx documentation
     │       ├── _static
     │       └── _templates
-    ├── sifra                   <-- The MODULES/SCRIPTS
-    ├── simulation_setup        <-- Scenario config files
-    └── tests                   <-- Test scripts
+    ├── sifra                     <-- The MODULES/SCRIPTS
+    ├── simulation_setup          <-- Scenario config files
+    └── tests                     <-- Test scripts
 
 
 .. _scenario-config-file:
@@ -58,7 +58,7 @@ HAZARD_TRANSFER_PARAM = 'PGA'   # EDP - Engineering Demand Parameter
 HAZARD_TRANSFER_UNIT = 'g'     # EDP_unit - Demand Parameter Unit
 SCENARIO_HAZARD_VALUES = [0.50]
 
-**Restoration Setup: **
+**Restoration Setup Parameters**:
 
 TIME_UNIT = 'week'
 RESTORE_TIME_UPPER = 250.0
@@ -70,7 +70,7 @@ RESTORE_TIME_MAX = 300.0
 # This represent resource application towards the restoration process.
 RESTORATION_STREAMS = [5, 10, 20]
 
-**System Setup: **
+**System Setup Parameters**:
 
 .. System Description & Configuration
 
@@ -82,21 +82,21 @@ PS_GEN_TECH = "Coal Fired"
 COMMODITY_FLOW_TYPES = 2
 SYS_CONF_FILE_NAME = 'sys_config_ps_sd0.35g.xlsx'
 
-**Directory Specification: **
+**Directory Specification Parameters**:
 
 PROJECT_DIR = 'data/ps_coal'
 INPUT_DIR_NAME = 'data/ps_coal/input'
 OUTPUT_DIR_NAME = 'data/ps_coal/output'
 
-**Test Switches: **
+**Test Switches Parameters**:
 
 FIT_PE_DATA = True
 FIT_RESTORATION_DATA = True
 SAVE_VARS_NPY = True
 
-**Test Switches: **
+**Test Switches Parameters**:
 MULTIPROCESS = 1
 
-**Test run or normal run" **
+**Test run or normal run**:
 ENV = 1
 
