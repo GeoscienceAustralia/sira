@@ -176,43 +176,105 @@ to the keep the directory structure of the code in mind:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>./data/&lt;facility_type&gt;/input
 </pre></div>
 </div>
-<p><a href="#id1"><span class="problematic" id="id2">**</span></a>Hazard Setup: **</p>
-<p>PGA_MIN  = 0.0
-PGA_MAX  = 1.5
-PGA_STEP = 0.01
-NUM_SAMPLES = 500
-USE_ENDPOINT = True</p>
-<p>HAZARD_TRANSFER_PARAM = &#8216;PGA&#8217;   # EDP - Engineering Demand Parameter
-HAZARD_TRANSFER_UNIT = &#8216;g&#8217;     # EDP_unit - Demand Parameter Unit
-SCENARIO_HAZARD_VALUES = [0.50]</p>
-<p><strong>Restoration Setup Parameters</strong>:</p>
-<p>TIME_UNIT = &#8216;week&#8217;
-RESTORE_TIME_UPPER = 250.0
-RESTORE_PCT_CHKPOINTS = 21
-RESTORE_TIME_STEP = 1
-RESTORE_TIME_MAX = 300.0</p>
-<p># The number of simultaneous components to work on.
-# This represent resource application towards the restoration process.
-RESTORATION_STREAMS = [5, 10, 20]</p>
-<p><strong>System Setup Parameters</strong>:</p>
-<p>SYSTEM_CLASSES = [&#8220;PowerStation&#8221;, &#8220;Substation&#8221;]
-SYSTEM_CLASS = &#8220;PowerStation&#8221;
-SYSTEM_SUBCLASS = &#8220;Coal Fired&#8221;
-PS_GEN_TECH = &#8220;Coal Fired&#8221;</p>
-<p>COMMODITY_FLOW_TYPES = 2
-SYS_CONF_FILE_NAME = &#8216;sys_config_ps_sd0.35g.xlsx&#8217;</p>
-<p><strong>Directory Specification Parameters</strong>:</p>
-<p>PROJECT_DIR = &#8216;data/ps_coal&#8217;
-INPUT_DIR_NAME = &#8216;data/ps_coal/input&#8217;
-OUTPUT_DIR_NAME = &#8216;data/ps_coal/output&#8217;</p>
-<p><strong>Test Switches Parameters</strong>:</p>
-<p>FIT_PE_DATA = True
-FIT_RESTORATION_DATA = True
-SAVE_VARS_NPY = True</p>
-<p><strong>Test Switches Parameters</strong>:
-MULTIPROCESS = 1</p>
-<p><strong>Test run or normal run</strong>:
-ENV = 1</p>
+<p>+========================+===============+======================================================+
+| Parameter Name         | Explanation   |                                                      |
++========================+===============+======================================================+
+| HAZARD_TRANSFER_PARAM  | Data Type:    | String                                               |
+|                        | Description:  | Engineering Demand Parameter                         |
+|                        | Example:      | &#8216;PGA&#8217;                                                |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| HAZARD_TRANSFER_UNIT   | Data Type:    | String                                               |
+|                        | Description:  | &#8216;g&#8217;                                                  |
+|                        | Example:      | Demand Parameter Unit                                |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| PGA_MIN                | Data Type:    | Float                                                |
+|                        | Description:  | Minimum value for PGA                                |
+|                        | Example:      | 0.0                                                  |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| PGA_MAX                | Data Type:    | Float                                                |
+|                        | Description:  | Maximum value for PGA                                |
+|                        | Example:      | 1.5                                                  |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| PGA_STEP               | Data Type:    | Float                                                |
+|                        | Description:  | Step size for incrementing PGA                       |
+|                        | Example:      | 0.01                                                 |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| NUM_SAMPLES            | Data Type:    | Integer                                              |
+|                        | Description:  | Iterations for Monte Carlo process                   |
+|                        | Example:      | 500                                                  |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| SCENARIO_HAZARD_VALUES | Data Type:    | List of floats                                       |
+|                        | Description:  | The value(s) at which to assess facility response    |
+|                        | Example:      | [0.50]                                               |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| TIME_UNIT              | Data Type:    | String                                               |
+|                        | Description:  | Unit of time                                         |
+|                        | Example:      | &#8216;week&#8217;                                               |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| RESTORE_PCT_CHKPOINTS  | Data Type:    | Integer                                              |
+|                        | Description:  | Number of steps to assess functionality              |
+|                        | Example:      | 21                                                   |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| RESTORE_TIME_STEP      | Data Type:    | Integer                                              |
+|                        | Description:  | Time increment for restoration period                |
+|                        | Example:      | 1                                                    |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| RESTORE_TIME_MAX       | Data Type:    | Integer                                              |
+|                        | Description:  | Maximum value for restoration period assessment      |
+|                        | Example:      | 300                                                  |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| RESTORATION_STREAMS    | Data Type:    | List of integers                                     |
+|                        | Description:  | The number of simultaneous components to work on     |
+|                        | Example:      | [5, 10, 20]                                          |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| SYSTEM_CLASSES         | Data Type:    | List of strings                                      |
+|                        | Description:  | The allowed facility system types                    |
+|                        | Example:      | [&#8220;PowerStation&#8221;, &#8220;Substation&#8221;]                       |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| SYSTEM_CLASS           | Data Type:    | String                                               |
+|                        | Description:  | The facility system type to be modelled              |
+|                        | Example:      | &#8220;PowerStation&#8221;                                       |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| SYSTEM_SUBCLASS        | Data Type:    | String                                               |
+|                        | Description:  | Sub-category of system                               |
+|                        | Example:      | &#8220;Coal Fired&#8221;                                         |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| COMMODITY_FLOW_TYPES   | Data Type:    | Integer                                              |
+|                        | Description:  | Number of input commodity types                      |
+|                        | Example:      | 2                                                    |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| SYS_CONF_FILE_NAME     | Data Type:    | String                                               |
+|                        | Description:  | File name for system config and fragility info       |
+|                        | Example:      | &#8216;sys_config_ps_sd0.35g.xlsx&#8217;                         |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| INPUT_DIR_NAME         | Data Type:    | String                                               |
+|                        | Description:  | File path relative to code root                      |
+|                        | Example:      | &#8216;data/ps_coal/input&#8217;                                 |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| OUTPUT_DIR_NAME        | Data Type:    | String                                               |
+|                        | Description:  | File path relative to code root                      |
+|                        | Example:      | &#8216;data/ps_coal/output&#8217;                                |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| FIT_PE_DATA            | Data Type:    | Boolean                                              |
+|                        | Description:  | Flag for fitting Prob of Exceedance data             |
+|                        | Example:      | True                                                 |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| FIT_RESTORATION_DATA   | Data Type:    | Boolean                                              |
+|                        | Description:  | Fit model to restoration values calculated           |
+|                        | Example:      | True                                                 |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| SAVE_VARS_NPY          | Data Type:    | Boolean                                              |
+|                        | Description:  | Save calculated value in binary numpy format         |
+|                        | Example:      | True                                                 |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| MULTIPROCESS           | Data Type:    | Integer                                              |
+|                        | Description:  | use multi-core processing? 0 -&gt; False, 1 -&gt; True     |
+|                        | Example:      | 1                                                    |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+
+| ENV                    | Data Type:    | Integer                                              |
+|                        | Description:  | 0 -&gt; run tests,  1 -&gt; normal run                     |
+|                        | Example:      | 1                                                    |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+</p>
 </div>
 </div>
 
