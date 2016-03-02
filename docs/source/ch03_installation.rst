@@ -1,7 +1,7 @@
 
-****************************
-SIFRA Installation and Usage
-****************************
+**********************
+Installation and Usage
+**********************
 
 .. _system-requirements:
 
@@ -109,9 +109,9 @@ To run the software, follow the following simple steps:
 - Run the primary fragility characterisarion module from the command line.
   We assume that same configuration file is stored in 
   ``/Users/personx/sifra/simulation_setup/``, and the configuration file is 
-  names ``config_ps.conf``::
+  names ``config_x.conf``::
 
-    python -m sifra simulation_setup/config_ps.conf
+    python -m sifra simulation_setup/config_x.conf
 
 
 Running Code Tests

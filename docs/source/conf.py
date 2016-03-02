@@ -16,6 +16,9 @@ import sys
 import os
 import shlex
 
+# directory relative to this conf file
+CURDIR = os.path.abspath(os.path.dirname(__file__))
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -81,7 +84,12 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ['epilog.rst', 'tex']
+
+# A string of reStructuredText that will be included at the end of each source
+# that will be read file.
+rst_epilog = open(os.path.join(CURDIR, 'epilog.rst'), 'r').read()
+
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -168,7 +176,7 @@ html_static_path = ['_static']
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
-#html_use_smartypants = True
+html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
@@ -224,16 +232,16 @@ htmlhelp_basename = 'SIFRAdoc'
 
 latex_elements = {
 # The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+'papersize': 'a4paper',
 
 # The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
+'pointsize': '10pt',
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
 
 # Latex figure (float) alignment
-#'figure_align': 'htbp',
+'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
