@@ -84,7 +84,9 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['epilog.rst', 'tex']
+exclude_patterns = ['epilog.rst',
+                    'copyrightnotice.rst',
+                    'tex']
 
 # A string of reStructuredText that will be included at the end of each source
 # that will be read file.

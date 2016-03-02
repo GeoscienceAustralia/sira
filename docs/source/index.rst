@@ -48,10 +48,6 @@ Contents
     bibliography
     reportglossary
 
-.. toctree::
-    :hidden:
-
-    copyrightnotice_html
 
 .. raw:: html
 
@@ -59,4 +55,4 @@ Contents
     background: #dddddd;
     margin: 2em 0 2em 0; overflow: hidden;"> </div>
 
-.. include:: copyrightnotice_html.rst
+.. include:: copyrightnotice.rst
