@@ -95,7 +95,8 @@
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
-<ul class="simple">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice_html.html">License</a></li>
 </ul>
 
             
@@ -175,6 +176,309 @@ to the keep the directory structure of the code in mind:</p>
 </div>
 <p>The following table lists the parameters in the config file, their
 description, and representative values.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="20%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head stub">Parameter Name</th>
+<th class="head">Explanation</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><th class="stub">HAZARD_TRANSFER_PARAM</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Engineering Demand Parameter</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8216;PGA&#8217;</td>
+</tr>
+<tr class="row-odd"><th class="stub">HAZARD_TRANSFER_UNIT</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Demand Parameter Unit</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8216;g&#8217;</td>
+</tr>
+<tr class="row-even"><th class="stub">PGA_MIN</th>
+<td>Data Type:</td>
+<td>Float</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Minimum value for PGA</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>0.0</td>
+</tr>
+<tr class="row-odd"><th class="stub">PGA_MAX</th>
+<td>Data Type:</td>
+<td>Float</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Maximum value for PGA</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>1.5</td>
+</tr>
+<tr class="row-even"><th class="stub">PGA_STEP</th>
+<td>Data Type:</td>
+<td>Float</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Step size for incrementing PGA</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>0.01</td>
+</tr>
+<tr class="row-odd"><th class="stub">NUM_SAMPLES</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Iterations for Monte Carlo process</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>500</td>
+</tr>
+<tr class="row-even"><th class="stub">SCENARIO_HAZARD_VALUES</th>
+<td>Data Type:</td>
+<td>List of floats</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>The value(s) at which to assess facility response</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>[0.50]</td>
+</tr>
+<tr class="row-odd"><th class="stub">TIME_UNIT</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Unit of time for restoration time calculations</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8216;week&#8217;</td>
+</tr>
+<tr class="row-even"><th class="stub">RESTORE_PCT_CHKPOINTS</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Number of steps to assess functionality</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>21</td>
+</tr>
+<tr class="row-odd"><th class="stub">RESTORE_TIME_STEP</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Time increment for restoration period</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><th class="stub">RESTORE_TIME_MAX</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Maximum value for restoration period assessment</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>300</td>
+</tr>
+<tr class="row-odd"><th class="stub">RESTORATION_STREAMS</th>
+<td>Data Type:</td>
+<td>List of integers</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>The number of simultaneous components to work on</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>[5, 10, 20]</td>
+</tr>
+<tr class="row-even"><th class="stub">SYSTEM_CLASSES</th>
+<td>Data Type:</td>
+<td>List of strings</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>The allowed facility system types</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>[&#8220;PowerStation&#8221;, &#8220;Substation&#8221;]</td>
+</tr>
+<tr class="row-odd"><th class="stub">SYSTEM_CLASS</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>The facility system type to be modelled</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8220;PowerStation&#8221;</td>
+</tr>
+<tr class="row-even"><th class="stub">SYSTEM_SUBCLASS</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Sub-category of system</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8220;Coal Fired&#8221;</td>
+</tr>
+<tr class="row-odd"><th class="stub">COMMODITY_FLOW_TYPES</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Number of input commodity types</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><th class="stub">SYS_CONF_FILE_NAME</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>File name for system config and fragility info</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8216;sys_config_ps.xlsx&#8217;</td>
+</tr>
+<tr class="row-odd"><th class="stub">INPUT_DIR_NAME</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>File path relative to code root</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8216;data/ps_coal/input&#8217;</td>
+</tr>
+<tr class="row-even"><th class="stub">OUTPUT_DIR_NAME</th>
+<td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>File path relative to code root</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>&#8216;data/ps_coal/output&#8217;</td>
+</tr>
+<tr class="row-odd"><th class="stub">FIT_PE_DATA</th>
+<td>Data Type:</td>
+<td>Boolean</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Flag for fitting Prob of Exceedance data</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><th class="stub">FIT_RESTORATION_DATA</th>
+<td>Data Type:</td>
+<td>Boolean</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Fit model to restoration values calculated</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><th class="stub">SAVE_VARS_NPY</th>
+<td>Data Type:</td>
+<td>Boolean</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Save calculated value in binary numpy format</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><th class="stub">MULTIPROCESS</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>Use multi-core processing? 0 -&gt; False, 1 -&gt; True</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><th class="stub">RUN_CONTEXT</th>
+<td>Data Type:</td>
+<td>Integer</td>
+</tr>
+<tr class="row-even"><th class="stub">&nbsp;</th>
+<td>Description:</td>
+<td>0 -&gt; run tests,  1 -&gt; normal run</td>
+</tr>
+<tr class="row-odd"><th class="stub">&nbsp;</th>
+<td>Example:</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="facility-definition-file">
 <span id="facility-config-file"></span><h2>4.2. Facility Definition File<a class="headerlink" href="#facility-definition-file" title="Permalink to this headline">¶</a></h2>

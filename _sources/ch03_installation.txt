@@ -60,8 +60,8 @@ been added:
 
     conda config --get channels
 
-**For OS X and Linux-64 systems:** It should be possible to set up a full run 
-environment solely through the *.yml environment specification file. For OS X 
+**For OS X and Linux-64 systems**: It should be possible to set up a full run
+environment solely through the \*.yml environment specification file. For OS X
 run the following commands::
 
     conda env create -f environment_osx.yml
@@ -112,13 +112,6 @@ To run the software, follow the following simple steps:
   names ``config_ps.conf``::
 
     python -m sifra simulation_setup/config_ps.conf
-
-
-When the software is started for te first time, 
-or if it cannot find a :ref:`scenario file <simulation-scenario-file>`, the 
-user will be prompted to select a scenario file. If a scenario file has been 
-loaded previously, SIFRA attempts to load that same scenario file then next 
-time it is run.
 
 
 Running Code Tests

@@ -1,4 +1,4 @@
-.. _concept-and-design::
+.. _concept-and-design:
 
 ******************
 Concept and Design
@@ -67,7 +67,7 @@ illustrates this concept for a thermal power station.
    :align: center
    :width: 98%
    
-    Figure 2.1  Schematic representation of a coal-fired power station
+   Figure 2.1  Schematic representation of a coal-fired power station
 
 The 'edges', or inter-nodal connections, represent a link or a process for 
 maintaining 'flow' of goods or services within the system, and thus their 
@@ -107,9 +107,9 @@ values. This Process is shown in Figure 2.2.
    :alt: Linking hazard to damage and loss
    :align: center
    :width: 98%
-   
-    Figure 2.2  Schematic of process linking component damage assessment to 
-    loss projection
+
+   Figure 2.2  Schematic of process linking component damage assessment to
+   loss projection
 
 Four discrete sequential damage states are used for assessing system 
 fragility, similar to those used in HAZUS (FEMA 2003): DS1 Slight, 

@@ -97,7 +97,8 @@
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
-<ul class="simple">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice_html.html">License</a></li>
 </ul>
 
             
@@ -186,8 +187,8 @@ conda config --add channels https://conda.anaconda.org/marufr
 been added:</p>
 <blockquote>
 <div>conda config &#8211;get channels</div></blockquote>
-<p><strong>For OS X and Linux-64 systems:</strong> It should be possible to set up a full run
-environment solely through the <a href="#id1"><span class="problematic" id="id2">*</span></a>.yml environment specification file. For OS X
+<p><strong>For OS X and Linux-64 systems</strong>: It should be possible to set up a full run
+environment solely through the *.yml environment specification file. For OS X
 run the following commands:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>conda env create -f environment_osx.yml
 source activate sifra_env
@@ -236,11 +237,6 @@ names <code class="docutils literal"><span class="pre">config_ps.conf</span></co
 </div>
 </li>
 </ul>
-<p>When the software is started for te first time,
-or if it cannot find a <span class="xref std std-ref">scenario file</span>, the
-user will be prompted to select a scenario file. If a scenario file has been
-loaded previously, SIFRA attempts to load that same scenario file then next
-time it is run.</p>
 </div>
 <div class="section" id="running-code-tests">
 <h2>3.4. Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
