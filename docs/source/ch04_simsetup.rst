@@ -48,8 +48,7 @@ description, and representative values.
    :header-rows: 1
    :widths: 25, 20, 55
    :stub-columns: 1
-
-   :file: ./_static/files/scenario_config_parameters.csv
+   :file: _static/files/scenario_config_parameters.csv
 
 
 .. _facility-config-file:
