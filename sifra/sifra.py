@@ -241,7 +241,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     ids_comp = np.zeros((sc.num_samples, fc.num_elements), dtype=int)
 
     # index of damage state of components: from 0 to nds+1
-    if sc.env:  # test run
+    if sc.run_context:  # test run
         prng = np.random.RandomState(idxPGA)
     else:
         prng = np.random.RandomState()

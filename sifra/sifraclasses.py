@@ -409,14 +409,12 @@ class ScenarioDataGetter(object):
         self.haz_param_max = self.setup["PGA_MAX"]
         self.haz_param_step = self.setup["PGA_STEP"]
         self.num_samples = self.setup["NUM_SAMPLES"]
-        self.use_end_point = self.setup['USE_ENDPOINT']
         self.time_unit = self.setup["TIME_UNIT"]
         self.parallel_or_serial = self.setup["MULTIPROCESS"]
         self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
-        self.env = self.setup["ENV"]
+        self.run_context = self.setup["RUN_CONTEXT"]
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
         self.restoration_streams = self.setup["RESTORATION_STREAMS"]
 
@@ -429,7 +427,6 @@ class RestorationDataGetter(object):
         self.setup = readfile(setup_file)
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_upper = self.setup["RESTORE_TIME_UPPER"]
         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
         self.restoration_streams = self.setup["RESTORATION_STREAMS"]
 
