@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Introduction &mdash; SIFRA v0.1.1 docs</title>
+  <title>5. Attributing Fragility to Components &mdash; SIFRA v0.1.1 docs</title>
   
 
   
@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
-        <link rel="next" title="2. Concept and Design" href="ch02_concept_design.html"/>
-        <link rel="prev" title="Welcome to SIFRA documentation" href="index.html"/> 
+        <link rel="next" title="Bibliography" href="bibliography.html"/>
+        <link rel="prev" title="4. Simulation Setup" href="ch04_simsetup.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,11 +82,11 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">2. Concept and Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3. Installation and Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4. Simulation Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5. Attributing Fragility to Components</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">5. Attributing Fragility to Components</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
@@ -123,7 +123,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>1. Introduction</li>
+    <li>5. Attributing Fragility to Components</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -135,47 +135,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="introduction">
-<span id="intro-page"></span><h1>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>Critical infrastructure facilities typically comprise a number of
-interconnected components that work in concert to deliver a service.
-In the context of natural hazard vulnerability, the components have differing
-susceptibilities, require different resource levels and time to repair, and
-have a range of criticalities to the overall service delivery. The
-vulnerability of the facility, then, is a complex convolution of all these
-components and factors.</p>
-<p>SIFRA stands for <em>System for Infrastructure Facility Resilience Analysis</em>.
-It comprises a method and software tools that provide a framework for
-simulating the fragility of infrastructure facilities to natural hazards,
-based on assessment of the fragilities and configuration of components that
-comprises the facility. Currently the system is designed to work with
-earthquake hazards only. <code class="docutils literal"><span class="pre">SIFRA</span></code> enables the vulnerabilities of each element
-to be integrated into an assessment of the implications of severe hazard
-exposure to facility damage, service disruption and cost.</p>
-<p>SIFRA is used to model the vulnerability of high-value infrastructure
-facilities to natural hazards. Earthquake ground motion is the present focus
-and many uncertainties are captured through a Monte Carlo sampling process.
-The tool not only enables current facility vulnerability to be quantified,
-but also enables the most vulnerable components to be identified in terms of
-repair cost, time to recovery, and service disruption implications. The
-outcomes also support benefit versus cost studies of retrofit options.
-Ultimately, it provides information that supports asset managers in regards
-to the most cost-effective utilisation of limited retrofit resources.</p>
-<p id="intro-design-notes"><a class="reference internal" href="reportglossary.html#term-vulnerability"><span class="xref std std-term">Vulnerability</span></a> of a facility is modelled by assigning
-fragilities to the individual components that make up a facility. The program
-accounts for variability in component fragilities by sampling probability
-distributions for the each fragility curve median and beta values. Once values
-have been selected for each curve it checks that <a class="reference internal" href="reportglossary.html#term-fragility-curves"><span class="xref std std-term">fragility curves</span></a> do
-not overlap and if they do, re-samples the median and beta probability
-distributions until non-overlapping fragility curves are produced.</p>
-<p>Damage scales for several assets, and method for estimating recovery times
-have been taken from HAZUS <cite>hazus-mh-mr5</cite>.
-Repair cost (and hence damage index) and recovery times for each component are
-customised for each asset type, based on consultation with assets operators.
-The threshold values of spectral acceleration for each of four damage states
-are sampled by randomly sampling the fragility curves described above.</p>
-<p>Hazard modelling is to be done externally, and provided to this tool as an
-input. Currently only peak ground acceleration can be accepted by the system.</p>
+  <div class="section" id="attributing-fragility-to-components">
+<span id="fragility-attribution"></span><h1>5. Attributing Fragility to Components<a class="headerlink" href="#attributing-fragility-to-components" title="Permalink to this headline">¶</a></h1>
+<p>As earthquake induced ground shaking at a facility increases in intensity,
+the individual components respond and sustain progressively more damage.
+Fragility functions are used to define this susceptibility of components
+to damage by quantifying the likelihood that a level of damage will be
+exceeded for a given level of shaking. This approach entails the definition
+of one or more earthquake damage states for each component and the selection
+of a ground shaking measure that is highly correlated to the component damage.</p>
+<p>Each component within a facility is strictly unique. However, for a given
+component it can be classed into a category of asset referred to as a
+<code class="docutils literal"><span class="pre">component</span> <span class="pre">type</span></code>, in which all components have similar vulnerability.
+The assignment of component type fragility algorithms for each damage state
+is based on asset typology and the design levels under consideration.
+The fragility algorithm defines a cumulative probability of exceedance for
+each damage state that captures the variability of the vulnerability within
+a “component type” and the effect of variability in component response to
+ground motion on damage severity.  The form of these functions can take a
+range of mathematical forms.  The most common form is log normal and defined
+by a median (θ) and log standard deviation (β), which is the form
+that SIFRA uses.</p>
+<p>Component type fragility models need to be representative of the assets they
+characterise. Models can be developed or sourced using the following
+hierarchy of approaches which is in order of increasing uncertainty:</p>
+<ol class="arabic simple">
+<li>Direct consultation with industry asset managers to reach agreement on
+component fragilities by adjusting the most appropriate published models
+and drawing upon construction specifications, manufacturer’s shake table
+proof testing (if available) and observed earthquake performance
+(if possible).</li>
+<li>Selection of the most applicable model from published models in the
+literature.</li>
+<li>Utilisation of heuristic engineering judgment in adapting damage models
+for other components assessed to have similar fragility. There are many
+fragility models published in the literature.  The literature review and
+model compilation produced by the Syner-G Project (Pitilakis et al. 2014)
+sponsored by the European Commission presents a wide range of electricity
+sector component models.  Its key references included works by
+Vanzi (1996), Anagnos (1999) and the HAZUS Technical Manual (FEMA 2003).
+HAZUS includes fragility functions for a wider range of facility
+components than those presented in the Syner-G Project.</li>
+</ol>
+<p>Each damage state has a description of the typical severity of physical
+component damage which has implications for the use of the component.
+Hence, each damage state also has an operational level for the damaged
+component, a cost to repair (as a proportion of the replacement cost) and
+a resource requirement in terms of number of technicians and time. This
+is used to assess the utility of the facility immediately after an extreme
+event and to assess the restoration prognosis.</p>
 </div>
 
 
@@ -185,10 +193,10 @@ input. Currently only peak ground acceleration can be accepted by the system.</p
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch02_concept_design.html" class="btn btn-neutral float-right" title="2. Concept and Design" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="bibliography.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to SIFRA documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ch04_simsetup.html" class="btn btn-neutral" title="4. Simulation Setup" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
