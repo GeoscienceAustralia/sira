@@ -24,6 +24,9 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
+# custom extensions directory to python path
+# sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -53,7 +56,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The encoding of source files.
-#source_encoding = 'utf-8-sig'
+# source_encoding = 'utf-8-sig'
 
 # The master toctree document.
 master_doc = 'index'
@@ -82,6 +85,16 @@ language = None
 #today = ''
 # Else, today_fmt is used as the format for a strftime call.
 #today_fmt = '%B %d, %Y'
+
+# # configures bibliography
+# # see http://wnielson.bitbucket.org/projects/sphinx-natbib/
+# natbib = {
+#     'file': os.path.join(CURDIR,'_static/files/refs.bib'),
+#     'brackets': '[]',
+#     'separator': ',',
+#     'style': 'numbers',
+#     'sort': True,
+# }
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -141,13 +154,13 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # This was the default in conf.py:
 # html_theme = 'alabaster'
 
+# Add any paths that contain custom themes here, relative to this directory.
+#html_theme_path = []
+
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #html_theme_options = {}
-
-# Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -161,6 +174,7 @@ html_short_title = project
 numfig = True
 # The scope of figure numbers. 1 means “in a section”.
 numfig_secnum_depth = 1
+html_secnumber_suffix = " "
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -174,12 +188,12 @@ numfig_secnum_depth = 1
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['_static', '_static/files']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
-#html_extra_path = []
+# html_extra_path = []
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -261,6 +275,10 @@ latex_elements = {
 latex_documents = [
   (master_doc, 'SIFRA.tex', u'SIFRA Documentation',
    u'Maruf Rahman', 'manual'),
+]
+
+latex_additional_files = [
+    'refs.bib',
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

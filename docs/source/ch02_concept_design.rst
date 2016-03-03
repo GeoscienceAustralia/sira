@@ -26,7 +26,7 @@ This approach affords three key advantages:
 
 The concept of components and facilities used in this exercise map closely 
 to the typology of micro- and macro-components respectively, as defined in 
-the Synerg-G program :cite:`PitilakisEtAl2014,SynerG2010`, and align with
+the Synerg-G program :cite:`SynerG2010,PitilakisEtAl2014`, and align with
 the definition of subsystems and systems as defined in
 :cite:`RinaldiEtAl2001`. Under this scheme, the components are
 represented as nodes. Based on their role within the system, these nodes,
@@ -141,7 +141,7 @@ where, \mathit{i} is the index of the damage state,
 :math:`{i \in \mathbb{Z} | 0 \ge i \ge S}`. 
 The 'None' damage state is *i=0*, and *i=S* is the complete or highest 
 modelled damage state. :math:`R_i[t]` is the likely level of restoration of 
-functionality at time :math:`t`. Restoration level :math:`R_i` can take on 
+functionality at time :math:`t` . Restoration level :math:`R_i` can take on
 any value in the unit interval [0,1].
 
 The simulation of the restoration prognosis is conducted based on a set of 
@@ -212,11 +212,11 @@ expedite the restoration of the high priority lines.
 
 The outputs from the restoration model are: 
 
-(a) a simple Gantt chart with each component needing repair, 
+(i)    a simple Gantt chart with each component needing repair,
 
-(b) restoration plot for each output line over time and the associated 
-    percentage of total system capacity rehabilitated, and 
+(ii)   restoration plot for each output line over time and the associated
+       percentage of total system capacity rehabilitated, and
 
-(c) total restoration time for each output line for a given restoration 
-    scheme.
+(iii)  total restoration time for each output line for a given restoration
+       scheme.
 

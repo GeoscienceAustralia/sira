@@ -57,14 +57,17 @@ dependencies:
   - parmap==1.2.3
   - pexpect==4.0.1
   - pydot==1.0.2
+  - pybtex==0.19
+  - pybtex-docutils==0.2.1
   - pygments==2.1
   - pyparsing==1.5.7
   - seqdiag==0.9.0
   - snowballstemmer==1.2.1
-  - sphinx==1.3.5
+  - sphinx==1.3.6
   - sphinx-rtd-theme==0.1.9
+  - sphinxcontrib-bibtex==0.3.3
   - sphinxcontrib-actdiag==0.6.0
-  - sphinxcontrib-blockdiag==1.3.0
+  - sphinxcontrib-blockdiag==1.5.5
   - sphinxcontrib-nwdiag==0.7.0
   - sphinxcontrib-seqdiag==0.6.0
   - webcolors==1.5

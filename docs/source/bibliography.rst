@@ -1,10 +1,10 @@
 :orphan:
 
-.. only:: html or text
+.. only:: html
 
-   .. rubric:: References
+    References
+    ==========
 
-.. bibliography:: sifrarefs.bib
-   :list: enumerated
-   :cited:
-
+.. bibliography:: _static/files/refs.bib
+   :all:
+   :style: plain

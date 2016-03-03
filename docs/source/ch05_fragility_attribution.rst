@@ -41,10 +41,10 @@ hierarchy of approaches which is in order of increasing uncertainty:
 3. Utilisation of heuristic engineering judgment in adapting damage models
    for other components assessed to have similar fragility. There are many
    fragility models published in the literature.  The literature review and
-   model compilation produced by the Syner-G Project (Pitilakis et al. 2014)
+   model compilation produced by the Syner-G Project :cite:`PitilakisEtAl2014`.
    sponsored by the European Commission presents a wide range of electricity
    sector component models.  Its key references included works by
-   Vanzi (1996) :cite:`Vanzi1996`, Anagnos (1999) :cite:`Anagnos1999` and
+   Vanzi :cite:`Vanzi1996`, Anagnos :cite:`Anagnos1999` and
    the HAZUS Technical Manual :cite:`FEMA2003`.
    HAZUS includes fragility functions for a wider range of facility
    components than those presented in the Syner-G Project.
