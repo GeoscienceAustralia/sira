@@ -26,6 +26,14 @@
 
 .. |GT| unicode:: 0x003E
 
+.. |BlkSquare| unicode:: 0x25A0 .. Black square
+
+.. |BlkSquareSml| unicode:: 0x25AA .. Black square small
+
+.. |WhtSquare| unicode:: 0x25A1 .. White square
+
+.. |rightarrow| replace:: :math:`\Rightarrow`
+
 .. === GREEK SMALL LETTERS ====================================================
 
 .. |alpha| unicode:: 0x03B1

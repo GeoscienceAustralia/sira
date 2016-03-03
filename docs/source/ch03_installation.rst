@@ -127,16 +127,3 @@ or, simply run::
 
     nosetest
 
-
-.. --- < begin : substitutions > ------------------------------------
-
-.. |square-blk| unicode:: 0x25A0 .. Black square
-
-.. |square-blk-sml| unicode:: 0x25AA .. Black square small
-
-.. |square-wht| unicode:: 0x25A1 .. White square
-
-.. |arrow-right| replace:: :math:`\Rightarrow`
-
-.. --- < end : substitutions > --------------------------------------
-

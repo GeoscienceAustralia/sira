@@ -43,7 +43,7 @@ not overlap and if they do, re-samples the median and beta probability
 distributions until non-overlapping fragility curves are produced.
 
 Damage scales for several assets, and method for estimating recovery times 
-have been taken from HAZUS `hazus-mh-mr5`.
+have been taken from HAZUS :cite:`FEMA2003`.
 Repair cost (and hence damage index) and recovery times for each component are 
 customised for each asset type, based on consultation with assets operators.
 The threshold values of spectral acceleration for each of four damage states 

@@ -41,7 +41,7 @@ The following are some key features of SIFRA:
 Contents
 ========
 
-.. include:: toc_chapters.txt
+.. include:: chapters_for_toc.txt
 
 .. toctree::
 

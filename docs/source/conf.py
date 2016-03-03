@@ -33,6 +33,7 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinxcontrib.bibtex',
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
@@ -86,7 +87,9 @@ language = None
 # directories to ignore when looking for source files.
 exclude_patterns = ['epilog.rst',
                     'copyrightnotice.rst',
-                    'tex']
+                    '.DS_Store',
+                    'tex',
+                    '*.bak']
 
 # A string of reStructuredText that will be included at the end of each source
 # that will be read file.
@@ -152,6 +155,12 @@ html_title = project+' v'+release+' docs'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 html_short_title = project
+
+# Number figures, tables and code-blocks are automatically, if they have caption.
+# For now, it works only with the HTML builder.
+numfig = True
+# The scope of figure numbers. 1 means “in a section”.
+numfig_secnum_depth = 1
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.

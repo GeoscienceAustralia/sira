@@ -26,10 +26,11 @@ This approach affords three key advantages:
 
 The concept of components and facilities used in this exercise map closely 
 to the typology of micro- and macro-components respectively, as defined in 
-the Synerg-G program (Pitilakis et al. 2014), and align with the definition 
-of subsystems and systems as defined in (Rinaldi et al. 2001). Under this 
-scheme, the components are represented as nodes. Based on their role within 
-the system, these nodes, or components, are classified in four categories:
+the Synerg-G program :cite:`PitilakisEtAl2014,SynerG2010`, and align with
+the definition of subsystems and systems as defined in
+:cite:`RinaldiEtAl2001`. Under this scheme, the components are
+represented as nodes. Based on their role within the system, these nodes,
+or components, are classified in four categories:
 
 1. *Supply nodes*: These nodes represent thr entry points into the system 
    for required inputs or commodities. As for example, coal and water can be 
