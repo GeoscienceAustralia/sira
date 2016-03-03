@@ -89,7 +89,7 @@ exclude_patterns = ['epilog.rst',
                     'copyrightnotice.rst',
                     '.DS_Store',
                     'tex',
-                    '*.bak']
+                    '.bak']
 
 # A string of reStructuredText that will be included at the end of each source
 # that will be read file.
