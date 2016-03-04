@@ -61,7 +61,7 @@ docs/_build/
 target/
 
 # project specific files
-data/ps_coal/output/
+output/*
 
 # Created by .ignore support plugin (hsz.mobi)
 
