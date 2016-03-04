@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. Simulation Setup &mdash; SIFRA v0.1.1 docs</title>
+  <title>4 Simulation Setup &mdash; SIFRA v0.1.1 docs</title>
   
 
   
@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
-        <link rel="next" title="5. Attributing Fragility to Components" href="ch05_fragility_attribution.html"/>
-        <link rel="prev" title="3. Installation and Usage" href="ch03_installation.html"/> 
+        <link rel="next" title="5 Attributing Fragility to Components" href="ch05_fragility_attribution.html"/>
+        <link rel="prev" title="3 Installation and Usage" href="ch03_installation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,18 +82,26 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">2. Concept and Design</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3. Installation and Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">4. Simulation Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">4.1. Scenario Definition File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#facility-definition-file">4.2. Facility Definition File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">2 Concept and Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">4 Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">4.1 Scenario Definition File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#facility-definition-file">4.2 Facility Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.3 Configuration of Output Nodes: <em>output_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.4 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#damage-algorithms-for-component-types-comp-type-dmg-algo">4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5. Attributing Fragility to Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Attributing Fragility to Components</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
 
@@ -125,7 +133,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>4. Simulation Setup</li>
+    <li>4 Simulation Setup</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -138,7 +146,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="simulation-setup">
-<span id="simulation-inputs"></span><h1>4. Simulation Setup<a class="headerlink" href="#simulation-setup" title="Permalink to this headline">¶</a></h1>
+<span id="simulation-inputs"></span><h1>4 Simulation Setup<a class="headerlink" href="#simulation-setup" title="Permalink to this headline">¶</a></h1>
 <p>Setting a simulation requires populating two different sets of inputs:</p>
 <ul class="simple">
 <li>Scenario configuration</li>
@@ -148,28 +156,33 @@
 their parameters, data layout, and sample input data are presented in the
 remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>.
-├── LICENSE                   &lt;-- License file: Apache 2
-├── README.md                 &lt;-- Summary documentation
-├── data
-│   └── ps_coal               &lt;-- Directory for specified facility type
-│       ├── input             &lt;-- Facility definition file resides here
-│       └── output            &lt;-- The simulation results are here
-│           └── raw_output    &lt;-- Raw data/binary outputs for provenance
-├── docs
-│   └── source                &lt;-- ReST files for Sphinx documentation
+<div class="highlight-python"><div class="highlight"><pre>.
+├── LICENSE                  &lt;-- License file: Apache 2
+├── README.md                &lt;-- Summary documentation
+│
+├── docs                     &lt;-- Sphinx documentation files
+│   └── source
 │       ├── _static
-│       └── _templates
-├── sifra                     &lt;-- The MODULES/SCRIPTS
-├── simulation_setup          &lt;-- Scenario config files
-└── tests                     &lt;-- Test scripts
+│       ├── _templates
+│       └── extensions
+│
+├── models                   &lt;-- Facility system models reside here
+│   └── &lt;facility_type&gt;      &lt;-- Dir for models of specified type
+│
+├── output                   &lt;-- Simulation results are stored here
+│   └── scenario_X           &lt;-- Simulation project name
+│       └── raw_output       &lt;-- Raw data/binary outputs for provenance &amp;
+│                                  post-processing
+├── sifra                    &lt;-- The MODULES/SCRIPTS
+├── simulation_setup         &lt;-- Scenario config files
+└── tests                    &lt;-- Test scripts
 </pre></div>
 </div>
 <div class="section" id="scenario-definition-file">
-<span id="scenario-config-file"></span><h2>4.1. Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
+<span id="scenario-config-file"></span><h2>4.1 Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
 <p>The simulation &#8216;scenario&#8217; definition file is located in the following directory
 (relative to the root dir of source code):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./simulation_setup
+<div class="highlight-python"><div class="highlight"><pre>./simulation_setup/
 </pre></div>
 </div>
 <p>The following table lists the parameters in the config file, their
@@ -479,11 +492,74 @@ description, and representative values.</p>
 </table>
 </div>
 <div class="section" id="facility-definition-file">
-<span id="facility-config-file"></span><h2>4.2. Facility Definition File<a class="headerlink" href="#facility-definition-file" title="Permalink to this headline">¶</a></h2>
-<p>The file that defines a facility is located in the following directory
-(relative to the root dir of source code):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>./data/&lt;facility_type&gt;/input
+<span id="facility-config-file"></span><h2>4.2 Facility Definition File<a class="headerlink" href="#facility-definition-file" title="Permalink to this headline">¶</a></h2>
+<p>The system definition files for a facility of type <code class="docutils literal"><span class="pre">&lt;facility_type_A&gt;</span></code>
+is located in the following directory (relative to the root dir of
+source code):</p>
+<div class="highlight-python"><div class="highlight"><pre>./models/&lt;facility_type_A&gt;/
 </pre></div>
+</div>
+<p>The system model is defined using an MS Excel spreadsheet file.
+It contains five worksheets. The names of the worksheets are fixed.
+The function and format of these worksheets are described in the
+following subsections:</p>
+<div class="section" id="list-of-component-component-list">
+<h3>4.2.1 List of Component: <em>component_list</em><a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
+<p>The <em>component_list</em> has the following fields:</p>
+<p><code class="docutils literal"><span class="pre">component_id</span></code>
+<code class="docutils literal"><span class="pre">component_type</span></code>
+<code class="docutils literal"><span class="pre">component_class</span></code>
+<code class="docutils literal"><span class="pre">cost_fraction</span></code>
+<code class="docutils literal"><span class="pre">node_type</span></code>
+<code class="docutils literal"><span class="pre">node_cluster</span></code>
+<code class="docutils literal"><span class="pre">op_capacity</span></code></p>
+</div>
+<div class="section" id="connections-between-components-component-connections">
+<h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">Origin</span></code>
+<code class="docutils literal"><span class="pre">Destination</span></code>
+<code class="docutils literal"><span class="pre">Capacity</span></code>
+<code class="docutils literal"><span class="pre">Weight</span></code>
+<code class="docutils literal"><span class="pre">Distance</span></code></p>
+</div>
+<div class="section" id="configuration-of-output-nodes-output-setup">
+<h3>4.2.3 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">OutputNode</span></code>
+<code class="docutils literal"><span class="pre">ProductionNode</span></code>
+<code class="docutils literal"><span class="pre">Capacity</span></code>
+<code class="docutils literal"><span class="pre">CapFraction</span></code>
+<code class="docutils literal"><span class="pre">Priority</span></code></p>
+</div>
+<div class="section" id="configuration-of-supply-nodes-supply-setup">
+<h3>4.2.4 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">InputNode</span></code>
+<code class="docutils literal"><span class="pre">Capacity</span></code>
+<code class="docutils literal"><span class="pre">CapFraction</span></code>
+<code class="docutils literal"><span class="pre">CommodityType</span></code></p>
+</div>
+<div class="section" id="damage-algorithms-for-component-types-comp-type-dmg-algo">
+<h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">component_type</span></code>
+<code class="docutils literal"><span class="pre">damage_state</span></code>
+<code class="docutils literal"><span class="pre">damage_function</span></code>
+<code class="docutils literal"><span class="pre">mode</span></code>
+<code class="docutils literal"><span class="pre">damage_median</span></code>
+<code class="docutils literal"><span class="pre">damage_logstd</span></code>
+<code class="docutils literal"><span class="pre">damage_ratio</span></code>
+<code class="docutils literal"><span class="pre">functionality</span></code>
+<code class="docutils literal"><span class="pre">minimum</span></code>
+<code class="docutils literal"><span class="pre">sigma_1</span></code>
+<code class="docutils literal"><span class="pre">sigma_2</span></code>
+<code class="docutils literal"><span class="pre">recovery_mean</span></code>
+<code class="docutils literal"><span class="pre">recovery_std</span></code>
+<code class="docutils literal"><span class="pre">recovery_95percentile</span></code>
+<code class="docutils literal"><span class="pre">fragility_source</span></code></p>
+</div>
+<div class="section" id="definition-of-damage-states-damage-state-def">
+<h3>4.2.6 Definition of Damage States: <em>damage_state_def</em><a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">component_type</span></code>
+<code class="docutils literal"><span class="pre">damage_state</span></code>
+<code class="docutils literal"><span class="pre">damage_state_definitions</span></code></p>
 </div>
 </div>
 </div>
@@ -495,10 +571,10 @@ description, and representative values.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch05_fragility_attribution.html" class="btn btn-neutral float-right" title="5. Attributing Fragility to Components" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ch05_fragility_attribution.html" class="btn btn-neutral float-right" title="5 Attributing Fragility to Components" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ch03_installation.html" class="btn btn-neutral" title="3. Installation and Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ch03_installation.html" class="btn btn-neutral" title="3 Installation and Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

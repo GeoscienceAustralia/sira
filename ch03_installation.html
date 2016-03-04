@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Installation and Usage &mdash; SIFRA v0.1.1 docs</title>
+  <title>3 Installation and Usage &mdash; SIFRA v0.1.1 docs</title>
   
 
   
@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
-        <link rel="next" title="4. Simulation Setup" href="ch04_simsetup.html"/>
-        <link rel="prev" title="2. Concept and Design" href="ch02_concept_design.html"/> 
+        <link rel="next" title="4 Simulation Setup" href="ch04_simsetup.html"/>
+        <link rel="prev" title="2 Concept and Design" href="ch02_concept_design.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,20 +82,20 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">2. Concept and Design</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">3. Installation and Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">3.1. Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-development-environment">3.2. Setting Up a Development Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-the-code">3.3. Running the Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-code-tests">3.4. Running Code Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept_design.html">2 Concept and Design</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-development-environment">3.2 Setting Up a Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-code">3.3 Running the Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-code-tests">3.4 Running Code Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4. Simulation Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5. Attributing Fragility to Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Attributing Fragility to Components</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
 
@@ -127,7 +127,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>3. Installation and Usage</li>
+    <li>3 Installation and Usage</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -140,9 +140,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="installation-and-usage">
-<h1>3. Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Permalink to this headline">¶</a></h1>
+<h1>3 Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="requirements">
-<span id="system-requirements"></span><h2>3.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<span id="system-requirements"></span><h2>3.1 Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p><strong>SIFRA</strong> is built in Python 2.7. Python hardware requirements are fairly
 minimal. Most modern systems based on x86 architecture should be able to run
 this software.</p>
@@ -166,7 +166,7 @@ update the PATH variable with the location of the Graphviz binaries.</p>
 for Python 2.7: &lt;<a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>&gt;</p>
 </div>
 <div class="section" id="setting-up-a-development-environment">
-<span id="setup-dev-environ"></span><h2>3.2. Setting Up a Development Environment<a class="headerlink" href="#setting-up-a-development-environment" title="Permalink to this headline">¶</a></h2>
+<span id="setup-dev-environ"></span><h2>3.2 Setting Up a Development Environment<a class="headerlink" href="#setting-up-a-development-environment" title="Permalink to this headline">¶</a></h2>
 <p>We recommend using <code class="docutils literal"><span class="pre">conda</span></code> for managing virtual environments and
 packages required for running <code class="docutils literal"><span class="pre">sifra</span></code>.</p>
 <p>For the sake of simplicity, we recommend using <code class="docutils literal"><span class="pre">Anaconda</span></code>. It is a
@@ -177,7 +177,7 @@ installing <code class="docutils literal"><span class="pre">Anaconda</span></cod
 <p>Some packages we need are not hosted in the main <code class="docutils literal"><span class="pre">conda</span></code> package
 repository. In such cases we will host them in our own user channel.
 We suggest adding the following channels to the default:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda config --add channels https://conda.anaconda.org/anaconda
+<div class="highlight-python"><div class="highlight"><pre>conda config --add channels https://conda.anaconda.org/anaconda
 conda config --add channels https://conda.anaconda.org/marufr
 </pre></div>
 </div>
@@ -188,7 +188,7 @@ been added:</p>
 <p><strong>For OS X and Linux-64 systems</strong>: It should be possible to set up a full run
 environment solely through the *.yml environment specification file. For OS X
 run the following commands:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda env create -f environment_osx.yml
+<div class="highlight-python"><div class="highlight"><pre>conda env create -f environment_osx.yml
 source activate sifra_env
 </pre></div>
 </div>
@@ -196,7 +196,7 @@ source activate sifra_env
 the environment specification file for Linux.</p>
 <p><strong>For Windows systems</strong>, a similar process needs to be followed, with some
 exceptions. First run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda env create -f environment_win64.yml
+<div class="highlight-python"><div class="highlight"><pre>conda env create -f environment_win64.yml
 activate sifra_env
 </pre></div>
 </div>
@@ -210,19 +210,19 @@ and <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlib
 - <code class="docutils literal"><span class="pre">python_igraph-0.7.1.post6-cp27-none-win_amd64.whl</span></code>
 - <code class="docutils literal"><span class="pre">pygraphviz-1.3.1-cp27-none-win_amd64.whl</span></code></p>
 <p>Install these downloaded <code class="docutils literal"><span class="pre">wheels</span></code> with pip:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pip install &lt;pkg_name&gt;.whl
+<div class="highlight-python"><div class="highlight"><pre>pip install &lt;pkg_name&gt;.whl
 </pre></div>
 </div>
 </div>
 <div class="section" id="running-the-code">
-<span id="running-sifra"></span><h2>3.3. Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline">¶</a></h2>
+<span id="running-sifra"></span><h2>3.3 Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline">¶</a></h2>
 <p>To run the software, follow the following simple steps:</p>
 <ul>
 <li><p class="first">Open a command terminal</p>
 </li>
 <li><p class="first">Change to the directory that has the <code class="docutils literal"><span class="pre">sifra</span></code> code. If the code is in the
 directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra</span></code>, then run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd ~/sifra/
+<div class="highlight-python"><div class="highlight"><pre>cd ~/sifra/
 </pre></div>
 </div>
 </li>
@@ -230,22 +230,22 @@ directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra
 We assume that same configuration file is stored in
 <code class="docutils literal"><span class="pre">/Users/personx/sifra/simulation_setup/</span></code>, and the configuration file is
 names <code class="docutils literal"><span class="pre">config_x.conf</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>python -m sifra simulation_setup/config_x.conf
+<div class="highlight-python"><div class="highlight"><pre>python -m sifra simulation_setup/config_x.conf
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
 <div class="section" id="running-code-tests">
-<h2>3.4. Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
+<h2>3.4 Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
 <p>To run tests use either <code class="docutils literal"><span class="pre">nose</span></code> or <code class="docutils literal"><span class="pre">unittest</span></code>.
 Example (from the first level &#8216;sifra&#8217; directory):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd sifra  # and not cd sifra/sifra
+<div class="highlight-python"><div class="highlight"><pre>cd sifra  # and not cd sifra/sifra
 python -m unittest discover tests
 </pre></div>
 </div>
 <p>or, simply run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">nosetest</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">nosetest</span>
 </pre></div>
 </div>
 </div>
@@ -258,10 +258,10 @@ python -m unittest discover tests
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch04_simsetup.html" class="btn btn-neutral float-right" title="4. Simulation Setup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ch04_simsetup.html" class="btn btn-neutral float-right" title="4 Simulation Setup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ch02_concept_design.html" class="btn btn-neutral" title="2. Concept and Design" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ch02_concept_design.html" class="btn btn-neutral" title="2 Concept and Design" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

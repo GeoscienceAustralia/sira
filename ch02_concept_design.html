@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. Concept and Design &mdash; SIFRA v0.1.1 docs</title>
+  <title>2 Concept and Design &mdash; SIFRA v0.1.1 docs</title>
   
 
   
@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
-        <link rel="next" title="3. Installation and Usage" href="ch03_installation.html"/>
-        <link rel="prev" title="1. Introduction" href="ch01_intro.html"/> 
+        <link rel="next" title="3 Installation and Usage" href="ch03_installation.html"/>
+        <link rel="prev" title="1 Introduction" href="ch01_intro.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,19 +82,19 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1. Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">2. Concept and Design</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#facility-system-model">2.1. Facility System Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#translating-hazard-impact-to-system-loss">2.2. Translating hazard impact to system loss</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#system-restoraion-model">2.3. System Restoraion Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">2 Concept and Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#facility-system-model">2.1 Facility System Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#translating-hazard-impact-to-system-loss">2.2 Translating hazard impact to system loss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-restoraion-model">2.3 System Restoraion Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3. Installation and Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4. Simulation Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5. Attributing Fragility to Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Attributing Fragility to Components</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
 
@@ -126,7 +126,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>2. Concept and Design</li>
+    <li>2 Concept and Design</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -139,9 +139,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="concept-and-design">
-<span id="id1"></span><h1>2. Concept and Design<a class="headerlink" href="#concept-and-design" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>2 Concept and Design<a class="headerlink" href="#concept-and-design" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="facility-system-model">
-<h2>2.1. Facility System Model<a class="headerlink" href="#facility-system-model" title="Permalink to this headline">¶</a></h2>
+<h2>2.1 Facility System Model<a class="headerlink" href="#facility-system-model" title="Permalink to this headline">¶</a></h2>
 <p>Facilities are modelled in the <code class="docutils literal"><span class="pre">sifra</span></code> methodology as a network of components.
 This approach affords three key advantages:</p>
 <ol class="arabic simple">
@@ -158,10 +158,11 @@ the system.</li>
 </ol>
 <p>The concept of components and facilities used in this exercise map closely
 to the typology of micro- and macro-components respectively, as defined in
-the Synerg-G program (Pitilakis et al. 2014), and align with the definition
-of subsystems and systems as defined in (Rinaldi et al. 2001). Under this
-scheme, the components are represented as nodes. Based on their role within
-the system, these nodes, or components, are classified in four categories:</p>
+the Synerg-G program <a class="reference internal" href="bibliography.html#synerg2010" id="id2">[6]</a><a class="reference internal" href="bibliography.html#pitilakisetal2014" id="id3">[7]</a>, and align with
+the definition of subsystems and systems as defined in
+<a class="reference internal" href="bibliography.html#rinaldietal2001" id="id4">[8]</a>. Under this scheme, the components are
+represented as nodes. Based on their role within the system, these nodes,
+or components, are classified in four categories:</p>
 <ol class="arabic simple">
 <li><em>Supply nodes</em>: These nodes represent thr entry points into the system
 for required inputs or commodities. As for example, coal and water can be
@@ -188,9 +189,9 @@ this category.</li>
 the nodes. Constraints on flow through specific paths, or sets of nodes, can
 be represented as capacities of edges connecting those nodes. Figure 2.1
 illustrates this concept for a thermal power station.</p>
-<div class="figure align-center" id="id2">
+<div class="figure align-center" id="id5">
 <span id="pwrstn-schematic-diagram"></span><a class="reference internal image-reference" href="_images/pwrstn_schematic_diagram.png"><img alt="Power station schematic" src="_images/pwrstn_schematic_diagram.png" style="width: 98%;" /></a>
-<p class="caption"><span class="caption-text">Figure 2.1  Schematic representation of a coal-fired power station</span></p>
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Figure 2.1  Schematic representation of a coal-fired power station</span></p>
 </div>
 <p>The &#8216;edges&#8217;, or inter-nodal connections, represent a link or a process for
 maintaining &#8216;flow&#8217; of goods or services within the system, and thus their
@@ -209,7 +210,7 @@ network modelling platform to calculate graph metrics for a post-hazard
 damaged system model.</p>
 </div>
 <div class="section" id="translating-hazard-impact-to-system-loss">
-<h2>2.2. Translating hazard impact to system loss<a class="headerlink" href="#translating-hazard-impact-to-system-loss" title="Permalink to this headline">¶</a></h2>
+<h2>2.2 Translating hazard impact to system loss<a class="headerlink" href="#translating-hazard-impact-to-system-loss" title="Permalink to this headline">¶</a></h2>
 <p>For a given value of level of ground shaking, a set of random samples is
 generated, and the damage state of each component is calculated for each
 random sample based on the fragility function of the given component. Given
@@ -220,9 +221,9 @@ the system response at the selected ground shaking intensity. To obtain a
 characterisation of the system and develop fragility algorithms for the
 system (e.g. the power station) the process is repeated for a range of PGA
 values. This Process is shown in Figure 2.2.</p>
-<div class="figure align-center" id="id3">
+<div class="figure align-center" id="id6">
 <span id="fig-hazard-loss-link"></span><a class="reference internal image-reference" href="_images/hazard_loss_link.png"><img alt="Linking hazard to damage and loss" src="_images/hazard_loss_link.png" style="width: 98%;" /></a>
-<p class="caption"><span class="caption-text">Figure 2.2  Schematic of process linking component damage assessment to
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Figure 2.2  Schematic of process linking component damage assessment to
 loss projection</span></p>
 </div>
 <p>Four discrete sequential damage states are used for assessing system
@@ -232,7 +233,7 @@ station is based on ranges of economic loss as a percentage of total system
 value.</p>
 </div>
 <div class="section" id="system-restoraion-model">
-<h2>2.3. System Restoraion Model<a class="headerlink" href="#system-restoraion-model" title="Permalink to this headline">¶</a></h2>
+<h2>2.3 System Restoraion Model<a class="headerlink" href="#system-restoraion-model" title="Permalink to this headline">¶</a></h2>
 <p>The restoration algorithms are defined as normal functions. An approximation
 of mean restoration time for each component at each damage level is
 attributed. The structural damage level definitions associated with the
@@ -249,7 +250,7 @@ components based of the restoration model:</p>
 <span class="math">\({i \in \mathbb{Z} | 0 \ge i \ge S}\)</span>.
 The &#8216;None&#8217; damage state is <em>i=0</em>, and <em>i=S</em> is the complete or highest
 modelled damage state. <span class="math">\(R_i[t]\)</span> is the likely level of restoration of
-functionality at time <span class="math">\(t\)</span>. Restoration level <span class="math">\(R_i\)</span> can take on
+functionality at time <span class="math">\(t\)</span> . Restoration level <span class="math">\(R_i\)</span> can take on
 any value in the unit interval [0,1].</p>
 <p>The simulation of the restoration prognosis is conducted based on a set of
 inputs and assumptions. The required data inputs to this process are:</p>
@@ -312,7 +313,7 @@ line. This exercise may allow the operator to eliminate the potentially long
 procurement or transportation time for a replacement unit, and thereby
 expedite the restoration of the high priority lines.</p>
 <p>The outputs from the restoration model are:</p>
-<ol class="loweralpha simple">
+<ol class="lowerroman simple">
 <li>a simple Gantt chart with each component needing repair,</li>
 <li>restoration plot for each output line over time and the associated
 percentage of total system capacity rehabilitated, and</li>
@@ -329,10 +330,10 @@ scheme.</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch03_installation.html" class="btn btn-neutral float-right" title="3. Installation and Usage" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ch03_installation.html" class="btn btn-neutral float-right" title="3 Installation and Usage" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ch01_intro.html" class="btn btn-neutral" title="1. Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ch01_intro.html" class="btn btn-neutral" title="1 Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

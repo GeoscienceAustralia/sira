@@ -1,8 +1,10 @@
 :orphan:
 
-.. only:: html or text
-    
-    Bibliography
-    =============
+.. only:: html
 
-.. cite:refs::
+    References
+    ==========
+
+.. bibliography:: _static/files/refs.bib
+   :all:
+   :style: plain
