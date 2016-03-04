@@ -15,20 +15,25 @@ remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind::
 
     .
-    ├── LICENSE                   <-- License file: Apache 2
-    ├── README.md                 <-- Summary documentation
-    ├── data
-    │   └── ps_coal               <-- Directory for specified facility type
-    │       ├── input             <-- Facility definition file resides here
-    │       └── output            <-- The simulation results are here
-    │           └── raw_output    <-- Raw data/binary outputs for provenance
-    ├── docs
-    │   └── source                <-- ReST files for Sphinx documentation
+    ├── LICENSE                  <-- License file: Apache 2
+    ├── README.md                <-- Summary documentation
+    │
+    ├── docs                     <-- Sphinx documentation files
+    │   └── source
     │       ├── _static
-    │       └── _templates
-    ├── sifra                     <-- The MODULES/SCRIPTS
-    ├── simulation_setup          <-- Scenario config files
-    └── tests                     <-- Test scripts
+    │       ├── _templates
+    │       └── extensions
+    │
+    ├── models                   <-- Facility system models reside here
+    │   └── <facility_type>      <-- Dir for models of specified type
+    │
+    ├── output                   <-- Simulation results are stored here
+    │   └── scenario_X           <-- Simulation project name
+    │       └── raw_output       <-- Raw data/binary outputs for provenance &
+    │                                  post-processing
+    ├── sifra                    <-- The MODULES/SCRIPTS
+    ├── simulation_setup         <-- Scenario config files
+    └── tests                    <-- Test scripts
 
 
 .. _scenario-config-file:
@@ -39,7 +44,7 @@ Scenario Definition File
 The simulation 'scenario' definition file is located in the following directory 
 (relative to the root dir of source code)::
 
-    ./simulation_setup
+    ./simulation_setup/
 
 The following table lists the parameters in the config file, their
 description, and representative values.
@@ -56,7 +61,85 @@ description, and representative values.
 Facility Definition File
 ========================
 
-The file that defines a facility is located in the following directory
-(relative to the root dir of source code)::
+The system definition files for a facility of type ``<facility_type_A>``
+is located in the following directory (relative to the root dir of
+source code)::
 
-    ./data/<facility_type>/input
+    ./models/<facility_type_A>/
+
+The system model is defined using an MS Excel spreadsheet file.
+It contains five worksheets. The names of the worksheets are fixed.
+The function and format of these worksheets are described in the
+following subsections:
+
+
+List of Component: *component_list*
+-----------------------------------
+
+The *component_list* has the following fields:
+
+``component_id``
+``component_type``
+``component_class``
+``cost_fraction``
+``node_type``
+``node_cluster``
+``op_capacity``
+
+
+Connections between Components: *component_connections*
+-------------------------------------------------------
+
+``Origin``
+``Destination``
+``Capacity``
+``Weight``
+``Distance``
+
+
+Configuration of Output Nodes: *output_setup*
+---------------------------------------------
+
+``OutputNode``
+``ProductionNode``
+``Capacity``
+``CapFraction``
+``Priority``
+
+
+Configuration of Supply Nodes: *supply_setup*
+---------------------------------------------
+
+``InputNode``
+``Capacity``
+``CapFraction``
+``CommodityType``
+
+
+Damage Algorithms for Component Types: *comp_type_dmg_algo*
+-----------------------------------------------------------
+
+``component_type``
+``damage_state``
+``damage_function``
+``mode``
+``damage_median``
+``damage_logstd``
+``damage_ratio``
+``functionality``
+``minimum``
+``sigma_1``
+``sigma_2``
+``recovery_mean``
+``recovery_std``
+``recovery_95percentile``
+``fragility_source``
+
+
+Definition of Damage States: *damage_state_def*
+-----------------------------------------------
+
+``component_type``
+``damage_state``
+``damage_state_definitions``
+
