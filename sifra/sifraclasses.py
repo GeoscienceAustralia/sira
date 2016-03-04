@@ -453,8 +453,8 @@ class Scenario(ScenarioDataGetter, IoDataGetter):
 
         # Set up parameters for simulating recovery from hazard impact
         self.restoration_time_range, self.time_step = np.linspace(
-            0, self.restore_time_upper, num=self.restore_time_upper + 1,
-            endpoint=self.use_end_point, retstep=True)
+            0, self.restore_time_max, num=self.restore_time_max + 1,
+            endpoint=True, retstep=True)
 
         self.num_time_steps = len(self.restoration_time_range)
 
