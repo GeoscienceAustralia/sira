@@ -121,7 +121,7 @@ class FacilityDataGetter(object):
             skiprows=3, skipinitialspace=True)
 
         COMP_DF = pd.read_excel(
-            config_file, sheetname='comp_list',
+            config_file, sheetname='component_list',
             index_col='component_id', header=0,
             skiprows=3, skipinitialspace=True)
 
@@ -179,8 +179,8 @@ class Network(object):
         G.vs["functionality"] = 1.0
 
         for index, row in node_conn_df.iterrows():
-            G.add_edge(row['Orig'], row['Dest'],
-                       capacity=G.vs.find(row['Orig'])["capacity"],
+            G.add_edge(row['Origin'], row['Destination'],
+                       capacity=G.vs.find(row['Origin'])["capacity"],
                        weight=row['Weight'],
                        distance=row['Distance'])
         return num_elements, G, nodes_all
@@ -194,7 +194,7 @@ class Network(object):
         node_conn_df = facility.node_conn_df
         comp_df = facility.comp_df
         for index, row in node_conn_df.iterrows():
-            sys.add_edge(row['Orig'], row['Dest'],
+            sys.add_edge(row['Origin'], row['Destination'],
                        capacity=row['Capacity'],
                        weight=row['Weight'],
                        distance=row['Distance'])
@@ -266,8 +266,8 @@ class Facility(FacilityDataGetter, IoDataGetter):
 
         for _, row in self.node_conn_df.iterrows():
             sys.add_edge(
-                row['Orig'], row['Dest'],
-                capacity=sys.vs.find(row['Orig'])['capacity'],
+                row['Origin'], row['Destination'],
+                capacity=sys.vs.find(row['Origin'])['capacity'],
                 weight=row['Weight'],
                 distance=row['Distance'])
         return sys
