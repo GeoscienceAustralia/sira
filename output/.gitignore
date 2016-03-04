@@ -1,0 +1,10 @@
+# ------------------------------------------------------------------------
+# The purpose of this directory is to hold the simulation output
+# However we may not want to publish our outputs to github every time
+# we do a run or test some changes. So we use this special `.gitignore`
+# file to hide all local content in this dir from git.
+# ------------------------------------------------------------------------
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
