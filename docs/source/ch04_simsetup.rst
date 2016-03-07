@@ -79,11 +79,17 @@ List of Component: *component_list*
 The *component_list* has the following fields:
 
 ``component_id``
+
 ``component_type``
+
 ``component_class``
+
 ``cost_fraction``
+
 ``node_type``
+
 ``node_cluster``
+
 ``op_capacity``
 
 
