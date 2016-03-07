@@ -76,21 +76,62 @@ following subsections:
 List of Component: *component_list*
 -----------------------------------
 
-The *component_list* has the following fields:
+The *component_list* has the following parameters:
 
-``component_id``
+=======================  ===================================================
+``component_id``         |Description: unique id for component in system
+                         |Data Type: alphanumeric, parts of the name can
+                         | be separated by underscores
+                         |Example: stack_1
+=======================  ===================================================
 
-``component_type``
 
-``component_class``
+=======================  ===================================================
+``component_type``       |Description:
+                         |Data Type:
+                         |
+                         |Example: stack_1
+=======================  ===================================================
 
-``cost_fraction``
 
-``node_type``
+=======================  ===================================================
+``component_class``      |Description:
+                         |Data Type:
+                         |
+                         |Example: stack_1
+=======================  ===================================================
 
-``node_cluster``
 
-``op_capacity``
+=======================  ===================================================
+``cost_fraction``        |Description:
+                         |Data Type:
+                         |
+                         |Example: stack_1
+=======================  ===================================================
+
+
+=======================  ===================================================
+``node_type``            |Description:
+                         |Data Type:
+                         |
+                         |Example: stack_1
+=======================  ===================================================
+
+
+=======================  ===================================================
+``node_cluster``         |Description:
+                         |Data Type:
+                         |
+                         |Example: stack_1
+=======================  ===================================================
+
+
+=======================  ===================================================
+``op_capacity``          |Description:
+                         |Data Type:
+                         |
+                         |Example: stack_1
+=======================  ===================================================
 
 
 Connections between Components: *component_connections*
