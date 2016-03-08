@@ -81,7 +81,7 @@ The *component_list* has the following parameters:
 =======================  =====================================================
 `component_id`           | **Description:** unique id for component in system
                          | **Data Type:** alphanumeric, parts of the name can
-                         | be separated by underscores
+                           be separated by underscores
                          | **Example:** stack_1
 =======================  =====================================================
 
