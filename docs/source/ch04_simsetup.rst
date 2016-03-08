@@ -79,9 +79,9 @@ List of Component: *component_list*
 The *component_list* has the following parameters:
 
 `component_id`
- | **Description:** unique id for component in system
- | **Data Type:** alphanumeric, parts of the name can be separated by underscores
- | **Example:** stack_1
+  Description: unique id for component in system |br|
+  Data Type: alphanumeric, parts of the name can be separated by underscores |br|
+  Example: stack_1 |br|
 
 
 `component_type`
@@ -91,33 +91,33 @@ The *component_list* has the following parameters:
 
 
 `component_class`
-  Description:
-  Data Type:
-  Example: stack_1
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 `cost_fraction`
-| Description:
-| Data Type:
-| Example: stack_1
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 `node_type`
-| Description:
-| Data Type:
-| Example: stack_1
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 `node_cluster`
-|Description:
-|Data Type:
-|Example: stack_1
+  Description: |br|
+  Data Type: |br|
+  Example: |br|
 
 
 `op_capacity`
-|Description:
-|Data Type:
-|Example: stack_1
+  Description: |br|
+  Data Type: |br|
+  Example: |br|
 
 
 Connections between Components: *component_connections*
