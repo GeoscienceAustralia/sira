@@ -27,7 +27,7 @@ The following are some key features of SIFRA:
   Linux platforms.
 
 - **Flexible Facility Model:** |br|
-  :term:`facility` data model is based on network theory, allowing
+  :term:`Facility` data model is based on network theory, allowing
   the user to develop arbitrarily complex custom facility models
   for simulation.
 
