@@ -10,7 +10,7 @@ Setting a simulation requires populating two different sets of inputs:
 - Facility system configuration
 
 These two sets of input data are contained in two separate files. These files,
-their parameters, data layout, and sample input data are presented in the 
+their parameters, data layout, and sample input data are presented in the
 remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind::
 
@@ -41,7 +41,7 @@ to the keep the directory structure of the code in mind::
 Scenario Definition File
 ========================
 
-The simulation 'scenario' definition file is located in the following directory 
+The simulation 'scenario' definition file is located in the following directory
 (relative to the root dir of source code)::
 
     ./simulation_setup/
@@ -78,60 +78,46 @@ List of Component: *component_list*
 
 The *component_list* has the following parameters:
 
-=======================  =====================================================
-`component_id`           | **Description:** unique id for component in system
-                         | **Data Type:** alphanumeric, parts of the name can
-                           be separated by underscores
-                         | **Example:** stack_1
-=======================  =====================================================
+`component_id`
+| **Description:** unique id for component in system
+| **Data Type:** alphanumeric, parts of the name can be separated by underscores
+| **Example:** stack_1
 
 
-=======================  ===================================================
-``component_type``       | Description:
-                         | Data Type:
-                         |
-                         | Example: stack_1
-=======================  ===================================================
+`component_type`
+| Description:
+| Data Type:
+| Example: stack_1
 
 
-=======================  ===================================================
-``component_class``      | Description:
-                         | Data Type:
-                         |
-                         | Example: stack_1
-=======================  ===================================================
+`component_class`
+| Description:
+| Data Type:
+| Example: stack_1
 
 
-=======================  ===================================================
-``cost_fraction``        | Description:
-                         | Data Type:
-                         |
-                         | Example: stack_1
-=======================  ===================================================
+`cost_fraction`
+| Description:
+| Data Type:
+| Example: stack_1
 
 
-=======================  ===================================================
-``node_type``            | Description:
-                         | Data Type:
-                         |
-                         | Example: stack_1
-=======================  ===================================================
+`node_type`
+| Description:
+| Data Type:
+| Example: stack_1
 
 
-=======================  ===================================================
-``node_cluster``         |Description:
-                         |Data Type:
-                         |
-                         |Example: stack_1
-=======================  ===================================================
+`node_cluster`
+|Description:
+|Data Type:
+|Example: stack_1
 
 
-=======================  ===================================================
-``op_capacity``          |Description:
-                         |Data Type:
-                         |
-                         |Example: stack_1
-=======================  ===================================================
+`op_capacity`
+|Description:
+|Data Type:
+|Example: stack_1
 
 
 Connections between Components: *component_connections*
