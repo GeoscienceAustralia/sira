@@ -85,9 +85,9 @@ The *component_list* has the following parameters:
 
 
 `component_type`
- | Description:
- | Data Type:
- | Example: stack_1
+ | Description: |br|
+ | Data Type: |br|
+ | Example: |br|
 
 
 `component_class`
