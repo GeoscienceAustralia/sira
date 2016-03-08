@@ -78,43 +78,43 @@ List of Component: *component_list*
 
 The *component_list* has the following parameters:
 
-=======================  ===================================================
-``component_id``         |Description: unique id for component in system
-                         |Data Type: alphanumeric, parts of the name can
+=======================  =====================================================
+`component_id`           | **Description:** unique id for component in system
+                         | **Data Type:** alphanumeric, parts of the name can
                          | be separated by underscores
-                         |Example: stack_1
-=======================  ===================================================
+                         | **Example:** stack_1
+=======================  =====================================================
 
 
 =======================  ===================================================
-``component_type``       |Description:
-                         |Data Type:
+``component_type``       | Description:
+                         | Data Type:
                          |
-                         |Example: stack_1
+                         | Example: stack_1
 =======================  ===================================================
 
 
 =======================  ===================================================
-``component_class``      |Description:
-                         |Data Type:
+``component_class``      | Description:
+                         | Data Type:
                          |
-                         |Example: stack_1
+                         | Example: stack_1
 =======================  ===================================================
 
 
 =======================  ===================================================
-``cost_fraction``        |Description:
-                         |Data Type:
+``cost_fraction``        | Description:
+                         | Data Type:
                          |
-                         |Example: stack_1
+                         | Example: stack_1
 =======================  ===================================================
 
 
 =======================  ===================================================
-``node_type``            |Description:
-                         |Data Type:
+``node_type``            | Description:
+                         | Data Type:
                          |
-                         |Example: stack_1
+                         | Example: stack_1
 =======================  ===================================================
 
 
