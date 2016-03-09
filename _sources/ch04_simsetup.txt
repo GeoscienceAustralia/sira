@@ -88,7 +88,6 @@ The *component_list* has the following parameters:
 
 
 `component_type`
-
 ==============  ==========================================================
 Description:    The general type of a component. Represents a broad
                 category of equipment.
