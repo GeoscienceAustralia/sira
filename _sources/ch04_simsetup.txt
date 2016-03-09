@@ -123,56 +123,206 @@ The *component_list* has the following parameters:
 Connections between Components: *component_connections*
 -------------------------------------------------------
 
-``Origin``
-``Destination``
-``Capacity``
-``Weight``
-``Distance``
+`Origin`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Destination`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Capacity`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Weight`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Distance`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 Configuration of Output Nodes: *output_setup*
 ---------------------------------------------
 
-``OutputNode``
-``ProductionNode``
-``Capacity``
-``CapFraction``
-``Priority``
+`OutputNode`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`ProductionNode`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Capacity`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`CapFraction`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Priority`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 Configuration of Supply Nodes: *supply_setup*
 ---------------------------------------------
 
-``InputNode``
-``Capacity``
-``CapFraction``
-``CommodityType``
+`InputNode`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`Capacity`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`CapFraction`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`CommodityType`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 Damage Algorithms for Component Types: *comp_type_dmg_algo*
 -----------------------------------------------------------
 
-``component_type``
-``damage_state``
-``damage_function``
-``mode``
-``damage_median``
-``damage_logstd``
-``damage_ratio``
-``functionality``
-``minimum``
-``sigma_1``
-``sigma_2``
-``recovery_mean``
-``recovery_std``
-``recovery_95percentile``
-``fragility_source``
+`component_type`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_state`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_function`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`mode`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_median`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_logstd`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_ratio`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`functionality`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`minimum`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`sigma_1`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`sigma_2`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`recovery_mean`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`recovery_std`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`recovery_95percentile`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`fragility_source`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
 
 Definition of Damage States: *damage_state_def*
 -----------------------------------------------
 
-``component_type``
-``damage_state``
-``damage_state_definitions``
+`component_type`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_state`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
+
+
+`damage_state_definitions`
+  Description: |br|
+  Data Type: |br|
+  Example:  |br|
 
