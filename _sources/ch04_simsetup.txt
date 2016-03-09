@@ -82,15 +82,18 @@ The *component_list* has the following parameters:
   Description: Unique id for component in system. This is an instance
   of `component_type` |br|
   Data Type: String. It is recommended to use alphanumeric characters,
-  starting with a letter, and logically distinct parts of the name can be
+  starting with a letter, and logically distinct parts of the name
   separated by underscores |br|
   Example: 'stack_1' |br|
 
 
 `component_type`
-  Description: The  |br|
-  Data Type: |br|
-  Example: 'Stack' |br|
+  Description:  The general type of a component. Represents a broad
+                category of equipment. |br|
+  Data Type:    String. It is recommended to use alphanumeric characters,
+                starting with a letter, and logically distinct parts of
+                the name separated by underscores |br|
+  Example:      'Stack' |br|
 
 
 `component_class`
