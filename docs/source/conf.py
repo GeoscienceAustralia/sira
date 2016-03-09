@@ -25,7 +25,7 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 #sys.path.insert(0, os.path.abspath('.'))
 
 # custom extensions directory to python path
-# sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
+sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
 
 # -- General configuration ------------------------------------------------
 
@@ -36,6 +36,7 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'figtable',
     'sphinxcontrib.bibtex',
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
@@ -45,7 +46,6 @@ extensions = [
     'sphinxcontrib.blockdiag',
     'sphinxcontrib.actdiag',
     'sphinxcontrib.seqdiag',
-    'figtable',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
