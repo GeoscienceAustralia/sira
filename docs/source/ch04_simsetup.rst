@@ -88,22 +88,14 @@ The *component_list* has the following parameters:
 
 
 `component_type`
-
-.. figtable::
-    :label: component-type-tbl
-    :caption: ""
-    :alt: component_list table -> component_type parameter
-    :spec: l l
-    :nofig:
-
-    ==============  ==========================================================
-    Description:    The general type of a component. Represents a broad
-                    category of equipment.
-    Data Type:      String. It is recommended to use alphanumeric
-                    characters, starting with a letter, and logically
-                    distinct parts of the name separated by spaces.
-    Example:        'Stack'
-    ==============  ==========================================================
+==============  ==============
+Description:    The general type of a component. Represents a broad
+                category of equipment.
+Data Type:      String. It is recommended to use alphanumeric
+                characters, starting with a letter, and logically
+                distinct parts of the name separated by spaces.
+Example:        'Stack'
+==============  ==============
 
 
 `component_class`
