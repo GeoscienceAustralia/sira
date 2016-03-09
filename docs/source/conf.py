@@ -45,6 +45,7 @@ extensions = [
     'sphinxcontrib.blockdiag',
     'sphinxcontrib.actdiag',
     'sphinxcontrib.seqdiag',
+    'figtable',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
