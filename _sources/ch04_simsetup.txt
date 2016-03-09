@@ -88,12 +88,15 @@ The *component_list* has the following parameters:
 
 
 `component_type`
-  Description:  The general type of a component. Represents a broad
-                category of equipment. |br|
-  Data Type:    String. It is recommended to use alphanumeric characters,
-                starting with a letter, and logically distinct parts of
-                the name separated by underscores |br|
-  Example:      'Stack' |br|
+  Description:
+    The general type of a component. Represents a broad
+    category of equipment.
+  Data Type:
+    String. It is recommended to use alphanumeric characters,
+    starting with a letter, and logically distinct parts of
+    the name separated by spaces.
+  Example:
+    'Stack'
 
 
 `component_class`
