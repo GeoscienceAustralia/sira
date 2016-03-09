@@ -79,11 +79,11 @@ List of Component: *component_list*
 The *component_list* has the following parameters:
 
 `component_id`
-  Description: Unique id for component in system. This is an instance of `component_type` |br|
-  Data Type: String.
-  | It is recommended to use alphanumeric characters, starting with a
-  | letter, and logically distinct parts of the name can be separated
-  | by underscores |br|
+  Description: Unique id for component in system. This is an instance
+  of `component_type` |br|
+  Data Type: String. It is recommended to use alphanumeric characters,
+  starting with a letter, and logically distinct parts of the name can be
+  separated by underscores |br|
   Example: 'stack_1' |br|
 
 
