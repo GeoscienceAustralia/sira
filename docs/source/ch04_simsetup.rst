@@ -350,7 +350,7 @@ The *component_list* has the following parameters:
                 Typically at the start of the simulation all components
                 would have a value of 1.0.
 
-  :Data Type:   Float :math:`{x \in \mathbb{R} | 0 \ge x \ge 1}`
+  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \ge x \ge 1\}}`
 
   :Example:     1.0
 
