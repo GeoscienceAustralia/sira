@@ -46,6 +46,7 @@ extensions = [
     'sphinxcontrib.blockdiag',
     'sphinxcontrib.actdiag',
     'sphinxcontrib.seqdiag',
+    'sphinxcontrib.exceltable',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

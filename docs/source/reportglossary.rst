@@ -6,10 +6,18 @@ Glossary
 ..  glossary::
     :sorted:
 
+    typology
+        defintion TBA
+
+
     vulnerability
         definition TBA
 
-        
+
+    facility
+        defintion TBA
+
+
     fragility curves
         definition TBA
 		

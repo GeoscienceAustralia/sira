@@ -32,7 +32,7 @@ The following are some key features of SIFRA:
   for simulation.
 
 - **Extensible Component Library:** |br|
-  User can define new instances of :term:`component_type`
+  User can define new instances of `component_type`
   (the building blocks of a facility) and link it to existing or
   custom fragility algorithms.
 

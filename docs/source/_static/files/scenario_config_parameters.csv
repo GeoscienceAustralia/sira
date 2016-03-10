@@ -30,11 +30,11 @@ Parameter Name,Explanation,
 ,Description:,Time increment for restoration period
 ,Example:,1
 ``RESTORE_TIME_MAX``,Data Type:,Integer
-,Description:,Maximum value for restoration period assessment
-,Example:,300
+\,Description:,Maximum value for restoration period assessment
+\,Example:,300
 ``RESTORATION_STREAMS``,Data Type:,List of integers
-,Description:,The number of simultaneous components to work on
-,Example:,"[5, 10, 20]"
+\,Description:,The number of simultaneous components to work on
+\,Example:,"[5, 10, 20]"
 ``SYSTEM_CLASSES``,Data Type:,List of strings
 ,Description:,The allowed facility system types
 ,Example:,"[""PowerStation"", ""Substation""]"
