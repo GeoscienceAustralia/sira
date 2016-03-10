@@ -120,8 +120,8 @@ station is based on ranges of economic loss as a percentage of total system
 value.
 
 
-System Restoraion Model
-=======================
+System Restoration Model
+========================
 
 The restoration algorithms are defined as normal functions. An approximation 
 of mean restoration time for each component at each damage level is 
@@ -135,11 +135,11 @@ probability of the components being in each of the S sequential damage
 states used in the model and the estimated recovery at time t for the 
 components based of the restoration model:
 
-.. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i | PGA=x] \times R_i[t]
+.. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i\ |\ PGA=x] \times R_i[t]
     :label: eqn-recovery-time
 
-where, \mathit{i} is the index of the damage state,
-:math:`{i \in \mathbb{Z} | 0 \ge i \ge S}`. 
+where, :math:`{i}` is the index of the damage state,
+:math:`{\{i \in \mathbb{Z}\ |\ 0 \le i \le S\}}`.
 The 'None' damage state is *i=0*, and *i=S* is the complete or highest 
 modelled damage state. :math:`R_i[t]` is the likely level of restoration of 
 functionality at time :math:`t` . Restoration level :math:`R_i` can take on
