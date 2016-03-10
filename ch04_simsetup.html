@@ -187,309 +187,347 @@ to the keep the directory structure of the code in mind:</p>
 </div>
 <p>The following table lists the parameters in the config file, their
 description, and representative values.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="20%" />
-<col width="20%" />
-<col width="60%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Parameter Name</th>
-<th class="head">Explanation</th>
-<th class="head">&nbsp;</th>
-</tr>
-</thead>
+<dl class="docutils">
+<dt><cite>HAZARD_TRANSFER_PARAM</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">HAZARD_TRANSFER_PARAM</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Engineering Demand Parameter</td>
 </tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Engineering Demand Parameter</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8216;PGA&#8217;</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">HAZARD_TRANSFER_UNIT</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Demand Parameter Unit</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8216;g&#8217;</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">PGA_MIN</span></code></td>
-<td>Data Type:</td>
-<td>Float</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Minimum value for PGA</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>0.0</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">PGA_MAX</span></code></td>
-<td>Data Type:</td>
-<td>Float</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Maximum value for PGA</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>1.5</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">PGA_STEP</span></code></td>
-<td>Data Type:</td>
-<td>Float</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Step size for incrementing PGA</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>0.01</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">NUM_SAMPLES</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Iterations for Monte Carlo process</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>500</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">SCENARIO_HAZARD_VALUES</span></code></td>
-<td>Data Type:</td>
-<td>List of floats</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>The value(s) at which to assess facility response</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>[0.50]</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TIME_UNIT</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Unit of time for restoration time calculations</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8216;week&#8217;</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">RESTORE_PCT_CHKPOINTS</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Number of steps to assess functionality</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>21</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">RESTORE_TIME_STEP</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Time increment for restoration period</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>1</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">RESTORE_TIME_MAX</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Maximum value for restoration period assessment</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>300</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">RESTORATION_STREAMS</span></code></td>
-<td>Data Type:</td>
-<td>List of integers</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>The number of simultaneous components to work on</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>[5, 10, 20]</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">SYSTEM_CLASSES</span></code></td>
-<td>Data Type:</td>
-<td>List of strings</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>The allowed facility system types</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>[&#8220;PowerStation&#8221;, &#8220;Substation&#8221;]</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">SYSTEM_CLASS</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>The facility system type to be modelled</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8220;PowerStation&#8221;</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">SYSTEM_SUBCLASS</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Sub-category of system</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8220;Coal Fired&#8221;</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">COMMODITY_FLOW_TYPES</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Number of input commodity types</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>2</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">SYS_CONF_FILE_NAME</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>File name for system config and fragility info</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8216;sys_config_ps.xlsx&#8217;</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">INPUT_DIR_NAME</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>File path relative to code root</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8216;data/ps_coal/input&#8217;</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">OUTPUT_DIR_NAME</span></code></td>
-<td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>File path relative to code root</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>&#8216;data/ps_coal/output&#8217;</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">FIT_PE_DATA</span></code></td>
-<td>Data Type:</td>
-<td>Boolean</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Flag for fitting Prob of Exceedance data</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>True</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">FIT_RESTORATION_DATA</span></code></td>
-<td>Data Type:</td>
-<td>Boolean</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Fit model to simulated restoration data</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>True</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">SAVE_VARS_NPY</span></code></td>
-<td>Data Type:</td>
-<td>Boolean</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Save calculated value in binary numpy format</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>True</td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">MULTIPROCESS</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Description:</td>
-<td>Use multi-core processing? 0 -&gt; False, 1 -&gt; True</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Example:</td>
-<td>1</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">RUN_CONTEXT</span></code></td>
-<td>Data Type:</td>
-<td>Integer</td>
-</tr>
-<tr class="row-even"><td>&nbsp;</td>
-<td>Description:</td>
-<td>0 -&gt; run tests,  1 -&gt; normal run</td>
-</tr>
-<tr class="row-odd"><td>&nbsp;</td>
-<td>Example:</td>
-<td>1</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;PGA&#8217;</td>
 </tr>
 </tbody>
 </table>
+</dd>
+<dt><cite>HAZARD_TRANSFER_UNIT</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Demand Parameter Unit</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;g&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>PGA_MIN</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Minimum value for PGA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.0</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>PGA_MAX</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Maximum value for PGA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.5</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>PGA_STEP</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Step size for incrementing PGA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.01</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>NUM_SAMPLES</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Iterations for Monte Carlo process</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">500</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>SCENARIO_HAZARD_VALUES</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The value(s) at which to assess facility response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of floats</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[0.50, 0.55]</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>TIME_UNIT</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Unit of time for restoration time calculations</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;week&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>RESTORE_PCT_CHKPOINTS</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Number of steps to assess functionality</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">21</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>RESTORE_TIME_STEP</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Time increment for restoration period</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>RESTORE_TIME_MAX</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Maximum value for restoration period assessment</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">300</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>RESTORATION_STREAMS</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The number of simultaneous components to work on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of integers</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[5, 10, 20]</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>SYSTEM_CLASSES</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The allowed facility system types</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of strings</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[&#8216;PowerStation&#8217;, &#8216;Substation&#8217;]</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>SYSTEM_CLASS</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The facility system type to be modelled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;PowerStation&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>SYSTEM_SUBCLASS</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Sub-category of system</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Coal Fired&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>COMMODITY_FLOW_TYPES</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Number of input commodity types</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">2</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>SYS_CONF_FILE_NAME</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">File name for system config and fragility info</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;sys_config_ps.xlsx&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>INPUT_DIR_NAME</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">File path relative to code root</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;data/ps_coal/input&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>OUTPUT_DIR_NAME</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">File path relative to code root</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;data/ps_coal/output&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>FIT_PE_DATA</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Flag for fitting Prob of Exceedance data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Boolean</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">True</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>FIT_RESTORATION_DATA</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Fit model to simulated restoration data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Boolean</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">True</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>SAVE_VARS_NPY</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to save simulated
+values in binary numpy format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Boolean</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">True</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>MULTIPROCESS</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to use multi-core processing.
+0 -&gt; False, 1 -&gt; True</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>RUN_CONTEXT</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to run a full simulation,
+or run test code. 0 -&gt; run tests, 1 -&gt; normal run.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
 </div>
 <div class="section" id="facility-definition-file">
 <span id="facility-config-file"></span><h2>4.2 Facility Definition File<a class="headerlink" href="#facility-definition-file" title="Permalink to this headline">¶</a></h2>
@@ -508,73 +546,237 @@ following subsections:</p>
 <p>The <em>component_list</em> has the following parameters:</p>
 <dl class="docutils">
 <dt><cite>component_id</cite></dt>
-<dd>Description: Unique id for component in system. This is an instance
-of <cite>component_type</cite> <br />
-Data Type: String. It is recommended to use alphanumeric characters,
-starting with a letter, and logically distinct parts of the name
-separated by underscores <br />
-Example: &#8216;stack_1&#8217; <br /></dd>
-</dl>
-<p><cite>component_type</cite></p>
-<dl class="docutils">
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Unique id for component in system. This is an instance
+of <cite>component_type</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+It is recommended to use alphanumeric characters,
+starting with a letter, and logically distinct parts
+of the name separated by underscores</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;stack_1&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>component_type</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The <a class="reference internal" href="reportglossary.html#term-typology"><span class="xref std std-term">typology</span></a> of a system component.
+Represents a broad category of equipment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+It is recommended to use alphanumeric characters,
+starting with a letter, and logically distinct
+parts of the name separated by spaces.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Stack&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>component_class</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The general category of equipment. A number of
+component types can be grouped under this, e.g.
+&#8216;Power Transformer 100MVA 230/69&#8217; and
+&#8216;Power Transformer 50MVA 230/69&#8217; are both under
+the same component_class of &#8216;Power Transformer&#8217;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+It is recommended to use alphanumeric characters,
+starting with a letter, and logically distinct
+parts of the name separated by spaces.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Power Transformer&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>cost_fraction</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Value of the component instance a fraction of the
+total system cost, with the total cost being 1.0</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({x \in \mathbb{R} | 0 \ge x \ge 1}\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.03</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>node_type</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This indicates the role of the node (component) within
+network representing the system. For details, see
+<a class="reference external" href="_facility-system-model">Facility System Model</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+Must be one of four values:
+supply, transshipment, dependency, sink</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;supply&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>node_cluster</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example: <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This is an optional parameter to assist is drawing
+the system diagram. It indicates how the different
+component instances should be grouped together.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Boiler System&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>op_capacity</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example: <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Operational capacity of the component.
+One (1.0) indicates full functionality, and
+zero (0.0) indicates complete loss of functionality.
+Typically at the start of the simulation all components
+would have a value of 1.0.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({x \in \mathbb{R} | 0 \ge x \ge 1}\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0</td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 <div class="section" id="connections-between-components-component-connections">
 <h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>Origin</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>Destination</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>Capacity</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>Weight</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>Distance</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 <div class="section" id="configuration-of-output-nodes-output-setup">
 <h3>4.2.3 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>OutputNode</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>ProductionNode</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>Capacity</cite></dt>
 <dd>Description: <br />
 Data Type: <br />

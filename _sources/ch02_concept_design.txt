@@ -4,6 +4,7 @@
 Concept and Design
 ******************
 
+.. _facility-system-model:
 
 Facility System Model
 =====================
