@@ -140,10 +140,10 @@ components based of the restoration model:
 
 where, :math:`{i}` is the index of the damage state,
 :math:`{\{i \in \mathbb{Z}\ |\ 0 \le i \le S\}}`.
-The 'None' damage state is *i=0*, and *i=S* is the complete or highest 
-modelled damage state. :math:`R_i[t]` is the likely level of restoration of 
-functionality at time :math:`t` . Restoration level :math:`R_i` can take on
-any value in the unit interval [0,1].
+The 'None' damage state is :math:`{i=0}`, and :math:`{i=S}` is the complete
+or highest modelled damage state. :math:`R_i[t]` is the likely level of
+restoration of functionality at time :math:`t` . Restoration level
+:math:`R_i` can take on any value in the unit interval [0,1].
 
 The simulation of the restoration prognosis is conducted based on a set of 
 inputs and assumptions. The required data inputs to this process are:

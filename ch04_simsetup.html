@@ -597,7 +597,9 @@ It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct
 parts of the name separated by spaces.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Power Transformer&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Emission Management&#8217; &#8211; stacks and ash disposal systems
+belong to different typologies, but both contribute to
+the function of emission management.</td>
 </tr>
 </tbody>
 </table>
@@ -664,7 +666,7 @@ would have a value of 1.0.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}\)</span></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0 (default value)</td>
 </tr>
 </tbody>
 </table>
@@ -679,11 +681,16 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The node (component) to which the tail of a
+directional edge is connected. For undirected graphs
+the origin/destination designation is immaterial.
+For bidirectional connections, you will need to define
+two edges, e.g. A <span class="math">\(\Rightarrow\)</span> B, and B <span class="math">\(\Rightarrow\)</span> A</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;stack_1&#8217;</td>
 </tr>
 </tbody>
 </table>
@@ -693,11 +700,14 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The node (component) on which the head of a
+directional edge terminates. For undirected graphs
+the origin/destination designation is immaterial.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;turbine_condenser_1&#8217;</td>
 </tr>
 </tbody>
 </table>
@@ -707,11 +717,12 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Capacity of the edge.
+It can be more than the required flow.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}\)</span></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0 (default value)</td>
 </tr>
 </tbody>
 </table>
@@ -721,25 +732,13 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This parameter can be used to prioritise an edge or
+a series of edges (a path) over another edge or set
+of edges.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd>
-<dt><cite>Distance</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1 (default value)</td>
 </tr>
 </tbody>
 </table>
@@ -754,16 +753,96 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the &#8216;sink&#8217; nodes representing the load or
+the aggregate consumer of the product(s) of the system.
+These are not real components, but a modelling construct.
+These nodes are not considered in the fragility
+calculations.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+and must be of <cite>node_type</cite> sink.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;output_1&#8217;</td>
 </tr>
 </tbody>
 </table>
 </dd>
 <dt><cite>ProductionNode</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the facility
+system model. The completed &#8216;product&#8217; of a system exits
+from this node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+and must be of <cite>node_type</cite> transshipment.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;gen_1&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>Capacity</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Production capacity that the specific production node
+is responsible for. The unit depends on the
+type of product the system produces
+(e.g. MW for generator plant).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">300</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>CapFraction</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The fraction of total production capacity of the
+output nodes. The sum of capacities of all nodes must
+equal 1.0.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \lt x \le 1\}}\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.5</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>Priority</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This parameter is used to assign relative sequential
+priority for output/production nodes in for the
+purposes of post-disaster recovery</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer
+<span class="math">\({\{x \in \mathbb{Z}\ |\ 1 \le x \le n\}}\)</span>,
+where <cite>n</cite> is the total number of output nodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="configuration-of-supply-nodes-supply-setup">
+<h3>4.2.4 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><cite>InputNode</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -778,103 +857,269 @@ would have a value of 1.0.</td>
 </table>
 </dd>
 <dt><cite>Capacity</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>CapFraction</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
-<dt><cite>Priority</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
-</dl>
-</div>
-<div class="section" id="configuration-of-supply-nodes-supply-setup">
-<h3>4.2.4 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt><cite>InputNode</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
-<dt><cite>Capacity</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
-<dt><cite>CapFraction</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>CommodityType</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 <div class="section" id="damage-algorithms-for-component-types-comp-type-dmg-algo">
 <h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>damage_state</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>damage_function</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>mode</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>damage_median</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>damage_logstd</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>damage_ratio</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>functionality</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>minimum</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>sigma_1</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>sigma_2</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>recovery_mean</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>recovery_std</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>recovery_95percentile</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Some times it is difficult to get the concept of
+standard deviation across to an audience of
+infrastructure experts, and hence it is difficult
+to get a reliable value for it. In such cases we can
+obtain a 95th percentile value for recovery time, and
+translate that to standard deviation for a normal
+distribution.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>fragility_source</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Which source the fragility algorithm was adopted from,
+how it was adapted, or how it was developed.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Free text</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 <div class="section" id="definition-of-damage-states-damage-state-def">

@@ -309,7 +309,9 @@ The *component_list* has the following parameters:
                 starting with a letter, and logically distinct
                 parts of the name separated by spaces.
 
-  :Example:     'Power Transformer'
+  :Example:     'Emission Management' -- stacks and ash disposal systems
+                belong to different typologies, but both contribute to
+                the function of emission management.
 
 
 `cost_fraction`
@@ -352,207 +354,280 @@ The *component_list* has the following parameters:
 
   :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}`
 
-  :Example:     1.0
+  :Example:     1.0 (default value)
 
 
 Connections between Components: *component_connections*
 -------------------------------------------------------
 
 `Origin`
-  :Description:
+  :Description: The node (component) to which the tail of a
+                directional edge is connected. For undirected graphs
+                the origin/destination designation is immaterial.
+                For bidirectional connections, you will need to define
+                two edges, e.g. A |rightarrow| B, and B |rightarrow| A
 
-  :Data Type:
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table.
 
-  :Example:
+  :Example:     'stack_1'
 
 
 `Destination`
-  :Description:
+  :Description: The node (component) on which the head of a
+                directional edge terminates. For undirected graphs
+                the origin/destination designation is immaterial.
 
-  :Data Type:
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table.
 
-  :Example:
+  :Example:     'turbine_condenser_1'
 
 
 `Capacity`
-  :Description:
+  :Description: Capacity of the edge.
+                It can be more than the required flow.
 
-  :Data Type:
+  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}`
 
-  :Example:
+  :Example:     1.0 (default value)
 
 
 `Weight`
-  :Description:
+  :Description: This parameter can be used to prioritise an edge or
+                a series of edges (a path) over another edge or set
+                of edges.
 
-  :Data Type:
+  :Data Type:   Integer
 
-  :Example:
-
-
-`Distance`
-  :Description:
-
-  :Data Type:
-
-  :Example:
+  :Example:     1 (default value)
 
 
 Configuration of Output Nodes: *output_setup*
 ---------------------------------------------
 
 `OutputNode`
-  :Description:
+  :Description: These are the 'sink' nodes representing the load or
+                the aggregate consumer of the product(s) of the system.
+                These are not real components, but a modelling construct.
+                These nodes are not considered in the fragility
+                calculations.
 
-  :Data Type:
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and must be of `node_type` sink.
 
-  :Example:
+  :Example:     'output_1'
 
 
 `ProductionNode`
-  :Description:
+  :Description: These are the real terminal nodes within the facility
+                system model. The completed 'product' of a system exits
+                from this node.
 
-  :Data Type:
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and must be of `node_type` transshipment.
 
-  :Example:
+  :Example:     'gen_1'
 
 
 `Capacity`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description: Production capacity that the specific production node
+                is responsible for. The unit depends on the
+                type of product the system produces
+                (e.g. MW for generator plant).
+
+  :Data Type:   Float
+
+  :Example:     300
 
 
 `CapFraction`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description: The fraction of total production capacity of the
+                output nodes. The sum of capacities of all nodes must
+                equal 1.0.
+
+  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \lt x \le 1\}}`
+
+  :Example:     0.5
 
 
 `Priority`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description: This parameter is used to assign relative sequential
+                priority for output/production nodes in for the
+                purposes of post-disaster recovery
+
+  :Data Type:   Integer
+                :math:`{\{x \in \mathbb{Z}\ |\ 1 \le x \le n\}}`,
+                where `n` is the total number of output nodes
+
+  :Example:     _
 
 
 Configuration of Supply Nodes: *supply_setup*
 ---------------------------------------------
 
 `InputNode`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `Capacity`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `CapFraction`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `CommodityType`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 Damage Algorithms for Component Types: *comp_type_dmg_algo*
 -----------------------------------------------------------
 
 `component_type`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `damage_state`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `damage_function`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `mode`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `damage_median`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `damage_logstd`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `damage_ratio`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `functionality`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `minimum`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `sigma_1`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `sigma_2`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `recovery_mean`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `recovery_std`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description:
+
+  :Data Type:
+
+  :Example:
 
 
 `recovery_95percentile`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description: Some times it is difficult to get the concept of
+                standard deviation across to an audience of
+                infrastructure experts, and hence it is difficult
+                to get a reliable value for it. In such cases we can
+                obtain a 95th percentile value for recovery time, and
+                translate that to standard deviation for a normal
+                distribution.
+
+  :Data Type:   Float
+
+  :Example:
 
 
 `fragility_source`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description: Which source the fragility algorithm was adopted from,
+                how it was adapted, or how it was developed.
+
+  :Data Type:   Free text
+
+  :Example:
 
 
 Definition of Damage States: *damage_state_def*
