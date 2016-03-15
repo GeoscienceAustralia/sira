@@ -542,7 +542,7 @@ It contains five worksheets. The names of the worksheets are fixed.
 The function and format of these worksheets are described in the
 following subsections:</p>
 <div class="section" id="list-of-component-component-list">
-<h3>4.2.1 List of Component: <em>component_list</em><a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
+<span id="input-component-list"></span><h3>4.2.1 List of Component: <em>component_list</em><a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
 <dl class="docutils">
 <dt><cite>component_id</cite></dt>
@@ -612,7 +612,8 @@ the function of emission management.</td>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Value of the component instance a fraction of the
 total system cost, with the total cost being 1.0</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}\)</span></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R} \mid 0 \le x \le 1\}}\)</span></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.03</td>
 </tr>
@@ -664,7 +665,8 @@ zero (0.0) indicates complete loss of functionality.
 Typically at the start of the simulation all components
 would have a value of 1.0.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}\)</span></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R} \mid 0 \leq x \leq 1\}}\)</span></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0 (default value)</td>
 </tr>
@@ -674,7 +676,7 @@ would have a value of 1.0.</td>
 </dl>
 </div>
 <div class="section" id="connections-between-components-component-connections">
-<h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
+<span id="input-component-connections"></span><h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>Origin</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -720,7 +722,8 @@ the origin/destination designation is immaterial.</td>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Capacity of the edge.
 It can be more than the required flow.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}\)</span></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R}\ \mid \ 0 \leq x \leq 1\}}\)</span></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0 (default value)</td>
 </tr>
@@ -746,7 +749,7 @@ of edges.</td>
 </dl>
 </div>
 <div class="section" id="configuration-of-output-nodes-output-setup">
-<h3>4.2.3 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
+<span id="input-output-setup"></span><h3>4.2.3 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>OutputNode</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -812,7 +815,7 @@ type of product the system produces
 output nodes. The sum of capacities of all nodes must
 equal 1.0.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R}\ |\ 0 \lt x \le 1\}}\)</span></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R} \mid 0 &lt; x \leq 1\}}\)</span></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.5</td>
 </tr>
@@ -828,8 +831,8 @@ equal 1.0.</td>
 priority for output/production nodes in for the
 purposes of post-disaster recovery</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer
-<span class="math">\({\{x \in \mathbb{Z}\ |\ 1 \le x \le n\}}\)</span>,
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer.
+<span class="math">\({\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}\)</span>,
 where <cite>n</cite> is the total number of output nodes</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
@@ -840,18 +843,20 @@ where <cite>n</cite> is the total number of output nodes</td>
 </dl>
 </div>
 <div class="section" id="configuration-of-supply-nodes-supply-setup">
-<h3>4.2.4 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
+<span id="input-supply-setup"></span><h3>4.2.4 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>InputNode</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The <cite>component_id</cite> of the input node.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+and its <cite>node_type</cite> must be <cite>supply</cite>.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;coal_supply&#8217;</td>
 </tr>
 </tbody>
 </table>
@@ -861,11 +866,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The operational capacity of the node. It can be a real value
+value if known, or default to 100%.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}\)</span></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">100.0 (default value)</td>
 </tr>
 </tbody>
 </table>
@@ -875,11 +882,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">What decimal fractional value of the input commodity
+enters the system through this input node.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}\)</span></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1.0</td>
 </tr>
 </tbody>
 </table>
@@ -889,11 +898,15 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The type of commodity entering into the system through
+the specified input node.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">For a coal-fired power station there might be two
+commodities, namely coal and water.
+For an electric substation it is electricity.
+For a water treatment plant, it is waster water.</td>
 </tr>
 </tbody>
 </table>
@@ -901,18 +914,21 @@ where <cite>n</cite> is the total number of output nodes</td>
 </dl>
 </div>
 <div class="section" id="damage-algorithms-for-component-types-comp-type-dmg-algo">
-<h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<span id="input-comp-type-dmg-algo"></span><h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The type of component, based on the typology definitions
+being used in the system model.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Alphanumeric characters.
+May use dashes &#8216;-&#8216; or underscores &#8216;_&#8217;.
+Avoid using special characters.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Demineralisation Plant&#8217;</td>
 </tr>
 </tbody>
 </table>
@@ -922,11 +938,22 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The list of damage states used in defining the
+damage scale being modelled within the system.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String. Fixed, pre-determined state names.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first">For a four-state sequential damage scale,
+the following damage states are used:</p>
+<ol class="last arabic simple">
+<li>DS1 Slight</li>
+<li>DS2 Moderate</li>
+<li>DS3 Extensive</li>
+<li>DS4 Complete</li>
+</ol>
+</td>
 </tr>
 </tbody>
 </table>
@@ -936,11 +963,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The probability distribution for the damage function.
+Currently only log-normal curves are used, but additional
+distributions can be added as required.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;lognormal&#8217;</td>
 </tr>
 </tbody>
 </table>
@@ -950,11 +979,12 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Number indicating the mode of the function.
+Currently can handle only unimodal or bimodal functions.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer [1,2]</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">1</td>
 </tr>
 </tbody>
 </table>
@@ -964,11 +994,15 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Median of the damage function.
+A median will need to be defined for each damage state.
+It should be typically be progressively higher for more
+severe damage states:
+<span class="math">\({\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}\)</span></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.45</td>
 </tr>
 </tbody>
 </table>
@@ -978,11 +1012,14 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Standard deviation of the damage function.
+It will need to be defined for each damage state.
+The value of standard deviation should be such that
+the curves do not overlap.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.20</td>
 </tr>
 </tbody>
 </table>
@@ -992,11 +1029,20 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The fractional loss of a component&#8217;s value for damage
+sustained at a given damage state. This parameter links
+a damage state to expected direct loss of component value.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R} \mid 0.0 \leq x\}}\)</span>.
+A value of 0 indicates no loss of value, and
+a value of 1.0 indicates complete loss.
+In special cases the the value of loss ratio can be
+greater than 1.0, which indicates complete loss of
+component and additional cost of removal, disposal, or
+securing or destroyed component.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">Damage ratio of 0.30 for damage state &#8220;DS2 Moderate&#8221;</td>
 </tr>
 </tbody>
 </table>
@@ -1006,11 +1052,25 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">An unitless fractional value indicating the functional
+capacity of a component for a given damage state.
+This parameter links damage states to expected
+post-impact residual functionality of the component.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+<span class="math">\({\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}\)</span>.
+A value of 0 indicates no loss of value, and
+a value of 1.0 indicates complete loss.
+In special cases the the value of loss ratio can be
+greater than 1.0, which indicates complete loss of
+component and additional cost of removal, disposal, or
+securing or destroyed component.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">A stack of a thermal power station is expected to remain
+fully functional (functionality==1), under &#8216;Slight&#8217;
+damage state, i.e. under conditions of minor damage to
+structure with deformation of holding down bolts and with
+some bracing connections.</td>
 </tr>
 </tbody>
 </table>
@@ -1020,11 +1080,15 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Minimum value for which the damage algorithm is
+applicable.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">The algorithms presented by Anagnos <a class="reference internal" href="bibliography.html#anagnos1999" id="id1">[1]</a>
+for 500kV circuit breakers are only applicable for
+PGA values of 0.15g and above, for the various noted
+failure modes.</td>
 </tr>
 </tbody>
 </table>
@@ -1034,11 +1098,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The first standard deviation for a bimodal
+damage function.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float, for a bimodal function. However, for
+single mode functions, use &#8216;NA&#8217;.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
 </tr>
 </tbody>
 </table>
@@ -1048,11 +1114,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The second standard deviation for a bimodal
+damage function.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float, for a bimodal function. However, for
+single mode functions, use &#8216;NA&#8217;.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
 </tr>
 </tbody>
 </table>
@@ -1062,11 +1130,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The mean of the recovery function. Component and
+system restoration time are assumed to follow the
+normal distribution.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
 </tr>
 </tbody>
 </table>
@@ -1076,11 +1146,13 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The standard deviation of the recovery function.
+Component and system restoration time are assumed
+to follow the normal distribution.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
 </tr>
 </tbody>
 </table>
@@ -1090,17 +1162,26 @@ where <cite>n</cite> is the total number of output nodes</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Some times it is difficult to get the concept of
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Some times it is difficult to get the concept of
 standard deviation across to an audience of
 infrastructure experts, and hence it is difficult
 to get a reliable value for it. In such cases we can
 obtain a 95th percentile value for recovery time, and
 translate that to standard deviation for a normal
-distribution.</td>
+distribution using the following equation:</p>
+<div class="math">
+\[\begin{split}\begin{align}
+&amp;X_{0.95} = \mu + Z_{0.95} \sigma \\
+\Rightarrow &amp;X_{0.95} = \mu + \Phi^{-1}(0.95) \sigma \\
+\Rightarrow &amp;\sigma = \frac{X_{0.95} - \mu}{\Phi^{-1}(0.95)}
+\end{align}\end{split}\]</div>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">Float</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">_</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1115,7 +1196,7 @@ how it was adapted, or how it was developed.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Free text</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
 </tr>
 </tbody>
 </table>
@@ -1123,20 +1204,35 @@ how it was adapted, or how it was developed.</td>
 </dl>
 </div>
 <div class="section" id="definition-of-damage-states-damage-state-def">
-<h3>4.2.6 Definition of Damage States: <em>damage_state_def</em><a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
+<span id="input-damage-state-def"></span><h3>4.2.6 Definition of Damage States: <em>damage_state_def</em><a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
+<p>This table documents the physical damage characteristics that are implied
+by the damage states used to model the fragility of the system components.</p>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd>The entries here are the same as noted under
+<cite>component_type</cite> in the <a class="reference internal" href="#input-comp-type-dmg-algo"><span>Componenet Type Damage
+Algorithm table table</span></a>.</dd>
 <dt><cite>damage_state</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd>The entries here are the same as noted under
+<cite>damage_state</cite> in the <a class="reference internal" href="#input-comp-type-dmg-algo"><span>Component Type Damage
+Algorithm table table</span></a>.</dd>
 <dt><cite>damage_state_definitions</cite></dt>
-<dd>Description: <br />
-Data Type: <br />
-Example:  <br /></dd>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The physical damage descriptors corresponding
+to the damage states.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Free text.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">230 kV Current Transformers would be said to be in
+<cite>Failure</cite> state if there is
+&#8220;porcelain cracking, or overturning.&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 </div>

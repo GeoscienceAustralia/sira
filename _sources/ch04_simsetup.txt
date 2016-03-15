@@ -268,6 +268,8 @@ The function and format of these worksheets are described in the
 following subsections:
 
 
+.. _input__component_list:
+
 List of Component: *component_list*
 -----------------------------------
 
@@ -318,7 +320,8 @@ The *component_list* has the following parameters:
   :Description: Value of the component instance a fraction of the
                 total system cost, with the total cost being 1.0
 
-  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}`
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0 \le x \le 1\}}`
 
   :Example:     0.03
 
@@ -352,10 +355,13 @@ The *component_list* has the following parameters:
                 Typically at the start of the simulation all components
                 would have a value of 1.0.
 
-  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}`
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0 \leq x \leq 1\}}`
 
   :Example:     1.0 (default value)
 
+
+.. _input__component_connections:
 
 Connections between Components: *component_connections*
 -------------------------------------------------------
@@ -388,7 +394,8 @@ Connections between Components: *component_connections*
   :Description: Capacity of the edge.
                 It can be more than the required flow.
 
-  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \le x \le 1\}}`
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R}\ \mid \ 0 \leq x \leq 1\}}`
 
   :Example:     1.0 (default value)
 
@@ -402,6 +409,8 @@ Connections between Components: *component_connections*
 
   :Example:     1 (default value)
 
+
+.. _input__output_setup:
 
 Configuration of Output Nodes: *output_setup*
 ---------------------------------------------
@@ -448,7 +457,7 @@ Configuration of Output Nodes: *output_setup*
                 output nodes. The sum of capacities of all nodes must
                 equal 1.0.
 
-  :Data Type:   Float :math:`{\{x \in \mathbb{R}\ |\ 0 \lt x \le 1\}}`
+  :Data Type:   Float :math:`{\{x \in \mathbb{R} \mid 0 < x \leq 1\}}`
 
   :Example:     0.5
 
@@ -458,153 +467,222 @@ Configuration of Output Nodes: *output_setup*
                 priority for output/production nodes in for the
                 purposes of post-disaster recovery
 
-  :Data Type:   Integer
-                :math:`{\{x \in \mathbb{Z}\ |\ 1 \le x \le n\}}`,
+  :Data Type:   Integer.
+                :math:`{\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}`,
                 where `n` is the total number of output nodes
 
   :Example:     _
 
 
+.. _input__supply_setup:
+
 Configuration of Supply Nodes: *supply_setup*
 ---------------------------------------------
 
 `InputNode`
-  :Description:
+  :Description: The `component_id` of the input node.
 
-  :Data Type:
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and its `node_type` must be `supply`.
 
-  :Example:
+  :Example:     'coal_supply'
 
 
 `Capacity`
-  :Description:
+  :Description: The operational capacity of the node. It can be a real value
+                value if known, or default to 100%.
 
-  :Data Type:
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}`
 
-  :Example:
+  :Example:     100.0 (default value)
 
 
 `CapFraction`
-  :Description:
+  :Description: What decimal fractional value of the input commodity
+                enters the system through this input node.
 
-  :Data Type:
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}`
 
-  :Example:
+  :Example:     1.0
 
 
 `CommodityType`
-  :Description:
+  :Description: The type of commodity entering into the system through
+                the specified input node.
 
-  :Data Type:
+  :Data Type:   String.
 
-  :Example:
+  :Example:     For a coal-fired power station there might be two
+                commodities, namely coal and water.
+                For an electric substation it is electricity.
+                For a water treatment plant, it is waster water.
 
+
+.. _input__comp_type_dmg_algo:
 
 Damage Algorithms for Component Types: *comp_type_dmg_algo*
 -----------------------------------------------------------
 
 `component_type`
-  :Description:
+  :Description: The type of component, based on the typology definitions
+                being used in the system model.
 
-  :Data Type:
+  :Data Type:   Alphanumeric characters.
+                May use dashes '-' or underscores '_'.
+                Avoid using special characters.
 
-  :Example:
+  :Example:     'Demineralisation Plant'
 
 
 `damage_state`
-  :Description:
+  :Description: The list of damage states used in defining the
+                damage scale being modelled within the system.
 
-  :Data Type:
+  :Data Type:   String. Fixed, pre-determined state names.
 
-  :Example:
+  :Example:     For a four-state sequential damage scale,
+                the following damage states are used:
+
+                1. DS1 Slight
+                2. DS2 Moderate
+                3. DS3 Extensive
+                4. DS4 Complete
 
 
 `damage_function`
-  :Description:
+  :Description: The probability distribution for the damage function.
+                Currently only log-normal curves are used, but additional
+                distributions can be added as required.
 
-  :Data Type:
+  :Data Type:   String.
 
-  :Example:
+  :Example:     'lognormal'
 
 
 `mode`
-  :Description:
+  :Description: Number indicating the mode of the function.
+                Currently can handle only unimodal or bimodal functions.
 
-  :Data Type:
+  :Data Type:   Integer [1,2]
 
-  :Example:
+  :Example:     1
 
 
 `damage_median`
-  :Description:
+  :Description: Median of the damage function.
+                A median will need to be defined for each damage state.
+                It should be typically be progressively higher for more
+                severe damage states:
+                :math:`{\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}`
 
-  :Data Type:
+  :Data Type:   Float.
 
-  :Example:
+  :Example:     0.45
 
 
 `damage_logstd`
-  :Description:
+  :Description: Standard deviation of the damage function.
+                It will need to be defined for each damage state.
+                The value of standard deviation should be such that
+                the curves do not overlap.
 
-  :Data Type:
+  :Data Type:   Float.
 
-  :Example:
+  :Example:     0.20
 
 
 `damage_ratio`
-  :Description:
+  :Description: The fractional loss of a component's value for damage
+                sustained at a given damage state. This parameter links
+                a damage state to expected direct loss of component value.
 
-  :Data Type:
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x\}}`.
+                A value of 0 indicates no loss of value, and
+                a value of 1.0 indicates complete loss.
+                In special cases the the value of loss ratio can be
+                greater than 1.0, which indicates complete loss of
+                component and additional cost of removal, disposal, or
+                securing or destroyed component.
 
-  :Example:
+  :Example:     Damage ratio of 0.30 for damage state "DS2 Moderate"
 
 
 `functionality`
-  :Description:
+  :Description: An unitless fractional value indicating the functional
+                capacity of a component for a given damage state.
+                This parameter links damage states to expected
+                post-impact residual functionality of the component.
 
-  :Data Type:
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}`.
+                A value of 0 indicates no loss of value, and
+                a value of 1.0 indicates complete loss.
+                In special cases the the value of loss ratio can be
+                greater than 1.0, which indicates complete loss of
+                component and additional cost of removal, disposal, or
+                securing or destroyed component.
 
-  :Example:
+  :Example:     A stack of a thermal power station is expected to remain
+                fully functional (functionality==1), under 'Slight'
+                damage state, i.e. under conditions of minor damage to
+                structure with deformation of holding down bolts and with
+                some bracing connections.
 
 
 `minimum`
-  :Description:
+  :Description: Minimum value for which the damage algorithm is
+                applicable.
 
-  :Data Type:
+  :Data Type:   Float.
 
-  :Example:
+  :Example:     The algorithms presented by Anagnos :cite:`Anagnos1999`
+                for 500kV circuit breakers are only applicable for
+                PGA values of 0.15g and above, for the various noted
+                failure modes.
 
 
 `sigma_1`
-  :Description:
+  :Description: The first standard deviation for a bimodal
+                damage function.
 
-  :Data Type:
+  :Data Type:   Float, for a bimodal function. However, for
+                single mode functions, use 'NA'.
 
-  :Example:
+  :Example:     _
 
 
 `sigma_2`
-  :Description:
+  :Description: The second standard deviation for a bimodal
+                damage function.
 
-  :Data Type:
+  :Data Type:   Float, for a bimodal function. However, for
+                single mode functions, use 'NA'.
 
-  :Example:
+  :Example:     _
 
 
 `recovery_mean`
-  :Description:
+  :Description: The mean of the recovery function. Component and
+                system restoration time are assumed to follow the
+                normal distribution.
 
-  :Data Type:
+  :Data Type:   Float.
 
-  :Example:
+  :Example:     _
 
 
 `recovery_std`
-  :Description:
+  :Description: The standard deviation of the recovery function.
+                Component and system restoration time are assumed
+                to follow the normal distribution.
 
-  :Data Type:
+  :Data Type:   Float.
 
-  :Example:
+  :Example:     _
 
 
 `recovery_95percentile`
@@ -614,11 +692,19 @@ Damage Algorithms for Component Types: *comp_type_dmg_algo*
                 to get a reliable value for it. In such cases we can
                 obtain a 95th percentile value for recovery time, and
                 translate that to standard deviation for a normal
-                distribution.
+                distribution using the following equation:
+
+                .. math::
+
+                    \begin{align}
+                    &X_{0.95} = \mu + Z_{0.95} \sigma \\
+                    \Rightarrow &X_{0.95} = \mu + \Phi^{-1}(0.95) \sigma \\
+                    \Rightarrow &\sigma = \frac{X_{0.95} - \mu}{\Phi^{-1}(0.95)}
+                    \end{align}
 
   :Data Type:   Float
 
-  :Example:
+  :Example:     _
 
 
 `fragility_source`
@@ -627,26 +713,37 @@ Damage Algorithms for Component Types: *comp_type_dmg_algo*
 
   :Data Type:   Free text
 
-  :Example:
+  :Example:     _
 
+
+.. _input__damage_state_def:
 
 Definition of Damage States: *damage_state_def*
 -----------------------------------------------
 
+This table documents the physical damage characteristics that are implied
+by the damage states used to model the fragility of the system components.
+
+
 `component_type`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  The entries here are the same as noted under
+  `component_type` in the :ref:`Componenet Type Damage
+  Algorithm table table <input__comp_type_dmg_algo>`.
 
 
 `damage_state`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  The entries here are the same as noted under
+  `damage_state` in the :ref:`Component Type Damage
+  Algorithm table table <input__comp_type_dmg_algo>`.
 
 
 `damage_state_definitions`
-  Description: |br|
-  Data Type: |br|
-  Example:  |br|
+  :Description: The physical damage descriptors corresponding
+                to the damage states.
+
+  :Data Type:   Free text.
+
+  :Example:     230 kV Current Transformers would be said to be in
+                `Failure` state if there is
+                "porcelain cracking, or overturning."
 
