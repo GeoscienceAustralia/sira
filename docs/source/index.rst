@@ -6,7 +6,7 @@
 Welcome to SIFRA documentation
 ******************************
 
-Version: |release|
+:Release: |release|
 
 SIFRA stands for **System for Infrastructure Facility Resilience
 Analysis**.
