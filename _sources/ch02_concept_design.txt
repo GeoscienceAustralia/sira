@@ -119,6 +119,29 @@ DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for a power
 station is based on ranges of economic loss as a percentage of total system 
 value.
 
+The probability of a component exceeding damage state :math:`ds` is calculated
+using the log-normal cumulative distribution function (CDF) as shown in
+equation below, for a PGA value of :math:`x` g:
+
+.. math::
+
+   P[D_s \mid PGA=x] = \Phi \left(\dfrac {ln(x) - \mu_{lnX}}{\sigma_{lnX}}\right)
+                     = \Phi \left(\dfrac {ln(x) - \mu_{\theta}}{\beta}\right)
+
+where, |theta| = median, and |beta| = logarithmic standard deviation.
+
+For a component in damage state :math:`ds_i`, the corresponding loss is
+calculated as:
+
+.. math::
+
+   L_{C, ds_i} = R_{C, ds_i} \times CF_C
+
+where, |br|
+:math:`R_{C, ds_i}` = `d` is the damage ratio for component `C`
+at damage state :math:`ds_i`, and |br|
+:math:`CF_C` = cost of component `C` as a proportional of total system cost.
+
 
 System Restoration Model
 ========================
@@ -135,11 +158,10 @@ probability of the components being in each of the S sequential damage
 states used in the model and the estimated recovery at time t for the 
 components based of the restoration model:
 
-.. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i\ |\ PGA=x] \times R_i[t]
-    :label: eqn-recovery-time
+.. math:: F_{C|x} = \sum_{i=0}^{S} P[{ds}_i \mid PGA=x] \times R_i[t]
 
 where, :math:`{i}` is the index of the damage state,
-:math:`{\{i \in \mathbb{Z}\ |\ 0 \le i \le S\}}`.
+:math:`{\{i \in \mathbb{Z} \mid 0 \leq i \leq S\}}`.
 The 'None' damage state is :math:`{i=0}`, and :math:`{i=S}` is the complete
 or highest modelled damage state. :math:`R_i[t]` is the likely level of
 restoration of functionality at time :math:`t` . Restoration level

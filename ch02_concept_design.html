@@ -231,6 +231,21 @@ fragility, similar to those used in HAZUS (FEMA 2003): DS1 Slight,
 DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for a power
 station is based on ranges of economic loss as a percentage of total system
 value.</p>
+<p>The probability of a component exceeding damage state <span class="math">\(ds\)</span> is calculated
+using the log-normal cumulative distribution function (CDF) as shown in
+equation below, for a PGA value of <span class="math">\(x\)</span> g:</p>
+<div class="math">
+\[P[D_s \mid PGA=x] = \Phi \left(\dfrac {ln(x) - \mu_{lnX}}{\sigma_{lnX}}\right)
+                  = \Phi \left(\dfrac {ln(x) - \mu_{\theta}}{\beta}\right)\]</div>
+<p>where, θ = median, and β = logarithmic standard deviation.</p>
+<p>For a component in damage state <span class="math">\(ds_i\)</span>, the corresponding loss is
+calculated as:</p>
+<div class="math">
+\[L_{C, ds_i} = R_{C, ds_i} \times CF_C\]</div>
+<p>where, <br />
+<span class="math">\(R_{C, ds_i}\)</span> = <cite>d</cite> is the damage ratio for component <cite>C</cite>
+at damage state <span class="math">\(ds_i\)</span>, and <br />
+<span class="math">\(CF_C\)</span> = cost of component <cite>C</cite> as a proportional of total system cost.</p>
 </div>
 <div class="section" id="system-restoration-model">
 <h2>2.3 System Restoration Model<a class="headerlink" href="#system-restoration-model" title="Permalink to this headline">¶</a></h2>
@@ -244,10 +259,10 @@ earthquake of PGA=x is calculated as a weighted combination of the
 probability of the components being in each of the S sequential damage
 states used in the model and the estimated recovery at time t for the
 components based of the restoration model:</p>
-<div class="math" id="equation-eqn-recovery-time">
-<span class="eqno">(1)</span>\[F_{C|x} = \sum_{i=0}^{S} P[{ds}_i\ |\ PGA=x] \times R_i[t]\]</div>
+<div class="math">
+\[F_{C|x} = \sum_{i=0}^{S} P[{ds}_i \mid PGA=x] \times R_i[t]\]</div>
 <p>where, <span class="math">\({i}\)</span> is the index of the damage state,
-<span class="math">\({\{i \in \mathbb{Z}\ |\ 0 \le i \le S\}}\)</span>.
+<span class="math">\({\{i \in \mathbb{Z} \mid 0 \leq i \leq S\}}\)</span>.
 The &#8216;None&#8217; damage state is <span class="math">\({i=0}\)</span>, and <span class="math">\({i=S}\)</span> is the complete
 or highest modelled damage state. <span class="math">\(R_i[t]\)</span> is the likely level of
 restoration of functionality at time <span class="math">\(t\)</span> . Restoration level
