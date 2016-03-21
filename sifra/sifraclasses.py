@@ -93,7 +93,8 @@ class FacilityDataGetter(object):
         self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
             self.assign_infrastructure_data()
 
-        self.nominal_production = self.sysout_setup['Capacity'].sum()
+        self.nominal_production = \
+            self.sysout_setup['output_node_capacity'].sum()
 
         self.sys_dmg_states = ['DS0 None',
                                'DS1 Slight',
@@ -127,13 +128,13 @@ class FacilityDataGetter(object):
 
         SYSOUT_SETUP = pd.read_excel(
             config_file, sheetname='output_setup',
-            index_col='OutputNode', header=0,
+            index_col='output_node', header=0,
             skiprows=3, skipinitialspace=True)
-        SYSOUT_SETUP = SYSOUT_SETUP.sort_values(by='Priority', ascending=True)
+        SYSOUT_SETUP = SYSOUT_SETUP.sort_values(by='priority', ascending=True)
 
         SYSINP_SETUP = pd.read_excel(
             config_file, sheetname='supply_setup',
-            index_col='InputNode', header=0,
+            index_col='input_node', header=0,
             skiprows=3, skipinitialspace=True)
 
         FRAGILITIES = pd.read_excel(
@@ -175,14 +176,13 @@ class Network(object):
         G.vs["cost_fraction"] = list(comp_df['cost_fraction'].values)
         G.vs["node_type"] = list(comp_df['node_type'].values)
         G.vs["node_cluster"] = list(comp_df['node_cluster'].values)
-        G.vs["capacity"] = 1.0
+        G.vs["node_capacity"] = 1.0
         G.vs["functionality"] = 1.0
 
         for index, row in node_conn_df.iterrows():
-            G.add_edge(row['Origin'], row['Destination'],
-                       capacity=G.vs.find(row['Origin'])["capacity"],
-                       weight=row['Weight'],
-                       distance=row['Distance'])
+            G.add_edge(row['origin'], row['destination'],
+                       capacity=G.vs.find(row['origin'])["node_capacity"],
+                       weight=row['weight'])
         return num_elements, G, nodes_all
 
     @staticmethod
@@ -194,10 +194,9 @@ class Network(object):
         node_conn_df = facility.node_conn_df
         comp_df = facility.comp_df
         for index, row in node_conn_df.iterrows():
-            sys.add_edge(row['Origin'], row['Destination'],
-                       capacity=row['Capacity'],
-                       weight=row['Weight'],
-                       distance=row['Distance'])
+            sys.add_edge(row['origin'], row['destination'],
+                       capacity=row['link_capacity'],
+                       weight=row['weight'])
         systemlayout.draw_sys_layout(
             sys, comp_df, out_dir=facility.output_path,
             graph_label="System Component Layout"
@@ -212,7 +211,7 @@ class Network(object):
                                          'dependency'].index)]
         src_node_list = [k for (k, v)in sys.in_degree().iteritems() if v == 0]
         out_node_list = \
-            list(facility.sysout_setup.index.get_level_values('OutputNode'))
+            list(facility.sysout_setup.index.get_level_values('output_node'))
 
         return sup_node_list, dep_node_list, src_node_list, out_node_list
 
@@ -261,15 +260,14 @@ class Facility(FacilityDataGetter, IoDataGetter):
         sys.vs["node_cluster"] = \
             list(self.comp_df['node_cluster'].values)
 
-        sys.vs["capacity"] = 1.0
+        sys.vs["node_capacity"] = 1.0
         sys.vs["functionality"] = 1.0
 
         for _, row in self.node_conn_df.iterrows():
             sys.add_edge(
-                row['Origin'], row['Destination'],
-                capacity=sys.vs.find(row['Origin'])['capacity'],
-                weight=row['Weight'],
-                distance=row['Distance'])
+                row['origin'], row['destination'],
+                capacity=sys.vs.find(row['origin'])['node_capacity'],
+                weight=row['weight'])
         return sys
 
     def convert_df_to_dict(self):
@@ -286,7 +284,7 @@ class Facility(FacilityDataGetter, IoDataGetter):
 
         output_dict = {}
         outputnodes = \
-            list(np.unique(sysout_setup.index.get_level_values('OutputNode')))
+            list(np.unique(sysout_setup.index.get_level_values('output_node')))
 
         for k1 in outputnodes:
             output_dict[k1] = {}
@@ -294,18 +292,17 @@ class Facility(FacilityDataGetter, IoDataGetter):
 
         input_dict = {}
         inputnodes = \
-            list(np.unique(sysinp_setup.index.get_level_values('InputNode')))
+            list(np.unique(sysinp_setup.index.get_level_values('input_node')))
 
         for k1 in inputnodes:
             input_dict[k1] = {}
             input_dict[k1] = sysinp_setup.ix[k1].to_dict()
-            # input_dict[k1]['AvlCapacity'] = input_dict[k1]['Capacity']
 
         nodes_by_commoditytype = {}
-        for i in np.unique(sysinp_setup['CommodityType']):
+        for i in np.unique(sysinp_setup['commodity_type']):
             nodes_by_commoditytype[i] \
                 = [x for x in sysinp_setup.index
-                   if sysinp_setup.ix[x]['CommodityType'] == i]
+                   if sysinp_setup.ix[x]['commodity_type'] == i]
 
         return cpdict, output_dict, input_dict, nodes_by_commoditytype
 
@@ -383,10 +380,9 @@ class Facility(FacilityDataGetter, IoDataGetter):
         out_dir = self.output_path
         grx = nx.DiGraph()
         for _, row in self.node_conn_df.iterrows():
-            grx.add_edge(row['Origin'], row['Destination'],
-                         capacity=row['Capacity'],
-                         weight=row['Weight'],
-                         distance=row['Distance'])
+            grx.add_edge(row['origin'], row['destination'],
+                         capacity=row['link_capacity'],
+                         weight=row['weight'])
         systemlayout.draw_sys_layout(
             grx, self.comp_df,
             out_dir=out_dir,

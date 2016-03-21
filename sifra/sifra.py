@@ -131,14 +131,15 @@ def compute_output_given_ds(cp_func, fc):
                 avl_sys_flow_by_src.append(
                     G.maxflow_value(G.vs.find(inode).index,
                                     G.vs.find(onode).index, G.es["capacity"])
-                    * fc.input_dict[inode]['CapFraction']
+                    * fc.input_dict[inode]['capacity_fraction']
                 )
 
             total_available_flow_list.append(sum(avl_sys_flow_by_src))
 
         total_available_flow = min(total_available_flow_list)
         sys_out_capacity_list.append(
-            min(total_available_flow, fc.output_dict[onode]['CapFraction'])
+            min(total_available_flow,
+                fc.output_dict[onode]['capacity_fraction'])
             * fc.nominal_production
         )
 

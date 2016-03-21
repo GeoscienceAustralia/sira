@@ -221,10 +221,10 @@ def prep_repair_list(facility_obj,
         for CK, sup_nodes_by_commtype in nodes_by_commoditytype.iteritems():
             arr_row = []
             for i,inode in enumerate(sup_nodes_by_commtype):
-                arr_row.append(input_dict[inode]['CapFraction'])
+                arr_row.append(input_dict[inode]['capacity_fraction'])
         
             for i,inode in enumerate(sup_nodes_by_commtype):
-                thresh = output_dict[onode]['CapFraction']
+                thresh = output_dict[onode]['capacity_fraction']
             
                 vx = []
                 vlist = []
@@ -511,7 +511,7 @@ def vis_restoration_process(scenario,
     line_rst_times = {}
     ypos = 0
     for x, onode in enumerate(out_node_list): 
-        ypos += 100.0 * facility.output_dict[onode]['CapFraction']
+        ypos += 100.0 * facility.output_dict[onode]['capacity_fraction']
         
         # line_rst_times[onode] = \
         #     max(rst_setup_df[rst_setup_df['OutputNode']==onode]['RstEnd'])
@@ -527,7 +527,7 @@ def vis_restoration_process(scenario,
                      fontname='Open Sans', size=12, color='k', 
                      annotation_clip=False)    
         rst_time_line[x, :] = \
-            100. * facility.output_dict[onode]['CapFraction'] * \
+            100. * facility.output_dict[onode]['capacity_fraction'] * \
             np.array(list(np.zeros(int(line_rst_times[onode]))) +
                      list(np.ones(xmax - int(line_rst_times[onode])))
                      )
