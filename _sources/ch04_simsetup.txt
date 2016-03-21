@@ -268,7 +268,7 @@ The function and format of these worksheets are described in the
 following subsections:
 
 
-.. _input__component_list:
+.. _inputdata__component_list:
 
 List of Component: *component_list*
 -----------------------------------
@@ -361,12 +361,12 @@ The *component_list* has the following parameters:
   :Example:     1.0 (default value)
 
 
-.. _input__component_connections:
+.. _inputdata__component_connections:
 
 Connections between Components: *component_connections*
 -------------------------------------------------------
 
-`Origin`
+`origin`
   :Description: The node (component) to which the tail of a
                 directional edge is connected. For undirected graphs
                 the origin/destination designation is immaterial.
@@ -379,7 +379,7 @@ Connections between Components: *component_connections*
   :Example:     'stack_1'
 
 
-`Destination`
+`destination`
   :Description: The node (component) on which the head of a
                 directional edge terminates. For undirected graphs
                 the origin/destination designation is immaterial.
@@ -390,7 +390,7 @@ Connections between Components: *component_connections*
   :Example:     'turbine_condenser_1'
 
 
-`Capacity`
+`link_capacity`
   :Description: Capacity of the edge.
                 It can be more than the required flow.
 
@@ -400,7 +400,7 @@ Connections between Components: *component_connections*
   :Example:     1.0 (default value)
 
 
-`Weight`
+`weight`
   :Description: This parameter can be used to prioritise an edge or
                 a series of edges (a path) over another edge or set
                 of edges.
@@ -410,12 +410,59 @@ Connections between Components: *component_connections*
   :Example:     1 (default value)
 
 
-.. _input__output_setup:
+.. _inputdata__supply_setup:
+
+Configuration of Supply Nodes: *supply_setup*
+---------------------------------------------
+
+`input_node`
+  :Description: The `component_id` of the input node.
+
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and its `node_type` must be `supply`.
+
+  :Example:     'coal_supply'
+
+
+`input_capacity`
+  :Description: The operational capacity of the node. It can be a real value
+                value if known, or default to 100%.
+
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}`
+
+  :Example:     100.0 (default value)
+
+
+`capacity_fraction`
+  :Description: What decimal fractional value of the input commodity
+                enters the system through this input node.
+
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}`
+
+  :Example:     1.0
+
+
+`commodity_type`
+  :Description: The type of commodity entering into the system through
+                the specified input node.
+
+  :Data Type:   String.
+
+  :Example:     For a coal-fired power station there might be two
+                commodities, namely coal and water.
+                For an electric substation it is electricity.
+                For a water treatment plant, it is waster water.
+
+
+.. _inputdata__output_setup:
 
 Configuration of Output Nodes: *output_setup*
 ---------------------------------------------
 
-`OutputNode`
+`output_node`
   :Description: These are the 'sink' nodes representing the load or
                 the aggregate consumer of the product(s) of the system.
                 These are not real components, but a modelling construct.
@@ -429,7 +476,7 @@ Configuration of Output Nodes: *output_setup*
   :Example:     'output_1'
 
 
-`ProductionNode`
+`production_node`
   :Description: These are the real terminal nodes within the facility
                 system model. The completed 'product' of a system exits
                 from this node.
@@ -441,7 +488,7 @@ Configuration of Output Nodes: *output_setup*
   :Example:     'gen_1'
 
 
-`Capacity`
+`output_node_capacity`
   :Description: Production capacity that the specific production node
                 is responsible for. The unit depends on the
                 type of product the system produces
@@ -452,7 +499,7 @@ Configuration of Output Nodes: *output_setup*
   :Example:     300
 
 
-`CapFraction`
+`capacity_fraction`
   :Description: The fraction of total production capacity of the
                 output nodes. The sum of capacities of all nodes must
                 equal 1.0.
@@ -462,7 +509,7 @@ Configuration of Output Nodes: *output_setup*
   :Example:     0.5
 
 
-`Priority`
+`priority`
   :Description: This parameter is used to assign relative sequential
                 priority for output/production nodes in for the
                 purposes of post-disaster recovery
@@ -474,54 +521,7 @@ Configuration of Output Nodes: *output_setup*
   :Example:     _
 
 
-.. _input__supply_setup:
-
-Configuration of Supply Nodes: *supply_setup*
----------------------------------------------
-
-`InputNode`
-  :Description: The `component_id` of the input node.
-
-  :Data Type:   String. Must be one of the entries in the
-                `component_id` columns in the `component_list` table,
-                and its `node_type` must be `supply`.
-
-  :Example:     'coal_supply'
-
-
-`Capacity`
-  :Description: The operational capacity of the node. It can be a real value
-                value if known, or default to 100%.
-
-  :Data Type:   Float.
-                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}`
-
-  :Example:     100.0 (default value)
-
-
-`CapFraction`
-  :Description: What decimal fractional value of the input commodity
-                enters the system through this input node.
-
-  :Data Type:   Float.
-                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}`
-
-  :Example:     1.0
-
-
-`CommodityType`
-  :Description: The type of commodity entering into the system through
-                the specified input node.
-
-  :Data Type:   String.
-
-  :Example:     For a coal-fired power station there might be two
-                commodities, namely coal and water.
-                For an electric substation it is electricity.
-                For a water treatment plant, it is waster water.
-
-
-.. _input__comp_type_dmg_algo:
+.. _inputdata__comp_type_dmg_algo:
 
 Damage Algorithms for Component Types: *comp_type_dmg_algo*
 -----------------------------------------------------------
@@ -716,7 +716,7 @@ Damage Algorithms for Component Types: *comp_type_dmg_algo*
   :Example:     _
 
 
-.. _input__damage_state_def:
+.. _inputdata__damage_state_def:
 
 Definition of Damage States: *damage_state_def*
 -----------------------------------------------

@@ -90,8 +90,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#facility-definition-file">4.2 Facility Definition File</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.3 Configuration of Output Nodes: <em>output_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.4 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: <em>output_setup</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#damage-algorithms-for-component-types-comp-type-dmg-algo">4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
 </ul>
@@ -542,7 +542,7 @@ It contains five worksheets. The names of the worksheets are fixed.
 The function and format of these worksheets are described in the
 following subsections:</p>
 <div class="section" id="list-of-component-component-list">
-<span id="input-component-list"></span><h3>4.2.1 List of Component: <em>component_list</em><a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-component-list"></span><h3>4.2.1 List of Component: <em>component_list</em><a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
 <dl class="docutils">
 <dt><cite>component_id</cite></dt>
@@ -676,9 +676,9 @@ would have a value of 1.0.</td>
 </dl>
 </div>
 <div class="section" id="connections-between-components-component-connections">
-<span id="input-component-connections"></span><h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-component-connections"></span><h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
-<dt><cite>Origin</cite></dt>
+<dt><cite>origin</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -697,7 +697,7 @@ two edges, e.g. A <span class="math">\(\Rightarrow\)</span> B, and B <span class
 </tbody>
 </table>
 </dd>
-<dt><cite>Destination</cite></dt>
+<dt><cite>destination</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -714,7 +714,7 @@ the origin/destination designation is immaterial.</td>
 </tbody>
 </table>
 </dd>
-<dt><cite>Capacity</cite></dt>
+<dt><cite>link_capacity</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -730,7 +730,7 @@ It can be more than the required flow.</td>
 </tbody>
 </table>
 </dd>
-<dt><cite>Weight</cite></dt>
+<dt><cite>weight</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -748,104 +748,10 @@ of edges.</td>
 </dd>
 </dl>
 </div>
-<div class="section" id="configuration-of-output-nodes-output-setup">
-<span id="input-output-setup"></span><h3>4.2.3 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt><cite>OutputNode</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the &#8216;sink&#8217; nodes representing the load or
-the aggregate consumer of the product(s) of the system.
-These are not real components, but a modelling construct.
-These nodes are not considered in the fragility
-calculations.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table,
-and must be of <cite>node_type</cite> sink.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;output_1&#8217;</td>
-</tr>
-</tbody>
-</table>
-</dd>
-<dt><cite>ProductionNode</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the facility
-system model. The completed &#8216;product&#8217; of a system exits
-from this node.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table,
-and must be of <cite>node_type</cite> transshipment.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;gen_1&#8217;</td>
-</tr>
-</tbody>
-</table>
-</dd>
-<dt><cite>Capacity</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Production capacity that the specific production node
-is responsible for. The unit depends on the
-type of product the system produces
-(e.g. MW for generator plant).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">300</td>
-</tr>
-</tbody>
-</table>
-</dd>
-<dt><cite>CapFraction</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The fraction of total production capacity of the
-output nodes. The sum of capacities of all nodes must
-equal 1.0.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R} \mid 0 &lt; x \leq 1\}}\)</span></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.5</td>
-</tr>
-</tbody>
-</table>
-</dd>
-<dt><cite>Priority</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This parameter is used to assign relative sequential
-priority for output/production nodes in for the
-purposes of post-disaster recovery</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer.
-<span class="math">\({\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}\)</span>,
-where <cite>n</cite> is the total number of output nodes</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-</div>
 <div class="section" id="configuration-of-supply-nodes-supply-setup">
-<span id="input-supply-setup"></span><h3>4.2.4 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-supply-setup"></span><h3>4.2.3 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
-<dt><cite>InputNode</cite></dt>
+<dt><cite>input_node</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -861,7 +767,7 @@ and its <cite>node_type</cite> must be <cite>supply</cite>.</td>
 </tbody>
 </table>
 </dd>
-<dt><cite>Capacity</cite></dt>
+<dt><cite>input_capacity</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -877,7 +783,7 @@ value if known, or default to 100%.</td>
 </tbody>
 </table>
 </dd>
-<dt><cite>CapFraction</cite></dt>
+<dt><cite>capacity_fraction</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -893,7 +799,7 @@ enters the system through this input node.</td>
 </tbody>
 </table>
 </dd>
-<dt><cite>CommodityType</cite></dt>
+<dt><cite>commodity_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -913,8 +819,102 @@ For a water treatment plant, it is waster water.</td>
 </dd>
 </dl>
 </div>
+<div class="section" id="configuration-of-output-nodes-output-setup">
+<span id="inputdata-output-setup"></span><h3>4.2.4 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><cite>output_node</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the &#8216;sink&#8217; nodes representing the load or
+the aggregate consumer of the product(s) of the system.
+These are not real components, but a modelling construct.
+These nodes are not considered in the fragility
+calculations.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+and must be of <cite>node_type</cite> sink.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;output_1&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>production_node</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the facility
+system model. The completed &#8216;product&#8217; of a system exits
+from this node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+and must be of <cite>node_type</cite> transshipment.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;gen_1&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>output_node_capacity</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Production capacity that the specific production node
+is responsible for. The unit depends on the
+type of product the system produces
+(e.g. MW for generator plant).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">300</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>capacity_fraction</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The fraction of total production capacity of the
+output nodes. The sum of capacities of all nodes must
+equal 1.0.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float <span class="math">\({\{x \in \mathbb{R} \mid 0 &lt; x \leq 1\}}\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.5</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>priority</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This parameter is used to assign relative sequential
+priority for output/production nodes in for the
+purposes of post-disaster recovery</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer.
+<span class="math">\({\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}\)</span>,
+where <cite>n</cite> is the total number of output nodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
 <div class="section" id="damage-algorithms-for-component-types-comp-type-dmg-algo">
-<span id="input-comp-type-dmg-algo"></span><h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-comp-type-dmg-algo"></span><h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -1204,18 +1204,18 @@ how it was adapted, or how it was developed.</td>
 </dl>
 </div>
 <div class="section" id="definition-of-damage-states-damage-state-def">
-<span id="input-damage-state-def"></span><h3>4.2.6 Definition of Damage States: <em>damage_state_def</em><a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-damage-state-def"></span><h3>4.2.6 Definition of Damage States: <em>damage_state_def</em><a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
 <p>This table documents the physical damage characteristics that are implied
 by the damage states used to model the fragility of the system components.</p>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
 <dd>The entries here are the same as noted under
-<cite>component_type</cite> in the <a class="reference internal" href="#input-comp-type-dmg-algo"><span>Componenet Type Damage
-Algorithm table table</span></a>.</dd>
+<cite>component_type</cite> in the <span class="xref std std-ref">Componenet Type Damage
+Algorithm table table</span>.</dd>
 <dt><cite>damage_state</cite></dt>
 <dd>The entries here are the same as noted under
-<cite>damage_state</cite> in the <a class="reference internal" href="#input-comp-type-dmg-algo"><span>Component Type Damage
-Algorithm table table</span></a>.</dd>
+<cite>damage_state</cite> in the <span class="xref std std-ref">Component Type Damage
+Algorithm table table</span>.</dd>
 <dt><cite>damage_state_definitions</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
