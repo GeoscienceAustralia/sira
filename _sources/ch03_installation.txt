@@ -104,14 +104,14 @@ To run the software, follow the following simple steps:
 2.  Change to the directory that has the ``sifra`` code. If the code is
     in the directorty ``/Users/personx/sifra``, then run::
 
-    cd ~/sifra/ 
+        cd ~/sifra/
 
 3.  Run the primary fragility characterisarion module from the command line.
     We assume that same configuration file is stored in
     ``/Users/personx/sifra/simulation_setup/``, and the configuration file
     is names ``config_x.conf``::
 
-    python -m sifra simulation_setup/config_x.conf
+        python -m sifra simulation_setup/config_x.conf
 
 The post-processing tools are run as simple python scripts. It should be
 noted, that the post-processing tools depend on the outputs produced by a
