@@ -87,12 +87,12 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">3 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">3.1 Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-a-development-environment">3.2 Setting Up a Development Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-the-code">3.3 Running the Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-core-sifra-code">3.3 Running the Core SIFRA Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-code-tests">3.4 Running Code Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Attributing Fragility to Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
@@ -214,27 +214,34 @@ and <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlib
 </pre></div>
 </div>
 </div>
-<div class="section" id="running-the-code">
-<span id="running-sifra"></span><h2>3.3 Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-the-core-sifra-code">
+<span id="running-sifra"></span><h2>3.3 Running the Core SIFRA Code<a class="headerlink" href="#running-the-core-sifra-code" title="Permalink to this headline">¶</a></h2>
 <p>To run the software, follow the following simple steps:</p>
-<ul>
+<ol class="arabic">
 <li><p class="first">Open a command terminal</p>
 </li>
-<li><p class="first">Change to the directory that has the <code class="docutils literal"><span class="pre">sifra</span></code> code. If the code is in the
-directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra</span></code>, then run:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd ~/sifra/
-</pre></div>
-</div>
+<li><p class="first">Change to the directory that has the <code class="docutils literal"><span class="pre">sifra</span></code> code. If the code is
+in the directorty <code class="docutils literal"><span class="pre">/Users/personx/sifra</span></code>, then run:</p>
+<p>cd ~/sifra/</p>
 </li>
 <li><p class="first">Run the primary fragility characterisarion module from the command line.
 We assume that same configuration file is stored in
-<code class="docutils literal"><span class="pre">/Users/personx/sifra/simulation_setup/</span></code>, and the configuration file is
-names <code class="docutils literal"><span class="pre">config_x.conf</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre>python -m sifra simulation_setup/config_x.conf
+<code class="docutils literal"><span class="pre">/Users/personx/sifra/simulation_setup/</span></code>, and the configuration file
+is names <code class="docutils literal"><span class="pre">config_x.conf</span></code>:</p>
+<p>python -m sifra simulation_setup/config_x.conf</p>
+</li>
+</ol>
+<p>The post-processing tools are run as simple python scripts. It should be
+noted, that the post-processing tools depend on the outputs produced by a
+full simulation run that characterises the system fragility. Therefore,
+thea full run of the SIFRA needs to be conducted on the system model of
+interest prior to running the tools for model fitting and scenario and
+restoration analysis tools. They are simply run as:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ~/sifra/sifra/
+python fit_model.py ../simulation_setup/config_x.conf
+python scenario_loss_analysis.py ../simulation_setup/config_x.conf
 </pre></div>
 </div>
-</li>
-</ul>
 </div>
 <div class="section" id="running-code-tests">
 <h2>3.4 Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>

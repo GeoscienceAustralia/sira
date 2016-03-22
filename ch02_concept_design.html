@@ -85,13 +85,13 @@
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">2 Concept and Design</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#facility-system-model">2.1 Facility System Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#translating-hazard-impact-to-system-loss">2.2 Translating hazard impact to system loss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-loss-modelling">2.2 System Loss Modelling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#system-restoration-model">2.3 System Restoration Model</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Attributing Fragility to Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
@@ -142,8 +142,8 @@
 <span id="id1"></span><h1>2 Concept and Design<a class="headerlink" href="#concept-and-design" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="facility-system-model">
 <span id="id2"></span><h2>2.1 Facility System Model<a class="headerlink" href="#facility-system-model" title="Permalink to this headline">¶</a></h2>
-<p>Facilities are modelled in the <code class="docutils literal"><span class="pre">sifra</span></code> methodology as a network of components.
-This approach affords three key advantages:</p>
+<p>Facilities are modelled in the <code class="docutils literal"><span class="pre">sifra</span></code> methodology as a network of
+components. This approach affords three key advantages:</p>
 <ol class="arabic simple">
 <li>it allows for modelling the effect of impaired or destroyed components
 on the operational capacity of the system,</li>
@@ -165,23 +165,23 @@ represented as nodes. Based on their role within the system, these nodes,
 or components, are classified in four categories:</p>
 <ol class="arabic simple">
 <li><em>Supply nodes</em>: These nodes represent thr entry points into the system
-for required inputs or commodities. As for example, coal and water can be
-the required ‘commodities’ into a thermal power station. In the case of
-the substation, required input is electricity from power stations or other
-substations.</li>
+for required inputs or commodities. As for example, coal and water can
+be the required ‘commodities’ into a thermal power station. In the case
+of the substation, required input is electricity from power stations or
+other substations.</li>
 <li><em>Output nodes</em>: These nodes represent the exit points for the output of
-the system. For example, in the case of the power station, the output nodes
-act as dummy loads - representing the energy consumers - connected to each
-of the step-up transformers. The sum of flow through the network measured
-at the output nodes represented the effective production (or operational)
-capacity of the facility.</li>
+the system. For example, in the case of the power station, the output
+nodes act as dummy loads - representing the energy consumers - connected
+to each of the step-up transformers. The sum of flow through the network
+measured at the output nodes represented the effective production
+(or operational) capacity of the facility.</li>
 <li><em>Dependency nodes</em>: These nodes represent the components that do not
-directly participate in the production process of the system, or in the
-handling of system inputs, but are critical for system operations in some
-other capacity, e.g. system management or monitoring. The control building
-of a substation is an example of this.</li>
-<li><em>Transhipment nodes</em>: These are nodes that transform, transport, or store
-system inputs to give effect to processes that produces the outputs
+directly participate in the production process of the system, or in
+the handling of system inputs, but are critical for system operations
+in some other capacity, e.g. system management or monitoring. The
+control building of a substation is an example of this.</li>
+<li><em>Transhipment nodes</em>: These are nodes that transform, transport, or
+store system inputs to give effect to processes that produces the outputs
 required of the system. Majority of the nodes within a system fall into
 this category.</li>
 </ol>
@@ -203,24 +203,24 @@ electrical network where electricity – the system &#8216;commodity&#8217; – 
 either direction through an edge (electrical conductor) as dictated by load
 demands and system constraints. Therefore, most of the edges in the
 substation are bidirectional, unless specifically constrained.</p>
-<p>Connection paths and &#8216;production capacities&#8217; along those paths within a system
-are calculated as the maximum flow through those paths.
+<p>Connection paths and &#8216;production capacities&#8217; along those paths within a
+system are calculated as the maximum flow through those paths.
 The <a class="reference external" href="http://igraph.org/python/">igraph</a> Python package was used as the
 network modelling platform to calculate graph metrics for a post-hazard
 damaged system model.</p>
 </div>
-<div class="section" id="translating-hazard-impact-to-system-loss">
-<h2>2.2 Translating hazard impact to system loss<a class="headerlink" href="#translating-hazard-impact-to-system-loss" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="system-loss-modelling">
+<h2>2.2 System Loss Modelling<a class="headerlink" href="#system-loss-modelling" title="Permalink to this headline">¶</a></h2>
 <p>For a given value of level of ground shaking, a set of random samples is
 generated, and the damage state of each component is calculated for each
-random sample based on the fragility function of the given component. Given
-the assessed damage state of all the system components, the system
+random sample based on the fragility function of the given component.
+Given the assessed damage state of all the system components, the system
 functionality is assessed and system output level calculated. This process
-is run through a Monte Carlo process for the set of random samples to assess
-the system response at the selected ground shaking intensity. To obtain a
-characterisation of the system and develop fragility algorithms for the
-system (e.g. the power station) the process is repeated for a range of PGA
-values. This Process is shown in Figure 2.2.</p>
+is run through a Monte Carlo process for the set of random samples to
+assess the system response at the selected ground shaking intensity. To
+obtain a characterisation of the system and develop fragility algorithms
+for the system (e.g. the power station) the process is repeated for a
+range of PGA values. This Process is shown in Figure 2.2.</p>
 <div class="figure align-center" id="id7">
 <span id="fig-hazard-loss-link"></span><a class="reference internal image-reference" href="_images/hazard_loss_link.png"><img alt="Linking hazard to damage and loss" src="_images/hazard_loss_link.png" style="width: 98%;" /></a>
 <p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Figure 2.2  Schematic of process linking component damage assessment to
@@ -254,8 +254,8 @@ of mean restoration time for each component at each damage level is
 attributed. The structural damage level definitions associated with the
 damage states are central to establishing a common understanding to
 facilitate the development of the restoration parameters.</p>
-<p>The functionality <span class="math">\(F_C\)</span> of component C at t time units after impact of an
-earthquake of PGA=x is calculated as a weighted combination of the
+<p>The functionality <span class="math">\(F_C\)</span> of component C at t time units after impact
+of an earthquake of PGA=x is calculated as a weighted combination of the
 probability of the components being in each of the S sequential damage
 states used in the model and the estimated recovery at time t for the
 components based of the restoration model:</p>
@@ -282,13 +282,17 @@ In regard to this, the concept of &#8216;<em>Restoration Streams</em>&#8216; is 
 maximum number of components that can be worked on simultaneously. This is
 effectively a proxy representing the deployment of trained personnel and
 material for the repair tasks. Additional optional offsets can be factored
-in to capture specific contexts:
-(i) <em>Restoration Offset</em> – this is a time allowance for assessment of
-damage to the system and for securing the site to assure it is safe for commencement of repairs;
-(ii) <em>Testing and Commission Interval</em>: this is a time allowance for testing
-conformity with operational and safety parameters for the system, or a part
-thereof.</p>
-<p>Given a set of restoration parameters and the restoration plan, the consequent restoration time is calculated as follows:</p>
+in to capture specific contexts:</p>
+<ol class="loweralpha simple">
+<li><em>Restoration Offset</em> – this is a time allowance for assessment of
+damage to the system and for securing the site to assure it is safe
+for commencement of repairs;</li>
+<li><em>Testing and Commission Interval</em>: this is a time allowance for testing
+conformity with operational and safety parameters for the system, or a
+part thereof.</li>
+</ol>
+<p>Given a set of restoration parameters and the restoration plan, the
+consequent restoration time is calculated as follows:</p>
 <ol class="arabic simple">
 <li>Test if there is any available path between the set of required input
 nodes (i.e. supply nodes) and the output node assigned the highest
@@ -320,21 +324,23 @@ in bringing in 100MW of electricity from power plants. In this case, the
 designated output node must be linked to at least three of the input/supply
 nodes to meet its demand.</p>
 <p>In addition to the core process of approximating restoration time, a
-routine for simulating component cannibalisation within a facility or system
-has also been incorporated. Here we use cannibalisation to refer to an
-exercise whereby an operator may move an undamaged component from a low
-priority or redundant line to replace a damaged component on a high priority
-line. This exercise may allow the operator to eliminate the potentially long
-procurement or transportation time for a replacement unit, and thereby
-expedite the restoration of the high priority lines.</p>
+routine for simulating component cannibalisation within a facility or
+system has also been incorporated. Here we use cannibalisation to refer
+to an exercise whereby an operator may move an undamaged component from
+a low priority or redundant line to replace a damaged component on a
+high priority line. This exercise may allow the operator to eliminate
+the potentially long procurement or transportation time for a replacement
+unit, and thereby expedite the restoration of the high priority lines.</p>
 <p>The outputs from the restoration model are:</p>
-<ol class="lowerroman simple">
+<ol class="loweralpha simple">
 <li>a simple Gantt chart with each component needing repair,</li>
-<li>restoration plot for each output line over time and the associated
-percentage of total system capacity rehabilitated, and</li>
-<li>total restoration time for each output line for a given restoration
-scheme.</li>
 </ol>
+<dl class="docutils">
+<dt>(*)  restoration plot for each output line over time and the associated</dt>
+<dd>percentage of total system capacity rehabilitated, and</dd>
+<dt>(*)  total restoration time for each output line for a given restoration</dt>
+<dd>scheme.</dd>
+</dl>
 </div>
 </div>
 
