@@ -82,15 +82,15 @@ and most reliable options is to download the the appropriate wheels from
 `Christoph Gohlke's unofficial page of Windows binaries
 <http://www.lfd.uci.edu/~gohlke/pythonlibs/>`_.
 
-For Windows 64 bit systems, you will need to download the ``wheels`` for
-`python-igraph <http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph>`_
-and `pygraphviz <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz>`_:
-- ``python_igraph-0.7.1.post6-cp27-none-win_amd64.whl``
-- ``pygraphviz-1.3.1-cp27-none-win_amd64.whl``
+Download the appropriate ``wheels`` for your Windows platform (32 or 64 bit):
 
-Install these downloaded ``wheels`` with pip::
+- `python-igraph <http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph>`_
+- `pygraphviz <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz>`_.
+
+Install the downloaded ``wheels`` (*.whl files) with pip::
 
     pip install <pkg_name>.whl
+
 
 .. _running-sifra:
 
