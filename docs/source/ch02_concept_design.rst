@@ -9,8 +9,8 @@ Concept and Design
 Facility System Model
 =====================
 
-Facilities are modelled in the ``sifra`` methodology as a network of components. 
-This approach affords three key advantages: 
+Facilities are modelled in the ``sifra`` methodology as a network of
+components. This approach affords three key advantages:
 
 (1) it allows for modelling the effect of impaired or destroyed components 
     on the operational capacity of the system, 
@@ -34,30 +34,30 @@ represented as nodes. Based on their role within the system, these nodes,
 or components, are classified in four categories:
 
 1. *Supply nodes*: These nodes represent thr entry points into the system 
-   for required inputs or commodities. As for example, coal and water can be 
-   the required ‘commodities’ into a thermal power station. In the case of 
-   the substation, required input is electricity from power stations or other 
-   substations.
+   for required inputs or commodities. As for example, coal and water can
+   be the required ‘commodities’ into a thermal power station. In the case
+   of the substation, required input is electricity from power stations or
+   other substations.
 
 2. *Output nodes*: These nodes represent the exit points for the output of 
-   the system. For example, in the case of the power station, the output nodes 
-   act as dummy loads - representing the energy consumers - connected to each 
-   of the step-up transformers. The sum of flow through the network measured 
-   at the output nodes represented the effective production (or operational) 
-   capacity of the facility.
+   the system. For example, in the case of the power station, the output
+   nodes act as dummy loads - representing the energy consumers - connected
+   to each of the step-up transformers. The sum of flow through the network
+   measured at the output nodes represented the effective production
+   (or operational) capacity of the facility.
 
 3. *Dependency nodes*: These nodes represent the components that do not 
-   directly participate in the production process of the system, or in the 
-   handling of system inputs, but are critical for system operations in some 
-   other capacity, e.g. system management or monitoring. The control building
-   of a substation is an example of this.
+   directly participate in the production process of the system, or in
+   the handling of system inputs, but are critical for system operations
+   in some other capacity, e.g. system management or monitoring. The
+   control building of a substation is an example of this.
 
-4. *Transhipment nodes*: These are nodes that transform, transport, or store 
-   system inputs to give effect to processes that produces the outputs 
+4. *Transhipment nodes*: These are nodes that transform, transport, or
+   store system inputs to give effect to processes that produces the outputs
    required of the system. Majority of the nodes within a system fall into 
    this category.
 
-The component configuration and redundancies are captured as edges connecting 
+The component configuration and redundancies are captured as edges connecting
 the nodes. Constraints on flow through specific paths, or sets of nodes, can 
 be represented as capacities of edges connecting those nodes. Figure 2.1 
 illustrates this concept for a thermal power station.
@@ -82,26 +82,26 @@ either direction through an edge (electrical conductor) as dictated by load
 demands and system constraints. Therefore, most of the edges in the 
 substation are bidirectional, unless specifically constrained.
 
-Connection paths and 'production capacities' along those paths within a system 
-are calculated as the maximum flow through those paths. 
+Connection paths and 'production capacities' along those paths within a
+system are calculated as the maximum flow through those paths.
 The `igraph <http://igraph.org/python/>`_ Python package was used as the 
 network modelling platform to calculate graph metrics for a post-hazard 
 damaged system model. 
 
 
-Translating hazard impact to system loss
-========================================
+System Loss Modelling
+=====================
 
 For a given value of level of ground shaking, a set of random samples is 
 generated, and the damage state of each component is calculated for each 
-random sample based on the fragility function of the given component. Given 
-the assessed damage state of all the system components, the system 
+random sample based on the fragility function of the given component.
+Given the assessed damage state of all the system components, the system
 functionality is assessed and system output level calculated. This process 
-is run through a Monte Carlo process for the set of random samples to assess 
-the system response at the selected ground shaking intensity. To obtain a 
-characterisation of the system and develop fragility algorithms for the 
-system (e.g. the power station) the process is repeated for a range of PGA 
-values. This Process is shown in Figure 2.2.
+is run through a Monte Carlo process for the set of random samples to
+assess the system response at the selected ground shaking intensity. To
+obtain a characterisation of the system and develop fragility algorithms
+for the system (e.g. the power station) the process is repeated for a
+range of PGA values. This Process is shown in Figure 2.2.
 
 .. _fig_hazard_loss_link:
 
@@ -152,8 +152,8 @@ attributed. The structural damage level definitions associated with the
 damage states are central to establishing a common understanding to 
 facilitate the development of the restoration parameters.
 
-The functionality :math:`F_C` of component C at t time units after impact of an 
-earthquake of PGA=x is calculated as a weighted combination of the 
+The functionality :math:`F_C` of component C at t time units after impact
+of an earthquake of PGA=x is calculated as a weighted combination of the
 probability of the components being in each of the S sequential damage 
 states used in the model and the estimated recovery at time t for the 
 components based of the restoration model:
@@ -183,13 +183,17 @@ maximum number of components that can be worked on simultaneously. This is
 effectively a proxy representing the deployment of trained personnel and 
 material for the repair tasks. Additional optional offsets can be factored 
 in to capture specific contexts: 
-(i) *Restoration Offset* – this is a time allowance for assessment of 
-damage to the system and for securing the site to assure it is safe for commencement of repairs; 
-(ii) *Testing and Commission Interval*: this is a time allowance for testing 
-conformity with operational and safety parameters for the system, or a part 
-thereof.
 
-Given a set of restoration parameters and the restoration plan, the consequent restoration time is calculated as follows:
+(a)  *Restoration Offset* – this is a time allowance for assessment of
+     damage to the system and for securing the site to assure it is safe
+     for commencement of repairs;
+
+(b)  *Testing and Commission Interval*: this is a time allowance for testing
+     conformity with operational and safety parameters for the system, or a
+     part thereof.
+
+Given a set of restoration parameters and the restoration plan, the
+consequent restoration time is calculated as follows:
 
 1. Test if there is any available path between the set of required input 
    nodes (i.e. supply nodes) and the output node assigned the highest 
@@ -225,21 +229,21 @@ designated output node must be linked to at least three of the input/supply
 nodes to meet its demand.
 
 In addition to the core process of approximating restoration time, a 
-routine for simulating component cannibalisation within a facility or system 
-has also been incorporated. Here we use cannibalisation to refer to an 
-exercise whereby an operator may move an undamaged component from a low 
-priority or redundant line to replace a damaged component on a high priority 
-line. This exercise may allow the operator to eliminate the potentially long 
-procurement or transportation time for a replacement unit, and thereby 
-expedite the restoration of the high priority lines.
+routine for simulating component cannibalisation within a facility or
+system has also been incorporated. Here we use cannibalisation to refer
+to an exercise whereby an operator may move an undamaged component from
+a low priority or redundant line to replace a damaged component on a
+high priority line. This exercise may allow the operator to eliminate
+the potentially long procurement or transportation time for a replacement
+unit, and thereby expedite the restoration of the high priority lines.
 
 The outputs from the restoration model are: 
 
-(i)    a simple Gantt chart with each component needing repair,
+(a)  a simple Gantt chart with each component needing repair,
 
-(ii)   restoration plot for each output line over time and the associated
-       percentage of total system capacity rehabilitated, and
+(*)  restoration plot for each output line over time and the associated
+     percentage of total system capacity rehabilitated, and
 
-(iii)  total restoration time for each output line for a given restoration
-       scheme.
+(*)  total restoration time for each output line for a given restoration
+     scheme.
 

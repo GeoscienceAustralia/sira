@@ -1,8 +1,8 @@
 .. _fragility-attribution:
 
-***********************************
-Attributing Fragility to Components
-***********************************
+*******************************
+Component Fragility Attribution
+*******************************
 
 As earthquake induced ground shaking at a facility increases in intensity,
 the individual components respond and sustain progressively more damage.

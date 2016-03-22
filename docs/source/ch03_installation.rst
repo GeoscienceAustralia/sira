@@ -94,24 +94,35 @@ Install these downloaded ``wheels`` with pip::
 
 .. _running-sifra:
 
-Running the Code
-================
+Running the Core SIFRA Code
+===========================
 
 To run the software, follow the following simple steps:
 
-- Open a command terminal
+1.  Open a command terminal
 
-- Change to the directory that has the ``sifra`` code. If the code is in the 
-  directorty ``/Users/personx/sifra``, then run::
+2.  Change to the directory that has the ``sifra`` code. If the code is
+    in the directorty ``/Users/personx/sifra``, then run::
 
     cd ~/sifra/ 
 
-- Run the primary fragility characterisarion module from the command line.
-  We assume that same configuration file is stored in 
-  ``/Users/personx/sifra/simulation_setup/``, and the configuration file is 
-  names ``config_x.conf``::
+3.  Run the primary fragility characterisarion module from the command line.
+    We assume that same configuration file is stored in
+    ``/Users/personx/sifra/simulation_setup/``, and the configuration file
+    is names ``config_x.conf``::
 
     python -m sifra simulation_setup/config_x.conf
+
+The post-processing tools are run as simple python scripts. It should be
+noted, that the post-processing tools depend on the outputs produced by a
+full simulation run that characterises the system fragility. Therefore,
+thea full run of the SIFRA needs to be conducted on the system model of
+interest prior to running the tools for model fitting and scenario and
+restoration analysis tools. They are simply run as::
+
+    cd ~/sifra/sifra/
+    python fit_model.py ../simulation_setup/config_x.conf
+    python scenario_loss_analysis.py ../simulation_setup/config_x.conf
 
 
 Running Code Tests
