@@ -158,12 +158,13 @@ Windows systems that are not based on the NT-platform are not supported. This
 restriction is due to the fact that from version 2.6 onwards Python has not
 supported non-NT Windows platforms.</p>
 <p>You will need to install <code class="docutils literal"><span class="pre">Graphviz</span></code> for the drawing the system diagram
-through networkx and pygraphviz. Please visit: <a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a>
-and download the appropriate version for your operating system. Follow the
-posted download instructions carefully. After installation you may need to
-update the PATH variable with the location of the Graphviz binaries.</p>
+through <cite>networkx</cite> and <cite>pygraphviz</cite> packages. Please visit:
+<a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a> and download the appropriate version for
+your operating system. Follow the posted download instructions carefully.
+After installation you may need to update the PATH variable with the
+location of the Graphviz binaries.</p>
 <p>For windows systems you will need to install Microsoft Visual C++ Compiler
-for Python 2.7: &lt;<a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>&gt;</p>
+for Python 2.7: <a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a></p>
 </div>
 <div class="section" id="setting-up-a-development-environment">
 <span id="setup-dev-environ"></span><h2>3.2 Setting Up a Development Environment<a class="headerlink" href="#setting-up-a-development-environment" title="Permalink to this headline">¶</a></h2>
@@ -202,14 +203,16 @@ activate sifra_env
 </div>
 <p>This will install most requirements except for <code class="docutils literal"><span class="pre">igraph</span></code> and <code class="docutils literal"><span class="pre">pygraphviz</span></code>.
 Compiling these packages under windows can be very challenging. The simplest
-and most reliable options is to download the the appropriate wheels from
+and most reliable option is to download the the appropriate binary
+distribution in the form of <cite>wheels</cite> from
 <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">Christoph Gohlke&#8217;s unofficial page of Windows binaries</a>.</p>
-<p>Download the appropriate <code class="docutils literal"><span class="pre">wheels</span></code> for your Windows platform (32 or 64 bit):</p>
+<p>Download the appropriate <cite>wheels</cite> (*.whl files) of the following packages
+for your Windows platform (32 or 64 bit):</p>
 <ul class="simple">
 <li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph">python-igraph</a></li>
 <li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz">pygraphviz</a>.</li>
 </ul>
-<p>Install the downloaded <code class="docutils literal"><span class="pre">wheels</span></code> (<a href="#id1"><span class="problematic" id="id2">*</span></a>.whl files) with pip:</p>
+<p>Install the downloaded <cite>wheels</cite> (*.whl files) with pip:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install &lt;pkg_name&gt;.whl
 </pre></div>
 </div>

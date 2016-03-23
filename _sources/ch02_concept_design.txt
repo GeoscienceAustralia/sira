@@ -184,13 +184,13 @@ effectively a proxy representing the deployment of trained personnel and
 material for the repair tasks. Additional optional offsets can be factored 
 in to capture specific contexts: 
 
-(a)  *Restoration Offset* – this is a time allowance for assessment of
-     damage to the system and for securing the site to assure it is safe
-     for commencement of repairs;
+a)  *Restoration Offset* – this is a time allowance for assessment of
+    damage to the system and for securing the site to assure it is safe
+    for commencement of repairs;
 
-(b)  *Testing and Commission Interval*: this is a time allowance for testing
-     conformity with operational and safety parameters for the system, or a
-     part thereof.
+b)  *Testing and Commission Interval*: this is a time allowance for testing
+    conformity with operational and safety parameters for the system, or a
+    part thereof.
 
 Given a set of restoration parameters and the restoration plan, the
 consequent restoration time is calculated as follows:
@@ -220,8 +220,8 @@ In order to restore full capacity at an output node, it may be necessary to
 restore more than one path, i.e. connect an output node to multiple input 
 nodes. This can be understood through some simple examples. If the facility 
 in question is a thermal power station, the functioning of the generator 
-depends on both the supply of fuel (as the source of energy to be 
-transformed) and water (for cooling and for steam production to drive the 
+depends on both the supply of fuel (as the source of energy to be
+transformed) and water (for cooling and for steam production to drive the
 turbines). In case of a substation, a certain output node may have a demand 
 of 300MW, but it might be that there are four incoming lines each bringing 
 in bringing in 100MW of electricity from power plants. In this case, the 
@@ -239,11 +239,11 @@ unit, and thereby expedite the restoration of the high priority lines.
 
 The outputs from the restoration model are: 
 
-(a)  a simple Gantt chart with each component needing repair,
+a)  a simple Gantt chart with each component needing repair,
 
-(*)  restoration plot for each output line over time and the associated
-     percentage of total system capacity rehabilitated, and
+b)  restoration plot for each output line over time and the associated
+    percentage of total system capacity rehabilitated, and
 
-(*)  total restoration time for each output line for a given restoration
-     scheme.
+c)  total restoration time for each output line for a given restoration
+    scheme.
 

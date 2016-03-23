@@ -24,14 +24,15 @@ Windows systems that are not based on the NT-platform are not supported. This
 restriction is due to the fact that from version 2.6 onwards Python has not 
 supported non-NT Windows platforms. 
 
-You will need to install ``Graphviz`` for the drawing the system diagram 
-through networkx and pygraphviz. Please visit: `<http://www.graphviz.org/>`_
-and download the appropriate version for your operating system. Follow the 
-posted download instructions carefully. After installation you may need to 
-update the PATH variable with the location of the Graphviz binaries.
+You will need to install ``Graphviz`` for the drawing the system diagram
+through `networkx` and `pygraphviz` packages. Please visit:
+`<http://www.graphviz.org/>`_ and download the appropriate version for
+your operating system. Follow the posted download instructions carefully.
+After installation you may need to update the PATH variable with the
+location of the Graphviz binaries.
 
 For windows systems you will need to install Microsoft Visual C++ Compiler 
-for Python 2.7: <http://aka.ms/vcpython27>
+for Python 2.7: `<http://aka.ms/vcpython27>`_
 
 
 .. _setup-dev-environ:
@@ -78,16 +79,18 @@ exceptions. First run::
 
 This will install most requirements except for ``igraph`` and ``pygraphviz``. 
 Compiling these packages under windows can be very challenging. The simplest 
-and most reliable options is to download the the appropriate wheels from 
+and most reliable option is to download the the appropriate binary
+distribution in the form of `wheels` from
 `Christoph Gohlke's unofficial page of Windows binaries
 <http://www.lfd.uci.edu/~gohlke/pythonlibs/>`_.
 
-Download the appropriate ``wheels`` for your Windows platform (32 or 64 bit):
+Download the appropriate `wheels` (\*.whl files) of the following packages
+for your Windows platform (32 or 64 bit):
 
 - `python-igraph <http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph>`_
 - `pygraphviz <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz>`_.
 
-Install the downloaded ``wheels`` (*.whl files) with pip::
+Install the downloaded `wheels` (\*.whl files) with pip::
 
     pip install <pkg_name>.whl
 
