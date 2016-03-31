@@ -92,7 +92,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: <em>output_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#damage-algorithms-for-component-types-comp-type-dmg-algo">4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
 </ul>
 </li>
@@ -627,7 +627,7 @@ total system cost, with the total cost being 1.0</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This indicates the role of the node (component) within
 network representing the system. For details, see
-<a class="reference external" href="_facility-system-model">Facility System Model</a></td>
+<a class="reference internal" href="ch02_concept_design.html#facility-system-model"><span>Facility System Model</span></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
 Must be one of four values:
@@ -683,16 +683,20 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The node (component) to which the tail of a
-directional edge is connected. For undirected graphs
-the origin/destination designation is immaterial.
-For bidirectional connections, you will need to define
-two edges, e.g. A <span class="math">\(\Rightarrow\)</span> B, and B <span class="math">\(\Rightarrow\)</span> A</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The node (component) to which the tail of a
+directional edge is connected.</p>
+<p>For bidirectional connections, you will need to define
+two edges, e.g. A <span class="math">\(\rightarrow\)</span> B, and B <span class="math">\(\rightarrow\)</span> A.
+For undirected graphs the origin/destination designation
+is immaterial.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String. Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;stack_1&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">&#8216;stack_1&#8217;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -804,15 +808,21 @@ enters the system through this input node.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The type of commodity entering into the system through
-the specified input node.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The type of commodity entering into the system through
+the specified input node.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">For a coal-fired power station there might be two
-commodities, namely coal and water.
-For an electric substation it is electricity.
-For a water treatment plant, it is waster water.</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first">For a coal-fired power station there might be two
+commodities, namely coal and water. So, there will need
+to be at least two input nodes, one with a <cite>commodity_type</cite>
+of &#8216;coal&#8217; and the other with <cite>commodity_type</cite> of &#8216;water&#8217;.</p>
+<p class="last">For an electric substation the <cite>commodity_type</cite> is
+electricity.
+For a water treatment plant, it is waster water.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -827,17 +837,20 @@ For a water treatment plant, it is waster water.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the &#8216;sink&#8217; nodes representing the load or
-the aggregate consumer of the product(s) of the system.
-These are not real components, but a modelling construct.
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">These are the &#8216;sink&#8217; nodes representing the load or
+the aggregate consumer of the product(s) of the system.</p>
+<p>These are not real components, but a modelling construct.
 These nodes are not considered in the fragility
-calculations.</td>
+calculations.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String. Must be one of the entries in the
 <cite>component_id</cite> columns in the <cite>component_list</cite> table,
-and must be of <cite>node_type</cite> sink.</td>
+and must be of <cite>node_type</cite> sink.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;output_1&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">&#8216;output_1&#8217;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -865,14 +878,17 @@ and must be of <cite>node_type</cite> transshipment.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Production capacity that the specific production node
-is responsible for. The unit depends on the
-type of product the system produces
-(e.g. MW for generator plant).</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Production capacity that the specific production node
+is responsible for.</p>
+<p>The unit depends on the type of product the system
+produces (e.g. MW for generator plant).</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">Float</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">300</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">300</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -913,9 +929,9 @@ where <cite>n</cite> is the total number of output nodes</td>
 </dd>
 </dl>
 </div>
-<div class="section" id="damage-algorithms-for-component-types-comp-type-dmg-algo">
-<span id="inputdata-comp-type-dmg-algo"></span><h3>4.2.5 Damage Algorithms for Component Types: <em>comp_type_dmg_algo</em><a class="headerlink" href="#damage-algorithms-for-component-types-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
+<div class="section" id="component-type-damage-algorithms-comp-type-dmg-algo">
+<span id="inputdata-comp-type-dmg-algo"></span><h3>4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em><a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils" id="dmg-algo-component-type">
 <dt><cite>component_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -933,6 +949,8 @@ Avoid using special characters.</td>
 </tbody>
 </table>
 </dd>
+</dl>
+<dl class="docutils" id="dmg-algo-damage-state">
 <dt><cite>damage_state</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -963,13 +981,16 @@ the following damage states are used:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The probability distribution for the damage function.
-Currently only log-normal curves are used, but additional
-distributions can be added as required.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The probability distribution for the damage function.</p>
+<p>Currently only log-normal curves are used, but additional
+distributions can be added as required.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;lognormal&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">&#8216;lognormal&#8217;</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -994,15 +1015,18 @@ Currently can handle only unimodal or bimodal functions.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Median of the damage function.
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Median of the damage function.
 A median will need to be defined for each damage state.
 It should be typically be progressively higher for more
-severe damage states:
-<span class="math">\({\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}\)</span></td>
+severe damage states:</p>
+<p><span class="math">\({\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}\)</span></p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">Float.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.45</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">0.45</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1210,25 +1234,27 @@ by the damage states used to model the fragility of the system components.</p>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
 <dd>The entries here are the same as noted under
-<cite>component_type</cite> in the <span class="xref std std-ref">Componenet Type Damage
-Algorithm table table</span>.</dd>
+<a class="reference internal" href="#dmg-algo-component-type"><span>component_type</span></a> in the
+&#8216;Component Type Damage Algorithms&#8217; table.</dd>
 <dt><cite>damage_state</cite></dt>
 <dd>The entries here are the same as noted under
-<cite>damage_state</cite> in the <span class="xref std std-ref">Component Type Damage
-Algorithm table table</span>.</dd>
+<a class="reference internal" href="#dmg-algo-damage-state"><span>damage_state</span></a> in the
+&#8216;Component Type Damage Algorithms&#8217; table.</dd>
 <dt><cite>damage_state_definitions</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The physical damage descriptors corresponding
-to the damage states.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Free text.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">230 kV Current Transformers would be said to be in
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The physical damage descriptors corresponding
+to the damage states.</p>
+<p>Example:
+230 kV Current Transformers would be said to be in
 <cite>Failure</cite> state if there is
-&#8220;porcelain cracking, or overturning.&#8221;</td>
+&#8220;porcelain cracking, or overturning.&#8221;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Free text.</p>
+</td>
 </tr>
 </tbody>
 </table>

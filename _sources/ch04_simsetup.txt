@@ -329,7 +329,7 @@ The *component_list* has the following parameters:
 `node_type`
   :Description: This indicates the role of the node (component) within
                 network representing the system. For details, see
-                `Facility System Model <_facility-system-model>`_
+                :ref:`Facility System Model <facility-system-model>`.
 
   :Data Type:   String.
                 Must be one of four values:
@@ -368,10 +368,12 @@ Connections between Components: *component_connections*
 
 `origin`
   :Description: The node (component) to which the tail of a
-                directional edge is connected. For undirected graphs
-                the origin/destination designation is immaterial.
+                directional edge is connected.
+
                 For bidirectional connections, you will need to define
-                two edges, e.g. A |rightarrow| B, and B |rightarrow| A
+                two edges, e.g. A |rightarrow| B, and B |rightarrow| A.
+                For undirected graphs the origin/destination designation
+                is immaterial.
 
   :Data Type:   String. Must be one of the entries in the
                 `component_id` columns in the `component_list` table.
@@ -452,8 +454,12 @@ Configuration of Supply Nodes: *supply_setup*
   :Data Type:   String.
 
   :Example:     For a coal-fired power station there might be two
-                commodities, namely coal and water.
-                For an electric substation it is electricity.
+                commodities, namely coal and water. So, there will need
+                to be at least two input nodes, one with a `commodity_type`
+                of 'coal' and the other with `commodity_type` of 'water'.
+
+                For an electric substation the `commodity_type` is
+                electricity.
                 For a water treatment plant, it is waster water.
 
 
@@ -465,6 +471,7 @@ Configuration of Output Nodes: *output_setup*
 `output_node`
   :Description: These are the 'sink' nodes representing the load or
                 the aggregate consumer of the product(s) of the system.
+
                 These are not real components, but a modelling construct.
                 These nodes are not considered in the fragility
                 calculations.
@@ -490,9 +497,10 @@ Configuration of Output Nodes: *output_setup*
 
 `output_node_capacity`
   :Description: Production capacity that the specific production node
-                is responsible for. The unit depends on the
-                type of product the system produces
-                (e.g. MW for generator plant).
+                is responsible for.
+
+                The unit depends on the type of product the system
+                produces (e.g. MW for generator plant).
 
   :Data Type:   Float
 
@@ -523,8 +531,10 @@ Configuration of Output Nodes: *output_setup*
 
 .. _inputdata__comp_type_dmg_algo:
 
-Damage Algorithms for Component Types: *comp_type_dmg_algo*
------------------------------------------------------------
+Component Type Damage Algorithms: *comp_type_dmg_algo*
+------------------------------------------------------
+
+.. _dmg_algo_component_type:
 
 `component_type`
   :Description: The type of component, based on the typology definitions
@@ -536,6 +546,7 @@ Damage Algorithms for Component Types: *comp_type_dmg_algo*
 
   :Example:     'Demineralisation Plant'
 
+.. _dmg_algo_damage_state:
 
 `damage_state`
   :Description: The list of damage states used in defining the
@@ -554,6 +565,7 @@ Damage Algorithms for Component Types: *comp_type_dmg_algo*
 
 `damage_function`
   :Description: The probability distribution for the damage function.
+
                 Currently only log-normal curves are used, but additional
                 distributions can be added as required.
 
@@ -576,6 +588,7 @@ Damage Algorithms for Component Types: *comp_type_dmg_algo*
                 A median will need to be defined for each damage state.
                 It should be typically be progressively higher for more
                 severe damage states:
+
                 :math:`{\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}`
 
   :Data Type:   Float.
@@ -727,23 +740,23 @@ by the damage states used to model the fragility of the system components.
 
 `component_type`
   The entries here are the same as noted under
-  `component_type` in the :ref:`Componenet Type Damage
-  Algorithm table table <input__comp_type_dmg_algo>`.
+  :ref:`component_type <dmg_algo_component_type>` in the
+  'Component Type Damage Algorithms' table.
 
 
 `damage_state`
   The entries here are the same as noted under
-  `damage_state` in the :ref:`Component Type Damage
-  Algorithm table table <input__comp_type_dmg_algo>`.
+  :ref:`damage_state <dmg_algo_damage_state>` in the
+  'Component Type Damage Algorithms' table.
 
 
 `damage_state_definitions`
   :Description: The physical damage descriptors corresponding
                 to the damage states.
 
-  :Data Type:   Free text.
-
-  :Example:     230 kV Current Transformers would be said to be in
+                Example:
+                230 kV Current Transformers would be said to be in
                 `Failure` state if there is
                 "porcelain cracking, or overturning."
 
+  :Data Type:   Free text.
