@@ -228,7 +228,7 @@ description, and representative values.
 
 `MULTIPROCESS`
     :Description:   Switch to indicate whether to use multi-core processing.
-                    0 -> False, 1 -> True
+                    0 |rightarrow| False, 1 |rightarrow| True
 
     :Data Type:     Integer
 
@@ -237,7 +237,8 @@ description, and representative values.
 
 `RUN_CONTEXT`
     :Description:   Switch to indicate whether to run a full simulation,
-                    or run test code. 0 -> run tests, 1 -> normal run.
+                    or run test code.
+                    0 |rightarrow| run tests, 1 |rightarrow| normal run.
 
     :Data Type:     Integer
 
@@ -540,11 +541,12 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
   :Description: The type of component, based on the typology definitions
                 being used in the system model.
 
+                Example: 'Demineralisation Plant'
+
   :Data Type:   Alphanumeric characters.
                 May use dashes '-' or underscores '_'.
                 Avoid using special characters.
 
-  :Example:     'Demineralisation Plant'
 
 .. _dmg_algo_damage_state:
 
@@ -552,15 +554,15 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
   :Description: The list of damage states used in defining the
                 damage scale being modelled within the system.
 
-  :Data Type:   String. Fixed, pre-determined state names.
-
-  :Example:     For a four-state sequential damage scale,
+                Example: For a four-state sequential damage scale,
                 the following damage states are used:
 
                 1. DS1 Slight
                 2. DS2 Moderate
                 3. DS3 Extensive
                 4. DS4 Complete
+
+  :Data Type:   String. Fixed, pre-determined state names.
 
 
 `damage_function`
@@ -569,18 +571,18 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
                 Currently only log-normal curves are used, but additional
                 distributions can be added as required.
 
-  :Data Type:   String.
+                Example: 'lognormal'
 
-  :Example:     'lognormal'
+  :Data Type:   String.
 
 
 `mode`
   :Description: Number indicating the mode of the function.
                 Currently can handle only unimodal or bimodal functions.
 
-  :Data Type:   Integer [1,2]
+                Default value is 1.
 
-  :Example:     1
+  :Data Type:   Integer [1,2]
 
 
 `damage_median`
@@ -593,8 +595,6 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
   :Data Type:   Float.
 
-  :Example:     0.45
-
 
 `damage_logstd`
   :Description: Standard deviation of the damage function.
@@ -604,13 +604,14 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
   :Data Type:   Float.
 
-  :Example:     0.20
-
 
 `damage_ratio`
   :Description: The fractional loss of a component's value for damage
                 sustained at a given damage state. This parameter links
                 a damage state to expected direct loss of component value.
+
+                Example:
+                Damage ratio of 0.30 for damage state "DS2 Moderate"
 
   :Data Type:   Float.
                 :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x\}}`.
@@ -621,14 +622,19 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
                 component and additional cost of removal, disposal, or
                 securing or destroyed component.
 
-  :Example:     Damage ratio of 0.30 for damage state "DS2 Moderate"
-
 
 `functionality`
   :Description: An unitless fractional value indicating the functional
                 capacity of a component for a given damage state.
                 This parameter links damage states to expected
                 post-impact residual functionality of the component.
+
+                Example:
+                A stack of a thermal power station is expected to remain
+                fully functional (functionality==1), under 'Slight'
+                damage state, i.e. under conditions of minor damage to
+                structure with deformation of holding down bolts and with
+                some bracing connections.
 
   :Data Type:   Float.
                 :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}`.
@@ -639,43 +645,34 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
                 component and additional cost of removal, disposal, or
                 securing or destroyed component.
 
-  :Example:     A stack of a thermal power station is expected to remain
-                fully functional (functionality==1), under 'Slight'
-                damage state, i.e. under conditions of minor damage to
-                structure with deformation of holding down bolts and with
-                some bracing connections.
-
 
 `minimum`
   :Description: Minimum value for which the damage algorithm is
                 applicable.
 
-  :Data Type:   Float.
-
-  :Example:     The algorithms presented by Anagnos :cite:`Anagnos1999`
+                Example:
+                The algorithms presented by Anagnos :cite:`Anagnos1999`
                 for 500kV circuit breakers are only applicable for
                 PGA values of 0.15g and above, for the various noted
                 failure modes.
+
+  :Data Type:   Float.
 
 
 `sigma_1`
   :Description: The first standard deviation for a bimodal
                 damage function.
 
-  :Data Type:   Float, for a bimodal function. However, for
+  :Data Type:   Float, for a bimodal function. For
                 single mode functions, use 'NA'.
-
-  :Example:     _
 
 
 `sigma_2`
   :Description: The second standard deviation for a bimodal
                 damage function.
 
-  :Data Type:   Float, for a bimodal function. However, for
+  :Data Type:   Float, for a bimodal function. For
                 single mode functions, use 'NA'.
-
-  :Example:     _
 
 
 `recovery_mean`
@@ -685,8 +682,6 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
   :Data Type:   Float.
 
-  :Example:     _
-
 
 `recovery_std`
   :Description: The standard deviation of the recovery function.
@@ -694,8 +689,6 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
                 to follow the normal distribution.
 
   :Data Type:   Float.
-
-  :Example:     _
 
 
 `recovery_95percentile`
@@ -717,16 +710,12 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
   :Data Type:   Float
 
-  :Example:     _
-
 
 `fragility_source`
   :Description: Which source the fragility algorithm was adopted from,
                 how it was adapted, or how it was developed.
 
   :Data Type:   Free text
-
-  :Example:     _
 
 
 .. _inputdata__damage_state_def:
