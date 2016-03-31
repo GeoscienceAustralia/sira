@@ -32,7 +32,9 @@
 
 .. |WhtSquare| unicode:: 0x25A1 .. White square
 
-.. |rightarrow| replace:: :math:`\Rightarrow`
+.. |rightarrow| replace:: :math:`\rightarrow`
+
+.. |doublerightarrow| replace:: :math:`\Rightarrow`
 
 .. === GREEK SMALL LETTERS ====================================================
 
