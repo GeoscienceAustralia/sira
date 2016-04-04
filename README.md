@@ -1,3 +1,7 @@
+See the full documentation here:
+<http://geoscienceaustralia.github.io/sifra/index.html>
+
+
 Overview
 ==========
 SIFRA stands for **System for Infrastructure Facility Resilience
