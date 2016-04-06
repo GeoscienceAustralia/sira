@@ -2,10 +2,9 @@ See the full documentation here:
 <http://geoscienceaustralia.github.io/sifra/index.html>
 
 
-Overview
-==========
-SIFRA stands for **System for Infrastructure Facility Resilience
-Analysis**.
+What is it
+===========
+SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 SIFRA comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
@@ -33,7 +32,7 @@ The following are some key features of this tool:
 
 
 Setup Instructions
-=======================
+===================
 It is good practice to set up a virtual environment for working with
 developing code. This gives us the tools to manage the package
 dependencies and requirements in a transparent manner, and impact of
@@ -109,8 +108,8 @@ Install these downloaded ``wheels`` with pip:
     pip install <pkg_name>.whl
 
 
-Running SIFRA
-----------------
+Running the Code
+-----------------
 *For the purposes of this discussion, we will assume that this
 repository has been cloned in the user's home directory.*
 
@@ -138,8 +137,8 @@ and generate the component criticality plot, run the command:
     python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
 
 
-Running Code Tests
---------------------
+Running the Tests
+------------------
 To run tests use either ``nose`` or ``unittest``.
 Example (from the first level 'sifra' directory):
 
