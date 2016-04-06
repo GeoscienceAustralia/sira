@@ -100,19 +100,21 @@ Install the downloaded `wheels` (\*.whl files) with pip::
 Running the Core SIFRA Code
 ===========================
 
-To run the software, follow the following simple steps:
+For the purposes of discussion, it is assumed that the name of the
+configuration file is ``config_x.conf``, and it is located in the
+directory ``/Users/user_x/sifra/simulation_setup/``.
+
+The software can be run from the command line using these simple steps::
 
 1.  Open a command terminal
 
 2.  Change to the directory that has the ``sifra`` code. If the code is
-    in the directorty ``/Users/personx/sifra``, then run::
+    in the directorty ``/Users/user_x/sifra``, then run::
 
         cd ~/sifra/
 
-3.  Run the primary fragility characterisarion module from the command line.
-    We assume that same configuration file is stored in
-    ``/Users/personx/sifra/simulation_setup/``, and the configuration file
-    is names ``config_x.conf``::
+3.  Run the primary fragility characterisation module from the command line.
+    ::
 
         python -m sifra simulation_setup/config_x.conf
 
