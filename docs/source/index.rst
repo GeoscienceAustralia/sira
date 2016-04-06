@@ -8,8 +8,7 @@ Welcome to SIFRA documentation
 
 :Release: |release|
 
-SIFRA stands for **System for Infrastructure Facility Resilience
-Analysis**.
+SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 SIFRA comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
