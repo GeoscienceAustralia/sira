@@ -104,7 +104,7 @@ For the purposes of discussion, it is assumed that the name of the
 configuration file is ``config_x.conf``, and it is located in the
 directory ``/Users/user_x/sifra/simulation_setup/``.
 
-The software can be run from the command line using these simple steps::
+The software can be run from the command line using these simple steps:
 
 1.  Open a command terminal
 
@@ -113,8 +113,8 @@ The software can be run from the command line using these simple steps::
 
         cd ~/sifra/
 
-3.  Run the primary fragility characterisation module from the command line.
-    ::
+3.  Run the primary fragility characterisation module from the command
+    line::
 
         python -m sifra simulation_setup/config_x.conf
 
