@@ -69,7 +69,7 @@ illustrates this concept for a thermal power station.
    :align: center
    :width: 98%
    
-   Figure 2.1  Schematic representation of a coal-fired power station
+   Schematic representation of a coal-fired power station
 
 The 'edges', or inter-nodal connections, represent a link or a process for 
 maintaining 'flow' of goods or services within the system, and thus their 
@@ -110,7 +110,7 @@ range of PGA values. This Process is shown in Figure 2.2.
    :align: center
    :width: 98%
 
-   Figure 2.2  Schematic of process linking component damage assessment to
+   Schematic of process linking component damage assessment to
    loss projection
 
 Four discrete sequential damage states are used for assessing system 
