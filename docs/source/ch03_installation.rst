@@ -24,12 +24,12 @@ Windows systems that are not based on the NT-platform are not supported. This
 restriction is due to the fact that from version 2.6 onwards Python has not 
 supported non-NT Windows platforms. 
 
-You will need to install ``Graphviz`` for the drawing the system diagram
-through `networkx` and `pygraphviz` packages. Please visit:
-`<http://www.graphviz.org/>`_ and download the appropriate version for
-your operating system. Follow the posted download instructions carefully.
-After installation you may need to update the PATH variable with the
-location of the Graphviz binaries.
+You will need to install `Graphviz`, which is used by
+`networkx` and `pygraphviz` packages to draw the system diagram.
+Please visit: `<http://www.graphviz.org/>`_ and download the appropriate
+version for your operating system. Follow the posted download instructions
+carefully. After installation you may need to update the PATH variable
+with the location of the Graphviz binaries.
 
 For windows systems you will need to install Microsoft Visual C++ Compiler 
 for Python 2.7: `<http://aka.ms/vcpython27>`_
