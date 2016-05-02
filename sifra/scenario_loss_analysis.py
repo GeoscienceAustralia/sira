@@ -629,8 +629,8 @@ def component_criticality(facility, scenario,
     ax.text(1.05, 0.995, 
             'Facility:  '+facility.system_class+'\n'+
                 'Hazard:  '+'Earthquake '+
-                sc_haz_val_str+scenario.hazard_transfer_unit+' '+
-                scenario.hazard_transfer_param,
+                sc_haz_val_str+scenario.intensity_measure_unit+' '+
+                scenario.intensity_measure_param,
             ha = 'left', va = 'top', rotation=0,
             fontsize=11, clip_on=False, transform=ax.transAxes)
     
@@ -749,7 +749,7 @@ def draw_component_loss_barchart_v1(scenario,
 
     ax1.annotate('HAZARD EVENT\n' +
                  'Earthquake\n' +
-                 sc_haz_val_str + ' ' + scenario.hazard_transfer_param,
+                 sc_haz_val_str + ' ' + scenario.intensity_measure_param,
                  xy=(1.0 + subplot_spacing/2.0, -1.25),
                  xycoords=('axes fraction', 'data'),
                  ha='center', va='center', size=12,
@@ -838,7 +838,7 @@ def draw_component_loss_barchart_v2(scenario,
         annotation_clip=False);
     axes.annotate(
         'Hazard Event: Earthquake ' + sc_haz_val_str + ' ' +
-            scenario.hazard_transfer_param,
+            scenario.intensity_measure_param,
         xy=(0.0, -1.1), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
         fontname='Open Sans', size=12, color='grey', weight='bold',
@@ -911,7 +911,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
                 ha='left', va='top', annotation_clip=False,
                 fontname='Open Sans', size=12, weight='bold', color='k');
     ax.annotate('Hazard Event: Earthquake ' + sc_haz_val_str + ' ' +
-                    scenario.hazard_transfer_param,
+                    scenario.intensity_measure_param,
                 xy=(0.0, -0.8), xycoords=('axes fraction', 'data'),
                 ha='left', va='top', annotation_clip=False,
                 fontname='Open Sans', size=12, weight='bold',
