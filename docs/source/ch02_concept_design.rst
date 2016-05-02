@@ -33,7 +33,7 @@ the definition of subsystems and systems as defined in
 represented as nodes. Based on their role within the system, these nodes,
 or components, are classified in four categories:
 
-1. *Supply nodes*: These nodes represent thr entry points into the system 
+1. *Supply nodes*: These nodes represent the entry points into the system
    for required inputs or commodities. As for example, coal and water can
    be the required ‘commodities’ into a thermal power station. In the case
    of the substation, required input is electricity from power stations or
