@@ -49,7 +49,7 @@ The simulation 'scenario' definition file is located in the following directory
 The following table lists the parameters in the config file, their
 description, and representative values.
 
-`HAZARD_TRANSFER_PARAM`
+`INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
 
     :Data Type:     String
@@ -57,7 +57,7 @@ description, and representative values.
     :Example:       'PGA'
 
 
-`HAZARD_TRANSFER_UNIT`
+`INTENSITY_MEASURE_UNIT`
     :Description:   Demand Parameter Unit
 
     :Data Type:     String
