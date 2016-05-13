@@ -30,6 +30,7 @@ A tool for seismic performance analysis of infrastructure facilities
 
 from __future__ import print_function
 import os
+import sys
 import cPickle
 import zipfile
 
@@ -37,7 +38,12 @@ import numpy as np
 import scipy.stats as stats
 import pandas as pd
 import parmap
+
+import matplotlib.pyplot as plt
+import seaborn as sns
 from colorama import Fore
+
+from sifraclasses import Scenario, Facility, PowerStation
 
 SETUPFILE = None
 
@@ -163,12 +169,13 @@ def pe2pb(pe):
 # ============================================================================
 
 
-def power_calc(fc, sc):
+def calc_sys_output(fc, sc):
     """
     Power output and economic loss calculations for each component
-    fc: Facility object, from sifraclasses
-    sc: Scenario object, from sifraclasses
-    :returns:
+    :param fc: Facility object, from sifraclasses
+    :param sc: Scenario object, from sifraclasses
+    :return:
+        component_resp_df
         pandas dataframe with following values for each system component
         - mean of simulated loss
         - standard deviation of simulated loss
@@ -336,7 +343,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
 # ============================================================================
 
 
-def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
+def calc_loss_arrays(fc, sc, component_resp_df, parallel_proc):
 
     # print("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
@@ -351,7 +358,7 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
         (sc.num_samples, sc.num_hazard_pts, sc.num_time_steps)
     )
 
-    if parallel_or_serial:
+    if parallel_proc:
         print('\nInitiating computation of loss arrays...')
         print(Fore.YELLOW + 'using parallel processing\n' + Fore.RESET)
         parallel_return = parmap.map(
@@ -392,6 +399,34 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_or_serial):
 # ****************************************************************************
 # BEGIN POST-PROCESSING ...
 # ****************************************************************************
+
+
+def plot_mean_econ_loss(fc, sc, economic_loss_array):
+    """Draws and saves a boxplot of mean economic loss"""
+
+    fig = plt.figure(figsize=(9, 5), facecolor='white')
+    sns.set(style='ticks', palette='Set3')
+    ax = sns.boxplot(economic_loss_array*100, showmeans=True,
+                     widths=0.3, linewidth=0.7, color='lightgrey',
+                     meanprops=dict(marker='s',
+                                    markeredgecolor='salmon',
+                                    markerfacecolor='salmon')
+                    )
+    sns.despine(top=True, left=True, right=True)
+    ax.tick_params(axis='y', left='off', right='off')
+    ax.yaxis.grid(True)
+
+    intensity_label = sc.intensity_measure_param+' ('\
+                      +sc.intensity_measure_unit+')'
+    ax.set_xlabel(intensity_label)
+    ax.set_ylabel('Loss Fraction (%)')
+    ax.set_xticklabels(sc.hazard_intensity_vals);
+    ax.set_title('Loss Ratio', loc='center', y=1.04);
+    ax.title.set_fontsize(12)
+
+    figfile = os.path.join(sc.output_path, 'fig_lossratio_boxplot.png')
+    plt.savefig(figfile, format='png', bbox_inches='tight', dpi=300)
+    plt.close(fig)
 
 
 def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
@@ -500,6 +535,8 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
     for k, v in fc.compdict['component_class'].iteritems():
         cp_class_map[v].append(k)
 
+    # ------------------------------------------------------------------------
+
     if fc.system_class == 'Substation':
         uncosted_classes = ['JUNCTION POINT',
                             'SYSTEM INPUT', 'SYSTEM OUTPUT',
@@ -575,6 +612,7 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
 
     # ------------------------------------------------------------------------
     # Validate damage ratio of the system
+    # ------------------------------------------------------------------------
 
     exp_damage_ratio = np.zeros((len(fc.network.nodes_all),
                                  sc.num_hazard_pts))
@@ -736,5 +774,45 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
     print("\nOutputs saved in: " +
           Fore.GREEN + sc.output_path + Fore.RESET + '\n')
 
+    plot_mean_econ_loss(fc, sc, economic_loss_array)
+
 # ... END POST-PROCESSING
 # ****************************************************************************
+
+def main():
+
+    SETUPFILE = sys.argv[1]
+    discard = {}
+    config = {}
+
+    exec (open(SETUPFILE).read(), discard, config)
+    FacilityObj = eval(config["SYSTEM_CLASS"])
+    sc = Scenario(SETUPFILE)
+    fc = FacilityObj(SETUPFILE)
+
+    # Define input files, output location, scenario inputs
+    SYS_CONFIG_FILE = os.path.join(sc.input_path, fc.sys_config_file_name)
+
+    if not os.path.exists(sc.output_path):
+        os.makedirs(sc.output_path)
+
+    component_resp_df = calc_sys_output(fc, sc)
+
+    ids_comp_vs_haz, sys_output_dict, \
+    component_resp_dict, calculated_output_array, \
+    economic_loss_array, output_array_given_recovery \
+        = calc_loss_arrays(fc, sc,
+                           component_resp_df,
+                           parallel_proc=sc.run_parallel_proc)
+
+    post_processing(fc, sc,
+                    ids_comp_vs_haz,
+                    sys_output_dict,
+                    component_resp_dict,
+                    calculated_output_array,
+                    economic_loss_array,
+                    output_array_given_recovery)
+
+
+if __name__ == '__main__':
+    main()

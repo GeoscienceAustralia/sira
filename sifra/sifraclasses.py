@@ -406,7 +406,7 @@ class ScenarioDataGetter(object):
         self.haz_param_step = self.setup["PGA_STEP"]
         self.num_samples = self.setup["NUM_SAMPLES"]
         self.time_unit = self.setup["TIME_UNIT"]
-        self.parallel_or_serial = self.setup["MULTIPROCESS"]
+        self.run_parallel_proc = self.setup["MULTIPROCESS"]
         self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
         self.run_context = self.setup["RUN_CONTEXT"]
         self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
