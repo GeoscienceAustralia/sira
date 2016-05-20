@@ -10,6 +10,7 @@ Glossary
         "a system used for putting things into groups according to how they
         are similar : the study of how things can be divided into different
         types".
+        
         http://www.merriam-webster.com/dictionary/typology
 
 
