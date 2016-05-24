@@ -9,8 +9,7 @@ Glossary
     typology
         "a system used for putting things into groups according to how they
         are similar : the study of how things can be divided into different
-        types".
-        
+        types". |br|
         http://www.merriam-webster.com/dictionary/typology
 
 
@@ -20,8 +19,7 @@ Glossary
         if destroyed, degraded or rendered unavailable for an extended period,
         would significantly impact on the social or economic wellbeing of the
         nation or affect Australia’s ability to conduct national defence and
-        ensure national security.”
-
+        ensure national security.” |br|
         *Critical Infrastructure Resilience Strategy, pg 8,
         Attorney General’s Department, Commonwealth of Australia.
         Published: 2010*
