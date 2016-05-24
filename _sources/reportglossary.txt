@@ -7,10 +7,10 @@ Glossary
     :sorted:
 
     typology
-        "a system used for putting things into groups according to how they
+        "[A] system used for putting things into groups according to how they
         are similar : the study of how things can be divided into different
         types". |br|
-        http://www.merriam-webster.com/dictionary/typology
+        *http://www.merriam-webster.com/dictionary/typology *
 
 
     critical infrastructure
@@ -20,9 +20,9 @@ Glossary
         would significantly impact on the social or economic wellbeing of the
         nation or affect Australia’s ability to conduct national defence and
         ensure national security.” |br|
-        *Critical Infrastructure Resilience Strategy, pg 8,
-        Attorney General’s Department, Commonwealth of Australia.
-        Published: 2010*
+        Attorney General’s Department, Commonwealth of Australia (2015).
+        *Critical Infrastructure Resilience Strategy: Policy Statement*, pg 3.
+        URL: http://www.tisn.gov.au/Pages/default.aspx
 
 
     facility
