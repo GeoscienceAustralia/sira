@@ -796,6 +796,7 @@ def main():
     if not os.path.exists(sc.output_path):
         os.makedirs(sc.output_path)
 
+    # Component Response DataFrame
     component_resp_df = calc_sys_output(fc, sc)
 
     ids_comp_vs_haz, sys_output_dict, \
