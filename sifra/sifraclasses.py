@@ -197,10 +197,15 @@ class Network(object):
             sys.add_edge(row['origin'], row['destination'],
                        capacity=row['link_capacity'],
                        weight=row['weight'])
-        systemlayout.draw_sys_layout(
-            sys, comp_df, out_dir=facility.output_path,
-            graph_label="System Component Layout"
-        )
+            if facility.system_class.lower() in ['wwtp', 'pwtp', 'wtp']:
+                systemlayout.draw_wtp_layout(
+                    sys, comp_df, out_dir=facility.output_path,
+                    graph_label="Water Treatment Plant Component Layout")
+            else:
+                systemlayout.draw_sys_layout(
+                sys, comp_df, out_dir=facility.output_path,
+                graph_label="System Component Layout")
+
         # ---------------------------------------------------------------------
         # List of tagged nodes with special roles:
         sup_node_list = [str(k) for k in
@@ -642,5 +647,28 @@ class PowerStation(Facility):
         elif generation_tech.lower() == 'combined cycle':
             self.dmg_scale_criteria = 'Economic Loss'
             self.dmg_scale_bounds = [0.01, 0.15, 0.4, 0.8, 1.0]
+
+# =============================================================================
+
+class PotableWaterTreatmentPlant(Facility):
+    """
+    Defines specific attributes of a potable water treatment plant,
+    customising the Critical Infrastructure Facility class
+    """
+
+    def __init__(self, setup_file):
+        super(PotableWaterTreatmentPlant, self).__init__(setup_file)
+
+        self.asset_type = "Potable Water Treatment Plant"
+        self.name = ''
+
+        self.sys_dmg_states = ['DS0 None',
+                               'DS1 Slight',
+                               'DS2 Moderate',
+                               'DS3 Extensive',
+                               'DS4 Complete']
+
+        self.dmg_scale_criteria = 'Economic Loss'
+        self.dmg_scale_bounds = [0.10, 0.30, 0.50, 0.75, 1.00]
 
 # =============================================================================
