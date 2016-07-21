@@ -2,7 +2,7 @@
 __author__ = 'Sudipta Basak'
 
 import sys, os
-from sifraclasses import Scenario, Facility, PowerStation
+from sifraclasses import Scenario, PowerStation, PotableWaterTreatmentPlant
 from sifra import calc_sys_output, calc_loss_arrays, post_processing
 
 
