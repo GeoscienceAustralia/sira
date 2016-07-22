@@ -43,7 +43,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from colorama import Fore
 
-from sifraclasses import Scenario, Facility, PowerStation
+from sifraclasses import Scenario, PowerStation, PotableWaterTreatmentPlant
 
 SETUPFILE = None
 
@@ -406,12 +406,18 @@ def plot_mean_econ_loss(fc, sc, economic_loss_array):
 
     fig = plt.figure(figsize=(9, 5), facecolor='white')
     sns.set(style='ticks', palette='Set3')
-    ax = sns.boxplot(economic_loss_array*100, showmeans=True,
-                     widths=0.3, linewidth=0.7, color='lightgrey',
+    # ax = sns.boxplot(economic_loss_array*100, showmeans=True,
+    #                  widths=0.3, linewidth=0.7, color='lightgrey',
+    #                  meanprops=dict(marker='s',
+    #                                 markeredgecolor='salmon',
+    #                                 markerfacecolor='salmon')
+    #                 )
+    ax = sns.boxplot(economic_loss_array * 100, showmeans=True,
+                     linewidth=0.7, color='lightgrey',
                      meanprops=dict(marker='s',
                                     markeredgecolor='salmon',
                                     markerfacecolor='salmon')
-                    )
+                     )
     sns.despine(top=True, left=True, right=True)
     ax.tick_params(axis='y', left='off', right='off')
     ax.yaxis.grid(True)

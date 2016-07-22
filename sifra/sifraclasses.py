@@ -197,14 +197,15 @@ class Network(object):
             sys.add_edge(row['origin'], row['destination'],
                        capacity=row['link_capacity'],
                        weight=row['weight'])
-            if facility.system_class.lower() in ['wwtp', 'pwtp', 'wtp']:
-                systemlayout.draw_wtp_layout(
-                    sys, comp_df, out_dir=facility.output_path,
-                    graph_label="Water Treatment Plant Component Layout")
-            else:
-                systemlayout.draw_sys_layout(
+
+        if facility.system_class.lower() in ['wwtp', 'pwtp', 'wtp']:
+            systemlayout.draw_wtp_layout(
                 sys, comp_df, out_dir=facility.output_path,
-                graph_label="System Component Layout")
+                graph_label="Water Treatment Plant Component Layout")
+        else:
+            systemlayout.draw_sys_layout(
+            sys, comp_df, out_dir=facility.output_path,
+            graph_label="System Component Layout")
 
         # ---------------------------------------------------------------------
         # List of tagged nodes with special roles:
