@@ -198,14 +198,14 @@ class Network(object):
                        capacity=row['link_capacity'],
                        weight=row['weight'])
 
-        if facility.system_class.lower() in ['wwtp', 'pwtp', 'wtp']:
+        if facility.system_class.lower() in ['potablewatertreatmentplant']:
             systemlayout.draw_wtp_layout(
                 sys, comp_df, out_dir=facility.output_path,
                 graph_label="Water Treatment Plant Component Layout")
         else:
             systemlayout.draw_sys_layout(
-            sys, comp_df, out_dir=facility.output_path,
-            graph_label="System Component Layout")
+                sys, comp_df, out_dir=facility.output_path,
+                graph_label="System Component Layout")
 
         # ---------------------------------------------------------------------
         # List of tagged nodes with special roles:
@@ -377,23 +377,23 @@ class Facility(FacilityDataGetter, IoDataGetter):
         comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
         return cp_types_costed, cpmap, costed_comptypes, comps_costed
 
-    def draw_layout(self):
-        """
-        Generate a diagram with the graph layout representing
-        the system configuration
-        The directed graph is generated with NetworkX
-        """
-        out_dir = self.output_path
-        grx = nx.DiGraph()
-        for _, row in self.node_conn_df.iterrows():
-            grx.add_edge(row['origin'], row['destination'],
-                         capacity=row['link_capacity'],
-                         weight=row['weight'])
-        systemlayout.draw_sys_layout(
-            grx, self.comp_df,
-            out_dir=out_dir,
-            out_file="system_layout",
-            graph_label="System Component Layout")
+    # def draw_layout(self, facility):
+    #     """
+    #     Generate a diagram with the graph layout representing
+    #     the system configuration
+    #     The directed graph is generated with NetworkX
+    #     """
+    #     out_dir = self.output_path
+    #     grx = nx.DiGraph()
+    #     for _, row in self.node_conn_df.iterrows():
+    #         grx.add_edge(row['origin'], row['destination'],
+    #                      capacity=row['link_capacity'],
+    #                      weight=row['weight'])
+    #     systemlayout.draw_sys_layout(
+    #         grx, self.comp_df,
+    #         out_dir=out_dir,
+    #         out_file="system_layout",
+    #         graph_label="System Component Layout")
 
 
 class ScenarioDataGetter(object):
