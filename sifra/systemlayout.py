@@ -1,7 +1,8 @@
+from __future__ import print_function
 import os
+import sys
 import networkx as nx
 import pandas as pd
-
 
 # ------------------------------------------------------------------------------
 
@@ -13,7 +14,7 @@ def msplit(string, delims):
     return s
 
 
-def segment_long_labels(string, chars=6, delims=[]):
+def segment_long_labels(string, chars=7, delims=[]):
     if (not delims) or \
             (len(string) > chars and len(string.split(delims[0])[0]) > 8):
         return '\n'.join(
@@ -28,6 +29,8 @@ def segment_long_labels(string, chars=6, delims=[]):
 
 def draw_sys_layout(G, comp_df, out_dir="", out_file="system_layout",
                     graph_label="System Layout"):
+    """Draws the component configuration for a general infrastructure system."""
+
     # --- Set up output file names & location ---
     if not out_dir.strip():
         output_path = os.getcwd()
@@ -40,7 +43,7 @@ def draw_sys_layout(G, comp_df, out_dir="", out_file="system_layout",
 
     # --- Draw graph using pygraphviz ---
 
-    A = nx.to_agraph(G)
+    A = nx.nx_agraph.to_agraph(G)
 
     A.graph_attr.update(resolution=300,
                         size="10.25,7.75",
@@ -92,6 +95,7 @@ def draw_sys_layout(G, comp_df, out_dir="", out_file="system_layout",
         if str(comp_df.ix[node]['node_type']) == 'sink':
             A.get_node(node).attr['shape'] = 'doublecircle'
             A.get_node(node).attr['rank'] = 'sink'
+            A.get_node(node).attr['penwidth'] = 2.0
 
         if str(comp_df.ix[node]['node_type']) == 'dependency':
             A.get_node(node).attr.update(
@@ -110,12 +114,15 @@ def draw_sys_layout(G, comp_df, out_dir="", out_file="system_layout",
     A.draw(sys_config_img, format='png', prog='dot')
 
 
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 
 def draw_wtp_layout(G, comp_df, out_dir="", out_file="system_layout",
                     graph_label="System Layout"):
-    """Draws the component configutaion for water treatment plants."""
-    # --- Set up output file names & location ---
+    """Draws the component configuration for water treatment plants."""
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Set up output file names & location
+
     if not out_dir.strip():
         output_path = os.getcwd()
     else:
@@ -125,22 +132,23 @@ def draw_wtp_layout(G, comp_df, out_dir="", out_file="system_layout",
     sys_config_dot = os.path.join(output_path, fn + '.dot')
     sys_config_img = os.path.join(output_path, fn + '.png')
 
-    # --- Draw graph using pygraphviz ---
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Draw graph using pygraphviz, and define general node & edge attributes
 
-    A = nx.to_agraph(G)
+    A = nx.nx_agraph.to_agraph(G)
 
-    A.graph_attr.update(resolution=300,
-                        # size="10.25,7.75",
+    A.graph_attr.update(resolution=200,
                         directed=True,
                         labelloc="t",
                         label=graph_label,
                         rankdir="TB",
-                        splines="spline",
+                        ranksep=1,
+                        splines="ortho",
                         center="true",
                         forcelabels="true",
                         fontname="Helvetica-Bold",
                         fontcolor="#444444",
-                        fontsize=18)
+                        fontsize=24)
 
     A.node_attr.update(shape="circle",
                        style="rounded,filled",
@@ -148,58 +156,106 @@ def draw_wtp_layout(G, comp_df, out_dir="", out_file="system_layout",
                        width=1.4,
                        height=1.4,
                        xlp="0, 0",
-                       color="royalblue2",
+                       color="gray14",
                        fillcolor="white",
-                       fontcolor="royalblue3",
-                       penwidth=1.0,
+                       fontcolor="gray14",
+                       penwidth=1.5,
                        fontname="Helvetica-Bold",
-                       fontsize=14)
+                       fontsize=17)
 
     A.edge_attr.update(arrowhead="normal",
                        arrowsize="1.0",
-                       color="royalblue2",
+                       color="gray12",
                        penwidth=1.0)
 
-    # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Customise nodes based on node type or defined clusters
 
     for node in comp_df.index.values.tolist():
 
         label_mod = segment_long_labels(node, delims=['_', ' '])
         A.get_node(node).attr['label'] = label_mod
 
-        if str(comp_df.ix[node]['node_type']) == 'supply':
+        if str(comp_df.ix[node]['node_cluster']) == 'Water Supply':
             A.get_node(node).attr.update(
-                label="",
-                xlabel=label_mod,
-                shape='point',
-                height=0.4,
-                style='filled',
-                fillcolor="royalblue2"
+                shape="rect",
+                style="rounded,filled",
+                fixedsize="true",
+                height=1.0,
+                width=2.4,
+                color="royalblue1",
+                fillcolor="royalblue1",
+                fontcolor="white"
+            )
+
+        if str(comp_df.ix[node]['node_cluster']) == 'Power Supply':
+            A.get_node(node).attr['label'] = \
+                segment_long_labels(node, chars=10, delims=['_', ' '])
+            A.get_node(node).attr.update(
+                shape="rect",
+                style="rounded,filled",
+                fixedsize="true",
+                height=1.0,
+                width=2.4,
+                color="indianred",
+                fillcolor="indianred",
+                fontcolor="white"
             )
 
         if str(comp_df.ix[node]['node_type']) == 'sink':
-            A.get_node(node).attr['shape'] = 'doublecircle'
-            A.get_node(node).attr['rank'] = 'sink'
+            A.get_node(node).attr.update(
+                shape="doublecircle",
+                rank="sink",
+                penwidth=2.0,
+                color="royalblue2",
+                fillcolor="white",
+                fontcolor="royalblue3"
+            )
 
         if str(comp_df.ix[node]['node_type']) == 'dependency':
             A.get_node(node).attr.update(
                 shape="circle",
-                penwidth=2.0,
-                color="Orchid",
-                fontcolor="Orchid"
+                penwidth=3.5,
+                color="maroon",
+                fillcolor="white",
+                fontcolor="maroon"
             )
 
     for cluster in pd.unique(comp_df['node_cluster'].values):
         grp = comp_df[comp_df['node_cluster'] == cluster].index.values.tolist()
-        A.add_subgraph(grp, rank='same')
+        A.add_subgraph(grp, rank='same', rankdir='LR')
 
-    # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     A.write(sys_config_dot)
     A.draw(sys_config_img, format='png', prog='dot')
 
+# -----------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------
+def main():
+
+    from sifraclasses import Scenario, PowerStation, PotableWaterTreatmentPlant
+
+    SETUPFILE = sys.argv[1]
+    discard = {}
+    config = {}
+
+    exec (open(SETUPFILE).read(), discard, config)
+
+    print("Setting up objects...")
+    FacilityObj = eval(config["SYSTEM_CLASS"])
+    sc = Scenario(SETUPFILE)
+    fc = FacilityObj(SETUPFILE)
+    # Define input files, output location, scenario inputs
+    SYS_CONFIG_FILE = os.path.join(sc.input_path, fc.sys_config_file_name)
+
+    print("Initiating drawing network model schematic...")
+    fc.network.network_setup(fc)
+    print("Drawing complete.\n")
+
+if __name__=="__main__":
+    main()
+
 
 '''
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
