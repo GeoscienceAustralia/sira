@@ -238,7 +238,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
 
     # ----- Write fitted model params to file -----
     sys_dmg_model.to_csv(os.path.join(out_path,
-                                      'Model_System_Fragility.csv'), sep=',')
+                                      'system_model_fragility.csv'), sep=',')
 
     # ----- Plot the simulation data -----
     fontP = FontProperties()
@@ -518,7 +518,7 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
     #     lmfit.printfuncs.report_ci(sys_rst_ci[dx])
 
     sys_rst_mdl_mode1.to_csv(os.path.join(out_path,
-                                          'Model_System_Restoration__mode1.csv'),
+                                          'system_model_restoration__mode1.csv'),
                              sep=',')
 
     fig = plt.figure(figsize=(9, 4.5), facecolor='white')
@@ -634,7 +634,7 @@ def fit_restoration_data_multimode(RESTORATION_TIME_RANGE,
                                    sys_mix_fit[dx].chisqr
 
     sys_rst_mdl_mode2.to_csv(os.path.join(sc.output_path,
-                                          'Model_System_Restoration__mode2.csv'),
+                                          'system_model_restoration__mode2.csv'),
                              sep=',')
 
     print("\n\n" + "-" * 79)
