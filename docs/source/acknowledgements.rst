@@ -5,7 +5,9 @@ Acknowledgements
 
 Mark Edwards: for the vision behind this simulation tool.
 
-Martin Wehner and Ammar Ahmed: for initial planning and design of the predecessor to this code.
+Martin Wehner: for initial planning and design of the predecessor to this code.
+
+Ammar Ahmed: for identifying requirements for improving capabilities in the original software.
 
 Maruf Rahman: for revision of the 'facility model', input data preservation, and small bug fixes.
 
