@@ -3,6 +3,7 @@ import os
 import sys
 import networkx as nx
 import pandas as pd
+import re
 
 # -----------------------------------------------------------------------------
 
@@ -14,14 +15,15 @@ def msplit(string, delims):
     return s
 
 
-def segment_long_labels(string, chars=7, delims=[]):
-    if (not delims) or \
-            (len(string) > chars
-             and len(string.split(delims[0])[0]) > chars+1):
-        return '\n'.join(
-            string[i:i + chars] for i in range(0, len(string), chars))
-    elif len(string) > chars:
+def segment_long_labels(string, maxlen=7, delims=[]):
+    if (not delims) and (len(string) > maxlen):
+        # return '\n'.join(string[i:i+maxlen]
+        #                  for i in range(0, len(string), maxlen))
+        return "\n".join(re.findall("(?s).{,"+str(maxlen)+"}", string))[:-1]
+
+    elif len(string) > maxlen:
         return msplit(string, delims)
+
     else:
         return string
 
@@ -35,7 +37,7 @@ def draw_sys_layout(G, comp_df,
                     orientation="TB",
                     connector_type="spline",
                     clustering=False):
-    """Draws the component configuration for given infrastructure system."""
+    """Draws the component configuration for a given infrastructure system."""
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Set up output file names & location
@@ -47,7 +49,6 @@ def draw_sys_layout(G, comp_df,
 
     fname = out_file.split(os.extsep)[0]  # strip away file ext and add our own
     sys_config_dot = os.path.join(output_path, fname + '.dot')
-    sys_config_img = os.path.join(output_path, fname + '.png')
 
     if orientation.upper() not in ['TB', 'LR', 'RL', 'BT']:
         orientation = 'TB'
@@ -112,7 +113,7 @@ def draw_sys_layout(G, comp_df,
 
         if str(comp_df.ix[node]['node_type']).lower() == 'supply':
             A.get_node(node).attr['label'] = \
-                segment_long_labels(node, chars=12, delims=['_', ' '])
+                segment_long_labels(node, maxlen=12, delims=['_', ' '])
             A.get_node(node).attr.update(
                 label=A.get_node(node).attr['label'],
                 shape="rect",
@@ -169,7 +170,10 @@ def draw_sys_layout(G, comp_df,
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     A.write(sys_config_dot)
-    A.draw(sys_config_img, format='png', prog='dot')
+
+    A.draw(os.path.join(output_path, fname + '.png'),
+           format='png', prog='dot')
+
     A.draw(os.path.join(output_path, fname + '.svg'),
            format='svg', prog='dot', args='-Gsize=11,8\! -Gdpi=300')
 
