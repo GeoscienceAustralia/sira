@@ -18,7 +18,7 @@ designed to work with earthquake hazards only. SIFRA was developed in
 agency's vision to contribute to enhancing the resilience of communities
 in Australia and its region.
 
-The following are some key features of SIFRA:
+Some key features of SIFRA:
 
 - **Written in Python:** |br|
   It is written in Python, and there is no
