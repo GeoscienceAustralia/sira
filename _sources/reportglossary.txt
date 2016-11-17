@@ -7,22 +7,22 @@ Glossary
     :sorted:
 
     typology
-        "[A] system used for putting things into groups according to how they
+        "a system used for putting things into groups according to how they
         are similar : the study of how things can be divided into different
         types". |br|
-        *http://www.merriam-webster.com/dictionary/typology *
+        Source: http://www.merriam-webster.com/dictionary/typology
 
 
     critical infrastructure
-        Critical Infrastructure are “those physical facilities, supply chains,
+        Critical Infrastructure are "those physical facilities, supply chains,
         information technologies and communication networks which,
         if destroyed, degraded or rendered unavailable for an extended period,
         would significantly impact on the social or economic wellbeing of the
         nation or affect Australia’s ability to conduct national defence and
-        ensure national security.” |br|
+        ensure national security." |br|
         Attorney General’s Department, Commonwealth of Australia (2015).
         *Critical Infrastructure Resilience Strategy: Policy Statement*, pg 3.
-        URL: http://www.tisn.gov.au/Pages/default.aspx
+        Source: http://www.tisn.gov.au/Pages/default.aspx
 
 
     facility
