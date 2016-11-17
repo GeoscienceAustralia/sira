@@ -3,7 +3,7 @@ __author__ = 'Sudipta Basak'
 
 import sys, os
 from sifraclasses import Scenario, PowerStation, PotableWaterTreatmentPlant
-from sifra import calc_sys_output, calc_loss_arrays, post_processing
+from sysresponse import calc_sys_output, calc_loss_arrays, post_processing
 
 
 if __name__ == "__main__":
