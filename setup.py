@@ -12,7 +12,7 @@ if __name__ == '__main__':
         name=package_name,
         version=__version__,
         url='https://github.com/GeoscienceAustralia/sifra',
-        license='',
+        license='LICENSE',
         author='Maruf Rahman, Sudipta Basak',
         test_suite='.tests',
         tests_require=['nose'],
