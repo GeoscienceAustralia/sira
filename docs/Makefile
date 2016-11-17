@@ -205,13 +205,14 @@ gh-pages:
 	cd $(BUILDDIR)/html
 	rm -rf ./_images ./_sources ./_static .buildinfo
 	rm -rf *.html
-	cd ${CURDIR}
+	cd $(CURDIR)
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	@echo "- - -"
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	@echo "- - -"
 	cd $(BUILDDIR)/html
 	git add -A
 	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`"
 	git push origin gh-pages
 	cd $(CURDIR)
+
