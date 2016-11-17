@@ -211,7 +211,8 @@ gh-pages:
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 	cd $(BUILDDIR)/html
 	git add -A
-	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && git push origin gh-pages
+	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`"
+	git push origin gh-pages
 	# git commit -m "Updated gh-pages"
 	# git push origin gh-pages
 	cd $(CURDIR)
