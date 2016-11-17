@@ -42,6 +42,7 @@ Glossary
 		
 
     fragility function
+    fragility curves
         Fragility function is a mathematical function that expresses the
         relationship between the probability of occurrence of some undesirable
         event and some measure of environmental excitation. In our case the the

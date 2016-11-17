@@ -27,9 +27,9 @@ components. This approach affords three key advantages:
 
 The concept of components and facilities used in this exercise map closely 
 to the typology of micro- and macro-components respectively, as defined in 
-the Synerg-G program :cite:`SynerG2010,PitilakisEtAl2014`, and align with
+the Synerg-G program :cite:`SynerG2010,Pitilakis-etal-2014`, and align with
 the definition of subsystems and systems as defined in
-:cite:`RinaldiEtAl2001`. Under this scheme, the components are
+:cite:`Rinaldi-etal-2001`. Under this scheme, the components are
 represented as nodes. Based on their role within the system, these nodes,
 or components, are classified in four categories:
 
