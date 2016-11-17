@@ -6,9 +6,7 @@
 SIFRA documentation
 *******************
 
-https://github.com/GeoscienceAustralia/sifra
-
-:Release: |release|
+https://github.com/GeoscienceAustralia/sifra | **Release:** |release|
 
 SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 It comprises a method and software tools that provide a framework
