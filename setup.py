@@ -3,6 +3,13 @@ from itertools import ifilter
 from os import path
 from ast import parse
 
+DESCRIPTION = 'SIFRA: System for Infrastructure Facility Resilience Analysis'
+MAINTAINER = 'Maruf Rahman'
+CONTRIBUTORS = ['Maruf Rahman', 'Sudipta Basak']
+MAINTAINER_EMAIL = 'maruf.rahman@ga.gov.au'
+URL = 'https://github.com/GeoscienceAustralia/sifra'
+LICENSE = 'Apache v2.0'
+
 if __name__ == '__main__':
     package_name = 'sifra'
     with open(path.join(package_name, '__init__.py')) as f:
@@ -11,9 +18,9 @@ if __name__ == '__main__':
     setup(
         name=package_name,
         version=__version__,
-        url='https://github.com/GeoscienceAustralia/sifra',
-        license='LICENSE',
-        author='Maruf Rahman, Sudipta Basak',
+        url=URL,
+        license=LICENSE,
+        author=MAINTAINER,
         test_suite='.tests',
         tests_require=['nose'],
         install_requires=['graphviz'],
