@@ -19,7 +19,7 @@ from scipy import stats
 
 # =============================================================================
 
-def readfile(setup_file):
+def _readfile(setup_file):
     """
     Module for reading in scenario data file
     """
@@ -40,12 +40,12 @@ def readfile(setup_file):
 
 # =============================================================================
 
-class IoDataGetter(object):
+class _IoDataGetter(object):
     """
     Class for reading in scenario setup information
     """
     def __init__(self, setup_file):
-        self.setup = readfile(setup_file)
+        self.setup = _readfile(setup_file)
         self.input_dir_name = self.setup["INPUT_DIR_NAME"]
         self.output_dir_name = self.setup["OUTPUT_DIR_NAME"]
         self.sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
@@ -71,7 +71,44 @@ class IoDataGetter(object):
             os.makedirs(self.raw_output_dir)
 
 
-class FacilityDataGetter(object):
+class _ScenarioDataGetter(object):
+    """
+    Class for reading in simulation scenario parameters
+    """
+    def __init__(self, setup_file):
+        self.setup = _readfile(setup_file)
+        self.fit_pe_data = self.setup["FIT_PE_DATA"]
+        self.fit_restoration_data = self.setup["FIT_RESTORATION_DATA"]
+        self.save_vars_npy = self.setup["SAVE_VARS_NPY"]
+        self.intensity_measure_param = self.setup["INTENSITY_MEASURE_PARAM"]
+        self.intensity_measure_unit = self.setup["INTENSITY_MEASURE_UNIT"]
+        self.haz_param_min = self.setup["PGA_MIN"]
+        self.haz_param_max = self.setup["PGA_MAX"]
+        self.haz_param_step = self.setup["PGA_STEP"]
+        self.num_samples = self.setup["NUM_SAMPLES"]
+        self.time_unit = self.setup["TIME_UNIT"]
+        self.run_parallel_proc = self.setup["MULTIPROCESS"]
+        self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
+        self.run_context = self.setup["RUN_CONTEXT"]
+        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
+        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
+        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
+        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
+
+
+class _RestorationDataGetter(object):
+    """
+    Class for reading in restoration scenario parameters
+    """
+    def __init__(self, setup_file):
+        self.setup = _readfile(setup_file)
+        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
+        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
+        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
+        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
+
+
+class _FacilityDataGetter(object):
     """
     Module for reading in scenario setup information.
     It is a wrapper to protect the core classes from being affected by
@@ -79,7 +116,7 @@ class FacilityDataGetter(object):
     are introduced), and changes to input file formats.
     """
     def __init__(self, setup_file):
-        self.setup = readfile(setup_file)
+        self.setup = _readfile(setup_file)
         self.system_classes = self.setup["SYSTEM_CLASSES"]
         self.system_class = self.setup["SYSTEM_CLASS"]
         self.system_subclass = self.setup["SYSTEM_SUBCLASS"]
@@ -145,7 +182,9 @@ class FacilityDataGetter(object):
         return COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF
 
 
-class Network(object):
+# =============================================================================
+
+class _Network(object):
 
     def __init__(self, facility):
         self.num_elements, self.G, self.nodes_all = \
@@ -232,14 +271,14 @@ class Network(object):
         return sup_node_list, dep_node_list, src_node_list, out_node_list
 
 
-class Facility(FacilityDataGetter, IoDataGetter):
+class FacilitySystem(_FacilityDataGetter, _IoDataGetter):
     """
     Defines an Critical Infrastructure Facility and its parameters
     """
 
     def __init__(self, setup_file):
-        FacilityDataGetter.__init__(self, setup_file)
-        IoDataGetter.__init__(self, setup_file)
+        _FacilityDataGetter.__init__(self, setup_file)
+        _IoDataGetter.__init__(self, setup_file)
         self.cp_types_in_system, self.cp_types_in_db = \
             self.check_types_with_db()
         self.uncosted_comptypes = \
@@ -253,7 +292,7 @@ class Facility(FacilityDataGetter, IoDataGetter):
         self.sys = self.build_system_model()
         self.fragdict = self.fragility_dict()
         self.compdict = self.comp_df.to_dict()
-        self.network = Network(self)
+        self.network = _Network(self)
 
     def build_system_model(self):
         """
@@ -406,51 +445,14 @@ class Facility(FacilityDataGetter, IoDataGetter):
     #         graph_label="System Component Layout")
 
 
-class ScenarioDataGetter(object):
-    """
-    Class for reading in simulation scenario parameters
-    """
-    def __init__(self, setup_file):
-        self.setup = readfile(setup_file)
-        self.fit_pe_data = self.setup["FIT_PE_DATA"]
-        self.fit_restoration_data = self.setup["FIT_RESTORATION_DATA"]
-        self.save_vars_npy = self.setup["SAVE_VARS_NPY"]
-        self.intensity_measure_param = self.setup["INTENSITY_MEASURE_PARAM"]
-        self.intensity_measure_unit = self.setup["INTENSITY_MEASURE_UNIT"]
-        self.haz_param_min = self.setup["PGA_MIN"]
-        self.haz_param_max = self.setup["PGA_MAX"]
-        self.haz_param_step = self.setup["PGA_STEP"]
-        self.num_samples = self.setup["NUM_SAMPLES"]
-        self.time_unit = self.setup["TIME_UNIT"]
-        self.run_parallel_proc = self.setup["MULTIPROCESS"]
-        self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
-        self.run_context = self.setup["RUN_CONTEXT"]
-        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
-        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
-        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
-
-
-class RestorationDataGetter(object):
-    """
-    Class for reading in restoration scenario parameters
-    """
-    def __init__(self, setup_file):
-        self.setup = readfile(setup_file)
-        self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
-        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
-        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
-
-
-class Scenario(ScenarioDataGetter, IoDataGetter):
+class Scenario(_ScenarioDataGetter, _IoDataGetter):
     """
     Defines the scenario for hazard impact modelling
     """
 
     def __init__(self, setup_file):
-        ScenarioDataGetter.__init__(self, setup_file)
-        IoDataGetter.__init__(self, setup_file)
+        _ScenarioDataGetter.__init__(self, setup_file)
+        _IoDataGetter.__init__(self, setup_file)
 
         """Set up parameters for simulating hazard impact"""
         self.num_hazard_pts = \
@@ -630,9 +632,12 @@ class ComponentType(object):
         plt.close()
 
 
-# =============================================================================
+# *****************************************************************************
+# Definitions of specific infrastructure systems:
+# These are variations on a Facility or a Network
+# *****************************************************************************
 
-class PowerStation(Facility):
+class PowerStation(FacilitySystem):
     """
     Defines specific attributes of a power station, customising
     the Critical Infrastructure Facility class
@@ -661,7 +666,7 @@ class PowerStation(Facility):
 
 # =============================================================================
 
-class PotableWaterTreatmentPlant(Facility):
+class PotableWaterTreatmentPlant(FacilitySystem):
     """
     Defines specific attributes of a potable water treatment plant,
     customising the Critical Infrastructure Facility class
