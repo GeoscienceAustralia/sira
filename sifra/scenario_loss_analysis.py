@@ -1,4 +1,6 @@
 from __future__ import print_function
+from sifraclasses import *
+
 import numpy as np
 import scipy.stats as stats
 import pandas as pd
@@ -10,7 +12,6 @@ import itertools
 from colorama import Fore, init
 init()
 
-from sifraclasses import Scenario, Facility, PowerStation
 import sifraplot as spl
 
 import matplotlib.pyplot as plt

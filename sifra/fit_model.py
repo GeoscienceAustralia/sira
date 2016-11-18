@@ -1,4 +1,5 @@
 from __future__ import print_function
+from sifraclasses import *
 
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
@@ -11,10 +12,8 @@ import pandas as pd
 
 import sys
 import os
-# import getopt
 
 import sifraplot as spl
-from sifraclasses import Scenario, Facility, PowerStation
 
 import brewer2mpl
 from colorama import Fore, Style, init
@@ -806,7 +805,7 @@ if __name__ == "__main__":
         sys_rst_mdl_mode1 = fit_restoration_data(
             RESTORATION_TIME_RANGE, sys_fn, SYS_DS, sc.output_path)
         # sys_rst_mdl_mode2 = fit_restoration_data_multimode(
-        #     RESTORATION_TIME_RANGE, sys_fn, SYS_DS, sc.output_path)
+        #     RESTORATION_TIME_RANGE, sys_fn, SYS_DS, scn.output_path)
         print("\n" + "-" * 79)
 
 # ============================================================================

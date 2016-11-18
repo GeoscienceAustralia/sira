@@ -29,6 +29,8 @@ A tool for seismic performance analysis of infrastructure facilities
 """
 
 from __future__ import print_function
+from sifraclasses import *
+
 import os
 import sys
 import cPickle
@@ -42,8 +44,6 @@ import parmap
 import matplotlib.pyplot as plt
 import seaborn as sns
 from colorama import Fore
-
-from sifraclasses import Scenario, PowerStation, PotableWaterTreatmentPlant
 
 SETUPFILE = None
 
