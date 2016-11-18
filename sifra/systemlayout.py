@@ -194,7 +194,7 @@ def main():
     sc = Scenario(SETUPFILE)
     fc = FacilityObj(SETUPFILE)
     # Define input files, output location, scenario inputs
-    # SYS_CONFIG_FILE = os.path.join(sc.input_path, fc.sys_config_file_name)
+    # SYS_CONFIG_FILE = os.path.join(scn.input_path, sysobj.sys_config_file_name)
 
     print("Initiating drawing network model schematic...")
     fc.network.network_setup(fc)
