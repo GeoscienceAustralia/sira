@@ -53,17 +53,26 @@ both a package manager and environment manager. Instructions for
 installing ``Anaconda`` are here:
 <http://docs.continuum.io/anaconda/install>
 
-**Prerequisites:** You will need to install ``Graphviz`` for the 
-drawing the system diagram through networkx and pygraphviz. 
-Please visit: <http://www.graphviz.org/> 
-and download the appropriate version for your operating system. 
-Please follow the posted download instructions carefully. 
-After installation you may need to update the PATH variable 
+**Prerequisites:** You will need to install ``Graphviz`` for the
+drawing the system diagram through networkx and pygraphviz.
+Please visit: <http://www.graphviz.org/>
+and download the appropriate version for your operating system.
+Please follow the posted download instructions carefully.
+After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.
 
-For windows systems you will need to install 
+For windows systems you will need to install
 Microsoft Visual C++ Compiler for Python 2.7:
 <http://aka.ms/vcpython27>
+
+On Ubuntu you can
+
+```
+apt-get update && apt-get install -y \
+    build-essential pkg-config \
+    graphviz libgraphviz-dev \
+    xml2 libxml2-dev
+```
 
 Some packages we need are not hosted in the main ``conda`` package
 repository. In such cases we will host them in our own user channel.
@@ -78,7 +87,7 @@ been added:
     $ conda config --get channels
 
 **For OS X and Linux-64 systems:** It should be possible to set up a
-full run environment solely through the *.yml environment specification
+full run environment solely through the \*.yml environment specification
 file. For OS X run the following commands:
 
     $ conda env create -f environment_osx.yml
@@ -111,12 +120,35 @@ Install these downloaded ``wheels`` with pip:
 
     $ pip install <pkg_name>.whl
 
+Using Docker
+------------
+
+If you have Docker installed, you can build a container for working
+on/with sifra by running the command
+
+```
+docker build -t docker-sifra .
+```
+
+and start the container with
+
+```
+docker run -v .:/sifra -it docker-sifra
+```
+
+from this directory (that is, the one containing this README.md
+file). To run from some other directory, you would need to change
+the volume mapping like:
+
+```
+docker run -v /path/to/sifra/clone:/sifra -it docker-sifra
+```
 
 Running the Code
 ----------------
-*For the purposes of this discussion, we will assume that this
+For the purposes of this discussion, we will assume that this
 repository has been cloned in the user's home directory, within
-a directory named `sifra`. *
+a directory named `sifra`.
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
