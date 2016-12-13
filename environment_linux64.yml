@@ -3,7 +3,6 @@ dependencies:
 - anaconda-client=1.1.2=py27_0
 - clyent=1.0.0=py27_0
 - colorama=0.3.3=py27_0
-- couchdb=1.1=py27_0
 - cycler=0.9.0=py27_0
 - decorator=4.0.4=py27_0
 - freetype=2.5.5=0
@@ -59,6 +58,7 @@ dependencies:
   - babel==2.1.1
   - blockdiag==1.5.3
   - brewer2mpl==1.4.1
+  - couchdb==1.1
   - docutils==0.12
   - funcparserlib==0.3.6
   - ipython-genutils==0.1.0
