@@ -126,23 +126,28 @@ Using Docker
 If you have Docker installed, you can build a container for working
 on/with sifra by running the command
 
-```
-docker build -t docker-sifra .
-```
+    $ docker build -t docker-sifra .
 
-and start the container with
+We depend on couchdb (<https://hub.docker.com/_/couchdb/>), which we
+can run through docker (for testing\development at least) with:
 
-```
-docker run -v .:/sifra -it docker-sifra
-```
+    $ docker run -d --name sifra-couchdb couchdb
+
+
+and then start sifra with
+
+    $ docker run -v `pwd`:/sifra -it --link sifra-couchdb:couchdb docker-sifra
+
+Alternatively, you can pull a pre-built container by replacing *docker-sifra*
+in the above with *geoscienceaustralia/sifra*, giving:
+
+    $ docker run -v `pwd`:/sifra -it --link sifra-couchdb:couchdb geoscienceaustralia/sifra
 
 from this directory (that is, the one containing this README.md
 file). To run from some other directory, you would need to change
-the volume mapping like:
+the volume mapping to reflect the correct path, e.g.:
 
-```
-docker run -v /path/to/sifra/clone:/sifra -it docker-sifra
-```
+    $ docker run -v /path/to/sifra/clone:/sifra -it --link sifra-couchdb:couchdb geoscienceaustralia/sifra
 
 Running the Code
 ----------------
