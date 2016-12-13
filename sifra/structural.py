@@ -372,7 +372,7 @@ class SerialisationProvider(object):
 
 
 class CouchSerialisationProvider(SerialisationProvider):
-    COUCH_URL = 'http://127.0.0.01:5984'
+    COUCH_URL = 'http://couch:5984'
 
     def __init__(self):
         import couchdb
