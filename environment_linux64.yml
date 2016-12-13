@@ -3,6 +3,7 @@ dependencies:
 - anaconda-client=1.1.2=py27_0
 - clyent=1.0.0=py27_0
 - colorama=0.3.3=py27_0
+- couchdb=1.1=py27_0
 - cycler=0.9.0=py27_0
 - decorator=4.0.4=py27_0
 - freetype=2.5.5=0
