@@ -68,4 +68,9 @@ output/*
 # OS X hidden files
 .DS_Store
 
+# ipython
 *.ipynb
+
+# vim
+*.swp
+

@@ -1,9 +1,6 @@
 import abc
+import importlib
 import collections
-
-
-
-DB_NAME = 'models'
 
 
 
@@ -18,6 +15,8 @@ class NoDefaultException(Exception):
     :py:class:`_Base`.
     """
     pass
+
+
 
 class ValidationError(Exception):
     """
@@ -34,12 +33,16 @@ class ValidationError(Exception):
     """
     pass
 
+
+
 class AlreadySavedException(Exception):
     """
     Raised if an attempt is made to save a 'Document' which has previously been
     saved.
     """
     pass
+
+
 
 class DisallowedElementException(ValueError):
     """
@@ -48,6 +51,8 @@ class DisallowedElementException(ValueError):
     :py:attr:StructuralMeta.DISALLOWED_FIELDS.
     """
     pass
+
+
 
 class MultipleBasesOfTypeBaseError(ValueError):
     """
@@ -90,24 +95,40 @@ def jsonify(obj, flatten):
 
 
 
-def to_python(obj):
+class Pythonizer(object):
     """
-    Convert a 'jsonified' object to a Python object. This is the inverse of
-    :py:func:`jsonify`.
+    Functor for converting JSONable objects to Python classes.
 
-    A python instance ``c`` should be eqivalent to ``to_python(jsonify(c))``
-    with respect to the data returned by ``__jsonify__`` if the object has that
-    method or the object as a whole otherwise.
+    Plea
+
+    :param module_name: The name of a Python module.
     """
 
-    if isinstance(obj, dict):
-        if 'class' in obj:
-            cls = obj.pop('class')
-            return eval(cls)(**to_python(obj))
-        return {str(k): to_python(v) for k, v in obj.iteritems()}
-    if isinstance(obj, list):
-        return [to_python(v) for v in obj]
-    return obj
+    def __init__(self, module_name):
+        self.module_name = module_name
+
+    @staticmethod
+    def _class_getter(mod_class):
+        return getattr(importlib.import_module(mod_class[0]), mod_class[1])
+
+    def __call__(self, obj):
+        """
+        Convert a 'jsonified' object to a Python object. This is the inverse of
+        :py:func:`jsonify`.
+
+        A python instance ``c`` should be eqivalent to ``__call__(jsonify(c))``
+        with respect to the data returned by ``__jsonify__`` if the object has that
+        method or the object as a whole otherwise.
+        """
+
+        if isinstance(obj, dict):
+            if 'class' in obj:
+                cls = obj.pop('class')
+                return self._class_getter(cls)(**self.__call__(obj))
+            return {str(k): self.__call__(v) for k, v in obj.iteritems()}
+        if isinstance(obj, list):
+            return [self.__call__(v) for v in obj]
+        return obj
 
 
 
@@ -140,7 +161,7 @@ class Element(object):
 
     def __jsonify__(self, val, flatten):
         """
-        Convert *val* to a form that can be json sersialised.
+        Convert *val* to a form that can be JSON sersialised.
         """
 
         self.__validate__(val)
@@ -155,7 +176,22 @@ class Element(object):
         :py:raises:`ValidationError`.
         """
 
-        if not isinstance(val, eval(self.cls)):
+        # Ideally, we'd like to do the following manipulation of self.cls in
+        # the constructor. However, at the time the constructor is called, we
+        # don't have self.to_python, which is set on this instance in the
+        # metaclass StructuralMeta at the time the elements are handled. We
+        # could get around this by defining the element class for a module in
+        # a way similar to that employed in generate_element_base.
+        if isinstance(self.cls, basestring):
+            self.cls = [self.to_python.module_name, self.cls]
+        try:
+            cls = self.to_python._class_getter(self.cls)
+        except:
+            # hope that we have a builtin
+            cls = eval(self.cls[1])
+            self.cls = ['__builtin__', self.cls[1]]
+
+        if not isinstance(val, cls):
             raise ValidationError('value is not instance of {}'.format(self.cls))
 
         if self.validators is not None:
@@ -175,18 +211,30 @@ class StructuralMeta(type):
     #: which ``issubclass(type(c), StructuralMeta)`` is *True*. These are names
     #: of elements which are used internally and for the sake of the performance
     #: of attribute lookup, are banned for other use.
-    DISALLOWED_FIELDS = ['class', 'predecessor', '_id', '_rev', '_provider']
+    DISALLOWED_FIELDS = ['class', 'predecessor', '_id', '_rev']
 
     def __new__(cls, name, bases, dct):
         # check that only one base is instance of _Base
         if len([base for base in bases if issubclass(type(base), StructuralMeta)]) > 1:
             raise MultipleBasesOfTypeBaseError('Invalid bases in class {}'.format(name))
 
+        # get the thingy that makes python objects from strings
+        to_python = dct.get('to_python', None)
+
+        if to_python is None:
+            for base in bases:
+                try:
+                    to_python = base.to_python
+                    break
+                except:
+                    pass
+
         # extract the parameters
         params = {}
         for k in dct.keys():
             if isinstance(dct[k], Element):
                 params[k] = dct.pop(k)
+                params[k].to_python = to_python
 
         # cannot have a parameter with name class, as this messes with
         # serialisation
@@ -264,18 +312,21 @@ class _Base(object):
         """
 
         if isinstance(self._predecessor, basestring):
-            self._predecessor = to_python(self.db.get(self._predecessor))
+            self._predecessor = to_python(self.get_db().get(self._predecessor))
         return self._predecessor
 
-    @property
-    def db(self):
+    @classmethod
+    def get_db(cls):
         """
         Get the db to be used by this instance.
 
-        .. todo:: This is currently not thread safe... fix this.
+        .. todo:: This gets the provider from the instance, which allows the
+            provider to differ between instances. Not sure if this is desirable
+            or not. It may be better to get the provider from the class and,
+            perhaps, even make the provider immutable.
         """
 
-        return self._provider.get_db_for(DB_NAME)
+        return cls._provider.get_db()
 
     def __validate__(self):
         """
@@ -300,7 +351,7 @@ class _Base(object):
         hasa = lambda k: hasattr(self, k) if flatten else self._hasattr
 
         self.__validate__()
-        res = {'class': type(self).__name__}
+        res = {'class': [type(self).__module__, type(self).__name__]}
         res.update({
             jsonify(k, flatten): v.__jsonify__(getattr(self, k), flatten)
             for k, v in self.__params__.iteritems()
@@ -315,9 +366,12 @@ class _Base(object):
 
         return self.__class__(predecessor=self)
 
-    def save(self, flatten):
+    def save(self, flatten, object_id=None):
         """
         Save this instance.
+
+        .. todo:: We should check that no objet with id *object_id* already
+            exists.
         """
 
         if self._id is not None:
@@ -332,16 +386,27 @@ class _Base(object):
             elif hasattr(self._predecessor, '_id'):
                 res['predecessor'] = self._predecessor._id
 
+        if object_id is not None:
+            res['_id'] = object_id
+
         # cannot do the following in one line as we need to set self._id last
-        doc = self.db.save(res)
+        doc = self.__class__._provider.get_db().save(res)
         self._rev = doc[1]
         self._id = doc[0]
 
         return self.clone()
 
+    @classmethod
+    def load(cls, object_id):
+        """
+        Load a previously saved instance.
+        """
+
+        return cls.to_python(cls._provider.get_db().get(object_id))
 
 
-def generate_element_base(provider):
+
+def generate_element_base(provider, module_name):
     """
     Generate a base class for deriving 'model' classes from.
 
@@ -349,7 +414,10 @@ def generate_element_base(provider):
     :type provider: :py:class:`SerialisationProvider`
     """
 
-    return type('ElementBase', (_Base,), {'_provider': provider})
+    return type(
+        'ElementBase',
+        (_Base,),
+        {'_provider': provider, 'to_python': Pythonizer(module_name)})
 
 
 
@@ -362,168 +430,41 @@ class SerialisationProvider(object):
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def get_db_for(self, db_name):
+    def get_db(self):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete_db(self, b_name):
+    def delete_db(self):
         raise NotImplementedError()
 
 
 
 class CouchSerialisationProvider(SerialisationProvider):
-    COUCH_URL = 'http://couch:5984'
 
-    def __init__(self):
+    def __init__(self, server_url, db_name):
         import couchdb
-        self._server = couchdb.Server(CouchSerialisationProvider.COUCH_URL)
+        self._server = couchdb.Server(server_url)
+        self._db_name = db_name
+        self._db = None
 
-    def get_db_for(self, db_name):
+    def _connect(self):
         import couchdb
         try:
-            return self._server[db_name]
+            self._db = self._server[self._db_name]
         except couchdb.http.ResourceNotFound:
-            return self._server.create(db_name)
+            self._db = self._server.create(self._db_name)
 
-    def delete_db(self, db_name):
+    def get_db(self):
+        import couchdb
+        if self._db is None:
+            self._connect()
+        return self._db
+
+    def delete_db(self):
         import couchdb
         try:
-            self._server.delete(db_name)
-        except couchdb.ResourceNotFound:
+            self._server.delete(self._db_name)
+        except couchdb.http.ResourceNotFound:
             pass
-
-
-
-if __name__ == "__main__":
-    # classes used for testing
-    provider = CouchSerialisationProvider()
-    Base = generate_element_base(provider)
-
-    class Model(Base):
-        components = Element('dict', 'A component', dict,
-            [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
-
-        name = Element('str', "The model's name", 'model')
-
-        def add_component(self, name, component):
-            self.components[name] = component
-
-
-
-    class Component(Base):
-        frag_func = Element('ResponseModel', 'A fragility function', Element.NO_DEFAULT)
-
-        def expose_to(self, pga):
-            return self.frag_func(pga)
-
-
-
-    class ResponseModel(Base):
-        def __call__(self, pga):
-            raise NotImplementedError()
-
-
-
-    class StepFunc(ResponseModel):
-        xs = Element('list', 'X values for steps', Element.NO_DEFAULT,
-            [lambda x: [float(val) for val in x]])
-        ys = Element('list', 'Y values for steps', Element.NO_DEFAULT)
-
-        def __validate__(self):
-            if len(self.xs) != len(self.ys):
-                raise ValidationError('length of xs and ys must be equal')
-
-        def __call__(self, value):
-            for x, y in zip(self.xs, self.ys):
-                if value < x:
-                    return y
-
-            raise ValueError('value is greater than all xs!')
-
-
-
-    from pprint import pprint
-    import unittest as ut
-
-    class Test1(ut.TestCase):
-        def setUp(self):
-            self.model = Model()
-            frag_curve = StepFunc(xs=[1,2,3], ys=[0.,.5,1.])
-            boiler = Component(frag_func=frag_curve)
-            self.model.add_component('boiler', boiler)
-
-        def tearDown(self):
-            provider.delete_db(DB_NAME)
-
-        def test_to_from_json_like(self):
-            """
-            Test that a model can be created from one converted 'to json'.
-            """
-
-            model2 = to_python(jsonify(self.model, False))
-
-        def test_modifiability(self):
-            """
-            Test that a previously save model cannot be modified.
-            """
-
-            # first use the db provider directly
-            _id, _rev = provider.get_db_for(DB_NAME).save(jsonify(self.model, False))
-            model2 = to_python(provider.get_db_for(DB_NAME).get(_id))
-            with self.assertRaises(TypeError):
-                model2.name = 'new name'
-
-            # now use a model which has had save called on it
-            model3 = model2.clone()
-            # check that we can modify it at first
-            model3.name = 'new name'
-            # check that once it has been saved, it can no longer be modified
-            model3.save(False)
-            with self.assertRaises(TypeError):
-                model3.name = 'new new name'
-
-        def test_cannot_resave(self):
-            """
-            Check that a model which has been saved cannot be saved again.
-            """
-
-            nextVersionOfModel = self.model.save(False)
-            with self.assertRaises(AlreadySavedException):
-                self.model.save(False)
-
-        def test_correct_hasattr(self):
-            """
-            Check that the method for checking existence of an attribute on an
-            an instance excluding is predecessor is working.
-            """
-
-            self.model.thingy = 'hi'
-            new_model = self.model.clone()
-            self.assertFalse(new_model._hasattr('thingy'))
-
-    class Test2(ut.TestCase):
-        def test_cannot_have_fields(self):
-            """
-            Check that we cannot create a model containing elements with
-            dissallowed names.
-            """
-
-            with self.assertRaises(ValueError):
-                cls = type(
-                    'Tst',
-                    (Base,),
-                    {'predecessor': Element('object', 'dissallowed name', object)})
-
-        def test_single_base_of_type_base(self):
-            """
-            Check that a model cannot inherit from Base more than once.
-            """
-
-            c1 = type('C1', (Base,), {})
-            c2 = type('C2', (Base,), {})
-            with self.assertRaises(MultipleBasesOfTypeBaseError):
-                c3 = type('C3', (c1, c2), {})
-
-
-    ut.main()
+        self._db = None
 
