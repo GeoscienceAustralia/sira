@@ -1,21 +1,21 @@
 import unittest as ut
 
 # these are required for defining the data model
-from sifra.structural import (
+from structural import (
     CouchSerialisationProvider,
     Element,
     ValidationError,
     generate_element_base)
 
 # the following are only required for running the tests.
-from sifra.structural import (
+from structural import (
     jsonify,
     AlreadySavedException,
     MultipleBasesOfTypeBaseError)
 
 
 
-COUCH_URL = 'http://localhost:5984'
+COUCH_URL = 'http://couch:5984'
 DB_NAME = 'models'
 provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
 Base = generate_element_base(provider, __name__)
@@ -180,4 +180,8 @@ class Test2(ut.TestCase):
         c2 = type('C2', (Base,), {})
         with self.assertRaises(MultipleBasesOfTypeBaseError):
             c3 = type('C3', (c1, c2), {})
+
+
+if __name__ == '__main__':
+    ut.main()
 
