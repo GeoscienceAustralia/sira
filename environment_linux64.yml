@@ -13,6 +13,7 @@ dependencies:
   - icu=56.1=0
   - ipython=4.0.0=py27_0
   - ipython_genutils=0.1.0=py27_0
+  - ipywidgets=5.2.2=py27_0
   - jbig=2.1=0
   - jpeg=8d=0
   - libgfortran=1.0=0
