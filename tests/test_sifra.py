@@ -1,32 +1,33 @@
-__author__ = 'sudipta'
+from __future__ import print_function
 
 import unittest
 import cPickle
 import os
 import numpy as np
 
-from sifra.sifra import calc_loss_arrays
-from sifra.sifraclasses import ScenarioDataGetter, Facility, Scenario
-from sifra.sifra import power_calc
+from sifra.sysresponse import calc_loss_arrays
+from sifra.sifraclasses import _ScenarioDataGetter, FacilitySystem, Scenario
+from sifra.sysresponse import calc_sys_output
 
+__author__ = 'sudipta'
 
-class TestSira(unittest.TestCase):
+class TestSifra(unittest.TestCase):
     def test_calc_loss_arrays(self):
+        """
+        :return: tests the calc_loss_arrays function, on a non-parallel run.
+        """
         SETUPFILE = 'tests/config_ps_X_test.conf'
         SETUPFILE = os.path.join(os.getcwd(), SETUPFILE)
-        print ('using default test setupfile')
+        print('\nUsing default test setup file')
         scenario = Scenario(SETUPFILE)
-        facility = Facility('tests/config_ps_X_test.conf')
-        """
-        :return: tests the calc_loss_arrays function, which is the main.
-        """
-        print '======================Testing serial run ============================='
-        component_resp_df = power_calc(facility, scenario)
+        facility = FacilitySystem('tests/config_ps_X_test.conf')
+        print('\n========================= Testing serial run =========================')
+        component_resp_df = calc_sys_output(facility, scenario)
         ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array, \
             economic_loss_array, output_array_given_recovery \
-            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_or_serial=0)
-        test_ids_comp_vs_haz = cPickle.load(open('tests/ids_comp_vs_haz.pick', 'rb'))
-        test_sys_output_dict = cPickle.load(open('tests/sys_output_dict.pick', 'rb'))
+            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_proc=0)
+        test_ids_comp_vs_haz = cPickle.load(open('tests/ids_comp_vs_haz.pickle', 'rb'))
+        test_sys_output_dict = cPickle.load(open('tests/sys_output_dict.pickle', 'rb'))
         for k, v in ids_comp_vs_haz.iteritems():
             self.assertEqual(v.shape, (scenario.num_samples, facility.num_elements), msg='size mismatch')
 
@@ -37,21 +38,21 @@ class TestSira(unittest.TestCase):
             np.testing.assert_array_equal(sys_output_dict[k], test_sys_output_dict[k], 'arrays not equal', verbose=True)
 
     def test_calc_loss_arrays_parallel(self):
+        """
+        :return: tests the calc_loss_arrays function, on a parallel run.
+        """
         SETUPFILE = 'tests/config_ps_X_test.conf'
         SETUPFILE = os.path.join(os.getcwd(), SETUPFILE)
         print ('using default test setupfile')
         scenario = Scenario(SETUPFILE)
-        facility = Facility('tests/config_ps_X_test.conf')
-        """
-        :return: tests the calc_loss_arrays function, which is the main.
-        """
-        print '======================Testing parallel run ============================='
-        component_resp_df = power_calc(facility, scenario)
+        facility = FacilitySystem('tests/config_ps_X_test.conf')
+        print('\n========================= Testing parallel run =========================')
+        component_resp_df = calc_sys_output(facility, scenario)
         ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array, \
             economic_loss_array, output_array_given_recovery \
-            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_or_serial=1)
-        test_ids_comp_vs_haz = cPickle.load(open('tests/ids_comp_vs_haz.pick', 'rb'))
-        test_sys_output_dict = cPickle.load(open('tests/sys_output_dict.pick', 'rb'))
+            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_proc=1)
+        test_ids_comp_vs_haz = cPickle.load(open('tests/ids_comp_vs_haz.pickle', 'rb'))
+        test_sys_output_dict = cPickle.load(open('tests/sys_output_dict.pickle', 'rb'))
         for k, v in ids_comp_vs_haz.iteritems():
             self.assertEqual(v.shape, (scenario.num_samples, facility.num_elements), msg='size mismatch')
 
@@ -65,12 +66,12 @@ class TestSira(unittest.TestCase):
         # sys_output_dict # should be full when 0, and 0 when hazard level 10
 
         scenario = Scenario('tests/config_ps_X_test_extremes.conf')
-        facility = Facility('tests/config_ps_X_test_extremes.conf')
-        component_resp_df = power_calc(facility, scenario)
+        facility = FacilitySystem('tests/config_ps_X_test_extremes.conf')
+        component_resp_df = calc_sys_output(facility, scenario)
 
         ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array, \
             economic_loss_array, output_array_given_recovery \
-            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_or_serial=1)
+            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_proc=1)
 
         # print facility.comp_df['cost_fraction']
         for k, v in component_resp_dict.iteritems():
