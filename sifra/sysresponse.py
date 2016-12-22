@@ -450,6 +450,14 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
     with open(idshaz, 'w') as handle:
         cPickle.dump(ids_comp_vs_haz, handle)
 
+    crd_pkl = os.path.join(sc.raw_output_dir, 'component_resp_dict.pickle')
+    with open(crd_pkl, 'w') as handle:
+        cPickle.dump(component_resp_dict, handle)
+
+    sod_pkl = os.path.join(sc.raw_output_dir, 'sys_output_dict.pickle')
+    with open(sod_pkl, 'w') as handle:
+        cPickle.dump(sys_output_dict, handle)
+
     idshaz_zip = os.path.join(sc.raw_output_dir, 'ids_comp_vs_haz.zip')
     zipmode = zipfile.ZIP_DEFLATED
     with zipfile.ZipFile(idshaz_zip, 'w', zipmode) as zip:
