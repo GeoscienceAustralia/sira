@@ -1,6 +1,7 @@
 import abc
 import importlib
 import collections
+import inspect
 
 
 
@@ -218,23 +219,11 @@ class StructuralMeta(type):
         if len([base for base in bases if issubclass(type(base), StructuralMeta)]) > 1:
             raise MultipleBasesOfTypeBaseError('Invalid bases in class {}'.format(name))
 
-        # get the thingy that makes python objects from strings
-        to_python = dct.get('to_python', None)
-
-        if to_python is None:
-            for base in bases:
-                try:
-                    to_python = base.to_python
-                    break
-                except:
-                    pass
-
         # extract the parameters
         params = {}
         for k in dct.keys():
             if isinstance(dct[k], Element):
                 params[k] = dct.pop(k)
-                params[k].to_python = to_python
 
         # cannot have a parameter with name class, as this messes with
         # serialisation
@@ -246,6 +235,12 @@ class StructuralMeta(type):
         dct['__params__'] = params
 
         return super(StructuralMeta, cls).__new__(cls, name, bases, dct)
+
+    def __init__(cls, name, bases, dct):
+        cls.to_python = Pythonizer(inspect.getmodule(cls).__name__)
+        for param in cls.__params__.itervalues():
+            param.to_python = cls.to_python
+        super(StructuralMeta, cls).__init__(name, bases, dct)
 
 
 
@@ -406,7 +401,7 @@ class _Base(object):
 
 
 
-def generate_element_base(provider, module_name):
+def generate_element_base(provider):
     """
     Generate a base class for deriving 'model' classes from.
 
@@ -417,7 +412,7 @@ def generate_element_base(provider, module_name):
     return type(
         'ElementBase',
         (_Base,),
-        {'_provider': provider, 'to_python': Pythonizer(module_name)})
+        {'_provider': provider})
 
 
 

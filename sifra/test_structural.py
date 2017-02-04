@@ -7,6 +7,9 @@ from sifra.structural import (
     ValidationError,
     generate_element_base)
 
+from sifra.structural_test_util import(
+    ResponseModel)
+
 # the following are only required for running the tests.
 from sifra.structural import (
     jsonify,
@@ -18,7 +21,7 @@ from sifra.structural import (
 COUCH_URL = 'http://localhost:5984'
 DB_NAME = 'models'
 provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
-Base = generate_element_base(provider, __name__)
+Base = generate_element_base(provider)
 
 
 
@@ -41,9 +44,16 @@ class Component(Base):
 
 
 
-class ResponseModel(Base):
-    def __call__(self, pga):
-        raise NotImplementedError()
+class Unreachable_fromm_test_util(object):
+    """
+    Since :py:class:`ResponseModel` is defined in a different module using a
+    different :py:class:`sifra.structural._Base`, we want to make sure that
+    we can still instantiate classes that are not visible within that module (
+    like this one) outside of that module.
+    """
+
+    def __jsonify__(self, flatten):
+        return {'class': [type(self).__module__, type(self).__name__]}
 
 
 
@@ -51,6 +61,10 @@ class StepFunc(ResponseModel):
     xs = Element('list', 'X values for steps', Element.NO_DEFAULT,
         [lambda x: [float(val) for val in x]])
     ys = Element('list', 'Y values for steps', Element.NO_DEFAULT)
+    dummy = Element(
+        'Unreachable_fromm_test_util',
+        'Uncreachable from test_util',
+        Unreachable_fromm_test_util)
 
     def __validate__(self):
         if len(self.xs) != len(self.ys):
