@@ -5,48 +5,21 @@ from sifra.structural import (
     CouchSerialisationProvider,
     Element,
     ValidationError,
+    MultipleBasesOfTypeBaseError,
+    AlreadySavedException,
+    jsonify,
     generate_element_base)
 
-from sifra.structural_test_util import(
+from sifra.elements import (
+    Model,
+    Component,
     ResponseModel)
 
-# the following are only required for running the tests.
-from sifra.structural import (
-    jsonify,
-    AlreadySavedException,
-    MultipleBasesOfTypeBaseError)
 
-
-
-COUCH_URL = 'http://localhost:5984'
-DB_NAME = 'models'
-provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
-Base = generate_element_base(provider)
-
-
-
-class Model(Base):
-    components = Element('dict', 'A component', dict,
-        [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
-
-    name = Element('str', "The model's name", 'model')
-
-    def add_component(self, name, component):
-        self.components[name] = component
-
-
-
-class Component(Base):
-    frag_func = Element('ResponseModel', 'A fragility function', Element.NO_DEFAULT)
-
-    def expose_to(self, pga):
-        return self.frag_func(pga)
-
-
-
-class Unreachable_fromm_test_util(object):
+class Unreachable_from_elements(object):
     """
-    Since :py:class:`ResponseModel` is defined in a different module using a
+    Since :py:class:`ResponseModel` (which is the base class of
+    :py:class:`StepFunc`) is defined in a different module using a
     different :py:class:`sifra.structural._Base`, we want to make sure that
     we can still instantiate classes that are not visible within that module (
     like this one) outside of that module.
@@ -62,9 +35,9 @@ class StepFunc(ResponseModel):
         [lambda x: [float(val) for val in x]])
     ys = Element('list', 'Y values for steps', Element.NO_DEFAULT)
     dummy = Element(
-        'Unreachable_fromm_test_util',
-        'Uncreachable from test_util',
-        Unreachable_fromm_test_util)
+        'Unreachable_from_elements',
+        'Uncreachable from elements',
+        Unreachable_from_elements)
 
     def __validate__(self):
         if len(self.xs) != len(self.ys):
@@ -91,6 +64,14 @@ class LogNormalCDF(ResponseModel):
 
 
 
+
+COUCH_URL = 'http://couch:5984'
+DB_NAME = 'models'
+provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
+Base = generate_element_base(provider)
+
+
+
 class Test1(ut.TestCase):
     def setUp(self):
         self.model = Model()
@@ -109,14 +90,18 @@ class Test1(ut.TestCase):
         serialised and deserialised.
         """
 
+        abscissa = 1.0
+        object_id = 'my-instance'
+
         def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
             return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
-        object_id = 'my-instance'
-        res_1 = self.model.components['turbine'].frag_func(1.0)
+        res_1 = self.model.components['turbine'].frag_func(abscissa)
         self.model.save(False, object_id)
+
         model_copy = Model.load(object_id)
-        res_2 = model_copy.components['turbine'].frag_func(1.0)
+        res_2 = model_copy.components['turbine'].frag_func(abscissa)
+
         self.assertTrue(isclose(res_1, res_2, abs_tol=1e-09))
 
     def test_to_from_json_like(self):
