@@ -157,6 +157,24 @@ class Test1(ut.TestCase):
         new_model = self.model.clone()
         self.assertFalse(new_model._hasattr('thingy'))
 
+    def test_non_modified_serialisation(self):
+        """
+        When a model is saved and the resulting clone is saved without
+        modification, the id of its predecessor should be the same as what it
+        was cloned from and the result of jsonify should be length 1 (that is,
+        the result should only contain the class string).
+        """
+
+        m1 = self.model.save(False)
+        mj = jsonify(m1, False)
+        self.assertEqual(len(mj), 1, "Result of jsonify should have had length 1")
+
+        m2 = m1.save(False)
+        self.assertEqual(m1.predecessor._id, m2.predecessor._id,
+            "Models should have had same predecessor ids")
+
+
+
 class Test2(ut.TestCase):
     def test_cannot_have_fields(self):
         """

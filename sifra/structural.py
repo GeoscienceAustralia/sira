@@ -343,7 +343,7 @@ class _Base(object):
         Validate this instance and transform it into an object suitable for
         JSON serialisation.
         """
-        hasa = lambda k: hasattr(self, k) if flatten else self._hasattr
+        hasa = lambda k: hasattr(self, k) if flatten else self._hasattr(k)
 
         self.__validate__()
         res = {'class': [type(self).__module__, type(self).__name__]}
@@ -375,21 +375,28 @@ class _Base(object):
 
         res = jsonify(self, flatten)
 
-        if self._predecessor is not None:
-            if isinstance(self._predecessor, basestring):
-                res['predecessor'] = self._predecessor
-            elif hasattr(self._predecessor, '_id'):
-                res['predecessor'] = self._predecessor._id
+        if len(res) > 1:
+            # then we have added something to this.
+            if self._predecessor is not None:
+                if isinstance(self._predecessor, basestring):
+                    res['predecessor'] = self._predecessor
+                elif hasattr(self._predecessor, '_id'):
+                    res['predecessor'] = self._predecessor._id
 
-        if object_id is not None:
-            res['_id'] = object_id
+            if object_id is not None:
+                res['_id'] = object_id
 
-        # cannot do the following in one line as we need to set self._id last
-        doc = self.__class__._provider.get_db().save(res)
-        self._rev = doc[1]
-        self._id = doc[0]
+            # cannot do the following in one line as we need to set self._id last
+            #doc = self.__class__._provider.get_db().save(res)
+            doc = self.get_db().save(res)
+            self._rev = doc[1]
+            self._id = doc[0]
+            return self.clone()
 
-        return self.clone()
+        else:
+            # then we just skip self from the chain
+            return self.__class__(predecessor=self._predecessor)
+
 
     @classmethod
     def load(cls, object_id):
@@ -435,31 +442,44 @@ class SerialisationProvider(object):
 
 
 class CouchSerialisationProvider(SerialisationProvider):
+    """
+    Implementation of :py:class:`SerialisationProvider` for
+    `CouchDB <http://couchdb.apache.org/>`_.
+    """
+
+    _all_provider_instances = []
 
     def __init__(self, server_url, db_name):
         import couchdb
+        self._server_url = server_url
         self._server = couchdb.Server(server_url)
         self._db_name = db_name
         self._db = None
+        CouchSerialisationProvider._all_provider_instances.append(self)
+
 
     def _connect(self):
         import couchdb
         try:
+            # note that this causes an error in the couch db server... but that
+            # is the way the python-couchdb library is designed.
             self._db = self._server[self._db_name]
         except couchdb.http.ResourceNotFound:
             self._db = self._server.create(self._db_name)
 
     def get_db(self):
         import couchdb
+        # The following is not thread safe, but I don't think that creating
+        # multiple connections will cause problems... so don't worry about it.
         if self._db is None:
             self._connect()
         return self._db
 
     def delete_db(self):
         import couchdb
-        try:
+        if self._db is not None:
             self._server.delete(self._db_name)
-        except couchdb.http.ResourceNotFound:
-            pass
-        self._db = None
+        for prov in CouchSerialisationProvider._all_provider_instances:
+            if prov._server_url == self._server_url and prov._db_name == self._db_name:
+                prov._db = None
 
