@@ -47,8 +47,8 @@ class AlreadySavedException(Exception):
 
 class DisallowedElementException(ValueError):
     """
-    Raised if an an attempt is made to define an element with a dissallowed
-    name. Dissallowed names are specified by
+    Raised if an an attempt is made to define an element with a disallowed
+    name. Disallowed names are specified by
     :py:attr:StructuralMeta.DISALLOWED_FIELDS.
     """
     pass
@@ -420,6 +420,9 @@ def generate_element_base(provider):
     :param provider: Serialisation provider to get 'database connections' from.
     :type provider: :py:class:`SerialisationProvider`
     """
+
+    if not isinstance(provider, SerialisationProvider):
+        raise ValueError('"provider" must be instance of SerialisationProvider')
 
     return type(
         'ElementBase',

@@ -84,8 +84,8 @@ def draw_sys_layout(G, comp_df,
         shape="circle",
         style="rounded,filled",
         fixedsize="true",
-        width=1.5,
-        height=1.5,
+        width=1.8,
+        height=1.8,
         xlp="0, 0",
         color="royalblue3",  # gray14
         fillcolor="white",
@@ -123,8 +123,8 @@ def draw_sys_layout(G, comp_df,
                 fillcolor="white",
                 fontcolor="limegreen",
                 penwidth=2.0,
-                height=1.1,
-                width=2.0,
+                height=1.2,
+                width=2.2,
             )
 
         if str(comp_df.ix[node]['node_type']).lower() == 'sink':

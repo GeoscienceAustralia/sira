@@ -5,10 +5,13 @@ from sifra.structural import (
     CouchSerialisationProvider,
     Element,
     ValidationError,
-    MultipleBasesOfTypeBaseError,
-    AlreadySavedException,
-    jsonify,
     generate_element_base)
+
+# the following are only required for running the tests.
+from sifra.structural import (
+    jsonify,
+    AlreadySavedException,
+    MultipleBasesOfTypeBaseError)
 
 from sifra.elements import (
     Model,
@@ -210,4 +213,9 @@ class Test3(ut.TestCase):
 
         for nm in ('StepFunc', 'LogNormalCDF'):
             self.assertIn(nm, sc_names)
+
+
+
+if __name__ == '__main__':
+    ut.main()
 
