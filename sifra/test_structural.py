@@ -15,6 +15,9 @@ from sifra.elements import (
     Component,
     ResponseModel)
 
+from sifra.structures import (
+    XYPairs)
+
 
 class Unreachable_from_elements(object):
     """
@@ -31,24 +34,25 @@ class Unreachable_from_elements(object):
 
 
 class StepFunc(ResponseModel):
-    xs = Element('list', 'X values for steps', Element.NO_DEFAULT,
-        [lambda x: [float(val) for val in x]])
-    ys = Element('list', 'Y values for steps', Element.NO_DEFAULT)
+    xys = Element('XYPairs', 'A list of X, Y pairs.', list,
+        [lambda xy: [(float(x), float(y)) for x, y in xy]])
+
     dummy = Element(
         'Unreachable_from_elements',
-        'Uncreachable from elements',
+        'Unreachable from elements',
         Unreachable_from_elements)
 
-    def __validate__(self):
-        if len(self.xs) != len(self.ys):
-            raise ValidationError('length of xs and ys must be equal')
-
     def __call__(self, value):
-        for x, y in zip(self.xs, self.ys):
+        """
+        Note that intervals are closed on the right.
+        """
+
+        for x, y in self.xys:
             if value < x:
                 return y
 
         raise ValueError('value is greater than all xs!')
+
 
 
 
@@ -75,7 +79,7 @@ Base = generate_element_base(provider)
 class Test1(ut.TestCase):
     def setUp(self):
         self.model = Model()
-        frag_curve = StepFunc(xs=[1,2,3], ys=[0.,.5,1.])
+        frag_curve = StepFunc(xys=XYPairs([[1.,0.], [2.,.5], [3.,1.]]))
         boiler = Component(frag_func=frag_curve)
         turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
         self.model.add_component('boiler', boiler)
@@ -197,4 +201,13 @@ class Test2(ut.TestCase):
         c2 = type('C2', (Base,), {})
         with self.assertRaises(MultipleBasesOfTypeBaseError):
             c3 = type('C3', (c1, c2), {})
+
+
+
+class Test3(ut.TestCase):
+    def test_gets_all_subclasses(self):
+        sc_names = [cls.__name__ for cls in ResponseModel.__subclasses__()]
+
+        for nm in ('StepFunc', 'LogNormalCDF'):
+            self.assertIn(nm, sc_names)
 

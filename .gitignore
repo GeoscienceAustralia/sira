@@ -57,6 +57,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# couch db stuff
+db/
+
 # PyBuilder
 target/
 

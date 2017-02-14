@@ -136,7 +136,7 @@ class Pythonizer(object):
 class Element(object):
     """
     Represents an element of a model. If a model were represented in a relational
-    database, this is analgous to a field in a table.
+    database, this would be analgous to a field in a table.
     """
 
     @staticmethod
@@ -193,7 +193,8 @@ class Element(object):
             self.cls = ['__builtin__', self.cls[1]]
 
         if not isinstance(val, cls):
-            raise ValidationError('value is not instance of {}'.format(self.cls))
+            raise ValidationError('value is not instance of {}'.format(
+                '.'.join(self.cls)))
 
         if self.validators is not None:
             for v in self.validators:
@@ -208,6 +209,10 @@ class Element(object):
 
 
 class StructuralMeta(type):
+    """
+    Metaclass for structural
+    """
+
     #: Names of :py:class:`Element`s that cannot defined on any class ``c`` for
     #: which ``issubclass(type(c), StructuralMeta)`` is *True*. These are names
     #: of elements which are used internally and for the sake of the performance
