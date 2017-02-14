@@ -60,6 +60,9 @@ docs/_build/
 # couch db stuff
 db/
 
+# node stuff
+sifra-gui/node_modules
+
 # PyBuilder
 target/
 
