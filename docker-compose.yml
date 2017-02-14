@@ -1,0 +1,14 @@
+version: '2.1'
+services:
+    couch:
+        image: couchdb
+        volumes:
+            - /home/simon/code/sifra/db:/usr/local/var/lib/couchdb
+    sifra:
+        image: sifra
+        #image: geoscienceaustralia/sifra:data-model
+        volumes:
+            - /home/simon/code/sifra:/sifra
+        stdin_open: true
+        tty: true
+
