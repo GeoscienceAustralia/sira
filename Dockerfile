@@ -8,7 +8,6 @@ RUN apt-get install -y python-pip python-dev
 RUN pip install --upgrade pip
 RUN pip install numpy
 RUN pip install pandas
-RUN pip install igraph
 RUN pip install networkx
 RUN pip install seaborn
 RUN pip install scipy
@@ -21,6 +20,8 @@ RUN pip install couchdb
 RUN pip install python-igraph==0.7.1.post6
 RUN pip install pygraphviz
 RUN pip install xlrd
+RUN pip install jgraph
+RUN pip install sqlalchemy
 VOLUME "/sifra"
 ENV PYTHONPATH /sifra:$PYTHONPATH
 

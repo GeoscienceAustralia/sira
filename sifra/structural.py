@@ -2,6 +2,9 @@ import abc
 import importlib
 import collections
 import inspect
+from copy import deepcopy
+from sifra.settings import USE_COUCH_DB, COUCH_DB_URL, COUCH_DB_NAME
+from sifra.serialisation import SerialisationProvider
 
 
 
@@ -72,7 +75,12 @@ class MultipleBasesOfTypeBaseError(ValueError):
 
 
 
-def jsonify(obj, flatten):
+def class_getter(mod_class):
+    return getattr(importlib.import_module(mod_class[0]), mod_class[1])
+
+
+
+def jsonify(obj):
     """
     Convert an object to a representation that can be converted to a JSON document.
 
@@ -87,12 +95,75 @@ def jsonify(obj, flatten):
 
     if hasattr(obj, '__jsonify__'):
         # should probably check the number of args
-        return obj.__jsonify__(flatten)
+        return obj.__jsonify__()
     if isinstance(obj, dict):
-        return {jsonify(k, flatten) : jsonify(v, flatten) for k, v in obj.iteritems()}
+        return {jsonify(k) : jsonify(v) for k, v in obj.iteritems()}
     if isinstance(obj, collections.Iterable) and not isinstance(obj, basestring):
-        return [jsonify(v, flatten) for v in obj]
+        return [jsonify(v) for v in obj]
     return obj
+
+
+
+def _merge_data_and_metadata(meta, data):
+    """
+    .. note:: It is pretty inefficient duplicating the data as much as we do in
+        this method. It would be possible to do this based on the value alone
+        (getting the json_desc as required) in the browser. The only trick is,
+        being able to differentiate between a list and a dict in javascript.
+    """
+
+    if not isinstance(data, dict):
+        meta['_value'] = data
+        return
+
+    if 'class' in data and meta['class'] != '.'.join(data['class']):
+        if not issubclass(
+            class_getter(data['class']),
+            class_getter(meta['class'].rsplit('.', 1))):
+            raise Exception('inconsisent class structure')
+        meta.update(deepcopy(class_getter(data['class']).__json_desc__))
+
+    meta['_value'] = data
+    for k, v in data.iteritems():
+        if k == 'class' or k not in meta:
+            continue
+        if isinstance(v, dict):
+            _merge_data_and_metadata(meta[k], v)
+            if meta[k]['class'] == '__builtin__.dict':
+                meta[k]['_items'] = {}
+                for k1, v1 in v.iteritems():
+                    # note that the following line implys that dicts can
+                    # only contain classes that extend sifra.structural.Base, or
+                    # at least have __json_desc__ defined
+                    nextMeta = deepcopy(class_getter(v1['class']).__json_desc__)
+                    meta[k]['_items'][k1] = nextMeta
+                    _merge_data_and_metadata(nextMeta, v1)
+        elif isinstance(v, list):
+            # check that meta thinks we are dealing with a dict... should
+            # be debug time assert when happy with this.
+            if meta[k]['class'] != '__builtin__.list':
+                raise Exception('inconsistent value and description')
+            meta[k]['_value'] = v
+            meta[k]['_items'] = []
+            for v1 in v:
+                # note that the following line implys that dicts can
+                # only contain classes that extend sifra.structural.Base, or
+                # at least have __json_desc__ defined
+                nextMeta = deepcopy(class_getter(v1['class']).__json_desc__)
+                meta[k]['_items'].append(nextMeta)
+                _merge_data_and_metadata(nextMeta, v1)
+
+        else:
+            _merge_data_and_metadata(meta[k], data[k])
+
+
+
+class Info(str):
+    """
+    Strings that provide 'metadata' on classes. At present, this is only used to
+    identify immutable strings on a class when they are displayed.
+    """
+    pass
 
 
 
@@ -105,12 +176,9 @@ class Pythonizer(object):
     :param module_name: The name of a Python module.
     """
 
-    def __init__(self, module_name):
+    def __init__(self, module_name=''):
         self.module_name = module_name
 
-    @staticmethod
-    def _class_getter(mod_class):
-        return getattr(importlib.import_module(mod_class[0]), mod_class[1])
 
     def __call__(self, obj):
         """
@@ -123,10 +191,15 @@ class Pythonizer(object):
         """
 
         if isinstance(obj, dict):
+            attrs = obj.pop('_attributes', None)
             if 'class' in obj:
                 cls = obj.pop('class')
-                return self._class_getter(cls)(**self.__call__(obj))
-            return {str(k): self.__call__(v) for k, v in obj.iteritems()}
+                res = class_getter(cls)(**self.__call__(obj))
+            else:
+                res = {str(k): self.__call__(v) for k, v in obj.iteritems()}
+            if attrs is not None:
+                res._attributes = attrs
+            return res
         if isinstance(obj, list):
             return [self.__call__(v) for v in obj]
         return obj
@@ -150,7 +223,7 @@ class Element(object):
 
     def __init__(self, cls, description, default=None, validators=None):
         self.cls = cls
-        self.description = description
+        self.description = Info(description)
         self._default = default
         self.validators = validators
 
@@ -160,13 +233,13 @@ class Element(object):
             raise NoDefaultException()
         return self._default() if callable(self._default) else self._default
 
-    def __jsonify__(self, val, flatten):
+    def __jsonify__(self, val):
         """
         Convert *val* to a form that can be JSON sersialised.
         """
 
         self.__validate__(val)
-        return jsonify(val, flatten)
+        return jsonify(val)
 
     def __validate__(self, val):
         """
@@ -186,15 +259,19 @@ class Element(object):
         if isinstance(self.cls, basestring):
             self.cls = [self.to_python.module_name, self.cls]
         try:
-            cls = self.to_python._class_getter(self.cls)
+            cls = class_getter(self.cls)
+            self.cls = [cls.__module__, cls.__name__]
         except:
             # hope that we have a builtin
             cls = eval(self.cls[1])
             self.cls = ['__builtin__', self.cls[1]]
 
         if not isinstance(val, cls):
-            raise ValidationError('value is not instance of {}'.format(
-                '.'.join(self.cls)))
+            try:
+                val = cls(val)
+            except:
+                raise ValidationError('value is not instance of {}'.format(
+                    '.'.join(self.cls)))
 
         if self.validators is not None:
             for v in self.validators:
@@ -217,39 +294,87 @@ class StructuralMeta(type):
     #: which ``issubclass(type(c), StructuralMeta)`` is *True*. These are names
     #: of elements which are used internally and for the sake of the performance
     #: of attribute lookup, are banned for other use.
-    DISALLOWED_FIELDS = ['class', 'predecessor', '_id', '_rev']
+    DISALLOWED_FIELDS = [
+        'class',
+        'predecessor', '_predecessor',
+        '_value',
+        '_attributes']
 
     def __new__(cls, name, bases, dct):
         # check that only one base is instance of _Base
         if len([base for base in bases if issubclass(type(base), StructuralMeta)]) > 1:
             raise MultipleBasesOfTypeBaseError('Invalid bases in class {}'.format(name))
 
-        # extract the parameters
-        params = {}
-        for k in dct.keys():
-            if isinstance(dct[k], Element):
-                params[k] = dct.pop(k)
+        def extract_params_of_type(clazz):
+            # extract the parameters
+            params = {}
+            for k in dct.keys():
+                if isinstance(dct[k], clazz):
+                    params[k] = dct.pop(k)
 
-        # cannot have a parameter with name class, as this messes with
-        # serialisation
-        for field in StructuralMeta.DISALLOWED_FIELDS:
-            if field in params:
-                raise DisallowedElementException(
-                    'class {} cannot have Element with name "{}"'.format(name, field))
+            # cannot have a parameter with name class, as this messes with
+            # serialisation
+            for field in StructuralMeta.DISALLOWED_FIELDS:
+                if field in params:
+                    raise DisallowedElementException(
+                        'class {} cannot have Element with name "{}"'.format(name, field))
 
-        dct['__params__'] = params
+            return params
+
+        dct['__params__'] = extract_params_of_type(Element)
+
+        # create a json description of the class
+        json_desc = {}
+        for k, v in dct['__params__'].iteritems():
+            # TODO: put validators in here
+            json_desc[k] = {'class': v.cls}
+
+
+        for k, v in extract_params_of_type(Info).iteritems():
+            json_desc[k] = {
+                'class': 'Info',
+                'value': str(v)}
+
+        dct['__json_desc__'] = json_desc
 
         return super(StructuralMeta, cls).__new__(cls, name, bases, dct)
 
     def __init__(cls, name, bases, dct):
-        cls.to_python = Pythonizer(inspect.getmodule(cls).__name__)
+        # we do this here as I prefer to get the module from the class. Not sure
+        # if it matters in practice, but it just feels better.
+        cls_module = inspect.getmodule(cls).__name__
+        cls.to_python = Pythonizer(cls_module)
+        cls.__json_desc__['class'] = '.'.join([cls_module, name])
+
         for param in cls.__params__.itervalues():
             param.to_python = cls.to_python
+
+        for k, v in cls.__json_desc__.iteritems():
+            if k == 'class':
+                continue
+            try:
+                ecls = class_getter([cls_module, v['class']])
+                if hasattr(ecls, '__json_desc__'):
+                    cls.__json_desc__[k] = ecls.__json_desc__
+                else:
+                    v['class'] = '.'.join([ecls.__module__, ecls.__name__])
+                    if isinstance(ecls, Element):
+                        try:
+                            default = v.default
+                        except NoDefaultException:
+                            pass
+                        else:
+                            default = jsonify(default)
+                            if default:
+                                cls.__json_desc__[k]['default'] = default
+            except:
+                v['class'] = '.'.join(['__builtin__', v['class']])
+
         super(StructuralMeta, cls).__init__(name, bases, dct)
 
 
 
-class _Base(object):
+class Base(object):
     """
     Base class for all 'model' classes. **This should never be used by clients**
     and serves as a base class for dynamically generated classes returned by
@@ -259,11 +384,6 @@ class _Base(object):
     __metaclass__ = StructuralMeta
 
     def __init__(self, **kwargs):
-        # can't do the following with self._id, as this causes problems with
-        # __setattr__ and, in particular, __getattr__.
-        object.__setattr__(self, '_id', None)
-        _id = kwargs.pop('_id', None)
-        self._rev = kwargs.pop('_rev', None)
         self._predecessor = kwargs.pop('predecessor', None)
 
         if self._predecessor is None:
@@ -277,42 +397,14 @@ class _Base(object):
         for k, v in kwargs.iteritems():
             setattr(self, k, v)
 
-        # must be done last to avoid __setattr__ getting upset.
-        if _id is not None:
-            self._id = _id
-
-    def __setattr__(self, name, value):
-        """
-        Override of :py:meth:`object.__setattr__` which raises
-        :py:exception:`TypeError` if an attempt is made to set an attribute on
-        an instance for which has already been saved.
-
-        .. overrides::`object.__setattr__`
-
-        """
-
-        if self._id is not None:
-            raise TypeError('Cannot modify saved item. Please clone first.')
-        object.__setattr__(self, name, value)
-
-    def __getattr__(self, name):
-        """
-        Get an attribute from the objects predecessor.
-        """
-
-        try:
-            return getattr(self.predecessor, name)
-        except AttributeError:
-            raise AttributeError("'{}' has no attribute {}".format(self.__class__.__name__, name))
-
     @property
     def predecessor(self):
         """
         The objects predecessor. This goes back to the database if required.
         """
 
-        if isinstance(self._predecessor, basestring):
-            self._predecessor = to_python(self.get_db().get(self._predecessor))
+        if isinstance(self._predecessor, list):
+            self._predecessor = self.to_python(self.get_db().get(self._predecessor[0]))
         return self._predecessor
 
     @classmethod
@@ -335,73 +427,50 @@ class _Base(object):
 
         pass
 
-    def _hasattr(self, key):
-        # like hasattr, but does not look into predecessor.
-        try:
-            object.__getattribute__(self, key)
-        except AttributeError:
-            return False
-        return True
-
-    def __jsonify__(self, flatten):
+    def __jsonify__(self):
         """
         Validate this instance and transform it into an object suitable for
         JSON serialisation.
         """
-        hasa = lambda k: hasattr(self, k) if flatten else self._hasattr(k)
 
         self.__validate__()
         res = {'class': [type(self).__module__, type(self).__name__]}
         res.update({
-            jsonify(k, flatten): v.__jsonify__(getattr(self, k), flatten)
+            jsonify(k): v.__jsonify__(getattr(self, k))
             for k, v in self.__params__.iteritems()
-            if hasa(k)})
+            if hasattr(self, k)})
         return res
 
-    def clone(self):
+    def jsonify_with_metadata(self):
         """
-        Clone this instance. This creates and returns a new instance with
-        predecessor *self*.
+        .. note:: It is pretty inefficient duplicating the data as much as we do in
+            this method. It would be possible to do this based on the value alone
+            (getting the json_desc as required) in the browser. The only trick is,
+            being able to differentiate between a list and a dict in javascript.
         """
 
-        return self.__class__(predecessor=self)
+        meta = deepcopy(self.__json_desc__)
+        data = jsonify(self)
+        _merge_data_and_metadata(meta, data)
+        return meta
 
-    def save(self, flatten, object_id=None):
+    def save(self, category=None, attributes=None):
         """
         Save this instance.
-
-        .. todo:: We should check that no objet with id *object_id* already
-            exists.
         """
 
-        if self._id is not None:
-            # then this has been saved before!
-            raise AlreadySavedException('Document has already been saved.')
+        res = jsonify(self)
 
-        res = jsonify(self, flatten)
+        # then we have added something to this.
+        if self._predecessor is not None:
+            res['predecessor'] = self._predecessor
 
-        if len(res) > 1:
-            # then we have added something to this.
-            if self._predecessor is not None:
-                if isinstance(self._predecessor, basestring):
-                    res['predecessor'] = self._predecessor
-                elif hasattr(self._predecessor, '_id'):
-                    res['predecessor'] = self._predecessor._id
+        self._predecessor = self.get_db().save(
+            res,
+            category=category,
+            attributes=attributes)
 
-            if object_id is not None:
-                res['_id'] = object_id
-
-            # cannot do the following in one line as we need to set self._id last
-            #doc = self.__class__._provider.get_db().save(res)
-            doc = self.get_db().save(res)
-            self._rev = doc[1]
-            self._id = doc[0]
-            return self.clone()
-
-        else:
-            # then we just skip self from the chain
-            return self.__class__(predecessor=self._predecessor)
-
+        return self._predecessor
 
     @classmethod
     def load(cls, object_id):
@@ -411,83 +480,16 @@ class _Base(object):
 
         return cls.to_python(cls._provider.get_db().get(object_id))
 
-
-
-def generate_element_base(provider):
-    """
-    Generate a base class for deriving 'model' classes from.
-
-    :param provider: Serialisation provider to get 'database connections' from.
-    :type provider: :py:class:`SerialisationProvider`
-    """
-
-    if not isinstance(provider, SerialisationProvider):
-        raise ValueError('"provider" must be instance of SerialisationProvider')
-
-    return type(
-        'ElementBase',
-        (_Base,),
-        {'_provider': provider})
+    @classmethod
+    def set_provider(cls, provider):
+        cls._provider = provider
 
 
 
-class SerialisationProvider(object):
-    """
-    Provides access to an object that can be used to serialise models or other
-    components.
-    """
-
-    __metaclass__ = abc.ABCMeta
-
-    @abc.abstractmethod
-    def get_db(self):
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete_db(self):
-        raise NotImplementedError()
-
-
-
-class CouchSerialisationProvider(SerialisationProvider):
-    """
-    Implementation of :py:class:`SerialisationProvider` for
-    `CouchDB <http://couchdb.apache.org/>`_.
-    """
-
-    _all_provider_instances = []
-
-    def __init__(self, server_url, db_name):
-        import couchdb
-        self._server_url = server_url
-        self._server = couchdb.Server(server_url)
-        self._db_name = db_name
-        self._db = None
-        CouchSerialisationProvider._all_provider_instances.append(self)
-
-
-    def _connect(self):
-        import couchdb
-        try:
-            # note that this causes an error in the couch db server... but that
-            # is the way the python-couchdb library is designed.
-            self._db = self._server[self._db_name]
-        except couchdb.http.ResourceNotFound:
-            self._db = self._server.create(self._db_name)
-
-    def get_db(self):
-        import couchdb
-        # The following is not thread safe, but I don't think that creating
-        # multiple connections will cause problems... so don't worry about it.
-        if self._db is None:
-            self._connect()
-        return self._db
-
-    def delete_db(self):
-        import couchdb
-        if self._db is not None:
-            self._server.delete(self._db_name)
-        for prov in CouchSerialisationProvider._all_provider_instances:
-            if prov._server_url == self._server_url and prov._db_name == self._db_name:
-                prov._db = None
+if USE_COUCH_DB:
+    from sifra.serialisation import CouchSerialisationProvider
+    Base.set_provider(CouchSerialisationProvider(COUCH_DB_URL, COUCH_DB_NAME))
+else:
+    from sifra.serialisation import SqliteSerialisationProvider
+    Base.set_provider(SqliteSerialisationProvider())
 

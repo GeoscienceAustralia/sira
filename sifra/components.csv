@@ -1,0 +1,26 @@
+hazard,sector,facility_type,component
+earthquake,electric power station,Electric Power Network,Generation Plant
+earthquake,electric power station,Electric Power Network,Substation
+earthquake,electric power station,Generation Plant,Ash Disposal System
+earthquake,electric power station,Generation Plant,Boiler
+earthquake,electric power station,Generation Plant,Coal Yard
+earthquake,electric power station,Generation Plant,Cooling System
+earthquake,electric power station,Generation Plant,Demineralisation Plant
+earthquake,electric power station,Generation Plant,Electrostatic Precipitator
+earthquake,electric power station,Generation Plant,Generator
+earthquake,electric power station,Generation Plant,Main Feed Conveyor
+earthquake,electric power station,Generation Plant,Power House
+earthquake,electric power station,Generation Plant,Stack
+earthquake,electric power station,Generation Plant,Stacker Reclaimer
+earthquake,electric power station,Generation Plant,Supply Conveyor
+earthquake,electric power station,Generation Plant,Turbine and Condenser
+earthquake,electric power station,Generation Plant,Unloader
+earthquake,electric power station,Substation,Capacitive Voltage Transformer
+earthquake,electric power station,Substation,Current Transformer
+earthquake,electric power station,Substation,Disconnect Switch
+earthquake,electric power station,Substation,Lightning Arrester
+earthquake,electric power station,Substation,Power Transformer
+earthquake,electric power station,Substation,Power Transformer
+earthquake,electric power station,Substation,Control Building
+earthquake,electric power station,Substation,Grounding
+earthquake,electric power station,Substation,Bus

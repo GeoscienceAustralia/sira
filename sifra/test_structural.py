@@ -2,10 +2,9 @@ import unittest as ut
 
 # these are required for defining the data model
 from sifra.structural import (
-    CouchSerialisationProvider,
+    Base,
     Element,
-    ValidationError,
-    generate_element_base)
+    ValidationError)
 
 # the following are only required for running the tests.
 from sifra.structural import (
@@ -21,6 +20,10 @@ from sifra.elements import (
 from sifra.structures import (
     XYPairs)
 
+from sifra.serialisation import (
+    CouchSerialisationProvider)
+
+
 
 class Unreachable_from_elements(object):
     """
@@ -31,7 +34,7 @@ class Unreachable_from_elements(object):
     like this one) outside of that module.
     """
 
-    def __jsonify__(self, flatten):
+    def __jsonify__(self):
         return {'class': [type(self).__module__, type(self).__name__]}
 
 
@@ -72,10 +75,10 @@ class LogNormalCDF(ResponseModel):
 
 
 
-COUCH_URL = 'http://couch:5984'
-DB_NAME = 'models'
-provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
-Base = generate_element_base(provider)
+#COUCH_URL = 'http://couch:5984'
+#DB_NAME = 'models'
+#provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
+#Base = generate_element_base(provider)
 
 
 
@@ -89,7 +92,7 @@ class Test1(ut.TestCase):
         self.model.add_component('turbine', turbine)
 
     def tearDown(self):
-        provider.delete_db()
+        Base._provider.delete_db()
 
     def test_can_call(self):
         """
@@ -98,15 +101,23 @@ class Test1(ut.TestCase):
         """
 
         abscissa = 1.0
-        object_id = 'my-instance'
+        object_name = 'my-instance'
 
         def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
             return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
         res_1 = self.model.components['turbine'].frag_func(abscissa)
-        self.model.save(False, object_id)
+        oid, ver = self.model.save(attributes = {'name': object_name})
 
-        model_copy = Model.load(object_id)
+        model_copy = Model.load(oid)
+        name = value = None
+        for name, value in model_copy._attributes.iteritems():
+            if name == 'name':
+                break
+
+        self.assertIsNotNone(name, 'attribute "name" should not be None.')
+        self.assertEqual(value, object_name)
+
         res_2 = model_copy.components['turbine'].frag_func(abscissa)
 
         self.assertTrue(isclose(res_1, res_2, abs_tol=1e-09))
@@ -116,69 +127,15 @@ class Test1(ut.TestCase):
         Test that a model can be created from one converted 'to JSON'.
         """
 
-        model2 = Base.to_python(jsonify(self.model, False))
+        model2 = Base.to_python(jsonify(self.model))
 
-    def test_modifiability(self):
+    def test_jsonify_with_metadata(self):
         """
-        Test that:
-
-            - a previously saved model cannot be modified, and
-            - a freshly cloned model can be modified.
+        Test that :py:meth:`sifra.structural.Base.jsnoify_with_metadata` does
+        not raise an exception. This test needs to do more.
         """
 
-        # first use the db provider directly. note that when we used the db
-        # directly, it would be possible to save a previously saved db again
-        # as there is no check for this (which is done in _Base.save())
-        _id, _rev = provider.get_db().save(jsonify(self.model, False))
-        model2 = Base.to_python(provider.get_db().get(_id))
-
-        # check that we cannot modify the copy pulled from the db.
-        with self.assertRaises(TypeError):
-            model2.name = 'new name'
-
-        # now use a model which has had save called on it
-        model3 = model2.clone()
-        # check that we can modify it at first
-        model3.name = 'new name'
-        # check that once it has been saved, it can no longer be modified
-        model3.save(False)
-        with self.assertRaises(TypeError):
-            model3.name = 'new new name'
-
-    def test_cannot_resave(self):
-        """
-        Check that a model which has been saved cannot be saved again.
-        """
-
-        nextVersionOfModel = self.model.save(False)
-        with self.assertRaises(AlreadySavedException):
-            self.model.save(False)
-
-    def test_correct_hasattr(self):
-        """
-        Check that the method for checking existence of an attribute on an
-        an instance excluding is predecessor is working.
-        """
-
-        self.model.thingy = 'hi'
-        new_model = self.model.clone()
-        self.assertFalse(new_model._hasattr('thingy'))
-
-    def test_non_modified_serialisation(self):
-        """
-        When a model is saved and the resulting clone is saved without
-        modification, the id of its predecessor should be the same as what it
-        was cloned from and the result of jsonify should be length 1 (that is,
-        the result should only contain the class string).
-        """
-
-        m1 = self.model.save(False)
-        mj = jsonify(m1, False)
-        self.assertEqual(len(mj), 1, "Result of jsonify should have had length 1")
-
-        m2 = m1.save(False)
-        self.assertEqual(m1.predecessor._id, m2.predecessor._id,
-            "Models should have had same predecessor ids")
+        data = self.model.jsonify_with_metadata()
 
 
 
@@ -186,7 +143,7 @@ class Test2(ut.TestCase):
     def test_cannot_have_fields(self):
         """
         Check that we cannot create a model containing elements with
-        dissallowed names.
+        dissallowed names, such as "predecessor".
         """
 
         with self.assertRaises(ValueError):
@@ -216,6 +173,26 @@ class Test3(ut.TestCase):
 
 
 
+class Test4(ut.TestCase):
+    def test_has_json_desc(self):
+        desc = Model.__json_desc__
+        self.assertIn('description', desc, 'Model should contain "description"')
+        self.assertIn('components', desc, 'Model should cotain "components"')
+
+
+
+
+
+
+
 if __name__ == '__main__':
     ut.main()
+
+else:
+    model = Model()
+    frag_curve = StepFunc(xys=XYPairs([[1.,0.], [2.,.5], [3.,1.]]))
+    boiler = Component(frag_func=frag_curve)
+    turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
+    model.add_component('boiler', boiler)
+    model.add_component('turbine', turbine)
 

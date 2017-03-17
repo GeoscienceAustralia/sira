@@ -2,17 +2,9 @@ import unittest as ut
 
 # these are required for defining the data model
 from sifra.structural import (
-    CouchSerialisationProvider,
     Element,
-    ValidationError,
-    generate_element_base)
-
-
-
-COUCH_URL = 'http://couch:5984'
-DB_NAME = 'models'
-provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
-Base = generate_element_base(provider)
+    Info,
+    Base)
 
 
 
@@ -21,7 +13,11 @@ class ResponseModel(Base):
         raise NotImplementedError('__call__ is not impleme ted on {}'.format(
             self.__class__.__name__))
 
+
+
 class Model(Base):
+    description = Info('Represents a model (e.g. a "model of a powerstation")')
+
     components = Element('dict', 'A component', dict,
         [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
 
