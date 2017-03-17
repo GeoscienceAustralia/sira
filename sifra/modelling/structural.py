@@ -3,7 +3,6 @@ import importlib
 import collections
 import inspect
 from copy import deepcopy
-from sifra.settings import USE_COUCH_DB, COUCH_DB_URL, COUCH_DB_NAME
 from sifra.modelling.serialisation import SerialisationProvider
 
 
@@ -486,10 +485,6 @@ class Base(object):
 
 
 
-if USE_COUCH_DB:
-    from sifra.modelling.serialisation import CouchSerialisationProvider
-    Base.set_provider(CouchSerialisationProvider(COUCH_DB_URL, COUCH_DB_NAME))
-else:
-    from sifra.modelling.serialisation import SqliteSerialisationProvider
-    Base.set_provider(SqliteSerialisationProvider())
+from sifra.modelling.serialisation import SqliteSerialisationProvider
+Base.set_provider(SqliteSerialisationProvider())
 

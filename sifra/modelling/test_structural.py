@@ -17,9 +17,6 @@ from sifra.modelling.elements import (
 from sifra.modelling.structures import (
     XYPairs)
 
-from sifra.modelling.serialisation import (
-    CouchSerialisationProvider)
-
 
 
 class Unreachable_from_elements(object):
@@ -69,13 +66,6 @@ class LogNormalCDF(ResponseModel):
         import scipy.stats as stats
         return stats.lognorm.cdf(value, self.beta, scale=self.median)
 
-
-
-
-#COUCH_URL = 'http://couch:5984'
-#DB_NAME = 'models'
-#provider = CouchSerialisationProvider(COUCH_URL, DB_NAME)
-#Base = generate_element_base(provider)
 
 
 

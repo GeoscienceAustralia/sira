@@ -64,7 +64,6 @@ dependencies:
     - babel==2.1.1
     - blockdiag==1.5.3
     - brewer2mpl==1.4.1
-    - couchdb==1.1
     - docutils==0.12
     - funcparserlib==0.3.6
     - ipython-genutils==0.1.0

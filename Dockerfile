@@ -16,7 +16,6 @@ RUN pip install lmfit
 RUN pip install brewer2mpl
 RUN pip install colorama
 RUN pip install parmap
-RUN pip install couchdb
 RUN pip install python-igraph==0.7.1.post6
 RUN pip install pygraphviz
 RUN pip install xlrd

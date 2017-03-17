@@ -1,9 +1,5 @@
 version: '3'
 services:
-    couch:
-        image: couchdb
-        volumes:
-            - ./db:/usr/local/var/lib/couchdb
     sifraapi:
         build:
             context: .

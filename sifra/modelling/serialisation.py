@@ -1,7 +1,6 @@
 import sys
 import abc
 import json
-import couchdb
 from sifra.modelling.components import (
     _Session,
     Component,
@@ -38,66 +37,6 @@ def _addAttributes(component, attributes):
 
 def _attributesToDict(attributes):
     return {a.name: a.value for a in attributes}
-
-
-
-class CouchDBProxy(object):
-    def __init__(self, db):
-        self._db = db
-
-    def get(self, obj_id):
-        return self._db.get(obj_id)
-
-    def save(self, obj, category=None, attributes=None):
-        clazz = obj['class']
-        oid, over = self._db.save(obj)
-        if category is not None:
-            category = getComponentCategory(**category)
-        component = Component(category=category, clazz=clazz)
-        session = _Session()
-        session.add(component)
-        _addAttributes(component, attributes)
-        session.commit()
-        return [oid, over]
-
-
-
-class CouchSerialisationProvider(SerialisationProvider):
-    """
-    Implementation of :py:class:`SerialisationProvider` for
-    `CouchDB <http://couchdb.apache.org/>`_.
-    """
-
-    _all_provider_instances = []
-
-    def __init__(self, server_url, db_name):
-        self._server_url = server_url
-        self._server = couchdb.Server(server_url)
-        self._db_name = db_name
-        self._db = None
-        CouchSerialisationProvider._all_provider_instances.append(self)
-
-    def _connect(self):
-        try:
-            # note that this causes an error in the couch db server... but that
-            # is the way the python-couchdb library is designed.
-            self._db = self._server[self._db_name]
-        except couchdb.http.ResourceNotFound:
-            self._db = self._server.create(self._db_name)
-
-    def get_db(self):
-        # The following is not thread safe, but I don't think that creating
-        # multiple connections will cause problems... so don't worry about it.
-        if self._db is None:
-            self._connect()
-        return CouchDBProxy(self._db)
-
-    def delete_db(self):
-        if self._db is not None:
-            self._server.delete(self._db_name)
-            for prov in CouchSerialisationProvider._all_provider_instances:
-                if prov._server_url == self._server_url and prov._db_name == self._db_name:
-                    prov._db = None
 
 
 
