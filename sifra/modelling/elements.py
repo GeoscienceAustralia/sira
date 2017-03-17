@@ -1,7 +1,5 @@
-import unittest as ut
-
 # these are required for defining the data model
-from sifra.structural import (
+from sifra.modelling.structural import (
     Element,
     Info,
     Base)

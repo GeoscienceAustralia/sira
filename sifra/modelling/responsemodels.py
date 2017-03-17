@@ -1,6 +1,6 @@
-from sifra.elements import ResponseModel
-from sifra.structures import XYPairs
-from sifra.structural import Element as _Element
+from sifra.modelling.elements import ResponseModel
+from sifra.modelling.structures import XYPairs
+from sifra.modelling.structural import Element as _Element
 
 class StepFunc(ResponseModel):
     xys = _Element('XYPairs', 'A list of X, Y pairs.', list,

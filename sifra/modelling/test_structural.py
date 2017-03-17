@@ -1,26 +1,23 @@
 import unittest as ut
 
 # these are required for defining the data model
-from sifra.structural import (
+from sifra.modelling.structural import (
     Base,
     Element,
-    ValidationError)
-
-# the following are only required for running the tests.
-from sifra.structural import (
+    ValidationError,
     jsonify,
     AlreadySavedException,
     MultipleBasesOfTypeBaseError)
 
-from sifra.elements import (
+from sifra.modelling.elements import (
     Model,
     Component,
     ResponseModel)
 
-from sifra.structures import (
+from sifra.modelling.structures import (
     XYPairs)
 
-from sifra.serialisation import (
+from sifra.modelling.serialisation import (
     CouchSerialisationProvider)
 
 

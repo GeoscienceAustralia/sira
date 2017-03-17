@@ -13,7 +13,7 @@ import { ClassMetadataService } from '../class-metadata.service';
         </div>
         <div class="element-body" [@bodyState]="bodyState">
             <template ngFor let-key [ngForOf]="classDefKeys">
-                <div *ngIf="_classDef[key].class==='sifra.structural.Info'">
+                <div *ngIf="_classDef[key].class==='sifra.modelling.structural.Info'">
                     <div class="string-display-name">
                         {{key}}
                     </div>
@@ -23,7 +23,7 @@ import { ClassMetadataService } from '../class-metadata.service';
                 </div>
             </template>
             <template ngFor let-key [ngForOf]="classDefKeys">
-                <template [ngIf]="key !== 'class' && _classDef[key].class!=='sifra.structural.Info'">
+                <template [ngIf]="key !== 'class' && _classDef[key].class!=='sifra.modelling.structural.Info'">
                     <div [ngSwitch]="_classDef[key].class">
 
                         <string-display *ngSwitchCase="'__builtin__.string'"
@@ -44,7 +44,7 @@ import { ClassMetadataService } from '../class-metadata.service';
                             (publish)="doPublish($event)">
                         </dict-display>
 
-                        <pair-list-display *ngSwitchCase="'sifra.structures.XYPairs'"
+                        <pair-list-display *ngSwitchCase="'sifra.modelling.structures.XYPairs'"
                             [name]="key"
                             [value]="_classDef[key]"
                             (publish)="doPublish($event)">

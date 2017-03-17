@@ -7,10 +7,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class TestClassMetadataService {
     classDefs = {
-        "sifra.elements.StepFunction": {
-            "class": "sifra.elements.StepFunction",
+        "sifra.modelling.elements.StepFunction": {
+            "class": "sifra.modelling.elements.StepFunction",
             "description": {
-                "class": "sifra.structural.Info",
+                "class": "sifra.modelling.structural.Info",
                 "value": "This is a description of the class"
             },
             "name": {
@@ -18,25 +18,25 @@ export class TestClassMetadataService {
                 "default": "Bloobaloob"
             },
             "xys": {
-                "class": "sifra.structures.XYPairs"
+                "class": "sifra.modelling.structures.XYPairs"
             }
         },
-        "sifra.elements.Component": {
-            "class": "sifra.elements.Component",
+        "sifra.modelling.elements.Component": {
+            "class": "sifra.modelling.elements.Component",
             "description": {
-                "class": "sifra.structural.Info",
+                "class": "sifra.modelling.structural.Info",
                 "value": "This is a cool component"
             },
             "FragilityCurve": {
-                "class": "sifra.elements.StepFunction"
+                "class": "sifra.modelling.elements.StepFunction"
             }
         },
-        "sifra.elements.Model": {
-            "class": "sifra.elements.Model",
+        "sifra.modelling.elements.Model": {
+            "class": "sifra.modelling.elements.Model",
             "components": {
                 "class": "__builtin__.dict",
                 "description": {
-                    "class": "sifra.structural.Info",
+                    "class": "sifra.modelling.structural.Info",
                     "value": "The components that make up the model"
                 }
             }

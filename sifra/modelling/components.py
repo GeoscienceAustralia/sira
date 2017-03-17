@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker, relationship, backref
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.ext.declarative import declarative_base
 from sifra.settings import DB_CONNECTION_STRING, SQLITE_DB_FILE, BUILD_DB_TABLES
-from sifra.utils import get_all_subclasses
+from sifra.modelling.utils import get_all_subclasses
 
 _Base = declarative_base()
 

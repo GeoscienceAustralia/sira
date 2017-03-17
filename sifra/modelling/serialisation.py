@@ -2,7 +2,7 @@ import sys
 import abc
 import json
 import couchdb
-from sifra.components import (
+from sifra.modelling.components import (
     _Session,
     Component,
     ComponentAttribute,

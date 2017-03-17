@@ -46,7 +46,7 @@ export class PairListDisplayComponent {
     @Output() publish = new EventEmitter();
 
     private _value: Array<Array<number>>;
-    private _class = ['sifra.structures', 'XYPairs'];
+    private _class = ['sifra.modelling.structures', 'XYPairs'];
     private _description: string = null;
 
     addPair() {
