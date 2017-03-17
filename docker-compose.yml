@@ -1,14 +1,42 @@
-version: '2.1'
+version: '3'
 services:
     couch:
         image: couchdb
         volumes:
-            - /home/simon/code/sifra/db:/usr/local/var/lib/couchdb
+            - ./db:/usr/local/var/lib/couchdb
+    sifraapi:
+        build:
+            context: .
+            dockerfile: Dockerfile-api
+        image: sifra-api
+        volumes:
+            - .:/sifra
+        ports:
+            - "5000:5000"
+        depends_on:
+            # this is required for the builds to be performed in the right order
+            # which apparently only works for more recent versions of
+            # docker-compose.
+            - sifra
+    sifragui:
+        build:
+            context: .
+            dockerfile: Dockerfile-gui
+        image: sifra-gui
+        volumes:
+            - .:/sifra
+        ports:
+            - "4200:4200"
     sifra:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        # this service is only required if you want to run tests or interact via
+        # a console in some other way
         image: sifra
         #image: geoscienceaustralia/sifra:data-model
         volumes:
-            - /home/simon/code/sifra:/sifra
+            - .:/sifra
         stdin_open: true
         tty: true
 
