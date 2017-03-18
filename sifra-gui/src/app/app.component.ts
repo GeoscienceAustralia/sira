@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClassMetadataService } from './class-metadata.service';
+import { ElementChooserComponent } from './element-chooser/element-chooser.component';
 
 enum HazardLevel {
     HAZARD,
@@ -11,7 +12,10 @@ enum HazardLevel {
 @Component({
     selector: 'app-root',
     template: `
-    <element-chooser *ngIf="!currentComponent"
+    <element-chooser
+        #elementchooser
+        [checkCanChange]="makeDirtyChecker()"
+        (change)="chosenChanged($event)"
         (publish)="doPublish($event)">
     </element-chooser>
     <element-editor *ngIf="currentComponent"
@@ -130,7 +134,13 @@ export class AppComponent implements OnInit {
     // The existing components (at this stage, response models)
     private components: any = [];
 
-    constructor(private classMetadataService: ClassMetadataService) {}
+    // Has the current object been modified but not saved?
+    private dirty: boolean = false;
+
+    @ViewChild('elementchooser') elementChooser: ElementChooserComponent;
+
+    constructor(private classMetadataService: ClassMetadataService) {
+    }
 
     ngOnInit() {
         this.getLevels();
@@ -142,8 +152,20 @@ export class AppComponent implements OnInit {
             );
     }
 
+    makeDirtyChecker() {
+        let _this = this;
+        return () => !_this.dirty;
+    }
+
+    chosenChanged($event) {
+        if(!this.dirty) {
+            this.reset(false);
+        }
+    }
+
     doPublish($event) {
         this.resultObject = $event;
+        this.dirty = true;
     }
 
     selected($event, level) {
@@ -220,17 +242,23 @@ export class AppComponent implements OnInit {
                 this.components.push(newComponent);
                 delete this.resultObject['component_sector'];
                 delete this.resultObject['attributes'];
+                this.dirty = false;
             },
             error => {
                 alert(error);
                 delete this.resultObject['component_sector'];
                 delete this.resultObject['attributes'];
+                this.dirty = false;
             });
     }
 
-    reset() {
+    reset(resetChild = true) {
         this.currentComponent = null;
         this.resultObject = null;
+        this.dirty = false;
+        if(resetChild) {
+            this.elementChooser.reset();
+        }
     }
 
     resetSave() {

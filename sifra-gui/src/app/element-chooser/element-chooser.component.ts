@@ -20,14 +20,16 @@ import { ClassMetadataService } from '../class-metadata.service';
                 [className]="className"
                 (publish)="doPublish($event)">
             </element-editor>
-            <button (click)="reset();">Reset</button>
+            <button *ngIf="className" (click)="reset()">Reset</button>
         </div>
     </div>
     `
 })
 export class ElementChooserComponent implements OnInit {
     @Input() name: string = null;
+    @Input() checkCanChange: ()=>boolean; // = () => true;
 
+    @Output() change = new EventEmitter();
     @Output() publish = new EventEmitter();
 
     classTypes: any = null;
@@ -47,13 +49,14 @@ export class ElementChooserComponent implements OnInit {
     }
 
     selected($event) {
-        if(this.dirty) {
+        if(this.dirty || !this.checkCanChange()) {
             alert('please save or discard current changes');
             return;
         }
         this.reset();
         this.changeDetector.detectChanges();
         this.className = $event.id;
+        this.change.emit($event);
     }
 
     reset() {
