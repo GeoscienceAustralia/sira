@@ -280,6 +280,11 @@ export class AppComponent implements OnInit {
     }
 
     showComponent(componentId: string) {
+        if(this.dirty) {
+            alert('Please save or discard current changes.');
+            return;
+        }
+
         this.classMetadataService.getInstance(componentId)
             .subscribe(
                 component => {
