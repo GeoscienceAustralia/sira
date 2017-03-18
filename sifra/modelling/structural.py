@@ -295,7 +295,7 @@ class StructuralMeta(type):
     #: of attribute lookup, are banned for other use.
     DISALLOWED_FIELDS = [
         'class',
-        'predecessor', '_predecessor',
+        'predecessor', '_predecessor', '_id',
         '_value',
         '_attributes']
 
@@ -402,8 +402,10 @@ class Base(object):
         The objects predecessor. This goes back to the database if required.
         """
 
-        if isinstance(self._predecessor, list):
-            self._predecessor = self.to_python(self.get_db().get(self._predecessor[0]))
+        if not isinstance(self._predecessor, self.__class__):
+            _id = self._predecessor
+            self._predecessor = self.to_python(self.get_db().get(self._predecessor))
+            self._predecessor._id = _id
         return self._predecessor
 
     @classmethod
@@ -460,8 +462,9 @@ class Base(object):
 
         res = jsonify(self)
 
-        # then we have added something to this.
-        if self._predecessor is not None:
+        if isinstance(self._predecessor, self.__class__):
+            res['predecessor'] = self._predecessor._id
+        elif self._predecessor is not None:
             res['predecessor'] = self._predecessor
 
         self._predecessor = self.get_db().save(

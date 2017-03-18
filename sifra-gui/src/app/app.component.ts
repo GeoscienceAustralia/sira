@@ -131,6 +131,7 @@ export class AppComponent implements OnInit {
     // the previously defined component to display
     private currentComponent: any = null;
 
+    private currentComponentId: string = null;
     // The existing components (at this stage, response models)
     private components: any = [];
 
@@ -158,9 +159,7 @@ export class AppComponent implements OnInit {
     }
 
     chosenChanged($event) {
-        if(!this.dirty) {
-            this.reset(false);
-        }
+        this.reset(false);
     }
 
     doPublish($event) {
@@ -234,26 +233,35 @@ export class AppComponent implements OnInit {
             name: this.name,
             description: this.description};
 
+        if(this.currentComponentId) {
+            this.resultObject['predecessor'] = this.currentComponentId;
+        }
+
+        let cleanup = function(inst) {
+            delete inst.resultObject['component_sector'];
+            delete inst.resultObject['attributes'];
+            delete inst.resultObject['predecessor'];
+            inst.dirty = false;
+        }
         this.resultObject['component_sector'] = componentSector;
         this.resultObject['attributes'] = attrs;
 
         this.classMetadataService.save(this.resultObject).subscribe(
             newComponent => {
                 this.components.push(newComponent);
-                delete this.resultObject['component_sector'];
-                delete this.resultObject['attributes'];
-                this.dirty = false;
+                this.currentComponentId = newComponent.id;
+                cleanup(this);
             },
             error => {
                 alert(error);
-                delete this.resultObject['component_sector'];
-                delete this.resultObject['attributes'];
-                this.dirty = false;
-            });
+                cleanup(this);
+            }
+        );
     }
 
     reset(resetChild = true) {
         this.currentComponent = null;
+        this.currentComponentId = null;
         this.resultObject = null;
         this.dirty = false;
         if(resetChild) {
@@ -274,7 +282,10 @@ export class AppComponent implements OnInit {
     showComponent(componentId: string) {
         this.classMetadataService.getInstance(componentId)
             .subscribe(
-                component => this.currentComponent = component,
+                component => {
+                    this.currentComponent = component;
+                    this.currentComponentId = componentId;
+                },
                 error => alert(error)
             );
     }
