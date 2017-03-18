@@ -123,7 +123,7 @@ def save():
     category = data.pop('component_sector', None)
     attrs = data.pop('attributes', None)
     inst = Pythonizer()(data)
-    oid, over = inst.save(
+    oid = inst.save(
         category=category,
         attributes=attrs)
     name = attrs.pop('name', 'anonymous component') if attrs is not None else 'anonymous component'

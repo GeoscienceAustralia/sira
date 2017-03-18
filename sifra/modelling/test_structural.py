@@ -94,7 +94,7 @@ class Test1(ut.TestCase):
             return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
         res_1 = self.model.components['turbine'].frag_func(abscissa)
-        oid, ver = self.model.save(attributes = {'name': object_name})
+        oid = self.model.save(attributes = {'name': object_name})
 
         model_copy = Model.load(oid)
         name = value = None

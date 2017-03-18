@@ -71,7 +71,7 @@ class SqliteDBProxy(object):
             session.flush()
             _addAttributes(component, attributes)
             session.commit()
-            return [component.id, None]
+            return component.id
         except Exception, e:
             session.rollback()
             raise e
