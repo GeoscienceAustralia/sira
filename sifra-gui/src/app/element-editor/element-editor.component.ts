@@ -139,9 +139,11 @@ export class ElementEditorComponent implements OnInit, DoCheck {
     // A list of available classes.
     availableClasses: string[] = [];
 
-    // The keys in this elements definition.
-    private _classDef: any = null;
-    private _value: any = {};
+    // The 'schema' for the class.
+    _classDef: any = null;
+
+    // An instance of a document corresponding to the schema (_classDef).
+    _value: any = {};
     classDefKeys: any = [];
     bodyState: string = "visible";
     oldClassName: string = null;

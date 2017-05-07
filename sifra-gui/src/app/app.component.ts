@@ -113,27 +113,34 @@ enum HazardLevel {
     `
 })
 export class AppComponent implements OnInit {
-    // unfortunately globals are not visible within templates
+    // unfortunately globals are not visible within templates...
     public hazardLevel = HazardLevel;
+
+    // A dictionary of lists describing the available categories for each level.
+    public levels: any = null;
+
+    // The existing components (at this stage, response models)
+    public components: any = [];
+
+    // The previously defined component to display.
+    public currentComponent: any = null;
 
     // Object containing the result to be saved.
     private resultObject: any = null;
-    private levels: any = null;
 
     // strings that represent the category
     private hazard: string[] = [];
     private sector: string[] = [];
     private facility: string[] = [];
     private component: string[] = [];
+
+    // The name to save the component as.
     private name: string = null;
+
+    // The description of the component.
     private description: string = null;
 
-    // the previously defined component to display
-    private currentComponent: any = null;
-
     private currentComponentId: string = null;
-    // The existing components (at this stage, response models)
-    private components: any = [];
 
     // Has the current object been modified but not saved?
     private dirty: boolean = false;
