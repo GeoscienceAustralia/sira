@@ -7,9 +7,9 @@ import { ClassMetadataService } from '../class-metadata.service';
     selector: 'element-editor',
     template: `
     <div *ngIf="classDef" class="element-container">
-        <div *ngIf="name||className" class="element-title" (click)="hideMe($event)">
+        <div *ngIf="name||_className" class="element-title" (click)="hideMe($event)">
             <span *ngIf="name">{{name}}</span>
-            <span *ngIf="className">{{className}}</span>
+            <span *ngIf="_className">{{_className}}</span>
         </div>
         <div class="element-body" [@bodyState]="bodyState">
             <template ngFor let-key [ngForOf]="classDefKeys">
@@ -121,8 +121,10 @@ export class ElementEditorComponent implements OnInit, DoCheck {
     // The name of this element. Will be returned via publish.
     @Input() name: string = null;
 
+    // Internal version of classname.
+    _className: string = null;
     // The name of the class.
-    @Input() className: string = null;
+    @Input() className: string;
 
     // An instance of a document corresponding to the schema (classDef).
     private _value: any = {};
@@ -160,6 +162,8 @@ export class ElementEditorComponent implements OnInit, DoCheck {
         if((this.className && this.classDef) || (!this.className && !this.classDef)) {
             throw new Error('strictly one of "classDef" and "className" must be provided');
         }
+
+        this._className = this.className ? this.className : this.classDef.class;
 
         this.classMetadataService.getClassTypes().subscribe(
             availableClasses => {
