@@ -20,7 +20,6 @@ import { ClassMetadataService } from '../class-metadata.service';
                 [className]="className"
                 (publish)="doPublish($event)">
             </element-editor>
-            <button *ngIf="className" (click)="reset()">Reset</button>
         </div>
     </div>
     `
