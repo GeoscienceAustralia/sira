@@ -12,7 +12,7 @@ import { ClassMetadataService } from '../class-metadata.service';
         <div>
             <ng-select
                 [items]="classTypes"
-                (selected)="selected($event);"
+                (selected)="selected($event)"
                 placeholder="please choose an element type to create">
             </ng-select>
             <element-editor *ngIf="className"
@@ -27,7 +27,7 @@ import { ClassMetadataService } from '../class-metadata.service';
 })
 export class ElementChooserComponent implements OnInit {
     @Input() name: string = null;
-    @Input() checkCanChange: ()=>boolean; // = () => true;
+    @Input() checkCanChange: () => boolean = () => true;
 
     @Output() change = new EventEmitter();
     @Output() publish = new EventEmitter();
