@@ -294,6 +294,7 @@ export class AppComponent implements OnInit {
                 component => {
                     this.currentComponent = component;
                     this.currentComponentId = componentId;
+                    this.resultObject = component._value;
                 },
                 error => alert(error)
             );
