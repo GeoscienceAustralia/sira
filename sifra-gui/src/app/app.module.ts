@@ -13,6 +13,7 @@ import { StringDisplayComponent } from './element-editor/string-display/string-d
 import { PairListDisplayComponent } from './element-editor/pair-list-display/pair-list-display.component';
 import { ElementChooserComponent } from './element-chooser/element-chooser.component';
 import { DictDisplayComponent } from './element-editor/dict-display/dict-display.component';
+import { SimpleDialogComponent } from './simple-dialog/simple-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DictDisplayComponent } from './element-editor/dict-display/dict-display
     StringDisplayComponent,
     PairListDisplayComponent,
     ElementChooserComponent,
-    DictDisplayComponent
+    DictDisplayComponent,
+    SimpleDialogComponent
   ],
   imports: [
     BrowserModule,

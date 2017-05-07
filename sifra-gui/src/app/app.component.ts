@@ -23,58 +23,63 @@ enum HazardLevel {
         (publish)="doPublish($event)">
     </element-editor>
 
-    <br/>
-    <div *ngIf="levels">
-        <table>
-        <tr>
-        <td><label>Hazard:</label></td>
-        <td><ng-select
-            [items]="levels.hazards"
-            [active]="hazard"
-            (selected)="selected($event, hazardLevel.HAZARD)"
-            placeholder="please choose a hazard">
-        </ng-select></td>
-        </tr><tr>
-        <td><label>Sector:</label></td>
-        <td><ng-select
-            [items]="levels.sectors"
-            [active]="sector"
-            (selected)="selected($event, hazardLevel.SECTOR)"
-            placeholder="please choose a sector">
-        </ng-select></td>
-        </tr><tr>
-        <td><label>Facility:</label></td>
-        <td><ng-select
-            [items]="levels.facilities"
-            [active]="facility"
-            (selected)="selected($event, hazardLevel.FACILITY)"
-            placeholder="please choose a facility type">
-        </ng-select></td>
-        </tr><tr>
-        <td><label>Component:</label></td>
-        <td><ng-select
-            [items]="levels.components"
-            [active]="component"
-            (selected)="selected($event, hazardLevel.COMPONENT)"
-            placeholder="please choose a component type">
-        </ng-select></td>
-        </tr><tr>
-        <td><label>Name:</label></td>
-        <td><input type="text" [value]="name" (change)="setName($event)" style="width: 100%"><br></td>
-        </tr><tr>
-        <td><label>Description:</label><br></td>
-        <td><textarea
-            rows="4" cols="50"
-            [value]="description"
-            (change)="setDescription($event)">
-        </textarea></td>
-        </tr>
-        </table>
+    <simple-dialog [(visible)]="showingSaveDialog" [closable]="false">
+        <div *ngIf="levels">
+            <table>
+            <tr>
+            <td><label>Hazard:</label></td>
+            <td><ng-select
+                [items]="levels.hazards"
+                [active]="hazard"
+                (selected)="selected($event, hazardLevel.HAZARD)"
+                placeholder="please choose a hazard">
+            </ng-select></td>
+            </tr><tr>
+            <td><label>Sector:</label></td>
+            <td><ng-select
+                [items]="levels.sectors"
+                [active]="sector"
+                (selected)="selected($event, hazardLevel.SECTOR)"
+                placeholder="please choose a sector">
+            </ng-select></td>
+            </tr><tr>
+            <td><label>Facility:</label></td>
+            <td><ng-select
+                [items]="levels.facilities"
+                [active]="facility"
+                (selected)="selected($event, hazardLevel.FACILITY)"
+                placeholder="please choose a facility type">
+            </ng-select></td>
+            </tr><tr>
+            <td><label>Component:</label></td>
+            <td><ng-select
+                [items]="levels.components"
+                [active]="component"
+                (selected)="selected($event, hazardLevel.COMPONENT)"
+                placeholder="please choose a component type">
+            </ng-select></td>
+            </tr><tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" [value]="name" (change)="setName($event)" style="width: 100%"><br></td>
+            </tr><tr>
+            <td><label>Description:</label><br></td>
+            <td><textarea
+                rows="4" cols="50"
+                [value]="description"
+                (change)="setDescription($event)">
+            </textarea></td>
+            </tr>
+            </table>
 
-        <button (click)="save()">Save</button>
-        <button (click)="reset()">Reset</button>
-        <button (click)="resetSave()">Clear type</button>
-    </div>
+            <button (click)="save()">Save</button>
+            <button (click)="resetSave()">Reset</button>
+            <button (click)="showingSaveDialog=false">Cancel</button>
+        </div>
+    </simple-dialog>
+
+    <br/>
+    <button (click)="showingSaveDialog=anythingToSave()">Save</button>
+    <button (click)="reset()">Reset</button>
     <br/>
 
     <div *ngIf="components.length">
@@ -96,6 +101,9 @@ export class AppComponent implements OnInit {
 
     // The previously defined component to display.
     public currentComponent: any = null;
+
+    // Is the save dialog visible?
+    public showingSaveDialog: boolean = false;
 
     // Object containing the result to be saved.
     private resultObject: any = null;
@@ -192,8 +200,18 @@ export class AppComponent implements OnInit {
         );
     }
 
+    // Check if there is anything to save.
+    anythingToSave() {
+        if(!this.resultObject) {
+            alert('Nothing to save!');
+            return false;
+        }
+        return true;
+    }
+
+
+    // Save a new instance.
     save() {
-        // Save a new instance.
         if(!this.resultObject) {
             alert('No result to save!');
             return;
@@ -240,6 +258,7 @@ export class AppComponent implements OnInit {
             delete inst.resultObject['attributes'];
             delete inst.resultObject['predecessor'];
             inst.dirty = false;
+            inst.showingSaveDialog=false;
         }
 
         // And finally (attempt to) save the result.
