@@ -287,6 +287,8 @@ export class AppComponent implements OnInit {
             return;
         }
 
+        this.reset();
+
         this.classMetadataService.getInstance(componentId)
             .subscribe(
                 component => {
