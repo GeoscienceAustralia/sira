@@ -138,57 +138,105 @@ Install these downloaded ``wheels`` with pip:
 
 ### Using Docker
 
-If you have Docker installed, you can build a container for working on/with
+If you have Docker installed, you can build a container for working with
 sifra by running the command
 
 ```
 docker build -t sifra .
 ```
 
-This container will allow to you run the modelling system and unit tests and can
-be started with
+The primary advantage of working with docker is that you do not have to worry
+abouti setting up the python environment, which is done when building the
+container and isolated from your own environment.
+
+To run an interactive container you can use:
 
 ```
-docker run -itv "$(pwd):/sifra" sifra
+docker run -it -v "$(pwd):/sifra" --name sifra sifra
 ```
 
-Once inside the container you can find the current directory at `/sifra`. Since
-this maps the present directory, you can modify files either within the
-container or the host and the changes will be available in both.
+This will give you a terminal inside the container in which you can execute
+commands. Inside the container you can find the current directory mapped at
+`/sifra`. You can modify files either within the container or the host and the
+changes will be available in both.
 
-The new system (at Feb 2017) uses 3 microservices implemented in docker
-containers. The containers are defined in the *Dockerfile*s in the present
-directory. These are:
+Alternatively, you might want a container running in the background which you
+can execute commands at (using
+[docker exec](https://docs.docker.com/engine/reference/commandline/exec/)). In
+this case you would start the container with:
 
-- *Dockerfile*: Provides a python environment that can be used for running
-models and tests.
+```
+docker run -id -v "$(pwd):/sifra" --name sifra sifra
+```
+
+One could then, for example, run the unit tests for the modelling package with:
+
+```
+docker exec sifra python -m unittest sifra.modelling.test_structural
+```
+
+In any case, once you are done you should destroy the container with
+
+```
+docker kill sifra
+docker rm sifra
+```
+
+or, if your too lazy to type two lines...
+
+```
+docker rm -f sifra
+```
+
+Several other containers are provided to help with development. These are
+defined in the other *Dockerfile*s in the present directory, and are:
 
 - *Dockerfile-api*: Provides a web API which is used for parameterising
 model components (at this stage just response functions) and serialising them.
 This is presently (at Feb 2017) a prototype and provides only a small subset
 of what we hope for.
 
-- *Dockerfile-gui*: Provides an [Agular2](https://angular.io/) application for
-defining model components built on top of the API mentioned above.
+- *Dockerfile-gui-dev*: Provides an [Agular2](https://angular.io/) application for
+defining model components built on top of the API mentioned above. The application
+is hosted using Angular's development server and can be accessed on *localhost:4200*.
 
-By far the easiest way to run the system is with
+- *Dockerfile-gui-prod*: For deploying the web application in production. This
+does a production build of the Angular project and hosts it using
+[busybox](https://www.busybox.net/). The app is still exposed on port 4200, so
+to host it at port 80 one would start it with:
+
+  ```
+  docker build -t sifra-gui -f Dockerfile-gui-prod .
+  ```
+
+  and start it with (for example):
+
+  ```
+  docker run -d -p 80:4200 --restart always sifra-gui-prod
+  ```
+
+#### Docker Compose
+
+By far the easiest way to run the system for development is with
 [docker-compose](https://docs.docker.com/compose/), which can be done with:
 
 ```
-docker-compose build # need only be done once to build the images
 docker-compose up
 ```
 
 Assuming that you start the system this way in the current folder, you can:
 
 - attach to the sifa image to run models and tests with
-    ```
-    docker attach sifra_sifra_1
-    ```
+
+  ```
+  docker attach sifra_sifra_1
+  ```
 
 - access the GUI for defining fragility functions at *http://localhost:4200*, and
 
 - access the web API at *http://localhost:5000*.
+
+The both the API and GUI will stay in sync with your code.
 
 You can tear the system down (destroying the containers) with
 
@@ -198,9 +246,6 @@ docker-compose down
 
 
 ## Running the Code
-
-For the purposes of this discussion, we will assume that this repository has
-been cloned in the user's home directory, within a directory named `sifra`.
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
@@ -242,6 +287,9 @@ Example (from the first level 'sifra' directory):
 or, simply run:
 
     $ nosetest
+
+If you are using docker as described above, you can do this within the sifra
+container.
 
 :grey_exclamation: NOTE: Project needs a more comprehensive test suite.
 
