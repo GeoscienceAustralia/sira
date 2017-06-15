@@ -1,0 +1,28 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
+    "sifra_base_ami": "ami-96666ff5",
+    "region_name"   : "ap-southeast-2"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `region_name`}}",
+      "source_ami": "{{user `sifra_base_ami`}}",
+      "instance_type": "t2.medium",
+      "ssh_username": "ubuntu",
+      "ami_name": "Sifra Dev (Ubuntu) {{timestamp}}",
+      "tags": {"Name": "Sifra Dev (Ubuntu)", "Owner": "Hazards"},
+      "associate_public_ip_address": true
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "build-sifra-box.sh"
+    }
+  ]
+}
+

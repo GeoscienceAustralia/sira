@@ -245,6 +245,19 @@ docker-compose down
 ```
 
 
+### Building an AMI for Dev Machines
+
+We're we come from, if we don't have a laptop handy, we like to use AWS for
+provisioning dev machines. A basic dev box can be setup using
+[Packer](https://www.packer.io/intro/), by running:
+
+```
+packer build build.json
+```
+
+in the current directory.
+
+
 ## Running the Code
 
 Clone the repository onto your system. Detailed instructions can
