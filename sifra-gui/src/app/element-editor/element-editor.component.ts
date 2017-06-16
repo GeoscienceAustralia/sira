@@ -6,35 +6,35 @@ import { ClassMetadataService } from '../class-metadata.service';
 @Component({
     selector: 'element-editor',
     template: `
-    <div *ngIf="_classDef" class="element-container">
-        <div *ngIf="name||className" class="element-title" (click)="hideMe($event)">
+    <div *ngIf="classDef" class="element-container">
+        <div *ngIf="name||_className" class="element-title" (click)="hideMe($event)">
             <span *ngIf="name">{{name}}</span>
-            <span *ngIf="className">{{className}}</span>
+            <span *ngIf="_className">{{_className}}</span>
         </div>
         <div class="element-body" [@bodyState]="bodyState">
             <template ngFor let-key [ngForOf]="classDefKeys">
-                <div *ngIf="_classDef[key].class==='sifra.modelling.structural.Info'">
+                <div *ngIf="classDef[key].class==='sifra.modelling.structural.Info'">
                     <div class="string-display-name">
                         {{key}}
                     </div>
                     <div class="string-display-body">
-                        {{_classDef[key].value}}
+                        {{classDef[key].value}}
                     </div>
                 </div>
             </template>
             <template ngFor let-key [ngForOf]="classDefKeys">
-                <template [ngIf]="key !== 'class' && _classDef[key].class!=='sifra.modelling.structural.Info'">
-                    <div [ngSwitch]="_classDef[key].class">
+                <template [ngIf]="key !== 'class' && classDef[key].class!=='sifra.modelling.structural.Info'">
+                    <div [ngSwitch]="classDef[key].class">
 
                         <string-display *ngSwitchCase="'__builtin__.string'"
                             [name]="key"
-                            [value]="_classDef[key]"
+                            [value]="classDef[key]"
                             (publish)="doPublish($event)">
                         </string-display>
 
                         <string-display *ngSwitchCase="'__builtin__.float'"
                             [name]="key"
-                            [value]="_classDef[key]"
+                            [value]="classDef[key]"
                             [numeric]="true"
                             (publish)="doPublish($event)">
                         </string-display>
@@ -46,15 +46,15 @@ import { ClassMetadataService } from '../class-metadata.service';
 
                         <pair-list-display *ngSwitchCase="'sifra.modelling.structures.XYPairs'"
                             [name]="key"
-                            [value]="_classDef[key]"
+                            [value]="classDef[key]"
                             (publish)="doPublish($event)">
                         </pair-list-display>
 
                         <template ngSwitchDefault>
-                            <div *ngIf="doThisBlock(_classDef[key].class)">
+                            <div *ngIf="doThisBlock(classDef[key].class)">
                                 <element-editor
                                     [name]="key"
-                                    [value]="_classDef[key]._value || {}"
+                                    [value]="classDef[key].value || {}"
                                     (publish)="doPublish($event)">
                                 </element-editor>
                             </div>
@@ -121,16 +121,24 @@ export class ElementEditorComponent implements OnInit, DoCheck {
     // The name of this element. Will be returned via publish.
     @Input() name: string = null;
 
+    // Internal version of classname.
+    _className: string = null;
     // The name of the class.
-    @Input() className: string = null;
+    @Input() className: string;
+
+    // An instance of a document corresponding to the schema (classDef).
+    private _value: any = {};
 
     // The definition of this element.
-    @Input()
+    @Input('value')
     set value(value: any) {
-        this._value = value['_value'] || {};
-        delete value['_value'];
-        this._classDef = value;
+        this._value = value._value || {};
+        delete value._value;
+        this.classDef = value;
         this.getKeys();
+    }
+    get value(): any {
+        return this._value;
     }
 
     // Fired when the value is modified.
@@ -139,19 +147,23 @@ export class ElementEditorComponent implements OnInit, DoCheck {
     // A list of available classes.
     availableClasses: string[] = [];
 
-    // The keys in this elements definition.
-    private _classDef: any = null;
-    private _value: any = {};
-    classDefKeys: any = [];
+    // The 'schema' for the class.
+    classDef: any = null;
+
+    // Should the body be visible ("visible" for yes)?
     bodyState: string = "visible";
+
+    classDefKeys: any = [];
     oldClassName: string = null;
 
     constructor(private classMetadataService: ClassMetadataService) {}
 
     ngOnInit() {
-        if((this.className && this._classDef) || (!this.className && !this._classDef)) {
+        if((this.className && this.classDef) || (!this.className && !this.classDef)) {
             throw new Error('strictly one of "classDef" and "className" must be provided');
         }
+
+        this._className = this.className ? this.className : this.classDef.class;
 
         this.classMetadataService.getClassTypes().subscribe(
             availableClasses => {
@@ -165,7 +177,7 @@ export class ElementEditorComponent implements OnInit, DoCheck {
             let splits = this.className.split('.');
             let clsName = splits.pop();
             let modName = splits.join('.');
-            this._value['class'] = [modName, clsName];
+            this.value['class'] = [modName, clsName];
         }
     }
 
@@ -173,7 +185,7 @@ export class ElementEditorComponent implements OnInit, DoCheck {
         if(this.className && this.className != this.oldClassName) {
             this.classMetadataService.getClassDef(this.className).subscribe(
                 classDef => {
-                    this._classDef = classDef;
+                    this.classDef = classDef;
                     this.getKeys();
                 },
                 error => alert(<any>error)
@@ -183,16 +195,16 @@ export class ElementEditorComponent implements OnInit, DoCheck {
     }
 
     doPublish($event) {
-        this._value[$event.name] = $event.value;
+        this.value[$event.name] = $event.value;
         if(this.name) {
-            this.publish.emit({name: this.name, value: this._value});
+            this.publish.emit({name: this.name, value: this.value});
         } else {
-            this.publish.emit(this._value);
+            this.publish.emit(this.value);
         }
     }
 
     getKeys() {
-        this.classDefKeys = this._classDef ? Object.keys(this._classDef) : [];
+        this.classDefKeys = this.classDef ? Object.keys(this.classDef) : [];
     }
 
     hideMe($event) {

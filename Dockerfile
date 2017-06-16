@@ -22,5 +22,6 @@ RUN pip install xlrd
 RUN pip install jgraph
 RUN pip install sqlalchemy
 VOLUME "/sifra"
+WORKDIR "/sifra/sifra"
 ENV PYTHONPATH /sifra:$PYTHONPATH
 

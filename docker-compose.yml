@@ -14,15 +14,17 @@ services:
             # which apparently only works for more recent versions of
             # docker-compose.
             - sifra
+        restart: always
     sifragui:
         build:
             context: .
-            dockerfile: Dockerfile-gui
+            dockerfile: Dockerfile-gui-dev
         image: sifra-gui
         volumes:
             - .:/sifra
         ports:
             - "4200:4200"
+        restart: always
     sifra:
         build:
             context: .
@@ -35,4 +37,5 @@ services:
             - .:/sifra
         stdin_open: true
         tty: true
+        restart: always
 

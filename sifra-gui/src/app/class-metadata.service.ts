@@ -59,7 +59,7 @@ export class TestClassMetadataService {
 
 @Injectable()
 export class ClassMetadataService {
-    SERVER_URL: string = 'http://localhost:5000';
+    SERVER_URL: string = window.location.protocol + '//' + window.location.hostname + ':5000';
 
     constructor(private http: Http) {
     }

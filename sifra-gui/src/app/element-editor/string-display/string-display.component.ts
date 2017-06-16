@@ -28,7 +28,7 @@ export class StringDisplayComponent {
 
     @Output() publish = new EventEmitter();
 
-    private _value: string;
+    _value: string;
 
     doPublish($event) {
         this._value = $event.value;

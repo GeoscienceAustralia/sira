@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { ClassMetadataServiceService } from './class-metadata-service.service';
+import { ClassMetadataService } from './class-metadata.service';
 
-describe('ClassMetadataServiceService', () => {
+describe('ClassMetadataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ClassMetadataServiceService]
+      providers: [ClassMetadataService]
     });
   });
 
-  it('should ...', inject([ClassMetadataServiceService], (service: ClassMetadataServiceService) => {
+  it('should ...', inject([ClassMetadataService], (service: ClassMetadataService) => {
     expect(service).toBeTruthy();
   }));
 });
