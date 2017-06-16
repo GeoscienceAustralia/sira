@@ -8,7 +8,7 @@ from __future__ import print_function
 import os
 import numpy as np
 import pandas as pd
-import jgraph
+import igraph
 import networkx as nx
 import systemlayout
 import matplotlib.pyplot as plt
