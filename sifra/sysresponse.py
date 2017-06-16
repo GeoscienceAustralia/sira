@@ -29,6 +29,7 @@ A tool for seismic performance analysis of infrastructure facilities
 """
 
 from __future__ import print_function
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -47,8 +48,12 @@ import parmap
 
 import seaborn as sns
 from colorama import Fore
+import time
+from datetime import timedelta
 
+code_start_time = time.time()
 SETUPFILE = None
+
 
 # ============================================================================
 
@@ -520,7 +525,7 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
                          for cn in fc.cpmap[ct]])
 
     # ------------------------------------------------------------------------
-    # Calculating system fragility:
+        # Calculating system fragility:
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     for j in range(sc.num_hazard_pts):
         for i in range(sc.num_samples):
@@ -831,6 +836,8 @@ def main():
                     economic_loss_array,
                     output_array_given_recovery)
 
-
 if __name__ == '__main__':
     main()
+
+print("[ Run time: %s ]\n" % \
+      str(timedelta(seconds=(time.time() - code_start_time))))
