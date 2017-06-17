@@ -3,7 +3,7 @@
 # This can be run as root, as would happen if it is used as user-data when
 # spinning up a machine in AWS, or as another user. The next block sets prefixes
 # for running commands for each case.
-if [ "$(whoami)" == "root" ]; then
+if [ $(id -u) -eq 0 ]; then
     SUDO=
     NOSUDO="sudo -i -u ubuntu"
 else
