@@ -10,9 +10,10 @@ systems, within this framework, refer to facilities and networks that
 provide essential utility services for communities, regions and/or a country.
 This will include electricity generation and transmission, water and wastewater
 treatment and reticulation, and transport networks. It excludes standalone
-high-value buildings and manufacturing plants. The SIFRA project is also
-not focused on whether or not a given infrastructure is "critical" or not,
-as that invites a needless debate on what constitutes criticality.
+high-value buildings and manufacturing plants. The SIFRA project also
+deliberately eschews an exclusive focus on "critical" infrastructure,
+as that invites unnecessary debates on criteria of criticality and
+jurisdiction for that class of assets.
 
 .. _system-model-vocab:
 
