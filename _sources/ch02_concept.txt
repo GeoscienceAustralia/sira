@@ -4,11 +4,6 @@
 Model Concepts
 **************
 
-.. _system-model-vocab:
-
-The 'System' Model and Related Vocabulary
-=========================================
-
 SIFRA provides a modelling framework and software tools for assessing
 impact of natural hazards on infrastructure systems. Infrastructure
 systems, within this framework, refer to facilities and networks that
@@ -19,25 +14,31 @@ high-value buildings and manufacturing plants. The SIFRA project is also
 not focused on whether or not a given infrastructure is "critical" or not,
 as that invites a needless debate on what constitutes criticality.
 
-The central idea in the SIFRA modelling construct is this::
+.. _system-model-vocab:
+
+The 'System' Model and Related Vocabulary
+=========================================
+
+The central idea in the SIFRA modelling construct is this:
 
     All lifeline infrastructure 'systems' within the modelling framework
     are conceptualised as a network of interconnected nodes.
 
 The 'nodes' or vertices and connecting edges have different meaning based
-on the level of abstraction, which is clarified below.
+on the level of abstraction, which is clarified in following subsections.
 
-This approach affords a number of advantages:
-(1) it is highly flexible and scalable, making it possible accommodate
-diverse sectors and assets of varying scales and complexities;
-(2) it allows for modelling the effect of impaired or destroyed
-components on the operational capacity of the overall system;
-(3) it allows for using graph theory to assess the graduated capacity
-degradation, and restoration, through modelling flow through the network;
-and (4) it allows for detection of the prioritised 'paths', or sets of
-components, within network that need to be repaired or restored in order
-to restore the flow through the network which represents the productive
-capacity of the system.
+This modelling approach affords a very high degree of flexibility and
+scalability, making it possible accommodate diverse sectors and assets
+of varying scales and complexities.
+
+Furthermore, it allows the user to:
+(a) model the effect of impaired or destroyed components on the
+operational capacity of the overall system;
+(b) use graph theory to assess the graduated capacity degradation, and
+restoration, through modelling flow through the network; and
+(c) detect prioritised 'paths', or sets of components, within network
+that need to be repaired or restored in order to restore the flow through
+the network which represents the productive capacity of the system.
 
 
 Hierarchy of Elements within a *As-Built* Infrastructure System
