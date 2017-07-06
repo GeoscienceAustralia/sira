@@ -97,7 +97,7 @@ If the subject of investigation is a **network** then in the context that
 specific exercise:
 
     - the System Model is a Level 1 element, i.e. an
-      **Infrastructure Networks** and
+      **Infrastructure Networks**, and
     - the Components are Level 2 elements, i.e.
       **Infrastructure Facilities**
 
@@ -105,7 +105,7 @@ If the subject of investigation is a **facility** then in the context that
 specific exercise:
 
     - the System Model is a Level 2 element, i.e. an
-      **Infrastructure Facility** and
+      **Infrastructure Facility**, and
     - the Components are Level 3 elements, i.e. an
       **Infrastructure Microcomponents**
 
