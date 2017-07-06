@@ -20,8 +20,8 @@ jurisdiction for that class of assets.
 The 'System' Model and Related Vocabulary
 =========================================
 
-The central idea in the SIFRA modelling construct is this:
-All lifeline infrastructure 'systems' within the modelling framework are
+The central idea in the SIFRA modelling construct is this: All lifeline
+infrastructure 'systems' within the modelling framework are
 conceptualised as a network of interconnected nodes.
 
 The 'nodes' or vertices and connecting edges have different meaning based
