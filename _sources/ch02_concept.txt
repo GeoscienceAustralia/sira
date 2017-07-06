@@ -95,9 +95,10 @@ Component
 
 If the subject of investigation is a **Network**
     then in the context that specific exercise:  |br|
-    -  the System Model is a Level 1 element, i.e. an **Infrastructure Networks**,
-    and |br|
-    -  the Components are Level 2 elements, i.e. **Infrastructure Facilities**
+    -  the System Model is a Level 1 element, i.e.
+    an **Infrastructure Networks**, and |br|
+    -  the Components are Level 2 elements, i.e.
+    **Infrastructure Facilities**
 
 If the subject of investigation is a **Facility**
     then in the context that specific exercise: |br|
