@@ -48,20 +48,20 @@ The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:
 
 Level 1 : **Infrastructure Network**
-    This is the top level of interconnected infrastructure systems where
-    infrastructure facilities are connected to form a network or networks.
+   This is the top level of interconnected infrastructure systems where
+   infrastructure facilities are connected to form a network or networks.
 
 Level 2 : **Infrastructure Facility**
-    The concept of facilities used in this framework map closely to the
-    typology of macro-components as defined in the Synerg-G program
-    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
-    systems as defined in :cite:`Rinaldi-etal-2001`.
+   The concept of facilities used in this framework map closely to the
+   typology of macro-components as defined in the Synerg-G program
+   :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
+   systems as defined in :cite:`Rinaldi-etal-2001`.
 
 Level 3 : **Infrastructure Microcomponent**
-    This concept of components map closely to the typology of
-    micro-components as defined in the Synerg-G program
-    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
-    definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.
+   This concept of components map closely to the typology of
+   micro-components as defined in the Synerg-G program
+   :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
+   definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.
 
 This applies to discussions on a *complete* that is responsible for
 delivering some service. This also applies to classification of assets,
@@ -77,35 +77,35 @@ impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).
 
 The System Model
-    This defines a logical set of assets that is an abstraction
-    of a real equivalent asset. The usage of the term system in this
-    context is closer to its application in System Engineering, rather than
-    from an IT or software engineering perspective. The System Model defines
-    the *boundary* of the collection of elements under investigation. It is
-    the collection of nodes and connecting edges that collectively provides
-    a service or generates a type of product. This term can be used to refer
-    to a network or a facility. The context of the simulation will
-    disambiguate its meaning.
+   This defines a logical set of assets that is an abstraction
+   of a real equivalent asset. The usage of the term system in this
+   context is closer to its application in System Engineering, rather than
+   from an IT or software engineering perspective. The System Model defines
+   the *boundary* of the collection of elements under investigation. It is
+   the collection of nodes and connecting edges that collectively provides
+   a service or generates a type of product. This term can be used to refer
+   to a network or a facility. The context of the simulation will
+   disambiguate its meaning.
 
 Component
-    It is the high-level element within the network (or graph) that
-    represents the **System Model**. A collection of interconnected
-    components with specific attributes and roles comprise the System
-    in the context of the simulation model.
+   It is the high-level element within the network (or graph) that
+   represents the **System Model**. A collection of interconnected
+   components with specific attributes and roles comprise the System
+   in the context of the simulation model.
 
 If the subject of investigation is a **Network**
-    then in the context that specific exercise:  |br|
-    |BlkCircleSml|  the System Model is a Level 1 element, i.e.
-    an **Infrastructure Network**, and |br|
-    |BlkCircleSml|  the Components are Level 2 elements, i.e.
-    **Infrastructure Facilities**
+   then in the context that specific exercise:  |br|
+   |BlkCircleSml|  the System Model is a Level 1 element, i.e.
+   an **Infrastructure Network**, and |br|
+   |BlkCircleSml|  the Components are Level 2 elements, i.e.
+   **Infrastructure Facilities**
 
 If the subject of investigation is a **Facility**
-    then in the context that specific exercise: |br|
-    |BlkCircleSml|  the System Model is a Level 2 element, i.e.
-    an **Infrastructure Facility**, and  |br|
-    |BlkCircleSml|  the Components are Level 3 elements, i.e.
-    an **Infrastructure Microcomponents**
+   then in the context that specific exercise: |br|
+   |BlkCircleSml|  the System Model is a Level 2 element, i.e.
+   an **Infrastructure Facility**, and  |br|
+   |BlkCircleSml|  the Components are Level 3 elements, i.e.
+   an **Infrastructure Microcomponents**
 
 
 Classification of Nodes within a *Model* of an Infrastructure System
@@ -267,13 +267,13 @@ effectively a proxy representing the deployment of trained personnel and
 material for the repair tasks. Additional optional offsets can be factored 
 in to capture specific contexts: 
 
-a)  *Restoration Offset* – this is a time allowance for assessment of
-    damage to the system and for securing the site to assure it is safe
-    for commencement of repairs;
+a) *Restoration Offset* – this is a time allowance for assessment of
+   damage to the system and for securing the site to assure it is safe
+   for commencement of repairs;
 
-b)  *Testing and Commission Interval*: this is a time allowance for testing
-    conformity with operational and safety parameters for the system, or a
-    part thereof.
+b) *Testing and Commission Interval*: this is a time allowance for testing
+   conformity with operational and safety parameters for the system, or a
+   part thereof.
 
 Given a set of restoration parameters and the restoration plan, the
 consequent restoration time is calculated as follows:
@@ -322,11 +322,11 @@ unit, and thereby expedite the restoration of the high priority lines.
 
 The outputs from the restoration model are: 
 
-a)  a simple Gantt chart with each component needing repair,
+1) a simple Gantt chart with each component needing repair,
 
-b)  restoration plot for each output line over time and the associated
-    percentage of total system capacity rehabilitated, and
+2) restoration plot for each output line over time and the associated
+   percentage of total system capacity rehabilitated, and
 
-c)  total restoration time for each output line for a given restoration
-    scheme.
+3) total restoration time for each output line for a given restoration
+   scheme.
 
