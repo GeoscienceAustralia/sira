@@ -1,0 +1,73 @@
+Parameter Name,Explanation,
+``HAZARD_TRANSFER_PARAM``,Data Type:,String
+,Description:,Engineering Demand Parameter
+,Example:,'PGA'
+``HAZARD_TRANSFER_UNIT``,Data Type:,String
+,Description:,Demand Parameter Unit
+,Example:,'g'
+``PGA_MIN``,Data Type:,Float
+,Description:,Minimum value for PGA
+,Example:,0.0
+``PGA_MAX``,Data Type:,Float
+,Description:,Maximum value for PGA
+,Example:,1.5
+``PGA_STEP``,Data Type:,Float
+,Description:,Step size for incrementing PGA
+,Example:,0.01
+``NUM_SAMPLES``,Data Type:,Integer
+,Description:,Iterations for Monte Carlo process
+,Example:,500
+``SCENARIO_HAZARD_VALUES``,Data Type:,List of floats
+,Description:,The value(s) at which to assess facility response
+,Example:,[0.50]
+``TIME_UNIT``,Data Type:,String
+,Description:,Unit of time for restoration time calculations
+,Example:,'week'
+``RESTORE_PCT_CHKPOINTS``,Data Type:,Integer
+,Description:,Number of steps to assess functionality
+,Example:,21
+``RESTORE_TIME_STEP``,Data Type:,Integer
+,Description:,Time increment for restoration period
+,Example:,1
+``RESTORE_TIME_MAX``,Data Type:,Integer
+\,Description:,Maximum value for restoration period assessment
+\,Example:,300
+``RESTORATION_STREAMS``,Data Type:,List of integers
+\,Description:,The number of simultaneous components to work on
+\,Example:,"[5, 10, 20]"
+``SYSTEM_CLASSES``,Data Type:,List of strings
+,Description:,The allowed facility system types
+,Example:,"[""PowerStation"", ""Substation""]"
+``SYSTEM_CLASS``,Data Type:,String
+,Description:,The facility system type to be modelled
+,Example:,"""PowerStation"""
+``SYSTEM_SUBCLASS``,Data Type:,String
+,Description:,Sub-category of system
+,Example:,"""Coal Fired"""
+``COMMODITY_FLOW_TYPES``,Data Type:,Integer
+,Description:,Number of input commodity types
+,Example:,2
+``SYS_CONF_FILE_NAME``,Data Type:,String
+,Description:,File name for system config and fragility info
+,Example:,'sys_config_ps.xlsx'
+``INPUT_DIR_NAME``,Data Type:,String
+,Description:,File path relative to code root
+,Example:,'data/ps_coal/input'
+``OUTPUT_DIR_NAME``,Data Type:,String
+,Description:,File path relative to code root
+,Example:,'data/ps_coal/output'
+``FIT_PE_DATA``,Data Type:,Boolean
+,Description:,Flag for fitting Prob of Exceedance data
+,Example:,True
+``FIT_RESTORATION_DATA``,Data Type:,Boolean
+,Description:,Fit model to simulated restoration data
+,Example:,True
+``SAVE_VARS_NPY``,Data Type:,Boolean
+,Description:,Save calculated value in binary numpy format
+,Example:,True
+``MULTIPROCESS``,Data Type:,Integer
+,Description:,"Use multi-core processing? 0 -> False, 1 -> True"
+,Example:,1
+``RUN_CONTEXT``,Data Type:,Integer
+,Description:,"0 -> run tests,  1 -> normal run"
+,Example:,1
