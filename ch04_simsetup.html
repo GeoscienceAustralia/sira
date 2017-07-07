@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
         <link rel="next" title="5 Component Fragility Attribution" href="ch05_fragility_attribution.html"/>
         <link rel="prev" title="3 Installation and Usage" href="ch03_installation.html"/> 
@@ -41,6 +46,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,11 +87,14 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">4 Simulation Setup</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4 Simulation Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">4.1 Scenario Definition File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#facility-definition-file">4.2 Facility Definition File</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
@@ -115,8 +124,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">SIFRA</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SIFRA</a>
+        
       </nav>
 
 
@@ -125,21 +136,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>4 Simulation Setup</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>4 Simulation Setup</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -156,7 +184,7 @@
 their parameters, data layout, and sample input data are presented in the
 remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind:</p>
-<div class="highlight-python"><div class="highlight"><pre>.
+<div class="highlight-default"><div class="highlight"><pre><span></span>.
 ├── LICENSE                  &lt;-- License file: Apache 2
 ├── README.md                &lt;-- Summary documentation
 │
@@ -180,9 +208,9 @@ to the keep the directory structure of the code in mind:</p>
 </div>
 <div class="section" id="scenario-definition-file">
 <span id="scenario-config-file"></span><h2>4.1 Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
-<p>The simulation &#8216;scenario&#8217; definition file is located in the following directory
+<p>The simulation ‘scenario’ definition file is located in the following directory
 (relative to the root dir of source code):</p>
-<div class="highlight-python"><div class="highlight"><pre>./simulation_setup/
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">simulation_setup</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>The following table lists the parameters in the config file, their
@@ -197,7 +225,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;PGA&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘PGA’</td>
 </tr>
 </tbody>
 </table>
@@ -211,7 +239,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;g&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘g’</td>
 </tr>
 </tbody>
 </table>
@@ -295,7 +323,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;week&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘week’</td>
 </tr>
 </tbody>
 </table>
@@ -365,7 +393,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of strings</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[&#8216;PowerStation&#8217;, &#8216;Substation&#8217;]</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[‘PowerStation’, ‘Substation’]</td>
 </tr>
 </tbody>
 </table>
@@ -379,7 +407,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;PowerStation&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘PowerStation’</td>
 </tr>
 </tbody>
 </table>
@@ -393,7 +421,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Coal Fired&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Coal Fired’</td>
 </tr>
 </tbody>
 </table>
@@ -421,7 +449,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;sys_config_ps.xlsx&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘sys_config_ps.xlsx’</td>
 </tr>
 </tbody>
 </table>
@@ -435,7 +463,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;data/ps_coal/input&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘data/ps_coal/input’</td>
 </tr>
 </tbody>
 </table>
@@ -449,7 +477,7 @@ description, and representative values.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;data/ps_coal/output&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘data/ps_coal/output’</td>
 </tr>
 </tbody>
 </table>
@@ -535,7 +563,7 @@ or run test code.
 <p>The system definition files for a facility of type <code class="docutils literal"><span class="pre">&lt;facility_type_A&gt;</span></code>
 is located in the following directory (relative to the root dir of
 source code):</p>
-<div class="highlight-python"><div class="highlight"><pre>./models/&lt;facility_type_A&gt;/
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">models</span><span class="o">/&lt;</span><span class="n">facility_type_A</span><span class="o">&gt;/</span>
 </pre></div>
 </div>
 <p>The system model is defined using an MS Excel spreadsheet file.
@@ -559,7 +587,7 @@ It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct parts
 of the name separated by underscores</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;stack_1&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘stack_1’</td>
 </tr>
 </tbody>
 </table>
@@ -577,7 +605,7 @@ It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct
 parts of the name separated by spaces.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Stack&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Stack’</td>
 </tr>
 </tbody>
 </table>
@@ -589,16 +617,16 @@ parts of the name separated by spaces.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The general category of equipment. A number of
 component types can be grouped under this, e.g.
-&#8216;Power Transformer 100MVA 230/69&#8217; and
-&#8216;Power Transformer 50MVA 230/69&#8217; are both under
-the same component_class of &#8216;Power Transformer&#8217;</td>
+‘Power Transformer 100MVA 230/69’ and
+‘Power Transformer 50MVA 230/69’ are both under
+the same component_class of ‘Power Transformer’</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
 It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct
 parts of the name separated by spaces.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Emission Management&#8217; &#8211; stacks and ash disposal systems
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Emission Management’ – stacks and ash disposal systems
 belong to different typologies, but both contribute to
 the function of emission management.</td>
 </tr>
@@ -634,7 +662,7 @@ network representing the system. For details, see
 Must be one of four values:
 supply, transshipment, dependency, sink</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;supply&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘supply’</td>
 </tr>
 </tbody>
 </table>
@@ -650,7 +678,7 @@ component instances should be grouped together.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;Boiler System&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Boiler System’</td>
 </tr>
 </tbody>
 </table>
@@ -696,7 +724,7 @@ is immaterial.</p>
 <cite>component_id</cite> columns in the <cite>component_list</cite> table.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">&#8216;stack_1&#8217;</p>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">‘stack_1’</p>
 </td>
 </tr>
 </tbody>
@@ -714,7 +742,7 @@ the origin/destination designation is immaterial.</td>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
 <cite>component_id</cite> columns in the <cite>component_list</cite> table.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;turbine_condenser_1&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘turbine_condenser_1’</td>
 </tr>
 </tbody>
 </table>
@@ -767,7 +795,7 @@ of edges.</td>
 <cite>component_id</cite> columns in the <cite>component_list</cite> table,
 and its <cite>node_type</cite> must be <cite>supply</cite>.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;coal_supply&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘coal_supply’</td>
 </tr>
 </tbody>
 </table>
@@ -819,7 +847,7 @@ the specified input node.</p>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first">For a coal-fired power station there might be two
 commodities, namely coal and water. So, there will need
 to be at least two input nodes, one with a <cite>commodity_type</cite>
-of &#8216;coal&#8217; and the other with <cite>commodity_type</cite> of &#8216;water&#8217;.</p>
+of ‘coal’ and the other with <cite>commodity_type</cite> of ‘water’.</p>
 <p class="last">For an electric substation the <cite>commodity_type</cite> is
 electricity.
 For a water treatment plant, it is waster water.</p>
@@ -838,7 +866,7 @@ For a water treatment plant, it is waster water.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">These are the &#8216;sink&#8217; nodes representing the load or
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">These are the ‘sink’ nodes representing the load or
 the aggregate consumer of the product(s) of the system.</p>
 <p>These are not real components, but a modelling construct.
 These nodes are not considered in the fragility
@@ -850,7 +878,7 @@ calculations.</p>
 and must be of <cite>node_type</cite> sink.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">&#8216;output_1&#8217;</p>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">‘output_1’</p>
 </td>
 </tr>
 </tbody>
@@ -862,14 +890,14 @@ and must be of <cite>node_type</cite> sink.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the facility
-system model. The completed &#8216;product&#8217; of a system exits
+system model. The completed ‘product’ of a system exits
 from this node.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
 <cite>component_id</cite> columns in the <cite>component_list</cite> table,
 and must be of <cite>node_type</cite> transshipment.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">&#8216;gen_1&#8217;</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘gen_1’</td>
 </tr>
 </tbody>
 </table>
@@ -940,11 +968,11 @@ where <cite>n</cite> is the total number of output nodes</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The type of component, based on the typology definitions
 being used in the system model.</p>
-<p>Example: &#8216;Demineralisation Plant&#8217;</p>
+<p>Example: ‘Demineralisation Plant’</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Alphanumeric characters.
-May use dashes &#8216;-&#8216; or underscores &#8216;_&#8217;.
+May use dashes ‘-‘ or underscores ‘_’.
 Avoid using special characters.</p>
 </td>
 </tr>
@@ -984,7 +1012,7 @@ the following damage states are used:</p>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The probability distribution for the damage function.</p>
 <p>Currently only log-normal curves are used, but additional
 distributions can be added as required.</p>
-<p>Example: &#8216;lognormal&#8217;</p>
+<p>Example: ‘lognormal’</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">String.</p>
@@ -1047,11 +1075,11 @@ the curves do not overlap.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The fractional loss of a component&#8217;s value for damage
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The fractional loss of a component’s value for damage
 sustained at a given damage state. This parameter links
 a damage state to expected direct loss of component value.</p>
 <p>Example:
-Damage ratio of 0.30 for damage state &#8220;DS2 Moderate&#8221;</p>
+Damage ratio of 0.30 for damage state “DS2 Moderate”</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Float.
@@ -1078,7 +1106,7 @@ This parameter links damage states to expected
 post-impact residual functionality of the component.</p>
 <p>Example:
 A stack of a thermal power station is expected to remain
-fully functional (functionality==1), under &#8216;Slight&#8217;
+fully functional (functionality==1), under ‘Slight’
 damage state, i.e. under conditions of minor damage to
 structure with deformation of holding down bolts and with
 some bracing connections.</p>
@@ -1126,7 +1154,7 @@ failure modes.</p>
 damage function.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float, for a bimodal function. For
-single mode functions, use &#8216;NA&#8217;.</td>
+single mode functions, use ‘NA’.</td>
 </tr>
 </tbody>
 </table>
@@ -1140,7 +1168,7 @@ single mode functions, use &#8216;NA&#8217;.</td>
 damage function.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float, for a bimodal function. For
-single mode functions, use &#8216;NA&#8217;.</td>
+single mode functions, use ‘NA’.</td>
 </tr>
 </tbody>
 </table>
@@ -1221,12 +1249,12 @@ by the damage states used to model the fragility of the system components.</p>
 <dl class="docutils">
 <dt><cite>component_type</cite></dt>
 <dd>The entries here are the same as noted under
-<a class="reference internal" href="#dmg-algo-component-type"><span>component_type</span></a> in the
-&#8216;Component Type Damage Algorithms&#8217; table.</dd>
+<a class="reference internal" href="#dmg-algo-component-type"><span class="std std-ref">component_type</span></a> in the
+‘Component Type Damage Algorithms’ table.</dd>
 <dt><cite>damage_state</cite></dt>
 <dd>The entries here are the same as noted under
-<a class="reference internal" href="#dmg-algo-damage-state"><span>damage_state</span></a> in the
-&#8216;Component Type Damage Algorithms&#8217; table.</dd>
+<a class="reference internal" href="#dmg-algo-damage-state"><span class="std std-ref">damage_state</span></a> in the
+‘Component Type Damage Algorithms’ table.</dd>
 <dt><cite>damage_state_definitions</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1237,7 +1265,7 @@ to the damage states.</p>
 <p>Example:
 230 kV Current Transformers would be said to be in
 <cite>Failure</cite> state if there is
-&#8220;porcelain cracking, or overturning.&#8221;</p>
+“porcelain cracking, or overturning.”</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Free text.</p>
@@ -1253,15 +1281,18 @@ to the damage states.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch05_fragility_attribution.html" class="btn btn-neutral float-right" title="5 Component Fragility Attribution" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ch05_fragility_attribution.html" class="btn btn-neutral float-right" title="5 Component Fragility Attribution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ch03_installation.html" class="btn btn-neutral" title="3 Installation and Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ch03_installation.html" class="btn btn-neutral" title="3 Installation and Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1295,13 +1326,14 @@ to the damage states.</p>
             VERSION:'0.1.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

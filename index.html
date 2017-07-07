@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="SIFRA v0.1.1 docs" href="#"/>
         <link rel="next" title="1 Introduction" href="ch01_intro.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
@@ -102,8 +111,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">SIFRA</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">SIFRA</a>
+        
       </nav>
 
 
@@ -112,21 +123,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
-      
-    <li>SIFRA documentation</li>
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>SIFRA documentation</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -142,7 +170,7 @@ hazards, based on assessment of the fragilities and configuration of
 components that comprises the facility. Currently the system is
 designed to work with earthquake hazards only. SIFRA was developed in
 <a class="reference external" href="http://www.ga.gov.au/">Geoscience Australia (GA)</a> in support of the
-agency&#8217;s vision to contribute to enhancing the resilience of communities
+agency’s vision to contribute to enhancing the resilience of communities
 in Australia and its region.</p>
 <div class="section" id="feature-highlights">
 <h2>Feature Highlights<a class="headerlink" href="#feature-highlights" title="Permalink to this headline">¶</a></h2>
@@ -175,7 +203,7 @@ times for facility operations.</li>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model-and-related-vocabulary">2.1 The &#8216;System&#8217; Model and Related Vocabulary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model-and-related-vocabulary">2.1 The ‘System’ Model and Related Vocabulary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-loss-modelling">2.2 System Loss Modelling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
 </ul>
@@ -207,13 +235,13 @@ margin: 2em 0 2em 0; overflow: hidden;"> </div></div>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
 <p>Copyright 2016, Geoscience Australia</p>
-<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
 <blockquote>
 <div><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></div></blockquote>
 <p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS,
+distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
@@ -222,12 +250,15 @@ limitations under the License.</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch01_intro.html" class="btn btn-neutral float-right" title="1 Introduction" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ch01_intro.html" class="btn btn-neutral float-right" title="1 Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -262,13 +293,14 @@ limitations under the License.</p>
             VERSION:'0.1.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
         <link rel="prev" title="References" href="bibliography.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
@@ -89,7 +98,7 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Glossary</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
 </ul>
 
             
@@ -102,8 +111,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">SIFRA</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SIFRA</a>
+        
       </nav>
 
 
@@ -112,21 +123,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Glossary</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Glossary</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -144,12 +172,12 @@ earthquake ground motion.</dd>
 <dt id="term-amplitude">amplitude</dt>
 <dd>The maximum value of a time-varying quantity.</dd>
 <dt id="term-critical-infrastructure">critical infrastructure</dt>
-<dd>Critical Infrastructure are &#8220;those physical facilities, supply chains,
+<dd>Critical Infrastructure are “those physical facilities, supply chains,
 information technologies and communication networks which,
 if destroyed, degraded or rendered unavailable for an extended period,
 would significantly impact on the social or economic wellbeing of the
 nation or affect Australia’s ability to conduct national defence and
-ensure national security.&#8221; <br />
+ensure national security.” <br />
 Attorney General’s Department, Commonwealth of Australia (2015).
 <em>Critical Infrastructure Resilience Strategy: Policy Statement</em>, pg 3.
 Source: <a class="reference external" href="http://www.tisn.gov.au/Pages/default.aspx">http://www.tisn.gov.au/Pages/default.aspx</a></dd>
@@ -162,10 +190,10 @@ lifeline products and services. These are high-value assets that are
 essential for the proper functioning of the CI networks and for the
 provisioning of essential services.</dd>
 <dt id="term-fragility">fragility</dt>
-<dd>Fragility &#8220;implies easily damaged or broken, but is often used to
+<dd>Fragility “implies easily damaged or broken, but is often used to
 describe the probability of a stated level of damage for a specific
-hazard, e.g. an earthquake.&#8221; Fragility measures probability.</dd>
-<dt id="term-fragility-function"><span id="term-fragility-curves"></span>fragility function<br />fragility curves</dt>
+hazard, e.g. an earthquake.” Fragility measures probability.</dd>
+<dt id="term-fragility-function">fragility function<dt id="term-fragility-curves">fragility curves</dt>
 <dd>Fragility function is a mathematical function that expresses the
 relationship between the probability of occurrence of some undesirable
 event and some measure of environmental excitation. In our case the the
@@ -173,9 +201,9 @@ undesirable event is a facility or component reaching or exceeding some
 clearly defined limit state, and the environmental excitation is
 an earthquake of a defined intensity measure.</dd>
 <dt id="term-typology">typology</dt>
-<dd>&#8220;a system used for putting things into groups according to how they
+<dd>“a system used for putting things into groups according to how they
 are similar : the study of how things can be divided into different
-types&#8221;. <br />
+types”. <br />
 Source: <a class="reference external" href="http://www.merriam-webster.com/dictionary/typology">http://www.merriam-webster.com/dictionary/typology</a></dd>
 <dt id="term-vulnerability">vulnerability</dt>
 <dd>Vulnerability refers to the concept of susceptibility of damage for
@@ -193,13 +221,16 @@ loss functions.</dd>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="bibliography.html" class="btn btn-neutral" title="References" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bibliography.html" class="btn btn-neutral" title="References" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -233,13 +264,14 @@ loss functions.</dd>
             VERSION:'0.1.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

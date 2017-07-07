@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="SIFRA v0.1.1 docs" href="index.html"/>
         <link rel="next" title="3 Installation and Usage" href="ch03_installation.html"/>
         <link rel="prev" title="1 Introduction" href="ch01_intro.html"/> 
@@ -41,6 +46,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,10 +87,13 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">2 Model Concepts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-system-model-and-related-vocabulary">2.1 The &#8216;System&#8217; Model and Related Vocabulary</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-system-model-and-related-vocabulary">2.1 The ‘System’ Model and Related Vocabulary</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hierarchy-of-elements-within-a-as-built-infrastructure-system">2.1.1 Hierarchy of Elements within a <em>As-Built</em> Infrastructure System</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hierarchy-and-terminology-for-a-model-of-an-infrastructure-system">2.1.2 Hierarchy and Terminology for a <em>Model</em> of an Infrastructure System</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a <em>Model</em> of an Infrastructure System</a></li>
@@ -113,8 +122,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">SIFRA</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SIFRA</a>
+        
       </nav>
 
 
@@ -123,21 +134,38 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>2 Model Concepts</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>2 Model Concepts</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -152,15 +180,15 @@ provide essential utility services for communities, regions and/or a country.
 This will include electricity generation and transmission, water and wastewater
 treatment and reticulation, and transport networks. It excludes standalone
 high-value buildings and manufacturing plants. The SIFRA project also
-deliberately eschews an exclusive focus on &#8220;critical&#8221; infrastructure,
+deliberately eschews an exclusive focus on “critical” infrastructure,
 as that invites unnecessary debates on criteria of criticality and
 jurisdiction for that class of assets.</p>
 <div class="section" id="the-system-model-and-related-vocabulary">
-<span id="system-model-vocab"></span><h2>2.1 The &#8216;System&#8217; Model and Related Vocabulary<a class="headerlink" href="#the-system-model-and-related-vocabulary" title="Permalink to this headline">¶</a></h2>
+<span id="system-model-vocab"></span><h2>2.1 The ‘System’ Model and Related Vocabulary<a class="headerlink" href="#the-system-model-and-related-vocabulary" title="Permalink to this headline">¶</a></h2>
 <p>The central idea in the SIFRA modelling construct is this: All lifeline
-infrastructure &#8216;systems&#8217; within the modelling framework are
+infrastructure ‘systems’ within the modelling framework are
 conceptualised as a network of interconnected nodes.</p>
-<p>The &#8216;nodes&#8217; or vertices and connecting edges have different meaning based
+<p>The ‘nodes’ or vertices and connecting edges have different meaning based
 on the level of abstraction, which is clarified in following subsections.</p>
 <p>This modelling approach affords a very high degree of flexibility and
 scalability, making it possible accommodate diverse sectors and assets
@@ -170,7 +198,7 @@ of varying scales and complexities.</p>
 operational capacity of the overall system;
 (b) use graph theory to assess the graduated capacity degradation, and
 restoration, through modelling flow through the network; and
-(c) detect prioritised &#8216;paths&#8217;, or sets of components, within network
+(c) detect prioritised ‘paths’, or sets of components, within network
 that need to be repaired or restored in order to restore the flow through
 the network which represents the productive capacity of the system.</p>
 <div class="section" id="hierarchy-of-elements-within-a-as-built-infrastructure-system">
@@ -268,17 +296,17 @@ illustrates this concept for a thermal power station.</p>
 <span id="pwrstn-schematic-diagram"></span><a class="reference internal image-reference" href="_images/pwrstn_schematic_diagram.png"><img alt="Power station schematic" src="_images/pwrstn_schematic_diagram.png" style="width: 98%;" /></a>
 <p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Schematic representation of a coal-fired power station</span></p>
 </div>
-<p>The &#8216;edges&#8217;, or inter-nodal connections, represent a link or a process for
-maintaining &#8216;flow&#8217; of goods or services within the system, and thus their
+<p>The ‘edges’, or inter-nodal connections, represent a link or a process for
+maintaining ‘flow’ of goods or services within the system, and thus their
 directionality is important. For the power station, the edges are
 unidirectional, since the inputs flow in one direction starting from the
 entry point into the system and are progressively transformed through the
 system to generate energy – the end product. However, a substation is an
-electrical network where electricity – the system &#8216;commodity&#8217; – can flow in
+electrical network where electricity – the system ‘commodity’ – can flow in
 either direction through an edge (electrical conductor) as dictated by load
 demands and system constraints. Therefore, most of the edges in the
 substation are bidirectional, unless specifically constrained.</p>
-<p>Connection paths and &#8216;production capacities&#8217; along those paths within a
+<p>Connection paths and ‘production capacities’ along those paths within a
 system are calculated as the maximum flow through those paths.
 The <a class="reference external" href="http://igraph.org/python/">igraph</a> Python package was used as the
 network modelling platform to calculate graph metrics for a post-hazard
@@ -339,7 +367,7 @@ components based of the restoration model:</p>
 \[F_{C|x} = \sum_{i=0}^{S} P[{ds}_i \mid PGA=x] \times R_i[t]\]</div>
 <p>where, <span class="math">\({i}\)</span> is the index of the damage state,
 <span class="math">\({\{i \in \mathbb{Z} \mid 0 \leq i \leq S\}}\)</span>.
-The &#8216;None&#8217; damage state is <span class="math">\({i=0}\)</span>, and <span class="math">\({i=S}\)</span> is the complete
+The ‘None’ damage state is <span class="math">\({i=0}\)</span>, and <span class="math">\({i=S}\)</span> is the complete
 or highest modelled damage state. <span class="math">\(R_i[t]\)</span> is the likely level of
 restoration of functionality at time <span class="math">\(t\)</span> . Restoration level
 <span class="math">\(R_i\)</span> can take on any value in the unit interval [0,1].</p>
@@ -354,7 +382,7 @@ be recovered</li>
 </ul>
 <p>The process assumes that restoration is undertaken in stages, subject to
 the level of resources that can be made available and the order of repairs.
-In regard to this, the concept of &#8216;<em>Restoration Streams</em>&#8216; is used&#8211;the
+In regard to this, the concept of ‘<em>Restoration Streams</em>’ is used–the
 maximum number of components that can be worked on simultaneously. This is
 effectively a proxy representing the deployment of trained personnel and
 material for the repair tasks. Additional optional offsets can be factored
@@ -420,15 +448,18 @@ scheme.</li>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ch03_installation.html" class="btn btn-neutral float-right" title="3 Installation and Usage" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ch03_installation.html" class="btn btn-neutral float-right" title="3 Installation and Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ch01_intro.html" class="btn btn-neutral" title="1 Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ch01_intro.html" class="btn btn-neutral" title="1 Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -462,13 +493,14 @@ scheme.</li>
             VERSION:'0.1.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
