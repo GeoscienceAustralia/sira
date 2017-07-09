@@ -11,6 +11,19 @@ from sifra.modelling.utils import get_all_subclasses
 
 _Base = declarative_base()
 
+class Document(_Base):
+    __tablename__ = "documents"
+    id = Column(Integer, primary_key=True)
+    json_doc = Column(String())
+    attributes = relationship('DocumentAttribute', cascade='all, delete-orphan')
+
+class DocumentAttribute(_Base):
+    __tablename__ = "document_attributes"
+    id = Column(Integer, primary_key=True)
+    document_id = Column(Integer, ForeignKey('documents.id'))
+    name = Column(String(32))
+    value = Column(String())
+
 class ComponentCategory(_Base):
     __tablename__ = "component_categories"
     id = Column(Integer, primary_key=True)
@@ -20,22 +33,23 @@ class ComponentCategory(_Base):
     hazard = Column(String(length=32))
     UniqueConstraint(component, sector, facility_type, hazard)
 
-class ComponentAttribute(_Base):
-    __tablename__ = "component_attributes"
-    id = Column(Integer, primary_key=True)
-    component_id = Column(Integer, ForeignKey('components.id'))
-    name = Column(String(32))
-    value = Column(String())
-
 class Component(_Base):
     __tablename__ = "components"
     id = Column(Integer, primary_key=True)
     name = Column(String(), unique=True)
     clazz = Column(String())
-    json_doc = Column(String())
+    document_id = Column(Integer, ForeignKey('documents.id'))
+    document = relationship('Document', backref=backref('documents', order_by=id))
     category_id = Column(Integer, ForeignKey('component_categories.id'))
     category = relationship('ComponentCategory', backref=backref('components', order_by=id))
-    attributes = relationship('ComponentAttribute', cascade='all, delete-orphan')
+
+    @property
+    def json_doc(self):
+        return self.document.json_doc
+
+    @property
+    def attributes(self):
+        return self.document.attributes
 
 def getComponentCategories(hazard=None, sector=None, facility_type=None, component=None):
     # convert anything that evaluates to false to None

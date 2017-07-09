@@ -3,8 +3,9 @@ import abc
 import json
 from sifra.modelling.components import (
     _Session,
+    Document,
     Component,
-    ComponentAttribute,
+    DocumentAttribute,
     getComponentCategory)
 
 
@@ -27,11 +28,11 @@ class SerialisationProvider(object):
 
 
 
-def _addAttributes(component, attributes):
+def _addAttributes(document, attributes):
     if attributes is not None:
         for name, value in attributes.iteritems():
-            component.attributes.append(
-                ComponentAttribute(name=name, value=value))
+            document.attributes.append(
+                DocumentAttribute(name=name, value=value))
 
 
 
@@ -62,14 +63,16 @@ class SqliteDBProxy(object):
         if category is not None:
             category = getComponentCategory(session, **category)
         try:
+            document = Document(json_doc=json.dumps(obj))
+            session.add(document)
+            # call flush here to get the document's id (the default name)
+            session.flush()
+            _addAttributes(document, attributes)
             component = Component(
                 category=category,
-                json_doc=json.dumps(obj),
+                document=document,
                 clazz=clazz)
             session.add(component)
-            # call flush here to get the component's id (the default name)
-            session.flush()
-            _addAttributes(component, attributes)
             session.commit()
             return component.id
         except Exception, e:
