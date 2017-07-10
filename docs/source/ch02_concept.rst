@@ -1,37 +1,120 @@
-.. _concept-and-design:
+.. _model-concepts:
 
-******************
-Concept and Design
-******************
+**************
+Model Concepts
+**************
 
-.. _facility-system-model:
+SIFRA provides a modelling framework and software tools for assessing
+impact of natural hazards on infrastructure systems. Infrastructure
+systems, within this framework, refer to facilities and networks that
+provide essential utility services for communities, regions and/or a country.
+This will include electricity generation and transmission, water and wastewater
+treatment and reticulation, and transport networks. It excludes standalone
+high-value buildings and manufacturing plants. The SIFRA project also
+deliberately eschews an exclusive focus on "critical" infrastructure,
+as that invites unnecessary debates on criteria of criticality and
+jurisdiction for that class of assets.
 
-Facility System Model
-=====================
+.. _system-model-vocab:
 
-Facilities are modelled in the ``sifra`` methodology as a network of
-components. This approach affords three key advantages:
+The 'System' Model and Related Vocabulary
+=========================================
 
-(1) it allows for modelling the effect of impaired or destroyed components 
-    on the operational capacity of the system, 
-    
-(2) it allows for using graph theory to assess the graduated capacity 
-    degradation, and restoration, through modelling flow through the 
-    network, and 
-    
-(3) it allows for detection of the most efficient 'paths', or sets of 
-    components, through the network that need to be restored in order to 
-    establish a link between input and output nodes, i.e. to restore the 
-    flow through the network which represents the productive capacity of 
-    the system.
+The central idea in the SIFRA modelling construct is this: All lifeline
+infrastructure 'systems' within the modelling framework are
+conceptualised as a network of interconnected nodes.
 
-The concept of components and facilities used in this exercise map closely 
-to the typology of micro- and macro-components respectively, as defined in 
-the Synerg-G program :cite:`SynerG2010,Pitilakis-etal-2014`, and align with
-the definition of subsystems and systems as defined in
-:cite:`Rinaldi-etal-2001`. Under this scheme, the components are
-represented as nodes. Based on their role within the system, these nodes,
-or components, are classified in four categories:
+The 'nodes' or vertices and connecting edges have different meaning based
+on the level of abstraction, which is clarified in following subsections.
+
+This modelling approach affords a very high degree of flexibility and
+scalability, making it possible accommodate diverse sectors and assets
+of varying scales and complexities.
+
+Furthermore, it allows the user to:
+(a) model the effect of impaired or destroyed components on the
+operational capacity of the overall system;
+(b) use graph theory to assess the graduated capacity degradation, and
+restoration, through modelling flow through the network; and
+(c) detect prioritised 'paths', or sets of components, within network
+that need to be repaired or restored in order to restore the flow through
+the network which represents the productive capacity of the system.
+
+
+Hierarchy of Elements within a *As-Built* Infrastructure System
+---------------------------------------------------------------
+
+The elements in an infrastructure (or lifeline) system are conceptualised
+as being structured in a three-level hierarchy:
+
+Level 1 : **Infrastructure Network**
+   This is the top level of interconnected infrastructure systems where
+   infrastructure facilities are connected to form a network or networks.
+
+Level 2 : **Infrastructure Facility**
+   The concept of facilities used in this framework map closely to the
+   typology of macro-components as defined in the Synerg-G program
+   :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
+   systems as defined in :cite:`Rinaldi-etal-2001`.
+
+Level 3 : **Infrastructure Microcomponent**
+   This concept of components map closely to the typology of
+   micro-components as defined in the Synerg-G program
+   :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
+   definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.
+
+This applies to discussions on a *complete* that is responsible for
+delivering some service. This also applies to classification of assets,
+and how information about those assets they are stored and referenced
+in a database.
+
+
+Hierarchy and Terminology for a *Model* of an Infrastructure System
+-------------------------------------------------------------------
+
+In the context of a specific infrastructure model developed for hazard
+impact assessment, the following terms and ideas apply (and are implemented
+in the simulation code).
+
+The System Model
+   This defines a logical set of assets that is an abstraction
+   of a real equivalent asset. The usage of the term system in this
+   context is closer to its application in System Engineering, rather than
+   from an IT or software engineering perspective. The System Model defines
+   the *boundary* of the collection of elements under investigation. It is
+   the collection of nodes and connecting edges that collectively provides
+   a service or generates a type of product. This term can be used to refer
+   to a network or a facility. The context of the simulation will
+   disambiguate its meaning.
+
+Component
+   It is the high-level element within the network (or graph) that
+   represents the **System Model**. A collection of interconnected
+   components with specific attributes and roles comprise the System
+   in the context of the simulation model.
+
+If the subject of investigation is a **Network**
+   then in the context that specific exercise:  |br|
+   |BlkCircleMed|  the System Model is a Level 1 element, i.e.
+   an **Infrastructure Network**, and |br|
+   |BlkCircleMed|  the Components are Level 2 elements, i.e.
+   **Infrastructure Facilities**
+
+If the subject of investigation is a **Facility**
+   then in the context that specific exercise: |br|
+   |BlkCircleMed|  the System Model is a Level 2 element, i.e.
+   an **Infrastructure Facility**, and  |br|
+   |BlkCircleMed|  the Components are Level 3 elements, i.e.
+   an **Infrastructure Microcomponents**
+
+
+Classification of Nodes within a *Model* of an Infrastructure System
+--------------------------------------------------------------------
+
+For a specific impact assessment project, the Components within the
+System Model are represented as nodes. Based on their role within the
+system, these nodes (or components or vertices) are classified in
+four categories:
 
 1. *Supply nodes*: These nodes represent the entry points into the system
    for required inputs or commodities. As for example, coal and water can
@@ -184,13 +267,13 @@ effectively a proxy representing the deployment of trained personnel and
 material for the repair tasks. Additional optional offsets can be factored 
 in to capture specific contexts: 
 
-a)  *Restoration Offset* – this is a time allowance for assessment of
-    damage to the system and for securing the site to assure it is safe
-    for commencement of repairs;
+a) *Restoration Offset* – this is a time allowance for assessment of
+   damage to the system and for securing the site to assure it is safe
+   for commencement of repairs;
 
-b)  *Testing and Commission Interval*: this is a time allowance for testing
-    conformity with operational and safety parameters for the system, or a
-    part thereof.
+b) *Testing and Commission Interval*: this is a time allowance for testing
+   conformity with operational and safety parameters for the system, or a
+   part thereof.
 
 Given a set of restoration parameters and the restoration plan, the
 consequent restoration time is calculated as follows:
@@ -239,11 +322,10 @@ unit, and thereby expedite the restoration of the high priority lines.
 
 The outputs from the restoration model are: 
 
-a)  a simple Gantt chart with each component needing repair,
+1) a simple Gantt chart with each component needing repair,
 
-b)  restoration plot for each output line over time and the associated
-    percentage of total system capacity rehabilitated, and
+2) restoration plot for each output line over time and the associated
+   percentage of total system capacity rehabilitated, and
 
-c)  total restoration time for each output line for a given restoration
-    scheme.
-
+3) total restoration time for each output line for a given restoration
+   scheme.

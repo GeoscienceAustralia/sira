@@ -57,6 +57,13 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# couch db stuff
+db/*
+!db/.gitkeep
+
+# node stuff
+sifra-gui/node_modules
+
 # PyBuilder
 target/
 
@@ -68,4 +75,9 @@ output/*
 # OS X hidden files
 .DS_Store
 
+# ipython
 *.ipynb
+
+# vim
+*.swp
+

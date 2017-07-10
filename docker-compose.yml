@@ -1,0 +1,41 @@
+version: '3'
+services:
+    sifraapi:
+        build:
+            context: .
+            dockerfile: Dockerfile-api
+        image: sifra-api
+        volumes:
+            - .:/sifra
+        ports:
+            - "5000:5000"
+        depends_on:
+            # this is required for the builds to be performed in the right order
+            # which apparently only works for more recent versions of
+            # docker-compose.
+            - sifra
+        restart: always
+    sifragui:
+        build:
+            context: .
+            dockerfile: Dockerfile-gui-dev
+        image: sifra-gui
+        volumes:
+            - .:/sifra
+        ports:
+            - "4200:4200"
+        restart: always
+    sifra:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        # this service is only required if you want to run tests or interact via
+        # a console in some other way
+        image: sifra
+        #image: geoscienceaustralia/sifra:data-model
+        volumes:
+            - .:/sifra
+        stdin_open: true
+        tty: true
+        restart: always
+
