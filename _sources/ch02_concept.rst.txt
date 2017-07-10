@@ -77,7 +77,6 @@ impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).
 
 The System Model
-
    This defines a logical set of assets that is an abstraction
    of a real equivalent asset. The usage of the term system in this
    context is closer to its application in System Engineering, rather than
@@ -89,7 +88,6 @@ The System Model
    disambiguate its meaning.
 
 Component
-
    It is the high-level element within the network (or graph) that
    represents the **System Model**. A collection of interconnected
    components with specific attributes and roles comprise the System
