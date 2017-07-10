@@ -47,6 +47,7 @@ Features
 |br|
 
 - **Restoration Prognosis:** |br|
+
   User can experiment with different levels of hazards and
   post-disaster resource allocation to gauge restoration
   times for facility operations.
