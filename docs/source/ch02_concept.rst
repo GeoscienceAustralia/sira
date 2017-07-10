@@ -95,16 +95,16 @@ Component
 
 If the subject of investigation is a **Network**
    then in the context that specific exercise:  |br|
-   |BlkCircleSml|  the System Model is a Level 1 element, i.e.
+   |BlkCircleMed|  the System Model is a Level 1 element, i.e.
    an **Infrastructure Network**, and |br|
-   |BlkCircleSml|  the Components are Level 2 elements, i.e.
+   |BlkCircleMed|  the Components are Level 2 elements, i.e.
    **Infrastructure Facilities**
 
 If the subject of investigation is a **Facility**
    then in the context that specific exercise: |br|
-   |BlkCircleSml|  the System Model is a Level 2 element, i.e.
+   |BlkCircleMed|  the System Model is a Level 2 element, i.e.
    an **Infrastructure Facility**, and  |br|
-   |BlkCircleSml|  the Components are Level 3 elements, i.e.
+   |BlkCircleMed|  the Components are Level 3 elements, i.e.
    an **Infrastructure Microcomponents**
 
 
@@ -329,4 +329,3 @@ The outputs from the restoration model are:
 
 3) total restoration time for each output line for a given restoration
    scheme.
-

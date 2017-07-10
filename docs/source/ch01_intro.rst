@@ -37,10 +37,11 @@ to the most cost-effective utilisation of limited retrofit resources.
 :term:`Vulnerability <vulnerability>` of a facility is modelled by assigning 
 fragilities to the individual components that make up a facility. The program 
 accounts for variability in component fragilities by sampling probability 
-distributions for the each fragility curve median and beta values. Once values 
-have been selected for each curve it checks that :term:`fragility curves` do 
-not overlap and if they do, re-samples the median and beta probability 
-distributions until non-overlapping fragility curves are produced.
+distributions for the each fragility curve median and beta values. Once
+values have been selected for each curve it checks that
+:term:`fragility curves` do not overlap and if they do, re-samples the
+median and beta probability distributions until non-overlapping fragility
+curves are produced.
 
 Damage scales for several assets, and method for estimating recovery times 
 have been taken from HAZUS :cite:`FEMA2003`.
