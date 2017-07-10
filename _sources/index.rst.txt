@@ -3,21 +3,27 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-SIFRA documentation
-*******************
+##############################################################
+SIFRA: A Tool for Analysis of Hazard Impacts on Infrastructure
+##############################################################
 
 https://github.com/GeoscienceAustralia/sifra |br|
-**Release:** |release|
+Release: |release|
 
 SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 It comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
-components that comprises the facility. Currently the system is
-designed to work with earthquake hazards only. SIFRA was developed in
-`Geoscience Australia (GA) <http://www.ga.gov.au/>`_ in support of the
-agency's vision to contribute to enhancing the resilience of communities
-in Australia and its region.
+components that comprise the facility. Currently the system is designed
+to work with earthquake hazards only. However, in the development of the
+methodology and classes, there is a strong emphasis on making the
+hazard attribution process and infrastructure models flexible to allow
+for expansion to other hazards and new infrastructure sectors.
+
+SIFRA was developed in `Geoscience Australia (GA) <http://www.ga.gov.au/>`_
+in support of the agency's vision to contribute to enhancing the resilience
+of communities in Australia and its region.
+
 
 Features
 ========
