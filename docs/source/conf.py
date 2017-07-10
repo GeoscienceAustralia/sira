@@ -127,7 +127,8 @@ rst_epilog = open(os.path.join(CURDIR, 'epilog.rst'), 'r').read()
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+# pygments_style = 'sphinx'
+pygments_style = 'pastie'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -144,14 +145,33 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-# on_rtd is whether we are on readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+# # --- Setup for READ THE DOCS theme ---
+# # on_rtd is whether we are on readthedocs.org
+# on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+#
+# if not on_rtd:  # only import and set the theme if we're building docs locally
+#     import sphinx_rtd_theme
+#     html_theme = 'sphinx_rtd_theme'
+#     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+# # otherwise, readthedocs.org uses their theme by default, so no need to specify it
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-# otherwise, readthedocs.org uses their theme by default, so no need to specify it
+# --- Setup for GUZZLE theme ---
+# https://github.com/guzzle/guzzle_sphinx_theme
+import guzzle_sphinx_theme
+html_theme_path = guzzle_sphinx_theme.html_theme_path()
+html_theme = 'guzzle_sphinx_theme'
+
+# Guzzle theme options (see theme.conf for more information)
+html_theme_options = {
+
+    # Set the name of the project to appear in the left sidebar.
+    "project_nav_name": "SIFRA",
+
+    # Allow the project link to be overriden to a custom URL.
+    "projectlink": "https://github.com/GeoscienceAustralia/sifra",
+}
+
+# ------------------------------
 
 # This was the default in conf.py:
 # html_theme = 'alabaster'

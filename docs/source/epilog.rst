@@ -32,6 +32,8 @@
 
 .. |WhtSquare| unicode:: 0x25A1 .. White square
 
+.. |BlkCircleSml| unicode:: 0x2022 .. Black cirle small
+
 .. |rightarrow| replace:: :math:`\rightarrow`
 
 .. |doublerightarrow| replace:: :math:`\Rightarrow`
