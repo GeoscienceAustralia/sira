@@ -38,6 +38,8 @@
 
 .. |BlkCircleLarge| unicode:: 0x2B24 .. Black cirle large
 
+.. |rightdoubleangle| unicode:: 0x00BB .. Right-pointing double angle quotation mark
+
 .. |rightarrow| replace:: :math:`\rightarrow`
 
 .. |doublerightarrow| replace:: :math:`\Rightarrow`
