@@ -134,24 +134,6 @@ as that invites unnecessary debates on criteria of criticality and
 jurisdiction for that class of assets.</p>
 <div class="section" id="the-system-model">
 <span id="system-model-vocab"></span><h2>2.1 The ‘System’ Model<a class="headerlink" href="#the-system-model" title="Permalink to this headline">¶</a></h2>
-<p>The central idea in the SIFRA modelling construct is this: All lifeline
-infrastructure ‘systems’ within the modelling framework are
-conceptualised as a network of interconnected nodes.</p>
-<p>The ‘nodes’ or vertices and connecting edges have different meaning based
-on the level of abstraction, which is clarified in following subsections.</p>
-<p>This modelling approach affords a very high degree of flexibility and
-scalability, making it possible accommodate diverse sectors and assets
-of varying scales and complexities.</p>
-<p>Furthermore, it allows the user to:
-(a) model the effect of impaired or destroyed components on the
-operational capacity of the overall system;
-(b) use graph theory to assess the graduated capacity degradation, and
-restoration, through modelling flow through the network; and
-(c) detect prioritised ‘paths’, or sets of components, within network
-that need to be repaired or restored in order to restore the flow through
-the network which represents the productive capacity of the system.</p>
-<div class="section" id="vocabulary">
-<h3>2.1.1 Vocabulary<a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h3>
 <p>A system, according to the
 <a class="reference external" href="https://www.merriam-webster.com/dictionary/system">Merriam-Webster</a>
 dictionary, is</p>
@@ -166,8 +148,25 @@ elements that together produce results not obtainable
 by the elements alone.”</div></blockquote>
 <p>The specific meaning of a system and its boundaries depend on the context,
 and it is important to understand how this term is used within the SIFRA
-modelling methodology.</p>
-<p><strong>Terminology Context: An Actual Infrastructure System</strong></p>
+modelling methodology. This is clarified in subsequent subsections.</p>
+<p>The central idea in the SIFRA modelling construct is this:
+All lifeline infrastructure ‘systems’ within the modelling framework are
+conceptualised as a network of interconnected nodes.</p>
+<p>The ‘nodes’ or vertices and connecting edges have different meaning based
+on the level of abstraction, which is clarified in following subsections.</p>
+<p>This modelling approach affords a very high degree of flexibility and
+scalability, making it possible accommodate diverse sectors and assets
+of varying scales and complexities.</p>
+<p>Furthermore, it allows the user to:
+(a) model the effect of impaired or destroyed components on the
+operational capacity of the overall system;
+(b) use graph theory to assess the graduated capacity degradation, and
+restoration, through modelling flow through the network; and
+(c) detect prioritised ‘paths’, or sets of components, within network
+that need to be repaired or restored in order to restore the flow through
+the network which represents the productive capacity of the system.</p>
+<div class="section" id="terminology-context-an-actual-infrastructure-system">
+<h3>2.1.1 Terminology Context: An Actual Infrastructure System<a class="headerlink" href="#terminology-context-an-actual-infrastructure-system" title="Permalink to this headline">¶</a></h3>
 <p>The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:</p>
 <ul>
@@ -192,7 +191,9 @@ definition of subsystems as defined in <a class="reference internal" href="bibli
 delivering some service. This also applies to classification of assets,
 and how information about those assets they are stored and referenced
 in a database.</p>
-<p><strong>Terminology Context: A Model of a Lifeline Infrastructure</strong></p>
+</div>
+<div class="section" id="terminology-context-a-model-of-a-lifeline-infrastructure">
+<h3>2.1.2 Terminology Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#terminology-context-a-model-of-a-lifeline-infrastructure" title="Permalink to this headline">¶</a></h3>
 <p>In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).</p>
@@ -229,29 +230,29 @@ an <strong>Infrastructure Microcomponents</strong></p>
 </ul>
 </div>
 <div class="section" id="classification-of-nodes-within-a-model-of-an-infrastructure-system">
-<span id="model-node-classification"></span><h3>2.1.2 Classification of Nodes within a Model of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
+<span id="model-node-classification"></span><h3>2.1.3 Classification of Nodes within a Model of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
 <p>For a specific impact assessment project, the Components within the
 System Model are represented as nodes. Based on their role within the
 system, these nodes (or components or vertices) are classified in
 four categories:</p>
 <ol class="arabic simple">
-<li><em>Supply nodes</em>: These nodes represent the entry points into the system
+<li><strong>Supply nodes</strong>: These nodes represent the entry points into the system
 for required inputs or commodities. As for example, coal and water can
 be the required ‘commodities’ into a thermal power station. In the case
 of the substation, required input is electricity from power stations or
 other substations.</li>
-<li><em>Output nodes</em>: These nodes represent the exit points for the output of
+<li><strong>Output nodes</strong>: These nodes represent the exit points for the output of
 the system. For example, in the case of the power station, the output
 nodes act as dummy loads - representing the energy consumers - connected
 to each of the step-up transformers. The sum of flow through the network
 measured at the output nodes represented the effective production
 (or operational) capacity of the facility.</li>
-<li><em>Dependency nodes</em>: These nodes represent the components that do not
+<li><strong>Dependency nodes</strong>: These nodes represent the components that do not
 directly participate in the production process of the system, or in
 the handling of system inputs, but are critical for system operations
 in some other capacity, e.g. system management or monitoring. The
 control building of a substation is an example of this.</li>
-<li><em>Transhipment nodes</em>: These are nodes that transform, transport, or
+<li><strong>Transhipment nodes</strong>: These are nodes that transform, transport, or
 store system inputs to give effect to processes that produces the outputs
 required of the system. Majority of the nodes within a system fall into
 this category.</li>

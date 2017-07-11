@@ -20,8 +20,26 @@ jurisdiction for that class of assets.
 The 'System' Model
 ==================
 
-The central idea in the SIFRA modelling construct is this: All lifeline
-infrastructure 'systems' within the modelling framework are
+A system, according to the
+`Merriam-Webster <https://www.merriam-webster.com/dictionary/system>`_
+dictionary, is
+
+    "a regularly interacting or interdependent group
+    of items forming a unified whole."
+
+The International Council on Systems Engineering (INCOSE)
+`defines a system thus <http://www.incose.org/AboutSE/WhatIsSE>`_:
+
+    "A system is a construct or collection of different
+    elements that together produce results not obtainable
+    by the elements alone."
+
+The specific meaning of a system and its boundaries depend on the context,
+and it is important to understand how this term is used within the SIFRA
+modelling methodology. This is clarified in subsequent subsections.
+
+The central idea in the SIFRA modelling construct is this:
+All lifeline infrastructure 'systems' within the modelling framework are
 conceptualised as a network of interconnected nodes.
 
 The 'nodes' or vertices and connecting edges have different meaning based
@@ -40,28 +58,8 @@ restoration, through modelling flow through the network; and
 that need to be repaired or restored in order to restore the flow through
 the network which represents the productive capacity of the system.
 
-Vocabulary
-----------
-
-A system, according to the
-`Merriam-Webster <https://www.merriam-webster.com/dictionary/system>`_
-dictionary, is
-
-    "a regularly interacting or interdependent group
-    of items forming a unified whole."
-
-The International Council on Systems Engineering (INCOSE)
-`defines a system thus <http://www.incose.org/AboutSE/WhatIsSE>`_:
-
-    "A system is a construct or collection of different
-    elements that together produce results not obtainable
-    by the elements alone."
-
-The specific meaning of a system and its boundaries depend on the context,
-and it is important to understand how this term is used within the SIFRA
-modelling methodology.
-
-**Terminology Context: An Actual Infrastructure System**
+Terminology Context: An Actual Infrastructure System
+----------------------------------------------------
 
 The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:
@@ -90,7 +88,8 @@ delivering some service. This also applies to classification of assets,
 and how information about those assets they are stored and referenced
 in a database.
 
-**Terminology Context: A Model of a Lifeline Infrastructure**
+Terminology Context: A Model of a Lifeline Infrastructure
+---------------------------------------------------------
 
 In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
@@ -139,26 +138,26 @@ System Model are represented as nodes. Based on their role within the
 system, these nodes (or components or vertices) are classified in
 four categories:
 
-1. *Supply nodes*: These nodes represent the entry points into the system
+1. **Supply nodes**: These nodes represent the entry points into the system
    for required inputs or commodities. As for example, coal and water can
    be the required ‘commodities’ into a thermal power station. In the case
    of the substation, required input is electricity from power stations or
    other substations.
 
-2. *Output nodes*: These nodes represent the exit points for the output of 
+2. **Output nodes**: These nodes represent the exit points for the output of
    the system. For example, in the case of the power station, the output
    nodes act as dummy loads - representing the energy consumers - connected
    to each of the step-up transformers. The sum of flow through the network
    measured at the output nodes represented the effective production
    (or operational) capacity of the facility.
 
-3. *Dependency nodes*: These nodes represent the components that do not 
+3. **Dependency nodes**: These nodes represent the components that do not
    directly participate in the production process of the system, or in
    the handling of system inputs, but are critical for system operations
    in some other capacity, e.g. system management or monitoring. The
    control building of a substation is an example of this.
 
-4. *Transhipment nodes*: These are nodes that transform, transport, or
+4. **Transhipment nodes**: These are nodes that transform, transport, or
    store system inputs to give effect to processes that produces the outputs
    required of the system. Majority of the nodes within a system fall into 
    this category.
