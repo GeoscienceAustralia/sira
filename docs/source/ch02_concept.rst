@@ -17,11 +17,29 @@ jurisdiction for that class of assets.
 
 .. _system-model-vocab:
 
-The 'System' Model and Related Vocabulary
-=========================================
+The 'System' Model
+==================
 
-The central idea in the SIFRA modelling construct is this: All lifeline
-infrastructure 'systems' within the modelling framework are
+A system, according to the
+`Merriam-Webster <https://www.merriam-webster.com/dictionary/system>`_
+dictionary, is
+
+    "a regularly interacting or interdependent group
+    of items forming a unified whole."
+
+The International Council on Systems Engineering (INCOSE)
+`defines a system thus <http://www.incose.org/AboutSE/WhatIsSE>`_:
+
+    "A system is a construct or collection of different
+    elements that together produce results not obtainable
+    by the elements alone."
+
+The specific meaning of a system and its boundaries depend on the context,
+and it is important to understand how this term is used within the SIFRA
+modelling methodology. This is clarified in subsequent subsections.
+
+The central idea in the SIFRA modelling construct is this:
+All lifeline infrastructure 'systems' within the modelling framework are
 conceptualised as a network of interconnected nodes.
 
 The 'nodes' or vertices and connecting edges have different meaning based
@@ -40,24 +58,26 @@ restoration, through modelling flow through the network; and
 that need to be repaired or restored in order to restore the flow through
 the network which represents the productive capacity of the system.
 
-
-Hierarchy of Elements within a *As-Built* Infrastructure System
----------------------------------------------------------------
+Terminology Context: An Actual Infrastructure System
+----------------------------------------------------
 
 The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:
 
-Level 1 : **Infrastructure Network**
+-  **Level 1 : Infrastructure Network**
+
    This is the top level of interconnected infrastructure systems where
    infrastructure facilities are connected to form a network or networks.
 
-Level 2 : **Infrastructure Facility**
+-  **Level 2 : Infrastructure Facility**
+
    The concept of facilities used in this framework map closely to the
    typology of macro-components as defined in the Synerg-G program
    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
    systems as defined in :cite:`Rinaldi-etal-2001`.
 
-Level 3 : **Infrastructure Microcomponent**
+-  **Level 3 : Infrastructure Microcomponent**
+
    This concept of components map closely to the typology of
    micro-components as defined in the Synerg-G program
    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
@@ -68,15 +88,15 @@ delivering some service. This also applies to classification of assets,
 and how information about those assets they are stored and referenced
 in a database.
 
-
-Hierarchy and Terminology for a *Model* of an Infrastructure System
--------------------------------------------------------------------
+Terminology Context: A Model of a Lifeline Infrastructure
+---------------------------------------------------------
 
 In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).
 
-The System Model
+-  **The System Model**
+
    This defines a logical set of assets that is an abstraction
    of a real equivalent asset. The usage of the term system in this
    context is closer to its application in System Engineering, rather than
@@ -87,55 +107,57 @@ The System Model
    to a network or a facility. The context of the simulation will
    disambiguate its meaning.
 
-Component
+-  **Component**
+
    It is the high-level element within the network (or graph) that
    represents the **System Model**. A collection of interconnected
    components with specific attributes and roles comprise the System
    in the context of the simulation model.
 
-If the subject of investigation is a **Network**
-   then in the context that specific exercise:  |br|
-   |BlkCircleMed|  the System Model is a Level 1 element, i.e.
+-  **If the context of investigation is a NETWORK**
+
+   |rightdoubleangle|  the System Model is a Level 1 element, i.e.
    an **Infrastructure Network**, and |br|
-   |BlkCircleMed|  the Components are Level 2 elements, i.e.
+   |rightdoubleangle|  the Components are Level 2 elements, i.e.
    **Infrastructure Facilities**
 
-If the subject of investigation is a **Facility**
-   then in the context that specific exercise: |br|
-   |BlkCircleMed|  the System Model is a Level 2 element, i.e.
+-  **If the context of investigation is a FACILITY**
+
+   |rightdoubleangle|  the System Model is a Level 2 element, i.e.
    an **Infrastructure Facility**, and  |br|
-   |BlkCircleMed|  the Components are Level 3 elements, i.e.
+   |rightdoubleangle|  the Components are Level 3 elements, i.e.
    an **Infrastructure Microcomponents**
 
+.. _model-node-classification:
 
-Classification of Nodes within a *Model* of an Infrastructure System
---------------------------------------------------------------------
+Classification of Nodes within a Model of an Infrastructure System
+------------------------------------------------------------------
 
 For a specific impact assessment project, the Components within the
 System Model are represented as nodes. Based on their role within the
 system, these nodes (or components or vertices) are classified in
 four categories:
 
-1. *Supply nodes*: These nodes represent the entry points into the system
+1. **Supply nodes**: These nodes represent the entry points into the system
    for required inputs or commodities. As for example, coal and water can
    be the required ‘commodities’ into a thermal power station. In the case
    of the substation, required input is electricity from power stations or
    other substations.
 
-2. *Output nodes*: These nodes represent the exit points for the output of 
+2. **Output nodes**: These nodes represent the exit points for the output of
    the system. For example, in the case of the power station, the output
    nodes act as dummy loads - representing the energy consumers - connected
    to each of the step-up transformers. The sum of flow through the network
    measured at the output nodes represented the effective production
    (or operational) capacity of the facility.
 
-3. *Dependency nodes*: These nodes represent the components that do not 
+3. **Dependency nodes**: These nodes represent the components that do not
    directly participate in the production process of the system, or in
    the handling of system inputs, but are critical for system operations
    in some other capacity, e.g. system management or monitoring. The
    control building of a substation is an example of this.
 
-4. *Transhipment nodes*: These are nodes that transform, transport, or
+4. **Transhipment nodes**: These are nodes that transform, transport, or
    store system inputs to give effect to processes that produces the outputs
    required of the system. Majority of the nodes within a system fall into 
    this category.
