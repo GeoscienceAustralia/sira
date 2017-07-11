@@ -107,6 +107,7 @@ If the subject of investigation is a **Facility**
    |BlkCircleMed|  the Components are Level 3 elements, i.e.
    an **Infrastructure Microcomponents**
 
+.. _model-node-classification:
 
 Classification of Nodes within a *Model* of an Infrastructure System
 --------------------------------------------------------------------

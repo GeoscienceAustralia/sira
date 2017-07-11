@@ -330,7 +330,7 @@ The *component_list* has the following parameters:
 `node_type`
   :Description: This indicates the role of the node (component) within
                 network representing the system. For details, see
-                :ref:`Facility System Model <facility-system-model>`.
+                :ref:`Classification of Nodes <model-node-classification>`.
 
   :Data Type:   String.
                 Must be one of four values:

@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
   color: black;
   font-weight: normal;
   padding: 0;
-  font-family: "Source Serif Pro", "serif";
+  font-family: "Alegreya Sans SC", "Source Serif Pro", "serif";
 }
 
 h1, h2, h3 {
@@ -65,7 +65,7 @@ h1 {
   font-size: 38px;
   padding: 10px 10px 10px 45px;
   margin: 20px 0 35px -45px;
-  background-color: aliceblue;
+  background-color: none;
   width: calc(100% + 90px);
   border-bottom: 1px solid #D8E4EF;
 }
