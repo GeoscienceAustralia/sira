@@ -154,25 +154,34 @@ the network which represents the productive capacity of the system.</p>
 <h3>2.1.1 Vocabulary<a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h3>
 <p>A system, according to the
 <a class="reference external" href="https://www.merriam-webster.com/dictionary/system">Merriam-Webster</a>
-dictionary, is “a regularly interacting or interdependent group
-of items forming a unified whole.” The specific meaning of a system and
-its boundaries depend on the context, and it is important to understand
-how this term is used within the SIFRA modelling methodology.</p>
+dictionary, is</p>
+<blockquote>
+<div>“a regularly interacting or interdependent group
+of items forming a unified whole.”</div></blockquote>
+<p>The International Council on Systems Engineering (INCOSE)
+<a class="reference external" href="http://www.incose.org/AboutSE/WhatIsSE">defines a system thus</a>:</p>
+<blockquote>
+<div>“A system is a construct or collection of different
+elements that together produce results not obtainable
+by the elements alone.”</div></blockquote>
+<p>The specific meaning of a system and its boundaries depend on the context,
+and it is important to understand how this term is used within the SIFRA
+modelling methodology.</p>
 <p><strong>Terminology Context: An Actual Infrastructure System</strong></p>
 <p>The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:</p>
 <ul>
-<li><p class="first">Level 1 : Infrastructure Network</p>
+<li><p class="first"><strong>Level 1 : Infrastructure Network</strong></p>
 <p>This is the top level of interconnected infrastructure systems where
 infrastructure facilities are connected to form a network or networks.</p>
 </li>
-<li><p class="first">Level 2 : Infrastructure Facility</p>
+<li><p class="first"><strong>Level 2 : Infrastructure Facility</strong></p>
 <p>The concept of facilities used in this framework map closely to the
 typology of macro-components as defined in the Synerg-G program
 <a class="reference internal" href="bibliography.html#synerg2010" id="id2">[6]</a><a class="reference internal" href="bibliography.html#pitilakis-etal-2014" id="id3">[7]</a>, and align with the definition
 systems as defined in <a class="reference internal" href="bibliography.html#rinaldi-etal-2001" id="id4">[8]</a>.</p>
 </li>
-<li><p class="first">Level 3 : Infrastructure Microcomponent</p>
+<li><p class="first"><strong>Level 3 : Infrastructure Microcomponent</strong></p>
 <p>This concept of components map closely to the typology of
 micro-components as defined in the Synerg-G program
 <a class="reference internal" href="bibliography.html#synerg2010" id="id5">[6]</a><a class="reference internal" href="bibliography.html#pitilakis-etal-2014" id="id6">[7]</a>, and align with the
@@ -188,7 +197,7 @@ in a database.</p>
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).</p>
 <ul>
-<li><p class="first">The System Model</p>
+<li><p class="first"><strong>The System Model</strong></p>
 <p>This defines a logical set of assets that is an abstraction
 of a real equivalent asset. The usage of the term system in this
 context is closer to its application in System Engineering, rather than
@@ -199,30 +208,28 @@ a service or generates a type of product. This term can be used to refer
 to a network or a facility. The context of the simulation will
 disambiguate its meaning.</p>
 </li>
-<li><p class="first">Component</p>
+<li><p class="first"><strong>Component</strong></p>
 <p>It is the high-level element within the network (or graph) that
 represents the <strong>System Model</strong>. A collection of interconnected
 components with specific attributes and roles comprise the System
 in the context of the simulation model.</p>
 </li>
-<li><p class="first">If the subject of investigation is a NETWORK</p>
-<p>then in the context that specific exercise:  <br />
-<span class="math">\(\Rightarrow\)</span>  the System Model is a Level 1 element, i.e.
+<li><p class="first"><strong>If the context of investigation is a NETWORK</strong></p>
+<p>0x00BB .. Right-pointing double angle quotation mark  the System Model is a Level 1 element, i.e.
 an <strong>Infrastructure Network</strong>, and <br />
-<span class="math">\(\Rightarrow\)</span>  the Components are Level 2 elements, i.e.
+0x00BB .. Right-pointing double angle quotation mark  the Components are Level 2 elements, i.e.
 <strong>Infrastructure Facilities</strong></p>
 </li>
-<li><p class="first">If the subject of investigation is a FACILITY</p>
-<p>then in the context that specific exercise: <br />
-<span class="math">\(\Rightarrow\)</span>  the System Model is a Level 2 element, i.e.
+<li><p class="first"><strong>If the context of investigation is a FACILITY</strong></p>
+<p>0x00BB .. Right-pointing double angle quotation mark  the System Model is a Level 2 element, i.e.
 an <strong>Infrastructure Facility</strong>, and  <br />
-<span class="math">\(\Rightarrow\)</span>  the Components are Level 3 elements, i.e.
+0x00BB .. Right-pointing double angle quotation mark  the Components are Level 3 elements, i.e.
 an <strong>Infrastructure Microcomponents</strong></p>
 </li>
 </ul>
 </div>
 <div class="section" id="classification-of-nodes-within-a-model-of-an-infrastructure-system">
-<span id="model-node-classification"></span><h3>2.1.2 Classification of Nodes within a <em>Model</em> of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
+<span id="model-node-classification"></span><h3>2.1.2 Classification of Nodes within a Model of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
 <p>For a specific impact assessment project, the Components within the
 System Model are represented as nodes. Based on their role within the
 system, these nodes (or components or vertices) are classified in
