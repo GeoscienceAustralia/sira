@@ -131,7 +131,7 @@ def _merge_data_and_metadata(meta, data):
             if meta[k]['class'] == '__builtin__.dict':
                 meta[k]['_items'] = {}
                 for k1, v1 in v.iteritems():
-                    # note that the following line implys that dicts can
+                    # note that the following line implies that dicts can
                     # only contain classes that extend sifra.structural.Base, or
                     # at least have __json_desc__ defined
                     nextMeta = deepcopy(class_getter(v1['class']).__json_desc__)

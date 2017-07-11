@@ -1,6 +1,7 @@
 from sifra.modelling.elements import ResponseModel
 from sifra.modelling.structures import XYPairs
 from sifra.modelling.structural import Element as _Element
+import scipy.stats as stats
 
 
 class StepFunc(ResponseModel):
@@ -35,7 +36,6 @@ class LogNormalCDF(ResponseModel):
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        import scipy.stats as stats
         return stats.lognorm.cdf(value, self.beta, loc=0, scale=self.median)
 
 
@@ -54,6 +54,5 @@ class NormalCDF(ResponseModel):
         loc = Mean
         scale = Standard Deviation i.e. square root of Variance
         """
-        import scipy.stats as stats
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 

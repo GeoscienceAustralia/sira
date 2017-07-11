@@ -124,16 +124,24 @@ def compute_output_given_ds(cp_func, fc):
     Computes system output given list of component functional status
     '''
     G = fc.network.G
-    nodes = fc.network.nodes_all
+    nodes = fc.network.node_map
 
-    for t in G.get_edgelist():
-        eid = G.get_eid(*t)
-        origin = G.vs[t[0]]['name']
-        destin = G.vs[t[1]]['name']
-        if fc.cpdict[origin]['node_type'] == 'dependency':
-            cp_func[nodes.index(destin)] *= cp_func[nodes.index(origin)]
-        cap = cp_func[nodes.index(origin)]
-        G.es[eid]["capacity"] = cap
+    # for t in G.get_edgelist():
+    #     eid = G.get_eid(*t)
+    #     origin = G.vs[t[0]]['name']
+    #     destin = G.vs[t[1]]['name']
+    #     if fc.cpdict[origin]['node_type'] == 'dependency':
+    #         cp_func[nodes[destin]] *= cp_func[nodes[origin]]
+    #
+    #     cap = cp_func[nodes[origin]]
+    #
+    #     G.es[eid]["capacity"] = cap
+
+    for t in fc.network.netx_G.edges(data=True):
+        if fc.cpdict[t[0]]['node_type'] == 'dependency':
+            cp_func[nodes[t[1]]] *= cp_func[nodes[t[0]]]
+        if t[2]['capacity'] != cp_func[nodes[t[0]]]:
+            t[2]['capacity'] = cp_func[nodes[t[0]]]
 
     sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
 
@@ -242,7 +250,6 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     output_array_given_recovery = np.zeros(
         (sc.num_samples, sc.num_time_steps)
     )
-
     # rnd = stats.uniform.rvs(
     #     loc=0, scale=1, size=(NUM_SAMPLES, num_elements))
     # np.save(os.path.join(RAW_OUTPUT_DIR, 'rnd_samples_x_elements.npy'), rnd)
@@ -270,7 +277,6 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             rnd[:, j][:, np.newaxis], axis=1
         )
         # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
-
     component_loss_tmp = {c: [] for c in nodes_sorted}
     component_func_tmp = {c: [] for c in nodes_sorted}
 
@@ -319,6 +325,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             output_array_given_recovery[i, t] = \
                 sum(compute_output_given_ds(cp_func_given_time[:, t], fc))
 
+
     comp_resp_dict = dict()
 
     for j, comp_name in enumerate(nodes_sorted):
@@ -341,6 +348,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     for onx, onode in enumerate(fc.network.out_node_list):
         sys_out_dict[onode]\
             = np.mean(sys_output_list_given_pga[_PGA][:, onx])
+
     return ids_comp, \
            sys_out_dict, \
            comp_resp_dict, \
@@ -588,7 +596,7 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
                     for c in cp_class_map[compclass]:
                         comp_class_failures[compclass][i, j] += \
                             ids_comp_vs_haz[PGA][
-                                i, fc.network.nodes_all.index(c)
+                                i, fc.network.node_map[c]
                             ]
                     comp_class_failures[compclass][i, j] /= \
                         len(cp_class_map[compclass])
