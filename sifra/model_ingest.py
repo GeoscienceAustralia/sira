@@ -1,6 +1,8 @@
 import sys
 import pandas as pd
 
+from sifra.modelling.utils import IODict
+
 from sifraclasses import _FacilityDataGetter
 
 from modelling.component import Component, ConnectionValues
@@ -20,7 +22,7 @@ import copy
 
 def ingest_spreadsheet(config):
     facility_data = _FacilityDataGetter(config)
-    component_dict = {}
+    component_dict = IODict()
 
     damage_algorithm_vals = None
     recovery_algorithm_vals = None
@@ -36,8 +38,8 @@ def ingest_spreadsheet(config):
     for index, damage_state in facility_data.fragility_data.iterrows():
         component_type = index[0]
         if component_type not in component_dict:
-            damage_algorithm_vals = {}
-            recovery_algorithm_vals = {}
+            damage_algorithm_vals = IODict()
+            recovery_algorithm_vals = IODict()
             # store the current values in the Algorithms
             component_dict[component_type] = {}
             component_dict[component_type]['component_type'] = component_type
@@ -54,6 +56,7 @@ def ingest_spreadsheet(config):
             print("Damage definition not found {}".format(index))
 
         response_params = {}
+        response_params['damage_ratio'] = damage_state['damage_ratio']
         response_params['functionality'] = damage_state['functionality']
         response_params['fragility_source'] = damage_state['fragility_source']
         response_params['damage_state_description'] = damage_def_state['damage_state_definition']

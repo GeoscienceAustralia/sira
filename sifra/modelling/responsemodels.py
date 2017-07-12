@@ -27,7 +27,7 @@ class LogNormalCDF(ResponseModel):
     beta = _Element('float', 'Log standard deviation of the log normal CDF',
             _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
-    def __call__(self, value):
+    def __call__(self, hazard_level):
         """
         In scipy lognormal CDF is implemented thus:
             scipy.stats.lognorm.cdf(x, s, loc=0, scale=1)
@@ -36,7 +36,7 @@ class LogNormalCDF(ResponseModel):
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        return stats.lognorm.cdf(value, self.beta, loc=0, scale=self.median)
+        return stats.lognorm.cdf(hazard_level.hazard_intensity, self.beta, loc=0, scale=self.median)
 
 
 class NormalCDF(ResponseModel):

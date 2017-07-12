@@ -21,6 +21,7 @@ def run_scenario(config_file):
     response_array = []
     response_array.extend(parmap.map(infrastructure.expose_to,
                                      hazard_levels.hazard_range(),
+                                     sc,
                                      parallel=False))
 
     print("response array len={}".format(len(response_array)))
