@@ -208,7 +208,7 @@ class Pythonizer(object):
 class Element(object):
     """
     Represents an element of a model. If a model were represented in a relational
-    database, this would be analgous to a field in a table.
+    database, this would be analogous to a field in a table.
     """
 
     @staticmethod
@@ -234,7 +234,7 @@ class Element(object):
 
     def __jsonify__(self, val):
         """
-        Convert *val* to a form that can be JSON sersialised.
+        Convert *val* to a form that can be JSON serialised.
         """
 
         self.__validate__(val)
