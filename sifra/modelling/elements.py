@@ -27,7 +27,6 @@ class DamageAlgorithm(Base):
 
 
 class Component(Base):
-    type =
     frag_func = Element('DamageAlgorithm', 'Fragility algorithm', Element.NO_DEFAULT)
     recovery_func = Element('DamageAlgorithm', 'Recovery algorithm', Element.NO_DEFAULT)
 
