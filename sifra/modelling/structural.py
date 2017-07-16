@@ -1,9 +1,6 @@
-import abc
-import importlib
-import collections
 import inspect
 from copy import deepcopy
-from sifra.modelling.serialisation import SerialisationProvider
+from sifra.modelling.utils import jsonify, pythonify, class_getter
 
 
 
@@ -74,35 +71,6 @@ class MultipleBasesOfTypeBaseError(ValueError):
 
 
 
-def class_getter(mod_class):
-    return getattr(importlib.import_module(mod_class[0]), mod_class[1])
-
-
-
-def jsonify(obj):
-    """
-    Convert an object to a representation that can be converted to a JSON document.
-
-    The algorithm is:
-
-        - if the object has a method ``__jsonify__``, return the result of calling it, otherwise
-        - if ``isinstance(obj, dict)``, transform the key/value (``k:v``) pairs with
-            ``jsonify(k): jsonify(v)``, otherwise
-        - if the object is iterable but not a string, transform the elements (``v``)
-            with ``jsonify(v)``.
-    """
-
-    if hasattr(obj, '__jsonify__'):
-        # should probably check the number of args
-        return obj.__jsonify__()
-    if isinstance(obj, dict):
-        return {jsonify(k) : jsonify(v) for k, v in obj.iteritems()}
-    if isinstance(obj, collections.Iterable) and not isinstance(obj, basestring):
-        return [jsonify(v) for v in obj]
-    return obj
-
-
-
 def _merge_data_and_metadata(meta, data):
     """
     .. note:: It is pretty inefficient duplicating the data as much as we do in
@@ -117,8 +85,8 @@ def _merge_data_and_metadata(meta, data):
 
     if 'class' in data and meta['class'] != '.'.join(data['class']):
         if not issubclass(
-            class_getter(data['class']),
-            class_getter(meta['class'].rsplit('.', 1))):
+                class_getter(data['class']),
+                class_getter(meta['class'].rsplit('.', 1))):
             raise Exception('inconsisent class structure')
         meta.update(deepcopy(class_getter(data['class']).__json_desc__))
 
@@ -166,45 +134,6 @@ class Info(str):
 
 
 
-class Pythonizer(object):
-    """
-    Functor for converting JSONable objects to Python classes.
-
-    Plea
-
-    :param module_name: The name of a Python module.
-    """
-
-    def __init__(self, module_name=''):
-        self.module_name = module_name
-
-
-    def __call__(self, obj):
-        """
-        Convert a 'jsonified' object to a Python object. This is the inverse of
-        :py:func:`jsonify`.
-
-        A python instance ``c`` should be eqivalent to ``__call__(jsonify(c))``
-        with respect to the data returned by ``__jsonify__`` if the object has that
-        method or the object as a whole otherwise.
-        """
-
-        if isinstance(obj, dict):
-            attrs = obj.pop('_attributes', None)
-            if 'class' in obj:
-                cls = obj.pop('class')
-                res = class_getter(cls)(**self.__call__(obj))
-            else:
-                res = {str(k): self.__call__(v) for k, v in obj.iteritems()}
-            if attrs is not None:
-                res._attributes = attrs
-            return res
-        if isinstance(obj, list):
-            return [self.__call__(v) for v in obj]
-        return obj
-
-
-
 class Element(object):
     """
     Represents an element of a model. If a model were represented in a relational
@@ -232,7 +161,7 @@ class Element(object):
             raise NoDefaultException()
         return self._default() if callable(self._default) else self._default
 
-    def __jsonify__(self, val):
+    def to_json(self, val):
         """
         Convert *val* to a form that can be JSON serialised.
         """
@@ -251,12 +180,12 @@ class Element(object):
 
         # Ideally, we'd like to do the following manipulation of self.cls in
         # the constructor. However, at the time the constructor is called, we
-        # don't have self.to_python, which is set on this instance in the
+        # don't have self.cls_module, which is set on this instance in the
         # metaclass StructuralMeta at the time the elements are handled. We
         # could get around this by defining the element class for a module in
         # a way similar to that employed in generate_element_base.
         if isinstance(self.cls, basestring):
-            self.cls = [self.to_python.module_name, self.cls]
+            self.cls = [self.cls_module, self.cls]
         try:
             cls = class_getter(self.cls)
             self.cls = [cls.__module__, cls.__name__]
@@ -299,7 +228,7 @@ class StructuralMeta(type):
         '_value',
         '_attributes']
 
-    def __new__(cls, name, bases, dct):
+    def __new__(mcs, name, bases, dct):
         # check that only one base is instance of _Base
         if len([base for base in bases if issubclass(type(base), StructuralMeta)]) > 1:
             raise MultipleBasesOfTypeBaseError('Invalid bases in class {}'.format(name))
@@ -336,17 +265,18 @@ class StructuralMeta(type):
 
         dct['__json_desc__'] = json_desc
 
-        return super(StructuralMeta, cls).__new__(cls, name, bases, dct)
+        return super(StructuralMeta, mcs).__new__(mcs, name, bases, dct)
 
     def __init__(cls, name, bases, dct):
-        # we do this here as I prefer to get the module from the class. Not sure
-        # if it matters in practice, but it just feels better.
+        # We do this here as I prefer to get the module from the class. Not sure
+        # if it matters in practice, but it feels better. cls_module contains
+        # the module in which this class is defined and we know that the types
+        # declared for the Elements of a class are accessible in that module.
         cls_module = inspect.getmodule(cls).__name__
-        cls.to_python = Pythonizer(cls_module)
         cls.__json_desc__['class'] = '.'.join([cls_module, name])
 
         for param in cls.__params__.itervalues():
-            param.to_python = cls.to_python
+            param.cls_module = cls_module
 
         for k, v in cls.__json_desc__.iteritems():
             if k == 'class':
@@ -404,7 +334,7 @@ class Base(object):
 
         if not isinstance(self._predecessor, self.__class__):
             _id = self._predecessor
-            self._predecessor = self.to_python(self.get_db().get(self._predecessor))
+            self._predecessor = pythonify(self.get_db().get(self._predecessor))
             self._predecessor._id = _id
         return self._predecessor
 
@@ -437,7 +367,7 @@ class Base(object):
         self.__validate__()
         res = {'class': [type(self).__module__, type(self).__name__]}
         res.update({
-            jsonify(k): v.__jsonify__(getattr(self, k))
+            jsonify(k): v.to_json(getattr(self, k))
             for k, v in self.__params__.iteritems()
             if hasattr(self, k)})
         return res
@@ -480,7 +410,7 @@ class Base(object):
         Load a previously saved instance.
         """
 
-        return cls.to_python(cls._provider.get_db().get(object_id))
+        return pythonify(cls._provider.get_db().get(object_id))
 
     @classmethod
     def set_provider(cls, provider):
@@ -490,4 +420,3 @@ class Base(object):
 
 from sifra.modelling.serialisation import SqliteSerialisationProvider
 Base.set_provider(SqliteSerialisationProvider())
-

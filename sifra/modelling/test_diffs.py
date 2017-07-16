@@ -1,5 +1,12 @@
 import unittest
-from utils import Diff, DictDiff, ListDiff, find_changes, reconstitute
+from sifra.modelling.utils import (
+    Diff,
+    DictDiff,
+    ListDiff,
+    find_changes,
+    reconstitute,
+    jsonify,
+    pythonify)
 
 """
 Tests of code for finding differences between two jsonifiable dictionaries.
@@ -18,9 +25,9 @@ def tups2lists(obj):
 
 
 
-class Tests(unittest.TestCase):
-    def test1(self):
-        a = {
+class Tests1(unittest.TestCase):
+    def setUp(self):
+        self.a = {
             'a': {'a': 'a'},
             'b': 1,
             'c': ['a', 'a'],
@@ -29,7 +36,7 @@ class Tests(unittest.TestCase):
             'f': ('a', 'a', 'a'),
             'g': ('a', 'a', 'a')}
 
-        b = {
+        self.b = {
             'a': {'a': 'a'},
             'b': 2,
             'c': ['a', {'a': 'a'}],
@@ -39,30 +46,41 @@ class Tests(unittest.TestCase):
 
             'h': ('a', 'a', 'a')}
 
+    def test1(self):
+        changes = find_changes(self.a, self.b)
+
         self.assertEqual(
-            tups2lists(reconstitute(a, find_changes(a, b))),
-            tups2lists(b))
+            tups2lists(reconstitute(self.a, changes)),
+            tups2lists(self.b))
 
     def test2(self):
+        changes = pythonify(jsonify(find_changes(self.a, self.b)))
+
+        self.assertEqual(
+            tups2lists(reconstitute(self.a, changes)),
+            tups2lists(self.b))
+
+class Tests2(unittest.TestCase):
+    def test1(self):
         a = b = 42
         self.assertIs(find_changes(a, b), None)
 
-    def test3(self):
+    def test2(self):
         a = 1
         b = 2
         self.assertIsInstance(find_changes(a, b), Diff)
 
-    def test4(self):
+    def test3(self):
         a = {'a': 'a'}
         b = {'a': 'b'}
         self.assertIsInstance(find_changes(a, b), DictDiff)
 
-    def test5(self):
+    def test4(self):
         a = [1]
         b = [2]
         self.assertIsInstance(find_changes(a, b), ListDiff)
 
-    def test6(self):
+    def test5(self):
         class A(object):
             def __init__(self, val):
                 self.val = val
@@ -72,14 +90,16 @@ class Tests(unittest.TestCase):
 
         a = A(1)
         b = A(2)
+
         self.assertIsInstance(find_changes(a, b), Diff)
 
-    def test7(self):
+    def test6(self):
         class A(object): pass
         class B(object): pass
 
         a = A()
         b = B()
+
         diff = find_changes(a, b)
         self.assertIsInstance(diff, Diff)
         self.assertIsInstance(diff.changed, B)
