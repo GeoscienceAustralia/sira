@@ -7,7 +7,8 @@ from sifra.modelling.structural import (
     ValidationError,
     jsonify,
     AlreadySavedException,
-    MultipleBasesOfTypeBaseError)
+    MultipleBasesOfTypeBaseError,
+    pythonify)
 
 from sifra.modelling.elements import (
     Model,
@@ -114,7 +115,7 @@ class Test1(ut.TestCase):
         Test that a model can be created from one converted 'to JSON'.
         """
 
-        model2 = Base.to_python(jsonify(self.model))
+        model2 = pythonify(jsonify(self.model))
 
     def test_jsonify_with_metadata(self):
         """

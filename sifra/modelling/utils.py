@@ -1,5 +1,6 @@
+import importlib
 from copy import deepcopy
-from collections import namedtuple
+from collections import namedtuple, Iterable
 from itertools import izip, imap
 
 def get_all_subclasses(cls):
@@ -12,12 +13,82 @@ def get_all_subclasses(cls):
 
 
 
+def jsonify(obj):
+    """
+    Convert an object to a representation that can be converted to a JSON
+    document.
+
+    The algorithm is:
+
+        - if the object has a method ``__jsonify__``, return the result of
+          calling it, otherwise
+        - if ``isinstance(obj, dict)``, transform the key/value (``k:v``) pairs
+          with ``jsonify(k): jsonify(v)``, otherwise
+        - if the object is iterable but not a string, transform the elements (``v``)
+          with ``jsonify(v)``.
+    """
+
+    if hasattr(obj, '__jsonify__'):
+        # should probably check the number of args, or change the name of the
+        # two arg version
+        return obj.__jsonify__()
+    if isinstance(obj, dict):
+        return {jsonify(k) : jsonify(v) for k, v in obj.iteritems()}
+    if isinstance(obj, Iterable) and not isinstance(obj, basestring):
+        return [jsonify(v) for v in obj]
+    return obj
+
+
+
+
+def pythonify(obj):
+    """
+    Convert a 'jsonified' object to a Python object. This is the inverse of
+    :py:func:`jsonify`.
+
+    A python instance ``c`` should be eqivalent to ``__call__(jsonify(c))``
+    with respect to the data returned by ``__jsonify__`` if the object has that
+    method or the object as a whole otherwise.
+    """
+
+    if isinstance(obj, dict):
+        attrs = obj.pop('_attributes', None)
+        if 'class' in obj:
+            cls = obj.pop('class')
+            res = class_getter(cls)(**pythonify(obj))
+        else:
+            res = {str(k): pythonify(v) for k, v in obj.iteritems()}
+        if attrs is not None:
+            res._attributes = attrs
+        return res
+    if isinstance(obj, list):
+        return [pythonify(v) for v in obj]
+    return obj
+
+
+
+def class_getter(mod_class):
+    return getattr(importlib.import_module(mod_class[0]), mod_class[1])
+
+
+
 def _make_diff(name, elements):
-    def __new__(cls, *args):
+    def __new__(cls, *args, **kwargs):
+        if len(kwargs):
+            args += tuple((kwargs.get(e, None) for e in elements[len(args):]))
         if all(imap(lambda x: x is None, args)):
             return None
         return super(cls, cls).__new__(cls, *args)
-    return type(name, (namedtuple(name, elements),), {'__new__': __new__})
+
+    def __jsonify__(self):
+        res = {e: jsonify(getattr(self, e)) for e in elements if getattr(self, e) is not None}
+        res['class'] = [type(self).__module__, type(self).__name__]
+        return res
+
+    return type(
+        name,
+        (namedtuple(name, elements),),
+        {'__new__': __new__, '__jsonify__': __jsonify__})
 
 Diff = _make_diff('Diff', ['changed'])
 DictDiff = _make_diff('DictDiff', ['changed', 'dropped', 'added'])
@@ -26,9 +97,6 @@ ListDiff = _make_diff('ListDiff', ['changed', 'dropped', 'added'])
 
 
 def find_changes(old, new):
-    if old == new:
-        return None
-
     if type(new) is tuple: # deliberately not isinstance... who knows what we could throw away
         new = list(new)
 
@@ -54,6 +122,7 @@ def find_changes(old, new):
             return ListDiff(all_changes or None, None, new[len(old):])
         else:
             assert all_changes, 'should not have got here'
+
         return ListDiff(all_changes or None, None, None)
 
     if type(new) != dict:
@@ -108,6 +177,6 @@ def reconstitute(old, changes):
 
         if changes.changed is not None:
             for k, v in changes.changed.iteritems():
-                result[k] = reconstitute(old[k], v)
+                result[int(k)] = reconstitute(old[int(k)], v)
 
     return result
