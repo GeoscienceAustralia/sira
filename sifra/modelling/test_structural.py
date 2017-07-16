@@ -183,4 +183,3 @@ else:
     turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
     model.add_component('boiler', boiler)
     model.add_component('turbine', turbine)
-

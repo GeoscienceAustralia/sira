@@ -128,4 +128,3 @@ def save():
         attributes=attrs)
     name = attrs.pop('name', 'anonymous component') if attrs is not None else 'anonymous component'
     return jsonify({'id': oid, 'name': name})
-

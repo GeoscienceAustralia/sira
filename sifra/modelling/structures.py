@@ -13,4 +13,3 @@ class XYPairs(Base):
         return {
             'class': [type(self).__module__, type(self).__name__],
             'pairs': [[float(p[0]), float(p[1])] for p in self.pairs]}
-

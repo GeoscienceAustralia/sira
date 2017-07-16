@@ -31,4 +31,3 @@ class Component(Base):
 
     def expose_to(self, pga):
         return self.frag_func(pga)
-

@@ -30,4 +30,3 @@ class LogNormalCDF(ResponseModel):
     def __call__(self, value):
         import scipy.stats as stats
         return stats.lognorm.cdf(value, self.beta, scale=self.median)
-
