@@ -56,4 +56,3 @@ class NormalCDF(ResponseModel):
         """
         import scipy.stats as stats
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
-

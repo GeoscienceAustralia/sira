@@ -91,4 +91,3 @@ class SqliteSerialisationProvider(SerialisationProvider):
         session = _Session()
         session.query(Component).delete()
         session.commit()
-
