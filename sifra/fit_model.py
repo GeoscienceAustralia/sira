@@ -721,7 +721,7 @@ def approximate_generic_sys_restoration(sc, fc, sys_frag,
             ids[p] = np.where(sys_frag[:, p] == ds)[0]
             m = np.mean(output_array_given_recovery[ids[p], p, :], axis=0)
             fn_tmp[p] = m / fc.nominal_production
-        sys_fn[SYS_DS[ds]] = stats.nanmean(fn_tmp, axis=0)
+        sys_fn[SYS_DS[ds]] = np.nanmean(fn_tmp, axis=0)
 
     # sys_fn = sys_fn.drop('DS0 None', axis=1)
     sys_fn.to_csv(os.path.join(
@@ -784,7 +784,9 @@ if __name__ == "__main__":
     required_time = \
         np.load(os.path.join(RAW_OUTPUT_DIR, 'required_time.npy'))
 
-    if fc.system_class == 'PowerStation':
+    if fc.system_class in ["PowerStation",
+							"PotableWaterTreatmentPlant", "PWTP",
+							"WasteWaterTreatmentPlant", "WWTP"]:
         pe_sys = \
             np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
     elif fc.system_class == 'Substation':
