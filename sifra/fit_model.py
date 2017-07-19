@@ -12,6 +12,7 @@ import pandas as pd
 
 import sys
 import os
+import warnings
 
 import sifraplot as spl
 
@@ -719,7 +720,9 @@ def approximate_generic_sys_restoration(sc, fc, sys_frag,
         ids = {}  # index of damage states within the samples
         for p in range(sc.num_hazard_pts):
             ids[p] = np.where(sys_frag[:, p] == ds)[0]
-            m = np.mean(output_array_given_recovery[ids[p], p, :], axis=0)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                m = np.mean(output_array_given_recovery[ids[p], p, :], axis=0)
             fn_tmp[p] = m / fc.nominal_production
         sys_fn[SYS_DS[ds]] = np.nanmean(fn_tmp, axis=0)
 
