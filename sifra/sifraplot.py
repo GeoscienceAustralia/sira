@@ -9,8 +9,8 @@ import matplotlib as mpl
 mpl.rcParams['legend.numpoints'] = 2
 mpl.rcParams['xtick.direction'] = 'out'
 mpl.rcParams['ytick.direction'] = 'out'
+mpl.rcParams['font.family'] = 'Open Sans', 'sans-serif'
 
-from datetime import datetime
 import numpy as np
 import brewer2mpl
 import re
@@ -226,11 +226,16 @@ def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
 
     axis.margins(x_margin, y_margin)
 
-    axis.set_title(figtitle, loc='center', y=1.04)
-    axis.set_xlabel(x_lab)
-    axis.set_ylabel(y_lab)
+    if len(x_lim) == 2:
+        axis.set_xlim(x_lim)
+    if len(y_lim) == 2:
+        axis.set_ylim(y_lim)
 
-    axis.title.set_fontsize(10)
+    axis.set_title(figtitle, loc='center', y=1.04, fontweight='bold', size=11)
+    axis.set_xlabel(x_lab, size=10)
+    axis.set_ylabel(y_lab, size=10)
+
+    # axis.title.set_fontsize(11)
     # for item in [axis.xaxis.label, axis.yaxis.label]: item.set_fontsize(10)
 
     # Shrink current axis width by 15%
@@ -249,10 +254,6 @@ def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
     if aspectratio > 0:
         forceAspect(axis, aspect=aspectratio)
 
-    if len(x_lim) == 2:
-        axis.set_xlim(x_lim)
-    if len(y_lim) == 2:
-        axis.set_ylim(y_lim)
 
     # if save_file is True:
     #     plt.savefig(figfile, format='png', bbox_inches='tight', dpi=250)
