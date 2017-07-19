@@ -9,6 +9,7 @@ from scipy import stats
 from scipy.optimize import curve_fit
 import lmfit
 import pandas as pd
+# pd.set_option('precision', 3)
 
 import sys
 import os
@@ -113,6 +114,8 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
                                           'LogStdDev',
                                           'Location',
                                           'Chi-Sqr'])
+    decimals = pd.Series([3, 3, 3],
+                         index=['Median', 'LogStdDev', 'Location'])
 
     # ----- Initial fit -----
     sys_dmg_ci = [{} for _ in xrange(len(SYS_DS))]
@@ -139,12 +142,18 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
                sys_dmg_fit[dx].params['loc'].value,
                sys_dmg_fit[dx].chisqr)
 
+    sys_dmg_model['Median'] = sys_dmg_model['Median'].map('${:,.3f}'.format)
+    sys_dmg_model['LogStdDev'] = sys_dmg_model['LogStdDev'].map('${:,.3f}'.format)
+    sys_dmg_model['Location'] = sys_dmg_model['Location'].map('${:,.3f}'.format)
+
     print("\n" + "-" * 79)
     print(Fore.YELLOW +
           "Fitting system FRAGILITY data: Lognormal CDF" +
           Fore.RESET)
     print("-" * 79)
-    print("INITIAL System Fragilities:\n\n", sys_dmg_model, '\n')
+    # sys_dmg_model = sys_dmg_model.round(decimals)
+    print("INITIAL System Fragilities:\n\n",
+          sys_dmg_model, '\n')
 
     # ----- Check for crossover and resample as needed -----
     for dx in range(1, len(SYS_DS)):
@@ -244,7 +253,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
     fontP = FontProperties()
     fontP.set_size('small')
 
-    fig = plt.figure(figsize=(9, 4.5), facecolor='white')
+    fig = plt.figure(figsize=(9, 5), facecolor='white')
     ax = fig.add_subplot(111, axisbg='white')
 
     spl.add_legend_subtitle("Data")
@@ -259,8 +268,6 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
 
     # ----- Plot the fitted models -----
     dmg_mdl_arr = np.zeros((len(SYS_DS), len(hazard_input_vals)))
-    # plt.plot([0], marker='None', linestyle='None',
-    #          label="\nFitted Model: LogNormal")
 
     spl.add_legend_subtitle("\nFitted Model: LogNormal CDF")
 
@@ -287,8 +294,9 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
                    x_scale=None,
                    y_scale=None,
                    x_tick_val=None,
+                   y_tick_pos=np.linspace(0.0, 1.0, num=11, endpoint=True),
                    y_tick_val=np.linspace(0.0, 1.0, num=11, endpoint=True),
-                   x_grid=False,
+                   x_grid=True,
                    y_grid=True,
                    add_legend=True)
 
@@ -549,7 +557,7 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
     outfig = os.path.join(out_path, 'fig_MODEL_sys_rst_mode1.png')
     ax.margins(0.03, None)
     spl.format_fig(ax,
-                   figtitle='Restoration Curves: ' + fc.system_class,
+                   figtitle='Restoration Model for: ' + fc.system_class,
                    x_lab='Time (' + sc.time_unit + ')',
                    y_lab='Percent Functional',
                    x_scale='log',  # <OR> None
