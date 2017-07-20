@@ -51,4 +51,3 @@ $NOSUDO git clone https://github.com/GeoscienceAustralia/sifra.git /home/ubuntu/
 
 # get an awsome tmux configuration
 curl https://raw.githubusercontent.com/Sleepingwell/tmux-conf/master/tmux.conf | $NOSUDO tee /home/ubuntu/.tmux.conf
-
