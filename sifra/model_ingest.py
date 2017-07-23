@@ -15,7 +15,9 @@ from sifra.modelling.elements import (RecoveryState,
 
 from sifra.modelling.responsemodels import (LogNormalCDF,
                                             NormalCDF,
-                                            StepFunc)
+                                            StepFunc,
+                                            Level0Response,
+                                            Level0Recovery)
 
 import copy
 
@@ -39,7 +41,9 @@ def ingest_spreadsheet(config):
         component_type = index[0]
         if component_type not in component_dict:
             damage_algorithm_vals = IODict()
+            damage_algorithm_vals['DS0'] = Level0Response()
             recovery_algorithm_vals = IODict()
+            recovery_algorithm_vals['DS0'] = Level0Recovery()
             # store the current values in the Algorithms
             component_dict[component_type] = {}
             component_dict[component_type]['component_type'] = component_type
@@ -52,8 +56,6 @@ def ingest_spreadsheet(config):
         ds_level = index[1]
         if index in damage_def_dict:
             damage_def_state = damage_def_dict[index]
-        else:
-            print("Damage definition not found {}".format(index))
 
         response_params = {}
         response_params['damage_ratio'] = damage_state['damage_ratio']
@@ -82,7 +84,7 @@ def ingest_spreadsheet(config):
         recovery_algorithm_vals[ds_level] = RecoveryState(**recovery_params)
 
     # add the other component attributes and make a component dict
-    system_components = {}
+    system_components = IODict()
     for component_id, component_details in facility_data.comp_df.iterrows():
         component_type = component_details['component_type']
         if component_type in component_dict:
@@ -107,14 +109,36 @@ def ingest_spreadsheet(config):
         system_component = system_components[component_id]
         destiny = system_component.destination_components
         if not destiny:
-            destiny = system_component.destination_components = {}
+            destiny = system_component.destination_components = IODict()
         edge_values = {}
-        edge_values['link_capacity'] = connection_values['link_capacity']
-        edge_values['weight'] = connection_values['weight']
+        edge_values['link_capacity'] = float(connection_values['link_capacity'])
+        edge_values['weight'] = float(connection_values['weight'])
         destiny[connection_values['destination']] = ConnectionValues(**edge_values)
 
     if_system_values = {}
     if_system_values['name'] = 'Coal power station 600MW'
     if_system_values['components'] = system_components
+
+    # create the supply and output node dictionaries
+    supply_nodes = {}
+    for index, supply_values in facility_data.sysinp_setup.iterrows():
+        sv_dict = {}
+        sv_dict['input_capacity'] = supply_values['input_capacity']
+        sv_dict['capacity_fraction'] = float(supply_values['capacity_fraction'])
+        sv_dict['commodity_type'] = supply_values['commodity_type']
+        supply_nodes[index] = sv_dict
+
+    if_system_values['supply_nodes'] = supply_nodes
+
+    output_nodes = {}
+    for index, output_values in facility_data.sysout_setup.iterrows():
+        op_dict = {}
+        op_dict['production_node']=output_values['production_node']
+        op_dict['output_node_capacity'] = output_values['output_node_capacity']
+        op_dict['capacity_fraction'] = float(output_values['capacity_fraction'])
+        op_dict['priority'] = output_values['priority']
+        output_nodes[index] = op_dict
+
+    if_system_values['output_nodes'] = output_nodes
 
     return IFSystem(**if_system_values)

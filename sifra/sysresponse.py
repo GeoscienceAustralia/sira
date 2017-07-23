@@ -124,24 +124,16 @@ def compute_output_given_ds(cp_func, fc):
     Computes system output given list of component functional status
     '''
     G = fc.network.G
-    nodes = fc.network.node_map
+    nodes = fc.network.nodes_all
 
-    # for t in G.get_edgelist():
-    #     eid = G.get_eid(*t)
-    #     origin = G.vs[t[0]]['name']
-    #     destin = G.vs[t[1]]['name']
-    #     if fc.cpdict[origin]['node_type'] == 'dependency':
-    #         cp_func[nodes[destin]] *= cp_func[nodes[origin]]
-    #
-    #     cap = cp_func[nodes[origin]]
-    #
-    #     G.es[eid]["capacity"] = cap
-
-    for t in fc.network.netx_G.edges(data=True):
-        if fc.cpdict[t[0]]['node_type'] == 'dependency':
-            cp_func[nodes[t[1]]] *= cp_func[nodes[t[0]]]
-        if t[2]['capacity'] != cp_func[nodes[t[0]]]:
-            t[2]['capacity'] = cp_func[nodes[t[0]]]
+    for t in G.get_edgelist():
+        eid = G.get_eid(*t)
+        origin = G.vs[t[0]]['name']
+        destin = G.vs[t[1]]['name']
+        if fc.cpdict[origin]['node_type'] == 'dependency':
+            cp_func[nodes.index(destin)] *= cp_func[nodes.index(origin)]
+        cap = cp_func[nodes.index(origin)]
+        G.es[eid]["capacity"] = cap
 
     sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
 

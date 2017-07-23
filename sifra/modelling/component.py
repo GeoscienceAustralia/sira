@@ -26,6 +26,9 @@ class Component(Base):
     def get_damage_state(self, ds_index):
         return self.frag_func.damage_states.index(ds_index)
 
+    def get_recovery(self, ds_index):
+        return self.recovery_func.recovery_states.index(ds_index)
+
 
 class ConnectionValues(Base):
     link_capacity = Element('float', 'Link capacity',0.0)
