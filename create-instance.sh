@@ -21,6 +21,7 @@ ami_id=$(aws ec2 describe-images \
 aws ec2 run-instances \
     --image-id $ami_id \
     --count 1 \
+    --iam-instance-profile SifraInstance \
     --instance-type t2.medium \
     --user-data file://build-sifra-box.sh \
     --key-name $1 \
