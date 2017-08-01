@@ -21,6 +21,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from colorama import Fore
 
+
 def run_scenario(config_file):
     scenario = Scenario(config_file)
 
@@ -72,8 +73,8 @@ def plot_mean_econ_loss(fc, sc, economic_loss_array):
                       +sc.intensity_measure_unit+')'
     ax.set_xlabel(intensity_label)
     ax.set_ylabel('Loss Fraction (%)')
-    ax.set_xticklabels(sc.hazard_intensity_vals);
-    ax.set_title('Loss Ratio', loc='center', y=1.04);
+    ax.set_xticklabels(sc.hazard_intensity_vals)
+    ax.set_title('Loss Ratio', loc='center', y=1.04)
     ax.title.set_fontsize(12)
 
     figfile = os.path.join(sc.output_path, 'fig_lossratio_boxplot.png')
@@ -122,6 +123,11 @@ def post_processing(infrastructure, scenario, response_dict):
     sys_output_df.to_csv(outfile_sysoutput,
                          sep=',', index_label=['Output Nodes'])
 
+    loss_by_comp_type(response_dict, infrastructure, scenario)
+    pe_by_component_class(response_dict, infrastructure, scenario)
+
+
+def loss_by_comp_type(response_dict, infrastructure, scenario):
     # ------------------------------------------------------------------------
     # Loss calculations by Component Type
     # ------------------------------------------------------------------------
@@ -176,175 +182,6 @@ def post_processing(infrastructure, scenario, response_dict):
             pe_sys_econloss[i, j] = \
                 np.sum(sys_frag[:, j] >= i) / float(scenario.num_samples)
 
-    # ------------------------------------------------------------------------
-    # For Probability of Exceedence calculations based on component failures
-    # ------------------------------------------------------------------------
-    #
-    #   Damage state boundaries for Component Type Failures (Substations) are
-    #   based on HAZUS MH MR3, p 8-66 to 8-68
-    #
-    # ------------------------------------------------------------------------
-
-    cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
-
-    cp_class_map = {k: [] for k in cp_classes_in_system}
-    for k, v in fc.compdict['component_class'].iteritems():
-        cp_class_map[v].append(k)
-
-    # ------------------------------------------------------------------------
-
-    if fc.system_class == 'Substation':
-        uncosted_classes = ['JUNCTION POINT',
-                            'SYSTEM INPUT', 'SYSTEM OUTPUT',
-                            'Generator', 'Bus', 'Lightning Arrester']
-        ds_lims_compclasses = {
-            'Disconnect Switch': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Circuit Breaker': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]
-        }
-
-        cp_classes_costed = \
-            [x for x in cp_classes_in_system if x not in uncosted_classes]
-
-        # --- System fragility - Based on Failure of Component Classes ---
-        comp_class_failures = \
-            {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
-             for cc in cp_classes_costed}
-
-        comp_class_frag = {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
-                           for cc in cp_classes_costed}
-        for j, PGA in enumerate(scenario.hazard_intensity_str):
-            for i in range(scenario.num_samples):
-                for compclass in cp_classes_costed:
-                    for c in cp_class_map[compclass]:
-                        comp_class_failures[compclass][i, j] += \
-                            ids_comp_vs_haz[PGA][
-                                i, fc.network.node_map[c]
-                            ]
-                    comp_class_failures[compclass][i, j] /= \
-                        len(cp_class_map[compclass])
-
-                    comp_class_frag[compclass][i, j] = \
-                        np.sum(comp_class_failures[compclass][i, j]
-                               > ds_lims_compclasses[compclass])
-
-        # Probability of Exceedence -- Based on Failure of Component Classes
-        pe_sys_cpfailrate = np.zeros(
-            (len(fc.sys_dmg_states), scenario.num_hazard_pts)
-        )
-        for p in range(scenario.num_hazard_pts):
-            for d in range(len(fc.sys_dmg_states)):
-                ds_ss_ix = []
-                for compclass in cp_classes_costed:
-                    ds_ss_ix.append(
-                        np.sum(comp_class_frag[compclass][:, p] >= d) /
-                        float(scenario.num_samples)
-                    )
-                pe_sys_cpfailrate[d, p] = np.median(ds_ss_ix)
-
-        # --- Save prob exceedance data as npy ---
-        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'),
-                pe_sys_cpfailrate)
-
-    # ------------------------------------------------------------------------
-
-    if fc.system_class == 'PowerStation':
-        uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
-        ds_lims_compclasses = {
-            'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Emission Management': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Fuel Delivery and Storage': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Fuel Movement': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Stepup Transformer': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
-        }
-
-    # ------------------------------------------------------------------------
-    # Validate damage ratio of the system
-    # ------------------------------------------------------------------------
-
-    exp_damage_ratio = np.zeros((len(fc.network.nodes_all),
-                                 scenario.num_hazard_pts))
-    for l, PGA in enumerate(scenario.hazard_intensity_vals):
-        # compute expected damage ratio
-        for j, comp_name in enumerate(fc.network.nodes_all):
-            pb = pe2pb(
-                cal_pe_ds(comp_name, PGA, fc.compdict, fc.fragdict, sc)
-            )
-            comp_type = fc.compdict['component_type'][comp_name]
-            dr = np.array([fc.fragdict['damage_ratio'][comp_type][ds]
-                           for ds in fc.sys_dmg_states])
-            cf = fc.compdict['cost_fraction'][comp_name]
-            loss_list = dr * cf
-            exp_damage_ratio[j, l] = np.sum(pb * loss_list)
-
-    # ------------------------------------------------------------------------
-    # Time to Restoration of Full Capacity
-    # ------------------------------------------------------------------------
-
-    threshold = 0.99
-    required_time = []
-
-    for j in range(scenario.num_hazard_pts):
-        cpower = \
-            np.mean(output_array_given_recovery[:, j, :], axis=0) / \
-            fc.nominal_production
-        temp = cpower > threshold
-        if sum(temp) > 0:
-            required_time.append(np.min(scenario.restoration_time_range[temp]))
-        else:
-            required_time.append(scenario.restore_time_max)
-
-    # ------------------------------------------------------------------------
-    # Write analytical outputs to file
-    # ------------------------------------------------------------------------
-
-    # --- Output File --- summary output ---
-    outfile_sys_response = os.path.join(
-        scenario.output_path, 'system_response.csv')
-    out_cols = ['PGA',
-                'Economic Loss',
-                'Mean Output',
-                'Days to Full Recovery']
-    outdat = {out_cols[0]: scenario.hazard_intensity_vals,
-              out_cols[1]: np.mean(economic_loss_array, axis=0),
-              out_cols[2]: np.mean(calculated_output_array, axis=0),
-              out_cols[3]: required_time}
-    df = pd.DataFrame(outdat)
-    df.to_csv(
-        outfile_sys_response, sep=',',
-        index=False, columns=out_cols
-    )
-
-    # --- Output File --- response of each COMPONENT to hazard ---
-    outfile_comp_resp = os.path.join(
-        scenario.output_path, 'component_response.csv')
-    component_resp_df = pd.DataFrame(component_resp_dict)
-    component_resp_df.index.names = ['component_id', 'response']
-    component_resp_df.to_csv(
-        outfile_comp_resp, sep=',',
-        index_label=['component_id', 'response']
-    )
-
-    # --- Output File --- mean loss of component ---
-    outfile_comp_loss = os.path.join(
-        scenario.output_path, 'component_meanloss.csv')
-    component_loss_df = component_resp_df.iloc[
-        component_resp_df.index.get_level_values(1) == 'loss_mean']
-    component_loss_df.reset_index(level='response', inplace=True)
-    component_loss_df = component_loss_df.drop('response', axis=1)
-    component_loss_df.to_csv(
-        outfile_comp_loss, sep=',',
-        index_label=['component_id']
-    )
-
     # --- Output File --- response of each COMPONENT TYPE to hazard ---
     outfile_comptype_resp = os.path.join(
         scenario.output_path, 'comp_type_response.csv')
@@ -377,6 +214,166 @@ def post_processing(infrastructure, scenario, response_dict):
     comptype_failure_df.to_csv(
         outfile_comptype_failures, sep=',',
         index_label=['component_type']
+    )
+
+    np.save(
+        os.path.join(scenario.raw_output_dir, 'sys_frag.npy'),
+        sys_frag
+    )
+
+    np.save(
+        os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'),
+        pe_sys_econloss
+    )
+
+
+def pe_by_component_class(response_dict, infrastructure, scenario):
+    # ------------------------------------------------------------------------
+    # For Probability of Exceedence calculations based on component failures
+    # ------------------------------------------------------------------------
+    #
+    #   Damage state boundaries for Component Type Failures (Substations) are
+    #   based on HAZUS MH MR3, p 8-66 to 8-68
+    #
+    # ------------------------------------------------------------------------
+
+    cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
+
+    cp_class_map = {k: [] for k in cp_classes_in_system}
+    for comp_id, component in infrastructure.components.iteritems():
+        cp_class_map[component.component_class].append(component)
+
+    # ------------------------------------------------------------------------
+    if infrastructure.system_class == 'Substation':
+        cp_classes_costed = \
+            [x for x in cp_classes_in_system if x not in infrastructure.uncosted_classes]
+
+        # --- System fragility - Based on Failure of Component Classes ---
+        comp_class_failures = \
+            {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
+             for cc in cp_classes_costed}
+
+        comp_class_frag = {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
+                           for cc in cp_classes_costed}
+
+        for j, hazard_level in enumerate(HazardLevels(scenario)):
+            for i in range(scenario.num_samples):
+                for compclass in cp_classes_costed:
+                    for c in cp_class_map[compclass]:
+                        comp_class_failures[compclass][i, j] += \
+                            response_dict[hazard_level.hazard_intensity][i, infrastructure.components[c]]
+                    comp_class_failures[compclass][i, j] /= len(cp_class_map[compclass])
+
+                    comp_class_frag[compclass][i, j] = \
+                        np.sum(comp_class_failures[compclass][i, j] > \
+                               infrastructure.ds_lims_compclasses[compclass])
+
+        # Probability of Exceedence -- Based on Failure of Component Classes
+        pe_sys_cpfailrate = np.zeros(
+            (len(infrastructure.sys_dmg_states), scenario.num_hazard_pts)
+        )
+        for p in range(scenario.num_hazard_pts):
+            for d in range(len(infrastructure.sys_dmg_states)):
+                ds_ss_ix = []
+                for compclass in cp_classes_costed:
+                    ds_ss_ix.append(
+                        np.sum(comp_class_frag[compclass][:, p] >= d) /
+                        float(scenario.num_samples)
+                    )
+                pe_sys_cpfailrate[d, p] = np.median(ds_ss_ix)
+
+        # --- Save prob exceedance data as npy ---
+        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'),
+                pe_sys_cpfailrate)
+
+    # ------------------------------------------------------------------------
+    # Validate damage ratio of the system
+    # ------------------------------------------------------------------------
+
+    exp_damage_ratio = np.zeros((len(infrastructure.components),
+                                 scenario.num_hazard_pts))
+    for l, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
+        # compute expected damage ratio
+        for j, component in enumerate(infrastructure.components.itervalues()):
+            pb = pe2pb(component.expose_to(hazard_level)[1:])
+            dr = np.array([component.frag_func.damage_states[ds].damage_ratio
+                           for ds in infrastructure.sys_dmg_states])
+            cf = component.cost_fraction
+            loss_list = dr * cf
+            exp_damage_ratio[j, l] = np.sum(pb * loss_list)
+
+    # ------------------------------------------------------------------------
+    # Time to Restoration of Full Capacity
+    # ------------------------------------------------------------------------
+
+    threshold = 0.99
+    required_time = []
+
+    for hazard_level in HazardLevels(scenario).hazard_range():
+        cpower = np.mean(response_dict[hazard_level.hazard_intensity][5], axis=0) / infrastructure.if_nominal_output
+        temp = cpower > threshold
+        if sum(temp) > 0:
+            required_time.append(np.min(scenario.restoration_time_range[temp]))
+        else:
+            required_time.append(scenario.restore_time_max)
+
+    # ------------------------------------------------------------------------
+    # Write analytical outputs to file
+    # ------------------------------------------------------------------------
+
+    # --- Output File --- summary output ---
+    outfile_sys_response = os.path.join(
+        scenario.output_path, 'system_response.csv')
+    out_cols = ['PGA',
+                'Economic Loss',
+                'Mean Output',
+                'Days to Full Recovery']
+
+    # create the arrays
+    comp_response_list = {}
+    economic_loss_list = []
+    calculated_output_list = []
+    output_array_given_recovery_list = []
+
+    for hazard_level, hazard_level_list in response_dict.iteritems():
+        comp_response_list[hazard_level] = (hazard_level_list[2])
+        economic_loss_list.append(hazard_level_list[3])
+        calculated_output_list.append(hazard_level_list[4])
+        output_array_given_recovery_list.append(hazard_level_list[5])
+
+    economic_loss_array = np.stack(economic_loss_list)
+    calculated_output_array = np.stack(calculated_output_list)
+    output_array_given_recovery = np.stack(output_array_given_recovery_list)
+
+
+    outdat = {out_cols[0]: scenario.hazard_intensity_vals,
+              out_cols[1]: np.mean(np.sum(economic_loss_array, axis=2), axis=1),
+              out_cols[2]: np.mean(calculated_output_array, axis=1),
+              out_cols[3]: required_time}
+    df = pd.DataFrame(outdat)
+    df.to_csv(
+        outfile_sys_response, sep=',',
+        index=False, columns=out_cols
+    )
+
+    # --- Output File --- response of each COMPONENT to hazard ---
+    outfile_comp_resp = os.path.join(scenario.output_path, 'component_response.csv')
+    component_resp_df = pd.DataFrame(comp_response_list)
+    component_resp_df.index.names = ['component_id', 'response']
+    component_resp_df.columns = scenario.hazard_intensity_str
+    component_resp_df.to_csv(
+        outfile_comp_resp, sep=',',
+        index_label=['component_id', 'response']
+    )
+
+    # --- Output File --- mean loss of component ---
+    outfile_comp_loss = os.path.join(scenario.output_path, 'component_meanloss.csv')
+    component_loss_df = component_resp_df.iloc[component_resp_df.index.get_level_values(1) == 'loss_mean']
+    component_loss_df.reset_index(level='response', inplace=True)
+    component_loss_df = component_loss_df.drop('response', axis=1)
+    component_loss_df.to_csv(
+        outfile_comp_loss, sep=',',
+        index_label=['component_id']
     )
 
     # # --- Output File --- DataFrame of mean failures per component CLASS ---
@@ -412,27 +409,30 @@ def post_processing(infrastructure, scenario, response_dict):
         )
 
         np.save(
-            os.path.join(scenario.raw_output_dir, 'sys_frag.npy'),
-            sys_frag
-        )
-
-        np.save(
             os.path.join(scenario.raw_output_dir, 'required_time.npy'),
             required_time
         )
 
-        np.save(
-            os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'),
-            pe_sys_econloss
-        )
     # ------------------------------------------------------------------------
     print("\nOutputs saved in: " +
           Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
-    plot_mean_econ_loss(fc, sc, economic_loss_array)
+    plot_mean_econ_loss(infrastructure, scenario, economic_loss_array)
 
     # ... END POST-PROCESSING
     # ****************************************************************************
+
+def pe2pb(pe):
+    """
+    Convert probability of excedence of damage states, to
+    probability of being in each discrete damage state
+    """
+    # sorted array: from max to min
+    pex = np.sort(pe)[::-1]
+    tmp = -1.0 * np.diff(pex)
+    pb = np.append(tmp, pex[-1])
+    pb = np.insert(pb, 0, 1 - pex[0])
+    return pb
 
 
 def main():

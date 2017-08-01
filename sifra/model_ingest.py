@@ -41,9 +41,9 @@ def ingest_spreadsheet(config):
         component_type = index[0]
         if component_type not in component_dict:
             damage_algorithm_vals = IODict()
-            damage_algorithm_vals['DS0'] = Level0Response()
+            damage_algorithm_vals['DS0 None'] = Level0Response()
             recovery_algorithm_vals = IODict()
-            recovery_algorithm_vals['DS0'] = Level0Recovery()
+            recovery_algorithm_vals['DS0 None'] = Level0Recovery()
             # store the current values in the Algorithms
             component_dict[component_type] = {}
             component_dict[component_type]['component_type'] = component_type
@@ -140,5 +140,8 @@ def ingest_spreadsheet(config):
         output_nodes[index] = op_dict
 
     if_system_values['output_nodes'] = output_nodes
+
+    # set the system class
+    if_system_values['system_class'] = facility_data.system_class
 
     return IFSystem(**if_system_values)

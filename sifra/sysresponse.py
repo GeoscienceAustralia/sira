@@ -317,7 +317,6 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             output_array_given_recovery[i, t] = \
                 sum(compute_output_given_ds(cp_func_given_time[:, t], fc))
 
-
     comp_resp_dict = dict()
 
     for j, comp_name in enumerate(nodes_sorted):

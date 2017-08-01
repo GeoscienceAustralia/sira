@@ -27,6 +27,42 @@ class IFSystem(Base):
     supply_total = None
     component_graph = None
     if_nominal_output = None
+    system_class = None
+
+    sys_dmg_states = ['DS0 None',
+                      'DS1 Slight',
+                      'DS2 Moderate',
+                      'DS3 Extensive',
+                      'DS4 Complete']
+
+    def __init__(self, **kwargs):
+        super(IFSystem, self).__init__(**kwargs)
+        if self.system_class == 'Substation':
+            self.uncosted_classes = ['JUNCTION POINT',
+                                     'SYSTEM INPUT', 'SYSTEM OUTPUT',
+                                     'Generator', 'Bus', 'Lightning Arrester']
+            self.ds_lims_compclasses = {
+                'Disconnect Switch': [0.05, 0.40, 0.70, 0.99, 1.00],
+                'Circuit Breaker': [0.05, 0.40, 0.70, 0.99, 1.00],
+                'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+                'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+                'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+                'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]
+            }
+        elif self.system_class == 'PowerStation':
+            self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
+            self.ds_lims_compclasses = {
+                'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Emission Management': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Fuel Delivery and Storage': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Fuel Movement': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Stepup Transformer': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
+                'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
+            }
 
     def add_component(self, name, component):
         self.components[name] = component
@@ -36,11 +72,12 @@ class IFSystem(Base):
 
         # calculate the damage state
         component_damage_state_ind = self.probable_ds_hazard_level(hazard_level, scenario)
+
         # calculate the output loss and economic loss
         component_sample_loss, \
         if_sample_output, \
-        if_sample_economic_loss,\
-        component_loss = self.calc_output_loss(scenario, component_damage_state_ind)
+        if_sample_economic_loss, \
+        if_output_given_recovery = self.calc_output_loss(scenario, component_damage_state_ind)
 
         component_response = self.calc_response(component_sample_loss,
                                                 component_damage_state_ind)
@@ -54,10 +91,11 @@ class IFSystem(Base):
                                                     str(timedelta(seconds=(time.time() - code_start_time)))))
 
         response_dict = {hazard_level.hazard_intensity: [component_damage_state_ind,
-                                              if_output,
-                                              component_response,
-                                              if_sample_output,
-                                              if_sample_economic_loss]}
+                                                         if_output,
+                                                         component_response,
+                                                         if_sample_output,
+                                                         if_sample_economic_loss,
+                                                         if_output_given_recovery]}
 
         return response_dict
 
@@ -112,7 +150,10 @@ class IFSystem(Base):
                 if_output_given_recovery[sample_index, time_step] = \
                     sum(self.compute_output_given_ds(component_function_at_time[:, time_step]))
 
-        return component_sample_loss, if_sample_output, if_sample_economic_loss, if_output_given_recovery
+        return component_sample_loss, \
+               if_sample_output, \
+               if_sample_economic_loss, \
+               if_output_given_recovery
 
     def compute_output_given_ds(self, comp_sample_func):
         if not self.if_nominal_output:
