@@ -1143,7 +1143,7 @@ component_meanloss = \
 
 # Read in the <SYSTEM FRAGILITY MODEL> fitted to simulated data
 system_fragility_mdl = \
-    pd.read_csv(os.path.join(OUTPUT_PATH, 'Model_System_Fragility.csv'),
+    pd.read_csv(os.path.join(OUTPUT_PATH, 'system_model_fragility.csv'),
                 index_col=0)
 
 system_fragility_mdl.index.name = "Damage States"
