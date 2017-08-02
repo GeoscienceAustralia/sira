@@ -13,7 +13,6 @@ from model_ingest import ingest_spreadsheet
 from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -34,13 +33,12 @@ def run_scenario(config_file):
     response_array.extend(parmap.map(infrastructure.expose_to,
                                      hazard_levels.hazard_range(),
                                      scenario,
-                                     parallel=False))
+                                     parallel=scenario.run_parallel_proc))
 
     # combine the responses into one dict
     response_dict = {}
     for response in response_array:
         response_dict.update(response)
-
 
     post_processing(infrastructure, scenario, response_dict)
 
@@ -295,7 +293,7 @@ def pe_by_component_class(response_dict, infrastructure, scenario):
     for l, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
         # compute expected damage ratio
         for j, component in enumerate(infrastructure.components.itervalues()):
-            pb = pe2pb(component.expose_to(hazard_level)[1:])
+            pb = pe2pb(component.expose_to(hazard_level, scenario)[1:])
             dr = np.array([component.frag_func.damage_states[ds].damage_ratio
                            for ds in infrastructure.sys_dmg_states])
             cf = component.cost_fraction

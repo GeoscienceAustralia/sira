@@ -1,9 +1,7 @@
-from sifra.modelling.utils import IODict
-import networkx as nx
 import numpy as np
 import time
 from datetime import timedelta
-import igraph
+from modelling.component_graph import ComponentGraph
 
 # these are required for defining the data model
 from sifra.modelling.structural import (
@@ -110,7 +108,7 @@ class IFSystem(Base):
         component_damage_state_ind = np.zeros((scenario.num_samples, num_elements), dtype=int)
         for index, component in enumerate(self.components.itervalues()):
             # get the probability of exceeding damage state for each component
-            component_pe_ds = component.expose_to(hazard_level)
+            component_pe_ds = component.expose_to(hazard_level, scenario)
             rnd = prng.uniform(size=(scenario.num_samples, len(component_pe_ds)))
             component_damage_state_ind[:, index] = np.sum(component_pe_ds > rnd, axis=1)
 
@@ -162,28 +160,9 @@ class IFSystem(Base):
                 self.if_nominal_output += output_comp['output_node_capacity']
 
         if not self.component_graph:
-            self.component_graph = nx.DiGraph()
-            for comp_index, (comp_id, component) in enumerate(self.components.iteritems()):
-                self.component_graph.add_node(comp_index)
-                for dest_index, (dest_comp_id, destination_component) in enumerate(component.destination_components.iteritems()):
-                    if component.node_type == 'dependency':
-                        comp_sample_func[dest_index] *= comp_sample_func[comp_index]
-
-                    self.component_graph.add_node(dest_comp_id)
-                    self.component_graph.add_edge(comp_id,
-                                                  dest_comp_id,
-                                                  {'capacity': comp_sample_func[comp_index],
-                                                   'weight': destination_component.weight})
-
+            self.component_graph = ComponentGraph(self.components, comp_sample_func)
         else:
-            for comp_index, (comp_id, component) in enumerate(self.components.iteritems()):
-                for dest_index, (dest_comp_id, destination_component) in enumerate(
-                        component.destination_components.iteritems()):
-                    if component.node_type == 'dependency':
-                        comp_sample_func[dest_index] *= comp_sample_func[comp_index]
-
-                    edge_dict = self.component_graph.get_edge_data(comp_id, dest_comp_id)
-                    edge_dict['capacity'] = round(comp_sample_func[comp_index], 10)
+            self.component_graph.update_capacity(self.components, comp_sample_func)
 
         # calculate the capacity
         system_flows_sample = []
@@ -192,9 +171,7 @@ class IFSystem(Base):
             # track the outputs by source type
             total_supply_flow_by_source = {}
             for supply_index, (supply_comp_id, supply_comp) in enumerate(self.supply_nodes.iteritems()):
-                if_flow_fraction = nx.maximum_flow_value(self.component_graph,
-                                                         supply_comp_id,
-                                                         output_comp_id)
+                if_flow_fraction = self.component_graph.maxflow(supply_comp_id,output_comp_id)
                 if_sample_flow = if_flow_fraction * supply_comp['capacity_fraction']
 
                 if supply_comp['commodity_type'] not in total_supply_flow_by_source:

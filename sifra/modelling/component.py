@@ -18,7 +18,7 @@ class Component(Base):
 
     destination_components = Element('IODict', 'List of connected components', {})
 
-    def expose_to(self, hazard_level):
+    def expose_to(self, hazard_level, scenario):
         component_pe_ds = self.frag_func.pe_ds(hazard_level)
 
         return component_pe_ds
