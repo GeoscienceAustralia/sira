@@ -9,7 +9,7 @@ from scipy import stats
 from scipy.optimize import curve_fit
 import lmfit
 import pandas as pd
-# pd.set_option('precision', 3)
+pd.options.display.float_format = '{:,.4f}'.format
 
 import sys
 import os
@@ -136,15 +136,15 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
         sys_dmg_fit[dx] = lmfit.minimize(res_lognorm_cdf, params_pe,
                                          args=(x_sample, y_sample))
 
-        sys_dmg_model.ix[SYS_DS[dx]] \
+        sys_dmg_model.loc[SYS_DS[dx]] \
             = (sys_dmg_fit[dx].params['median'].value,
                sys_dmg_fit[dx].params['logstd'].value,
                sys_dmg_fit[dx].params['loc'].value,
                sys_dmg_fit[dx].chisqr)
 
-    sys_dmg_model['Median'] = sys_dmg_model['Median'].map('${:,.3f}'.format)
-    sys_dmg_model['LogStdDev'] = sys_dmg_model['LogStdDev'].map('${:,.3f}'.format)
-    sys_dmg_model['Location'] = sys_dmg_model['Location'].map('${:,.3f}'.format)
+    # sys_dmg_model['Median'] = sys_dmg_model['Median'].map('{:,.3f}'.format)
+    # sys_dmg_model['LogStdDev'] = sys_dmg_model['LogStdDev'].map('{:,.3f}'.format)
+    # sys_dmg_model['Location'] = sys_dmg_model['Location'].map('{:,.1f}'.format)
 
     print("\n" + "-" * 79)
     print(Fore.YELLOW +
@@ -176,7 +176,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
         ######################################################################
         if dx >= 2:
             mu_lo, sd_lo, loc_lo, chi = \
-                sys_dmg_model.ix[SYS_DS[dx - 1]].values
+                sys_dmg_model.loc[SYS_DS[dx - 1]].values
             y_model_lo = stats.lognorm.cdf(x_sample, sd_lo,
                                            loc=loc_lo, scale=mu_lo)
 
@@ -225,7 +225,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
 
         ######################################################################
 
-        sys_dmg_model.ix[SYS_DS[dx]] = \
+        sys_dmg_model.loc[SYS_DS[dx]] = \
             sys_dmg_fit[dx].params['median'].value, \
             sys_dmg_fit[dx].params['logstd'].value, \
             sys_dmg_fit[dx].params['loc'].value, \
@@ -234,6 +234,9 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
         # sys_dmg_ci[dx] = lmfit.conf_interval(sys_dmg_fit[dx], \
         #                                 sigmas=[0.674,0.950,0.997])
 
+    # sys_dmg_model['Median'] = sys_dmg_model['Median'].map(lambda x: '{0:.2f}'.format(x))
+    # sys_dmg_model['LogStdDev'] = sys_dmg_model['LogStdDev'].map(lambda x: '{0:.2f}'.format(x))
+    # sys_dmg_model['Location'] = sys_dmg_model['Location'].map('{0:.1f}'.format)
     print("\nFINAL System Fragilities: \n")
     print(sys_dmg_model)
 
@@ -246,8 +249,8 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
     #     lmfit.printfuncs.report_ci(sys_dmg_ci[dx])
 
     # ----- Write fitted model params to file -----
-    sys_dmg_model.to_csv(os.path.join(out_path,
-                                      'system_model_fragility.csv'), sep=',')
+    sys_dmg_model.to_csv(
+        os.path.join(out_path, 'system_model_fragility.csv'), sep=',')
 
     # ----- Plot the simulation data -----
     fontP = FontProperties()
@@ -262,12 +265,15 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
         ax.plot(hazard_input_vals,
                 pb_exceed[i],
                 label=SYS_DS[i], clip_on=False,
-                color=spl.COLR_DS[i], linestyle='', alpha=0.3,
+                color=spl.COLR_DS[i], linestyle='', alpha=0.4,
                 marker=markers[i - 1], markersize=4,
                 markeredgecolor=spl.COLR_DS[i])
 
     # ----- Plot the fitted models -----
-    dmg_mdl_arr = np.zeros((len(SYS_DS), len(hazard_input_vals)))
+    # xformodel = np.linspace(0, max(hazard_input_vals),
+    #                 max(hazard_input_vals)/0.01 + 1, endpoint=True)
+    xformodel = np.linspace(0, 2.0, 201, endpoint=True)
+    dmg_mdl_arr = np.zeros((len(SYS_DS), len(xformodel)))
 
     spl.add_legend_subtitle("\nFitted Model: LogNormal CDF")
 
@@ -276,8 +282,8 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
         loc = sys_dmg_model.loc[SYS_DS[dx], 'Location']
         scale = sys_dmg_model.loc[SYS_DS[dx], 'Median']
         dmg_mdl_arr[dx] = stats.lognorm.cdf(
-            x_sample, shape, loc=loc, scale=scale)
-        ax.plot(hazard_input_vals,
+            xformodel, shape, loc=loc, scale=scale)
+        ax.plot(xformodel,
                 dmg_mdl_arr[dx],
                 label=SYS_DS[dx], clip_on=False,
                 color=spl.COLR_DS[dx], alpha=0.65,
@@ -294,8 +300,8 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
                    x_scale=None,
                    y_scale=None,
                    x_tick_val=None,
-                   y_tick_pos=np.linspace(0.0, 1.0, num=11, endpoint=True),
-                   y_tick_val=np.linspace(0.0, 1.0, num=11, endpoint=True),
+                   y_tick_pos=np.linspace(0.0, 1.0, num=6, endpoint=True),
+                   y_tick_val=np.linspace(0.0, 1.0, num=6, endpoint=True),
                    x_grid=True,
                    y_grid=True,
                    add_legend=True)
@@ -393,7 +399,7 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
                                          args=(x_sample, y_sample),
                                          method='leastsq')
 
-        sys_rst_mdl_mode1.ix[SYS_DS[dx]] \
+        sys_rst_mdl_mode1.loc[SYS_DS[dx]] \
             = sys_rst_fit[dx].params['mean'].value, \
               sys_rst_fit[dx].params['stddev'].value, \
               sys_rst_fit[dx].chisqr
@@ -403,6 +409,13 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
           "Fitting system RESTORATION data: Unimodal Normal CDF" +
           Fore.RESET)
     print("-" * 79)
+
+    # # Format output to limit displayed decimal precision
+    # sys_rst_mdl_mode1['Mean'] = \
+    #     sys_rst_mdl_mode1['Mean'].map('{:,.3f}'.format)
+    # sys_rst_mdl_mode1['StdDev'] = \
+    #     sys_rst_mdl_mode1['StdDev'].map('{:,.3f}'.format)
+
     print("INITIAL Restoration Parameters:\n\n", sys_rst_mdl_mode1, '\n')
 
     # ----- Check for crossover and resample as needed -----
@@ -418,7 +431,7 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
         # Check for crossover...
 
         if dx >= 2:
-            m1_lo, s1_lo, r1_chi = sys_rst_mdl_mode1.ix[SYS_DS[dx - 1]].values
+            m1_lo, s1_lo, r1_chi = sys_rst_mdl_mode1.loc[SYS_DS[dx - 1]].values
             y_model_lo = norm_cdf(x_sample, m1_lo, s1_lo)
 
             if sum(y_model_lo - y_model_hi < 0):
@@ -509,10 +522,15 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
         #                     sigmas=[0.674,0.950,0.997], trace=True)
         # --------------------------------------------------------------------
 
-        sys_rst_mdl_mode1.ix[SYS_DS[dx]] \
+        sys_rst_mdl_mode1.loc[SYS_DS[dx]] \
             = sys_rst_fit[dx].params['mean'].value, \
               sys_rst_fit[dx].params['stddev'].value, \
               sys_rst_fit[dx].chisqr
+
+    # sys_rst_mdl_mode1['Mean'] = \
+    #     sys_rst_mdl_mode1['Mean'].map('{:,.3f}'.format)
+    # sys_rst_mdl_mode1['StdDev'] = \
+    #     sys_rst_mdl_mode1['StdDev'].map('{:,.3f}'.format)
 
     print("\nFINAL Restoration Parameters: \n")
     print(sys_rst_mdl_mode1)
@@ -544,8 +562,8 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
     # --- Plot the fitted models ---
     spl.add_legend_subtitle("\nModel: Normal CDF")
     for dx in range(1, len(SYS_DS)):
-        m1 = sys_rst_mdl_mode1.ix[SYS_DS[dx]]['Mean']
-        s1 = sys_rst_mdl_mode1.ix[SYS_DS[dx]]['StdDev']
+        m1 = sys_rst_mdl_mode1.loc[SYS_DS[dx]]['Mean']
+        s1 = sys_rst_mdl_mode1.loc[SYS_DS[dx]]['StdDev']
         ax.plot(RESTORATION_TIME_RANGE[1:],
                 norm_cdf(RESTORATION_TIME_RANGE, m1, s1)[1:] * 100,
                 label=SYS_DS[dx], clip_on=False, color=spl.COLR_DS[dx],
@@ -638,7 +656,7 @@ def fit_restoration_data_multimode(RESTORATION_TIME_RANGE,
         # sys_mix_ci[dx] = lmfit.conf_interval(sys_mix_fit[dx], \
         #                     sigmas=[0.674,0.950,0.997], trace=False)
 
-        sys_rst_mdl_mode2.ix[DS] = m1, s1, w1, m2, s2, w2, \
+        sys_rst_mdl_mode2.loc[DS] = m1, s1, w1, m2, s2, w2, \
                                    sys_mix_fit[dx].chisqr
 
     sys_rst_mdl_mode2.to_csv(os.path.join(sc.output_path,
@@ -679,7 +697,7 @@ def fit_restoration_data_multimode(RESTORATION_TIME_RANGE,
         plt.plot(
             x_sample[1:],
             bimodal_norm_cdf(
-                x_sample, *sys_rst_mdl_mode2.ix[DS].values[:-1])[1:] * 100,
+                x_sample, *sys_rst_mdl_mode2.loc[DS].values[:-1])[1:] * 100,
             label=DS, clip_on=False, color=spl.COLR_DS[dx], alpha=0.65,
             linestyle='-', linewidth=1.5
         )
