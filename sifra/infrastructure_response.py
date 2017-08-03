@@ -30,8 +30,9 @@ def run_scenario(config_file):
     # Use the parallel option in the scenario to determine how
     # to run
     response_array = []
-    response_array.extend(parmap.map(infrastructure.expose_to,
+    response_array.extend(parmap.map(run_para_scen,
                                      hazard_levels.hazard_range(),
+                                     infrastructure,
                                      scenario,
                                      parallel=scenario.run_parallel_proc))
 
@@ -42,7 +43,11 @@ def run_scenario(config_file):
 
     post_processing(infrastructure, scenario, response_dict)
 
-# ****************************************************************************
+
+def run_para_scen(hazard_level, infrastructure, scenario):
+    return infrastructure.expose_to(hazard_level,scenario)
+
+    # ****************************************************************************
 # BEGIN POST-PROCESSING ...
 # ****************************************************************************
 
@@ -308,7 +313,7 @@ def pe_by_component_class(response_dict, infrastructure, scenario):
     required_time = []
 
     for hazard_level in HazardLevels(scenario).hazard_range():
-        cpower = np.mean(response_dict[hazard_level.hazard_intensity][5], axis=0) / infrastructure.if_nominal_output
+        cpower = np.nanmean(response_dict[hazard_level.hazard_intensity][5], axis=0) / infrastructure.get_nominal_output()
         temp = cpower > threshold
         if sum(temp) > 0:
             required_time.append(np.min(scenario.restoration_time_range[temp]))

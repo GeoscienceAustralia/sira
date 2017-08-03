@@ -153,12 +153,15 @@ class IFSystem(Base):
                if_sample_economic_loss, \
                if_output_given_recovery
 
-    def compute_output_given_ds(self, comp_sample_func):
+    def get_nominal_output(self):
         if not self.if_nominal_output:
             self.if_nominal_output = 0
             for output_comp_id, output_comp in self.output_nodes.iteritems():
                 self.if_nominal_output += output_comp['output_node_capacity']
 
+        return self.if_nominal_output
+
+    def compute_output_given_ds(self, comp_sample_func):
         if not self.component_graph:
             self.component_graph = ComponentGraph(self.components, comp_sample_func)
         else:
@@ -187,7 +190,7 @@ class IFSystem(Base):
             total_available_flow = min(total_supply_flow_by_source.itervalues())
 
             estimated_capacity_fraction = min(total_available_flow, output_comp['capacity_fraction'])
-            system_outflows_sample[output_index] = estimated_capacity_fraction * self.if_nominal_output
+            system_outflows_sample[output_index] = estimated_capacity_fraction * self.get_nominal_output()
 
         return system_outflows_sample
 
