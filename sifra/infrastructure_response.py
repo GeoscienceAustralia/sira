@@ -45,9 +45,10 @@ def run_scenario(config_file):
 
 
 def run_para_scen(hazard_level, infrastructure, scenario):
-    return infrastructure.expose_to(hazard_level,scenario)
+    return infrastructure.expose_to(hazard_level, scenario)
 
-    # ****************************************************************************
+
+# ****************************************************************************
 # BEGIN POST-PROCESSING ...
 # ****************************************************************************
 

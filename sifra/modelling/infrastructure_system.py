@@ -123,14 +123,14 @@ class IFSystem(Base):
         # iterate through the samples
         for sample_index in range(scenario.num_samples):
             component_function_at_time = []
-            comp_sample_loss = np.zeros(len(self.components))
+            comp_level_loss = np.zeros(len(self.components))
             comp_sample_func = np.zeros(len(self.components))
             component_ds = component_damage_state_ind[sample_index, :]
             for component_index, component in enumerate(self.components.itervalues()):
                 # get the damage state for the component
                 damage_state = component.get_damage_state(component_ds[component_index])
                 loss = damage_state.damage_ratio * component.cost_fraction
-                comp_sample_loss[component_index] = loss
+                comp_level_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
                 # calculate the recovery time
                 component_function_at_time.append(self.calc_recov_time_given_comp_ds(component,
@@ -138,8 +138,8 @@ class IFSystem(Base):
                                                                                      scenario))
 
             # calculate the sample infrastructure economic loss and output
-            component_sample_loss[sample_index, :] = comp_sample_loss
-            if_sample_economic_loss[sample_index] = np.sum(comp_sample_loss)
+            component_sample_loss[sample_index, :] = comp_level_loss
+            if_sample_economic_loss[sample_index] = np.sum(comp_level_loss)
             if_sample_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
 
             # calculate the restoration process
@@ -161,11 +161,11 @@ class IFSystem(Base):
 
         return self.if_nominal_output
 
-    def compute_output_given_ds(self, comp_sample_func):
+    def compute_output_given_ds(self, comp_level_func):
         if not self.component_graph:
-            self.component_graph = ComponentGraph(self.components, comp_sample_func)
+            self.component_graph = ComponentGraph(self.components, comp_level_func)
         else:
-            self.component_graph.update_capacity(self.components, comp_sample_func)
+            self.component_graph.update_capacity(self.components, comp_level_func)
 
         # calculate the capacity
         system_flows_sample = []
@@ -174,7 +174,7 @@ class IFSystem(Base):
             # track the outputs by source type
             total_supply_flow_by_source = {}
             for supply_index, (supply_comp_id, supply_comp) in enumerate(self.supply_nodes.iteritems()):
-                if_flow_fraction = self.component_graph.maxflow(supply_comp_id,output_comp_id)
+                if_flow_fraction = self.component_graph.maxflow(supply_comp_id, output_comp_id)
                 if_sample_flow = if_flow_fraction * supply_comp['capacity_fraction']
 
                 if supply_comp['commodity_type'] not in total_supply_flow_by_source:

@@ -2,7 +2,7 @@ import igraph
 import numpy as np
 
 
-class ComponentGraph():
+class ComponentGraph(object):
     """
     Abstraction of component graph in an attempt to optimise the calculation
     of economic loss
@@ -38,4 +38,6 @@ class ComponentGraph():
         sup_v = self.comp_graph.vs.find(supply_comp_id)
         out_v = self.comp_graph.vs.find(output_comp_id)
 
-        return self.comp_graph.maxflow_value(sup_v.index, out_v.index)
+        return self.comp_graph.maxflow_value(sup_v.index,
+                                             out_v.index,
+                                             self.comp_graph.es['capacity'])
