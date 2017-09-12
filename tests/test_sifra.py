@@ -52,12 +52,35 @@ class TestSifra(unittest.TestCase):
 
         infrastructure = ingest_spreadsheet(config_file)
         hazard_levels = HazardLevels(scenario)
-        response_dict = {}
+        post_processing_list = [{}, {}, {}, [], [], []]
 
         for hazard_level in hazard_levels.hazard_range():
-            response_dict.update(infrastructure.expose_to(hazard_level, scenario))
+            hazard_level_response = infrastructure.expose_to(hazard_level, scenario)
+            for key, value in hazard_level_response.iteritems():
+                for list_number in range(6):
+                    if list_number <= 2:
+                        post_processing_list[list_number]['%0.3f' % np.float(key)] = value[list_number]
+                    else:
+                        post_processing_list[list_number].append(value[list_number])
 
-        self.assertEquals(response_dict, ids_comp_vs_haz)
+        for list_number in range(3, 6):
+            post_processing_list[list_number] = np.array(post_processing_list[list_number])
+
+        # Convert the calculated output array into the correct format
+        post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
+        post_processing_list[4] = post_processing_list[4].transpose()
+        post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
+
+        # check
+        for list_number, sys_output in enumerate([ids_comp_vs_haz, sys_output_dict, component_resp_dict,
+                                                  calculated_output_array, economic_loss_array, output_array_given_recovery]):
+            if_array = post_processing_list[list_number]
+            if isinstance(if_array, dict):
+                # check the keys are the same
+                self.assertTrue(set(post_processing_list[list_number].keys()) == set(sys_output.keys()))
+
+            # check the length of the data are the same
+            self.assertTrue(len(if_array) == len(sys_output))
 
     def test_calc_loss_arrays_parallel(self):
         """

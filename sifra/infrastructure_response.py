@@ -29,19 +29,33 @@ def run_scenario(config_file):
 
     # Use the parallel option in the scenario to determine how
     # to run
-    response_array = []
-    response_array.extend(parmap.map(run_para_scen,
-                                     hazard_levels.hazard_range(),
-                                     infrastructure,
-                                     scenario,
-                                     parallel=scenario.run_parallel_proc))
+    hazard_level_response = []
+    hazard_level_response.extend(parmap.map(run_para_scen,
+                                            hazard_levels.hazard_range(),
+                                            infrastructure,
+                                            scenario,
+                                            parallel=scenario.run_parallel_proc))
 
-    # combine the responses into one dict
-    response_dict = {}
-    for response in response_array:
-        response_dict.update(response)
+    # combine the responses into one list
+    post_processing_list = [{}, {}, {}, [], [], []]
+    for hazard_level_values in hazard_level_response:
+        for key, value_list in hazard_level_values.iteritems():
+            for list_number in range(6):
+                if list_number <= 2:
+                    post_processing_list[list_number]['%0.3f' % np.float(key)] = value_list[list_number]
+                else:
+                    post_processing_list[list_number].append(value_list[list_number])
 
-    post_processing(infrastructure, scenario, response_dict)
+    # Convert the last 3 lists into arrays
+    for list_number in range(3, 6):
+        post_processing_list[list_number] = np.array(post_processing_list[list_number])
+
+    # Convert the calculated output array into the correct format
+    post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
+    post_processing_list[4] = post_processing_list[4].transpose()
+    post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
+
+    post_processing(infrastructure, scenario, post_processing_list)
 
 
 def run_para_scen(hazard_level, infrastructure, scenario):
@@ -86,25 +100,28 @@ def plot_mean_econ_loss(fc, sc, economic_loss_array):
     plt.close(fig)
 
 
-def post_processing(infrastructure, scenario, response_dict):
+def post_processing(infrastructure, scenario, response_list):
     # ------------------------------------------------------------------------
     # 'ids_comp_vs_haz' is a dict of numpy arrays
     # We pickle it for archival. But the file size can get very large.
     # So we zip it for archival and delete the original
     idshaz = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.pickle')
+    id_comp_vs_haz = response_list[0]
     with open(idshaz, 'w') as handle:
-        for response_key in sorted(response_dict.iterkeys()):
-            cPickle.dump({response_key: response_dict[response_key][0]}, handle)
+        for response_key in sorted(id_comp_vs_haz.iterkeys()):
+            cPickle.dump({response_key: id_comp_vs_haz[response_key]}, handle)
 
+    component_resp_dict = response_list[2]
     crd_pkl = os.path.join(scenario.raw_output_dir, 'component_resp_dict.pickle')
     with open(crd_pkl, 'w') as handle:
-        for response_key in sorted(response_dict.iterkeys()):
-            cPickle.dump({response_key: response_dict[response_key][2]}, handle)
+        for response_key in sorted(component_resp_dict.iterkeys()):
+            cPickle.dump({response_key: component_resp_dict[response_key]}, handle)
 
+    sys_output_dict = response_list[1]
     sod_pkl = os.path.join(scenario.raw_output_dir, 'sys_output_dict.pickle')
     with open(sod_pkl, 'w') as handle:
-        for response_key in sorted(response_dict.iterkeys()):
-            cPickle.dump({response_key: response_dict[response_key][1]}, handle)
+        for response_key in sorted(sys_output_dict.iterkeys()):
+            cPickle.dump({response_key: sys_output_dict[response_key]}, handle)
 
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zipmode = zipfile.ZIP_DEFLATED
@@ -115,10 +132,6 @@ def post_processing(infrastructure, scenario, response_dict):
     # ------------------------------------------------------------------------
     # System output file (for given hazard transfer parameter value)
     # ------------------------------------------------------------------------
-    sys_output_dict= dict()
-    for response_key in sorted(response_dict.iterkeys()):
-        sys_output_dict[response_key] = response_dict[response_key][1]
-
     sys_output_df = pd.DataFrame(sys_output_dict)
     sys_output_df.index.name = 'Output Nodes'
 
@@ -127,11 +140,11 @@ def post_processing(infrastructure, scenario, response_dict):
     sys_output_df.to_csv(outfile_sysoutput,
                          sep=',', index_label=['Output Nodes'])
 
-    loss_by_comp_type(response_dict, infrastructure, scenario)
-    pe_by_component_class(response_dict, infrastructure, scenario)
+    loss_by_comp_type(response_list, infrastructure, scenario)
+    pe_by_component_class(response_list, infrastructure, scenario)
 
 
-def loss_by_comp_type(response_dict, infrastructure, scenario):
+def loss_by_comp_type(response_list, infrastructure, scenario):
     # ------------------------------------------------------------------------
     # Loss calculations by Component Type
     # ------------------------------------------------------------------------
@@ -146,38 +159,40 @@ def loss_by_comp_type(response_dict, infrastructure, scenario):
     mindex = pd.MultiIndex.from_tuples(tp_ct,
                                        names=['component_type', 'response'])
     comptype_resp_df = pd.DataFrame(index=mindex,
-                                    columns=[scenario.hazard_intensity_vals])
+                                    columns=[scenario.hazard_intensity_str])
     comptype_resp_dict = comptype_resp_df.to_dict()
 
-    for p in scenario.hazard_intensity_vals:
+    component_resp_dict = response_list[2]
+    for p in scenario.hazard_intensity_str:
         for component_type in infrastructure.get_component_types():
             components_of_type = list(infrastructure.get_components_for_type(component_type))
-            ct_loss_mean_list = [response_dict[p][2][(comp_id, 'loss_mean')] for comp_id in components_of_type]
+            ct_loss_mean_list = [component_resp_dict[p][(comp_id, 'loss_mean')] for comp_id in components_of_type]
             comptype_resp_dict[p][(component_type, 'loss_mean')] = np.mean(ct_loss_mean_list)
 
-            ct_loss_mean_list = [response_dict[p][2][(comp_id, 'loss_mean')] for comp_id in components_of_type]
+            ct_loss_mean_list = [component_resp_dict[p][(comp_id, 'loss_mean')] for comp_id in components_of_type]
             comptype_resp_dict[p][(component_type, 'loss_tot')] = np.sum(ct_loss_mean_list)
 
-            ct_loss_std_list = [response_dict[p][2][(comp_id, 'loss_std')] for comp_id in components_of_type]
+            ct_loss_std_list = [component_resp_dict[p][(comp_id, 'loss_std')] for comp_id in components_of_type]
             comptype_resp_dict[p][(component_type, 'loss_std')] = np.mean(ct_loss_std_list)
 
-            ct_func_mean_list = [response_dict[p][2][(comp_id, 'func_mean')] for comp_id in components_of_type]
+            ct_func_mean_list = [component_resp_dict[p][(comp_id, 'func_mean')] for comp_id in components_of_type]
             comptype_resp_dict[p][(component_type, 'func_mean')] = np.mean(ct_func_mean_list)
 
-            ct_func_std_list = [response_dict[p][2][(comp_id, 'func_std')] for comp_id in components_of_type]
+            ct_func_std_list = [component_resp_dict[p][(comp_id, 'func_std')] for comp_id in components_of_type]
             comptype_resp_dict[p][(component_type, 'func_std')] = np.mean(ct_func_std_list)
 
-            ct_num_failures_list = [response_dict[p][2][(comp_id, 'num_failures')] for comp_id in components_of_type]
+            ct_num_failures_list = [component_resp_dict[p][(comp_id, 'num_failures')] for comp_id in components_of_type]
             comptype_resp_dict[p][(component_type, 'num_failures')] = np.mean(ct_num_failures_list)
 
     # ------------------------------------------------------------------------
     # Calculating system fragility:
-    sys_frag = np.zeros((scenario.num_samples, scenario.num_hazard_pts), dtype=int)
+    economic_loss_array = response_list[4]
+    sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
-    for j, hazard_level in enumerate(scenario.hazard_intensity_vals):
+    for j, hazard_level in enumerate(scenario.hazard_intensity_str):
         for i in range(scenario.num_samples):
             # system output and economic loss
-            sys_frag[i, j] = np.sum(response_dict[hazard_level][4][j] > if_system_damage_states)
+            sys_frag[i, j] = np.sum(economic_loss_array[i, j] > if_system_damage_states)
 
     # Calculating Probability of Exceedence:
     pe_sys_econloss = np.zeros((len(infrastructure.get_system_damage_states()), scenario.num_hazard_pts))
@@ -231,7 +246,7 @@ def loss_by_comp_type(response_dict, infrastructure, scenario):
     )
 
 
-def pe_by_component_class(response_dict, infrastructure, scenario):
+def pe_by_component_class(response_list, infrastructure, scenario):
     # ------------------------------------------------------------------------
     # For Probability of Exceedence calculations based on component failures
     # ------------------------------------------------------------------------
@@ -265,7 +280,7 @@ def pe_by_component_class(response_dict, infrastructure, scenario):
                 for compclass in cp_classes_costed:
                     for c in cp_class_map[compclass]:
                         comp_class_failures[compclass][i, j] += \
-                            response_dict[hazard_level.hazard_intensity][i, infrastructure.components[c]]
+                            response_list[hazard_level.hazard_intensity][i, infrastructure.components[c]]
                     comp_class_failures[compclass][i, j] /= len(cp_class_map[compclass])
 
                     comp_class_frag[compclass][i, j] = \
@@ -312,9 +327,9 @@ def pe_by_component_class(response_dict, infrastructure, scenario):
 
     threshold = 0.99
     required_time = []
-
-    for hazard_level in HazardLevels(scenario).hazard_range():
-        cpower = np.nanmean(response_dict[hazard_level.hazard_intensity][5], axis=0) / infrastructure.get_nominal_output()
+    output_array_given_recovery = response_list[5]
+    for j in range(scenario.num_hazard_pts):
+        cpower = np.mean(output_array_given_recovery[:, j, :], axis=0) / infrastructure.get_nominal_output()
         temp = cpower > threshold
         if sum(temp) > 0:
             required_time.append(np.min(scenario.restoration_time_range[temp]))
@@ -334,25 +349,13 @@ def pe_by_component_class(response_dict, infrastructure, scenario):
                 'Days to Full Recovery']
 
     # create the arrays
-    comp_response_list = {}
-    economic_loss_list = []
-    calculated_output_list = []
-    output_array_given_recovery_list = []
-
-    for hazard_level, hazard_level_list in response_dict.iteritems():
-        comp_response_list[hazard_level] = (hazard_level_list[2])
-        economic_loss_list.append(hazard_level_list[3])
-        calculated_output_list.append(hazard_level_list[4])
-        output_array_given_recovery_list.append(hazard_level_list[5])
-
-    economic_loss_array = np.stack(economic_loss_list)
-    calculated_output_array = np.stack(calculated_output_list)
-    output_array_given_recovery = np.stack(output_array_given_recovery_list)
-
+    comp_response_list = response_list[2]
+    economic_loss_array = response_list[3]
+    calculated_output_array = response_list[4]
 
     outdat = {out_cols[0]: scenario.hazard_intensity_vals,
-              out_cols[1]: np.mean(np.sum(economic_loss_array, axis=2), axis=1),
-              out_cols[2]: np.mean(calculated_output_array, axis=1),
+              out_cols[1]: np.mean(economic_loss_array, axis=0),
+              out_cols[2]: np.mean(calculated_output_array, axis=0),
               out_cols[3]: required_time}
     df = pd.DataFrame(outdat)
     df.to_csv(
