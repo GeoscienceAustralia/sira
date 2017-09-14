@@ -42,13 +42,16 @@ def run_scenario(config_file):
         for key, value_list in hazard_level_values.iteritems():
             for list_number in range(6):
                 if list_number <= 2:
-                    post_processing_list[list_number]['%0.3f' % np.float(key)] = value_list[list_number]
+                    post_processing_list[list_number]['%0.3f' % np.float(key)]\
+                            = value_list[list_number]
                 else:
-                    post_processing_list[list_number].append(value_list[list_number])
+                    post_processing_list[list_number].\
+                            append(value_list[list_number])
 
     # Convert the last 3 lists into arrays
     for list_number in range(3, 6):
-        post_processing_list[list_number] = np.array(post_processing_list[list_number])
+        post_processing_list[list_number]\
+                = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
     post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
@@ -280,7 +283,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
                 for compclass in cp_classes_costed:
                     for c in cp_class_map[compclass]:
                         comp_class_failures[compclass][i, j] += \
-                            response_list[hazard_level.hazard_intensity][i, infrastructure.components[c]]
+                            response_list[hazard_level.hazard_intensity]\
+                                         [i, infrastructure.components[c]]
                     comp_class_failures[compclass][i, j] /= len(cp_class_map[compclass])
 
                     comp_class_frag[compclass][i, j] = \
@@ -329,7 +333,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     required_time = []
     output_array_given_recovery = response_list[5]
     for j in range(scenario.num_hazard_pts):
-        cpower = np.mean(output_array_given_recovery[:, j, :], axis=0) / infrastructure.get_nominal_output()
+        cpower = np.mean(output_array_given_recovery[:, j, :], axis=0)\
+                 / infrastructure.get_nominal_output()
         temp = cpower > threshold
         if sum(temp) > 0:
             required_time.append(np.min(scenario.restoration_time_range[temp]))
@@ -350,8 +355,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
 
     # create the arrays
     comp_response_list = response_list[2]
-    economic_loss_array = response_list[3]
-    calculated_output_array = response_list[4]
+    economic_loss_array = response_list[4]
+    calculated_output_array = response_list[3]
 
     outdat = {out_cols[0]: scenario.hazard_intensity_vals,
               out_cols[1]: np.mean(economic_loss_array, axis=0),
@@ -364,7 +369,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     )
 
     # --- Output File --- response of each COMPONENT to hazard ---
-    outfile_comp_resp = os.path.join(scenario.output_path, 'component_response.csv')
+    outfile_comp_resp = os.path.join(scenario.output_path,
+                                     'component_response.csv')
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.index.names = ['component_id', 'response']
     component_resp_df.columns = scenario.hazard_intensity_str
@@ -374,8 +380,10 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     )
 
     # --- Output File --- mean loss of component ---
-    outfile_comp_loss = os.path.join(scenario.output_path, 'component_meanloss.csv')
-    component_loss_df = component_resp_df.iloc[component_resp_df.index.get_level_values(1) == 'loss_mean']
+    outfile_comp_loss = os.path.join(scenario.output_path,
+                                     'component_meanloss.csv')
+    component_loss_df = component_resp_df.iloc\
+        [component_resp_df.index.get_level_values(1) == 'loss_mean']
     component_loss_df.reset_index(level='response', inplace=True)
     component_loss_df = component_loss_df.drop('response', axis=1)
     component_loss_df.to_csv(
