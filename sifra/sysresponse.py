@@ -242,7 +242,6 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     output_array_given_recovery = np.zeros(
         (sc.num_samples, sc.num_time_steps)
     )
-
     # rnd = stats.uniform.rvs(
     #     loc=0, scale=1, size=(NUM_SAMPLES, num_elements))
     # np.save(os.path.join(RAW_OUTPUT_DIR, 'rnd_samples_x_elements.npy'), rnd)
@@ -270,7 +269,6 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
             rnd[:, j][:, np.newaxis], axis=1
         )
         # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
-
     component_loss_tmp = {c: [] for c in nodes_sorted}
     component_func_tmp = {c: [] for c in nodes_sorted}
 
@@ -341,6 +339,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
     for onx, onode in enumerate(fc.network.out_node_list):
         sys_out_dict[onode]\
             = np.mean(sys_output_list_given_pga[_PGA][:, onx])
+
     return ids_comp, \
            sys_out_dict, \
            comp_resp_dict, \
@@ -588,7 +587,7 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
                     for c in cp_class_map[compclass]:
                         comp_class_failures[compclass][i, j] += \
                             ids_comp_vs_haz[PGA][
-                                i, fc.network.nodes_all.index(c)
+                                i, fc.network.node_map[c]
                             ]
                     comp_class_failures[compclass][i, j] /= \
                         len(cp_class_map[compclass])

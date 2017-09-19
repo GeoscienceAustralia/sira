@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from sifra.modelling.utils import get_all_subclasses
-from sifra.modelling.components import getComponentCategories, getAllInstances, getInstance
+from sifra.modelling.component_db import getComponentCategories, getAllInstances, getInstance
 from sifra.modelling.structural import class_getter, Pythonizer
 from sifra.modelling.structures import *
 from sifra.modelling.responsemodels import *

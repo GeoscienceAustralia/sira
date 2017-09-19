@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
     sifraapi:
         build:
@@ -38,4 +38,3 @@ services:
         stdin_open: true
         tty: true
         restart: always
-

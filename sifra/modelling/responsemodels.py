@@ -1,6 +1,7 @@
 from sifra.modelling.elements import ResponseModel
 from sifra.modelling.structures import XYPairs
 from sifra.modelling.structural import Element as _Element
+import scipy.stats as stats
 
 
 class StepFunc(ResponseModel):
@@ -26,7 +27,7 @@ class LogNormalCDF(ResponseModel):
     beta = _Element('float', 'Log standard deviation of the log normal CDF',
             _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
-    def __call__(self, value):
+    def __call__(self, hazard_level):
         """
         In scipy lognormal CDF is implemented thus:
             scipy.stats.lognorm.cdf(x, s, loc=0, scale=1)
@@ -35,8 +36,7 @@ class LogNormalCDF(ResponseModel):
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        import scipy.stats as stats
-        return stats.lognorm.cdf(value, self.beta, loc=0, scale=self.median)
+        return stats.lognorm.cdf(hazard_level.hazard_intensity, self.beta, loc=0, scale=self.median)
 
 
 class NormalCDF(ResponseModel):
@@ -54,6 +54,15 @@ class NormalCDF(ResponseModel):
         loc = Mean
         scale = Standard Deviation i.e. square root of Variance
         """
-        import scipy.stats as stats
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 
+class Level0Response(ResponseModel):
+    mode = 1
+    damage_ratio = 0.0
+    functionality = 1.0
+    def __call__(self, hazard_level):
+        return 0.0
+
+class Level0Recovery(ResponseModel):
+    recovery_mean = 0.00001
+    recovery_std = 0.00001

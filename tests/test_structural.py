@@ -10,9 +10,11 @@ from sifra.modelling.structural import (
     MultipleBasesOfTypeBaseError)
 
 from sifra.modelling.elements import (
-    Model,
-    Component,
     ResponseModel)
+
+from sifra.modelling.component import Component
+
+from sifra.modelling.infrastructure_system import IFSystem
 
 from sifra.modelling.structures import (
     XYPairs)
@@ -71,7 +73,7 @@ class LogNormalCDF(ResponseModel):
 
 class Test1(ut.TestCase):
     def setUp(self):
-        self.model = Model()
+        self.model = IFSystem()
         frag_curve = StepFunc(xys=XYPairs([[1.,0.], [2.,.5], [3.,1.]]))
         boiler = Component(frag_func=frag_curve)
         turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
@@ -96,7 +98,7 @@ class Test1(ut.TestCase):
         res_1 = self.model.components['turbine'].frag_func(abscissa)
         oid = self.model.save(attributes = {'name': object_name})
 
-        model_copy = Model.load(oid)
+        model_copy = IFSystem.load(oid)
         name = value = None
         for name, value in model_copy._attributes.iteritems():
             if name == 'name':
@@ -162,7 +164,7 @@ class Test3(ut.TestCase):
 
 class Test4(ut.TestCase):
     def test_has_json_desc(self):
-        desc = Model.__json_desc__
+        desc = IFSystem.__json_desc__
         self.assertIn('description', desc, 'Model should contain "description"')
         self.assertIn('components', desc, 'Model should cotain "components"')
 
@@ -176,7 +178,7 @@ if __name__ == '__main__':
     ut.main()
 
 else:
-    model = Model()
+    model = IFSystem()
     frag_curve = StepFunc(xys=XYPairs([[1.,0.], [2.,.5], [3.,1.]]))
     boiler = Component(frag_func=frag_curve)
     turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
