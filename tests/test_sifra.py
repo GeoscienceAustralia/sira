@@ -23,8 +23,8 @@ class TestSifra(unittest.TestCase):
         SETUPFILE = 'test_scenario_ps_coal.conf'
         SETUPFILE = os.path.join(os.getcwd(), SETUPFILE)
         print('\nUsing default test setup file')
-        scenario = Scenario('/opt/project/simulation_setup/test_scenario_ps_coal.conf')
-        facility = FacilitySystem('/opt/project/simulation_setup/test_scenario_ps_coal.conf')
+        scenario = Scenario('/opt/project/tests/test_scenario_ps_coal.conf')
+        facility = FacilitySystem('/opt/project/tests/test_scenario_ps_coal.conf')
         print('\n========================= Testing serial run =========================')
         component_resp_df = calc_sys_output(facility, scenario)
         ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array, \

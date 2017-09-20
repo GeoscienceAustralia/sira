@@ -9,7 +9,7 @@ from model_ingest import ingest_spreadsheet
 class TestIngestResponseModel(ut.TestCase):
     def test_damage_states(self):
 
-        test_conf = '../simulation_setup/test_scenario_ps_coal.conf'
+        test_conf = '../tests/test_scenario_ps_coal.conf'
 
         if_system = ingest_spreadsheet(test_conf)
 
