@@ -11,11 +11,11 @@ class ComponentGraph(object):
     def __init__(self, components, comp_sample_func):
         self.comp_graph = igraph.Graph(directed=True)
 
-        for comp_index, (comp_id, component) in enumerate(components.iteritems()):
+        for comp_index, (comp_id, component) in enumerate(components.items()):
             self.comp_graph.add_vertex(name=comp_id)
 
             for dest_index, (dest_comp_id, destination_component) in enumerate(
-                component.destination_components.iteritems()):
+                component.destination_components.items()):
 
                 if component.node_type == 'dependency':
                     comp_sample_func[dest_index] *= comp_sample_func[comp_index]
@@ -26,8 +26,8 @@ class ComponentGraph(object):
                                          capacity=comp_sample_func[comp_index])
 
     def update_capacity(self, components, comp_sample_func):
-        for comp_index, (comp_id, component) in enumerate(components.iteritems()):
-            for dest_index, dest_comp_id in enumerate(component.destination_components.iterkeys()):
+        for comp_index, (comp_id, component) in enumerate(components.items()):
+            for dest_index, dest_comp_id in enumerate(component.destination_components.keys()):
                 if component.node_type == 'dependency':
                     comp_sample_func[dest_index] *= comp_sample_func[comp_index]
 
