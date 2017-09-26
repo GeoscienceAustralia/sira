@@ -2,7 +2,7 @@ import os
 import sys
 import time
 from datetime import timedelta
-import cPickle
+import pickle
 import zipfile
 
 import numpy as np
@@ -24,11 +24,11 @@ from colorama import Fore
 def run_scenario(config_file):
     scenario = Scenario(config_file)
 
-    infrastructure = ingest_spreadsheet(config_file)
-    hazard_levels = HazardLevels(scenario)
+    infrastructure = ingest_spreadsheet(config_file)   # `IFSystem` object
+    hazard_levels = HazardLevels(scenario)      # Hazard intensity Value, &
+                                                # Parameter, Unit
 
-    # Use the parallel option in the scenario to determine how
-    # to run
+    # Use the parallel option in the scenario to determine how to run
     hazard_level_response = []
     hazard_level_response.extend(parmap.map(run_para_scen,
                                             hazard_levels.hazard_range(),
@@ -37,13 +37,19 @@ def run_scenario(config_file):
                                             parallel=scenario.run_parallel_proc))
 
     # combine the responses into one list
-    post_processing_list = [{}, {}, {}, [], [], []]
+    post_processing_list = [{},  # hazard level vs component damage state index
+                            {},  # hazard level vs infrastructure output
+                            {},  # hazard level vs component response
+                            [],  # infrastructure output for sample
+                            [],  # infrastructure econ loss for sample
+                            []]  # infrastructure output given recovery
+
     for hazard_level_values in hazard_level_response:
-        for key, value_list in hazard_level_values.iteritems():
+        for key, value_list in hazard_level_values.items():
             for list_number in range(6):
                 if list_number <= 2:
                     post_processing_list[list_number]['%0.3f' % np.float(key)]\
-                            = value_list[list_number]
+                        = value_list[list_number]
                 else:
                     post_processing_list[list_number].\
                             append(value_list[list_number])
@@ -51,7 +57,7 @@ def run_scenario(config_file):
     # Convert the last 3 lists into arrays
     for list_number in range(3, 6):
         post_processing_list[list_number]\
-                = np.array(post_processing_list[list_number])
+            = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
     post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
@@ -74,12 +80,6 @@ def plot_mean_econ_loss(fc, sc, economic_loss_array):
 
     fig = plt.figure(figsize=(9, 5), facecolor='white')
     sns.set(style='ticks', palette='Set3')
-    # ax = sns.boxplot(economic_loss_array*100, showmeans=True,
-    #                  widths=0.3, linewidth=0.7, color='lightgrey',
-    #                  meanprops=dict(marker='s',
-    #                                 markeredgecolor='salmon',
-    #                                 markerfacecolor='salmon')
-    #                 )
     ax = sns.boxplot(economic_loss_array * 100, showmeans=True,
                      linewidth=0.7, color='lightgrey',
                      meanprops=dict(marker='s',
@@ -111,20 +111,20 @@ def post_processing(infrastructure, scenario, response_list):
     idshaz = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.pickle')
     id_comp_vs_haz = response_list[0]
     with open(idshaz, 'w') as handle:
-        for response_key in sorted(id_comp_vs_haz.iterkeys()):
-            cPickle.dump({response_key: id_comp_vs_haz[response_key]}, handle)
+        for response_key in sorted(id_comp_vs_haz.keys()):
+            pickle.dump({response_key: id_comp_vs_haz[response_key]}, handle)
 
     component_resp_dict = response_list[2]
     crd_pkl = os.path.join(scenario.raw_output_dir, 'component_resp_dict.pickle')
     with open(crd_pkl, 'w') as handle:
-        for response_key in sorted(component_resp_dict.iterkeys()):
-            cPickle.dump({response_key: component_resp_dict[response_key]}, handle)
+        for response_key in sorted(component_resp_dict.keys()):
+            pickle.dump({response_key: component_resp_dict[response_key]}, handle)
 
     sys_output_dict = response_list[1]
     sod_pkl = os.path.join(scenario.raw_output_dir, 'sys_output_dict.pickle')
     with open(sod_pkl, 'w') as handle:
-        for response_key in sorted(sys_output_dict.iterkeys()):
-            cPickle.dump({response_key: sys_output_dict[response_key]}, handle)
+        for response_key in sorted(sys_output_dict.keys()):
+            pickle.dump({response_key: sys_output_dict[response_key]}, handle)
 
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zipmode = zipfile.ZIP_DEFLATED
@@ -167,25 +167,53 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
 
     component_resp_dict = response_list[2]
     for p in scenario.hazard_intensity_str:
+
         for component_type in infrastructure.get_component_types():
-            components_of_type = list(infrastructure.get_components_for_type(component_type))
-            ct_loss_mean_list = [component_resp_dict[p][(comp_id, 'loss_mean')] for comp_id in components_of_type]
-            comptype_resp_dict[p][(component_type, 'loss_mean')] = np.mean(ct_loss_mean_list)
 
-            ct_loss_mean_list = [component_resp_dict[p][(comp_id, 'loss_mean')] for comp_id in components_of_type]
-            comptype_resp_dict[p][(component_type, 'loss_tot')] = np.sum(ct_loss_mean_list)
+            components_of_type \
+                = list(infrastructure.get_components_for_type(component_type))
 
-            ct_loss_std_list = [component_resp_dict[p][(comp_id, 'loss_std')] for comp_id in components_of_type]
-            comptype_resp_dict[p][(component_type, 'loss_std')] = np.mean(ct_loss_std_list)
+            ct_loss_mean_list \
+                = [component_resp_dict[p][(comp_id, 'loss_mean')]
+                   for comp_id in components_of_type]
 
-            ct_func_mean_list = [component_resp_dict[p][(comp_id, 'func_mean')] for comp_id in components_of_type]
-            comptype_resp_dict[p][(component_type, 'func_mean')] = np.mean(ct_func_mean_list)
+            comptype_resp_dict[p][(component_type, 'loss_mean')] \
+                = np.mean(ct_loss_mean_list)
 
-            ct_func_std_list = [component_resp_dict[p][(comp_id, 'func_std')] for comp_id in components_of_type]
-            comptype_resp_dict[p][(component_type, 'func_std')] = np.mean(ct_func_std_list)
+            ct_loss_mean_list \
+                = [component_resp_dict[p][(comp_id, 'loss_mean')]
+                   for comp_id in components_of_type]
 
-            ct_num_failures_list = [component_resp_dict[p][(comp_id, 'num_failures')] for comp_id in components_of_type]
-            comptype_resp_dict[p][(component_type, 'num_failures')] = np.mean(ct_num_failures_list)
+            comptype_resp_dict[p][(component_type, 'loss_tot')] \
+                = np.sum(ct_loss_mean_list)
+
+            ct_loss_std_list \
+                = [component_resp_dict[p][(comp_id, 'loss_std')]
+                   for comp_id in components_of_type]
+
+            comptype_resp_dict[p][(component_type, 'loss_std')] \
+                = np.mean(ct_loss_std_list)
+
+            ct_func_mean_list \
+                = [component_resp_dict[p][(comp_id, 'func_mean')]
+                   for comp_id in components_of_type]
+
+            comptype_resp_dict[p][(component_type, 'func_mean')] \
+                = np.mean(ct_func_mean_list)
+
+            ct_func_std_list \
+                = [component_resp_dict[p][(comp_id, 'func_std')]
+                   for comp_id in components_of_type]
+
+            comptype_resp_dict[p][(component_type, 'func_std')] \
+                = np.mean(ct_func_std_list)
+
+            ct_num_failures_list \
+                = [component_resp_dict[p][(comp_id, 'num_failures')]
+                   for comp_id in components_of_type]
+
+            comptype_resp_dict[p][(component_type, 'num_failures')] \
+                = np.mean(ct_num_failures_list)
 
     # ------------------------------------------------------------------------
     # Calculating system fragility:
@@ -262,7 +290,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
 
     cp_class_map = {k: [] for k in cp_classes_in_system}
-    for comp_id, component in infrastructure.components.iteritems():
+    for comp_id, component in infrastructure.components.items():
         cp_class_map[component.component_class].append(component)
 
     # ------------------------------------------------------------------------
@@ -317,7 +345,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
                                  scenario.num_hazard_pts))
     for l, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
         # compute expected damage ratio
-        for j, component in enumerate(infrastructure.components.itervalues()):
+        for j, component in enumerate(infrastructure.components.values()):
             pb = pe2pb(component.expose_to(hazard_level, scenario)[1:])
             dr = np.array([component.frag_func.damage_states[ds].damage_ratio
                            for ds in infrastructure.sys_dmg_states])
