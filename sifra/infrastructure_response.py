@@ -78,9 +78,35 @@ def run_para_scen(hazard_level, infrastructure, scenario):
 def plot_mean_econ_loss(fc, sc, economic_loss_array):
     """Draws and saves a boxplot of mean economic loss"""
 
+    hazvals_ext = [[str(i)] * sc.num_samples
+                   for i in list(sc.hazard_intensity_vals)]
+    x1 = np.ndarray.flatten(np.array(hazvals_ext))
+
+    smpl = range(1, sc.num_samples+1, 1)
+    x2 = np.array(smpl * sc.num_hazard_pts)
+
+    arrays = [x1, x2]
+    econ_loss = np.array(economic_loss_array)
+    econ_loss = np.ndarray.flatten(econ_loss.transpose())
+    econ_loss_flat = np.ndarray.flatten(econ_loss)
+
+    print('---')
+    print('num_samples: ', sc.num_samples)
+    print('num_hazard_pts: ', sc.num_hazard_pts)
+    print('---')
+    print(x1.shape)
+    print(x2.shape)
+    print(econ_loss_flat.shape)
+    print('---')
+
+    econ_loss_df = pd.DataFrame(econ_loss_flat, index=arrays)
+    econ_loss_df.index.names = ['Hazard Intensity', 'Sample Num']
+    econ_loss_df.columns = ['Econ Loss Ratio']
+
     fig = plt.figure(figsize=(9, 5), facecolor='white')
     sns.set(style='ticks', palette='Set3')
-    ax = sns.boxplot(economic_loss_array * 100, showmeans=True,
+    ax = sns.boxplot(x=x1, y='Econ Loss Ratio', data=econ_loss_df,
+                     showmeans=True,
                      linewidth=0.7, color='lightgrey',
                      meanprops=dict(marker='s',
                                     markeredgecolor='salmon',
