@@ -219,4 +219,3 @@ export class ElementEditorComponent implements OnInit, DoCheck {
         return this.availableClasses && this.availableClasses.indexOf(clazz) > -1;
     }
 }
-

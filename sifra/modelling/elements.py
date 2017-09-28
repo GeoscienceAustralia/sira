@@ -46,5 +46,8 @@ class Model(Base):
         self.components[name] = component
 
 
-def expose_to(self, intensity_param):
-    return [c.expose_to(intensity_param) for c in itervalues(components)]
+class Component(Base):
+    frag_func = Element('ResponseModel', 'A fragility function', Element.NO_DEFAULT)
+
+    def expose_to(self, pga):
+        return self.frag_func(pga)
