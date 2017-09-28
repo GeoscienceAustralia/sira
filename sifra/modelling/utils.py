@@ -1,4 +1,3 @@
-from collections import OrderedDict
 import importlib
 from copy import deepcopy
 from collections import namedtuple, Iterable
@@ -13,18 +12,6 @@ def get_all_subclasses(cls):
     else:
         return []
 
-
-class IODict(OrderedDict):
-    def __init__(self, *args, **kwargs):
-        super(IODict, self).__init__(*args, **kwargs)
-        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
-
-    def __setitem__(self, key, value):
-        super(IODict, self).__setitem__(key, value)
-        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
-
-    def index(self, index):
-        return super(IODict, self).__getitem__(self.key_index[index])
 
 def jsonify(obj):
     """
@@ -50,8 +37,6 @@ def jsonify(obj):
     if isinstance(obj, Iterable) and not isinstance(obj, basestring):
         return [jsonify(v) for v in obj]
     return obj
-
-
 
 
 def pythonify(obj):

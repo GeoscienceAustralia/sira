@@ -1,9 +1,11 @@
 import numpy as np
 
-from modelling.structural import Base, Element
+from sifra.modelling.structural import Base, Element
 from sifra.modelling.structures import XYPairs
 from sifra.modelling.structural import Element as _Element
 import scipy.stats as stats
+
+from sifra.modelling.iodict import IODict
 
 
 class ResponseModel(Base):

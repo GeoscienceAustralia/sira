@@ -3,7 +3,6 @@ from copy import deepcopy
 from sifra.modelling.utils import jsonify, pythonify, class_getter
 
 
-
 class NoDefaultException(Exception):
     """
     Thrown when a :py:class:`_Base` is created without providing values for one

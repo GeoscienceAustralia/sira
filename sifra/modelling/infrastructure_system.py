@@ -9,7 +9,8 @@ from sifra.modelling.structural import (
     Info,
     Base)
 
-from sifra.modelling.component import Component, IODict
+from sifra.modelling.component import Component
+from sifra.modelling.iodict import IODict
 
 
 class IFSystem(Base):

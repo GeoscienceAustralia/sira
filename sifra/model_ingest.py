@@ -1,20 +1,18 @@
-import sys
 import pandas as pd
 
 from sifraclasses import _FacilityDataGetter
 
-from modelling.component import (Component,
-                                 ConnectionValues,
-                                 IODict)
+from sifra.modelling.component import (Component,
+                                 ConnectionValues)
 
-from modelling.infrastructure_system import IFSystem
+from sifra.modelling.iodict import IODict
 
-from modelling.responsemodels import (LogNormalCDF,
-                                      NormalCDF,
-                                      StepFunc,
-                                      Level0Response,
-                                      Level0Recovery, DamageAlgorithm,
-                                      RecoveryState, RecoveryAlgorithm)
+from sifra.modelling.infrastructure_system import IFSystem
+
+from sifra.modelling.responsemodels import (LogNormalCDF,NormalCDF,StepFunc,
+                                            Level0Response,Level0Recovery,
+                                            DamageAlgorithm, RecoveryState,
+                                            RecoveryAlgorithm)
 
 import copy
 

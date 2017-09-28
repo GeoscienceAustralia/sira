@@ -6,6 +6,7 @@ import unittest as ut
 from model_ingest import ingest_spreadsheet
 from modelling.structural import jsonify
 
+
 class TestIngestResponseModel(ut.TestCase):
     def test_ingest_1(self):
 
@@ -25,7 +26,7 @@ class TestIngestResponseModel(ut.TestCase):
         if_system = ingest_spreadsheet(test_conf)
 
         # now jsonify
-        json_components = if_system.jsonify_with_metadata()
+        json_components = if_system.jsonify()
 
         self.assertTrue(len(json_components) > 0)
 
