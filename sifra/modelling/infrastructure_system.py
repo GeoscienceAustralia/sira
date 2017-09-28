@@ -9,18 +9,18 @@ from sifra.modelling.structural import (
     Info,
     Base)
 
-from sifra.modelling.component import Component
+from sifra.modelling.component import Component, IODict
 
 
 class IFSystem(Base):
     name = Element('str', "The model's name", 'model')
     description = Info('Represents a model (e.g. a "model of a powerstation")')
 
-    components = Element('IODict', 'The components that make up the infrastructure system', {},
+    components = Element('IODict', 'The components that make up the infrastructure system', IODict,
         [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
 
-    supply_nodes = Element('dict', 'The components that make up the infrastructure system', {})
-    output_nodes = Element('dict', 'The components that make up the infrastructure system', {})
+    supply_nodes = Element('dict', 'The components that supply the infrastructure system', {})
+    output_nodes = Element('dict', 'The components that output from the infrastructure system', {})
 
     supply_total = None
     component_graph = None
@@ -182,6 +182,7 @@ class IFSystem(Base):
                 else:
                     total_supply_flow_by_source[supply_comp['commodity_type']] += if_sample_flow
 
+                # TODO remove?
                 system_flows_sample.append(tuple([supply_comp['commodity_type'],
                                                   supply_comp_id,
                                                   output_comp_id,
@@ -258,3 +259,4 @@ class IFSystem(Base):
     def get_component_class_list(self):
         for component in self.components.itervalues():
             yield component.component_class
+

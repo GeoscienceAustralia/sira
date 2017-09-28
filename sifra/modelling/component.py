@@ -1,9 +1,40 @@
-from sifra.modelling.utils import IODict
-
 # these are required for defining the data model
+from collections import OrderedDict
+
+from modelling.structural import jsonify
 from sifra.modelling.structural import (
     Element,
     Base)
+
+
+class IODict(OrderedDict, Base):
+    def __init__(self, *args, **kwargs):
+        if '_saved_values' in kwargs:
+            super(IODict, self).__init__(kwargs['_saved_values'])
+        else:
+            super(IODict, self).__init__(*args, **kwargs)
+
+        super(IODict, self).__init__(*args, **kwargs)
+        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
+
+    def __setitem__(self, key, value):
+        super(IODict, self).__setitem__(key, value)
+        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
+
+    def index(self, index):
+        return super(IODict, self).__getitem__(self.key_index[index])
+
+    def __jsonify__(self):
+        """
+        Validate this instance and transform it into an object suitable for
+        JSON serialisation.
+        """
+        res = {
+            'class': [type(self).__module__, type(self).__name__],
+            '_saved_values': {
+                jsonify(k): jsonify(v)
+                for k, v in self.iteritems()}}
+        return res
 
 
 class Component(Base):
@@ -16,7 +47,7 @@ class Component(Base):
     frag_func = Element('DamageAlgorithm', 'Fragility algorithm', Element.NO_DEFAULT)
     recovery_func = Element('RecoveryAlgorithm', 'Recovery algorithm', Element.NO_DEFAULT)
 
-    destination_components = Element('IODict', 'List of connected components', {})
+    destination_components = Element('IODict', 'List of connected components', IODict)
 
     def expose_to(self, hazard_level, scenario):
         component_pe_ds = self.frag_func.pe_ds(hazard_level)
@@ -33,3 +64,5 @@ class Component(Base):
 class ConnectionValues(Base):
     link_capacity = Element('float', 'Link capacity',0.0)
     weight = Element('float', 'Weight',0.0)
+
+

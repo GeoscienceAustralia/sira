@@ -22,6 +22,8 @@ from colorama import Fore
 
 
 def run_scenario(config_file):
+    code_start_time = time.time()
+
     scenario = Scenario(config_file)
 
     infrastructure = ingest_spreadsheet(config_file)   # `IFSystem` object
@@ -66,6 +68,8 @@ def run_scenario(config_file):
 
     post_processing(infrastructure, scenario, post_processing_list)
 
+    print("[ Run time: %s ]\n" % \
+          str(timedelta(seconds=(time.time() - code_start_time))))
 
 def run_para_scen(hazard_level, infrastructure, scenario):
     return infrastructure.expose_to(hazard_level, scenario)
@@ -479,13 +483,9 @@ def pe2pb(pe):
 
 
 def main():
-    code_start_time = time.time()
-
     SETUPFILE = sys.argv[1]
 
     run_scenario(SETUPFILE)
-    print("[ Run time: %s ]\n" % \
-          str(timedelta(seconds=(time.time() - code_start_time))))
 
 
 if __name__ == '__main__':
