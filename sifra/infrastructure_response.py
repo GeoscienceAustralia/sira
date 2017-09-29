@@ -14,15 +14,19 @@ from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 
 import matplotlib
-matplotlib.use('Agg')
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import seaborn as sns
-from colorama import Fore
+from colorama import Fore, Back, Style
 
 
 def run_scenario(config_file):
     scenario = Scenario(config_file)
+    print(Style.BRIGHT + Fore.GREEN +
+          "\nSuccessfully loaded Scenario config..." +
+          "\nInitiating model run...\n" +
+          Style.RESET_ALL)
 
     infrastructure = ingest_spreadsheet(config_file)   # `IFSystem` object
     hazard_levels = HazardLevels(scenario)      # Hazard intensity Value, &
@@ -104,13 +108,18 @@ def plot_mean_econ_loss(sc, economic_loss_array):
                                     markeredgecolor='coral',
                                     markerfacecolor='coral')
                      )
-    sns.despine(top=True, left=True, right=True)
-    ax.tick_params(axis='y', left='off', right='off',
-                   labelsize=8, pad=5)
-    ax.tick_params(axis='x', bottom='on', top='off',
-                   labelsize=8, pad=5)
+
+    sns.despine(bottom=False, top=True, left=True, right=True, offset=10)
+    ax.spines['bottom'].set_linewidth(0.8)
+    ax.spines['bottom'].set_color('#555555')
+
     ax.yaxis.grid(True, which="major", linestyle='-',
-                  linewidth=0.5, color='#B6B6B6')
+                  linewidth=0.4, color='#B6B6B6')
+
+    ax.tick_params(axis='x', bottom='on', top='off',
+                   width=0.8, labelsize=8, pad=5, color='#555555')
+    ax.tick_params(axis='y', left='off', right='off',
+                   width=0.8, labelsize=8, pad=5, color='#555555')
 
     ax.set_xticklabels(sc.hazard_intensity_vals)
     intensity_label \
@@ -127,14 +136,14 @@ def plot_mean_econ_loss(sc, economic_loss_array):
 
 
 def post_processing(infrastructure, scenario, response_list):
-    write_system_response(response_list, infrastructure, scenario)
+    write_system_response(response_list, scenario)
     loss_by_comp_type(response_list, infrastructure, scenario)
     economic_loss_array = response_list[4]
     plot_mean_econ_loss(scenario, economic_loss_array)
     pe_by_component_class(response_list, infrastructure, scenario)
 
 
-def write_system_response(response_list, infrastructure, scenario):
+def write_system_response(response_list, scenario):
     # ------------------------------------------------------------------------
     # 'ids_comp_vs_haz' is a dict of numpy arrays
     # We pickle it for archival. But the file size can get very large.
@@ -507,7 +516,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
 
     # ------------------------------------------------------------------------
 
-    print("\nOutputs saved in: " +
+    print("\nOutputs saved in:\n" +
           Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
     # ... END POST-PROCESSING
@@ -530,12 +539,13 @@ def main():
     code_start_time = time.time()
 
     SETUPFILE = sys.argv[1]
-
     run_scenario(SETUPFILE)
-    print("[ Run time: %s ]\n" % \
-          str(timedelta(seconds=(time.time() - code_start_time))))
+
+    print(Style.BRIGHT + Fore.YELLOW +
+          "[ Run time: %s ]\n" %
+          str(timedelta(seconds=(time.time() - code_start_time))) +
+          Style.RESET_ALL)
 
 
 if __name__ == '__main__':
     main()
-
