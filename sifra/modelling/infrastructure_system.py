@@ -35,7 +35,7 @@ class IFSystem(Base):
 
     def __init__(self, **kwargs):
         super(IFSystem, self).__init__(**kwargs)
-        if self.system_class == 'Substation':
+        if self.system_class.lower() == 'substation':
             self.uncosted_classes = ['JUNCTION POINT',
                                      'SYSTEM INPUT', 'SYSTEM OUTPUT',
                                      'Generator', 'Bus', 'Lightning Arrester']
@@ -47,7 +47,7 @@ class IFSystem(Base):
                 'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
                 'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]
             }
-        elif self.system_class == 'PowerStation':
+        elif self.system_class.lower() == 'powerstation':
             self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
             self.ds_lims_compclasses = {
                 'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -85,8 +85,10 @@ class IFSystem(Base):
         for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
             if_output[output_comp_id] = np.mean(if_sample_output[:, output_index])
 
-        print("[ Hazard {} run time: {} ]\n".format(hazard_level.hazard_intensity,
-                                                    str(timedelta(seconds=(time.time() - code_start_time)))))
+        print("> Hazard intensity: {} {} | Run time: {}".
+              format(hazard_level.hazard_intensity,
+                     scenario.intensity_measure_unit,
+                     str(timedelta(seconds=(time.time() - code_start_time)))))
 
         response_dict = {hazard_level.hazard_intensity: [component_damage_state_ind,
                                                          if_output,
