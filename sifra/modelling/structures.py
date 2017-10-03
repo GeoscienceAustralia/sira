@@ -1,5 +1,6 @@
 from sifra.modelling.structural import Info, Base
 
+
 class XYPairs(Base):
     description = Info("The (x, f(x)) pairs defining a step function.")
 

@@ -26,7 +26,7 @@ class TestIngestResponseModel(ut.TestCase):
         if_system = ingest_spreadsheet(test_conf)
 
         # now jsonify
-        json_components = if_system.jsonify()
+        json_components = jsonify(if_system)
 
         self.assertTrue(len(json_components) > 0)
 
