@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import sys
 import time
@@ -22,11 +23,13 @@ from colorama import Fore, Back, Style
 
 
 def run_scenario(config_file):
-    scenario = Scenario(config_file)
     print(Style.BRIGHT + Fore.GREEN +
-          "\nSuccessfully loaded Scenario config..." +
-          "\nInitiating model run...\n" +
-          Style.RESET_ALL)
+          "\nLoading scenario config... " +
+          Style.RESET_ALL, end='')
+
+    scenario = Scenario(config_file)
+    print(Style.BRIGHT + Fore.GREEN + "Done." +
+          "\nInitiating model run...\n" + Style.RESET_ALL)
 
     infrastructure = ingest_spreadsheet(config_file)   # `IFSystem` object
     hazard_levels = HazardLevels(scenario)      # Hazard intensity Value, &
