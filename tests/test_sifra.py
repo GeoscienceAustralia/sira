@@ -8,11 +8,8 @@ import numpy as np
 from sifra.sysresponse import calc_loss_arrays
 from sifra.sifraclasses import FacilitySystem, Scenario
 from sifra.sysresponse import calc_sys_output
-from model_ingest import ingest_spreadsheet
-from sifra.modelling.hazard_levels import HazardLevels
+from infrastructure_response import calculate_response, ingest_spreadsheet
 
-
-__author__ = 'sudipta'
 
 class TestSifra(unittest.TestCase):
     def test_calc_loss_arrays(self):
@@ -46,41 +43,105 @@ class TestSifra(unittest.TestCase):
         scenario = Scenario(config_file)
         facility = FacilitySystem(config_file)
         component_resp_df = calc_sys_output(facility, scenario)
-        ids_comp_vs_haz, sys_output_dict, component_resp_dict, calculated_output_array, \
-            economic_loss_array, output_array_given_recovery \
-            = calc_loss_arrays(facility, scenario, component_resp_df, parallel_proc=0)
+        sr_result_list = calc_loss_arrays(facility, scenario, component_resp_df, parallel_proc=1)
 
-        infrastructure = ingest_spreadsheet(config_file)
-        hazard_levels = HazardLevels(scenario)
-        post_processing_list = [{}, {}, {}, [], [], []]
+        scenario = Scenario(config_file)
+        infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
 
-        for hazard_level in hazard_levels.hazard_range():
-            hazard_level_response = infrastructure.expose_to(hazard_level, scenario)
-            for key, value in hazard_level_response.iteritems():
-                for list_number in range(6):
-                    if list_number <= 2:
-                        post_processing_list[list_number]['%0.3f' % np.float(key)] = value[list_number]
-                    else:
-                        post_processing_list[list_number].append(value[list_number])
+        if_result_list = calculate_response(scenario, infrastructure)
 
-        for list_number in range(3, 6):
-            post_processing_list[list_number] = np.array(post_processing_list[list_number])
-
-        # Convert the calculated output array into the correct format
-        post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
-        post_processing_list[4] = post_processing_list[4].transpose()
-        post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
-
-        # check
-        for list_number, sys_output in enumerate([ids_comp_vs_haz, sys_output_dict, component_resp_dict,
-                                                  calculated_output_array, economic_loss_array, output_array_given_recovery]):
-            if_array = post_processing_list[list_number]
-            if isinstance(if_array, dict):
+        # check the differences between the two results
+        result_names = ['ds_comp_vs_haz', 'sys_output_dict',
+                        'component_resp_dict', 'calculated_output_array',
+                        'economic_loss_array', 'output_array_given_recovery']
+        for name, if_result, sys_result in zip(result_names,
+                                               if_result_list,
+                                               sr_result_list):
+            print(name)
+            if isinstance(if_result, dict):
                 # check the keys are the same
-                self.assertTrue(set(post_processing_list[list_number].keys()) == set(sys_output.keys()))
+                self.assertTrue(set(if_result.keys()) == set(sys_result.keys()))
+                # compare the differences between the values
+                for key in sorted(sys_result.keys()):
+                    level_sys_result = sys_result[key]
+                    level_if_result = if_result[key]
+                    if not isinstance(level_sys_result, dict):
+                        diff = (np.average(level_sys_result - level_if_result))/np.average(level_sys_result)
+                    else:
+                        level_diff = 0
+                        level_base = 0
+                        for level_key in sorted(level_sys_result.keys()):
+                            level_diff += \
+                                np.average(level_sys_result[level_key] - level_if_result[level_key])
+                            level_base += np.average(level_sys_result[level_key])
+                        diff = level_diff/level_base
+                    if diff != 0:
+                        print(key, diff)
+                        diff=0
+            elif isinstance(if_result, np.ndarray):
+                if name != 'output_array_given_recovery':
+                    print((np.average(if_result, axis=0)-np.average(sys_result, axis=0))/np.average(if_result, axis=0))
+                else:
+                    print((np.average(if_result, axis=(0, 2)) - np.average(sys_result, axis=(0, 2)))/np.average(if_result, axis=(0, 2)))
+            else:
+                print('wtf {0}'.format(name))
 
             # check the length of the data are the same
-            self.assertTrue(len(if_array) == len(sys_output))
+            self.assertTrue(len(if_result) == len(sys_result))
+
+    def test_if_vs_sys_ident(self):
+        config_file = '/opt/project/tests/test_identical_comps.conf'
+        scenario = Scenario(config_file)
+        facility = FacilitySystem(config_file)
+        component_resp_df = calc_sys_output(facility, scenario)
+        sr_result_list = calc_loss_arrays(facility, scenario, component_resp_df, parallel_proc=1)
+
+        scenario = Scenario(config_file)
+        infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
+
+        if_result_list = calculate_response(scenario, infrastructure)
+
+        # check the differences between the two results
+        result_names = ['ds_comp_vs_haz', 'sys_output_dict',
+                        'component_resp_dict', 'calculated_output_array',
+                        'economic_loss_array', 'output_array_given_recovery']
+        for name, if_result, sys_result in zip(result_names,
+                                               if_result_list,
+                                               sr_result_list):
+            print(name)
+            if isinstance(if_result, dict):
+                # check the keys are the same
+                self.assertTrue(set(if_result.keys()) == set(sys_result.keys()))
+                # compare the differences between the values
+                for key in sorted(sys_result.keys()):
+                    level_sys_result = sys_result[key]
+                    level_if_result = if_result[key]
+                    if not isinstance(level_sys_result, dict) and np.average(level_sys_result) > 0:
+                        diff = (np.average(level_sys_result - level_if_result))/np.average(level_sys_result)
+                    elif isinstance(level_sys_result, dict):
+                        level_diff = 0
+                        level_base = 0
+                        for level_key in sorted(level_sys_result.keys()):
+                            level_diff += \
+                                np.average(level_sys_result[level_key] - level_if_result[level_key])
+                            level_base += np.average(level_sys_result[level_key])
+                        diff = level_diff/level_base
+                    else:
+                        diff = 0
+                    if not np.isnan(diff) and diff != 0:
+                        print(key, diff)
+                        diff=0
+            elif isinstance(if_result, np.ndarray):
+                if name != 'output_array_given_recovery':
+                    if np.all(np.average(if_result, axis=0)> 0):
+                        print((np.average(if_result, axis=0)-np.average(sys_result, axis=0))/np.average(if_result, axis=0))
+                elif np.all(np.average(if_result, axis=(0, 2)) > 0):
+                    print((np.average(if_result, axis=(0, 2)) - np.average(sys_result, axis=(0, 2)))/np.average(if_result, axis=(0, 2)))
+            else:
+                print('wtf {0}'.format(name))
+
+            # check the length of the data are the same
+            self.assertTrue(len(if_result) == len(sys_result))
 
     def test_calc_loss_arrays_parallel(self):
         """

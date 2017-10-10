@@ -1,16 +1,14 @@
-import warnings
 import json
 from functools import wraps
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
-from sifra.modelling.utils import get_all_subclasses
+
 from sifra.modelling.component_db import getComponentCategories, getAllInstances, getInstance
-from sifra.modelling.structural import class_getter, Pythonizer
-from sifra.modelling.structures import *
 from sifra.modelling.responsemodels import *
-
-
+from sifra.modelling.structural import class_getter, Pythonizer
+from sifra.modelling.utils import get_all_subclasses
 
 csrf = CSRFProtect()
 app = Flask(__name__)
@@ -128,4 +126,3 @@ def save():
         attributes=attrs)
     name = attrs.pop('name', 'anonymous component') if attrs is not None else 'anonymous component'
     return jsonify({'id': oid, 'name': name})
-

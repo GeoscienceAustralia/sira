@@ -1,23 +1,18 @@
-import sys
 import pandas as pd
-
-from sifra.modelling.utils import IODict
 
 from sifraclasses import _FacilityDataGetter
 
-from modelling.component import Component, ConnectionValues
+from sifra.modelling.component import (Component,
+                                 ConnectionValues)
 
-from modelling.infrastructure_system import IFSystem
+from sifra.modelling.iodict import IODict
 
-from sifra.modelling.elements import (RecoveryState,
-                                      DamageAlgorithm,
-                                      RecoveryAlgorithm)
+from sifra.modelling.infrastructure_system import IFSystem
 
-from sifra.modelling.responsemodels import (LogNormalCDF,
-                                            NormalCDF,
-                                            StepFunc,
-                                            Level0Response,
-                                            Level0Recovery)
+from sifra.modelling.responsemodels import (LogNormalCDF,NormalCDF,StepFunc,
+                                            Level0Response,Level0Recovery,
+                                            DamageAlgorithm, RecoveryState,
+                                            RecoveryAlgorithm)
 
 import copy
 
@@ -71,7 +66,7 @@ def ingest_spreadsheet(config):
         elif damage_state['damage_function'] == 'Normal':
             response_model = NormalCDF(damage_state)
         elif damage_state['damage_function'] == 'StepFunc':
-            response_model = LogNormalCDF(damage_state)
+            response_model = StepFunc(damage_state)
         else:
             raise ValueError("No response model "
                              "matches {}".format(damage_state['damage_function']))

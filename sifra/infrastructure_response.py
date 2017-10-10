@@ -30,11 +30,22 @@ def run_scenario(config_file):
     scenario = Scenario(config_file)
     print(Style.BRIGHT + Fore.GREEN + "Done." +
           "\nInitiating model run...\n" + Style.RESET_ALL)
+    code_start_time = time.time()
 
-    infrastructure = ingest_spreadsheet(config_file)   # `IFSystem` object
-    hazard_levels = HazardLevels(scenario)      # Hazard intensity Value, &
-                                                # Parameter, Unit
+    scenario = Scenario(config_file)
+    infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
 
+    post_processing_list = calculate_response(scenario, infrastructure)
+
+    post_processing(infrastructure, scenario, post_processing_list)
+
+    print("[ Run time: %s ]\n" % \
+          str(timedelta(seconds=(time.time() - code_start_time))))
+
+
+def calculate_response(scenario, infrastructure):
+    hazard_levels = HazardLevels(scenario)  # Hazard intensity Value, &
+    # Parameter, Unit
     # Use the parallel option in the scenario to determine how to run
     hazard_level_response = []
     hazard_level_response.extend(parmap.map(run_para_scen,
@@ -42,7 +53,6 @@ def run_scenario(config_file):
                                             infrastructure,
                                             scenario,
                                             parallel=scenario.run_parallel_proc))
-
     # combine the responses into one list
     post_processing_list = [{},  # hazard level vs component damage state index
                             {},  # hazard level vs infrastructure output
@@ -50,28 +60,26 @@ def run_scenario(config_file):
                             [],  # infrastructure output for sample
                             [],  # infrastructure econ loss for sample
                             []]  # infrastructure output given recovery
-
     for hazard_level_values in hazard_level_response:
         for key, value_list in hazard_level_values.items():
             for list_number in range(6):
                 if list_number <= 2:
-                    post_processing_list[list_number]['%0.3f' % np.float(key)]\
+                    post_processing_list[list_number]['%0.3f' % np.float(key)] \
                         = value_list[list_number]
                 else:
-                    post_processing_list[list_number].\
-                            append(value_list[list_number])
+                    post_processing_list[list_number]. \
+                        append(value_list[list_number])
 
     # Convert the last 3 lists into arrays
     for list_number in range(3, 6):
-        post_processing_list[list_number]\
+        post_processing_list[list_number] \
             = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
     post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
     post_processing_list[4] = post_processing_list[4].transpose()
     post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
-
-    post_processing(infrastructure, scenario, post_processing_list)
+    return post_processing_list
 
 
 def run_para_scen(hazard_level, infrastructure, scenario):
@@ -539,8 +547,6 @@ def pe2pb(pe):
 
 
 def main():
-    code_start_time = time.time()
-
     SETUPFILE = sys.argv[1]
     run_scenario(SETUPFILE)
 
@@ -548,7 +554,6 @@ def main():
           "[ Run time: %s ]\n" %
           str(timedelta(seconds=(time.time() - code_start_time))) +
           Style.RESET_ALL)
-
 
 if __name__ == '__main__':
     main()

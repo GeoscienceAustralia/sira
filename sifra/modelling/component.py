@@ -1,9 +1,11 @@
-from sifra.modelling.utils import IODict
-
 # these are required for defining the data model
 from sifra.modelling.structural import (
     Element,
     Base)
+
+from sifra.modelling.iodict import IODict
+
+from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
 
 
 class Component(Base):
@@ -16,7 +18,7 @@ class Component(Base):
     frag_func = Element('DamageAlgorithm', 'Fragility algorithm', Element.NO_DEFAULT)
     recovery_func = Element('RecoveryAlgorithm', 'Recovery algorithm', Element.NO_DEFAULT)
 
-    destination_components = Element('IODict', 'List of connected components', {})
+    destination_components = Element('IODict', 'List of connected components', IODict)
 
     def expose_to(self, hazard_level, scenario):
         component_pe_ds = self.frag_func.pe_ds(hazard_level)
@@ -33,3 +35,5 @@ class Component(Base):
 class ConnectionValues(Base):
     link_capacity = Element('float', 'Link capacity',0.0)
     weight = Element('float', 'Weight',0.0)
+
+

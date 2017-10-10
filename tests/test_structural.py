@@ -7,10 +7,10 @@ from sifra.modelling.structural import (
     ValidationError,
     jsonify,
     AlreadySavedException,
-    MultipleBasesOfTypeBaseError)
+    MultipleBasesOfTypeBaseError,
+    pythonify)
 
-from sifra.modelling.elements import (
-    ResponseModel)
+from modelling.responsemodels import ResponseModel
 
 from sifra.modelling.component import Component
 
@@ -116,7 +116,7 @@ class Test1(ut.TestCase):
         Test that a model can be created from one converted 'to JSON'.
         """
 
-        model2 = Base.to_python(jsonify(self.model))
+        model2 = pythonify(jsonify(self.model))
 
     def test_jsonify_with_metadata(self):
         """
@@ -184,4 +184,3 @@ else:
     turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
     model.add_component('boiler', boiler)
     model.add_component('turbine', turbine)
-
