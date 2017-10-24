@@ -1,6 +1,8 @@
 import numpy as np
 import time
 from datetime import timedelta
+import logging
+
 from modelling.component_graph import ComponentGraph
 
 # these are required for defining the data model
@@ -14,6 +16,11 @@ from sifra.modelling.iodict import IODict
 
 
 class IFSystem(Base):
+    """
+    The top level representation of a system that can respond to a
+    range of hazards. It encapsulates a number of responsive (?)
+    components that are
+    """
     name = Element('str', "The model's name", 'model')
     description = Info('Represents a model (e.g. a "model of a powerstation")')
 
@@ -74,11 +81,13 @@ class IFSystem(Base):
 
         # calculate the output loss and economic loss
         component_sample_loss, \
+        comp_sample_func, \
         if_sample_output, \
         if_sample_economic_loss, \
         if_output_given_recovery = self.calc_output_loss(scenario, component_damage_state_ind)
 
         component_response = self.calc_response(component_sample_loss,
+                                                comp_sample_func,
                                                 component_damage_state_ind)
 
         # determine average output for the output components
@@ -86,8 +95,8 @@ class IFSystem(Base):
         for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
             if_output[output_comp_id] = np.mean(if_sample_output[:, output_index])
 
-        print("[ Hazard {} run time: {} ]\n".format(hazard_level.hazard_intensity,
-                                                    str(timedelta(seconds=(time.time() - code_start_time)))))
+        elapsed = timedelta(seconds=(time.time() - code_start_time))
+        logging.info("[ Hazard {} run time: {} ]\n".format(hazard_level.hazard_intensity, str(elapsed)))
 
         response_dict = {hazard_level.hazard_intensity: [component_damage_state_ind,
                                                          if_output,
@@ -100,38 +109,48 @@ class IFSystem(Base):
 
     def probable_ds_hazard_level(self, hazard_level, scenario):
         if scenario.run_context:  # test run
-            prng = np.random.RandomState(int(hazard_level.hazard_intensity))
+            prng = np.random.RandomState(int(hazard_level.hazard_intensity*100))
         else:
             prng = np.random.RandomState()
             
         num_elements = len(self.components)
         # index of the damage state!
-        component_damage_state_ind = np.zeros((scenario.num_samples, num_elements), dtype=int)
+        component_damage_state_ind = np.zeros((scenario.num_samples, num_elements),
+                                              dtype=int)
+        rnd = prng.uniform(size=(scenario.num_samples, num_elements))
+        logging.debug("Hazard Intensity {}".format(hazard_level.hazard_intensity))
         for index, component in enumerate(self.components.itervalues()):
             # get the probability of exceeding damage state for each component
-            component_pe_ds = component.expose_to(hazard_level, scenario)
-            rnd = prng.uniform(size=(scenario.num_samples, len(component_pe_ds)))
-            component_damage_state_ind[:, index] = np.sum(component_pe_ds > rnd, axis=1)
+            component_pe_ds = np.sort(component.expose_to(hazard_level, scenario))
+            logging.debug("Component {} : pe_ds {}".format(component.component_id,
+                                                          component_pe_ds))
+            component_damage_state_ind[:, index] = \
+                np.sum(component_pe_ds > rnd[:, index][:, np.newaxis], axis=1)
 
         return component_damage_state_ind
 
     def calc_output_loss(self, scenario, component_damage_state_ind):
-        component_sample_loss = np.zeros((scenario.num_samples, len(self.components)) , dtype=np.float64)
-        if_sample_economic_loss = np.zeros(scenario.num_samples, dtype=np.float64)
-        if_sample_output = np.zeros((scenario.num_samples, len(self.output_nodes)), dtype=np.float64)
+        if_level_loss = np.zeros((scenario.num_samples, len(self.components)),
+                                 dtype=np.float64)
+        if_level_economic_loss = np.zeros(scenario.num_samples,
+                                          dtype=np.float64)
+        if_level_functionality = np.zeros((scenario.num_samples, len(self.components)),
+                                 dtype=np.float64)
+        if_level_output = np.zeros((scenario.num_samples, len(self.output_nodes)),
+                                   dtype=np.float64)
         if_output_given_recovery = np.zeros((scenario.num_samples, scenario.num_time_steps), dtype=np.float64)
 
         # iterate through the samples
         for sample_index in range(scenario.num_samples):
             component_function_at_time = []
-            comp_level_loss = np.zeros(len(self.components))
+            comp_sample_loss = np.zeros(len(self.components))
             comp_sample_func = np.zeros(len(self.components))
             component_ds = component_damage_state_ind[sample_index, :]
             for component_index, component in enumerate(self.components.itervalues()):
                 # get the damage state for the component
                 damage_state = component.get_damage_state(component_ds[component_index])
                 loss = damage_state.damage_ratio * component.cost_fraction
-                comp_level_loss[component_index] = loss
+                comp_sample_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
                 # calculate the recovery time
                 component_function_at_time.append(self.calc_recov_time_given_comp_ds(component,
@@ -139,9 +158,10 @@ class IFSystem(Base):
                                                                                      scenario))
 
             # calculate the sample infrastructure economic loss and output
-            component_sample_loss[sample_index, :] = comp_level_loss
-            if_sample_economic_loss[sample_index] = np.sum(comp_level_loss)
-            if_sample_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
+            if_level_loss[sample_index, :] = comp_sample_loss
+            if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
+            if_level_functionality[sample_index, :] = comp_sample_func
+            if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
 
             # calculate the restoration process
             component_function_at_time = np.array(component_function_at_time)
@@ -149,9 +169,10 @@ class IFSystem(Base):
                 if_output_given_recovery[sample_index, time_step] = \
                     sum(self.compute_output_given_ds(component_function_at_time[:, time_step]))
 
-        return component_sample_loss, \
-               if_sample_output, \
-               if_sample_economic_loss, \
+        return if_level_loss, \
+               if_level_functionality, \
+               if_level_output, \
+               if_level_economic_loss, \
                if_output_given_recovery
 
     def get_nominal_output(self):
@@ -210,21 +231,21 @@ class IFSystem(Base):
         cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
         return cdf + (1.0 - cdf) * fn
 
-    def calc_response(self, component_loss, component_damage_state_ind):
+    def calc_response(self, component_loss, comp_sample_func, component_damage_state_ind):
         comp_resp_dict = dict()
 
         for comp_index, (comp_id, component) in enumerate(self.components.iteritems()):
             comp_resp_dict[(comp_id, 'loss_mean')] \
-                = np.mean(component_loss[comp_index])
+                = np.mean(component_loss[:, comp_index])
 
             comp_resp_dict[(comp_id, 'loss_std')] \
-                = np.std(component_loss[comp_index])
+                = np.std(component_loss[:, comp_index])
 
             comp_resp_dict[(comp_id, 'func_mean')] \
-                = np.mean(component_loss[comp_index])
+                = np.mean(comp_sample_func[:, comp_index])
 
             comp_resp_dict[(comp_id, 'func_std')] \
-                = np.std(component_loss[comp_index])
+                = np.std(comp_sample_func[:, comp_index])
 
             comp_resp_dict[(comp_id, 'num_failures')] \
                 = np.mean(component_damage_state_ind[:, comp_index] >= (len(component.frag_func.damage_states) - 1))

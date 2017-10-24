@@ -7,6 +7,19 @@ from sifra.modelling.iodict import IODict
 
 from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
 
+class ExposableInfrastructure(Base):
+    def expose_to(self, hazard_level, scenario):
+        pass
+
+    def get_damage_state(self, hazard_level, scenario):
+        pass
+
+    def get_economic_loss(self, hazard_level, scenario):
+        pass
+
+    def get_economic_loss(self, hazard_level, scenario):
+        pass
+
 
 class Component(Base):
     component_type = Element('str', 'Type of component.')

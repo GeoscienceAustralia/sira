@@ -123,14 +123,12 @@ def _merge_data_and_metadata(meta, data):
             _merge_data_and_metadata(meta[k], data[k])
 
 
-
 class Info(str):
     """
     Strings that provide 'metadata' on classes. At present, this is only used to
     identify immutable strings on a class when they are displayed.
     """
     pass
-
 
 
 class Element(object):
@@ -209,7 +207,6 @@ class Element(object):
                     raise e
                 except Exception as e:
                     raise ValidationError(str(e))
-
 
 
 class StructuralMeta(type):

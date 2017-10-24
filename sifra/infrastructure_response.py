@@ -4,6 +4,7 @@ import time
 from datetime import timedelta
 import pickle
 import zipfile
+import logging
 
 import numpy as np
 import pandas as pd
@@ -31,8 +32,8 @@ def run_scenario(config_file):
 
     post_processing(infrastructure, scenario, post_processing_list)
 
-    print("[ Run time: %s ]\n" % \
-          str(timedelta(seconds=(time.time() - code_start_time))))
+    elapsed = timedelta(seconds=(time.time() - code_start_time))
+    logging.info("[ Run time: %s ]\n" % str(elapsed))
 
 
 def calculate_response(scenario, infrastructure):
@@ -464,8 +465,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         )
 
     # ------------------------------------------------------------------------
-    print("\nOutputs saved in: " +
-          Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
+    logging.info("\nOutputs saved in: " +
+                 Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
     plot_mean_econ_loss(infrastructure, scenario, economic_loss_array)
 

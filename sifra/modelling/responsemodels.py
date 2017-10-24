@@ -101,7 +101,7 @@ class DamageAlgorithm(Base):
                 raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
             pe_ds[offset] = damage_state(intensity_param)
 
-        return pe_ds
+        return pe_ds[1:]
 
 
 class RecoveryState(Base):
