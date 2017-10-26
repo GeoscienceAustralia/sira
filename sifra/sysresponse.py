@@ -139,8 +139,8 @@ def compute_output_given_ds(cp_func, fc):
     sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
 
     for onode in fc.network.out_node_list:
+        total_available_flow_list = []
         for sup_node_list in fc.nodes_by_commoditytype.values():
-            total_available_flow_list = []
             avl_sys_flow_by_src = []
             for inode in sup_node_list:
                 avl_sys_flow_by_src.append(
@@ -159,7 +159,6 @@ def compute_output_given_ds(cp_func, fc):
         )
 
     return sys_out_capacity_list
-
 # ============================================================================
 
 
@@ -283,17 +282,17 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
         for j, comp_name in enumerate(nodes_sorted):
             # ................................................................
             comp_type = comp_dict['component_type'][comp_name]
-            ids = ids_comp[i, j]   # index for component damage state
-            ds = fc.sys_dmg_states[ids]   # damage state name
+            ids = ids_comp[i, j]   # component damage state for this sample
+            ds = fc.sys_dmg_states[ids]   # damage state index
             cf = comp_dict['cost_fraction'][comp_name]
             dr = fragdict['damage_ratio'][comp_type][ds]
             fn = fragdict['functionality'][comp_type][ds]
-            loss = dr * cf
+            loss = dr * cf # loss is the damage state times the cost fraction
             loss_list_all_comp.append(loss)
 
-            # ................................................................
             # component functionality for calculated damage state:
             cp_func.append(fn)
+            # calculate the recovery time
             cp_func_given_time.append(
                 calc_recov_time_given_comp_ds(
                     comp_name, ids, comp_dict, fragdict, fc, sc

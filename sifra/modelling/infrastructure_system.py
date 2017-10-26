@@ -119,7 +119,8 @@ class IFSystem(Base):
                                               dtype=int)
         rnd = prng.uniform(size=(scenario.num_samples, num_elements))
         logging.debug("Hazard Intensity {}".format(hazard_level.hazard_intensity))
-        for index, component in enumerate(self.components.itervalues()):
+        for index, comp_key in enumerate(sorted(self.components.keys())):
+            component = self.components[comp_key]
             # get the probability of exceeding damage state for each component
             component_pe_ds = np.sort(component.expose_to(hazard_level, scenario))
             logging.debug("Component {} : pe_ds {}".format(component.component_id,
@@ -146,7 +147,8 @@ class IFSystem(Base):
             comp_sample_loss = np.zeros(len(self.components))
             comp_sample_func = np.zeros(len(self.components))
             component_ds = component_damage_state_ind[sample_index, :]
-            for component_index, component in enumerate(self.components.itervalues()):
+            for component_index, comp_key in enumerate(sorted(self.components.keys())):
+                component = self.components[comp_key]
                 # get the damage state for the component
                 damage_state = component.get_damage_state(component_ds[component_index])
                 loss = damage_state.damage_ratio * component.cost_fraction
@@ -203,12 +205,6 @@ class IFSystem(Base):
                     total_supply_flow_by_source[supply_comp['commodity_type']] = if_sample_flow
                 else:
                     total_supply_flow_by_source[supply_comp['commodity_type']] += if_sample_flow
-
-                # TODO remove?
-                system_flows_sample.append(tuple([supply_comp['commodity_type'],
-                                                  supply_comp_id,
-                                                  output_comp_id,
-                                                  if_sample_flow]))
 
             total_available_flow = min(total_supply_flow_by_source.itervalues())
 
