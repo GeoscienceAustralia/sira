@@ -7,21 +7,34 @@ from sifra.modelling.iodict import IODict
 
 from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
 
-class ExposableInfrastructure(Base):
+
+class ExposableInfrastructure(object):
+    """
+    In design stage, not currently implemented
+    The intention is to implement the behavioural logic for infrastructure
+    under this class
+    """
+    def __init__(self, component):
+        self.component = component
+        self.hazard_levels = None
+
     def expose_to(self, hazard_level, scenario):
         pass
 
-    def get_damage_state(self, hazard_level, scenario):
+    def get_damage_state(self, hazard_level):
         pass
 
-    def get_economic_loss(self, hazard_level, scenario):
+    def get_economic_loss(self, hazard_level):
         pass
 
-    def get_economic_loss(self, hazard_level, scenario):
+    def get_functionality(self, hazard_level):
         pass
 
 
 class Component(Base):
+    """Fundamental unit of an infrastructure system. It
+    contains the categorical definitions of the component
+    as well as the algorithms that assess the damage and recovery."""
     component_type = Element('str', 'Type of component.')
     component_class = Element('str', 'Class of component.')
     node_type = Element('str', 'Class of node.')
@@ -46,7 +59,7 @@ class Component(Base):
 
 
 class ConnectionValues(Base):
-    link_capacity = Element('float', 'Link capacity',0.0)
-    weight = Element('float', 'Weight',0.0)
+    link_capacity = Element('float', 'Link capacity', 0.0)
+    weight = Element('float', 'Weight', 0.0)
 
 

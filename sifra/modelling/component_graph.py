@@ -1,6 +1,6 @@
-import igraph
-import numpy as np
 import logging
+
+import igraph
 
 
 class ComponentGraph(object):
@@ -10,6 +10,11 @@ class ComponentGraph(object):
     This implementation uses igraph
     """
     def __init__(self, components, comp_sample_func):
+        """
+        Construct a graph from the igraph package using the component dict.
+        :param components: Dict of components that represent the infrastructure model
+        :param comp_sample_func: The current functionality of the components.
+        """
         self.comp_graph = igraph.Graph(directed=True)
         self.dumped = False
 
@@ -22,7 +27,7 @@ class ComponentGraph(object):
                 component.destination_components.items()):
 
                 if component.node_type == 'dependency':
-                    comp_sample_func[dest_index] *= comp_sample_func[comp_index]
+                    comp_sample_func[dest_index] *= comp_sample_func[6]
 
                 if len(self.comp_graph.vs) == 0 or dest_comp_id not in self.comp_graph.vs['name']:
                     self.comp_graph.add_vertex(name=dest_comp_id)
@@ -31,6 +36,8 @@ class ComponentGraph(object):
                                          capacity=comp_sample_func[comp_index])
 
     def update_capacity(self, components, comp_sample_func):
+        """Update the graph to change any edge's capacity value to
+        reflect the new functionality of the vertice."""
         for comp_index, comp_id in enumerate(sorted(components.keys())):
             component = components[comp_id]
             for dest_index, dest_comp_id in enumerate(component.destination_components.keys()):
@@ -40,12 +47,13 @@ class ComponentGraph(object):
                 edge_id = self.comp_graph.get_eid(comp_id, dest_comp_id)
                 self.comp_graph.es[edge_id]['capacity'] = comp_sample_func[comp_index]
 
-        if 0.5 > np.min(comp_sample_func) and not self.dumped:
-            self.dumped = True
-            logging.info("\nif_resp func graph mean {}".format(np.mean(comp_sample_func)))
-            # self.dump_graph()
-
     def dump_graph(self, external=None):
+        """
+        Dump the contents of the graph.
+
+        Logs at info level the edges of the graph, with the
+        capacity value for each edge. Optionally will dump the passed
+        graph, which must implement the igraph methods."""
         comp_graph = external if external else self.comp_graph
         for edge in comp_graph.get_edgelist():
             edge_id = comp_graph.get_eid(edge[0], edge[1])
@@ -54,6 +62,7 @@ class ComponentGraph(object):
                                            comp_graph.es[edge_id]['capacity']))
 
     def maxflow(self, supply_comp_id, output_comp_id):
+        """Computes the maximum flow between two nodes."""
         sup_v = self.comp_graph.vs.find(supply_comp_id)
         out_v = self.comp_graph.vs.find(output_comp_id)
 

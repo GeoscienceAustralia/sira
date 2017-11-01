@@ -60,9 +60,15 @@ SETUPFILE = None
 
 
 def cal_pe_ds(comp, PGA, compdict, fragdict, sc):
-    '''
+    """
     Computes prob. of exceedence of component given PGA
-    '''
+    :param comp:
+    :param PGA:
+    :param compdict:
+    :param fragdict:
+    :param sc:
+    :return:
+    """
     ct = compdict['component_type'][comp]
     ds_list = sorted(fragdict['damage_median'][ct].keys())
     ds_list.remove('DS0 None')

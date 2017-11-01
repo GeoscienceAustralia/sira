@@ -18,9 +18,10 @@ from sifra.modelling.iodict import IODict
 class IFSystem(Base):
     """
     The top level representation of a system that can respond to a
-    range of hazards. It encapsulates a number of responsive (?)
-    components that are
+    range of hazards. It encapsulates a number of components that are
+    used to estimate the response to various hazard levels.
     """
+
     name = Element('str', "The model's name", 'model')
     description = Info('Represents a model (e.g. a "model of a powerstation")')
 
@@ -42,6 +43,10 @@ class IFSystem(Base):
                       'DS4 Complete']
 
     def __init__(self, **kwargs):
+        """
+
+        :param kwargs:
+        """
         super(IFSystem, self).__init__(**kwargs)
         if self.system_class == 'Substation':
             self.uncosted_classes = ['JUNCTION POINT',

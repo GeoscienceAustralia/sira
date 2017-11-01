@@ -53,7 +53,11 @@ def pythonify(obj):
         attrs = obj.pop('_attributes', None)
         if 'class' in obj:
             cls = obj.pop('class')
-            res = class_getter(cls)(**pythonify(obj))
+            clazz = class_getter(cls)
+            if hasattr(clazz, '__pythonify__'):
+                res = clazz.__pythonify__(obj)
+            else:
+                res = class_getter(cls)(**pythonify(obj))
         else:
             res = {str(k): pythonify(v) for k, v in obj.iteritems()}
         if attrs is not None:

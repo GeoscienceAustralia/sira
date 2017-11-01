@@ -1,18 +1,21 @@
 from collections import OrderedDict
 
-from sifra.modelling.utils import jsonify
+from sifra.modelling.utils import jsonify, pythonify
 
 from sifra.modelling.structural import Base
 
 
 class IODict(OrderedDict, Base):
+    """
+    An indexable, ordered dictionary.
+    The infrastructure components required a data structure that would maintain its order,
+    and allowed key value as well as index value access.
+    It also has to support _jsonify__ and __pythonify__ methods.
+    """
+
     def __init__(self, *args, **kwargs):
         super(IODict, self).__init__(*args, **kwargs)
-        if 'key_index' in kwargs:
-            key_index = kwargs.pop('key_index')
-            self.key_index = {i: k for i, k in enumerate(key_index.iterkeys())}
-        else:
-            self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
+        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
 
     def __setitem__(self, key, value):
         super(IODict, self).__setitem__(key, value)
@@ -35,6 +38,16 @@ class IODict(OrderedDict, Base):
 
     @classmethod
     def __pythonify__(cls, val):
-        return IODict(val)
+        new_io = IODict()
+
+        if 'key_index' in val:
+            key_index = val.pop('key_index')
+            for comp_index in sorted(key_index.keys()):
+                dict_name = key_index[comp_index]
+                value = val[dict_name]
+                new_io[dict_name] = pythonify(value)
+
+        return new_io
+
 
 
