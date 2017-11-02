@@ -18,16 +18,17 @@ class ComponentGraph(object):
         self.comp_graph = igraph.Graph(directed=True)
         self.dumped = False
 
+        id_index_map = {v: k for k, v in list(enumerate(sorted(components.keys())))}
+
         for comp_index, comp_id in enumerate(sorted(components.keys())):
             component = components[comp_id]
             if len(self.comp_graph.vs) == 0 or comp_id not in self.comp_graph.vs['name']:
                 self.comp_graph.add_vertex(name=comp_id)
 
-            for dest_index, (dest_comp_id, destination_component) in enumerate(
-                component.destination_components.items()):
-
+            for dest_comp_id, destination_component in component.destination_components.items():
+                dest_index = id_index_map[dest_comp_id]
                 if component.node_type == 'dependency':
-                    comp_sample_func[dest_index] *= comp_sample_func[6]
+                    comp_sample_func[dest_index] *= comp_sample_func[comp_index]
 
                 if len(self.comp_graph.vs) == 0 or dest_comp_id not in self.comp_graph.vs['name']:
                     self.comp_graph.add_vertex(name=dest_comp_id)
@@ -38,9 +39,11 @@ class ComponentGraph(object):
     def update_capacity(self, components, comp_sample_func):
         """Update the graph to change any edge's capacity value to
         reflect the new functionality of the vertice."""
+        id_index_map = {v: k for k, v in list(enumerate(sorted(components.keys())))}
         for comp_index, comp_id in enumerate(sorted(components.keys())):
             component = components[comp_id]
-            for dest_index, dest_comp_id in enumerate(component.destination_components.keys()):
+            for dest_comp_id in component.destination_components.keys():
+                dest_index = id_index_map[dest_comp_id]
                 if component.node_type == 'dependency':
                     comp_sample_func[dest_index] *= comp_sample_func[comp_index]
 

@@ -68,10 +68,8 @@ def pythonify(obj):
     return obj
 
 
-
 def class_getter(mod_class):
     return getattr(importlib.import_module(mod_class[0]), mod_class[1])
-
 
 
 def _make_diff(name, elements):

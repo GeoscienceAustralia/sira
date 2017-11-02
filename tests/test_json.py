@@ -19,8 +19,11 @@ class TestNewModel(unittest.TestCase):
         # serialise to json
         json_if = jsonify(infrastructure)
         self.assertTrue(len(json_if) > 0)
+
         # deserialise to Python
         infra_deserial = pythonify(json_if)
         self.assertTrue(isinstance(infra_deserial, IFSystem))
+
+
 
 

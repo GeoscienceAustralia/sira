@@ -44,10 +44,12 @@ class IFSystem(Base):
 
     def __init__(self, **kwargs):
         """
-
-        :param kwargs:
+        Construct the infrastructure object
+        :param kwargs: Objects making up the infrastructure
         """
         super(IFSystem, self).__init__(**kwargs)
+        # TODO This assignment should be replaced by subclasses of IFSystem
+        # instantiated directly by the model creator
         if self.system_class == 'Substation':
             self.uncosted_classes = ['JUNCTION POINT',
                                      'SYSTEM INPUT', 'SYSTEM OUTPUT',
@@ -76,10 +78,19 @@ class IFSystem(Base):
             }
 
     def add_component(self, name, component):
+        """Add the component to the dict"""
         self.components[name] = component
 
     def expose_to(self, hazard_level, scenario):
-        code_start_time = time.time()
+        """
+        Exposes the components of the infrastructure to a hazard level
+        within a scenario.
+        :param hazard_level: The hazard level that the infrastructure is to be exposed to.
+        :param scenario: The parameters for the scenario being simulated.
+        :return: The state of the infrastructure after the exposure.
+        """
+
+        code_start_time = time.time() # keep track of the length of time the exposure takes
 
         # calculate the damage state
         component_damage_state_ind = self.probable_ds_hazard_level(hazard_level, scenario)
@@ -113,6 +124,12 @@ class IFSystem(Base):
         return response_dict
 
     def probable_ds_hazard_level(self, hazard_level, scenario):
+        """
+        Calculate the probability of
+        :param hazard_level:
+        :param scenario:
+        :return:
+        """
         if scenario.run_context:  # test run
             prng = np.random.RandomState(int(hazard_level.hazard_intensity*100))
         else:
@@ -141,7 +158,7 @@ class IFSystem(Base):
         if_level_economic_loss = np.zeros(scenario.num_samples,
                                           dtype=np.float64)
         if_level_functionality = np.zeros((scenario.num_samples, len(self.components)),
-                                 dtype=np.float64)
+                                          dtype=np.float64)
         if_level_output = np.zeros((scenario.num_samples, len(self.output_nodes)),
                                    dtype=np.float64)
         if_output_given_recovery = np.zeros((scenario.num_samples, scenario.num_time_steps), dtype=np.float64)

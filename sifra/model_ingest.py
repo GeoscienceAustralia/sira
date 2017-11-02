@@ -21,8 +21,6 @@ def ingest_spreadsheet(config):
     facility_data = _FacilityDataGetter(config)
     component_dict = IODict()
 
-    damage_algorithm_vals = None
-    recovery_algorithm_vals = None
     damage_state_df = pd.read_excel(
         facility_data.sys_config_file, sheetname='damage_state_def',
         index_col=[0, 1], header=0,

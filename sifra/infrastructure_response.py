@@ -203,7 +203,7 @@ def post_processing(infrastructure, scenario, response_list):
 
 def loss_by_comp_type(response_list, infrastructure, scenario):
     """
-    Aggregate the economic loss by component type.
+    Aggregate the economic loss statistics by component type.
     :param response_list: list of simulation results
     :param infrastructure: simulated infrastructure
     :param scenario: values used in simulation
@@ -340,7 +340,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
 
 def pe_by_component_class(response_list, infrastructure, scenario):
     """
-    Aggregate the Probability of Exceedence calculations by component type.
+    Aggregate the probability of exceeding a damage state calculations by component type.
     :param response_list: list of simulation results
     :param infrastructure: simulated infrastructure
     :param scenario: values used in simulation

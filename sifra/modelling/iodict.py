@@ -9,7 +9,7 @@ class IODict(OrderedDict, Base):
     """
     An indexable, ordered dictionary.
     The infrastructure components required a data structure that would maintain its order,
-    and allowed key value as well as index value access.
+    and allow key and index value access.
     It also has to support _jsonify__ and __pythonify__ methods.
     """
 
@@ -22,6 +22,11 @@ class IODict(OrderedDict, Base):
         self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
 
     def index(self, index):
+        """
+        Return an item using the key_index values
+        :param index: The offset of the established order.
+        :return: Item at the parameter offset.
+        """
         return super(IODict, self).__getitem__(self.key_index[index])
 
     def __jsonify__(self):
@@ -38,16 +43,32 @@ class IODict(OrderedDict, Base):
 
     @classmethod
     def __pythonify__(cls, val):
-        new_io = IODict()
+        """
+        Convert the parameter into an IODict. Using
+        the key_index value, if present, to preserve
+        the desired order.
 
+        :param val: A map or iterable.
+        :return: IODict
+        """
         if 'key_index' in val:
+            # Create an IODict with the supplied order
+            new_io = IODict()
             key_index = val.pop('key_index')
             for comp_index in sorted(key_index.keys()):
                 dict_name = key_index[comp_index]
                 value = val[dict_name]
                 new_io[dict_name] = pythonify(value)
 
-        return new_io
+            return new_io
+        elif isinstance(val, dict):
+            # Construct the dictionary and create a new order
+            return IODict(**val)
+        else:
+            # Construct the dict with the order supplied by the iterable
+            return IODict(val)
+
+
 
 
 
