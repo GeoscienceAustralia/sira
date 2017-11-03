@@ -13,26 +13,37 @@ class ComponentGraph(object):
         """
         Construct a graph from the igraph package using the component dict.
         :param components: Dict of components that represent the infrastructure model
-        :param comp_sample_func: The current functionality of the components.
+        :param comp_sample_func: Array of the functionality of each component (1.0 -> 0.0).
         """
+        # create the directed graph
         self.comp_graph = igraph.Graph(directed=True)
         self.dumped = False
-
+        # store a map that will convert 'stack_1' -> 17 for editing the functionality (comp_sample_func)
         id_index_map = {v: k for k, v in list(enumerate(sorted(components.keys())))}
 
+        # iterate through the components to create the graph
         for comp_index, comp_id in enumerate(sorted(components.keys())):
             component = components[comp_id]
+            # check that the component is not already in the graph
             if len(self.comp_graph.vs) == 0 or comp_id not in self.comp_graph.vs['name']:
+                # add new component
                 self.comp_graph.add_vertex(name=comp_id)
 
+            # iterate through this components connected components
             for dest_comp_id, destination_component in component.destination_components.items():
                 dest_index = id_index_map[dest_comp_id]
+                # check if the parent component is a dependent node type
                 if component.node_type == 'dependency':
+                    # combine the dependent nodes functionality
                     comp_sample_func[dest_index] *= comp_sample_func[comp_index]
 
+                # Is the child node in the graph
                 if len(self.comp_graph.vs) == 0 or dest_comp_id not in self.comp_graph.vs['name']:
+                    # add new child component
                     self.comp_graph.add_vertex(name=dest_comp_id)
 
+                # connect the parent and child vertices with an edge.
+                # The functionality of the parent node is the
                 self.comp_graph.add_edge(comp_id, dest_comp_id,
                                          capacity=comp_sample_func[comp_index])
 
