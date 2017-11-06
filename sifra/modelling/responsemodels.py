@@ -66,12 +66,15 @@ class NormalCDF(ResponseModel):
         """
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 
+
 class Level0Response(ResponseModel):
     mode = 1
     damage_ratio = 0.0
     functionality = 1.0
+
     def __call__(self, hazard_level):
         return 0.0
+
 
 class Level0Recovery(ResponseModel):
     recovery_mean = 0.00001

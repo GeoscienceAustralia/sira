@@ -46,5 +46,5 @@ class Model(Base):
 class Component(Base):
     frag_func = Element('ResponseModel', 'A fragility function', Element.NO_DEFAULT)
 
-    def expose_to(self, pga):
-        return self.frag_func(pga)
+    def expose_to(self, hazard_level, scenario):
+        return self.frag_func(hazard_level)
