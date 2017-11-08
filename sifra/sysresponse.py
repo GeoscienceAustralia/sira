@@ -132,15 +132,23 @@ def compute_output_given_ds(cp_func, fc):
     '''
     G = fc.network.G
     nodes = fc.network.nodes_all
+    dependent_node_capacities = dict()
 
     for t in G.get_edgelist():
         eid = G.get_eid(*t)
         origin = G.vs[t[0]]['name']
         destin = G.vs[t[1]]['name']
         if fc.cpdict[origin]['node_type'] == 'dependency':
-            cp_func[nodes.index(destin)] *= cp_func[nodes.index(origin)]
+            dependent_node_capacities[destin] = cp_func[nodes.index(destin)] * cp_func[nodes.index(origin)]
         cap = cp_func[nodes.index(origin)]
         G.es[eid]["capacity"] = cap
+
+    # now we need to ensure that the dependent nodes have the latest capacities
+    for origin, capacity in dependent_node_capacities.items():
+        origin_vs_id = G.vs.select(name=origin).indices[0]
+        # set the capacities on each child edge
+        for edge in G.es.select(_source=origin_vs_id):
+            edge["capacity"] = capacity
 
     sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
 

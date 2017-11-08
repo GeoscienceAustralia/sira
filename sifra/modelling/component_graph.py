@@ -17,14 +17,16 @@ class ComponentGraph(object):
         """
         # create the directed graph
         self.comp_graph = igraph.Graph(directed=True)
-        self.dumped = False
+
+        # TODO make this part of components?
         # create a map that will convert 'stack_1' -> 17 for editing the functionality (comp_sample_func)
-        id_index_map = {v: k for k, v in list(enumerate(sorted(components.keys())))}
+        id_index_map = {comp_id: comp_index for comp_index, comp_id in list(enumerate(sorted(components.keys())))}
 
         # iterate through the components to create the graph
         # (using a list of sorted keys as we're trying to match the old code)
-        for comp_index, comp_id in enumerate(sorted(components.keys())):
+        for comp_id in components.keys():
             component = components[comp_id]
+            comp_index = id_index_map[comp_id]
             # check that the component is not already in the graph
             if len(self.comp_graph.vs) == 0 or comp_id not in self.comp_graph.vs['name']:
                 # add new component
@@ -57,8 +59,9 @@ class ComponentGraph(object):
 
         # iterate through the infrastructure components
         # (using a list of sorted keys as we're trying to match the old code)
-        for comp_index, comp_id in enumerate(sorted(components.keys())):
+        for comp_id in components.keys():
             component = components[comp_id]
+            comp_index = id_index_map[comp_id]
             # iterate through the destination components
             for dest_comp_id in component.destination_components.keys():
                 dest_index = id_index_map[dest_comp_id]
