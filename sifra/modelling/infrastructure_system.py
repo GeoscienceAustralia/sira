@@ -84,8 +84,10 @@ class IFSystem(Model):
                 'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
             }
 
+        component_graph = ComponentGraph(self.components)
+
     def add_component(self, name, component):
-        """Add the component to the dict"""
+        """Add a component to the component dict"""
         self.components[name] = component
 
     def expose_to(self, hazard_level, scenario):
@@ -170,7 +172,7 @@ class IFSystem(Model):
             # of this hazard level exceeding each of the components damage levels
             component_pe_ds = np.sort(component.expose_to(hazard_level, scenario))
             logging.debug("Component {} : pe_ds {}".format(component.component_id,
-                                                          component_pe_ds))
+                                                           component_pe_ds))
 
             # This little piece of numpy magic calculates the damage level by summing
             # how many damage states were exceeded.
@@ -219,6 +221,7 @@ class IFSystem(Model):
             component_function_at_time = []
             comp_sample_loss = np.zeros(len(self.components))
             comp_sample_func = np.zeros(len(self.components))
+            # Extract the array of damage states for this sample
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
             for component_index, comp_key in enumerate(sorted(self.components.keys())):
@@ -233,12 +236,13 @@ class IFSystem(Model):
                 component_function_at_time.append(self.calc_recov_time_given_comp_ds(component,
                                                                                      component_ds[component_index],
                                                                                      scenario))
-            # save this samples component loss and functionality
+            # save this sample's component loss and functionality
             if_level_loss[sample_index, :] = comp_sample_loss
             if_level_functionality[sample_index, :] = comp_sample_func
-            # calculate the infrastructure's economic loss for this sample
+            # the infrastructure's economic loss for this sample is the sum of all
+            # component losses
             if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
-            # Use the component graph to estimate the output for this sample
+            # estimate the output for this sample's component functionality
             if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
 
             # calculate the restoration output
@@ -317,11 +321,11 @@ class IFSystem(Model):
 
     def calc_response(self, component_loss, comp_sample_func, component_damage_state_ind):
         """
-
-        :param component_loss:
-        :param comp_sample_func:
-        :param component_damage_state_ind:
-        :return:
+        Convert the arrays into dicts for subsequent analysis
+        :param component_loss: The array of component loss values
+        :param comp_sample_func: The array of component functionality values
+        :param component_damage_state_ind: The array of component damage state indicators
+        :return: A dict of component response statistics
         """
         comp_resp_dict = dict()
 
@@ -345,6 +349,12 @@ class IFSystem(Model):
         return comp_resp_dict
 
     def get_component_types(self):
+        """
+        Convenience method to get the list of components that are
+        costed.
+
+        :return: list of costed component types
+        """
         uncosted_comptypes = set(['CONN_NODE',
                                  'SYSTEM_INPUT',
                                  'SYSTEM_OUTPUT'])
@@ -358,19 +368,39 @@ class IFSystem(Model):
         return list(component_types)
 
     def get_components_for_type(self, component_type):
+        """
+        Return a list of components for the passed component type.
+        :param component_type: A string representing a component type
+        :return: List of components with the matching component type.
+        """
         for component in self.components.itervalues():
             if component.component_type == component_type:
                 yield component.component_id
 
     def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings detailing the system damage levels.
+        """
         return ['DS0 None','DS1 Slight','DS2 Moderate','DS3 Extensive',
                 'DS4 Complete']
 
     def get_dmg_scale_bounds(self, scenario):
+        """
+        An array of damage scale boundaries
+        :param scenario: The values for the simulation scenarios
+        :return:  Array of real numbers representing damage state boundaries
+        """
         # todo introduce system subclass to infrastructure
         return [0.01, 0.15, 0.4, 0.8, 1.0]
 
     def get_component_class_list(self):
+        """
+        Return the list of component classes from the components.
+        Not sure why duplicates are returned and then stripped out,
+        it seems unnecessary
+        :return: A generator for the list.
+        """
         for component in self.components.itervalues():
             yield component.component_class
 

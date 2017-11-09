@@ -8,30 +8,6 @@ from sifra.modelling.iodict import IODict
 from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
 
 
-class ExposableInfrastructure(object):
-    """
-    In design stage, and not currently implemented
-    The intention is to implement the behavioural logic for the
-    infrastructure under this class.
-    """
-
-    def __init__(self, component):
-        self.component = component
-        self.hazard_levels = None
-
-    def expose_to(self, hazard_level, scenario):
-        pass
-
-    def get_damage_state(self, hazard_level):
-        pass
-
-    def get_economic_loss(self, hazard_level):
-        pass
-
-    def get_functionality(self, hazard_level):
-        pass
-
-
 class Component(Base):
     """Fundamental unit of an infrastructure system. It
     contains the categorical definitions of the component

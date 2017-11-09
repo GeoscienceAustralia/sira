@@ -9,7 +9,7 @@ class ComponentGraph(object):
     calculation of economic loss by using different Graph packages.
     This implementation uses igraph
     """
-    def __init__(self, components, comp_sample_func):
+    def __init__(self, components, comp_sample_func=None):
         """
         Construct a graph from the igraph package using the component dict.
         :param components: Dict of components that represent the infrastructure model
@@ -17,6 +17,10 @@ class ComponentGraph(object):
         """
         # create the directed graph
         self.comp_graph = igraph.Graph(directed=True)
+
+        # if we don't have a functionality array create a default one with 1.0's
+        if comp_sample_func is None:
+            comp_sample_func = [1.0] * len(components)
 
         # TODO make this part of components?
         # create a map that will convert 'stack_1' -> 17 for editing the functionality (comp_sample_func)
