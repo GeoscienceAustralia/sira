@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import sys
 import time
@@ -15,11 +16,11 @@ from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 
 import matplotlib
-matplotlib.use('Agg')
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import seaborn as sns
-from colorama import Fore
+from colorama import Fore, Back, Style
 
 
 def run_scenario(config_file):
@@ -30,7 +31,14 @@ def run_scenario(config_file):
     :return: None
     """
     # Construct the scenario object
+    print(Style.BRIGHT + Fore.GREEN +
+          "\nLoading scenario config... " +
+          Style.RESET_ALL, end='')
+
     scenario = Scenario(config_file)
+    print(Style.BRIGHT + Fore.GREEN + "Done." +
+          "\nInitiating model run...\n" + Style.RESET_ALL)
+    code_start_time = time.time()
 
     # `IFSystem` object that contains a list of components
     infrastructure = ingest_spreadsheet(config_file)
@@ -118,26 +126,54 @@ def run_para_scen(hazard_level, infrastructure, scenario):
 # BEGIN POST-PROCESSING ...
 # ****************************************************************************
 
-def plot_mean_econ_loss(fc, sc, economic_loss_array):
-    """Draws and saves a boxplot of mean economic loss."""
+def plot_mean_econ_loss(sc, economic_loss_array):
+    """Draws and saves a boxplot of mean economic loss"""
+
+    hazvals_ext = [[str(i)] * sc.num_samples
+                   for i in list(sc.hazard_intensity_vals)]
+    x1 = np.ndarray.flatten(np.array(hazvals_ext))
+
+    smpl = range(1, sc.num_samples+1, 1)
+    x2 = np.array(smpl * sc.num_hazard_pts)
+
+    arrays = [x1, x2]
+    econ_loss = np.array(economic_loss_array)
+    econ_loss = np.ndarray.flatten(econ_loss.transpose())
+    econ_loss_flat = np.ndarray.flatten(econ_loss)
+
+    econ_loss_df = pd.DataFrame(econ_loss_flat, index=arrays)
+    econ_loss_df.index.names = ['Hazard Intensity', 'Sample Num']
+    econ_loss_df.columns = ['Econ Loss Ratio']
 
     fig = plt.figure(figsize=(9, 5), facecolor='white')
-    sns.set(style='ticks', palette='Set3')
-    ax = sns.boxplot(economic_loss_array * 100, showmeans=True,
-                     linewidth=0.7, color='lightgrey',
-                     meanprops=dict(marker='s',
-                                    markeredgecolor='salmon',
-                                    markerfacecolor='salmon')
+    sns.set(style='ticks', palette='Set2')
+    # whitesmoke='#F5F5F5', coral='#FF7F50'
+    ax = sns.boxplot(x=x1, y='Econ Loss Ratio', data=econ_loss_df,
+                     linewidth=0.8, color='whitesmoke',
+                     showmeans=True,
+                     meanprops=dict(marker='o',
+                                    markeredgecolor='coral',
+                                    markerfacecolor='coral')
                      )
-    sns.despine(top=True, left=True, right=True)
-    ax.tick_params(axis='y', left='off', right='off')
-    ax.yaxis.grid(True)
 
-    intensity_label = sc.intensity_measure_param+' ('\
-                      +sc.intensity_measure_unit+')'
-    ax.set_xlabel(intensity_label)
-    ax.set_ylabel('Loss Fraction (%)')
+    sns.despine(bottom=False, top=True, left=True, right=True, offset=10)
+    ax.spines['bottom'].set_linewidth(0.8)
+    ax.spines['bottom'].set_color('#555555')
+
+    ax.yaxis.grid(True, which="major", linestyle='-',
+                  linewidth=0.4, color='#B6B6B6')
+
+    ax.tick_params(axis='x', bottom='on', top='off',
+                   width=0.8, labelsize=8, pad=5, color='#555555')
+    ax.tick_params(axis='y', left='off', right='off',
+                   width=0.8, labelsize=8, pad=5, color='#555555')
+
     ax.set_xticklabels(sc.hazard_intensity_vals)
+    intensity_label \
+        = sc.intensity_measure_param+' ('+sc.intensity_measure_unit+')'
+    ax.set_xlabel(intensity_label, labelpad=9, size=10)
+    ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
+
     ax.set_title('Loss Ratio', loc='center', y=1.04)
     ax.title.set_fontsize(12)
 
@@ -157,29 +193,24 @@ def post_processing(infrastructure, scenario, response_list):
     :param response_list: Values from the simulation
     :return: None
     """
+    write_system_response(response_list, scenario)
+    loss_by_comp_type(response_list, infrastructure, scenario)
+    economic_loss_array = response_list[4]
+    plot_mean_econ_loss(scenario, economic_loss_array)
+    pe_by_component_class(response_list, infrastructure, scenario)
+
+def write_system_response(response_list, scenario):
 
     # ------------------------------------------------------------------------
     # 'ids_comp_vs_haz' is a dict of numpy arrays
     # We pickle it for archival. But the file size can get very large.
     # So we zip it for archival and delete the original
+    # ------------------------------------------------------------------------
     idshaz = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.pickle')
     id_comp_vs_haz = response_list[0]
     with open(idshaz, 'w') as handle:
         for response_key in sorted(id_comp_vs_haz.keys()):
             pickle.dump({response_key: id_comp_vs_haz[response_key]}, handle)
-
-    component_resp_dict = response_list[2]
-    crd_pkl = os.path.join(scenario.raw_output_dir, 'component_resp_dict.pickle')
-    with open(crd_pkl, 'w') as handle:
-        for response_key in sorted(component_resp_dict.keys()):
-            pickle.dump({response_key: component_resp_dict[response_key]}, handle)
-
-    sys_output_dict = response_list[1]
-    sod_pkl = os.path.join(scenario.raw_output_dir, 'sys_output_dict.pickle')
-    with open(sod_pkl, 'w') as handle:
-        for response_key in sorted(sys_output_dict.keys()):
-            pickle.dump({response_key: sys_output_dict[response_key]}, handle)
-
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zipmode = zipfile.ZIP_DEFLATED
     with zipfile.ZipFile(idshaz_zip, 'w', zipmode) as zip:
@@ -189,16 +220,34 @@ def post_processing(infrastructure, scenario, response_list):
     # ------------------------------------------------------------------------
     # System output file (for given hazard transfer parameter value)
     # ------------------------------------------------------------------------
+    sys_output_dict = response_list[1]
+    sod_pkl = os.path.join(scenario.raw_output_dir,
+                           'sys_output_dict.pickle')
+    with open(sod_pkl, 'w') as handle:
+        for response_key in sorted(sys_output_dict.keys()):
+            pickle.dump({response_key: sys_output_dict[response_key]},
+                        handle)
+
     sys_output_df = pd.DataFrame(sys_output_dict)
-    sys_output_df.index.name = 'Output Nodes'
+    sys_output_df = sys_output_df.transpose()
+    sys_output_df.index.name = 'Hazard Intensity'
 
     outfile_sysoutput = os.path.join(scenario.output_path,
-                                 'system_output_given_haz_param.csv')
+                                     'system_output_vs_haz_intensity.csv')
     sys_output_df.to_csv(outfile_sysoutput,
-                         sep=',', index_label=['Output Nodes'])
+                         sep=',',
+                         index_label=[sys_output_df.index.name])
 
-    loss_by_comp_type(response_list, infrastructure, scenario)
-    pe_by_component_class(response_list, infrastructure, scenario)
+    # ------------------------------------------------------------------------
+    # Hazard response for component instances, i.e. components as-installed
+    # ------------------------------------------------------------------------
+    component_resp_dict = response_list[2]
+    crd_pkl = os.path.join(scenario.raw_output_dir,
+                           'component_resp_dict.pickle')
+    with open(crd_pkl, 'w') as handle:
+        for response_key in sorted(component_resp_dict.keys()):
+            pickle.dump({response_key: component_resp_dict[response_key]},
+                        handle)
 
 
 def loss_by_comp_type(response_list, infrastructure, scenario):
@@ -220,10 +269,12 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
              (comp_type, 'func_std'))
         )
 
-    mindex = pd.MultiIndex.from_tuples(tp_ct,
-                                       names=['component_type', 'response'])
-    comptype_resp_df = pd.DataFrame(index=mindex,
-                                    columns=[scenario.hazard_intensity_str])
+    mindex = pd.MultiIndex.from_tuples(
+        tp_ct,
+        names=['component_type', 'response'])
+    comptype_resp_df = pd.DataFrame(
+        index=mindex,
+        columns=[scenario.hazard_intensity_str])
     comptype_resp_dict = comptype_resp_df.to_dict()
 
     component_resp_dict = response_list[2]
@@ -284,10 +335,14 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
     for j, hazard_level in enumerate(scenario.hazard_intensity_str):
         for i in range(scenario.num_samples):
             # system output and economic loss
-            sys_frag[i, j] = np.sum(economic_loss_array[i, j] > if_system_damage_states)
+            sys_frag[i, j] = \
+                np.sum(economic_loss_array[i, j] > if_system_damage_states)
 
     # Calculating Probability of Exceedence:
-    pe_sys_econloss = np.zeros((len(infrastructure.get_system_damage_states()), scenario.num_hazard_pts))
+    pe_sys_econloss = np.zeros(
+        (len(infrastructure.get_system_damage_states()),
+         scenario.num_hazard_pts)
+    )
     for j in range(scenario.num_hazard_pts):
         for i in range(len(infrastructure.get_system_damage_states())):
             pe_sys_econloss[i, j] = \
@@ -295,7 +350,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
 
     # --- Output File --- response of each COMPONENT TYPE to hazard ---
     outfile_comptype_resp = os.path.join(
-        scenario.output_path, 'comp_type_response.csv')
+        scenario.output_path, 'comptype_response.csv')
     comptype_resp_df = pd.DataFrame(comptype_resp_dict)
     comptype_resp_df.index.names = ['component_type', 'response']
     comptype_resp_df.to_csv(
@@ -305,7 +360,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
 
     # --- Output File --- mean loss of component type ---
     outfile_comptype_loss = os.path.join(
-        scenario.output_path, 'comp_type_meanloss.csv')
+        scenario.output_path, 'comptype_meanloss.csv')
     comptype_loss_df = comptype_resp_df.iloc[
         comptype_resp_df.index.get_level_values(1) == 'loss_mean']
     comptype_loss_df.reset_index(level='response', inplace=True)
@@ -317,7 +372,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
 
     # --- Output File --- mean failures for component types ---
     outfile_comptype_failures = os.path.join(
-        scenario.output_path, 'comp_type_meanfailures.csv')
+        scenario.output_path, 'comptype_meanfailures.csv')
     comptype_failure_df = comptype_resp_df.iloc[
         comptype_resp_df.index.get_level_values(1) == 'num_failures']
     comptype_failure_df.reset_index(level='response', inplace=True)
@@ -340,11 +395,11 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
 
 def pe_by_component_class(response_list, infrastructure, scenario):
     """
-    Aggregate the probability of exceeding a damage state calculations by component type.
-    :param response_list: list of simulation results
-    :param infrastructure: simulated infrastructure
-    :param scenario: values used in simulation
-    :return: None
+    Calculated  probability of exceedence based on component classes
+    :param response_list:
+    :param infrastructure:
+    :param scenario:
+    :return:
     """
     # ------------------------------------------------------------------------
     # For Probability of Exceedence calculations based on component failures
@@ -362,17 +417,23 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         cp_class_map[component.component_class].append(component)
 
     # ------------------------------------------------------------------------
+    # For Probability of Exceedence calculations based on component failures:
+    #   Damage state boundaries for Component Type Failures (Substations) are
+    #   based on HAZUS MH MR3, p 8-66 to 8-68
+    # ------------------------------------------------------------------------
     if infrastructure.system_class == 'Substation':
         cp_classes_costed = \
-            [x for x in cp_classes_in_system if x not in infrastructure.uncosted_classes]
+            [x for x in cp_classes_in_system
+             if x not in infrastructure.uncosted_classes]
 
         # --- System fragility - Based on Failure of Component Classes ---
         comp_class_failures = \
             {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
              for cc in cp_classes_costed}
 
-        comp_class_frag = {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
-                           for cc in cp_classes_costed}
+        comp_class_frag = \
+            {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
+             for cc in cp_classes_costed}
 
         for j, hazard_level in enumerate(HazardLevels(scenario)):
             for i in range(scenario.num_samples):
@@ -381,7 +442,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
                         comp_class_failures[compclass][i, j] += \
                             response_list[hazard_level.hazard_intensity]\
                                          [i, infrastructure.components[c]]
-                    comp_class_failures[compclass][i, j] /= len(cp_class_map[compclass])
+                    comp_class_failures[compclass][i, j] /= \
+                        len(cp_class_map[compclass])
 
                     comp_class_frag[compclass][i, j] = \
                         np.sum(comp_class_failures[compclass][i, j] > \
@@ -528,7 +590,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     logging.info("\nOutputs saved in: " +
                  Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
-    plot_mean_econ_loss(infrastructure, scenario, economic_loss_array)
+    print("\nOutputs saved in:\n" +
+          Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
     # ... END POST-PROCESSING
     # ****************************************************************************
@@ -548,10 +611,12 @@ def pe2pb(pe):
 
 def main():
     SETUPFILE = sys.argv[1]
-
     run_scenario(SETUPFILE)
 
+    print(Style.BRIGHT + Fore.YELLOW +
+          "[ Run time: %s ]\n" %
+          str(timedelta(seconds=(time.time() - code_start_time))) +
+          Style.RESET_ALL)
 
 if __name__ == '__main__':
     main()
-
