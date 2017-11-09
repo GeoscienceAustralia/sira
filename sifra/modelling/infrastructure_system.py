@@ -53,7 +53,7 @@ class IFSystem(Model):
         # instantiated directly by the model creator
         # This intitiates some instance members with the correct configuration.
         # Not sure why these aren't in the configuration file
-        if self.system_class == 'Substation':
+        if self.system_class.lower() == 'substation':
             # Initiate the substation, note: this may not have been tested in this
             # version of the code.
             self.uncosted_classes = ['JUNCTION POINT',
@@ -67,7 +67,7 @@ class IFSystem(Model):
                 'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
                 'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]
             }
-        elif self.system_class == 'PowerStation':
+        elif self.system_class.lower() == 'powerstation':
             # Initiate the power station values, which have been used in all current
             # testing
             self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
@@ -119,6 +119,11 @@ class IFSystem(Model):
         if_output = {}
         for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
             if_output[output_comp_id] = np.mean(if_sample_output[:, output_index])
+
+        print("> Hazard intensity: {} {} | Run time: {}".
+              format(hazard_level.hazard_intensity,
+                     scenario.intensity_measure_unit,
+                     str(timedelta(seconds=(time.time() - code_start_time)))))
 
         # log the elapsed time for this hazard level
         elapsed = timedelta(seconds=(time.time() - code_start_time))
