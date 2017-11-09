@@ -5,6 +5,7 @@ import time
 from datetime import timedelta
 import pickle
 import zipfile
+import logging
 
 import numpy as np
 import pandas as pd
@@ -23,6 +24,13 @@ from colorama import Fore, Back, Style
 
 
 def run_scenario(config_file):
+    """
+    Run a scenario by constructing a facility, and executing a scenario, with
+    the parameters read from the config file.
+    :param config_file: Scenario setting values and the infrastructure configuration file path
+    :return: None
+    """
+    # Construct the scenario object
     print(Style.BRIGHT + Fore.GREEN +
           "\nLoading scenario config... " +
           Style.RESET_ALL, end='')
@@ -32,22 +40,33 @@ def run_scenario(config_file):
           "\nInitiating model run...\n" + Style.RESET_ALL)
     code_start_time = time.time()
 
-    scenario = Scenario(config_file)
-    infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
+    # `IFSystem` object that contains a list of components
+    infrastructure = ingest_spreadsheet(config_file)
 
     post_processing_list = calculate_response(scenario, infrastructure)
-
+    # After the response has been calculated the post processing
+    # will record the results
     post_processing(infrastructure, scenario, post_processing_list)
-
-    print("[ Run time: %s ]\n" % \
-          str(timedelta(seconds=(time.time() - code_start_time))))
 
 
 def calculate_response(scenario, infrastructure):
+    """
+    The response will be calculated by creating the hazard_levels,
+    iterating through the range of hazards and calling the infrastructure systems
+    expose_to method. This will return the results of the infrastructure to each hazard level
+    exposure. A parameter in the scenario file determines whether the parmap.map function spawns threads
+    that will perform parallel calculations.
+    :param scenario: Parameters for the simulation.
+    :param infrastructure: Model of the infrastructure.
+    :return: List of results for each hazard level.
+    """
     hazard_levels = HazardLevels(scenario)  # Hazard intensity Value, &
-    # Parameter, Unit
-    # Use the parallel option in the scenario to determine how to run
+                                            # Parameter, Unit
+
+    code_start_time = time.time() # start of the overall response calculation
+    # capture the results from the map call in a list
     hazard_level_response = []
+    # Use the parallel option in the scenario to determine how to run
     hazard_level_response.extend(parmap.map(run_para_scen,
                                             hazard_levels.hazard_range(),
                                             infrastructure,
@@ -60,13 +79,17 @@ def calculate_response(scenario, infrastructure):
                             [],  # infrastructure output for sample
                             [],  # infrastructure econ loss for sample
                             []]  # infrastructure output given recovery
+    # iterate through the hazard levels
     for hazard_level_values in hazard_level_response:
+        # iterate through the hazard level lists
         for key, value_list in hazard_level_values.items():
             for list_number in range(6):
+                # the first three lists are dicts
                 if list_number <= 2:
                     post_processing_list[list_number]['%0.3f' % np.float(key)] \
                         = value_list[list_number]
                 else:
+                    # the last three are lists
                     post_processing_list[list_number]. \
                         append(value_list[list_number])
 
@@ -79,10 +102,23 @@ def calculate_response(scenario, infrastructure):
     post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
     post_processing_list[4] = post_processing_list[4].transpose()
     post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
+
+    elapsed = timedelta(seconds=(time.time() - code_start_time))
+    logging.info("[ Run time: %s ]\n" % str(elapsed))
+
     return post_processing_list
 
 
 def run_para_scen(hazard_level, infrastructure, scenario):
+    """
+    The parmap.map function requires a module level function as a parameter.
+    So this function satisfies that requirement by calling the infrastructure's
+    exponse_to method within this one.
+    :param hazard_level: The hazard level that the infrastructure will be exposed to
+    :param infrastructure: The infrastructure model that is being simulated
+    :param scenario: The Parameters for the simulation
+    :return: List of results of the simulation
+    """
     return infrastructure.expose_to(hazard_level, scenario)
 
 
@@ -147,14 +183,24 @@ def plot_mean_econ_loss(sc, economic_loss_array):
 
 
 def post_processing(infrastructure, scenario, response_list):
+    """
+    Post simulation processing.
+
+    After the simulation has run the results are aggregated, saved
+    and the system fragility is calculated.
+    :param infrastructure: The infrastructure being simulated
+    :param scenario: Scenario values for the simulation
+    :param response_list: Values from the simulation
+    :return: None
+    """
     write_system_response(response_list, scenario)
     loss_by_comp_type(response_list, infrastructure, scenario)
     economic_loss_array = response_list[4]
     plot_mean_econ_loss(scenario, economic_loss_array)
     pe_by_component_class(response_list, infrastructure, scenario)
 
-
 def write_system_response(response_list, scenario):
+
     # ------------------------------------------------------------------------
     # 'ids_comp_vs_haz' is a dict of numpy arrays
     # We pickle it for archival. But the file size can get very large.
@@ -205,6 +251,13 @@ def write_system_response(response_list, scenario):
 
 
 def loss_by_comp_type(response_list, infrastructure, scenario):
+    """
+    Aggregate the economic loss statistics by component type.
+    :param response_list: list of simulation results
+    :param infrastructure: simulated infrastructure
+    :param scenario: values used in simulation
+    :return: None
+    """
     # ------------------------------------------------------------------------
     # Loss calculations by Component Type
     # ------------------------------------------------------------------------
@@ -348,6 +401,14 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     :param scenario:
     :return:
     """
+    # ------------------------------------------------------------------------
+    # For Probability of Exceedence calculations based on component failures
+    # ------------------------------------------------------------------------
+    #
+    #   Damage state boundaries for Component Type Failures (Substations) are
+    #   based on HAZUS MH MR3, p 8-66 to 8-68
+    #
+    # ------------------------------------------------------------------------
 
     cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
 
@@ -526,6 +587,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         )
 
     # ------------------------------------------------------------------------
+    logging.info("\nOutputs saved in: " +
+                 Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
     print("\nOutputs saved in:\n" +
           Fore.GREEN + scenario.output_path + Fore.RESET + '\n')

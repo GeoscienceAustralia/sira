@@ -40,6 +40,7 @@ import os
 import sys
 import cPickle
 import zipfile
+import logging
 
 import numpy as np
 import scipy.stats as stats
@@ -59,9 +60,15 @@ SETUPFILE = None
 
 
 def cal_pe_ds(comp, PGA, compdict, fragdict, sc):
-    '''
+    """
     Computes prob. of exceedence of component given PGA
-    '''
+    :param comp:
+    :param PGA:
+    :param compdict:
+    :param fragdict:
+    :param sc:
+    :return:
+    """
     ct = compdict['component_type'][comp]
     ds_list = sorted(fragdict['damage_median'][ct].keys())
     ds_list.remove('DS0 None')
@@ -125,21 +132,29 @@ def compute_output_given_ds(cp_func, fc):
     '''
     G = fc.network.G
     nodes = fc.network.nodes_all
+    dependent_node_capacities = dict()
 
     for t in G.get_edgelist():
         eid = G.get_eid(*t)
         origin = G.vs[t[0]]['name']
         destin = G.vs[t[1]]['name']
         if fc.cpdict[origin]['node_type'] == 'dependency':
-            cp_func[nodes.index(destin)] *= cp_func[nodes.index(origin)]
+            dependent_node_capacities[destin] = cp_func[nodes.index(destin)] * cp_func[nodes.index(origin)]
         cap = cp_func[nodes.index(origin)]
         G.es[eid]["capacity"] = cap
+
+    # now we need to ensure that the dependent nodes have the latest capacities
+    for origin, capacity in dependent_node_capacities.items():
+        origin_vs_id = G.vs.select(name=origin).indices[0]
+        # set the capacities on each child edge
+        for edge in G.es.select(_source=origin_vs_id):
+            edge["capacity"] = capacity
 
     sys_out_capacity_list = []  # normalised capacity: [0.0, 1.0]
 
     for onode in fc.network.out_node_list:
+        total_available_flow_list = []
         for sup_node_list in fc.nodes_by_commoditytype.values():
-            total_available_flow_list = []
             avl_sys_flow_by_src = []
             for inode in sup_node_list:
                 avl_sys_flow_by_src.append(
@@ -158,7 +173,6 @@ def compute_output_given_ds(cp_func, fc):
         )
 
     return sys_out_capacity_list
-
 # ============================================================================
 
 
@@ -222,7 +236,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
         _PGA = _PGA_dummy[idxPGA]
     else:
         _PGA = _PGA_dummy
-    print(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
+    logging.info(" {0:3d}  out of {1:3d}".format(idxPGA+1, nPGA))
 
     comp_dict = fc.compdict
     fragdict = fc.fragdict
@@ -257,18 +271,19 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
 
     # index of damage state of components: from 0 to nds+1
     if sc.run_context:  # test run
-        prng = np.random.RandomState(idxPGA)
+        prng = np.random.RandomState(int(sc.hazard_intensity_vals[idxPGA]*100))
     else:
         prng = np.random.RandomState()
 
     rnd = prng.uniform(size=(sc.num_samples, fc.num_elements))
     # index of damage state of components: from 0 to nds+1
+    logging.debug("Hazard Intensity {}".format(_PGA))
     for j, comp in enumerate(nodes_sorted):
-        ids_comp[:, j] = np.sum(
-            cal_pe_ds(comp, float(_PGA), comp_dict, fragdict, sc) >
-            rnd[:, j][:, np.newaxis], axis=1
-        )
+        comp_pe_ds = cal_pe_ds(comp, float(_PGA), comp_dict, fragdict, sc)
+        logging.debug("Component {} : pe_ds {}".format(comp, comp_pe_ds))
+        ids_comp[:, j] = np.sum(comp_pe_ds > rnd[:, j][:, np.newaxis], axis=1)
         # comp_loss_dict[comp] = np.zeros((num_samples,nPGA))
+
     component_loss_tmp = {c: [] for c in nodes_sorted}
     component_func_tmp = {c: [] for c in nodes_sorted}
 
@@ -281,17 +296,17 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
         for j, comp_name in enumerate(nodes_sorted):
             # ................................................................
             comp_type = comp_dict['component_type'][comp_name]
-            ids = ids_comp[i, j]   # index for component damage state
-            ds = fc.sys_dmg_states[ids]   # damage state name
+            ids = ids_comp[i, j]   # component damage state for this sample
+            ds = fc.sys_dmg_states[ids]   # damage state index
             cf = comp_dict['cost_fraction'][comp_name]
             dr = fragdict['damage_ratio'][comp_type][ds]
             fn = fragdict['functionality'][comp_type][ds]
-            loss = dr * cf
+            loss = dr * cf # loss is the damage state times the cost fraction
             loss_list_all_comp.append(loss)
 
-            # ................................................................
             # component functionality for calculated damage state:
             cp_func.append(fn)
+            # calculate the recovery time
             cp_func_given_time.append(
                 calc_recov_time_given_comp_ds(
                     comp_name, ids, comp_dict, fragdict, fc, sc
@@ -352,7 +367,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
 
 def calc_loss_arrays(fc, sc, component_resp_df, parallel_proc):
 
-    # print("\nCalculating system response to hazard transfer parameters...")
+    # logging.info("\nCalculating system response to hazard transfer parameters...")
     component_resp_dict = component_resp_df.to_dict()
     sys_output_dict = {k: {o: 0 for o in fc.network.out_node_list}
                        for k in sc.hazard_intensity_str}
@@ -366,8 +381,8 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_proc):
     )
 
     if parallel_proc:
-        print('\nInitiating computation of loss arrays...')
-        print(Fore.YELLOW + 'using parallel processing\n' + Fore.RESET)
+        logging.info('\nInitiating computation of loss arrays...')
+        logging.info(Fore.YELLOW + 'using parallel processing\n' + Fore.RESET)
         parallel_return = parmap.map(
             multiprocess_enabling_loop, range(len(sc.hazard_intensity_str)),
             sc.hazard_intensity_str, sc.num_hazard_pts, fc, sc
@@ -382,8 +397,8 @@ def calc_loss_arrays(fc, sc, component_resp_df, parallel_proc):
             output_array_given_recovery[:, idxPGA, :] = \
                 parallel_return[idxPGA][5]
     else:
-        print('\nInitiating computation of loss arrays...')
-        print(Fore.RED + 'not using parallel processing\n' + Fore.RESET)
+        logging.info('\nInitiating computation of loss arrays...')
+        logging.info(Fore.RED + 'not using parallel processing\n' + Fore.RESET)
         for idxPGA, _PGA in enumerate(sc.hazard_intensity_str):
             ids_comp_vs_haz[_PGA], \
             sys_output_dict[_PGA], \
@@ -792,8 +807,8 @@ def post_processing(fc, sc, ids_comp_vs_haz, sys_output_dict,
             pe_sys_econloss
         )
     # ------------------------------------------------------------------------
-    print("\nOutputs saved in: " +
-          Fore.GREEN + sc.output_path + Fore.RESET + '\n')
+        logging.info("\nOutputs saved in: " +
+                     Fore.GREEN + sc.output_path + Fore.RESET + '\n')
 
     plot_mean_econ_loss(fc, sc, economic_loss_array)
 
@@ -837,6 +852,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-print("[ Run time: %s ]\n" % \
-      str(timedelta(seconds=(time.time() - code_start_time))))
+    logging.info("[ Run time: %s ]\n" % \
+                 str(timedelta(seconds=(time.time() - code_start_time))))

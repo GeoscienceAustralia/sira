@@ -21,8 +21,6 @@ def ingest_spreadsheet(config):
     facility_data = _FacilityDataGetter(config)
     component_dict = IODict()
 
-    damage_algorithm_vals = None
-    recovery_algorithm_vals = None
     damage_state_df = pd.read_excel(
         facility_data.sys_config_file, sheetname='damage_state_def',
         index_col=[0, 1], header=0,
@@ -111,7 +109,8 @@ def ingest_spreadsheet(config):
         destiny[connection_values['destination']] = ConnectionValues(**edge_values)
 
     if_system_values = {}
-    if_system_values['name'] = 'Coal power station 600MW'
+    if_system_values['name'] = facility_data.system_class + " : " \
+                               + facility_data.system_subclass
     if_system_values['components'] = system_components
 
     # create the supply and output node dictionaries

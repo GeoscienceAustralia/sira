@@ -66,12 +66,15 @@ class NormalCDF(ResponseModel):
         """
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 
+
 class Level0Response(ResponseModel):
     mode = 1
     damage_ratio = 0.0
     functionality = 1.0
+
     def __call__(self, hazard_level):
         return 0.0
+
 
 class Level0Recovery(ResponseModel):
     recovery_mean = 0.00001
@@ -101,7 +104,7 @@ class DamageAlgorithm(Base):
                 raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
             pe_ds[offset] = damage_state(intensity_param)
 
-        return pe_ds
+        return pe_ds[1:]
 
 
 class RecoveryState(Base):
