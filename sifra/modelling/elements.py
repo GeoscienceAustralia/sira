@@ -1,8 +1,9 @@
 # these are required for defining the data model
+from sifra.modelling.structural import (
+    Element,
+    Info,
+    Base)
 
-
-<<<<<<< HEAD
-=======
 
 class ResponseModel(Base):
     def __call__(self, *args, **kwargs):
@@ -10,13 +11,13 @@ class ResponseModel(Base):
             self.__class__.__name__))
 
 
-class DamageState(ReponseModel):
+class DamageState(ResponseModel):
     damage_state_description = Element('str', 'A description of what the damage state means.')
 
 
 class DamageAlgorithm(Base):
     damage_states = Element('dict', 'Response models for the damage stages',
-        [lambda x: [isinstance(y, DamageState) for y in itervalues(x)]])
+        [lambda x: [isinstance(y, DamageState) for y in x.itervalues()]])
 
     def __call__(self, intensity_param, state):
         return self.damage_states[state](intensity_param)
@@ -34,7 +35,7 @@ class Model(Base):
     description = Info('Represents a model (e.g. a "model of a powerstation")')
 
     components = Element('dict', 'A component', dict,
-        [lambda x: [isinstance(y, Component) for y in itervalues(x)]])
+        [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
 
     name = Element('str', "The model's name", 'model')
 
@@ -45,6 +46,5 @@ class Model(Base):
 class Component(Base):
     frag_func = Element('ResponseModel', 'A fragility function', Element.NO_DEFAULT)
 
-    def expose_to(self, pga):
-        return self.frag_func(pga)
->>>>>>> superdev/master
+    def expose_to(self, hazard_level, scenario):
+        return self.frag_func(hazard_level)
