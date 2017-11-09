@@ -142,7 +142,7 @@ class IFSystem(Model):
         of samples given in the scenario.
         :param hazard_level: Level of the hazard
         :param scenario: Parameters for the scenario
-        :return: An array of the probability that the damage states were exceeded.
+        :return: An array of the probability that each of the damage states were exceeded.
         """
         if scenario.run_context:
             # Use seeding for this test run for reproducibility, the seeding
@@ -173,37 +173,59 @@ class IFSystem(Model):
                                                           component_pe_ds))
 
             # This little piece of numpy magic calculates the damage level by summing
-            # how many damage states were exceeded. Unpacking the calculation:
+            # how many damage states were exceeded.
+            # Unpacking the calculation:
             # component_pe_ds is usually something like [0.01, 0.12, 0.21, 0.33]
             # rnd[:, index] gives the random numbers created for this component
-            # something like
-            #
+            # with the first axis (denoted by :) containing the samples for this
+            # hazard intensity. The [:, np.newaxis] broadcasts (https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html)
+            # each randomn number across the supplied component_pe_ds. If the sample number
+            # is greater than the first two numbers in component_pe_ds, the comparison > will
+            # return [True, True, False, False]
+            # the np.sum will convert this to [1, 1, 0, 0] and return 2. This is the resulting
+            # damage level. This will complete the comparison for all of the samples
+            # for this component
             component_damage_state_ind[:, index] = \
                 np.sum(component_pe_ds > rnd[:, index][:, np.newaxis], axis=1)
 
         return component_damage_state_ind
 
     def calc_output_loss(self, scenario, component_damage_state_ind):
+        """
+        Calculate the results to the infrastructure given the damage state
+        parameter
+        :param scenario: Details of the scenario being run
+        :param component_damage_state_ind: The array of the component's damage state samples
+        :return: 5 lists of calculations
+        """
+        # Component loss caused by the damage
         if_level_loss = np.zeros((scenario.num_samples, len(self.components)),
                                  dtype=np.float64)
+        # Infrastructure loss: sum of component loss
         if_level_economic_loss = np.zeros(scenario.num_samples,
                                           dtype=np.float64)
+        # Component functionality
         if_level_functionality = np.zeros((scenario.num_samples, len(self.components)),
                                           dtype=np.float64)
+        # output for the level of damage
         if_level_output = np.zeros((scenario.num_samples, len(self.output_nodes)),
                                    dtype=np.float64)
+        # output available as recovery progresses
         if_output_given_recovery = np.zeros((scenario.num_samples, scenario.num_time_steps), dtype=np.float64)
 
         # iterate through the samples
         for sample_index in range(scenario.num_samples):
+            # initialise the function and loss arrays for the sample
             component_function_at_time = []
             comp_sample_loss = np.zeros(len(self.components))
             comp_sample_func = np.zeros(len(self.components))
             component_ds = component_damage_state_ind[sample_index, :]
+            # iterate through the components
             for component_index, comp_key in enumerate(sorted(self.components.keys())):
                 component = self.components[comp_key]
                 # get the damage state for the component
                 damage_state = component.get_damage_state(component_ds[component_index])
+                # use the damage state attributes to calculate the loss and functionality for the component sample
                 loss = damage_state.damage_ratio * component.cost_fraction
                 comp_sample_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
@@ -211,14 +233,15 @@ class IFSystem(Model):
                 component_function_at_time.append(self.calc_recov_time_given_comp_ds(component,
                                                                                      component_ds[component_index],
                                                                                      scenario))
-
-            # calculate the sample infrastructure economic loss and output
+            # save this samples component loss and functionality
             if_level_loss[sample_index, :] = comp_sample_loss
-            if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
             if_level_functionality[sample_index, :] = comp_sample_func
+            # calculate the infrastructure's economic loss for this sample
+            if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
+            # Use the component graph to estimate the output for this sample
             if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
 
-            # calculate the restoration process
+            # calculate the restoration output
             component_function_at_time = np.array(component_function_at_time)
             for time_step in range(scenario.num_time_steps):
                 if_output_given_recovery[sample_index, time_step] = \
@@ -231,6 +254,11 @@ class IFSystem(Model):
                if_output_given_recovery
 
     def get_nominal_output(self):
+        """
+        Estimate the output of the undamaged infrastructure output
+        nodes.
+        :return: Numeric value of aggregated output.
+        """
         if not self.if_nominal_output:
             self.if_nominal_output = 0
             for output_comp_id, output_comp in self.output_nodes.iteritems():
@@ -239,6 +267,13 @@ class IFSystem(Model):
         return self.if_nominal_output
 
     def compute_output_given_ds(self, comp_level_func):
+        """
+        Using the graph of components, the output is calculated
+        from the component functionality parameter.
+        :param comp_level_func: An array that indicates the functionality level for each component.
+        :return: An array of the output level for each output node.
+        """
+        # Create the component graph if one does not yet exist
         if not self.component_graph:
             self.component_graph = ComponentGraph(self.components, comp_level_func)
         else:
@@ -248,7 +283,7 @@ class IFSystem(Model):
         system_flows_sample = []
         system_outflows_sample = np.zeros(len(self.output_nodes))
         for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
-            # track the outputs by source type
+            # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
             for supply_index, (supply_comp_id, supply_comp) in enumerate(self.supply_nodes.iteritems()):
                 if_flow_fraction = self.component_graph.maxflow(supply_comp_id, output_comp_id)

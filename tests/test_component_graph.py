@@ -16,11 +16,12 @@ class TestComponentGraph(unittest.TestCase):
         facility = FacilitySystem(config_file)
         infrastructure = ingest_spreadsheet(config_file)
 
-        from random import random
+        # seeding is not used
+        prng = np.random.RandomState()
 
-        for _ in range(10000):
-            function_level = random()
-            component_idx = int(random()*31 + 1)
+        for rand_func, rand_comp in prng.uniform(size=(10000, 2)):
+            function_level = rand_func
+            component_idx = int(rand_comp*31 + 1)
             function_list = [1.0]*33
             function_list[component_idx] = function_level
             sys_output = compute_output_given_ds(function_list, facility)
@@ -40,6 +41,46 @@ class TestComponentGraph(unittest.TestCase):
                 infrastructure.component_graph.dump_graph(facility.network.G)
                 print("\nif graph")
                 infrastructure.component_graph.dump_graph()
+
+    def test_graph_function_much_damage(self):
+        facility = FacilitySystem(config_file)
+        infrastructure = ingest_spreadsheet(config_file)
+
+        # seeding is not used
+        prng = np.random.RandomState()
+
+        for function_list in prng.uniform(size=(100000, 33)):
+            sys_output = compute_output_given_ds(function_list.copy(), facility)
+            if_output = infrastructure.compute_output_given_ds(function_list)
+
+            if sys_output[0] != if_output[0] or \
+                            sys_output[1] != if_output[1]:
+                logging.info("\n{} \n sr:{} if:{}".format(function_list,
+                                                   sys_output,
+                                                   if_output))
+                # dump trees
+                logging.info("\nsys graph")
+                infrastructure.component_graph.dump_graph(facility.network.G)
+                logging.info("\nif graph")
+                infrastructure.component_graph.dump_graph()
+                self.fail("Massive!")
+
+    def test_graph_dependency_nodes(self):
+        breaker_array = np.array([0.22703707, 0.25474665, 0.15173351, 0.30446426, 0.03286735,
+                                  0.48631226, 0.42523123, 0.53783504, 0.67832764, 0.50216505,
+                                  0.4573121, 0.68553109, 0.57631243, 0.88695529, 0.39632882,
+                                  0.13494193, 0.85481656, 0.02530913, 0.01912627, 0.59846684,
+                                  0.3169484, 0.60619278, 0.73805362, 0.83371636, 0.32431238,
+                                  0.72273922, 0.82481816, 0.53597114, 0.85886813, 0.23147034,
+                                  0.35489199, 0.28757192, 0.73853101])
+        facility = FacilitySystem(config_file)
+        infrastructure = ingest_spreadsheet(config_file)
+
+        sys_output = compute_output_given_ds(breaker_array.copy(), facility)
+        if_output = infrastructure.compute_output_given_ds(breaker_array)
+
+        self.assertTrue(sys_output[0] == if_output[0])
+        self.assertTrue(sys_output[1] == if_output[1])
 
     def test_source_break(self):
         facility = FacilitySystem(config_file)

@@ -12,11 +12,11 @@ from infrastructure_response import calculate_response, ingest_spreadsheet
 
 logging.basicConfig(level=logging.INFO)
 ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
+config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
 
 
 class TestNewModel(unittest.TestCase):
     def test_infraresp_vs_sysresponse(self):
-        config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
         scenario = Scenario(config_file)
         facility = FacilitySystem(config_file)
         component_resp_df = calc_sys_output(facility, scenario)
@@ -97,7 +97,7 @@ class TestNewModel(unittest.TestCase):
         # a possible comparison for calculated output array
         # may be doing a statistical comparison on the two populations
 
-        # plot show won't work on pycharm connecting to a docker
+        # plot show won't work in pycharm connecting to a docker
         # instance on an AWS VM through X11. Go figure!
         # import matplotlib.pyplot as plt
         # import scipy as sp
