@@ -1072,7 +1072,7 @@ elif facility.system_class == 'Substation':
 
 comptype_resp_df = \
     pd.read_csv(os.path.join(scenario.output_path,
-                             'comp_type_response.csv'),
+                             'comptype_response.csv'),
                 index_col=['component_type', 'response'],
                 skipinitialspace=True)
 comptype_resp_df.columns = [haz_vals_str]

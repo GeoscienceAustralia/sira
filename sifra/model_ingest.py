@@ -109,7 +109,8 @@ def ingest_spreadsheet(config):
         destiny[connection_values['destination']] = ConnectionValues(**edge_values)
 
     if_system_values = {}
-    if_system_values['name'] = 'Coal power station 600MW'
+    if_system_values['name'] = facility_data.system_class + " : " \
+                               + facility_data.system_subclass
     if_system_values['components'] = system_components
 
     # create the supply and output node dictionaries
