@@ -22,7 +22,7 @@ aws ec2 run-instances \
     --image-id $ami_id \
     --count 1 \
     --iam-instance-profile Name=SifraInstance \
-    --instance-type t2.medium \
+    --instance-type t2.2xlarge \
     --user-data file://build-sifra-box.sh \
     --key-name $1 \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=sifra-$1}]"
