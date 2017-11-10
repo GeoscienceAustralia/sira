@@ -73,7 +73,7 @@ def calculate_response(scenario, infrastructure):
                                             hazard_levels.hazard_range(),
                                             infrastructure,
                                             scenario,
-                                            parallel=scenario.run_parallel_proc))
+                                            pm_parallel=scenario.run_parallel_proc))
     # combine the responses into one list
     post_processing_list = [{},  # hazard level vs component damage state index
                             {},  # hazard level vs infrastructure output

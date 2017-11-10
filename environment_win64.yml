@@ -54,7 +54,7 @@ dependencies:
   - lmfit==0.9.2
   - markupsafe==0.23
   - nwdiag==1.0.0
-  - parmap==1.2.3
+  - parmap==1.5.1
   - pexpect==4.0.1
   - pydot==1.0.2
   - pybtex==0.19
