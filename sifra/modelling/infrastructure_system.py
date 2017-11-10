@@ -122,14 +122,10 @@ class IFSystem(Model):
         for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
             if_output[output_comp_id] = np.mean(if_sample_output[:, output_index])
 
-        print("> Hazard intensity: {} {} | Run time: {}".
-              format(hazard_level.hazard_intensity,
-                     scenario.intensity_measure_unit,
-                     str(timedelta(seconds=(time.time() - code_start_time)))))
-
         # log the elapsed time for this hazard level
         elapsed = timedelta(seconds=(time.time() - code_start_time))
-        logging.info("[ Hazard {} run time: {} ]\n".format(hazard_level.hazard_intensity, str(elapsed)))
+        logging.info("[ Hazard {} run time: {} ]\n".format(hazard_level.hazard_intensity,
+                                                           str(elapsed)))
 
         # We combine the result data into a dictionary for ease of use
         response_dict = {hazard_level.hazard_intensity: [component_damage_state_ind,
