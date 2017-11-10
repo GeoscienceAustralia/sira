@@ -10,4 +10,3 @@ export const NDV_DIRECTIVES: any[] = [
     NdvEditDateComponent,
     NdvEditAreaComponent
 ];
-

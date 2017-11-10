@@ -6,4 +6,3 @@ SQLITE_DB_FILE = os.path.abspath(
 BUILD_DB_TABLES = not os.path.exists(SQLITE_DB_FILE)
 
 DB_CONNECTION_STRING = 'sqlite:///{}'.format(SQLITE_DB_FILE)
-
