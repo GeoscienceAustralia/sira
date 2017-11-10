@@ -1,7 +1,7 @@
 import sys
 import abc
 import json
-from sifra.modelling.components import (
+from sifra.modelling.component_db import (
     _Session,
     Document,
     Component,
@@ -91,4 +91,3 @@ class SqliteSerialisationProvider(SerialisationProvider):
         session = _Session()
         session.query(Component).delete()
         session.commit()
-

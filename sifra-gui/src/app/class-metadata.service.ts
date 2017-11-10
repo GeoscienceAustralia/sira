@@ -135,4 +135,3 @@ export class ClassMetadataService {
         return Observable.throw(errMsg);
     }
 }
-

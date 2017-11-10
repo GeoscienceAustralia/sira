@@ -72,4 +72,3 @@ export class ElementChooserComponent implements OnInit {
         this.dirty = true;
     }
 }
-

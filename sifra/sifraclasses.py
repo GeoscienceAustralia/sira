@@ -16,6 +16,7 @@ import seaborn as sns
 import re
 import copy
 from scipy import stats
+import time
 
 # =============================================================================
 
@@ -59,10 +60,11 @@ class _IoDataGetter(object):
     def set_io_dirs(self):
         self.input_path = os.path.join(self.root_dir,
                                        self.input_dir_name)
+        timestamp = time.strftime('_%Y%m%d_%H%M%S')
+        output_dir_timestamped = self.output_dir_name + timestamp
         self.output_path = os.path.join(self.root_dir,
-                                        self.output_dir_name)
-        self.raw_output_dir = os.path.join(self.root_dir,
-                                           self.output_dir_name,
+                                        output_dir_timestamped)
+        self.raw_output_dir = os.path.join(self.output_path,
                                            'raw_output')
 
         if not os.path.exists(self.output_path):
