@@ -11,12 +11,14 @@ import numpy as np
 import pandas as pd
 import parmap
 
+import matplotlib
+matplotlib.use('Agg')
+
+
 from model_ingest import ingest_spreadsheet
 from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 
-import matplotlib
-# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import seaborn as sns
