@@ -8,11 +8,10 @@ from modelling.component_graph import ComponentGraph
 # these are required for defining the data model
 from sifra.modelling.structural import (
     Element,
-    Info,
-    Base)
+    Info)
 
 from sifra.modelling.component import Component
-from sifra.modelling.elements import Model
+from sifra.modelling.model import Model
 from sifra.modelling.iodict import IODict
 
 

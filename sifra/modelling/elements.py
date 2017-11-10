@@ -21,30 +21,3 @@ class DamageAlgorithm(Base):
 
     def __call__(self, intensity_param, state):
         return self.damage_states[state](intensity_param)
-
-
-class Component(Base):
-    frag_func = Element('DamageAlgorithm', 'Fragility algorithm', Element.NO_DEFAULT)
-    recovery_func = Element('DamageAlgorithm', 'Recovery algorithm', Element.NO_DEFAULT)
-
-    def expose_to(self, intensity_param):
-        return self.frag_func(intensity_param)
-
-
-class Model(Base):
-    description = Info('Represents a model (e.g. a "model of a powerstation")')
-
-    components = Element('dict', 'A component', dict,
-        [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
-
-    name = Element('str', "The model's name", 'model')
-
-    def add_component(self, name, component):
-        self.components[name] = component
-
-
-class Component(Base):
-    frag_func = Element('ResponseModel', 'A fragility function', Element.NO_DEFAULT)
-
-    def expose_to(self, hazard_level, scenario):
-        return self.frag_func(hazard_level)
