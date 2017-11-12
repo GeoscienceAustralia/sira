@@ -14,6 +14,7 @@ from sifra.modelling.component import Component
 from sifra.modelling.model import Model
 from sifra.modelling.iodict import IODict
 
+import pickle
 
 class IFSystem(Model):
     """
@@ -26,7 +27,7 @@ class IFSystem(Model):
     description = Info('Represents a model (e.g. a "model of a powerstation")')
 
     components = Element('IODict', 'The components that make up the infrastructure system', IODict,
-        [lambda x: [isinstance(y, Component) for y in x.itervalues()]])
+        [lambda x: [isinstance(y, Component) for y in x.values()]])
 
     supply_nodes = Element('dict', 'The components that supply the infrastructure system', {})
     output_nodes = Element('dict', 'The components that output from the infrastructure system', {})
@@ -48,10 +49,18 @@ class IFSystem(Model):
         :param kwargs: Objects making up the infrastructure
         """
         super(IFSystem, self).__init__(**kwargs)
+
+        component_graph = ComponentGraph(self.components)
+        comp_graph_obj = 'component_graph.obj'
+        with open(comp_graph_obj, 'w') as fobj:
+            pickle.dump(component_graph, fobj)
+
         # TODO This assignment should be replaced by subclasses of IFSystem
         # instantiated directly by the model creator
-        # This intitiates some instance members with the correct configuration.
+        # This initiates some instance members with the correct configuration.
         # Not sure why these aren't in the configuration file
+        # TODO Need to move these damage state limits into config file (MR)
+
         if self.system_class.lower() == 'substation':
             # Initiate the substation, note: this may not have been tested in this
             # version of the code.
@@ -82,8 +91,6 @@ class IFSystem(Model):
                 'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
                 'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
             }
-
-        component_graph = ComponentGraph(self.components)
 
     def add_component(self, name, component):
         """Add a component to the component dict"""
