@@ -32,8 +32,8 @@ def segment_long_labels(string, maxlen=7, delims=[]):
 
 def draw_sys_layout(G, comp_df,
                     out_dir="",
-                    out_file="system_layout",
-                    graph_label="System Layout",
+                    out_file="system_topology",
+                    graph_label="System Topology",
                     orientation="TB",
                     connector_type="spline",
                     clustering=False):
