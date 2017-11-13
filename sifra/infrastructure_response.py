@@ -23,8 +23,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from colorama import Fore, Back, Style
 
-logging.basicConfig(level=logging.INFO)
-
+formatter = '%(levelname)-8s %(message)s'
+logging.basicConfig(level=logging.INFO, format=formatter)
 
 def run_scenario(config_file):
     """
@@ -35,12 +35,16 @@ def run_scenario(config_file):
     """
     # Construct the scenario object
     logging.info(Style.BRIGHT + Fore.GREEN +
-          "\nLoading scenario config... " +
-          Style.RESET_ALL)
+                 "Loading scenario config... " +
+                 Style.RESET_ALL)
 
     scenario = Scenario(config_file)
-    logging.info(Style.BRIGHT + Fore.GREEN + "Done." +
-          "\nInitiating model run...\n" + Style.RESET_ALL)
+    logging.info(Style.BRIGHT + Fore.YELLOW +
+                 "Done." +
+                 Style.RESET_ALL)
+    logging.info(Style.BRIGHT + Fore.GREEN +
+                 "Initiating model run...\n" +
+                 Style.RESET_ALL)
 
     # `IFSystem` object that contains a list of components
     infrastructure = ingest_spreadsheet(config_file)
@@ -105,8 +109,8 @@ def calculate_response(scenario, infrastructure):
     post_processing_list[4] = post_processing_list[4].transpose()
     post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
 
-    elapsed = timedelta(seconds=(time.time() - code_start_time))
-    logging.info("[ Run time: %s ]\n" % str(elapsed))
+    # elapsed = timedelta(seconds=(time.time() - code_start_time))
+    # logging.info("[ Run time: %s ]\n" % str(elapsed))
 
     return post_processing_list
 
@@ -589,7 +593,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         )
 
     # ------------------------------------------------------------------------
-    logging.info("\nOutputs saved in: " +
+    logging.info("Outputs saved in: \n" + " "*9 +
                  Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
     # ... END POST-PROCESSING
@@ -614,7 +618,7 @@ def main():
     run_scenario(SETUPFILE)
 
     logging.info(Style.BRIGHT + Fore.YELLOW +
-                 "[ Run time: %s ]\n" %
+                 "Total run time: %s\n" %
                  str(timedelta(seconds=(time.time() - code_start_time))) +
                  Style.RESET_ALL)
 
