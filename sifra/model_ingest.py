@@ -108,7 +108,7 @@ def ingest_spreadsheet(config):
         edge_values['weight'] = float(connection_values['weight'])
         destiny[connection_values['destination']] = ConnectionValues(**edge_values)
 
-    if_system_values = {}
+    if_system_values = dict()
     if_system_values['name'] = facility_data.system_class + " : " \
                                + facility_data.system_subclass
     if_system_values['components'] = system_components

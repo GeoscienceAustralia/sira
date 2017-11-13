@@ -14,7 +14,8 @@ from sifra.modelling.component import Component
 from sifra.modelling.model import Model
 from sifra.modelling.iodict import IODict
 
-import pickle
+import pickle as pick
+
 
 class IFSystem(Model):
     """
@@ -26,11 +27,10 @@ class IFSystem(Model):
     name = Element('str', "The model's name", 'model')
     description = Info('Represents a model (e.g. a "model of a powerstation")')
 
-    components = Element('IODict', 'The components that make up the infrastructure system', IODict,
-        [lambda x: [isinstance(y, Component) for y in x.values()]])
+    components = Element('IODict', 'The components that make up the infrastructure system', IODict)
 
-    supply_nodes = Element('dict', 'The components that supply the infrastructure system', {})
-    output_nodes = Element('dict', 'The components that output from the infrastructure system', {})
+    supply_nodes = Element('dict', 'The components that supply the infrastructure system', dict)
+    output_nodes = Element('dict', 'The components that output from the infrastructure system', dict)
 
     supply_total = None
     component_graph = None
@@ -50,10 +50,10 @@ class IFSystem(Model):
         """
         super(IFSystem, self).__init__(**kwargs)
 
-        component_graph = ComponentGraph(self.components)
+        self.component_graph = ComponentGraph(self.components)
         comp_graph_obj = 'component_graph.obj'
         with open(comp_graph_obj, 'w') as fobj:
-            pickle.dump(component_graph, fobj)
+            pick.dump(self.component_graph, fobj)
 
         # TODO This assignment should be replaced by subclasses of IFSystem
         # instantiated directly by the model creator

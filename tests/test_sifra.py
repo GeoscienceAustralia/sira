@@ -1,9 +1,6 @@
 from __future__ import print_function
 
 import unittest
-import cPickle
-import os
-import numpy as np
 import logging
 
 from sifra.infrastructure_response import run_scenario

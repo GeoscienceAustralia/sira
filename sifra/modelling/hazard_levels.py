@@ -2,6 +2,9 @@ import numpy as np
 
 
 class HazardLevels(object):
+    """
+
+    """
     def __init__(self, sc):
         self.sc = sc
         self.num_hazard_pts = \

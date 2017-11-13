@@ -16,7 +16,6 @@ class NoDefaultException(Exception):
     pass
 
 
-
 class ValidationError(Exception):
     """
     Thrown when validation of some item fails. Some examples of when this may
@@ -33,14 +32,12 @@ class ValidationError(Exception):
     pass
 
 
-
 class AlreadySavedException(Exception):
     """
     Raised if an attempt is made to save a 'Document' which has previously been
     saved.
     """
     pass
-
 
 
 class DisallowedElementException(ValueError):
@@ -50,7 +47,6 @@ class DisallowedElementException(ValueError):
     :py:attr:StructuralMeta.DISALLOWED_FIELDS.
     """
     pass
-
 
 
 class MultipleBasesOfTypeBaseError(ValueError):
@@ -67,7 +63,6 @@ class MultipleBasesOfTypeBaseError(ValueError):
     we go.
     """
     pass
-
 
 
 def _merge_data_and_metadata(meta, data):
@@ -296,7 +291,6 @@ class StructuralMeta(type):
                 v['class'] = '.'.join(['__builtin__', v['class']])
 
         super(StructuralMeta, cls).__init__(name, bases, dct)
-
 
 
 class Base(object):
