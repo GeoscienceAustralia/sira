@@ -51,6 +51,19 @@ def run_scenario(config_file):
     post_processing(infrastructure, scenario, post_processing_list)
 
 
+def run_para_scen(hazard_level, infrastructure, scenario):
+    """
+    The parmap.map function requires a module level function as a parameter.
+    So this function satisfies that requirement by calling the infrastructure's
+    exponse_to method within this one.
+    :param hazard_level: The hazard level that the infrastructure will be exposed to
+    :param infrastructure: The infrastructure model that is being simulated
+    :param scenario: The Parameters for the simulation
+    :return: List of results of the simulation
+    """
+    return infrastructure.expose_to(hazard_level, scenario)
+
+
 def calculate_response(scenario, infrastructure):
     """
     The response will be calculated by creating the hazard_levels,
@@ -109,20 +122,6 @@ def calculate_response(scenario, infrastructure):
     logging.info("[ Run time: %s ]\n" % str(elapsed))
 
     return post_processing_list
-
-
-def run_para_scen(hazard_level, infrastructure, scenario):
-    """
-    The parmap.map function requires a module level function as a parameter.
-    So this function satisfies that requirement by calling the infrastructure's
-    exponse_to method within this one.
-    :param hazard_level: The hazard level that the infrastructure will be exposed to
-    :param infrastructure: The infrastructure model that is being simulated
-    :param scenario: The Parameters for the simulation
-    :return: List of results of the simulation
-    """
-    return infrastructure.expose_to(hazard_level, scenario)
-
 
 # ****************************************************************************
 # BEGIN POST-PROCESSING ...

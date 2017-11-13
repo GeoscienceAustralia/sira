@@ -18,10 +18,8 @@ class Component(Base):
     node_type = Element('str', 'Class of node.')
     node_cluster = Element('str', 'Node cluster.')
 
-    operating_capacity = Element('float', 'Component nominal operating capacity',
-                                 [lambda x: 0.0 >= float(x) >= 1.0])
-    cost_fraction = Element('float', 'Cost as a fraction of total value of system',
-                            [lambda x: 0.0 >= float(x) >= 1.0])
+    operating_capacity = Element('float', 'Component nominal operating capacity')
+    cost_fraction = Element('float', 'Cost as a fraction of total value of system')
 
     frag_func = Element('DamageAlgorithm', 'Fragility algorithm', Element.NO_DEFAULT)
     recovery_func = Element('RecoveryAlgorithm', 'Recovery algorithm', Element.NO_DEFAULT)
