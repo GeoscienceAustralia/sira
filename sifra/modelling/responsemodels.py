@@ -9,12 +9,20 @@ from sifra.modelling.iodict import IODict
 
 
 class ResponseModel(Base):
+    """
+    Statistical model that assesses the response (amount of likely
+    damage) for a given hazard
+    """
     def __call__(self, *args, **kwargs):
         raise NotImplementedError('__call__ is not implemented'
                                   ' on {}'.format(self.__class__.__name__))
 
 
 class StepFunc(ResponseModel):
+    """
+    A response model that does not have a cumulative distribution
+    function, rather a series of steps for damage.
+    """
     xys = _Element('XYPairs', 'A list of X, Y pairs.', list,
         [lambda xy: [(float(x), float(y)) for x, y in xy]])
 
@@ -31,6 +39,9 @@ class StepFunc(ResponseModel):
 
 
 class LogNormalCDF(ResponseModel):
+    """
+    The log normal CDF response model for components.
+    """
     median = _Element('float', 'Median of the log normal CDF.',
             _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
@@ -50,6 +61,9 @@ class LogNormalCDF(ResponseModel):
 
 
 class NormalCDF(ResponseModel):
+    """
+    The normal CDF response model for components
+    """
     mean = _Element('float', 'Mean of the normal or Gaussian CDF',
                     _Element.NO_DEFAULT, [lambda x: float(x) >= 0.])
 
@@ -68,6 +82,9 @@ class NormalCDF(ResponseModel):
 
 
 class Level0Response(ResponseModel):
+    """
+    Standard response model for
+    """
     mode = 1
     damage_ratio = 0.0
     functionality = 1.0
@@ -80,8 +97,14 @@ class Level0Recovery(ResponseModel):
     recovery_mean = 0.00001
     recovery_std = 0.00001
 
+    def __call__(self, hazard_level):
+        return 0.0
+
 
 class DamageState(ResponseModel):
+    """
+    The allocated damage state for a given component
+    """
     damage_state = Element('str', 'Damage state name')
     damage_state_description = Element('str', 'A description of what the damage state means')
     mode = Element('int','The mode used to estimate the damage')

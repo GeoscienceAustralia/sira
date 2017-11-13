@@ -14,7 +14,6 @@ import parmap
 import matplotlib
 matplotlib.use('Agg')
 
-
 from model_ingest import ingest_spreadsheet
 from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
@@ -23,6 +22,8 @@ import matplotlib.pyplot as plt
 
 import seaborn as sns
 from colorama import Fore, Back, Style
+
+logging.basicConfig(level=logging.INFO)
 
 
 def run_scenario(config_file):
@@ -33,14 +34,13 @@ def run_scenario(config_file):
     :return: None
     """
     # Construct the scenario object
-    print(Style.BRIGHT + Fore.GREEN +
+    logging.info(Style.BRIGHT + Fore.GREEN +
           "\nLoading scenario config... " +
-          Style.RESET_ALL, end='')
+          Style.RESET_ALL)
 
     scenario = Scenario(config_file)
-    print(Style.BRIGHT + Fore.GREEN + "Done." +
+    logging.info(Style.BRIGHT + Fore.GREEN + "Done." +
           "\nInitiating model run...\n" + Style.RESET_ALL)
-    code_start_time = time.time()
 
     # `IFSystem` object that contains a list of components
     infrastructure = ingest_spreadsheet(config_file)
@@ -478,7 +478,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     for l, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
         # compute expected damage ratio
         for j, component in enumerate(infrastructure.components.values()):
-            pb = pe2pb(component.expose_to(hazard_level, scenario)[1:])
+            pb = pe2pb(component.expose_to(hazard_level, scenario))
             dr = np.array([component.frag_func.damage_states[ds].damage_ratio
                            for ds in infrastructure.sys_dmg_states])
             cf = component.cost_fraction
@@ -592,9 +592,6 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     logging.info("\nOutputs saved in: " +
                  Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
 
-    print("\nOutputs saved in:\n" +
-          Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
-
     # ... END POST-PROCESSING
     # ****************************************************************************
 
@@ -612,13 +609,14 @@ def pe2pb(pe):
 
 
 def main():
+    code_start_time = time.time()
     SETUPFILE = sys.argv[1]
     run_scenario(SETUPFILE)
 
-    print(Style.BRIGHT + Fore.YELLOW +
-          "[ Run time: %s ]\n" %
-          str(timedelta(seconds=(time.time() - code_start_time))) +
-          Style.RESET_ALL)
+    logging.info(Style.BRIGHT + Fore.YELLOW +
+                 "[ Run time: %s ]\n" %
+                 str(timedelta(seconds=(time.time() - code_start_time))) +
+                 Style.RESET_ALL)
 
 if __name__ == '__main__':
     main()
