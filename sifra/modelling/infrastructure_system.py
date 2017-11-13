@@ -130,8 +130,8 @@ class IFSystem(Model):
 
         # log the elapsed time for this hazard level
         elapsed = timedelta(seconds=(time.time() - code_start_time))
-        logging.info("[ Hazard {} run time: {} ]\n".format(hazard_level.hazard_intensity,
-                                                           str(elapsed)))
+        logging.info("Hazard {} run time: {}".format(hazard_level.hazard_intensity,
+                                                     str(elapsed)))
 
         # We combine the result data into a dictionary for ease of use
         response_dict = {hazard_level.hazard_intensity: [component_damage_state_ind,
