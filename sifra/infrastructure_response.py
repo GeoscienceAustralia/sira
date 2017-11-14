@@ -17,7 +17,7 @@ matplotlib.use('Agg')
 from model_ingest import ingest_spreadsheet
 from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
-from sifra.modelling.system_topology import set_sys_topology_view
+from sifra.modelling.system_topology import SystemTopology
 
 import matplotlib.pyplot as plt
 
@@ -50,7 +50,8 @@ def run_scenario(config_file):
     # `IFSystem` object that contains a list of components
     infrastructure = ingest_spreadsheet(config_file)
 
-    set_sys_topology_view(infrastructure, scenario)
+    sys_topology_view = SystemTopology(infrastructure, scenario)
+    sys_topology_view.draw_sys_topology(viewcontext="as-built")
 
     post_processing_list = calculate_response(scenario, infrastructure)
     # After the response has been calculated the post processing
