@@ -2,7 +2,6 @@ from __future__ import print_function
 import os
 import sys
 import networkx as nx
-import igraph
 import re
 
 # -----------------------------------------------------------------------------
@@ -17,8 +16,6 @@ def msplit(string, delims):
 
 def segment_long_labels(string, maxlen=7, delims=[]):
     if (not delims) and (len(string) > maxlen):
-        # return '\n'.join(string[i:i+maxlen]
-        #                  for i in range(0, len(string), maxlen))
         return "\n".join(re.findall("(?s).{,"+str(maxlen)+"}", string))[:-1]
 
     elif len(string) > maxlen:
@@ -36,7 +33,8 @@ def draw_sys_topology(G, component_attr,
                       graph_label="System Topology",
                       orientation="TB",
                       connector_type="spline",
-                      clustering=False):
+                      clustering=False,
+                      viewcontext=""):
     """
     Draws the component configuration for a given infrastructure system.
     :param G: ipython graph object
@@ -191,15 +189,45 @@ def draw_sys_topology(G, component_attr,
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    A.write(os.path.join(output_path, fname + '.dot'))
-
-    A.draw(os.path.join(output_path, fname + '.png'),
-           format='png', prog='dot')
+    if viewcontext == "as-built":
+        A.write(os.path.join(output_path, fname + '.dot'))
+        A.draw(os.path.join(output_path, fname + '.png'),
+               format='png', prog='dot')
 
     A.draw(os.path.join(output_path, fname + '.svg'),
            format='svg', prog='dot', args='-Gsize=11,8\! -Gdpi=300')
 
+
 # -----------------------------------------------------------------------------
+
+def set_sys_topology_view(infrastructure, scenario, viewcontext="as-built"):
+    component_attr = {}
+    for comp_id in infrastructure.components.keys():
+        component_attr[comp_id] = vars(infrastructure.components[comp_id])
+
+    if infrastructure.system_class.lower() in ['potablewatertreatmentplant']:
+        draw_sys_topology(
+            infrastructure.component_graph.comp_graph,
+            component_attr,
+            out_dir=scenario.output_path,
+            graph_label="Water Treatment Plant Component Topology",
+            orientation="TB",
+            connector_type="ortho",
+            clustering=True,
+            viewcontext=viewcontext
+        )
+    else:
+        draw_sys_topology(
+            infrastructure.component_graph.comp_graph,
+            component_attr,
+            out_dir=scenario.output_path,
+            graph_label="System Component Topology",
+            orientation="LR",
+            connector_type="spline",
+            clustering=False,
+            viewcontext = viewcontext
+        )
+
 
 def main():
 
@@ -215,8 +243,6 @@ def main():
     FacilityObj = eval(config["SYSTEM_CLASS"])
     sc = Scenario(SETUPFILE)
     fc = FacilityObj(SETUPFILE)
-    # Define input files, output location, scenario inputs
-    # SYS_CONFIG_FILE = os.path.join(scn.input_path, sysobj.sys_config_file_name)
 
     print("Initiating drawing network model schematic...")
     fc.network.network_setup(fc)
