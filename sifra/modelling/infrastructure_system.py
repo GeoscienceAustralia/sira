@@ -3,18 +3,15 @@ import time
 from datetime import timedelta
 import logging
 
-from modelling.component_graph import ComponentGraph
-
 # these are required for defining the data model
 from sifra.modelling.structural import (
     Element,
     Info)
 
 from sifra.modelling.component import Component
+from sifra.modelling.component_graph import ComponentGraph
 from sifra.modelling.model import Model
 from sifra.modelling.iodict import IODict
-
-import pickle as pick
 
 
 class IFSystem(Model):
@@ -51,9 +48,6 @@ class IFSystem(Model):
         super(IFSystem, self).__init__(**kwargs)
 
         self.component_graph = ComponentGraph(self.components)
-        comp_graph_obj = 'component_graph.obj'
-        with open(comp_graph_obj, 'w') as fobj:
-            pick.dump(self.component_graph, fobj)
 
         # TODO This assignment should be replaced by subclasses of IFSystem
         # instantiated directly by the model creator
@@ -187,7 +181,8 @@ class IFSystem(Model):
             # component_pe_ds is usually something like [0.01, 0.12, 0.21, 0.33]
             # rnd[:, index] gives the random numbers created for this component
             # with the first axis (denoted by :) containing the samples for this
-            # hazard intensity. The [:, np.newaxis] broadcasts (https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html)
+            # hazard intensity. The [:, np.newaxis] broadcasts
+            # (https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html)
             # each randomn number across the supplied component_pe_ds. If the sample number
             # is greater than the first two numbers in component_pe_ds, the comparison > will
             # return [True, True, False, False]
@@ -362,9 +357,7 @@ class IFSystem(Model):
 
         :return: list of costed component types
         """
-        uncosted_comptypes = set(['CONN_NODE',
-                                 'SYSTEM_INPUT',
-                                 'SYSTEM_OUTPUT'])
+        uncosted_comptypes = {'CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT'}
 
         component_types = set()
 
