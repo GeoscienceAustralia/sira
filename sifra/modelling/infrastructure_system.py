@@ -10,7 +10,7 @@ from sifra.modelling.structural import (
 
 from sifra.modelling.component import Component
 from sifra.modelling.component_graph import ComponentGraph
-from sifra.modelling.model import Model
+from sifra.modelling.infrastructure_model import Model
 from sifra.modelling.iodict import IODict
 
 

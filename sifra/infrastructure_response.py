@@ -27,6 +27,7 @@ from colorama import Fore, Back, Style
 formatter = '%(levelname)-8s %(message)s'
 logging.basicConfig(level=logging.INFO, format=formatter)
 
+
 def run_scenario(config_file):
     """
     Run a scenario by constructing a facility, and executing a scenario, with
