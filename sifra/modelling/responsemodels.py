@@ -18,7 +18,21 @@ class ResponseModel(Base):
                                   ' on {}'.format(self.__class__.__name__))
 
 
-class StepFunc(ResponseModel):
+class DamageState(ResponseModel):
+    """
+    The allocated damage state for a given component
+    """
+    damage_state = Element('str', 'Damage state name')
+    damage_state_description = Element('str', 'A description of what the damage state means')
+    mode = Element('int','The mode used to estimate the damage')
+    functionality = Element('float', 'Level of functionality for this damage level',
+                            0.0, [lambda x: float(x) >= 0.0])
+    fragility_source = Element('str', 'The source of the parameter values')
+    damage_ratio = Element('float', 'damage ratio',
+                           0.0, [lambda x: float(x) >= 0.0])
+
+
+class StepFunc(DamageState):
     """
     A response model that does not have a cumulative distribution
     function, rather a series of steps for damage.
@@ -38,7 +52,7 @@ class StepFunc(ResponseModel):
         raise ValueError('value is greater than all xs!')
 
 
-class LogNormalCDF(ResponseModel):
+class LogNormalCDF(DamageState):
     """
     The log normal CDF response model for components.
     """
@@ -60,7 +74,7 @@ class LogNormalCDF(ResponseModel):
         return stats.lognorm.cdf(hazard_level.hazard_intensity, self.beta, loc=0, scale=self.median)
 
 
-class NormalCDF(ResponseModel):
+class NormalCDF(DamageState):
     """
     The normal CDF response model for components
     """
@@ -81,9 +95,9 @@ class NormalCDF(ResponseModel):
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 
 
-class Level0Response(ResponseModel):
+class Level0Response(DamageState):
     """
-    Standard response model for
+    Standard response for no damage.
     """
     mode = 1
     damage_ratio = 0.0
@@ -93,7 +107,10 @@ class Level0Response(ResponseModel):
         return 0.0
 
 
-class Level0Recovery(ResponseModel):
+class Level0Recovery(DamageState):
+    """
+    Standard recovery for no damage.
+    """
     recovery_mean = 0.00001
     recovery_std = 0.00001
 
@@ -101,45 +118,43 @@ class Level0Recovery(ResponseModel):
         return 0.0
 
 
-class DamageState(ResponseModel):
-    """
-    The allocated damage state for a given component
-    """
-    damage_state = Element('str', 'Damage state name')
-    damage_state_description = Element('str', 'A description of what the damage state means')
-    mode = Element('int','The mode used to estimate the damage')
-    functionality = Element('float', 'Level of functionality for this damage level',
-                            0.0, [lambda x: float(x) >= 0.0])
-    fragility_source = Element('str', 'The source of the parameter values')
-    damage_ratio = Element('float', 'damage ratio',
-                            0.0, [lambda x: float(x) >= 0.0])
-
-
 class DamageAlgorithm(Base):
+    """
+    The collection of damage states that will calculate
+    the component's response to a hazard.
+    """
     damage_states = Element('IODict', 'Response models for the damage states',
         [lambda x: [isinstance(y, DamageState) for y in x.itervalues()]])
 
     def pe_ds(self, intensity_param):
+        """Calculate the probabilities that this component will
+        exceed the range of damage states."""
         pe_ds = np.zeros(len(self.damage_states))
 
         for offset, damage_state in enumerate(self.damage_states.itervalues()):
             if damage_state.mode != 1:
                 raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
             pe_ds[offset] = damage_state(intensity_param)
-
+        # Return all of the damage states except the undamaged one.
         return pe_ds[1:]
 
 
 class RecoveryState(Base):
+    """
+    The recovery parameters for a given damage level.
+    """
     recovery_mean = Element('float', 'Recovery mean',
                             0.0, [lambda x: float(x) > 0.0])
     recovery_std = Element('float', 'Recovery standard deviation',
-                            0.0, [lambda x: float(x) > 0.0])
+                           0.0, [lambda x: float(x) > 0.0])
     recovery_95percentile = Element('float', 'Recovery 95th percentile',
                                     0.0, [lambda x: float(x) > 0.0])
 
 
 class RecoveryAlgorithm(Base):
+    """
+    Collection of recovery states for a component.
+    """
     recovery_states = Element('IODict', 'Recovery models for the damage states',
         [lambda x: [isinstance(y, RecoveryState) for y in x.itervalues()]])
 

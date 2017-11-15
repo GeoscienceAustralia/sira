@@ -69,8 +69,6 @@ class LogNormalCDF(ResponseModel):
         return stats.lognorm.cdf(value, self.beta, scale=self.median)
 
 
-
-
 class Test1(ut.TestCase):
     def setUp(self):
         self.model = IFSystem()
@@ -127,7 +125,6 @@ class Test1(ut.TestCase):
         data = self.model.jsonify_with_metadata()
 
 
-
 class Test2(ut.TestCase):
     def test_cannot_have_fields(self):
         """
@@ -152,7 +149,6 @@ class Test2(ut.TestCase):
             c3 = type('C3', (c1, c2), {})
 
 
-
 class Test3(ut.TestCase):
     def test_gets_all_subclasses(self):
         sc_names = [cls.__name__ for cls in ResponseModel.__subclasses__()]
@@ -161,17 +157,11 @@ class Test3(ut.TestCase):
             self.assertIn(nm, sc_names)
 
 
-
 class Test4(ut.TestCase):
     def test_has_json_desc(self):
         desc = IFSystem.__json_desc__
         self.assertIn('description', desc, 'Model should contain "description"')
         self.assertIn('components', desc, 'Model should cotain "components"')
-
-
-
-
-
 
 
 if __name__ == '__main__':

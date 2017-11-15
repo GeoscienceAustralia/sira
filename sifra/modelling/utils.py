@@ -95,7 +95,6 @@ DictDiff = _make_diff('DictDiff', ['changed', 'dropped', 'added'])
 ListDiff = _make_diff('ListDiff', ['changed', 'dropped', 'added'])
 
 
-
 def find_changes(old, new):
     if type(new) is tuple: # deliberately not isinstance... who knows what we could throw away
         new = list(new)

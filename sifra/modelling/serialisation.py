@@ -27,7 +27,6 @@ class SerialisationProvider(object):
         raise NotImplementedError()
 
 
-
 def _addAttributes(document, attributes):
     if attributes is not None:
         for name, value in attributes.iteritems():
@@ -35,10 +34,8 @@ def _addAttributes(document, attributes):
                 DocumentAttribute(name=name, value=value))
 
 
-
 def _attributesToDict(attributes):
     return {a.name: a.value for a in attributes}
-
 
 
 class SqliteDBProxy(object):
@@ -80,7 +77,6 @@ class SqliteDBProxy(object):
             raise e
         finally:
             session.close()
-
 
 
 class SqliteSerialisationProvider(SerialisationProvider):

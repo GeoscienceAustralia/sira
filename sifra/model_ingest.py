@@ -18,6 +18,11 @@ import copy
 
 
 def ingest_spreadsheet(config):
+    """
+    Create an infrastructure_model from the config 
+    :param config:
+    :return:
+    """
     facility_data = _FacilityDataGetter(config)
     component_dict = IODict()
 
