@@ -53,19 +53,20 @@ class IODict(OrderedDict, Base):
         :param val: A map or iterable.
         :return: IODict
         """
-        if 'key_index' in val:
-            # Create an IODict with the supplied order
-            new_io = IODict()
-            key_index = val.pop('key_index')
-            for comp_index in sorted(key_index.keys()):
-                dict_name = key_index[comp_index]
-                value = val[dict_name]
-                new_io[dict_name] = pythonify(value)
+        if isinstance(val, dict):
+            if 'key_index' in val:
+                # Create an IODict with the supplied order
+                new_io = IODict()
+                key_index = val.pop('key_index')
+                for comp_index in sorted(key_index.keys()):
+                    dict_name = key_index[comp_index]
+                    value = val[dict_name]
+                    new_io[dict_name] = pythonify(value)
 
-            return new_io
-        elif isinstance(val, dict):
-            # Construct the dictionary and create a new order
-            return IODict(**val)
+                return new_io
+            else:
+                # Construct the dictionary and create a new order
+                return IODict(**val)
         else:
             # Construct the dict with the order supplied by the iterable
             return IODict(val)
