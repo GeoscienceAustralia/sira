@@ -13,16 +13,14 @@ import parmap
 
 import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
+from colorama import Fore, Back, Style
 
 from model_ingest import ingest_spreadsheet
 from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 from sifra.modelling.system_topology import SystemTopology
-
-import matplotlib.pyplot as plt
-
-import seaborn as sns
-from colorama import Fore, Back, Style
 
 formatter = '%(levelname)-8s %(message)s'
 logging.basicConfig(level=logging.INFO, format=formatter)
@@ -208,6 +206,7 @@ def post_processing(infrastructure, scenario, response_list):
     economic_loss_array = response_list[4]
     plot_mean_econ_loss(scenario, economic_loss_array)
     pe_by_component_class(response_list, infrastructure, scenario)
+
 
 def write_system_response(response_list, scenario):
 

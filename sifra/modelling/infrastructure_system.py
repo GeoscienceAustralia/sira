@@ -21,11 +21,6 @@ class IFSystem(Model):
     used to estimate the response to various hazard levels.
     """
 
-    name = Element('str', "The model's name", 'model')
-    description = Info('Represents a model (e.g. a "model of a powerstation")')
-
-    components = Element('IODict', 'The components that make up the infrastructure system', IODict)
-
     supply_nodes = Element('dict', 'The components that supply the infrastructure system', dict)
     output_nodes = Element('dict', 'The components that output from the infrastructure system', dict)
 
@@ -46,6 +41,9 @@ class IFSystem(Model):
         :param kwargs: Objects making up the infrastructure
         """
         super(IFSystem, self).__init__(**kwargs)
+
+        if not self.components:
+            self.components = IODict()
 
         self.component_graph = ComponentGraph(self.components)
 
@@ -85,10 +83,6 @@ class IFSystem(Model):
                 'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
                 'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
             }
-
-    def add_component(self, name, component):
-        """Add a component to the component dict"""
-        self.components[name] = component
 
     def expose_to(self, hazard_level, scenario):
         """
@@ -382,8 +376,8 @@ class IFSystem(Model):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        return ['DS0 None','DS1 Slight','DS2 Moderate','DS3 Extensive',
-                'DS4 Complete']
+        return self.sys_dmg_states
+
 
     def get_dmg_scale_bounds(self, scenario):
         """
