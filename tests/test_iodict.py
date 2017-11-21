@@ -37,7 +37,7 @@ class TestIODict(unittest.TestCase):
         for index, val in enumerate(dser_vals):
             self.assertEquals(io_deser.index(index), val[1])
 
-    def test_dict_init(self):
+    def test_ki_dict_init(self):
         # create a string list of values
         dser_vals = {"{:02d}".format(v): chr(80-v) for v in range(33, 0, -1)}
         key_index = {x[0]: x[1] for x in enumerate(reversed(sorted(dser_vals.keys())))}
@@ -55,6 +55,19 @@ class TestIODict(unittest.TestCase):
             self.assertEquals(io_deser.index(index_key), io_deser[io_key])
 
         # check that the index references the correct value in list
-        for index, val in enumerate(dser_vals):
-            self.assertEquals(io_deser.index(index), val[1])
+        for index, val in enumerate(io_deser.values()):
+            self.assertEquals(io_deser.index(index), val)
 
+    def test_dict_init(self):
+        # create a string list of values
+        dser_vals = {"{:02d}".format(v): chr(80-v) for v in range(33, 0, -1)}
+
+        # create the io dict from the string
+        io_deser = IODict.__pythonify__(dser_vals)
+
+        # check length
+        self.assertTrue(len(io_deser) == 33)
+
+        # check that all items are matched in both dicts
+        for  io_key in io_deser.keys():
+            self.assertEquals(dser_vals[io_key], io_deser[io_key])

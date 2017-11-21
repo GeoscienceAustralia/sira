@@ -34,7 +34,6 @@ class Unreachable_from_elements(object):
         return {'class': [type(self).__module__, type(self).__name__]}
 
 
-
 class StepFunc(ResponseModel):
     xys = Element('XYPairs', 'A list of X, Y pairs.', list,
         [lambda xy: [(float(x), float(y)) for x, y in xy]])
@@ -54,8 +53,6 @@ class StepFunc(ResponseModel):
                 return y
 
         raise ValueError('value is greater than all xs!')
-
-
 
 
 class LogNormalCDF(ResponseModel):
