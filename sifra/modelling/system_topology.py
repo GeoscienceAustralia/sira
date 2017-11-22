@@ -5,6 +5,8 @@ import networkx as nx
 import re
 
 # -----------------------------------------------------------------------------
+from networkx.readwrite.json_graph import node_link_data
+
 
 class SystemTopology(object):
 
@@ -82,14 +84,19 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw graph using pygraphviz, and define general node & edge attributes
         G = self.infrastructure.component_graph.comp_graph
+        graphml_file = os.path.join(output_path, fname + '.graphml')
+        G.write_graphml(graphml_file)
+
         elist = G.get_edgelist()
         named_elist = []
-        for t in elist:
-            named_elist.append((G.vs[t[0]]['name'],
-                                G.vs[t[1]]['name']))
-        A = nx.DiGraph(named_elist)
+        for tpl in elist:
+            named_elist.append((G.vs[tpl[0]]['name'],
+                                G.vs[tpl[1]]['name']))
+        nxG = nx.DiGraph(named_elist)
+        # nx.set_node_attributes(nxG, attr_name, dict)
+        print(self.component_attr)
 
-        self.gviz = nx.nx_agraph.to_agraph(A)
+        self.gviz = nx.nx_agraph.to_agraph(nxG)
 
         self.gviz.graph_attr.update(
             resolution=200,
@@ -205,10 +212,14 @@ class SystemTopology(object):
         if viewcontext == "as-built":
             self.gviz.write(os.path.join(output_path, fname + '.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
-                   format='png', prog='dot')
+                format='png', prog='dot')
 
-            self.gviz.draw(os.path.join(output_path, fname + '.svg'),
-               format='svg', prog='dot', args='-Gsize=11,8\! -Gdpi=300')
+        self.gviz.draw(os.path.join(output_path, fname + '.svg'),
+            format='svg', prog='dot', args='-Gsize=11,8\! -Gdpi=300')
+
+        # nx.readwrite.json_graph.node_link_data(self.gviz,
+        #                   os.path.join(output_path, fname + '.json'))
+
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
