@@ -39,18 +39,21 @@ def run_scenario(config_file):
                  Style.RESET_ALL)
 
     scenario = Scenario(config_file)
-    logging.info(Style.BRIGHT + Fore.YELLOW +
-                 "Done." +
-                 Style.RESET_ALL)
-    logging.info(Style.BRIGHT + Fore.GREEN +
-                 "Initiating model run...\n" +
-                 Style.RESET_ALL)
+    logging.info(Style.BRIGHT + Fore.YELLOW + "Done.\n" + Style.RESET_ALL)
 
     # `IFSystem` object that contains a list of components
+    logging.info(Style.BRIGHT + Fore.GREEN +
+                 "Building infrastructure system model... " +
+                 Style.RESET_ALL)
     infrastructure = ingest_spreadsheet(config_file)
-
     sys_topology_view = SystemTopology(infrastructure, scenario)
     sys_topology_view.draw_sys_topology(viewcontext="as-built")
+    logging.info(Style.BRIGHT + Fore.YELLOW + "Done.\n" + Style.RESET_ALL)
+
+    logging.info(Style.BRIGHT + Fore.GREEN +
+                 "Initiating model run..." +
+                 Style.RESET_ALL)
+
 
     post_processing_list = calculate_response(scenario, infrastructure)
     # After the response has been calculated the post processing
