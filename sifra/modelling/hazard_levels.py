@@ -3,26 +3,33 @@ import numpy as np
 
 class HazardLevels(object):
     """
+    A range of hazard levels that are created from the scenario values.
 
+    The idea is to abstract the number and type of hazards to allow greater
+    flexibility in the type and number of hazards to be modelled.
     """
-    def __init__(self, sc):
-        self.sc = sc
+    def __init__(self, scenario):
+        """Create the list of hazard levels from the scenario values"""
+        self.scenario = scenario
         self.num_hazard_pts = \
-            int(round((sc.haz_param_max - sc.haz_param_min) /
-                      float(sc.haz_param_step) + 1))
+            int(round((scenario.haz_param_max - scenario.haz_param_min) /
+                      float(scenario.haz_param_step) + 1))
 
         self.hazard_intensity_vals = \
-            np.linspace(sc.haz_param_min, sc.haz_param_max,
+            np.linspace(scenario.haz_param_min, scenario.haz_param_max,
                         num=self.num_hazard_pts)
 
     def hazard_range(self):
+        """A generator that can flexibly create hazard levels"""
         for hazard_intensity in self.hazard_intensity_vals:
-            yield HazardLevel(self.sc, hazard_intensity)
+            yield HazardLevel(self.scenario, hazard_intensity)
 
 
 class HazardLevel(object):
-    def __init__(self, sc, hazard_intensity):
-        self.intensity_measure_param = sc.intensity_measure_param
-        self.intensity_measure_unit = sc.intensity_measure_unit
+    """A particular level of hazard in the range of hazard levels."""
+    def __init__(self, scenario, hazard_intensity):
+        """Only the intensity is currently used."""
+        self.intensity_measure_param = scenario.intensity_measure_param
+        self.intensity_measure_unit = scenario.intensity_measure_unit
         self.hazard_intensity = hazard_intensity
 
