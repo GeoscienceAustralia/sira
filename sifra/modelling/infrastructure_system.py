@@ -10,8 +10,17 @@ from sifra.modelling.structural import (
 
 from sifra.modelling.component import Component
 from sifra.modelling.component_graph import ComponentGraph
-from sifra.modelling.model import Model
+from sifra.modelling.infrastructure_model import Model
 from sifra.modelling.iodict import IODict
+
+
+class IFSystemFactory(object):
+    @staticmethod
+    def create_model(config):
+        if config['system_class'].lower() == 'substation':
+            return SubStation(**config)
+        elif config['system_class'].lower() == 'powerstation':
+            return PowerStation(**config)
 
 
 class IFSystem(Model):
@@ -20,11 +29,6 @@ class IFSystem(Model):
     range of hazards. It encapsulates a number of components that are
     used to estimate the response to various hazard levels.
     """
-
-    name = Element('str', "The model's name", 'model')
-    description = Info('Represents a model (e.g. a "model of a powerstation")')
-
-    components = Element('IODict', 'The components that make up the infrastructure system', IODict)
 
     supply_nodes = Element('dict', 'The components that supply the infrastructure system', dict)
     output_nodes = Element('dict', 'The components that output from the infrastructure system', dict)
@@ -47,48 +51,10 @@ class IFSystem(Model):
         """
         super(IFSystem, self).__init__(**kwargs)
 
+        if not getattr(self, "components", None):
+            self.components = IODict()
+
         self.component_graph = ComponentGraph(self.components)
-
-        # TODO This assignment should be replaced by subclasses of IFSystem
-        # instantiated directly by the model creator
-        # This initiates some instance members with the correct configuration.
-        # Not sure why these aren't in the configuration file
-        # TODO Need to move these damage state limits into config file (MR)
-
-        if self.system_class.lower() == 'substation':
-            # Initiate the substation, note: this may not have been tested in this
-            # version of the code.
-            self.uncosted_classes = ['JUNCTION POINT',
-                                     'SYSTEM INPUT', 'SYSTEM OUTPUT',
-                                     'Generator', 'Bus', 'Lightning Arrester']
-            self.ds_lims_compclasses = {
-                'Disconnect Switch': [0.05, 0.40, 0.70, 0.99, 1.00],
-                'Circuit Breaker': [0.05, 0.40, 0.70, 0.99, 1.00],
-                'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-                'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-                'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-                'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]
-            }
-        elif self.system_class.lower() == 'powerstation':
-            # Initiate the power station values, which have been used in all current
-            # testing
-            self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
-            self.ds_lims_compclasses = {
-                'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Emission Management': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Fuel Delivery and Storage': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Fuel Movement': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Stepup Transformer': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
-                'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
-            }
-
-    def add_component(self, name, component):
-        """Add a component to the component dict"""
-        self.components[name] = component
 
     def expose_to(self, hazard_level, scenario):
         """
@@ -382,8 +348,8 @@ class IFSystem(Model):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        return ['DS0 None','DS1 Slight','DS2 Moderate','DS3 Extensive',
-                'DS4 Complete']
+        return self.sys_dmg_states
+
 
     def get_dmg_scale_bounds(self, scenario):
         """
@@ -404,3 +370,39 @@ class IFSystem(Model):
         for component in self.components.itervalues():
             yield component.component_class
 
+
+class SubStation(IFSystem):
+    def __init__(self, **kwargs):
+        super(IFSystem, self).__init__(**kwargs)
+        # Initiate the substation, note: this may not have been tested in this
+        # version of the code.
+        self.uncosted_classes = ['JUNCTION POINT',
+                                 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+                                 'Generator', 'Bus', 'Lightning Arrester']
+        self.ds_lims_compclasses = {
+            'Disconnect Switch': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Circuit Breaker': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00] }
+
+
+class PowerStation(IFSystem):
+    def __init__(self, **kwargs):
+        super(IFSystem, self).__init__(**kwargs)
+        # Initiate the power station values, which have been used in all current
+        # testing
+        self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
+        self.ds_lims_compclasses = {
+            'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Emission Management': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Fuel Delivery and Storage': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Fuel Movement': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Stepup Transformer': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
+        }

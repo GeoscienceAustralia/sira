@@ -3,14 +3,14 @@ import pandas as pd
 from sifraclasses import _FacilityDataGetter
 
 from sifra.modelling.component import (Component,
-                                 ConnectionValues)
+                                       ConnectionValues)
 
 from sifra.modelling.iodict import IODict
 
-from sifra.modelling.infrastructure_system import IFSystem
+from sifra.modelling.infrastructure_system import IFSystemFactory
 
-from sifra.modelling.responsemodels import (LogNormalCDF,NormalCDF,StepFunc,
-                                            Level0Response,Level0Recovery,
+from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
+                                            Level0Response, Level0Recovery,
                                             DamageAlgorithm, RecoveryState,
                                             RecoveryAlgorithm)
 
@@ -18,6 +18,11 @@ import copy
 
 
 def ingest_spreadsheet(config):
+    """
+    Create an infrastructure_model from the config 
+    :param config:
+    :return:
+    """
     facility_data = _FacilityDataGetter(config)
     component_dict = IODict()
 
@@ -138,4 +143,4 @@ def ingest_spreadsheet(config):
     # set the system class
     if_system_values['system_class'] = facility_data.system_class
 
-    return IFSystem(**if_system_values)
+    return IFSystemFactory.create_model(if_system_values)
