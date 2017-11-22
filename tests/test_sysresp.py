@@ -5,7 +5,7 @@ import cPickle
 import numpy as np
 import logging
 
-from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
+from sifra.sysresponse import calc_loss_arrays, calc_sys_output
 from sifra.sifraclasses import FacilitySystem, Scenario
 
 logging.basicConfig(level=logging.INFO)

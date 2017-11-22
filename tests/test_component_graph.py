@@ -9,8 +9,9 @@ from sifra.sifraclasses import FacilitySystem, Scenario
 from infrastructure_response import calculate_response, ingest_spreadsheet
 
 config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
-series_config ='/opt/project/tests/test_simple_series_struct.conf'
+series_config = '/opt/project/tests/test_simple_series_struct.conf'
 parallel_config = '/opt/project/tests/test_simple_parallel_struct.conf'
+dependent_config = '/opt/project/tests/test_simple_series_struct_dep.conf'
 
 
 class TestComponentGraph(unittest.TestCase):
@@ -139,7 +140,7 @@ class TestComponentGraph(unittest.TestCase):
             print("\nif graph")
             infrastructure.component_graph.dump_graph()
 
-    def test_small_changes_in_series(self):
+    def test_func_changes_in_series(self):
         series_if = ingest_spreadsheet(series_config)
         function_array = np.ones(len(series_if.components))
         pga_range = np.arange(1.0, 0.0, -0.001)
@@ -164,33 +165,91 @@ class TestComponentGraph(unittest.TestCase):
         series_if.component_graph.dump_graph()
         logging.info("test complete")
 
-    def test_small_changes_in_parallel(self):
+    def test_func_changes_in_parallel(self):
         logging.info("\n")
         series_if = ingest_spreadsheet(parallel_config)
-        function_array = np.ones(len(series_if.components))
         pga_range = np.arange(1.0, 0.0, -0.001)
-        results = np.zeros(pga_range.shape)
-        logging.info("parallel n1")
-        for index, test_pga in enumerate(pga_range):
-            function_array[1] = test_pga
-            max_flow = series_if.compute_output_given_ds(function_array)
-            results[index] = max_flow
 
-        self.dump_stats(pga_range, results, "parallel n1")
-        series_if.component_graph.dump_graph()
-        function_array = np.ones(len(series_if.components))
-        results_2 = np.zeros(pga_range.shape)
-        logging.info("parallel n2")
-        for index, test_pga in enumerate(pga_range):
-            function_array[2] = test_pga
-            max_flow = series_if.compute_output_given_ds(function_array)
-            results_2[index] = max_flow
+        for node_number in [1, 2, 3]:
+            results = np.zeros(pga_range.shape)
+            function_array = np.ones(len(series_if.components))
+            logging.info("parallel n{}".format(node_number))
+            for index, test_pga in enumerate(pga_range):
+                function_array[node_number] = test_pga
+                max_flow = series_if.compute_output_given_ds(function_array)
+                results[index] = max_flow
 
-        self.dump_stats(pga_range, results_2, "parallel n2")
-        series_if.component_graph.dump_graph()
+            self.dump_stats(pga_range, results, "parallel_n{}".format(node_number))
+            series_if.component_graph.dump_graph()
+
         logging.info("test complete")
 
-    def dump_stats(self, pga_range, results_array, title):
+    def test_ds_iteration_in_para(self):
+        logging.info("\n")
+        series_if = ingest_spreadsheet(parallel_config)
+        ds_range = np.arange(0, 5)
+
+        for node_number in [1, 2, 3]:
+            results = np.zeros(ds_range.shape)
+            function_array = np.ones(len(series_if.components))
+            logging.info("parallel n{}".format(node_number))
+            for index, test_ds in enumerate(ds_range):
+                component = series_if.components.index(node_number)
+                function_array[node_number] = component.frag_func.damage_states.index(test_ds).functionality
+                max_flow = series_if.compute_output_given_ds(function_array)
+                results[index] = max_flow
+
+            self.dump_stats(ds_range,
+                            results,
+                            "ds_para n{}".format(node_number),
+                            "damage state")
+            series_if.component_graph.dump_graph()
+
+        logging.info("test complete")
+
+    def test_func_changes_in_dep(self):
+        logging.info("\n")
+        series_if = ingest_spreadsheet(dependent_config)
+        pga_range = np.arange(1.0, 0.0, -0.001)
+
+        for node_number in [1, 4, 3]:
+            results = np.zeros(pga_range.shape)
+            function_array = np.ones(len(series_if.components))
+            logging.info("dep_n{}".format(node_number))
+            for index, test_pga in enumerate(pga_range):
+                function_array[node_number] = test_pga
+                max_flow = series_if.compute_output_given_ds(function_array)
+                results[index] = max_flow
+
+            self.dump_stats(pga_range, results, "dep_n{}".format(node_number))
+            series_if.component_graph.dump_graph()
+
+        logging.info("test complete")
+
+    def test_ds_iteration_in_dep(self):
+        logging.info("\n")
+        series_if = ingest_spreadsheet(dependent_config)
+        ds_range = np.arange(0, 5)
+
+        for node_number in [1, 4, 3]:
+            results = np.zeros(ds_range.shape)
+            function_array = np.ones(len(series_if.components))
+            logging.info("dep_n{}".format(node_number))
+            for index, test_ds in enumerate(ds_range):
+                component = series_if.components.index(node_number)
+                function_array[node_number] = component.frag_func.damage_states.index(test_ds).functionality
+                max_flow = series_if.compute_output_given_ds(function_array)
+                results[index] = max_flow
+
+            self.dump_stats(ds_range,
+                            results,
+                            "ds_dep_n{}".format(node_number),
+                            "damage state")
+            series_if.component_graph.dump_graph()
+
+        logging.info("test complete")
+
+    def dump_stats(self, pga_range, results_array, title, x_label="functionality %"):
         import matplotlib.pyplot as plt
 
         logging.info("mean {}".format(np.mean(results_array)))
@@ -202,6 +261,6 @@ class TestComponentGraph(unittest.TestCase):
         ax.axis([pga_range[0], pga_range[-1], 0, max(results_array)+10])
         ax.scatter(pga_range, results_array)
         ax.set_title(title)
-        ax.set_xlabel("functionality %")
+        ax.set_xlabel(x_label)
         ax.set_ylabel("flow")
         fig.savefig(title+'.png', format='png', bbox_inches='tight', dpi=300)
