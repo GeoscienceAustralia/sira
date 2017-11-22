@@ -1,12 +1,10 @@
 from __future__ import print_function
 import os
-import sys
 import networkx as nx
 import re
-
-# -----------------------------------------------------------------------------
 from networkx.readwrite.json_graph import node_link_data
 
+# -----------------------------------------------------------------------------
 
 class SystemTopology(object):
 
@@ -93,8 +91,6 @@ class SystemTopology(object):
             named_elist.append((G.vs[tpl[0]]['name'],
                                 G.vs[tpl[1]]['name']))
         nxG = nx.DiGraph(named_elist)
-        # nx.set_node_attributes(nxG, attr_name, dict)
-        print(self.component_attr)
 
         self.gviz = nx.nx_agraph.to_agraph(nxG)
 
