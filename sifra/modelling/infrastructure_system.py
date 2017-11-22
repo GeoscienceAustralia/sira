@@ -78,7 +78,7 @@ class IFSystem(Model):
         if_sample_economic_loss, \
         if_output_given_recovery = self.calc_output_loss(scenario, component_damage_state_ind)
 
-        # Construct the dictionary containing the statisitics of the response
+        # Construct the dictionary containing the statistics of the response
         component_response = self.calc_response(component_sample_loss,
                                                 comp_sample_func,
                                                 component_damage_state_ind)

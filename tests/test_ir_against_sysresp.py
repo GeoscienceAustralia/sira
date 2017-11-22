@@ -11,8 +11,8 @@ from sifra.sifraclasses import FacilitySystem, Scenario
 from infrastructure_response import calculate_response, ingest_spreadsheet
 
 logging.basicConfig(level=logging.INFO)
-ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
 config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
+ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
 
 
 class TestNewModel(unittest.TestCase):

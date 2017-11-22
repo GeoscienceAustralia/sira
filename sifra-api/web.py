@@ -7,8 +7,8 @@ from flask_wtf.csrf import CSRFProtect
 
 from sifra.modelling.component_db import getComponentCategories, getAllInstances, getInstance
 from sifra.modelling.responsemodels import *
-from sifra.modelling.structural import class_getter, Pythonizer
-from sifra.modelling.utils import get_all_subclasses
+from sifra.modelling.structural import class_getter
+from sifra.modelling.utils import get_all_subclasses, pythonify
 
 csrf = CSRFProtect()
 app = Flask(__name__)
@@ -108,7 +108,7 @@ def instancesOf(class_name):
 @app.route('/instance/<instance_name>')
 @_errorWrapper
 def instance(instance_name):
-    inst = Pythonizer()(getInstance(instance_name))
+    inst = pythonify(getInstance(instance_name))
     return jsonify(inst.jsonify_with_metadata())
 
 
@@ -120,7 +120,7 @@ def save():
     data = json.loads(request.data)
     category = data.pop('component_sector', None)
     attrs = data.pop('attributes', None)
-    inst = Pythonizer()(data)
+    inst = pythonify(data)
     oid = inst.save(
         category=category,
         attributes=attrs)
