@@ -373,7 +373,7 @@ class IFSystem(Model):
 
 class SubStation(IFSystem):
     def __init__(self, **kwargs):
-        super(IFSystem, self).__init__(**kwargs)
+        super(SubStation, self).__init__(**kwargs)
         # Initiate the substation, note: this may not have been tested in this
         # version of the code.
         self.uncosted_classes = ['JUNCTION POINT',
@@ -390,7 +390,7 @@ class SubStation(IFSystem):
 
 class PowerStation(IFSystem):
     def __init__(self, **kwargs):
-        super(IFSystem, self).__init__(**kwargs)
+        super(PowerStation, self).__init__(**kwargs)
         # Initiate the power station values, which have been used in all current
         # testing
         self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
