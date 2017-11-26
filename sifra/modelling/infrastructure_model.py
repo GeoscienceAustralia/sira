@@ -18,3 +18,27 @@ class Model(Base):
         """Add a component to the component dict"""
         self.components[name] = component
 
+    def save(self):
+        res = jsonify(self)
+
+        clazz = '.'.join(obj['class'])
+        session = _Session()
+
+        try:
+            document = Document(json_doc=json.dumps(obj))
+            session.add(document)
+            # call flush here to get the document's id (the default name)
+            session.flush()
+            _addAttributes(document, attributes)
+            component = Component(
+                category=category,
+                document=document,
+                clazz=clazz)
+            session.add(component)
+            session.commit()
+            return component.id
+        except Exception, e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()

@@ -6,7 +6,7 @@ import logging
 
 from sifra.modelling.utils import jsonify, pythonify
 from sifra.modelling.infrastructure_system import IFSystem
-from infrastructure_response import ingest_spreadsheet
+from model_ingest import ingest_spreadsheet
 
 logging.basicConfig(level=logging.INFO)
 ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'

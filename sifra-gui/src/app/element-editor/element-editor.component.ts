@@ -26,13 +26,20 @@ import { ClassMetadataService } from '../class-metadata.service';
                 <template [ngIf]="key !== 'class' && classDef[key].class!=='sifra.modelling.structural.Info'">
                     <div [ngSwitch]="classDef[key].class">
 
-                        <string-display *ngSwitchCase="'__builtin__.string'"
+                        <string-display *ngSwitchCase="'__builtin__.str'"
                             [name]="key"
                             [value]="classDef[key]"
                             (publish)="doPublish($event)">
                         </string-display>
 
                         <string-display *ngSwitchCase="'__builtin__.float'"
+                            [name]="key"
+                            [value]="classDef[key]"
+                            [numeric]="true"
+                            (publish)="doPublish($event)">
+                        </string-display>
+
+                        <string-display *ngSwitchCase="'__builtin__.int'"
                             [name]="key"
                             [value]="classDef[key]"
                             [numeric]="true"
