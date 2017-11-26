@@ -5,7 +5,7 @@ RUN apt-get install -y pkg-config
 RUN apt-get install -y graphviz libgraphviz-dev
 RUN apt-get install -y xml2 libxml2-dev
 RUN apt-get install -y python-pip python-dev
-RUN apt-get install -y python-tk
+# RUN apt-get install -y python-tk
 RUN pip install --upgrade pip
 RUN pip install numpy
 RUN pip install pandas

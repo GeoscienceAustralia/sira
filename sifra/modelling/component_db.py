@@ -11,11 +11,13 @@ from sifra.modelling.utils import get_all_subclasses
 
 _Base = declarative_base()
 
+
 class Document(_Base):
     __tablename__ = "documents"
     id = Column(Integer, primary_key=True)
     json_doc = Column(String())
     attributes = relationship('DocumentAttribute', cascade='all, delete-orphan')
+
 
 class DocumentAttribute(_Base):
     __tablename__ = "document_attributes"
@@ -23,6 +25,7 @@ class DocumentAttribute(_Base):
     document_id = Column(Integer, ForeignKey('documents.id'))
     name = Column(String(32))
     value = Column(String())
+
 
 class ComponentCategory(_Base):
     __tablename__ = "component_categories"
@@ -33,6 +36,7 @@ class ComponentCategory(_Base):
     hazard = Column(String(length=32))
     UniqueConstraint(component, sector, facility_type, hazard)
 
+
 class Component(_Base):
     __tablename__ = "components"
     id = Column(Integer, primary_key=True)
@@ -42,6 +46,7 @@ class Component(_Base):
     document = relationship('Document', backref=backref('documents', order_by=id))
     category_id = Column(Integer, ForeignKey('component_categories.id'))
     category = relationship('ComponentCategory', backref=backref('components', order_by=id))
+    attributes = relationship('ComponentAttribute', cascade='all, delete-orphan')
 
     @property
     def json_doc(self):
@@ -50,6 +55,25 @@ class Component(_Base):
     @property
     def attributes(self):
         return self.document.attributes
+
+
+class Model(_Base):
+    __tablename__ = "models"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(), unique=True)
+    description = Column(String(), unique=True)
+
+    document_id = Column(Integer, ForeignKey('documents.id'))
+    document = relationship('Document', backref=backref('documents', order_by=id))
+
+    @property
+    def json_doc(self):
+        return self.document.json_doc
+
+    @property
+    def attributes(self):
+        return self.document.attributes
+
 
 def getComponentCategories(hazard=None, sector=None, facility_type=None, component=None):
     # convert anything that evaluates to false to None
@@ -76,12 +100,14 @@ def getComponentCategories(hazard=None, sector=None, facility_type=None, compone
         'facilities': list(set((row.facility_type for row in rows))),
         'components': list(set((row.component for row in rows)))}
 
+
 def getComponentCategory(session, hazard, sector, facility_type, component):
     return session.query(ComponentCategory) \
         .filter(ComponentCategory.hazard == hazard) \
         .filter(ComponentCategory.sector == sector) \
         .filter(ComponentCategory.facility_type == facility_type) \
         .filter(ComponentCategory.component == component).one()
+
 
 def getAllInstances(cls):
     def getName(component):
@@ -94,6 +120,7 @@ def getAllInstances(cls):
         Component.clazz.in_(get_all_subclasses(cls)))
     return [{'name': getName(r), 'id': r.id} for r in components.all()]
 
+
 def getInstance(instance_id):
     session = _Session()
     return json.loads(session.query(Component).filter(
@@ -105,6 +132,7 @@ _engine = create_engine(
     connect_args={'check_same_thread': False},
     poolclass=StaticPool)
 _Session = sessionmaker(bind=_engine)
+
 
 if BUILD_DB_TABLES:
     _Base.metadata.create_all(_engine)

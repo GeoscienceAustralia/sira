@@ -9,7 +9,6 @@ from sifra.modelling.component_db import (
     getComponentCategory)
 
 
-
 class SerialisationProvider(object):
     """
     Provides access to an object that can be used to serialise models or other
@@ -57,8 +56,9 @@ class SqliteDBProxy(object):
 
         clazz = '.'.join(obj['class'])
         session = _Session()
-        if category is not None:
+        if isinstance(category, dict):
             category = getComponentCategory(session, **category)
+
         try:
             document = Document(json_doc=json.dumps(obj))
             session.add(document)

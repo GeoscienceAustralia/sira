@@ -17,7 +17,6 @@ app.config['SECRET_KEY'] = 'super-secret'
 CORS(app)
 
 
-
 class InvalidUsage(Exception):
     status_code = 500
 
@@ -34,7 +33,6 @@ class InvalidUsage(Exception):
         return rv
 
 
-
 def _errorWrapper(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -45,7 +43,6 @@ def _errorWrapper(func):
     return wrapper
 
 
-
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
@@ -53,12 +50,10 @@ def handle_invalid_usage(error):
     return response
 
 
-
 @app.route('/')
 @_errorWrapper
 def index():
     return jsonify({'version': 0.0, 'message': 'Hello!'})
-
 
 
 @app.route('/sector-lists')
@@ -71,14 +66,12 @@ def componentTopology():
         **{k.strip(): v.strip() for k, v in request.args.iteritems()}))
 
 
-
 @app.route('/class-types')
 @_errorWrapper
 def classTypes():
     # at the moment this just returns response models
     res = [c.__json_desc__['class'] for c in ResponseModel.__subclasses__()]
     return jsonify(res)
-
 
 
 @app.route('/class-def/<class_name>')
@@ -90,12 +83,10 @@ def classDef(class_name):
     return jsonify({'error': 'class "{}" does not exist'.format(class_name)})
 
 
-
 @app.route('/sub-classes-of/<class_name>')
 @_errorWrapper
 def subClassesOf(class_name):
     return jsonify(get_all_subclasses(class_getter(class_name.rsplit('.', 1))))
-
 
 
 @app.route('/instances-of/<class_name>')
@@ -104,13 +95,11 @@ def instancesOf(class_name):
     return jsonify(getAllInstances(class_getter(class_name.rsplit('.', 1))))
 
 
-
 @app.route('/instance/<instance_name>')
 @_errorWrapper
 def instance(instance_name):
     inst = pythonify(getInstance(instance_name))
     return jsonify(inst.jsonify_with_metadata())
-
 
 
 @csrf.exempt

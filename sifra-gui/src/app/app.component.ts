@@ -136,7 +136,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.getLevels();
         // get the existing components (which are used to populate the list),
-        this.classMetadataService.getInstancesOf('sifra.modelling.elements.ResponseModel')
+        this.classMetadataService.getInstancesOf('sifra.modelling.responsemodels.ResponseModel')
             .subscribe(
                 components => this.components = components,
                 error => alert(error)
