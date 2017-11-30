@@ -356,10 +356,13 @@ class Base(object):
 
         self.__validate__()
         res = {'class': [type(self).__module__, type(self).__name__]}
-        res.update({
-            jsonify(k): v.to_json(getattr(self, k))
-            for k, v in self.__params__.iteritems()
-            if hasattr(self, k)})
+
+        for k, v in vars(self).items():
+            if hasattr(v, '__jsonify__'):
+                res[k] = v.__jsonify__()
+            else:
+                res[k] = jsonify(v)
+
         return res
 
     def jsonify_with_metadata(self):
@@ -375,12 +378,12 @@ class Base(object):
         _merge_data_and_metadata(meta, data)
         return meta
 
-    def save(self, category=None, attributes=None):
+    def save(self, attributes=None):
         """
         Save this instance.
         """
 
-        res = jsonify(self)
+        res = self.__jsonify__()
 
         if isinstance(self._predecessor, self.__class__):
             res['predecessor'] = self._predecessor._id
@@ -389,7 +392,6 @@ class Base(object):
 
         self._predecessor = self.get_db().save(
             res,
-            category=category,
             attributes=attributes)
 
         return self._predecessor

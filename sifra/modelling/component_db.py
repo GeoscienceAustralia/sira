@@ -12,29 +12,11 @@ from sifra.modelling.utils import get_all_subclasses
 _Base = declarative_base()
 
 
-class Document(_Base):
-    __tablename__ = "documents"
-    id = Column(Integer, primary_key=True)
-    json_doc = Column(String())
-    attributes = relationship('DocumentAttribute', cascade='all, delete-orphan')
-
-
-class DocumentAttribute(_Base):
-    __tablename__ = "document_attributes"
-    id = Column(Integer, primary_key=True)
-    document_id = Column(Integer, ForeignKey('documents.id'))
-    name = Column(String(32))
+class Attribute(_Base):
+    __tablename__ = "attributes"
+    document_id = Column(Integer, primary_key=True)
+    name = Column(String(32), primary_key=True)
     value = Column(String())
-
-
-class ComponentCategory(_Base):
-    __tablename__ = "component_categories"
-    id = Column(Integer, primary_key=True)
-    component = Column(String(length=32))
-    sector = Column(String(length=32))
-    facility_type = Column(String(length=32))
-    hazard = Column(String(length=32))
-    UniqueConstraint(component, sector, facility_type, hazard)
 
 
 class Component(_Base):
@@ -42,11 +24,7 @@ class Component(_Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(), unique=True)
     clazz = Column(String())
-    document_id = Column(Integer, ForeignKey('documents.id'))
-    document = relationship('Document', backref=backref('documents', order_by=id))
-    category_id = Column(Integer, ForeignKey('component_categories.id'))
-    category = relationship('ComponentCategory', backref=backref('components', order_by=id))
-    attributes = relationship('ComponentAttribute', cascade='all, delete-orphan')
+    attributes = relationship('Attribute', cascade='all, delete-orphan')
 
     @property
     def json_doc(self):
@@ -61,18 +39,14 @@ class Model(_Base):
     __tablename__ = "models"
     id = Column(Integer, primary_key=True)
     name = Column(String(), unique=True)
-    description = Column(String(), unique=True)
+    clazz = Column(String())
 
-    document_id = Column(Integer, ForeignKey('documents.id'))
-    document = relationship('Document', backref=backref('documents', order_by=id))
-
-    @property
-    def json_doc(self):
-        return self.document.json_doc
+    components_json = Column(String())
+    attributes = relationship('Attribute', cascade='all, delete-orphan')
 
     @property
     def attributes(self):
-        return self.document.attributes
+        return self.attributes
 
 
 def getComponentCategories(hazard=None, sector=None, facility_type=None, component=None):
@@ -83,16 +57,16 @@ def getComponentCategories(hazard=None, sector=None, facility_type=None, compone
     component = component or None
 
     session = _Session()
-    rows = session.query(ComponentCategory)
+    rows = session.query(Attribute)
 
     if hazard is not None:
-        rows = rows.filter(ComponentCategory.hazard == hazard)
+        rows = rows.filter(Attribute.name == hazard)
     if sector is not None:
-        rows = rows.filter(ComponentCategory.sector == sector)
+        rows = rows.filter(Attribute.name == sector)
     if facility_type is not None:
-        rows = rows.filter(ComponentCategory.facility_type == facility_type)
+        rows = rows.filter(Attribute.name == facility_type)
     if component is not None:
-        rows = rows.filter(ComponentCategory.component == component)
+        rows = rows.filter(Attribute.name == component)
 
     return {
         'hazards': list(set((row.hazard for row in rows))),
@@ -102,11 +76,11 @@ def getComponentCategories(hazard=None, sector=None, facility_type=None, compone
 
 
 def getComponentCategory(session, hazard, sector, facility_type, component):
-    return session.query(ComponentCategory) \
-        .filter(ComponentCategory.hazard == hazard) \
-        .filter(ComponentCategory.sector == sector) \
-        .filter(ComponentCategory.facility_type == facility_type) \
-        .filter(ComponentCategory.component == component).one()
+    return session.query(Attribute) \
+        .filter(Attribute.name == hazard) \
+        .filter(Attribute.name == sector) \
+        .filter(Attribute.name == facility_type) \
+        .filter(Attribute.name == component).one()
 
 
 def getAllInstances(cls):
@@ -142,6 +116,6 @@ if BUILD_DB_TABLES:
         _reader = csv.DictReader(cin)
         _rows = {tuple(r.values()): r for r in _reader}
         for _row in _rows.itervalues():
-            _session.add(ComponentCategory(**_row))
+            _session.add(Attribute(**_row))
         _session.commit()
 
