@@ -3,8 +3,12 @@ from sifra.modelling.structural import (
     Info,
     Base)
 
-from sifra.modelling.component import Component
 from sifra.modelling.iodict import IODict
+from sifra.modelling.utils import jsonify, pythonify
+
+from sifra.modelling.component_db import (
+    _Session,
+    Model as ModelRow)
 
 
 class Model(Base):
@@ -21,24 +25,29 @@ class Model(Base):
     def save(self):
         res = jsonify(self)
 
-        clazz = '.'.join(obj['class'])
+        clazz = '.'.join(res['class'])
+        model_name = res['name']
         session = _Session()
 
         try:
-            document = Document(json_doc=json.dumps(obj))
-            session.add(document)
-            # call flush here to get the document's id (the default name)
-            session.flush()
-            _addAttributes(document, attributes)
-            component = Component(
-                category=category,
-                document=document,
-                clazz=clazz)
-            session.add(component)
+            # _addAttributes(res)
+            model_db = ModelRow(
+                name=model_name,
+                clazz=clazz,
+                components_json=str(res)
+            )
+            session.add(model_db)
             session.commit()
-            return component.id
+            return model_db.id
         except Exception, e:
             session.rollback()
             raise e
         finally:
             session.close()
+
+    def get(self, obj_id):
+        session = _Session()
+        instance = session.query(Model).filter(Model.id == obj_id).one()
+        res = pythonify(instance.json_doc)
+        session.close()
+        return res

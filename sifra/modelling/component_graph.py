@@ -43,7 +43,7 @@ class ComponentGraph(object):
                 if component.node_type == 'dependency':
                     # combine the dependent nodes functionality
                     # TODO investigate the correctness of the logic of the following
-                    comp_sample_func[dest_index] *= comp_sample_func[comp_index]
+                    self.update_dependency(comp_sample_func, comp_index, dest_index)
 
                 # Is the child node in the graph
                 if len(self.comp_graph.vs) == 0 or dest_comp_id not in self.comp_graph.vs['name']:
@@ -73,12 +73,17 @@ class ComponentGraph(object):
                 if component.node_type == 'dependency':
                     # combine the dependent vertices functionality with the parents
                     # TODO investigate the correctness of the logic of the following
-                    comp_sample_func[dest_index] *= comp_sample_func[comp_index]
+                    self.update_dependency(comp_sample_func, comp_index, dest_index)
 
                 # Determine the edge id from the id's of the parent and child node
                 edge_id = self.comp_graph.get_eid(comp_id, dest_comp_id)
                 # update the edge dict with the functionality of the parent vertice
                 self.comp_graph.es[edge_id]['capacity'] = comp_sample_func[comp_index]
+
+    def update_dependency(self,comp_sample_func, parent, dependent):
+        min_capacity = min(comp_sample_func[parent], comp_sample_func[dependent])
+        comp_sample_func[dependent] = min_capacity
+
 
     def dump_graph(self, external=None):
         """

@@ -368,7 +368,7 @@ def multiprocess_enabling_loop(idxPGA, _PGA_dummy, nPGA, fc, sc):
 def calc_loss_arrays(fc, sc, component_resp_df, parallel_proc):
 
     # logging.info("\nCalculating system response to hazard transfer parameters...")
-    component_resp_dict = component_resp_df.to_dict()
+    component_resp_dict = dict()
     sys_output_dict = {k: {o: 0 for o in fc.network.out_node_list}
                        for k in sc.hazard_intensity_str}
     ids_comp_vs_haz = {p: np.zeros((sc.num_samples, fc.num_elements))

@@ -4,21 +4,21 @@ import unittest as ut
 from sifra.modelling.structural import (
     Base,
     Element,
-    ValidationError,
     jsonify,
-    AlreadySavedException,
     MultipleBasesOfTypeBaseError,
     pythonify)
 
 from modelling.responsemodels import ResponseModel
-
 from sifra.modelling.component import Component
-
 from sifra.modelling.infrastructure_system import IFSystem
 
 from sifra.modelling.structures import (
     XYPairs)
 
+from sifra.settings import SQLITE_TEST_DB_FILE
+
+# TODO setup a test database
+DB_CONNECTION_STRING = 'sqlite:///{}'.format(SQLITE_TEST_DB_FILE)
 
 
 class Unreachable_from_elements(object):
@@ -47,7 +47,6 @@ class StepFunc(ResponseModel):
         """
         Note that intervals are closed on the right.
         """
-
         for x, y in self.xys:
             if value < x:
                 return y
@@ -68,10 +67,33 @@ class LogNormalCDF(ResponseModel):
 
 class Test1(ut.TestCase):
     def setUp(self):
-        self.model = IFSystem()
-        frag_curve = StepFunc(xys=XYPairs([[1.,0.], [2.,.5], [3.,1.]]))
-        boiler = Component(frag_func=frag_curve)
-        turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
+        self.model = IFSystem(name="model_test")
+        frag_curve = StepFunc(xys=XYPairs([[1., 0.], [2., .5], [3., 1.]]))
+
+        boiler_dict = {'frag_func': frag_curve,
+                       'operating_capacity': 1.0,
+                       'component_type': 'Boiler',
+                       'component_class': 'Boiler System',
+                       'destination_components': ['precip_1a', 'precip_1b'],
+                       'node_cluster': 'Boiler System',
+                       'cost_fraction': 0.1443,
+                       'node_type': 'transshipment',
+                       'recovery_func': [3.0, 0.61, 1.0]}
+
+        boiler = Component(**boiler_dict)
+
+        frag_func = LogNormalCDF(median=0.1, beta=0.5)
+        turbine_dict = {'frag_func': frag_func,
+                        'operating_capacity': 1.0,
+                        'component_type': 'Turbine and Condenser',
+                        'component_class': 'Condenser',
+                        'destination_components': ['gen_1', 'gen_2'],
+                        'node_cluster': 'Condenser',
+                        'cost_fraction': 0.1443,
+                        'node_type': 'transshipment',
+                        'recovery_func': [5.0, 0.61, 1.0]}
+
+        turbine = Component(**turbine_dict)
         self.model.add_component('boiler', boiler)
         self.model.add_component('turbine', turbine)
 
@@ -91,7 +113,7 @@ class Test1(ut.TestCase):
             return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
         res_1 = self.model.components['turbine'].frag_func(abscissa)
-        oid = self.model.save(attributes = {'name': object_name})
+        oid = self.model.save()
 
         model_copy = IFSystem.load(oid)
         name = value = None
@@ -163,11 +185,3 @@ class Test4(ut.TestCase):
 
 if __name__ == '__main__':
     ut.main()
-
-else:
-    model = IFSystem()
-    frag_curve = StepFunc(xys=XYPairs([[1.,0.], [2.,.5], [3.,1.]]))
-    boiler = Component(frag_func=frag_curve)
-    turbine = Component(frag_func = LogNormalCDF(median=0.1, beta=0.5))
-    model.add_component('boiler', boiler)
-    model.add_component('turbine', turbine)

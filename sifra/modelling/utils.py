@@ -33,11 +33,11 @@ def jsonify(obj):
         # two arg version
         return obj.__jsonify__()
     if isinstance(obj, dict):
-        return {jsonify(k) : jsonify(v) for k, v in obj.iteritems()}
+        return {jsonify(k): jsonify(v) for k, v in obj.iteritems()}
     if isinstance(obj, Iterable) and not isinstance(obj, basestring):
         return [jsonify(v) for v in obj]
-    return obj
 
+    return str(obj)
 
 def pythonify(obj):
     """
