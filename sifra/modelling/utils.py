@@ -37,7 +37,7 @@ def jsonify(obj):
     if isinstance(obj, Iterable) and not isinstance(obj, basestring):
         return [jsonify(v) for v in obj]
 
-    return str(obj)
+    return obj
 
 def pythonify(obj):
     """

@@ -5,6 +5,7 @@ import logging
 
 import json
 from sifra.modelling.utils import pythonify
+from sifra.modelling.component_db import save_model, load_model
 from model_ingest import ingest_spreadsheet
 
 
@@ -30,23 +31,15 @@ class TestSifraWeb(unittest.TestCase):
                         }"""
 
         data = json.loads(request_data)
-        category = data.pop('component_sector', None)
-        attrs = data.pop('attributes', None)
         inst = pythonify(data)
-        oid = inst.save(
-            category=category,
-            attributes=attrs)
+        oid = inst.save(inst)
 
         self.assertTrue(oid is not None)
 
     def test_save_spreadsheet(self):
         config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
         infrastructure = ingest_spreadsheet(config_file)
-        category = infrastructure.name
-        attrs = None
-        oid = infrastructure.save(
-            category=category,
-            attributes=attrs)
+        oid = save_model(infrastructure)
 
         self.assertTrue(oid is not None)
 

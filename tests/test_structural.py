@@ -11,6 +11,9 @@ from sifra.modelling.structural import (
 from modelling.responsemodels import ResponseModel
 from sifra.modelling.component import Component
 from sifra.modelling.infrastructure_system import IFSystem
+from sifra.modelling.infrastructure_model import Model
+from sifra.modelling.iodict import IODict
+from sifra.modelling.component_db import save_model, load_model
 
 from sifra.modelling.structures import (
     XYPairs)
@@ -67,14 +70,18 @@ class LogNormalCDF(ResponseModel):
 
 class Test1(ut.TestCase):
     def setUp(self):
+        self.tearDown()
         self.model = IFSystem(name="model_test")
         frag_curve = StepFunc(xys=XYPairs([[1., 0.], [2., .5], [3., 1.]]))
+        boil_children = IODict()
+        boil_children['turbine'] = {'link_capacity': 1.0,
+                                      'weight': 1.0}
 
         boiler_dict = {'frag_func': frag_curve,
                        'operating_capacity': 1.0,
                        'component_type': 'Boiler',
                        'component_class': 'Boiler System',
-                       'destination_components': ['precip_1a', 'precip_1b'],
+                       'destination_components': boil_children,
                        'node_cluster': 'Boiler System',
                        'cost_fraction': 0.1443,
                        'node_type': 'transshipment',
@@ -82,12 +89,13 @@ class Test1(ut.TestCase):
 
         boiler = Component(**boiler_dict)
 
+        turbo_children = IODict()
         frag_func = LogNormalCDF(median=0.1, beta=0.5)
         turbine_dict = {'frag_func': frag_func,
                         'operating_capacity': 1.0,
                         'component_type': 'Turbine and Condenser',
                         'component_class': 'Condenser',
-                        'destination_components': ['gen_1', 'gen_2'],
+                        'destination_components': turbo_children,
                         'node_cluster': 'Condenser',
                         'cost_fraction': 0.1443,
                         'node_type': 'transshipment',
@@ -113,16 +121,13 @@ class Test1(ut.TestCase):
             return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
         res_1 = self.model.components['turbine'].frag_func(abscissa)
-        oid = self.model.save()
+        oid = save_model(self.model)
 
-        model_copy = IFSystem.load(oid)
-        name = value = None
-        for name, value in model_copy._attributes.iteritems():
-            if name == 'name':
-                break
+        model_copy = load_model(oid)
 
-        self.assertIsNotNone(name, 'attribute "name" should not be None.')
-        self.assertEqual(value, object_name)
+        self.assertTrue('name' in model_copy.__dict__, 'attribute "name" should be present.')
+        self.assertIsNotNone(model_copy.name, 'attribute "name" should not be None.')
+        self.assertEquals(self.model.name, model_copy.name)
 
         res_2 = model_copy.components['turbine'].frag_func(abscissa)
 
