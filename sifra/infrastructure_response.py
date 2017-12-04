@@ -287,10 +287,12 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
     comptype_resp_df = pd.DataFrame(
         index=mindex,
         columns=[scenario.hazard_intensity_str])
-    comptype_resp_dict = comptype_resp_df.to_dict()
+    comptype_resp_dict = {}
 
     component_resp_dict = response_list[2]
     for p in scenario.hazard_intensity_str:
+        if p not in comptype_resp_dict:
+            comptype_resp_dict[p] = dict()
 
         for component_type in infrastructure.get_component_types():
 

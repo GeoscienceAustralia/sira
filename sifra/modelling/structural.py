@@ -360,7 +360,7 @@ class Base(object):
         for k, v in vars(self).items():
             if hasattr(v, '__jsonify__'):
                 res[k] = v.__jsonify__()
-            else:
+            elif k[0:1] != '_':
                 res[k] = jsonify(v)
 
         return res

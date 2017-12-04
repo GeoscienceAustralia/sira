@@ -29,12 +29,11 @@ class IFSystem(Model):
     range of hazards. It encapsulates a number of components that are
     used to estimate the response to various hazard levels.
     """
-
     supply_nodes = Element('dict', 'The components that supply the infrastructure system', dict)
     output_nodes = Element('dict', 'The components that output from the infrastructure system', dict)
 
     supply_total = None
-    component_graph = None
+    _component_graph = None
     if_nominal_output = None
     system_class = None
 
@@ -54,7 +53,7 @@ class IFSystem(Model):
         if not getattr(self, "components", None):
             self.components = IODict()
 
-        self.component_graph = ComponentGraph(self.components)
+        self._component_graph = ComponentGraph(self.components)
 
     def expose_to(self, hazard_level, scenario):
         """
@@ -246,10 +245,10 @@ class IFSystem(Model):
         :return: An array of the output level for each output node.
         """
         # Create the component graph if one does not yet exist
-        if not self.component_graph:
-            self.component_graph = ComponentGraph(self.components, comp_level_func)
+        if not self._component_graph:
+            self._component_graph = ComponentGraph(self.components, comp_level_func)
         else:
-            self.component_graph.update_capacity(self.components, comp_level_func)
+            self._component_graph.update_capacity(self.components, comp_level_func)
 
         # calculate the capacity
         system_flows_sample = []
@@ -258,7 +257,7 @@ class IFSystem(Model):
             # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
             for supply_index, (supply_comp_id, supply_comp) in enumerate(self.supply_nodes.iteritems()):
-                if_flow_fraction = self.component_graph.maxflow(supply_comp_id, output_comp_id)
+                if_flow_fraction = self._component_graph.maxflow(supply_comp_id, output_comp_id)
                 if_sample_flow = if_flow_fraction * supply_comp['capacity_fraction']
 
                 if supply_comp['commodity_type'] not in total_supply_flow_by_source:

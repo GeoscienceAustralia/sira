@@ -32,7 +32,7 @@ class DamageState(ResponseModel):
                            0.0, [lambda x: float(x) >= 0.0])
 
 
-class StepFunc(DamageState):
+class StepFunc(ResponseModel):
     """
     A response model that does not have a cumulative distribution
     function, rather a series of steps for damage.
@@ -52,7 +52,7 @@ class StepFunc(DamageState):
         raise ValueError('value is greater than all xs!')
 
 
-class LogNormalCDF(DamageState):
+class LogNormalCDF(ResponseModel):
     """
     The log normal CDF response model for components.
     """
@@ -62,7 +62,7 @@ class LogNormalCDF(DamageState):
     beta = _Element('float', 'Log standard deviation of the log normal CDF',
             _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
-    def __call__(self, hazard_level):
+    def __call__(self, hazard_intensity):
         """
         In scipy lognormal CDF is implemented thus:
             scipy.stats.lognorm.cdf(x, s, loc=0, scale=1)
@@ -71,10 +71,10 @@ class LogNormalCDF(DamageState):
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        return stats.lognorm.cdf(hazard_level.hazard_intensity, self.beta, loc=0, scale=self.median)
+        return stats.lognorm.cdf(hazard_intensity, self.beta, loc=0, scale=self.median)
 
 
-class NormalCDF(DamageState):
+class NormalCDF(ResponseModel):
     """
     The normal CDF response model for components
     """
@@ -131,7 +131,7 @@ class DamageAlgorithm(Base):
         exceed the range of damage states."""
         pe_ds = np.zeros(len(self.damage_states))
 
-        for offset, damage_state in enumerate(self.damage_states.itervalues()):
+        for offset, damage_state in enumerate(self.damage_states.values()):
             if damage_state.mode != 1:
                 raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
             pe_ds[offset] = damage_state(intensity_param)
@@ -151,6 +151,7 @@ class RecoveryState(Base):
                                     0.0, [lambda x: float(x) > 0.0])
 
 
+# TODO Complete the recovery algorithm
 class RecoveryAlgorithm(Base):
     """
     Collection of recovery states for a component.
@@ -162,4 +163,4 @@ class RecoveryAlgorithm(Base):
         for recovery_state in self.recovery_states:
             recovery_state(intensity_param)
 
-        return
+        return 1.0

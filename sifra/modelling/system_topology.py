@@ -6,24 +6,22 @@ from networkx.readwrite.json_graph import node_link_data
 
 # -----------------------------------------------------------------------------
 
-class SystemTopology(object):
 
-    infrastructure = ""         # `IFSystem` object
-    scenario = ""               # `Scenario` object
-    gviz = ""                   # placeholder for a pygraphviz agraph
-    component_attr = {}         # Dict for system comp attributes
+class SystemTopology(object):
 
     orientation = "LR"          # Orientation of graph - Graphviz option
     connector_type = "spline"   # Connector appearance - Graphviz option
     clustering = False          # Cluster based on defined `node_cluster`
 
-    out_dir = ""
     out_file = "system_topology"
     graph_label = "System Component Topology"
 
     def __init__(self, infrastructure, scenario):
         self.infrastructure = infrastructure
         self.scenario = scenario
+        self.gviz = ""  # placeholder for a pygraphviz agraph
+        self.component_attr = {}  # Dict for system comp attributes
+        self.out_dir = ""
 
         for comp_id in infrastructure.components.keys():
             self.component_attr[comp_id] = \
@@ -81,7 +79,7 @@ class SystemTopology(object):
             self.connector_type = 'spline'
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw graph using pygraphviz, and define general node & edge attributes
-        G = self.infrastructure.component_graph.comp_graph
+        G = self.infrastructure._component_graph.comp_graph
         graphml_file = os.path.join(output_path, fname + '.graphml')
         G.write_graphml(graphml_file)
 

@@ -6,6 +6,7 @@ from sifra.modelling.structural import (
 from sifra.modelling.iodict import IODict
 
 from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
+from sifra.modelling.location import Location
 
 
 class Component(Base):
@@ -34,7 +35,8 @@ class Component(Base):
         :param scenario: Additional parameters that may be required to assess hazard damage.
         :return: The array of probabilities that each damage level was exceeded.
         """
-        component_pe_ds = self.frag_func.pe_ds(hazard_level)
+        hazard_intensity = hazard_level.determine_intensity_at(self.get_location())
+        component_pe_ds = self.frag_func.pe_ds(hazard_intensity)
 
         return component_pe_ds
 
@@ -54,6 +56,10 @@ class Component(Base):
         :return: recovery function object
         """
         return self.recovery_func.recovery_states.index(ds_index)
+
+    @staticmethod
+    def get_location():
+        return Location(0, 0, 0)
 
 
 class ConnectionValues(Base):

@@ -3,7 +3,7 @@ import abc
 import json
 from sifra.modelling.component_db import (
     _Session,
-    Model,
+    ModelTable,
     Attribute)
 
 
@@ -44,29 +44,6 @@ class SqliteDBProxy(object):
         session.close()
         return res
 
-    def save(self, obj, category=None, attributes=None):
-        """
-        :param obj: A json serialisable object.
-        :param category: A dictionary of key value pairs suitable for passing to
-            the constructor of :py:class:`sifra.components.ComponentCategory` as
-            *\*\*kwargs*.
-        """
-
-        clazz = '.'.join(obj['class'])
-        session = _Session()
-
-        try:
-            _addAttributes(obj, attributes)
-            component = Component(clazz=clazz, json_doc=obj)
-            session.add(component)
-            session.commit()
-            return component.id
-        except Exception, e:
-            session.rollback()
-            raise e
-        finally:
-            session.close()
-
 
 class SqliteSerialisationProvider(SerialisationProvider):
     def get_db(self):
@@ -74,5 +51,6 @@ class SqliteSerialisationProvider(SerialisationProvider):
 
     def delete_db(self):
         session = _Session()
-        session.query(Model).delete()
+        session.query(ModelTable).delete()
+        session.query(Attribute).delete()
         session.commit()

@@ -33,3 +33,5 @@ class HazardLevel(object):
         self.intensity_measure_unit = scenario.intensity_measure_unit
         self.hazard_intensity = hazard_intensity
 
+    def determine_intensity_at(self, location=None):
+        return self.hazard_intensity

@@ -9,13 +9,29 @@ from sqlalchemy.ext.declarative import declarative_base
 from sifra.settings import DB_CONNECTION_STRING, SQLITE_DB_FILE, BUILD_DB_TABLES
 from sifra.modelling.utils import get_all_subclasses
 
+from sifra.modelling.utils import jsonify, pythonify
+
+import json
+
 _Base = declarative_base()
 
 
+class ModelTable(_Base):
+    __tablename__ = "models"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(), unique=True)
+    clazz = Column(String())
+
+    components_json = Column(String())
+    attributes = relationship('Attribute',
+                              primaryjoin="ModelTable.id==Attribute.model_id",
+                              cascade='all, delete-orphan')
+
+
 class Attribute(_Base):
-    __tablename__ = "attributes"
-    document_id = Column(Integer, primary_key=True)
-    name = Column(String(32), primary_key=True)
+    __tablename__ = "model_attributes"
+    model_id = Column(Integer, ForeignKey('models.id'), primary_key=True)
+    name = Column(String(100), primary_key=True)
     value = Column(String())
 
 
@@ -24,66 +40,63 @@ class Component(_Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(), unique=True)
     clazz = Column(String())
-    attributes = relationship('Attribute', cascade='all, delete-orphan')
-
-    @property
-    def json_doc(self):
-        return self.document.json_doc
-
-    @property
-    def attributes(self):
-        return self.document.attributes
 
 
-class Model(_Base):
-    __tablename__ = "models"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(), unique=True)
-    clazz = Column(String())
+def save_model(model):
+    res = jsonify(model)
 
-    components_json = Column(String())
-    attributes = relationship('Attribute', cascade='all, delete-orphan')
-
-    @property
-    def attributes(self):
-        return self.attributes
-
-
-def getComponentCategories(hazard=None, sector=None, facility_type=None, component=None):
-    # convert anything that evaluates to false to None
-    hazard = hazard or None
-    sector = sector or None
-    facility_type = facility_type or None
-    component = component or None
-
+    clazz = '.'.join(res['class'])
+    model_name = res['name']
     session = _Session()
-    rows = session.query(Attribute)
 
-    if hazard is not None:
-        rows = rows.filter(Attribute.name == hazard)
-    if sector is not None:
-        rows = rows.filter(Attribute.name == sector)
-    if facility_type is not None:
-        rows = rows.filter(Attribute.name == facility_type)
-    if component is not None:
-        rows = rows.filter(Attribute.name == component)
+    # Extract the attributes of the jsonified class
+    model_attributes = dict()
+    for var_name in res.keys():
+        if var_name in model.__dict__ and is_attribute_type(getattr(model, var_name)):
+            model_attributes[var_name] = res.pop(var_name)
 
-    return {
-        'hazards': list(set((row.hazard for row in rows))),
-        'sectors': list(set((row.sector for row in rows))),
-        'facilities': list(set((row.facility_type for row in rows))),
-        'components': list(set((row.component for row in rows)))}
+    try:
+        model_db = ModelTable(name=model_name,
+                            clazz=clazz,
+                            components_json=json.dumps(res))
+
+        session.add(model_db)
+        session.commit()
+
+        # _addAttributes(res)
+        for m_name, m_value in model_attributes.items():
+            model_attribute = Attribute(model_id=model_db.id,
+                                        name=m_name,
+                                        value=m_value)
+            session.add(model_attribute)
+
+        session.commit()
+
+        return model_db.id
+    except Exception, e:
+        session.rollback()
+        raise e
+    finally:
+        session.close()
 
 
-def getComponentCategory(session, hazard, sector, facility_type, component):
-    return session.query(Attribute) \
-        .filter(Attribute.name == hazard) \
-        .filter(Attribute.name == sector) \
-        .filter(Attribute.name == facility_type) \
-        .filter(Attribute.name == component).one()
+def load_model(obj_id):
+    session = _Session()
+    model_row = session.query(ModelTable).filter(ModelTable.id == obj_id).one()
+    model_kwargs = json.loads(model_row.components_json)
+    for ma in model_row.attributes:
+        model_kwargs[ma.name] = ma.value
+
+    res = pythonify(model_kwargs)
+    session.close()
+    return res
 
 
-def getAllInstances(cls):
+def is_attribute_type(var):
+    isinstance(var, (str, int, float))
+
+
+def getAllComponents(cls):
     def getName(component):
         for a in component.attributes:
             if a.name == 'name':
@@ -95,7 +108,7 @@ def getAllInstances(cls):
     return [{'name': getName(r), 'id': r.id} for r in components.all()]
 
 
-def getInstance(instance_id):
+def getComponent(instance_id):
     session = _Session()
     return json.loads(session.query(Component).filter(
         Component.id == instance_id).one().json_doc)
