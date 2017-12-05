@@ -1,10 +1,12 @@
 import sys
 import abc
 import json
-from sifra.modelling.component_db import (
+from sifra.modelling.sifra_db import (
     _Session,
     ModelTable,
-    Attribute)
+    ComponentTable,
+    ComponentAttribute,
+    ModelAttribute)
 
 
 class SerialisationProvider(object):
@@ -28,7 +30,7 @@ def _addAttributes(document, attributes):
     if attributes is not None:
         for name, value in attributes.iteritems():
             document.attributes.append(
-                Attribute(name=name, value=value))
+                ModelAttribute(name=name, value=value))
 
 
 def _attributesToDict(attributes):
@@ -38,7 +40,7 @@ def _attributesToDict(attributes):
 class SqliteDBProxy(object):
     def get(self, obj_id):
         session = _Session()
-        instance = session.query(Model).filter(Model.id == obj_id).one()
+        instance = session.query(ModelTable).filter(ModelTable.id == obj_id).one()
         res = json.loads(instance.json_doc)
         res['_attributes'] = _attributesToDict(instance.attributes)
         session.close()
@@ -52,5 +54,7 @@ class SqliteSerialisationProvider(SerialisationProvider):
     def delete_db(self):
         session = _Session()
         session.query(ModelTable).delete()
-        session.query(Attribute).delete()
+        session.query(ModelAttribute).delete()
+        session.query(ComponentTable).delete()
+        session.query(ComponentAttribute).delete()
         session.commit()

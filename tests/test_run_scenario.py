@@ -12,8 +12,6 @@ class TestSifra(unittest.TestCase):
         SETUPFILE = '/opt/project/tests/test_scenario_ps_coal.conf'
         run_scenario(SETUPFILE)
 
-        # TODO determine success parameters
-
     def test_run_series_scenario(self):
 
         SETUPFILE = '/opt/project/tests/test_simple_series_struct.conf'
