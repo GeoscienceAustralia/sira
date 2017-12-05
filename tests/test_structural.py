@@ -13,10 +13,9 @@ from sifra.modelling.component import Component
 from sifra.modelling.infrastructure_system import IFSystem
 from sifra.modelling.infrastructure_model import Model
 from sifra.modelling.iodict import IODict
-from sifra.modelling.component_db import save_model, load_model
+from sifra.modelling.sifra_db import save_model, load_model
 
-from sifra.modelling.structures import (
-    XYPairs)
+from sifra.modelling.structures import (XYPairs)
 
 from sifra.settings import SQLITE_TEST_DB_FILE
 

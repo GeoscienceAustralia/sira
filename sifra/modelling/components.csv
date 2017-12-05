@@ -1,4 +1,4 @@
-hazard,sector,facility_type,component
+hazard,sector,f
 earthquake,electric power station,Electric Power Network,Generation Plant
 earthquake,electric power station,Electric Power Network,Substation
 earthquake,electric power station,Generation Plant,Ash Disposal System

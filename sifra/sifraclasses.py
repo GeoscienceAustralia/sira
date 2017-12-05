@@ -526,7 +526,7 @@ class ComponentType(object):
         self.node_cluster = {}
 
         # ??? CHECK: same as 'functionality'?
-        self.op_capacity = {}
+        self.operating_capacity = {}
 
         self.node_obj = None  # <--- this is the hook into the graph
 

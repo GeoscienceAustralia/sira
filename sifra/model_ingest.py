@@ -97,7 +97,7 @@ def ingest_spreadsheet(config):
         component_values['cost_fraction'] = component_details['cost_fraction']
         component_values['node_type'] = component_details['node_type']
         component_values['node_cluster'] = component_details['node_cluster']
-        component_values['op_capacity'] = component_details['op_capacity']
+        component_values['operating_capacity'] = component_details['op_capacity']
 
         system_components[component_id] = Component(**component_values)
 
