@@ -164,3 +164,22 @@ class RecoveryAlgorithm(Base):
             recovery_state(intensity_param)
 
         return 1.0
+
+
+class AlgorithmFactory(object):
+    earthquake_response_algorithms = dict()
+    inundation_response_algorithms = dict()
+
+    @classmethod
+    def get_response_algorithm(cls, component_type, hazard_type):
+        if hazard_type == 'earthquake':
+            return cls.earthquake_response_algorithms[component_type]
+        elif hazard_type == 'inundation':
+            return cls.inundation_response_algorithms[component_type]
+
+    @classmethod
+    def add_response_algorithm(cls, component_type, hazard_type, algorithm):
+        if hazard_type == 'earthquake':
+            cls.earthquake_response_algorithms[component_type] = algorithm
+        elif hazard_type == 'inundation':
+            cls.inundation_response_algorithms[component_type] = algorithm

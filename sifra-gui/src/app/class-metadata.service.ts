@@ -21,8 +21,8 @@ export class TestClassMetadataService {
                 "class": "sifra.modelling.structures.XYPairs"
             }
         },
-        "sifra.modelling.elements.Component": {
-            "class": "sifra.modelling.elements.Component",
+        "sifra.modelling.component.Component": {
+            "class": "sifra.modelling.component.Component",
             "description": {
                 "class": "sifra.modelling.structural.Info",
                 "value": "This is a cool component"
@@ -91,6 +91,14 @@ export class ClassMetadataService {
 
     getInstance(componentId: string) {
         return this.makeAPIGetCall(this.SERVER_URL + '/instance/' + componentId);
+    }
+
+    getCurrentModels() {
+      return this.makeAPIGetCall(this.SERVER_URL + '/current_models');
+    }
+
+    getCurrentComponents() {
+      return this.makeAPIGetCall(this.SERVER_URL + '/current_models');
     }
 
     save(data: any) {
