@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, create_engine, Column, ForeignKey
+from sqlalchemy import Integer, String, create_engine, Column, ForeignKey, and_
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.ext.declarative import declarative_base
@@ -143,17 +143,69 @@ def save_component(component):
         session.close()
 
 
-def getAllComponents(cls):
+def getAllInstances(cls):
     session = _Session()
     components = session.query(ComponentTable).filter(
         ComponentTable.clazz.in_(get_all_subclasses(cls)))
     return [{'name': comp.component_type, 'id': comp.id} for comp in components.all()]
 
 
-def getComponent(instance_id):
+def getComponentCategories(hazard=None, sector=None, facility_type=None, component=None):
+    # convert anything that evaluates to false to None
+    hazard = hazard or None
+    sector = sector or None
+    facility_type = facility_type or None
+    component = component or None
+
+    session = _Session()
+    rows = session.query(ComponentAttribute)
+
+    response = dict()
+
+    rows = session.query(ComponentAttribute)
+    if hazard is not None:
+        rows = rows.filter(and_(ComponentAttribute.value == hazard,
+                                ComponentAttribute.name == 'hazard_type'))
+        response.update({'hazards': list(set((row.value for row in rows)))})
+    else:
+        rows = rows.filter(ComponentAttribute.name == 'hazard_type')
+        response.update({'hazards': list(set((row.value for row in rows)))})
+
+    rows = session.query(ComponentAttribute)
+    if sector is not None:
+        rows = rows.filter(and_(ComponentAttribute.value == sector,
+                                ComponentAttribute.name == 'component_class'))
+        response.update({'sectors': list(set((row.value for row in rows)))})
+    else:
+        rows = rows.filter(ComponentAttribute.name == 'component_class')
+        response.update({'sectors': list(set((row.value for row in rows)))})
+
+    rows = session.query(ComponentAttribute)
+    if facility_type is not None:
+        rows = rows.filter(ComponentAttribute.facility_type == facility_type)
+        response.update({'facilities': list(['Powerstation', 'Water treatment plant'])})
+    else:
+        response.update({'facilities': list(['Powerstation', 'Water treatment plant'])})
+
+    rows = session.query(ComponentAttribute)
+    if component is not None:
+        rows = rows.filter(and_(ComponentAttribute.value == component,
+                                ComponentAttribute.name == 'component_type'))
+        response.update({'components': list(set((row.value for row in rows)))})
+    else:
+        rows = rows.filter(ComponentAttribute.name == 'component_type')
+        response.update({'components': list(set((row.value for row in rows)))})
+
+    return response
+
+
+
+
+def getInstance(instance_id):
     session = _Session()
     return json.loads(session.query(ComponentTable).filter(
         ComponentTable.id == instance_id).one().component_json)
+
 
 _engine = create_engine(
     DB_CONNECTION_STRING,

@@ -29,9 +29,22 @@ class HazardLevel(object):
     """A particular level of hazard in the range of hazard levels."""
     def __init__(self, scenario, hazard_intensity):
         """Only the intensity is currently used."""
+        self.hazard_type = scenario.hazard_type
         self.intensity_measure_param = scenario.intensity_measure_param
         self.intensity_measure_unit = scenario.intensity_measure_unit
+        if scenario.level_factor_raster:
+            self.level_factor_raster = scenario.level_factor_raster
+        else:
+            self.level_factor_raster = None
         self.hazard_intensity = hazard_intensity
 
     def determine_intensity_at(self, location=None):
-        return self.hazard_intensity
+        if not location or (location.lon is np.NAN):
+            return self.hazard_intensity
+        else:
+            # TODO Implement the loading of a hazard level factor raster
+            if not self.level_factor_raster:
+                raise RuntimeError("A location was given, but a location raster has not been configured")
+            # use the lat long to offset into the NetCDF
+            return self.level_factor_raster.variables['pga_factor'][location.lat, location.lon]*self.hazard_intensity
+

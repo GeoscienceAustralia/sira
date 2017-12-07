@@ -88,6 +88,8 @@ class _ScenarioDataGetter(object):
         self.haz_param_max = self.setup["PGA_MAX"]
         self.haz_param_step = self.setup["PGA_STEP"]
         self.num_samples = self.setup["NUM_SAMPLES"]
+        self.hazard_type = self.setup.get("HAZARD_TYPE", 'earthquake')
+        self.level_factor_raster = self.setup.get("HAZARD_RASTER", None)
         self.time_unit = self.setup["TIME_UNIT"]
         self.run_parallel_proc = self.setup["MULTIPROCESS"]
         self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]

@@ -1,7 +1,8 @@
+import numpy as np
+
 # these are required for defining the data model
-from sifra.modelling.structural import (
-    Element,
-    Base)
+from sifra.modelling.structural import (Element,
+                                        Base)
 
 from sifra.modelling.iodict import IODict
 
@@ -36,6 +37,7 @@ class Component(Base):
         :return: The array of probabilities that each damage level was exceeded.
         """
         hazard_intensity = hazard_level.determine_intensity_at(self.get_location())
+
         component_pe_ds = self.frag_func.pe_ds(hazard_intensity)
 
         return component_pe_ds
@@ -59,7 +61,7 @@ class Component(Base):
 
     @staticmethod
     def get_location():
-        return Location(0, 0, 0)
+        return Location(np.NAN, np.NAN, np.NAN)
 
 
 class ConnectionValues(Base):

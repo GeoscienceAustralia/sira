@@ -5,8 +5,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 
-from sifra.modelling.component_db import getComponentCategories, getAllInstances, getInstance
-from sifra.modelling.responsemodels import *
+from sifra.modelling.sifra_db import getComponentCategories, getAllInstances, getInstance
+from sifra.modelling.component import *
 from sifra.modelling.structural import class_getter
 from sifra.modelling.utils import get_all_subclasses, pythonify
 
@@ -70,14 +70,14 @@ def componentTopology():
 @_errorWrapper
 def classTypes():
     # at the moment this just returns response models
-    res = [c.__json_desc__['class'] for c in ResponseModel.__subclasses__()]
+    res = [c.__json_desc__['class'] for c in Base.__subclasses__()]
     return jsonify(res)
 
 
 @app.route('/class-def/<class_name>')
 @_errorWrapper
 def classDef(class_name):
-    for clazz in ResponseModel.__subclasses__():
+    for clazz in Base.__subclasses__():
         if clazz.__json_desc__['class'] == class_name:
             return jsonify(clazz.__json_desc__)
     return jsonify({'error': 'class "{}" does not exist'.format(class_name)})

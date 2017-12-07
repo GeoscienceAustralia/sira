@@ -69,5 +69,4 @@ class TestSifraDB(unittest.TestCase):
                 component.hazard_type = 'earthquake'
                 comp_oid = save_component(component)
 
-
             self.assertTrue(comp_oid is not None)
