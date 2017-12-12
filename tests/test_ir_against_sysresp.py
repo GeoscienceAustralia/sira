@@ -25,8 +25,8 @@ class TestNewModel(unittest.TestCase):
                                           parallel_proc=scenario.run_parallel_proc)
 
         infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
-
-        if_result_list = calculate_response(scenario, infrastructure)
+        scenario.algorithm_factory = infrastructure[1]
+        if_result_list = calculate_response(scenario, infrastructure[0])
 
         self.dump_results(if_result_list, sr_result_list)
 
@@ -40,8 +40,8 @@ class TestNewModel(unittest.TestCase):
                                           parallel_proc=scenario.run_parallel_proc)
 
         infrastructure = ingest_spreadsheet(ident_config_file)  # `IFSystem` object
-
-        if_result_list = calculate_response(scenario, infrastructure)
+        scenario.algorithm_factory = infrastructure[1]
+        if_result_list = calculate_response(scenario, infrastructure[0])
 
         self.dump_results(if_result_list, sr_result_list)
 
@@ -56,16 +56,15 @@ class TestNewModel(unittest.TestCase):
                                           parallel_proc=scenario.run_parallel_proc)
 
         infrastructure = ingest_spreadsheet(simple_config)  # `IFSystem` object
-
-        if_result_list = calculate_response(scenario, infrastructure)
+        scenario.algorithm_factory = infrastructure[1]
+        if_result_list = calculate_response(scenario, infrastructure[0])
 
         self.dump_results(if_result_list, sr_result_list)
 
     def dump_results(self, if_result_list, sr_result_list):
         # check the differences between the two results
         result_names = ['comp_damage_state', 'sys_output_dict',
-                        'component_resp_dict', 'calculated_output_array',
-                        'economic_loss_array', 'output_array_given_recovery']
+                        'component_resp_dict', 'calculated_output_array']
         for name, if_result, sys_result in zip(result_names,
                                                if_result_list,
                                                sr_result_list):

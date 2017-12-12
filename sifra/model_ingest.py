@@ -12,7 +12,7 @@ from sifra.modelling.infrastructure_system import IFSystemFactory
 from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
                                             Level0Response, Level0Recovery,
                                             DamageAlgorithm, RecoveryState,
-                                            RecoveryAlgorithm)
+                                            RecoveryAlgorithm, AlgorithmFactory)
 
 import copy
 
@@ -25,6 +25,7 @@ def ingest_spreadsheet(config):
     """
     facility_data = _FacilityDataGetter(config)
     component_dict = IODict()
+    algorithm_factory = AlgorithmFactory()
 
     damage_state_df = pd.read_excel(
         facility_data.sys_config_file, sheetname='damage_state_def',
@@ -67,19 +68,30 @@ def ingest_spreadsheet(config):
             response_params['mode'] = damage_state['mode']
             response_model = LogNormalCDF(**response_params)
         elif damage_state['damage_function'] == 'Normal':
-            response_model = NormalCDF(damage_state)
+            response_model = NormalCDF(**response_params)
         elif damage_state['damage_function'] == 'StepFunc':
-            response_model = StepFunc(damage_state)
+            response_model = StepFunc(**response_params)
         else:
             raise ValueError("No response model "
                              "matches {}".format(damage_state['damage_function']))
+
         # add the response model to damage algorithm
         damage_algorithm_vals[ds_level] = response_model
 
         # create the recovery_model
-        recovery_columns = set(('recovery_std', 'recovery_mean', 'recovery_95percentile'))
+        recovery_columns = ('recovery_std', 'recovery_mean', 'recovery_95percentile')
         recovery_params = {key: damage_state[key] for key in recovery_columns}
         recovery_algorithm_vals[ds_level] = RecoveryState(**recovery_params)
+
+    # Create a damage algorithm in the AlgorithmFactory for the components
+    for component_type in component_dict.keys():
+        algorithm_factory.add_response_algorithm(component_type,
+                                                'earthquake',
+                                                component_dict[component_type]['frag_func'])
+
+        algorithm_factory.add_recovery_algorithm(component_type,
+                                                'earthquake',
+                                                component_dict[component_type]['recovery_func'])
 
     # add the other component attributes and make a component dict
     system_components = IODict()
@@ -143,4 +155,4 @@ def ingest_spreadsheet(config):
     # set the system class
     if_system_values['system_class'] = facility_data.system_class
 
-    return IFSystemFactory.create_model(if_system_values)
+    return IFSystemFactory.create_model(if_system_values), algorithm_factory

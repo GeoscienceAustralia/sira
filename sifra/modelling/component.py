@@ -38,9 +38,12 @@ class Component(Base):
         """
         hazard_intensity = hazard_level.determine_intensity_at(self.get_location())
 
-        component_pe_ds = self.frag_func.pe_ds(hazard_intensity)
+        frag_func = scenario.algorithm_factory.get_response_algorithm(self.component_type,
+                                                                      hazard_level.hazard_type)
 
-        return component_pe_ds
+        component_pe_ds = frag_func.pe_ds(hazard_intensity)
+        # for now just return the raw probabilities
+        return component_pe_ds[1:]
 
     def get_damage_state(self, ds_index):
         """
