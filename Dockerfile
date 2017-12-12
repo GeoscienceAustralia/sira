@@ -9,6 +9,7 @@ RUN apt-get install -y python-tk
 RUN pip install --upgrade pip
 RUN pip install numpy
 RUN pip install pandas
+RUN pip install netcdf4
 RUN pip install networkx
 RUN pip install seaborn
 RUN pip install scipy

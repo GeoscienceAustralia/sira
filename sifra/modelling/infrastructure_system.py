@@ -55,6 +55,7 @@ class IFSystem(Model):
 
         self._component_graph = ComponentGraph(self.components)
 
+
     def expose_to(self, hazard_level, scenario):
         """
         Exposes the components of the infrastructure to a hazard level
@@ -74,8 +75,7 @@ class IFSystem(Model):
         component_sample_loss, \
         comp_sample_func, \
         if_sample_output, \
-        if_sample_economic_loss, \
-        if_output_given_recovery = self.calc_output_loss(scenario, component_damage_state_ind)
+        if_sample_economic_loss = self.calc_output_loss(scenario, component_damage_state_ind)
 
         # Construct the dictionary containing the statistics of the response
         component_response = self.calc_response(component_sample_loss,
@@ -97,8 +97,7 @@ class IFSystem(Model):
                                                          if_output,
                                                          component_response,
                                                          if_sample_output,
-                                                         if_sample_economic_loss,
-                                                         if_output_given_recovery]}
+                                                         if_sample_economic_loss]}
 
         return response_dict
 
@@ -199,10 +198,7 @@ class IFSystem(Model):
                 loss = damage_state.damage_ratio * component.cost_fraction
                 comp_sample_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
-                # calculate the recovery time
-                component_function_at_time.append(self.calc_recov_time_given_comp_ds(component,
-                                                                                     component_ds[component_index],
-                                                                                     scenario))
+
             # save this sample's component loss and functionality
             if_level_loss[sample_index, :] = comp_sample_loss
             if_level_functionality[sample_index, :] = comp_sample_func
@@ -212,17 +208,10 @@ class IFSystem(Model):
             # estimate the output for this sample's component functionality
             if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
 
-            # calculate the restoration output
-            component_function_at_time = np.array(component_function_at_time)
-            for time_step in range(scenario.num_time_steps):
-                if_output_given_recovery[sample_index, time_step] = \
-                    sum(self.compute_output_given_ds(component_function_at_time[:, time_step]))
-
         return if_level_loss, \
                if_level_functionality, \
                if_level_output, \
-               if_level_economic_loss, \
-               if_output_given_recovery
+               if_level_economic_loss
 
     def get_nominal_output(self):
         """

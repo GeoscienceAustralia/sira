@@ -102,6 +102,8 @@ class Level0Response(DamageState):
     mode = 1
     damage_ratio = 0.0
     functionality = 1.0
+    beta = 0.0
+    median = 1.0
 
     def __call__(self, hazard_level):
         return 0.0
@@ -126,7 +128,7 @@ class DamageAlgorithm(Base):
     damage_states = Element('IODict', 'Response models for the damage states',
         [lambda x: [isinstance(y, DamageState) for y in x.itervalues()]])
 
-    def pe_ds(self, intensity_param):
+    def pe_ds(self, hazard_intensity):
         """Calculate the probabilities that this component will
         exceed the range of damage states."""
         pe_ds = np.zeros(len(self.damage_states))
@@ -134,9 +136,8 @@ class DamageAlgorithm(Base):
         for offset, damage_state in enumerate(self.damage_states.values()):
             if damage_state.mode != 1:
                 raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
-            pe_ds[offset] = damage_state(intensity_param)
-        # Return all of the damage states except the undamaged one.
-        return pe_ds[1:]
+            pe_ds[offset] = damage_state(hazard_intensity)
+        return pe_ds
 
 
 class RecoveryState(Base):
@@ -167,19 +168,31 @@ class RecoveryAlgorithm(Base):
 
 
 class AlgorithmFactory(object):
-    earthquake_response_algorithms = dict()
-    inundation_response_algorithms = dict()
+    def __init__(self):
+        self.response_algorithms = dict()
+        self.recovery_algorithms = dict()
 
-    @classmethod
-    def get_response_algorithm(cls, component_type, hazard_type):
-        if hazard_type == 'earthquake':
-            return cls.earthquake_response_algorithms[component_type]
-        elif hazard_type == 'inundation':
-            return cls.inundation_response_algorithms[component_type]
+    def get_response_algorithm(self, component_type, hazard_type):
+        return self.response_algorithms[hazard_type][component_type]
 
-    @classmethod
-    def add_response_algorithm(cls, component_type, hazard_type, algorithm):
-        if hazard_type == 'earthquake':
-            cls.earthquake_response_algorithms[component_type] = algorithm
-        elif hazard_type == 'inundation':
-            cls.inundation_response_algorithms[component_type] = algorithm
+    def add_response_algorithm(self, component_type, hazard_type, algorithm):
+        if hazard_type not in self.response_algorithms:
+            self.response_algorithms[hazard_type] = {}
+
+        self.response_algorithms[hazard_type][component_type] = algorithm
+
+    def get_recovery_algorithm(self, component_type, hazard_type):
+        return self.recovery_algorithms[hazard_type][component_type]
+
+    def add_recovery_algorithm(self, component_type, hazard_type, algorithm):
+        if hazard_type not in self.recovery_algorithms:
+            self.recovery_algorithms[hazard_type] = {}
+
+        self.recovery_algorithms[hazard_type][component_type] = algorithm
+
+
+class DamageState(object):
+    def __init__(self, damage_state, probability_ds_exceeded):
+        self.damage_state = damage_state
+        self.probability_ds_exceeded = probability_ds_exceeded
+

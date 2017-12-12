@@ -45,7 +45,10 @@ def run_scenario(config_file):
     logging.info(Style.BRIGHT + Fore.GREEN +
                  "Building infrastructure system model... " +
                  Style.RESET_ALL)
-    infrastructure = ingest_spreadsheet(config_file)
+    infrastructure, algorithm_factory = ingest_spreadsheet(config_file)
+    # assign the algorithm factory to the scenario
+    scenario.algorithm_factory = algorithm_factory
+
     sys_topology_view = SystemTopology(infrastructure, scenario)
     sys_topology_view.draw_sys_topology(viewcontext="as-built")
     logging.info(Style.BRIGHT + Fore.YELLOW + "Done.\n" + Style.RESET_ALL)
@@ -53,7 +56,6 @@ def run_scenario(config_file):
     logging.info(Style.BRIGHT + Fore.GREEN +
                  "Initiating model run..." +
                  Style.RESET_ALL)
-
 
     post_processing_list = calculate_response(scenario, infrastructure)
     # After the response has been calculated the post processing
@@ -102,13 +104,12 @@ def calculate_response(scenario, infrastructure):
                             {},  # hazard level vs infrastructure output
                             {},  # hazard level vs component response
                             [],  # infrastructure output for sample
-                            [],  # infrastructure econ loss for sample
-                            []]  # infrastructure output given recovery
+                            []]  # infrastructure econ loss for sample
     # iterate through the hazard levels
     for hazard_level_values in hazard_level_response:
         # iterate through the hazard level lists
         for key, value_list in hazard_level_values.items():
-            for list_number in range(6):
+            for list_number in range(5):
                 # the first three lists are dicts
                 if list_number <= 2:
                     post_processing_list[list_number]['%0.3f' % np.float(key)] \
@@ -119,14 +120,13 @@ def calculate_response(scenario, infrastructure):
                         append(value_list[list_number])
 
     # Convert the last 3 lists into arrays
-    for list_number in range(3, 6):
+    for list_number in range(3, 5):
         post_processing_list[list_number] \
             = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
     post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
     post_processing_list[4] = post_processing_list[4].transpose()
-    post_processing_list[5] = np.transpose(post_processing_list[5], axes=(1, 0, 2))
 
     # elapsed = timedelta(seconds=(time.time() - code_start_time))
     # logging.info("[ Run time: %s ]\n" % str(elapsed))
@@ -498,22 +498,6 @@ def pe_by_component_class(response_list, infrastructure, scenario):
             exp_damage_ratio[j, l] = np.sum(pb * loss_list)
 
     # ------------------------------------------------------------------------
-    # Time to Restoration of Full Capacity
-    # ------------------------------------------------------------------------
-
-    threshold = 0.99
-    required_time = []
-    output_array_given_recovery = response_list[5]
-    for j in range(scenario.num_hazard_pts):
-        cpower = np.mean(output_array_given_recovery[:, j, :], axis=0)\
-                 / infrastructure.get_nominal_output()
-        temp = cpower > threshold
-        if sum(temp) > 0:
-            required_time.append(np.min(scenario.restoration_time_range[temp]))
-        else:
-            required_time.append(scenario.restore_time_max)
-
-    # ------------------------------------------------------------------------
     # Write analytical outputs to file
     # ------------------------------------------------------------------------
 
@@ -522,8 +506,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         scenario.output_path, 'system_response.csv')
     out_cols = ['PGA',
                 'Economic Loss',
-                'Mean Output',
-                'Days to Full Recovery']
+                'Mean Output']
 
     # create the arrays
     comp_response_list = response_list[2]
@@ -532,8 +515,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
 
     outdat = {out_cols[0]: scenario.hazard_intensity_vals,
               out_cols[1]: np.mean(economic_loss_array, axis=0),
-              out_cols[2]: np.mean(calculated_output_array, axis=0),
-              out_cols[3]: required_time}
+              out_cols[2]: np.mean(calculated_output_array, axis=0)}
     df = pd.DataFrame(outdat)
     df.to_csv(
         outfile_sys_response, sep=',',
@@ -585,19 +567,8 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         )
 
         np.save(
-            os.path.join(scenario.raw_output_dir,
-                         'output_array_given_recovery.npy'),
-            output_array_given_recovery
-        )
-
-        np.save(
             os.path.join(scenario.raw_output_dir, 'exp_damage_ratio.npy'),
             exp_damage_ratio
-        )
-
-        np.save(
-            os.path.join(scenario.raw_output_dir, 'required_time.npy'),
-            required_time
         )
 
     # ------------------------------------------------------------------------
