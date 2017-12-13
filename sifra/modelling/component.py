@@ -23,9 +23,6 @@ class Component(Base):
     operating_capacity = Element('float', 'Component nominal operating capacity')
     cost_fraction = Element('float', 'Cost as a fraction of total value of system')
 
-    frag_func = Element('DamageAlgorithm', 'Fragility algorithm', Element.NO_DEFAULT)
-    recovery_func = Element('RecoveryAlgorithm', 'Recovery algorithm', Element.NO_DEFAULT)
-
     destination_components = Element('IODict', 'List of connected components', IODict)
 
     def expose_to(self, hazard_level, scenario):

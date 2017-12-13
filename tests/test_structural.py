@@ -183,8 +183,8 @@ class Test3(ut.TestCase):
 class Test4(ut.TestCase):
     def test_has_json_desc(self):
         desc = IFSystem.__json_desc__
-        self.assertIn('description', desc, 'Model should contain "description"')
-        self.assertIn('components', desc, 'Model should cotain "components"')
+        self.assertIn('output_nodes', desc, 'Model should contain "output_nodes"')
+        self.assertIn('supply_nodes', desc, 'Model should contain "intput_nodes"')
 
 
 if __name__ == '__main__':

@@ -6,8 +6,8 @@ import numpy as np
 import unittest as ut
 from model_ingest import ingest_spreadsheet
 from modelling.structural import jsonify
-from modelling.hazard_levels import HazardLevels
 from sifraclasses import Scenario
+from modelling.responsemodels import DamageAlgorithm
 
 
 class TestIngestResponseModel(ut.TestCase):
@@ -39,20 +39,23 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = '../tests/test_scenario_ps_coal.conf'
 
-        if_system = ingest_spreadsheet(test_conf)
+        if_system, algorithm_factory  = ingest_spreadsheet(test_conf)
 
-        self.assertTrue(len(if_system.algorithm_factory.response_algorithms) > 0)
-        self.assertTrue(len(if_system.algorithm_factory.recovery_algorithms) > 0)
+        self.assertTrue(len(algorithm_factory.response_algorithms) > 0)
+        self.assertTrue(len(algorithm_factory.recovery_algorithms) > 0)
 
-        # we always initialize with
-        self.assertTrue(len(if_system.algorithm_factory.response_algorithms['earthquake']) > 0)
-        self.assertTrue(len(if_system.algorithm_factory.recovery_algorithms['earthquake']) > 0)
+        # we always initialize with earthquakes
+        self.assertTrue(len(algorithm_factory.response_algorithms['earthquake']) > 0)
+        self.assertTrue(len(algorithm_factory.recovery_algorithms['earthquake']) > 0)
 
     def test_algorithm_factory(self):
         test_conf = '../tests/test_scenario_ps_coal.conf'
         scenario = Scenario(test_conf)
-        if_system = ingest_spreadsheet(test_conf)
+        if_system, algorithm_factory = ingest_spreadsheet(test_conf)
 
+        resp_alg = algorithm_factory.get_response_algorithm('Ash Disposal System', 'earthquake')
+
+        self.assertTrue(resp_alg.__class__.__name__ ==  DamageAlgorithm.__name__)
 
 if __name__ == '__main__':
     ut.main()

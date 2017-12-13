@@ -15,7 +15,7 @@ ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
 class TestNewModel(unittest.TestCase):
     def test_pythonify(self):
         config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
-        infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
+        infrastructure, alg_fact = ingest_spreadsheet(config_file)  # `IFSystem` object
         # serialise to json
         json_if = jsonify(infrastructure)
         self.assertTrue(len(json_if) > 0)

@@ -86,12 +86,12 @@ def ingest_spreadsheet(config):
     # Create a damage algorithm in the AlgorithmFactory for the components
     for component_type in component_dict.keys():
         algorithm_factory.add_response_algorithm(component_type,
-                                                'earthquake',
-                                                component_dict[component_type]['frag_func'])
+                                                 'earthquake',
+                                                 component_dict[component_type]['frag_func'])
 
         algorithm_factory.add_recovery_algorithm(component_type,
-                                                'earthquake',
-                                                component_dict[component_type]['recovery_func'])
+                                                 'earthquake',
+                                                 component_dict[component_type]['recovery_func'])
 
     # add the other component attributes and make a component dict
     system_components = IODict()
