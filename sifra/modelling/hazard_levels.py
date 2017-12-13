@@ -15,9 +15,9 @@ class HazardLevels(object):
             int(round((scenario.haz_param_max - scenario.haz_param_min) /
                       float(scenario.haz_param_step) + 1))
 
-        self.hazard_intensity_vals = \
-            np.linspace(scenario.haz_param_min, scenario.haz_param_max,
-                        num=self.num_hazard_pts)
+        self.hazard_intensity_vals = np.linspace(scenario.haz_param_min,
+                                                 scenario.haz_param_max,
+                                                 num=self.num_hazard_pts)
 
     def hazard_range(self):
         """A generator that can flexibly create hazard levels"""
