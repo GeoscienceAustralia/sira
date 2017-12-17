@@ -32,7 +32,7 @@ class DamageState(ResponseModel):
                            0.0, [lambda x: float(x) >= 0.0])
 
 
-class StepFunc(ResponseModel):
+class StepFunc(DamageState):
     """
     A response model that does not have a cumulative distribution
     function, rather a series of steps for damage.
@@ -52,7 +52,7 @@ class StepFunc(ResponseModel):
         raise ValueError('value is greater than all xs!')
 
 
-class LogNormalCDF(ResponseModel):
+class LogNormalCDF(DamageState):
     """
     The log normal CDF response model for components.
     """
@@ -74,7 +74,7 @@ class LogNormalCDF(ResponseModel):
         return stats.lognorm.cdf(hazard_intensity, self.beta, loc=0, scale=self.median)
 
 
-class NormalCDF(ResponseModel):
+class NormalCDF(DamageState):
     """
     The normal CDF response model for components
     """
@@ -189,10 +189,3 @@ class AlgorithmFactory(object):
             self.recovery_algorithms[hazard_type] = {}
 
         self.recovery_algorithms[hazard_type][component_type] = algorithm
-
-
-class DamageState(object):
-    def __init__(self, damage_state, probability_ds_exceeded):
-        self.damage_state = damage_state
-        self.probability_ds_exceeded = probability_ds_exceeded
-
