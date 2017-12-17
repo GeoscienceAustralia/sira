@@ -15,7 +15,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = '../tests/test_scenario_ps_coal.conf'
 
-        if_system = ingest_spreadsheet(test_conf)
+        if_system, _ = ingest_spreadsheet(test_conf)
 
         # now jsonify
         json_components = jsonify(if_system)
@@ -26,7 +26,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = '../tests/test_identical_comps.conf'
 
-        if_system = ingest_spreadsheet(test_conf)
+        if_system, _ = ingest_spreadsheet(test_conf)
 
         # now jsonify
         json_components = jsonify(if_system)
@@ -39,7 +39,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = '../tests/test_scenario_ps_coal.conf'
 
-        if_system, algorithm_factory  = ingest_spreadsheet(test_conf)
+        if_system, algorithm_factory = ingest_spreadsheet(test_conf)
 
         self.assertTrue(len(algorithm_factory.response_algorithms) > 0)
         self.assertTrue(len(algorithm_factory.recovery_algorithms) > 0)

@@ -42,7 +42,7 @@ class HazardLevel(object):
         if not location or (location.lon is np.NAN):
             return self.hazard_intensity
         else:
-            # TODO Implement the loading of a hazard level factor raster
+            # TODO Implement validation of parameters with the raster
             if not self.level_factor_raster:
                 raise RuntimeError("A location was given, but a location raster has not been configured")
             # use the lat long to offset into the NetCDF
