@@ -84,7 +84,6 @@ class ComponentGraph(object):
         min_capacity = min(comp_sample_func[parent], comp_sample_func[dependent])
         comp_sample_func[dependent] = min_capacity
 
-
     def dump_graph(self, external=None):
         """
         Dump the contents of the graph.

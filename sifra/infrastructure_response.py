@@ -449,7 +449,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
             {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
              for cc in cp_classes_costed}
 
-        for j, hazard_level in enumerate(HazardLevels(scenario)):
+        for j, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
             for i in range(scenario.num_samples):
                 for compclass in cp_classes_costed:
                     for c in cp_class_map[compclass]:
