@@ -93,11 +93,34 @@ commands. Inside the container you can find the current directory mapped at
 changes will be available in both.
 
 
-For details of the commands see [Using docker](https://http://geoscienceaustralia.github.io/sifra/ch03_installation.html/)
- in the help documentation
+For details of the commands see 
+[Using docker](https://http://geoscienceaustralia.github.io/sifra/ch03_installation.html/)
+in the help documentation
 
 
-## Running the Code
+## Running the Code on AWS in Docker
+
+First run an interactive container by using:
+
+```
+docker run -it -v "$(pwd):/sifra" --name sifra sifra
+```
+
+To run the sample scenario, while in in the /sifra directory run:
+```
+python -m sifra.infrastructure_response simulation_setup/test_scenario_ps_coal.conf
+```
+
+## Running the Tests in Docker
+
+Run the unit tests for the modelling package with:
+
+```
+docker exec sifra python -m unittest sifra.test
+```
+:grey_exclamation: NOTE: Project needs a more comprehensive test suite.
+
+## Running the Code in Conda
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
@@ -128,15 +151,6 @@ and generate the component criticality plot, run the command:
     $ python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
 
 
-## Running the Tests
-
-Run the unit tests for the modelling package with:
-
-```
-docker exec sifra python -m unittest sifra.test
-```
-:grey_exclamation: NOTE: Project needs a more comprehensive test suite.
-
 ## Todo
 
 - Restructure of Python code. While the modularisation is not too bad (each
@@ -156,7 +170,7 @@ docker exec sifra python -m unittest sifra.test
   prototype with a small time budget, I did not:
   - spend much time being idiomatically consistent,
   - leveraging existing elements of Angular2 (like
-    [reacitve forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html),
+    [reactive forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html),
   - ... writing tests.
 
 - Consider whether a framework like [Redux](http://redux.js.org/) would be useful.
