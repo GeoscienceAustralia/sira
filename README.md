@@ -94,11 +94,11 @@ changes will be available in both.
 
 
 For details of the commands see 
-[Using docker](https://http://geoscienceaustralia.github.io/sifra/ch03_installation.html/)
+[Using docker](https://geoscienceaustralia.github.io/sifra/ch03_installation.html)
 in the help documentation
 
 
-## Running the Code on AWS in Docker
+## Running a simulation in Docker
 
 First run an interactive container by using:
 
@@ -116,9 +116,25 @@ python -m sifra.infrastructure_response simulation_setup/test_scenario_ps_coal.c
 Run the unit tests for the modelling package with:
 
 ```
-docker exec sifra python -m unittest sifra.test
+docker exec sifra python -m unittest tests.test_ir_against_sysresp.TestNewModel
 ```
-:grey_exclamation: NOTE: Project needs a more comprehensive test suite.
+:grey_exclamation: NOTE: Project needs a more comprehensive test suite, and the docker configuration needs work 
+
+
+## Setting up a development Environment
+Recent development has been done mostly on an AWS instance in PyCharm. This
+requires tunnelling X11 through an SSH connection, which mostly works reasonably
+well. 
+
+The driver behind this is the authenticating proxy, which seems to break
+docker in our use-case. Others have been able to run docker containers within
+the GA network, but it was not considered a good use of development effort 
+to attempt this with SIFRA.
+
+PyCharm supports docker as detailed in the following links:
+[Pycharm Docker support](https://www.jetbrains.com/help/pycharm/docker.html)
+and 
+[Docker-Compose: Getting Flask up and running](https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/)
 
 ## Running the Code in Conda
 
@@ -134,7 +150,7 @@ Move into the root directory for the ``SIFRA`` code:
 Run the `sifra` code as a module, with the requisite configuration
 file:
 
-    $ python -m sifra simulation_setup/config_file.conf
+    $ python -m  simulation_setup/config_file.conf
 
 Depending on the scale of the model, and simulation paramters chosen,
 it may take between a few minutes and a few days to complete a run.
