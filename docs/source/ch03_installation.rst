@@ -98,7 +98,7 @@ container and isolated from your own environment.
 To run an interactive container you can use:
 
 ```
-docker run -it -v "$(pwd):/sifra" --name sifra sifra
+docker run -it -v "$(pwd):/sifra" --name sifra s
 ```
 
 This will give you a terminal inside the container in which you can execute
