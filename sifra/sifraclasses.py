@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 import igraph
 import networkx as nx
-import systemlayout
 import matplotlib.pyplot as plt
 import seaborn as sns
 import re
@@ -241,25 +240,6 @@ class _Network(object):
             sys.add_edge(row['origin'], row['destination'],
                        capacity=row['link_capacity'],
                        weight=row['weight'])
-
-        if facility.system_class.lower() in ['potablewatertreatmentplant']:
-            systemlayout.draw_sys_layout(
-                sys, comp_df,
-                out_dir=facility.output_path,
-                graph_label="Water Treatment Plant Component Layout",
-                orientation = "TB",
-                connector_type="ortho",
-                clustering=True
-            )
-        else:
-            systemlayout.draw_sys_layout(
-                sys, comp_df,
-                out_dir=facility.output_path,
-                graph_label="System Component Layout",
-                orientation="LR",
-                connector_type="spline",
-                clustering=False
-            )
 
         # ---------------------------------------------------------------------
         # List of tagged nodes with special roles:
