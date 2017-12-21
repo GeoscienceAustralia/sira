@@ -56,11 +56,9 @@ using Docker.
 **Create AWS Instance using Packer**:
 We're we come from, if we don't have a laptop handy, we like to use AWS for
 provisioning dev machines. A basic dev box can be setup using
-[Packer](https://www.packer.io/intro/), by running:
+[Packer](https://www.packer.io/intro/), by running::
 
-```
-packer build build.json
-```
+    $ packer build build.json
 
 in the current directory.
 
@@ -69,11 +67,9 @@ The top level directory of SIFRA has the script ``create-instance.sh``
 The script requires the `aws command line interface <https://aws.amazon.com/cli/>`
 to be installed on the machine. It also requires access to AWS account credentials.
 
-The script is run as:
+The script is run as::
 
-```
-create-instance.sh
-```
+    $ create-instance.sh
 
 Both of these commands will use the build_sifra_box.sh to install Linux updates
 and the docker components that will be required.
@@ -87,9 +83,7 @@ Using Docker
 If you have Docker installed, you can build a container for working with
 sifra by running the command
 
-```
-docker build -t sifra .
-```
+    $ docker build -t sifra .
 
 The primary advantage of working with docker is that you do not have to worry
 about setting up the python environment, which is done when building the
@@ -97,9 +91,7 @@ container and isolated from your own environment.
 
 To run an interactive container you can use:
 
-```
-docker run -it -v "$(pwd):/sifra" --name sifra s
-```
+    $ docker run -it -v "$(pwd):/sifra" --name sifra s
 
 This will give you a terminal inside the container in which you can execute
 commands. Inside the container you can find the current directory mapped at
@@ -109,30 +101,22 @@ changes will be available in both.
 Alternatively, you might want a container running in the background which you
 can execute commands at (using
 [docker exec](https://docs.docker.com/engine/reference/commandline/exec/)). In
-this case you would start the container with:
+this case you would start the container with::
 
-```
-docker run -id -v "$(pwd):/sifra" --name sifra sifra
-```
+    $ docker run -id -v "$(pwd):/sifra" --name sifra sifra
 
-One could then, for example, run the unit tests for the modelling package with:
+One could then, for example, run the unit tests for the modelling package with::
 
-```
-docker exec sifra python -m unittest sifra.modelling.test_structural
-```
+    $ docker exec sifra python -m unittest sifra.modelling.test_structural
 
-In any case, once you are done you should destroy the container with
+In any case, once you are done you should destroy the container with::
 
-```
-docker kill sifra
-docker rm sifra
-```
+    $ docker kill sifra
+    $ docker rm sifra
 
 or, if your too lazy to type two lines...
 
-```
-docker rm -f sifra
-```
+    $ docker rm -f sifra
 
 Several other containers are provided to help with development. These are
 defined in the other *Dockerfile*s in the present directory, and are:
