@@ -187,22 +187,24 @@ then used to build the SIFRA environment.</p>
 <div class="section" id="using-docker">
 <h3>3.2.2 Using Docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h3>
 <p>If you have Docker installed, you can build a container for working with
-sifra by running the command</p>
-<blockquote>
-<div>$ docker build -t sifra .</div></blockquote>
+sifra by running the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker build -t sifra .
+</pre></div>
+</div>
 <p>The primary advantage of working with docker is that you do not have to worry
 about setting up the python environment, which is done when building the
 container and isolated from your own environment.</p>
 <p>To run an interactive container you can use:</p>
-<blockquote>
-<div>$ docker run -it -v “$(pwd):/sifra” –name sifra s</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker run -it -v &quot;$(pwd):/sifra&quot; --name sifra s
+</pre></div>
+</div>
 <p>This will give you a terminal inside the container in which you can execute
 commands. Inside the container you can find the current directory mapped at
 <cite>/sifra</cite>. You can modify files either within the container or the host and the
 changes will be available in both.</p>
 <p>Alternatively, you might want a container running in the background which you
 can execute commands at (using
-[docker exec](<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">https://docs.docker.com/engine/reference/commandline/exec/</a>)). In
+<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">[docker exec]</a>. In
 this case you would start the container with:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ docker run -id -v &quot;$(pwd):/sifra&quot; --name sifra sifra
 </pre></div>
@@ -217,8 +219,10 @@ $ docker rm sifra
 </pre></div>
 </div>
 <p>or, if your too lazy to type two lines…</p>
-<blockquote>
-<div>$ docker rm -f sifra</div></blockquote>
+<dl class="docutils">
+<dt>::</dt>
+<dd>$ docker rm -f sifra</dd>
+</dl>
 <p>Several other containers are provided to help with development. These are
 defined in the other <a href="#id1"><span class="problematic" id="id2">*</span></a>Dockerfile*s in the present directory, and are:</p>
 <ul class="simple">
@@ -238,25 +242,25 @@ is hosted using Angular’s development server and can be accessed on <em>localh
 <p>does a production build of the Angular project and hosts it using
 <cite>busybox&lt;https://www.busybox.net/&gt;</cite>. The app is still exposed on port 4200, so
 to host it at port 80 one would start it with:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">sifra-gui</span> <span class="pre">-f</span> <span class="pre">Dockerfile-gui-prod</span> <span class="pre">.</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker build -t sifra-gui -f Dockerfile-gui-prod .
+</pre></div>
+</div>
 <p>and start it with (for example):</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-d</span> <span class="pre">-p</span> <span class="pre">80:4200</span> <span class="pre">--restart</span> <span class="pre">always</span> <span class="pre">sifra-gui-prod</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker run -d -p 80:4200 --restart always sifra-gui-prod
+</pre></div>
+</div>
 <p>#### Docker Compose</p>
 <p>By far the easiest way to run the system for development is with
-[docker-compose](<a class="reference external" href="https://docs.docker.com/compose/">https://docs.docker.com/compose/</a>), which can be done with:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker-compose</span> <span class="pre">up</span>
-<span class="pre">`</span></code></p>
+<a class="reference external" href="https://docs.docker.com/compose/">[docker-compose]</a>, which can be done with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker-compose up
+</pre></div>
+</div>
 <p>Assuming that you start the system this way in the current folder, you can:</p>
 <ul>
-<li><p class="first">attach to the sifa image to run models and tests with</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">sifra_sifra_1</span>
-<span class="pre">`</span></code></p>
+<li><p class="first">attach to the sifa image to run models and tests with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker attach sifra_sifra_1
+</pre></div>
+</div>
 </li>
 <li><p class="first">access the GUI for defining fragility functions at <em>http://localhost:4200</em>, and</p>
 </li>
@@ -264,10 +268,10 @@ to host it at port 80 one would start it with:</p>
 </li>
 </ul>
 <p>The both the API and GUI will stay in sync with your code.</p>
-<p>You can tear the system down (destroying the containers) with</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker-compose</span> <span class="pre">down</span>
-<span class="pre">`</span></code></p>
+<p>You can tear the system down (destroying the containers) with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker-compose down
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="setting-up-a-development-environment-with-anaconda">
@@ -282,27 +286,28 @@ installing <code class="docutils literal"><span class="pre">Anaconda</span></cod
 <p>Some packages we need are not hosted in the main <code class="docutils literal"><span class="pre">conda</span></code> package
 repository. In such cases we will host them in our own user channel.
 We suggest adding the following channels to the default:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">conda</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">anaconda</span>
-<span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">conda</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">marufr</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ conda config --add channels https://conda.anaconda.org/anaconda
+$ conda config --add channels https://conda.anaconda.org/marufr
 </pre></div>
 </div>
 <p>Run the following command to confirm the additional channels have
 been added:</p>
-<blockquote>
-<div>conda config –get channels</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ conda config --get channels
+</pre></div>
+</div>
 <p><strong>For OS X and Linux-64 systems</strong>: It should be possible to set up a full run
 environment solely through the *.yml environment specification file. For OS X
 run the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">environment_osx</span><span class="o">.</span><span class="n">yml</span>
-<span class="n">source</span> <span class="n">activate</span> <span class="n">sifra_env</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ conda env create -f environment_osx.yml
+$ source activate sifra_env
 </pre></div>
 </div>
 <p>For Linux-64 systems, the commands are identical, you will just need to use
 the environment specification file for Linux.</p>
 <p><strong>For Windows systems</strong>, a similar process needs to be followed, with some
 exceptions. First run:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">environment_win64</span><span class="o">.</span><span class="n">yml</span>
-<span class="n">activate</span> <span class="n">sifra_env</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ conda env create -f environment_win64.yml
+$ activate sifra_env
 </pre></div>
 </div>
 <p>This will install most requirements except for <code class="docutils literal"><span class="pre">igraph</span></code> and <code class="docutils literal"><span class="pre">pygraphviz</span></code>.
