@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>5 Component Fragility Attribution &#8212; SIFRA v0.2.0 docs</title>
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="bibliography.html" />
+    <link rel="prev" title="4 Simulation Setup" href="ch04_simsetup.html" />
+  
+   
+
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="bibliography.html" title="References"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch04_simsetup.html" title="4 Simulation Setup"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SIFRA</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+        <a href="
+    index.html" class="text-logo">SIFRA</a>
+        
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Table Of Contents</h2>
+  </div>
+  <div class="sidebar-toc">
+    
+    
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5 Component Fragility Attribution</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+
+    
+  </div>
+</div>
+        
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="index.html">Docs</a></li>
+              
+              <li>5 Component Fragility Attribution</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="component-fragility-attribution">
+<span id="fragility-attribution"></span><h1>5 Component Fragility Attribution<a class="headerlink" href="#component-fragility-attribution" title="Permalink to this headline">¶</a></h1>
+<p>As earthquake induced ground shaking at a facility increases in intensity,
+the individual components respond and sustain progressively more damage.
+Fragility functions are used to define this susceptibility of components
+to damage by quantifying the likelihood that a level of damage will be
+exceeded for a given level of shaking. This approach entails the definition
+of one or more earthquake damage states for each component and the selection
+of a ground shaking measure that is highly correlated to the component damage.</p>
+<p>Each component within a facility is strictly unique. However, for a given
+component it can be classed into a category of asset referred to as a
+<code class="docutils literal"><span class="pre">component</span> <span class="pre">type</span></code>, in which all components have similar vulnerability.
+The assignment of component type fragility algorithms for each damage state
+is based on asset typology and the design levels under consideration.
+The fragility algorithm defines a cumulative probability of exceedance for
+each damage state that captures the variability of the vulnerability within
+a “component type” and the effect of variability in component response to
+ground motion on damage severity.  The form of these functions can take a
+range of mathematical forms.  The most common form is log normal and defined
+by a median (θ) and log standard deviation (β), which is the form
+that SIFRA uses.</p>
+<p>Component type fragility models need to be representative of the assets they
+characterise. Models can be developed or sourced using the following
+hierarchy of approaches which is in order of increasing uncertainty:</p>
+<ol class="arabic simple">
+<li>Direct consultation with industry asset managers to reach agreement on
+component fragilities by adjusting the most appropriate published models
+and drawing upon construction specifications, manufacturer’s shake table
+proof testing (if available) and observed earthquake performance
+(if possible).</li>
+<li>Selection of the most applicable model from published models in the
+literature.</li>
+<li>Utilisation of heuristic engineering judgment in adapting damage models
+for other components assessed to have similar fragility. There are many
+fragility models published in the literature.  The literature review and
+model compilation produced by the Syner-G Project <a class="reference internal" href="bibliography.html#pitilakis-etal-2014" id="id1">[7]</a>.
+sponsored by the European Commission presents a wide range of electricity
+sector component models.  Its key references included works by
+Vanzi <a class="reference internal" href="bibliography.html#vanzi1996" id="id2">[12]</a>, Anagnos <a class="reference internal" href="bibliography.html#anagnos1999" id="id3">[1]</a> and
+the HAZUS Technical Manual <a class="reference internal" href="bibliography.html#fema2003" id="id4">[5]</a>.
+HAZUS includes fragility functions for a wider range of facility
+components than those presented in the Syner-G Project.</li>
+</ol>
+<p>Each damage state has a description of the typical severity of physical
+component damage which has implications for the use of the component.
+Hence, each damage state also has an operational level for the damaged
+component, a cost to repair (as a proportion of the replacement cost) and
+a resource requirement in terms of number of technicians and time. This
+is used to assess the utility of the facility immediately after an extreme
+event and to assess the restoration prognosis.</p>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="ch04_simsetup.html" title="previous chapter (use the left arrow)">4 Simulation Setup</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="bibliography.html" title="next chapter (use the right arrow)">References</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="bibliography.html" title="References"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch04_simsetup.html" title="4 Simulation Setup"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SIFRA</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2017, Geoscience Australia. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

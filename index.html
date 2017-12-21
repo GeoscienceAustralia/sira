@@ -1,0 +1,245 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>SIFRA: A Tool for Analysis of Hazard Impacts on Infrastructure &#8212; SIFRA v0.2.0 docs</title>
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1 Introduction" href="ch01_intro.html" />
+  
+   
+
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch01_intro.html" title="1 Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">SIFRA</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+        <a href="
+    #" class="text-logo">SIFRA</a>
+        
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <h2>Table Of Contents</h2>
+  </div>
+  <div class="sidebar-toc">
+    
+    
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+
+    
+  </div>
+</div>
+        
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="#">Docs</a></li>
+              
+              <li>SIFRA: A Tool for Analysis of Hazard Impacts on Infrastructure</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="sifra-a-tool-for-analysis-of-hazard-impacts-on-infrastructure">
+<h1>SIFRA: A Tool for Analysis of Hazard Impacts on Infrastructure<a class="headerlink" href="#sifra-a-tool-for-analysis-of-hazard-impacts-on-infrastructure" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/GeoscienceAustralia/sifra">https://github.com/GeoscienceAustralia/sifra</a> <br />
+Release: 0.2.0</p>
+<p>SIFRA is a <strong>System for Infrastructure Facility Resilience Analysis</strong>.
+It comprises a method and software tools that provide a framework
+for simulating the fragility of infrastructure facilities to natural
+hazards, based on assessment of the fragilities and configuration of
+components that comprise the facility. Currently the system is designed
+to work with earthquake hazards only. However, in the development of the
+methodology and classes, there is a strong emphasis on making the
+hazard attribution process and infrastructure models flexible to allow
+for expansion to other hazards and new infrastructure sectors.</p>
+<p>SIFRA was developed in <a class="reference external" href="http://www.ga.gov.au/">Geoscience Australia (GA)</a>
+in support of the agency’s vision to contribute to enhancing the resilience
+of communities in Australia and its region.</p>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>Written in Python:</strong> <br /></p>
+<p>It is written in Python, and there is no dependency on
+proprietary tools. It should run on OS X, Windows, and
+Linux platforms.</p>
+</li>
+<li><p class="first"><strong>Flexible Facility Model:</strong> <br /></p>
+<p><a class="reference internal" href="reportglossary.html#term-facility"><span class="xref std std-term">Facility</span></a> data model is based on graph theory, allowing
+the user to develop arbitrarily complex custom facility models
+for simulation.</p>
+</li>
+<li><p class="first"><strong>Extensible Component Library:</strong> <br /></p>
+<p>User can define new instances of <cite>component_type</cite>
+(the building blocks of a facility) and link it to existing or
+custom fragility algorithms.</p>
+</li>
+<li><p class="first"><strong>Component Criticality Analysis:</strong> <br /></p>
+<p>Scenario Analysis tools allow users to identify the cost of
+restoration for chosen scenarios, expected restoration times,
+and which component upgrades can most benefit the system.</p>
+</li>
+<li><p class="first"><strong>Restoration Prognosis:</strong> <br /></p>
+<p>User can experiment with different levels of hazards and
+post-disaster resource allocation to gauge restoration
+times for facility operations.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">3.2 AWS and Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sifra-code">3.4 Running the Core SIFRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#scenario-definition-file">4.1 Scenario Definition File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#facility-definition-file">4.2 Facility Definition File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>Copyright 2017, Geoscience Australia</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:</p>
+<p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</div>
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="ch01_intro.html" title="next chapter (use the right arrow)">1 Introduction</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch01_intro.html" title="1 Introduction"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">SIFRA</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2017, Geoscience Australia. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>
