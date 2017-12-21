@@ -53,101 +53,33 @@ The virtual environments were initally described and implemented using
 microservices implemented in docker containers. If you have docker installed on
 your system it is probably easiest to use the containers as described below.
 
-
 ## Building the Run Environment
+The AWS and Docker configuration is now the preferred way to deploy and develop
+ the application.
 
-### Using Anaconda
+### Building an AMI for Dev Machines
 
-We recommend using ``conda`` for managing virtual environments and
-packages required for running ``sifra``.
-
-For the sake of simplicity, we recommend using ``Anaconda``. It is a
-free Python distribution, and comes with the ``conda`` tool which is
-both a package manager and environment manager. Instructions for
-installing ``Anaconda`` are here:
-<http://docs.continuum.io/anaconda/install>
-
-**Prerequisites:** You will need to install ``Graphviz`` for the
-drawing the system diagram through networkx and pygraphviz.
-Please visit: <http://www.graphviz.org/>
-and download the appropriate version for your operating system.
-Please follow the posted download instructions carefully.
-After installation you may need to update the PATH variable
-with the location of the Graphviz binaries.
-
-For windows systems you will need to install
-Microsoft Visual C++ Compiler for Python 2.7:
-<http://aka.ms/vcpython27>
-
-On Ubuntu you can
+We're we come from, if we don't have a laptop handy, we like to use AWS for
+provisioning dev machines. A basic dev box can be setup using
+[Packer](https://www.packer.io/intro/), by running:
 
 ```
-apt-get update && apt-get install -y \
-    build-essential pkg-config \
-    graphviz libgraphviz-dev \
-    xml2 libxml2-dev
+packer build build.json
 ```
 
-Some packages we need are not hosted in the main ``conda`` package
-repository. In such cases we will host them in our own user channel.
-We suggest adding the following channels to the default::
+in the current directory. The details, and options, for installation
+are detailed in 
 
-    $ conda config --add channels https://conda.anaconda.org/anaconda
-    $ conda config --add channels https://conda.anaconda.org/marufr
+### Docker
+The packer command that creates the AWS instance will run a 
+shell script that will install Docker and clone the git repository
+from Github. The details of the script are in `build-sifra-box.sh`
 
-Run the following command to confirm the additional channels have
-been added:
-
-    $ conda config --get channels
-
-**For OS X and Linux-64 systems:** It should be possible to set up a
-full run environment solely through the \*.yml environment specification
-file. For OS X run the following commands:
-
-    $ conda env create -f environment_osx.yml
-    $ source activate sifra_env
-
-For Linux-64 systems, the commands are identical, you will just need
-to use the environment specification file for Linux.
-
-**For Windows systems**, a similar process needs to be followed, with
-some exceptions. First run:
-
-    $ conda env create -f environment_win64.yml
-    $ activate sifra_env
-
-This will install most requirements except for ``igraph`` and
-``pygraphviz``. Compiling these packages under windows can be very
-challenging. The simplest and most reliable options is to download
-the the appropriate wheels from Christoph Gohlke's unofficial page
-of Windows binaries:
-<http://www.lfd.uci.edu/~gohlke/pythonlibs/>
-
-For Windows 64 bit systems, you will need to download the ``wheels`` for
-[python-igraph](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph)
-and [pygraphviz](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz):
-
-- ``python_igraph-0.7.1.post6-cp27-none-win_amd64.whl``
-- ``pygraphviz-1.3.1-cp27-none-win_amd64.whl``
-
-Install these downloaded ``wheels`` with pip:
-
-    $ pip install <pkg_name>.whl
-
-
-
-### Using Docker
-
-If you have Docker installed, you can build a container for working with
-sifra by running the command
-
+Creating the environment is done using the following commands:
 ```
+cd sifra
 docker build -t sifra .
 ```
-
-The primary advantage of working with docker is that you do not have to worry
-abouti setting up the python environment, which is done when building the
-container and isolated from your own environment.
 
 To run an interactive container you can use:
 
@@ -160,105 +92,51 @@ commands. Inside the container you can find the current directory mapped at
 `/sifra`. You can modify files either within the container or the host and the
 changes will be available in both.
 
-Alternatively, you might want a container running in the background which you
-can execute commands at (using
-[docker exec](https://docs.docker.com/engine/reference/commandline/exec/)). In
-this case you would start the container with:
+
+For details of the commands see 
+[Using docker](https://geoscienceaustralia.github.io/sifra/ch03_installation.html)
+in the help documentation
+
+
+## Running a simulation in Docker
+
+First run an interactive container by using:
 
 ```
-docker run -id -v "$(pwd):/sifra" --name sifra sifra
+docker run -it -v "$(pwd):/sifra" --name sifra sifra
 ```
 
-One could then, for example, run the unit tests for the modelling package with:
-
+To run the sample scenario, while in in the /sifra directory run:
 ```
-docker exec sifra python -m unittest sifra.modelling.test_structural
-```
-
-In any case, once you are done you should destroy the container with
-
-```
-docker kill sifra
-docker rm sifra
+python -m sifra.infrastructure_response simulation_setup/test_scenario_ps_coal.conf
 ```
 
-or, if your too lazy to type two lines...
+## Running the Tests in Docker
+
+Run the unit tests for the modelling package with:
 
 ```
-docker rm -f sifra
+docker exec sifra python -m unittest discover -s /sifra/tests -t /sifra/tests
 ```
-
-Several other containers are provided to help with development. These are
-defined in the other *Dockerfile*s in the present directory, and are:
-
-- *Dockerfile-api*: Provides a web API which is used for parameterising
-model components (at this stage just response functions) and serialising them.
-This is presently (at Feb 2017) a prototype and provides only a small subset
-of what we hope for.
-
-- *Dockerfile-gui-dev*: Provides an [Agular2](https://angular.io/) application for
-defining model components built on top of the API mentioned above. The application
-is hosted using Angular's development server and can be accessed on *localhost:4200*.
-
-- *Dockerfile-gui-prod*: For deploying the web application in production. This
-does a production build of the Angular project and hosts it using
-[busybox](https://www.busybox.net/). The app is still exposed on port 4200, so
-to host it at port 80 one would start it with:
-
-  ```
-  docker build -t sifra-gui -f Dockerfile-gui-prod .
-  ```
-
-  and start it with (for example):
-
-  ```
-  docker run -d -p 80:4200 --restart always sifra-gui-prod
-  ```
-
-#### Docker Compose
-
-By far the easiest way to run the system for development is with
-[docker-compose](https://docs.docker.com/compose/), which can be done with:
-
-```
-docker-compose up
-```
-
-Assuming that you start the system this way in the current folder, you can:
-
-- attach to the sifa image to run models and tests with
-
-  ```
-  docker attach sifra_sifra_1
-  ```
-
-- access the GUI for defining fragility functions at *http://localhost:4200*, and
-
-- access the web API at *http://localhost:5000*.
-
-The both the API and GUI will stay in sync with your code.
-
-You can tear the system down (destroying the containers) with
-
-```
-docker-compose down
-```
+:grey_exclamation: NOTE: Project needs a more comprehensive test suite, and the docker configuration needs work 
 
 
-### Building an AMI for Dev Machines
+## Setting up a development Environment
+Recent development has been done mostly on an AWS instance in PyCharm. This
+requires tunnelling X11 through an SSH connection, which mostly works reasonably
+well. 
 
-We're we come from, if we don't have a laptop handy, we like to use AWS for
-provisioning dev machines. A basic dev box can be setup using
-[Packer](https://www.packer.io/intro/), by running:
+The driver behind this is the authenticating proxy, which seems to break
+docker in our use-case. Others have been able to run docker containers within
+the GA network, but it was not considered a good use of development effort 
+to attempt this with SIFRA.
 
-```
-packer build build.json
-```
+PyCharm supports docker as detailed in the following links:
+[Pycharm Docker support](https://www.jetbrains.com/help/pycharm/docker.html)
+and 
+[Docker-Compose: Getting Flask up and running](https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/)
 
-in the current directory.
-
-
-## Running the Code
+## Running the Code in Conda
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
@@ -272,7 +150,7 @@ Move into the root directory for the ``SIFRA`` code:
 Run the `sifra` code as a module, with the requisite configuration
 file:
 
-    $ python -m sifra simulation_setup/config_file.conf
+    $ python -m  simulation_setup/config_file.conf
 
 Depending on the scale of the model, and simulation paramters chosen,
 it may take between a few minutes and a few days to complete a run.
@@ -289,27 +167,12 @@ and generate the component criticality plot, run the command:
     $ python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
 
 
-## Running the Tests
-
-To run tests use either ``nose`` or ``unittest``.
-Example (from the first level 'sifra' directory):
-
-    $ cd sifra  # and not cd sifra/sifra
-    $ python -m unittest discover tests
-
-or, simply run:
-
-    $ nosetest
-
-If you are using docker as described above, you can do this within the sifra
-container.
-
-:grey_exclamation: NOTE: Project needs a more comprehensive test suite.
-
 ## Todo
 
-- Restructure of Python code. While the modularisation is not too bad (each
-  module is probably close to sensible), the names of modules are terrible.
+- Restructure of Python code. While the simulation has been integrated with
+  the json serialisation/deserialisation logic, the redundant classes should
+  be removed and the capacity to create, edit and delete a scenario needs to 
+  be developed.
 
 - The handling of types within the web API is inconsistent; in some cases it
   works with instances, in others dicts and in others, JSON docs. This
@@ -325,13 +188,13 @@ container.
   prototype with a small time budget, I did not:
   - spend much time being idiomatically consistent,
   - leveraging existing elements of Angular2 (like
-    [reacitve forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html),
+    [reactive forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html),
   - ... writing tests.
 
 - Consider whether a framework like [Redux](http://redux.js.org/) would be useful.
 
 - Perhaps get rid of ng\_select. I started with this before realising how easy
-  simple HTML selects would be to work with and before reading about reacitve
+  simple HTML selects would be to work with and before reading about reactive
   forms (I'm not sure how/if one could use ng\_select with them). One benefit of
   ng\_select may be handling large lists and one may want to do some testing
   before removing it.
@@ -341,13 +204,4 @@ container.
   produced by that method is heavy due to its repetativeness and would hence be
   slow to pass around over the net. The logic is straight forward and would be
   easy to implment in javascript given the 'metadata' and instance.
-
-
-## Special files
-
-*sifra/components.csv*: Used to populate the components categories table. All unique
-  rows in the table are used to form the set of possible component types. This
-  is loaded from *sifra/components.py* if the (sqlite) database *db/sqlite.db*
-  does not exist. If some other DB were used, the logic to choose when to load
-  this data would need to be chosen and implemented to suite.
 

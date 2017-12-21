@@ -121,14 +121,14 @@ class IFSystem(Model):
             prng = np.random.RandomState()
 
         # record the number of elements for use
-        num_elements = len(self.components)
+        num_components = len(self.components)
 
         # construct a zeroed numpy array that can contain the number of samples for
         # each element.
-        component_damage_state_ind = np.zeros((scenario.num_samples, num_elements),
+        component_damage_state_ind = np.zeros((scenario.num_samples, num_components),
                                               dtype=int)
         # create another numpy array of random uniform [0,1.0) numbers.
-        rnd = prng.uniform(size=(scenario.num_samples, num_elements))
+        rnd = prng.uniform(size=(scenario.num_samples, num_components))
         logging.debug("Hazard Intensity {}".format(hazard_level.hazard_intensity))
         # iterate through the components
         for index, comp_key in enumerate(sorted(self.components.keys())):
@@ -147,9 +147,9 @@ class IFSystem(Model):
             # with the first axis (denoted by :) containing the samples for this
             # hazard intensity. The [:, np.newaxis] broadcasts
             # (https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html)
-            # each randomn number across the supplied component_pe_ds. If the sample number
-            # is greater than the first two numbers in component_pe_ds, the comparison > will
-            # return [True, True, False, False]
+            # each randomn number across the supplied component_pe_ds. If the last two
+            # numbers in component_pe_ds are greater than the sample number, the
+            # comparison > will return [False, False, True, True]
             # the np.sum will convert this to [1, 1, 0, 0] and return 2. This is the resulting
             # damage level. This will complete the comparison for all of the samples
             # for this component
@@ -338,7 +338,6 @@ class IFSystem(Model):
         """
         return self.sys_dmg_states
 
-
     def get_dmg_scale_bounds(self, scenario):
         """
         An array of damage scale boundaries
@@ -373,7 +372,7 @@ class SubStation(IFSystem):
             'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00] }
+            'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]}
 
 
 class PowerStation(IFSystem):
