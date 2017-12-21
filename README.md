@@ -116,7 +116,7 @@ python -m sifra.infrastructure_response simulation_setup/test_scenario_ps_coal.c
 Run the unit tests for the modelling package with:
 
 ```
-docker exec sifra python -m unittest tests.test_ir_against_sysresp.TestNewModel
+docker exec sifra python -m unittest discover -s /sifra/tests -t /sifra/tests
 ```
 :grey_exclamation: NOTE: Project needs a more comprehensive test suite, and the docker configuration needs work 
 
@@ -169,8 +169,10 @@ and generate the component criticality plot, run the command:
 
 ## Todo
 
-- Restructure of Python code. While the modularisation is not too bad (each
-  module is probably close to sensible), the names of modules are terrible.
+- Restructure of Python code. While the simulation has been integrated with
+  the json serialisation/deserialisation logic, the redundant classes should
+  be removed and the capacity to create, edit and delete a scenario needs to 
+  be developed.
 
 - The handling of types within the web API is inconsistent; in some cases it
   works with instances, in others dicts and in others, JSON docs. This
