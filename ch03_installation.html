@@ -167,18 +167,18 @@ using Docker.</p>
 We’re we come from, if we don’t have a laptop handy, we like to use AWS for
 provisioning dev machines. A basic dev box can be setup using
 [Packer](<a class="reference external" href="https://www.packer.io/intro/">https://www.packer.io/intro/</a>), by running:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">packer</span> <span class="pre">build</span> <span class="pre">build.json</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ packer build build.json
+</pre></div>
+</div>
 <p>in the current directory.</p>
 <p><strong>Create AWS Instance using bash script</strong>:
 The top level directory of SIFRA has the script <code class="docutils literal"><span class="pre">create-instance.sh</span></code>
 The script requires the <cite>aws command line interface &lt;https://aws.amazon.com/cli/&gt;</cite>
 to be installed on the machine. It also requires access to AWS account credentials.</p>
 <p>The script is run as:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">create-instance.sh</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ create-instance.sh
+</pre></div>
+</div>
 <p>Both of these commands will use the build_sifra_box.sh to install Linux updates
 and the docker components that will be required.</p>
 <p>It then clones the SIFRA github repository, from the master branch. Docker is
@@ -188,16 +188,14 @@ then used to build the SIFRA environment.</p>
 <h3>3.2.2 Using Docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h3>
 <p>If you have Docker installed, you can build a container for working with
 sifra by running the command</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">sifra</span> <span class="pre">.</span>
-<span class="pre">`</span></code></p>
+<blockquote>
+<div>$ docker build -t sifra .</div></blockquote>
 <p>The primary advantage of working with docker is that you do not have to worry
 about setting up the python environment, which is done when building the
 container and isolated from your own environment.</p>
 <p>To run an interactive container you can use:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">-v</span> <span class="pre">&quot;$(pwd):/sifra&quot;</span> <span class="pre">--name</span> <span class="pre">sifra</span> <span class="pre">s</span>
-<span class="pre">`</span></code></p>
+<blockquote>
+<div>$ docker run -it -v “$(pwd):/sifra” –name sifra s</div></blockquote>
 <p>This will give you a terminal inside the container in which you can execute
 commands. Inside the container you can find the current directory mapped at
 <cite>/sifra</cite>. You can modify files either within the container or the host and the
@@ -206,22 +204,21 @@ changes will be available in both.</p>
 can execute commands at (using
 [docker exec](<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">https://docs.docker.com/engine/reference/commandline/exec/</a>)). In
 this case you would start the container with:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-id</span> <span class="pre">-v</span> <span class="pre">&quot;$(pwd):/sifra&quot;</span> <span class="pre">--name</span> <span class="pre">sifra</span> <span class="pre">sifra</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker run -id -v &quot;$(pwd):/sifra&quot; --name sifra sifra
+</pre></div>
+</div>
 <p>One could then, for example, run the unit tests for the modelling package with:</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">sifra</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">unittest</span> <span class="pre">sifra.modelling.test_structural</span>
-<span class="pre">`</span></code></p>
-<p>In any case, once you are done you should destroy the container with</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">kill</span> <span class="pre">sifra</span>
-<span class="pre">docker</span> <span class="pre">rm</span> <span class="pre">sifra</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker exec sifra python -m unittest sifra.modelling.test_structural
+</pre></div>
+</div>
+<p>In any case, once you are done you should destroy the container with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker kill sifra
+$ docker rm sifra
+</pre></div>
+</div>
 <p>or, if your too lazy to type two lines…</p>
-<p><code class="docutils literal"><span class="pre">`</span>
-<span class="pre">docker</span> <span class="pre">rm</span> <span class="pre">-f</span> <span class="pre">sifra</span>
-<span class="pre">`</span></code></p>
+<blockquote>
+<div>$ docker rm -f sifra</div></blockquote>
 <p>Several other containers are provided to help with development. These are
 defined in the other <a href="#id1"><span class="problematic" id="id2">*</span></a>Dockerfile*s in the present directory, and are:</p>
 <ul class="simple">
