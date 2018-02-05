@@ -56,7 +56,7 @@ using Docker.
 **Create AWS Instance using Packer**:
 We're we come from, if we don't have a laptop handy, we like to use AWS for
 provisioning dev machines. A basic dev box can be setup using
-[Packer](https://www.packer.io/intro/), by running::
+`Packer <https://www.packer.io/intro/>`_, by running::
 
     $ packer build build.json
 
@@ -64,7 +64,7 @@ in the current directory.
 
 **Create AWS Instance using bash script**:
 The top level directory of SIFRA has the script ``create-instance.sh``
-The script requires the `aws command line interface <https://aws.amazon.com/cli/>`
+The script requires the `aws command line interface <https://aws.amazon.com/cli/>`_
 to be installed on the machine. It also requires access to AWS account credentials.
 
 The script is run as::
@@ -99,8 +99,8 @@ commands. Inside the container you can find the current directory mapped at
 changes will be available in both.
 
 Alternatively, you might want a container running in the background which you
-can execute commands at (using
-`[docker exec] <https://docs.docker.com/engine/reference/commandline/exec/>`_. In
+can execute commands at using
+`docker exec <https://docs.docker.com/engine/reference/commandline/exec/>`_. In
 this case you would start the container with::
 
     $ docker run -id -v "$(pwd):/sifra" --name sifra sifra
@@ -115,27 +115,26 @@ In any case, once you are done you should destroy the container with::
     $ docker rm sifra
 
 
-or, if your too lazy to type two lines...
+or, if your too lazy to type two lines, use this command::
 
-::
     $ docker rm -f sifra
 
 Several other containers are provided to help with development. These are
 defined in the other *Dockerfile*s in the present directory, and are:
 
 - *Dockerfile-api*: Provides a web API which is used for parameterising
-model components (at this stage just response functions) and serialising them.
-This is presently (at Feb 2017) a prototype and provides only a small subset
-of what we hope for.
+  model components (at this stage just response functions) and serialising them.
+  This is presently (at Feb 2017) a prototype and provides only a small subset
+  of what we hope for.
 
-- *Dockerfile-gui-dev*: Provides an `Angular2<https://angular.io/>` application for
-defining model components built on top of the API mentioned above. The application
-is hosted using Angular's development server and can be accessed on *localhost:4200*.
+- *Dockerfile-gui-dev*: Provides an `Angular2 <https://angular.io/>`_ application for
+  defining model components built on top of the API mentioned above. The application
+  is hosted using Angular's development server and can be accessed on *localhost:4200*.
 
 - *Dockerfile-gui-prod*: For deploying the web application in production. This
-does a production build of the Angular project and hosts it using
-`busybox<https://www.busybox.net/>`. The app is still exposed on port 4200, so
-to host it at port 80 one would start it with::
+  does a production build of the Angular project and hosts it using
+  `busybox <https://www.busybox.net/>`_. The app is still exposed on port 4200, so
+  to host it at port 80 one would start it with::
 
     $ docker build -t sifra-gui -f Dockerfile-gui-prod .
 
@@ -143,10 +142,11 @@ and start it with (for example)::
 
     $ docker run -d -p 80:4200 --restart always sifra-gui-prod
 
-#### Docker Compose
+Docker Compose
+++++++++++++++
 
 By far the easiest way to run the system for development is with
-`[docker-compose] <https://docs.docker.com/compose/>`_, which can be done with::
+`docker-compose <https://docs.docker.com/compose/>`_, which can be done with::
 
     $ docker-compose up
 
@@ -160,7 +160,7 @@ Assuming that you start the system this way in the current folder, you can:
 
 - access the web API at *http://localhost:5000*.
 
-The both the API and GUI will stay in sync with your code.
+Then both the API and GUI will stay in sync with your code.
 
 You can tear the system down (destroying the containers) with::
 
