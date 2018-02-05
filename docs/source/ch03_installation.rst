@@ -154,13 +154,13 @@ By far the easiest way to run the system for development is with
 Assuming that you start the system this way in the current folder, you can:
 
 - attach to the sifa image to run models and tests with: |br|
-  `$ docker attach sifra_sifra_1`
+  ``$ docker attach sifra_sifra_1``
 
 - access the GUI for defining fragility functions at: |br|
-  `http://localhost:4200`, and
+  ``http://localhost:4200``, and
 
 - access the web API at: |br|
-  `http://localhost:5000`.
+  ``http://localhost:5000``.
 
 This method will allow both the API and GUI to stay in sync with your code.
 
