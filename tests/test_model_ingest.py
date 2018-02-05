@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import unittest as ut
-from model_ingest import ingest_spreadsheet
-from modelling.structural import jsonify
-from sifraclasses import Scenario
-from modelling.responsemodels import DamageAlgorithm
+from sifra.model_ingest import ingest_spreadsheet
+from sifra.modelling.structural import jsonify
+from sifra.sifraclasses import Scenario
+from sifra.modelling.responsemodels import DamageAlgorithm
 
 
 class TestIngestResponseModel(ut.TestCase):
