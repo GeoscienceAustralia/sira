@@ -123,19 +123,22 @@ or, if your too lazy to type two lines, use this command::
 Several other containers are provided to help with development. These are
 defined in the other `Dockerfiles` in the present directory, and are:
 
-- ``Dockerfile-api``: Provides a web API which is used for parameterising
+- ``Dockerfile-api``: |br|
+  Provides a web API which is used for parameterising
   model components (at this stage just response functions) and serialising them.
   This is presently (at Feb 2017) a prototype and provides only a small subset
   of what we hope for.
 
-- ``Dockerfile-gui-dev``: Provides an `Angular2 <https://angular.io/>`_ application for
+- ``Dockerfile-gui-dev``: |br|
+  Provides an `Angular2 <https://angular.io/>`_ application for
   defining model components built on top of the API mentioned above. The application
   is hosted using Angular's development server and can be accessed on *localhost:4200*.
 
-- ``Dockerfile-gui-prod``: For deploying the web application in production. This
+- ``Dockerfile-gui-prod``: |br|
+  For deploying the web application in production. This
   does a production build of the Angular project and hosts it using
-  `busybox <https://www.busybox.net/>`_. The app is still exposed on port 4200, so
-  to host it at port 80 one would start it with::
+  `busybox <https://www.busybox.net/>`_. The app is still exposed on port 4200,
+  so to host it at port 80 one would start it with::
 
     $ docker build -t sifra-gui -f Dockerfile-gui-prod .
 
@@ -156,11 +159,14 @@ Assuming that you start the system this way in the current folder, you can:
 - attach to the sifa image to run models and tests with: |br|
   ``$ docker attach sifra_sifra_1``
 
+
 - access the GUI for defining fragility functions at: |br|
   ``http://localhost:4200``, and
 
+
 - access the web API at: |br|
   ``http://localhost:5000``.
+
 
 This method will allow both the API and GUI to stay in sync with your code.
 
