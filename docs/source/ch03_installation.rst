@@ -43,10 +43,10 @@ The development of the Web interface to provide the ability to create
 component types and models led to the usage of Docker and AWS. Docker
 creates containers that provide independence of platforms when developing
 applications and services. So Docker removes the requirement for Conda
-to organise the Python libraries. The downside of using docker in our environment (GA Sysmonston) is that
-network security makes running Docker difficult. So development environments
-are easier to create and use on AWS. Use of AWS for Web applications is the
-current direction for GA.
+to organise the Python libraries. The downside of using docker in our
+environment (GA Sysmonston) is that network security makes running Docker
+difficult. So development environments are easier to create and use on AWS.
+Use of AWS for Web applications is the current direction for GA.
 
 Installation of SIFRA on AWS with Docker
 ++++++++++++++++++++++++++++++++++++++++
@@ -63,6 +63,7 @@ provisioning dev machines. A basic dev box can be setup using
 in the current directory.
 
 **Create AWS Instance using bash script**:
+
 The top level directory of SIFRA has the script ``create-instance.sh``
 The script requires the `aws command line interface <https://aws.amazon.com/cli/>`_
 to be installed on the machine. It also requires access to AWS account credentials.
