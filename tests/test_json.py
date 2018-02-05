@@ -6,15 +6,15 @@ import logging
 
 from sifra.modelling.utils import jsonify, pythonify
 from sifra.modelling.infrastructure_system import IFSystem
-from model_ingest import ingest_spreadsheet
+from sifra.model_ingest import ingest_spreadsheet
 
 logging.basicConfig(level=logging.INFO)
-ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
+ident_config_file = './test_scenario_ps_coal.conf'
 
 
 class TestNewModel(unittest.TestCase):
     def test_pythonify(self):
-        config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
+        config_file = './test_scenario_ps_coal.conf'
         infrastructure, alg_fact = ingest_spreadsheet(config_file)  # `IFSystem` object
         # serialise to json
         json_if = jsonify(infrastructure)
