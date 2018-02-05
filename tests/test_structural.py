@@ -8,7 +8,7 @@ from sifra.modelling.structural import (
     MultipleBasesOfTypeBaseError,
     pythonify)
 
-from modelling.responsemodels import ResponseModel
+from sifra.modelling.responsemodels import ResponseModel
 from sifra.modelling.component import Component
 from sifra.modelling.infrastructure_system import IFSystem
 from sifra.modelling.infrastructure_model import Model
