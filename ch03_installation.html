@@ -223,7 +223,7 @@ $ docker rm sifra
 </pre></div>
 </div>
 <p>Several other containers are provided to help with development. These are
-defined in the other <a href="#id1"><span class="problematic" id="id2">*</span></a>Dockerfile*s in the present directory, and are:</p>
+defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
 <ul>
 <li><p class="first"><em>Dockerfile-api</em>: Provides a web API which is used for parameterising
 model components (at this stage just response functions) and serialising them.
@@ -364,12 +364,14 @@ restoration analysis tools. They are simply run as:</p>
 <h2>3.5 Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
 <p>To run tests use either <code class="docutils literal"><span class="pre">nose</span></code> or <code class="docutils literal"><span class="pre">unittest</span></code>.
 Example (from the first level ‘sifra’ directory):</p>
-<blockquote>
-<div>$ cd sifra  # and not cd sifra/sifra
-$ python -m unittest discover tests</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd sifra   # and not cd sifra/sifra
+$ python -m unittest discover tests
+</pre></div>
+</div>
 <p>or, simply run:</p>
-<blockquote>
-<div>$ nosetest</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nosetest
+</pre></div>
+</div>
 <p>If you are using docker as described above, you can do this within the sifra
 container.</p>
 </div>
