@@ -121,7 +121,7 @@ or, if your too lazy to type two lines, use this command::
     $ docker rm -f sifra
 
 Several other containers are provided to help with development. These are
-defined in the other *Dockerfile*s in the present directory, and are:
+defined in the other `Dockerfiles` in the present directory, and are:
 
 - *Dockerfile-api*: Provides a web API which is used for parameterising
   model components (at this stage just response functions) and serialising them.
@@ -266,12 +266,12 @@ Running Code Tests
 
 
 To run tests use either ``nose`` or ``unittest``.
-Example (from the first level 'sifra' directory):
+Example (from the first level 'sifra' directory)::
 
-    $ cd sifra  # and not cd sifra/sifra
+    $ cd sifra   # and not cd sifra/sifra
     $ python -m unittest discover tests
 
-or, simply run:
+or, simply run::
 
     $ nosetest
 
