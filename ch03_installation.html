@@ -140,14 +140,14 @@ though the environment setup process will likely have some differences.
 Windows systems that are not based on the NT-platform are not supported. This
 restriction is due to the fact that from version 2.6 onwards Python has not
 supported non-NT Windows platforms.</p>
-<p>You will need to install <cite>Graphviz</cite>, which is used by
-<cite>networkx</cite> and <cite>pygraphviz</cite> packages to draw the system diagram.
+<p>You will need to install <code class="docutils literal"><span class="pre">Graphviz</span></code>, which is used by
+<code class="docutils literal"><span class="pre">networkx</span></code> and <code class="docutils literal"><span class="pre">pygraphviz</span></code> packages to draw the system diagram.
 Please visit: <a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a> and download the appropriate
 version for your operating system. Follow the posted download instructions
 carefully. After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.</p>
 <p>For windows systems you will need to install Microsoft Visual C++ Compiler
-for Python 2.7: <a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a></p>
+for Python 2.7: <a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>.</p>
 </div>
 <div class="section" id="aws-and-docker">
 <span id="setup-dev-environ"></span><h2>3.2 AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Permalink to this headline">¶</a></h2>
@@ -225,16 +225,16 @@ $ docker rm sifra
 <p>Several other containers are provided to help with development. These are
 defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
 <ul>
-<li><p class="first"><em>Dockerfile-api</em>: Provides a web API which is used for parameterising
+<li><p class="first"><code class="docutils literal"><span class="pre">Dockerfile-api</span></code>: Provides a web API which is used for parameterising
 model components (at this stage just response functions) and serialising them.
 This is presently (at Feb 2017) a prototype and provides only a small subset
 of what we hope for.</p>
 </li>
-<li><p class="first"><em>Dockerfile-gui-dev</em>: Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
+<li><p class="first"><code class="docutils literal"><span class="pre">Dockerfile-gui-dev</span></code>: Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
 defining model components built on top of the API mentioned above. The application
 is hosted using Angular’s development server and can be accessed on <em>localhost:4200</em>.</p>
 </li>
-<li><p class="first"><em>Dockerfile-gui-prod</em>: For deploying the web application in production. This
+<li><p class="first"><code class="docutils literal"><span class="pre">Dockerfile-gui-prod</span></code>: For deploying the web application in production. This
 does a production build of the Angular project and hosts it using
 <a class="reference external" href="https://www.busybox.net/">busybox</a>. The app is still exposed on port 4200, so
 to host it at port 80 one would start it with:</p>
@@ -256,18 +256,15 @@ to host it at port 80 one would start it with:</p>
 </pre></div>
 </div>
 <p>Assuming that you start the system this way in the current folder, you can:</p>
-<ul>
-<li><p class="first">attach to the sifa image to run models and tests with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ docker attach sifra_sifra_1
-</pre></div>
-</div>
-</li>
-<li><p class="first">access the GUI for defining fragility functions at <em>http://localhost:4200</em>, and</p>
-</li>
-<li><p class="first">access the web API at <em>http://localhost:5000</em>.</p>
-</li>
+<ul class="simple">
+<li>attach to the sifa image to run models and tests with: <br />
+<cite>$ docker attach sifra_sifra_1</cite></li>
+<li>access the GUI for defining fragility functions at: <br />
+<cite>http://localhost:4200</cite>, and</li>
+<li>access the web API at: <br />
+<cite>http://localhost:5000</cite>.</li>
 </ul>
-<p>Then both the API and GUI will stay in sync with your code.</p>
+<p>This method will allow both the API and GUI to stay in sync with your code.</p>
 <p>You can tear the system down (destroying the containers) with:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ docker-compose down
 </pre></div>

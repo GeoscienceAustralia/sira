@@ -24,15 +24,15 @@ Windows systems that are not based on the NT-platform are not supported. This
 restriction is due to the fact that from version 2.6 onwards Python has not 
 supported non-NT Windows platforms. 
 
-You will need to install `Graphviz`, which is used by
-`networkx` and `pygraphviz` packages to draw the system diagram.
+You will need to install ``Graphviz``, which is used by
+``networkx`` and ``pygraphviz`` packages to draw the system diagram.
 Please visit: `<http://www.graphviz.org/>`_ and download the appropriate
 version for your operating system. Follow the posted download instructions
 carefully. After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.
 
 For windows systems you will need to install Microsoft Visual C++ Compiler 
-for Python 2.7: `<http://aka.ms/vcpython27>`_
+for Python 2.7: `<http://aka.ms/vcpython27>`_.
 
 
 .. _setup-dev-environ:
@@ -123,16 +123,16 @@ or, if your too lazy to type two lines, use this command::
 Several other containers are provided to help with development. These are
 defined in the other `Dockerfiles` in the present directory, and are:
 
-- *Dockerfile-api*: Provides a web API which is used for parameterising
+- ``Dockerfile-api``: Provides a web API which is used for parameterising
   model components (at this stage just response functions) and serialising them.
   This is presently (at Feb 2017) a prototype and provides only a small subset
   of what we hope for.
 
-- *Dockerfile-gui-dev*: Provides an `Angular2 <https://angular.io/>`_ application for
+- ``Dockerfile-gui-dev``: Provides an `Angular2 <https://angular.io/>`_ application for
   defining model components built on top of the API mentioned above. The application
   is hosted using Angular's development server and can be accessed on *localhost:4200*.
 
-- *Dockerfile-gui-prod*: For deploying the web application in production. This
+- ``Dockerfile-gui-prod``: For deploying the web application in production. This
   does a production build of the Angular project and hosts it using
   `busybox <https://www.busybox.net/>`_. The app is still exposed on port 4200, so
   to host it at port 80 one would start it with::
@@ -153,15 +153,16 @@ By far the easiest way to run the system for development is with
 
 Assuming that you start the system this way in the current folder, you can:
 
-- attach to the sifa image to run models and tests with::
+- attach to the sifa image to run models and tests with: |br|
+  `$ docker attach sifra_sifra_1`
 
-    $ docker attach sifra_sifra_1
+- access the GUI for defining fragility functions at: |br|
+  `http://localhost:4200`, and
 
-- access the GUI for defining fragility functions at *http://localhost:4200*, and
+- access the web API at: |br|
+  `http://localhost:5000`.
 
-- access the web API at *http://localhost:5000*.
-
-Then both the API and GUI will stay in sync with your code.
+This method will allow both the API and GUI to stay in sync with your code.
 
 You can tear the system down (destroying the containers) with::
 
