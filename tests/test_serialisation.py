@@ -7,7 +7,7 @@ import json
 from sifra.modelling.utils import pythonify
 from sifra.modelling.sifra_db import save_model, load_model, save_component
 from sifra.modelling.structural import Base
-from model_ingest import ingest_spreadsheet
+from sifra.model_ingest import ingest_spreadsheet
 
 
 class TestSifraDB(unittest.TestCase):
@@ -20,7 +20,7 @@ class TestSifraDB(unittest.TestCase):
         pass
 
     def test_save_spreadsheet(self):
-        config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
+        config_file = './test_scenario_ps_coal.conf'
         infrastructure, _ = ingest_spreadsheet(config_file)
         oid = save_model(infrastructure)
 

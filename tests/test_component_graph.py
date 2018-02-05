@@ -6,12 +6,12 @@ logging.basicConfig(level=logging.INFO)
 
 from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
 from sifra.sifraclasses import FacilitySystem, Scenario
-from infrastructure_response import calculate_response, ingest_spreadsheet
+from sifra.infrastructure_response import calculate_response, ingest_spreadsheet
 
-config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
-series_config = '/opt/project/tests/test_simple_series_struct.conf'
-parallel_config = '/opt/project/tests/test_simple_parallel_struct.conf'
-dependent_config = '/opt/project/tests/test_simple_series_struct_dep.conf'
+config_file = './test_scenario_ps_coal.conf'
+series_config = './test_simple_series_struct.conf'
+parallel_config = './test_simple_parallel_struct.conf'
+dependent_config = './test_simple_series_struct_dep.conf'
 
 
 class TestComponentGraph(unittest.TestCase):
