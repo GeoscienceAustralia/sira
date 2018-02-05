@@ -8,11 +8,11 @@ import logging
 
 from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
 from sifra.sifraclasses import FacilitySystem, Scenario
-from infrastructure_response import calculate_response, ingest_spreadsheet
+from sifra.infrastructure_response import calculate_response, ingest_spreadsheet
 
 logging.basicConfig(level=logging.INFO)
-config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
-ident_config_file = '/opt/project/tests/test_scenario_ps_coal.conf'
+config_file = './test_scenario_ps_coal.conf'
+ident_config_file = './test_scenario_ps_coal.conf'
 
 
 class TestNewModel(unittest.TestCase):
