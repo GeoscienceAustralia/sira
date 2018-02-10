@@ -173,6 +173,25 @@ and generate the component criticality plot, run the command:
 
     $ python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
 
+## Testing
+
+To run tests use either nose or unittest. Example (from the first level 
+'sifra' directory):
+
+    $ cd sifra/tests
+    $ python -m unittest discover .
+
+or, simply run:
+
+    $ nosetest
+
+Prior to running the tests you may need to delete the temporary database. 
+Assuming you are in the root project directory:
+
+    $ cd db
+    $ rm sqlite.db 
+
+If you are using docker as described above, you can do this within the sifra container.
 
 ## Todo
 
@@ -190,7 +209,7 @@ and generate the component criticality plot, run the command:
   it. I went for the latter, which I think is the right choice, but did not
   have the time to make the API consistent throughout.
 
-- Much work needs to be done on the GUI. It is currently **horrible**. The
+- Much work needs to be done on the GUI. It is currently very elementary. The
   Angular2 code contained herein is my first experience with it and being a
   prototype with a small time budget, I did not:
   - spend much time being idiomatically consistent,
