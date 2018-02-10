@@ -123,16 +123,12 @@ the GA network, but it was not considered a good use of development effort
 to attempt this with SIFRA.
 
 PyCharm supports docker as detailed in the following links:
-
-[Pycharm Docker support](https://www.jetbrains.com/help/pycharm/docker.html)
-
-and 
-
-[Docker-Compose: Getting Flask up and running](https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/)
+    - [Pycharm Docker support](https://www.jetbrains.com/help/pycharm/docker.html)
+    - [Docker-Compose: Getting Flask up and running](https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/)
 
 The following direcotories must be marked as 'Sources Root' in PyCharm. 
-    sifra
-    sifra-api
+    - sifra
+    - sifra-api
 
 ## Running the Code in Conda
 
