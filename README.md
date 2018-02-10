@@ -12,7 +12,7 @@ designed to work with earthquake hazards only.
 
 The following are some key features of this tool:
 
-- Written in Python: It is written in Python, and there is no
+- Open Source: It is written in Python, and there is no
   dependency on proprietary tools. It should run on OS X, Windows, and
   Linux platforms.
 
@@ -54,14 +54,15 @@ microservices implemented in docker containers. If you have docker installed on
 your system it is probably easiest to use the containers as described below.
 
 ## Building the Run Environment
+
 The AWS and Docker configuration is now the preferred way to deploy and develop
  the application.
 
 ### Building an AMI for Dev Machines
 
-We're we come from, if we don't have a laptop handy, we like to use AWS for
-provisioning dev machines. A basic dev box can be setup using
-[Packer](https://www.packer.io/intro/), by running:
+To be able to have a easily replicable and deployable environment to run and 
+test the code, we use AWS for provisioning dev machines. A basic dev box can 
+be setup using [Packer](https://www.packer.io/intro/), by running:
 
 ```
 packer build build.json
@@ -110,16 +111,6 @@ To run the sample scenario, while in in the /sifra directory run:
 ```
 python -m sifra.infrastructure_response simulation_setup/test_scenario_ps_coal.conf
 ```
-
-## Running the Tests in Docker
-
-Run the unit tests for the modelling package with:
-
-```
-docker exec sifra python -m unittest discover -s /sifra/tests -t /sifra/tests
-```
-:grey_exclamation: NOTE: Project needs a more comprehensive test suite, and the docker configuration needs work 
-
 
 ## Setting up a development Environment
 Recent development has been done mostly on an AWS instance in PyCharm. This
@@ -191,7 +182,17 @@ Assuming you are in the root project directory:
     $ cd db
     $ rm sqlite.db 
 
+### Running the Tests in Docker
+
 If you are using docker as described above, you can do this within the sifra container.
+
+You can also directly run the unit tests for the modelling package with:
+
+```
+docker exec sifra python -m unittest discover -s /sifra/tests -t /sifra/tests
+```
+:grey_exclamation: NOTE: We need to demonstrate code coverage of the tests. 
+
 
 ## Todo
 
