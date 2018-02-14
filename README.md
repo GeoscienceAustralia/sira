@@ -61,7 +61,7 @@ The AWS and Docker configuration is now the preferred way to deploy and develop
 ### Building an AMI for Dev Machines
 
 To be able to have a easily replicable and deployable environment to run and 
-test the code, we use AWS for provisioning dev machines. A basic dev box can 
+test the code, we use AWS for provisioning dev machines. A basic dev instance can 
 be setup using [Packer](https://www.packer.io/intro/), by running:
 
 ```
