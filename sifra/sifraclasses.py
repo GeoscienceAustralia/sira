@@ -249,7 +249,7 @@ class _Network(object):
         dep_node_list = [str(k) for k in
                          list(comp_df.ix[comp_df['node_type'] ==
                                          'dependency'].index)]
-        src_node_list = [str(k) for (k, v) in sys.in_degree().items() if v==0]
+        src_node_list = [str(k) for (k, v) in sys.in_degree if v==0]
         out_node_list = \
             list(facility.sysout_setup.index.get_level_values('output_node'))
 
