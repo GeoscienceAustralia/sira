@@ -154,6 +154,25 @@ todo_include_todos = False
 #     html_theme = 'sphinx_rtd_theme'
 #     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # # otherwise, readthedocs.org uses their theme by default, so no need to specify it
+#
+# # RTD theme options:
+# html_theme_options = {
+#     'inherit': basic,
+#     'stylesheet': css/theme.css,
+#     'pygments_style': default,
+#     'canonical_url': '',
+#     'logo_only': False,
+#     'display_version': True,
+#     'prev_next_buttons_location': None,
+#     'style_external_links': True,
+#     'vcs_pageview_mode': '',
+#     # Toc options
+#     'collapse_navigation': False,
+#     'sticky_navigation': True,
+#     'navigation_depth': 3,
+#     'includehidden': True,
+#     'titles_only': False
+# }
 
 # --- Setup for GUZZLE theme ---
 # https://github.com/guzzle/guzzle_sphinx_theme
