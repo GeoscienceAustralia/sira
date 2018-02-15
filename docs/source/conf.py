@@ -168,7 +168,6 @@ html_theme_options = {
     'collapse_navigation': False,
     'sticky_navigation': True,
     'navigation_depth': 3,
-    'include_hidden': True,
     'titles_only': False
 }
 
