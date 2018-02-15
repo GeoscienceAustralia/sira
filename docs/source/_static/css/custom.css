@@ -4,7 +4,7 @@ body {
   background-color: #edf0f2;
   margin: 0;
   padding: 0;
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: "Lato", "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   color: #333;
   line-height: 1.5;
@@ -20,8 +20,8 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 38px;
   padding: 10px 10px 10px 45px;
-  margin: 20px 0 35px -45px;
+  margin: 20px 0 25px -45px;
   background-color: none;
   width: calc(100% + 90px);
-  border-bottom: 1px solid #D8E4EF;
+  /* border-bottom: 1px solid #D8E4EF; */
 }
