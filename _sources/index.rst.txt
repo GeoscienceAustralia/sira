@@ -28,9 +28,9 @@ of communities in Australia and its region.
 Features
 ========
 
-- **Written in Python:** |br|
+- **Open Source:** |br|
 
-  It is written in Python, and there is no dependency on
+  Written in Python, and there is no dependency on
   proprietary tools. It should run on OS X, Windows, and
   Linux platforms.
 
