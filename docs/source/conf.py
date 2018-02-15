@@ -159,7 +159,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 html_theme_options = {
     # 'inherit': basic,
     # 'stylesheet': css/theme.css,
-    'pygments_style': default,
+    # 'pygments_style': default,
     'canonical_url': '',
     'logo_only': False,
     'display_version': True,
