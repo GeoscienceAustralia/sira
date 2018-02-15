@@ -168,7 +168,6 @@ html_theme_options = {
     'collapse_navigation': False,
     'sticky_navigation': True,
     'navigation_depth': 3,
-    'titles_only': False
 }
 
 # # --- Setup for GUZZLE theme ---
