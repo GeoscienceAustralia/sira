@@ -145,50 +145,50 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-# # --- Setup for READ THE DOCS theme ---
-# # on_rtd is whether we are on readthedocs.org
-# on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-#
-# if not on_rtd:  # only import and set the theme if we're building docs locally
-#     import sphinx_rtd_theme
-#     html_theme = 'sphinx_rtd_theme'
-#     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-# # otherwise, readthedocs.org uses their theme by default, so no need to specify it
-#
-# # RTD theme options:
-# html_theme_options = {
-#     'inherit': basic,
-#     'stylesheet': css/theme.css,
-#     'pygments_style': default,
-#     'canonical_url': '',
-#     'logo_only': False,
-#     'display_version': True,
-#     'prev_next_buttons_location': None,
-#     'style_external_links': True,
-#     'vcs_pageview_mode': '',
-#     # Toc options
-#     'collapse_navigation': False,
-#     'sticky_navigation': True,
-#     'navigation_depth': 3,
-#     'includehidden': True,
-#     'titles_only': False
-# }
+# --- Setup for READ THE DOCS theme ---
+# on_rtd is whether we are on readthedocs.org
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-# --- Setup for GUZZLE theme ---
-# https://github.com/guzzle/guzzle_sphinx_theme
-import guzzle_sphinx_theme
-html_theme_path = guzzle_sphinx_theme.html_theme_path()
-html_theme = 'guzzle_sphinx_theme'
+if not on_rtd:  # only import and set the theme if we're building docs locally
+    import sphinx_rtd_theme
+    html_theme = 'sphinx_rtd_theme'
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+# otherwise, readthedocs.org uses their theme by default, so no need to specify it
 
-# Guzzle theme options (see theme.conf for more information)
+# RTD theme options:
 html_theme_options = {
-
-    # Set the name of the project to appear in the left sidebar.
-    "project_nav_name": "SIFRA",
-
-    # Allow the project link to be overriden to a custom URL.
-    "projectlink": "https://github.com/GeoscienceAustralia/sifra",
+    'inherit': basic,
+    'stylesheet': css/theme.css,
+    'pygments_style': default,
+    'canonical_url': '',
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': None,
+    'style_external_links': True,
+    'vcs_pageview_mode': '',
+    # Toc options
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'navigation_depth': 3,
+    'includehidden': True,
+    'titles_only': False
 }
+
+# # --- Setup for GUZZLE theme ---
+# # https://github.com/guzzle/guzzle_sphinx_theme
+# import guzzle_sphinx_theme
+# html_theme_path = guzzle_sphinx_theme.html_theme_path()
+# html_theme = 'guzzle_sphinx_theme'
+#
+# # Guzzle theme options (see theme.conf for more information)
+# html_theme_options = {
+#
+#     # Set the name of the project to appear in the left sidebar.
+#     "project_nav_name": "SIFRA",
+#
+#     # Allow the project link to be overriden to a custom URL.
+#     "projectlink": "https://github.com/GeoscienceAustralia/sifra",
+# }
 
 # ------------------------------
 
