@@ -51,7 +51,7 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Log files:
 *.log
 
 # Sphinx documentation
@@ -60,6 +60,9 @@ docs/_build/
 # couch db stuff
 db/*
 !db/.gitkeep
+
+# temporary database files
+db/*.sql
 
 # node stuff
 sifra-gui/node_modules
