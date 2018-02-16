@@ -64,7 +64,12 @@ To be able to have a easily replicable and deployable environment to run and
 test the code, we use AWS for provisioning dev machines. A basic dev instance can 
 be setup using [Packer](https://www.packer.io/intro/), by running:
 
+To get the aws credentials follow this (guide)[https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html].
+
 ```
+export AWS_ACCESS_KEY = <AWS ACCESS KEY>
+export AWS_SECRET_KEY = <AWS SECRET KEY>
+
 packer build build.json
 ```
 
@@ -179,8 +184,7 @@ Assuming you are in the root project directory:
     $ rm sqlite.db 
 
 
-:grey_exclamation: NOTE: We need to demonstrate code coverage of the tests. 
-
+:grey_exclamation: NOTE: We need to demonstrate code coverage of the tests.
 
 ## Todo
 
