@@ -32,31 +32,31 @@ Features
 
   Written in Python, and there is no dependency on
   proprietary tools. It should run on OS X, Windows, and
-  Linux platforms.
+  Linux platforms.|br|
 
 - **Flexible Facility Model:** |br|
 
   :term:`Facility` data model is based on graph theory, allowing
   the user to develop arbitrarily complex custom facility models
-  for simulation.
+  for simulation.|br|
 
 - **Extensible Component Library:** |br|
 
   User can define new instances of `component_type`
   (the building blocks of a facility) and link it to existing or
-  custom fragility algorithms.
+  custom fragility algorithms.|br|
 
 - **Component Criticality Analysis:** |br|
 
   Scenario Analysis tools allow users to identify the cost of
   restoration for chosen scenarios, expected restoration times,
-  and which component upgrades can most benefit the system.
+  and which component upgrades can most benefit the system.|br|
 
 - **Restoration Prognosis:** |br|
 
   User can experiment with different levels of hazards and
   post-disaster resource allocation to gauge restoration
-  times for facility operations.
+  times for facility operations.|br|
 
 
 Contents
