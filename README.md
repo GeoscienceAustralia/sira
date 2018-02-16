@@ -82,10 +82,16 @@ cd sifra
 docker build -t sifra .
 ```
 
+Find the container Id using:
+
+```
+docker ps -a
+```
+
 To run an interactive container you can use:
 
 ```
-docker run -it -v "$(pwd):/sifra" --name sifra sifra
+docker start -i <CONTAINER ID>
 ```
 
 This will give you a terminal inside the container in which you can execute
@@ -97,28 +103,6 @@ changes will be available in both.
 For details of the commands see 
 [Using docker](https://geoscienceaustralia.github.io/sifra/ch03_installation.html)
 in the help documentation
-
-
-## Running a simulation in Docker
-
-
-
-Find the container Id using:
-
-```
-docker ps -a
-```
-
-First run an interactive container by using:
-
-```
-docker start -i <CONTAINER ID>
-```
-
-To run the sample scenario, while in in the /sifra directory run:
-```
-python -m sifra.infrastructure_response simulation_setup/test_scenario_ps_coal.conf
-```
 
 ## Setting up a development Environment
 Recent development has been done mostly on an AWS instance in PyCharm. This
