@@ -180,15 +180,7 @@ Assuming you are in the root project directory:
     $ cd db
     $ rm sqlite.db 
 
-### Running the Tests in Docker
 
-If you are using docker as described above, you can do this within the sifra container.
-
-You can also directly run the unit tests for the modelling package with:
-
-```
-docker exec sifra python -m unittest discover -s /sifra/tests -t /sifra/tests
-```
 :grey_exclamation: NOTE: We need to demonstrate code coverage of the tests. 
 
 
