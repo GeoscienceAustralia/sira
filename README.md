@@ -93,6 +93,12 @@ To run an interactive container you can use:
 ```
 docker start -i <CONTAINER ID>
 ```
+or, simply run:
+
+```
+docker run -it -v "$(pwd):/sifra" --name sifra sifra
+```
+
 
 This will give you a terminal inside the container in which you can execute
 commands. Inside the container you can find the current directory mapped at
