@@ -11,6 +11,10 @@ else
     NOSUDO=
 fi
 
+# Older versions of Docker were called docker or docker-engine. If these are installed, uninstall them:
+$SUDO apt-get remove docker docker-engine docker.io
+
+# Update the apt package index:
 $SUDO apt-get update
 # should really say (except it is time consuming and can require user
 # interaction as it stands)...
@@ -18,7 +22,9 @@ $SUDO apt-get update
 
 # install prerequisites
 $SUDO apt-get install -y \
+    # TODO check if needed
     linux-image-extra-$(uname -r) \
+    # TODO check if needed
     linux-image-extra-virtual \
     apt-transport-https \
     ca-certificates \
@@ -27,16 +33,24 @@ $SUDO apt-get install -y \
     software-properties-common
 
 # install docker
-curl -fsSL https://apt.dockerproject.org/gpg | $SUDO apt-key add
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 $SUDO add-apt-repository \
-       "deb https://apt.dockerproject.org/repo/ \
-       ubuntu-$(lsb_release -cs) \
-       main"
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+       
+# Update the apt package index.
 $SUDO apt-get update
-$SUDO apt-get -y install docker-engine
 
-# install docker-compose
-$SUDO bash -c "curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+# Install the latest version of Docker CE
+$SUDO apt-get install docker-ce
+# TODO for production define the version number
+#$SUDO apt-get install docker-ce=17.12.0-ce
+
+# Download the latest version of Docker Compose
+$SUDO bash -c "curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose"
+
+# Apply executable permissions to the binary
 $SUDO chmod +x /usr/local/bin/docker-compose
 
 # add ubuntu to the docker group to avoid constant sudoing
