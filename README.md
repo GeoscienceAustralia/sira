@@ -224,3 +224,6 @@ Assuming you are in the root project directory:
   slow to pass around over the net. The logic is straight forward and would be
   easy to implment in javascript given the 'metadata' and instance.
 
+## Required packages
+
+[Graphviz](http://graphviz.org/download/)
