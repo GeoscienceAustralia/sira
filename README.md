@@ -101,10 +101,18 @@ in the help documentation
 
 ## Running a simulation in Docker
 
+
+
+Find the container Id using:
+
+```
+docker ps -a
+```
+
 First run an interactive container by using:
 
 ```
-docker run -it -v "$(pwd):/sifra" --name sifra sifra
+docker start -i <CONTAINER ID>
 ```
 
 To run the sample scenario, while in in the /sifra directory run:
