@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6 {
   /*color: black;*/
   padding: 0;
   font-weight: 600;
-  font-family: "Khand", "Alegreya Sans SC", "serif";
+  font-family: "Khand", "Alegreya Sans SC", "serif" !important;
   line-height: 1.2;
 }
 
@@ -35,4 +35,22 @@ h3 {
   font-size: 24px;
   margin-top: 10px;
   margin-bottom: 12px;
+}
+
+/* --------------------------------------------------
+override table width restrictions
+https://github.com/rtfd/sphinx_rtd_theme/issues/117
+*/
+@media screen and (min-width: 767px) {
+
+  .wy-table-responsive table td {
+    /* !important prevents the common CSS stylesheets from
+       overriding this as on RTD they are loaded after this stylesheet */
+    white-space: normal !important;
+  }
+
+  .wy-table-responsive {
+    overflow: visible !important;
+  }
+
 }
