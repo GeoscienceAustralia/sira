@@ -58,16 +58,19 @@ restoration, through modelling flow through the network; and
 that need to be repaired or restored in order to restore the flow through
 the network which represents the productive capacity of the system.
 
+
 Terminology Context: An Actual Infrastructure System
 ----------------------------------------------------
 
 The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:
 
+
 -  **Level 1 : Infrastructure Network**
 
    This is the top level of interconnected infrastructure systems where
    infrastructure facilities are connected to form a network or networks.
+
 
 -  **Level 2 : Infrastructure Facility**
 
@@ -144,18 +147,22 @@ four categories:
    of the substation, required input is electricity from power stations or
    other substations.
 
+
 2. **Output nodes**: These nodes represent the exit points for the output of
-   the system. For example, in the case of the power station, the output
-   nodes act as dummy loads - representing the energy consumers - connected
-   to each of the step-up transformers. The sum of flow through the network
-   measured at the output nodes represented the effective production
-   (or operational) capacity of the facility.
+   the system. They are referred to as sink nodes. For example, in the
+   case of the power station, the output nodes act as dummy loads -
+   representing the energy consumers - connected to each of the step-up
+   transformers. The sum of flow through the network measured at the
+   output nodes represented the effective production (or operational)
+   capacity of the facility.
+
 
 3. **Dependency nodes**: These nodes represent the components that do not
    directly participate in the production process of the system, or in
    the handling of system inputs, but are critical for system operations
    in some other capacity, e.g. system management or monitoring. The
    control building of a substation is an example of this.
+
 
 4. **Transhipment nodes**: These are nodes that transform, transport, or
    store system inputs to give effect to processes that produces the outputs
