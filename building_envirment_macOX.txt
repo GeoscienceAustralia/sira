@@ -1,0 +1,13 @@
+Download IDE like pycharm from https://www.jetbrains.com/pycharm/download/
+Download and install anaconda for Python 2.7 from  https://www.anaconda.com/download/#macos
+Download and install brew from https://brew.sh/
+
+conda install -c anaconda tk
+conda install -c anaconda graphviz
+conda install -c anaconda libxml2
+
+brew install igraph
+
+pip install --upgrade pip numpy pandas netcdf4 networkx seaborn scipy matplotlib lmfit brewer2mpl colorama parmap  pygraphviz xlrd jgraph sqlalchemy Sphinx sphinx-rtd-theme guzzle-sphinx-theme sphinxcontrib-actdiag sphinxcontrib-bibtex sphinxcontrib-blockdiag sphinxcontrib-exceltable sphinxcontrib-nwdiag sphinxcontrib-seqdiag sphinxcontrib-websupport Pygments pybtex scikit-learn six
+
+Select python interpreter in pycharm from path /anaconda2/bin/python2.7
