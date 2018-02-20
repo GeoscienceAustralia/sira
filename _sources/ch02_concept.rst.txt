@@ -105,7 +105,6 @@ in the simulation code).
    to a network or a facility. The context of the simulation will
    disambiguate its meaning.
 
-
 -  **Component**
 
    It is the high-level element within the network (or graph) that
