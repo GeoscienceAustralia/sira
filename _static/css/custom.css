@@ -1,6 +1,7 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
 @import url('https://fonts.googleapis.com/css?family=Khand:400,600|Alegreya+Sans+SC');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
@@ -14,8 +15,10 @@ body {
 h1, h2, h3, h4, h5, h6 {
   /*color: black;*/
   padding: 0;
-  font-weight: 600;
-  font-family: "Khand", "Alegreya Sans SC", "serif" !important;
+  /* font-weight: 600;
+  font-family: "Khand", "Alegreya Sans SC", "serif" !important;*/
+  font-weight: 700;
+  font-family: "Roboto Condensed", "Alegreya Sans SC", "serif" !important;
   line-height: 1.2;
 }
 
