@@ -1,5 +1,8 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Khand|Alegreya+Sans+SC');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 body {
   background-color: #edf0f2;
   font-family: "Lato", "Open Sans", Helvetica, Arial, sans-serif;
