@@ -105,7 +105,7 @@ in the simulation code).
    to a network or a facility. The context of the simulation will
    disambiguate its meaning.
 
-|br|
+
 -  **Component**
 
    It is the high-level element within the network (or graph) that
@@ -113,7 +113,6 @@ in the simulation code).
    components with specific attributes and roles comprise the System
    in the context of the simulation model.
 
-|br|
 -  **If the context of investigation is a NETWORK**
 
    |rightdoubleangle|  the System Model is a Level 1 element, i.e.
@@ -121,13 +120,13 @@ in the simulation code).
    |rightdoubleangle|  the Components are Level 2 elements, i.e.
    **Infrastructure Facilities**
 
-|br|
 -  **If the context of investigation is a FACILITY**
 
    |rightdoubleangle|  the System Model is a Level 2 element, i.e.
    an **Infrastructure Facility**, and  |br|
    |rightdoubleangle|  the Components are Level 3 elements, i.e.
    an **Infrastructure Microcomponents**
+
 
 .. _model-node-classification:
 
