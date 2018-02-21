@@ -69,7 +69,16 @@ Contents
 
 .. _user-docs:
 
-.. include:: chapters_for_toc.txt
+.. toctree::
+   :numbered:
+   :maxdepth: 2
+   :caption: User Documentation
+
+   ch01_intro
+   ch02_concept
+   ch03_installation
+   ch04_simsetup
+   ch05_fragility_attribution
 
 
 .. _back-matter:
