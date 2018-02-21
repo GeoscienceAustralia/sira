@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Model Concepts &mdash; SIFRA v0.1.2 docs</title>
+  <title>2 Model Concepts &mdash; SIFRA v0.1.2 docs</title>
   
 
   
@@ -38,8 +38,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="SIFRA v0.1.2 docs" href="index.html"/>
-        <link rel="next" title="Installation and Usage" href="ch03_installation.html"/>
-        <link rel="prev" title="Introduction" href="ch01_intro.html"/> 
+        <link rel="next" title="3 Installation and Usage" href="ch03_installation.html"/>
+        <link rel="prev" title="1 Introduction" href="ch01_intro.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -94,45 +94,50 @@
             
               <p class="caption"><span class="caption-text">User Documentation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Model Concepts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#the-system-model">The ‘System’ Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#context-an-actual-infrastructure-system">Context: An Actual Infrastructure System</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#context-a-model-of-a-lifeline-infrastructure">Context: A Model of a Lifeline Infrastructure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system">Classification of Nodes within a Model of an Infrastructure System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-system-model">2.1 The ‘System’ Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#context-an-actual-infrastructure-system">2.1.1 Context: An Actual Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#context-a-model-of-a-lifeline-infrastructure">2.1.2 Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#system-loss-modelling">System Loss Modelling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#system-restoration-model">System Restoration Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-restoration-model">2.3 System Restoration Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">Installation and Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#installation-of-sifra-on-aws-with-docker">Installation of SIFRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#using-docker">Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#docker-compose">Docker Compose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">3.2 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#installation-of-sifra-on-aws-with-docker">3.2.1 Installation of SIFRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#using-docker">3.2.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#docker-compose">3.2.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sifra-code">Running the Core SIFRA Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">Running Code Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sifra-code">3.4 Running the Core SIFRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">Simulation Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#scenario-definition-file">Scenario Definition File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#facility-definition-file">Facility Definition File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-component-component-list">List of Component: <em>component_list</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">Connections between Components: <em>component_connections</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">Configuration of Supply Nodes: <em>supply_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">Configuration of Output Nodes: <em>output_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">Component Type Damage Algorithms: <em>comp_type_dmg_algo</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">Definition of Damage States: <em>damage_state_def</em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#scenario-definition-file">4.1 Scenario Definition File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#facility-definition-file">4.2 Facility Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: <em>output_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">Component Fragility Attribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Back Matter</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
 
             
@@ -177,7 +182,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Model Concepts</li>
+      <li>2 Model Concepts</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,7 +200,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="model-concepts">
-<span id="id1"></span><h1>Model Concepts<a class="headerlink" href="#model-concepts" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>2 Model Concepts<a class="headerlink" href="#model-concepts" title="Permalink to this headline">¶</a></h1>
 <p>SIFRA provides a modelling framework and software tools for assessing
 impact of natural hazards on infrastructure systems. Infrastructure
 systems, within this framework, refer to facilities and networks that
@@ -207,7 +212,7 @@ deliberately eschews an exclusive focus on “critical” infrastructure,
 as that invites unnecessary debates on criteria of criticality and
 jurisdiction for that class of assets.</p>
 <div class="section" id="the-system-model">
-<span id="system-model-vocab"></span><h2>The ‘System’ Model<a class="headerlink" href="#the-system-model" title="Permalink to this headline">¶</a></h2>
+<span id="system-model-vocab"></span><h2>2.1 The ‘System’ Model<a class="headerlink" href="#the-system-model" title="Permalink to this headline">¶</a></h2>
 <p>A system, according to the
 <a class="reference external" href="https://www.merriam-webster.com/dictionary/system">Merriam-Webster</a>
 dictionary, is</p>
@@ -240,7 +245,7 @@ restoration, through modelling flow through the network; and
 that need to be repaired or restored in order to restore the flow through
 the network which represents the productive capacity of the system.</p>
 <div class="section" id="context-an-actual-infrastructure-system">
-<h3>Context: An Actual Infrastructure System<a class="headerlink" href="#context-an-actual-infrastructure-system" title="Permalink to this headline">¶</a></h3>
+<h3>2.1.1 Context: An Actual Infrastructure System<a class="headerlink" href="#context-an-actual-infrastructure-system" title="Permalink to this headline">¶</a></h3>
 <p>The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:</p>
 <ul class="simple">
@@ -264,7 +269,7 @@ and how information about those assets they are stored and referenced
 in a database.</p>
 </div>
 <div class="section" id="context-a-model-of-a-lifeline-infrastructure">
-<h3>Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#context-a-model-of-a-lifeline-infrastructure" title="Permalink to this headline">¶</a></h3>
+<h3>2.1.2 Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#context-a-model-of-a-lifeline-infrastructure" title="Permalink to this headline">¶</a></h3>
 <p>In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).</p>
@@ -297,7 +302,7 @@ an <strong>Infrastructure Microcomponents</strong></li>
 </ul>
 </div>
 <div class="section" id="classification-of-nodes-within-a-model-of-an-infrastructure-system">
-<span id="model-node-classification"></span><h3>Classification of Nodes within a Model of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
+<span id="model-node-classification"></span><h3>2.1.3 Classification of Nodes within a Model of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
 <p>For a specific impact assessment project, the Components within the
 System Model are represented as nodes. Based on their role within the
 system, these nodes (or components or vertices) are classified in
@@ -330,7 +335,7 @@ be represented as capacities of edges connecting those nodes. Figure 2.1
 illustrates this concept for a thermal power station.</p>
 <div class="figure align-center" id="id8">
 <span id="pwrstn-schematic-diagram"></span><a class="reference internal image-reference" href="_images/pwrstn_schematic_diagram.png"><img alt="Power station schematic" src="_images/pwrstn_schematic_diagram.png" style="width: 98%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Schematic representation of a coal-fired power station</span></p>
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Schematic representation of a coal-fired power station</span></p>
 </div>
 <p>The ‘edges’, or inter-nodal connections, represent a link or a process for
 maintaining ‘flow’ of goods or services within the system, and thus their
@@ -350,7 +355,7 @@ damaged system model.</p>
 </div>
 </div>
 <div class="section" id="system-loss-modelling">
-<h2>System Loss Modelling<a class="headerlink" href="#system-loss-modelling" title="Permalink to this headline">¶</a></h2>
+<h2>2.2 System Loss Modelling<a class="headerlink" href="#system-loss-modelling" title="Permalink to this headline">¶</a></h2>
 <p>For a given value of level of ground shaking, a set of random samples is
 generated, and the damage state of each component is calculated for each
 random sample based on the fragility function of the given component.
@@ -363,7 +368,7 @@ for the system (e.g. the power station) the process is repeated for a
 range of PGA values. This Process is shown in Figure 2.2.</p>
 <div class="figure align-center" id="id9">
 <span id="fig-hazard-loss-link"></span><a class="reference internal image-reference" href="_images/hazard_loss_link.png"><img alt="Linking hazard to damage and loss" src="_images/hazard_loss_link.png" style="width: 98%;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Schematic of process linking component damage assessment to
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Schematic of process linking component damage assessment to
 loss projection</span></p>
 </div>
 <p>Four discrete sequential damage states are used for assessing system
@@ -388,7 +393,7 @@ at damage state <span class="math">\(ds_i\)</span>, and <br />
 <span class="math">\(CF_C\)</span> = cost of component <cite>C</cite> as a proportional of total system cost.</p>
 </div>
 <div class="section" id="system-restoration-model">
-<h2>System Restoration Model<a class="headerlink" href="#system-restoration-model" title="Permalink to this headline">¶</a></h2>
+<h2>2.3 System Restoration Model<a class="headerlink" href="#system-restoration-model" title="Permalink to this headline">¶</a></h2>
 <p>The restoration algorithms are defined as normal functions. An approximation
 of mean restoration time for each component at each damage level is
 attributed. The structural damage level definitions associated with the

@@ -67,6 +67,7 @@ Features
 .. _user-docs:
 
 .. toctree::
+   :numbered:
    :maxdepth: 2
    :caption: User Documentation
 
@@ -83,6 +84,6 @@ Features
    :maxdepth: 1
    :caption: Back Matter
 
-    bibliography
-    reportglossary
-    copyrightnotice
+   bibliography
+   reportglossary
+   copyrightnotice
