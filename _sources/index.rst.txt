@@ -64,13 +64,9 @@ Features
     times for facility operations.
 
 
-Contents
-========
-
 .. _user-docs:
 
 .. toctree::
-   :numbered:
    :maxdepth: 2
    :caption: User Documentation
 
