@@ -44,7 +44,7 @@ h3 {
   margin-bottom: 12px;
 }
 
-.caption-text {
+.toctree-wrapper .caption .caption-text {
   font-family: "Roboto Condensed", "Alegreya Sans SC", "serif" !important;
   font-size: 28px;
   /*color: #777777;*/
