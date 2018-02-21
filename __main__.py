@@ -1,3 +1,5 @@
+#usage: python sifra -v -f "sample_structure.conf"
+
 import argparse
 
 def main():
