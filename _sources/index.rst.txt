@@ -67,10 +67,15 @@ Features
 Contents
 ========
 
+.. _user-docs:
+
 .. include:: chapters_for_toc.txt
 
+
+.. _back-matter:
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Back Matter
 
     bibliography
