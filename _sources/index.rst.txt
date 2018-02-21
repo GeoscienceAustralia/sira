@@ -42,10 +42,11 @@ Features
     proprietary tools. It should run on OS X, Windows, and
     Linux platforms.
 
-**Flexible Facility Model:**
-    :term:`Facility` data model is based on graph theory, allowing
-    the user to develop arbitrarily complex custom facility models
-    for simulation.
+**Flexible Infrastructure Model:**
+    The data model is based on graph theory. All infrastructure systems
+    are represented as networks. This allows an user to develop
+    arbitrarily complex custom facility models -- for a :term:`Facility`
+    or a network -- for impact simulation.
 
 **Extensible Component Library:**
     User can define new instances of `component_type`
