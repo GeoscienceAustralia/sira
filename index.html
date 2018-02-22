@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SIFRA Documentation &mdash; SIFRA v0.1.2 docs</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="SIFRA v0.1.2 docs" href="#"/>
+        <link rel="next" title="1 Introduction" href="ch01_intro.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> SIFRA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#context-an-actual-infrastructure-system">2.1.1 Context: An Actual Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#context-a-model-of-a-lifeline-infrastructure">2.1.2 Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">3.2 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#installation-of-sifra-on-aws-with-docker">3.2.1 Installation of SIFRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#using-docker">3.2.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#docker-compose">3.2.3 Docker Compose</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sifra-code">3.4 Running the Core SIFRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#scenario-definition-file">4.1 Scenario Definition File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#facility-definition-file">4.2 Facility Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: <em>output_setup</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Back Matter</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">SIFRA</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>SIFRA Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sifra-documentation">
+<h1>SIFRA Documentation<a class="headerlink" href="#sifra-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/GeoscienceAustralia/sifra">https://github.com/GeoscienceAustralia/sifra</a> <br />
+Release: 0.1.2</p>
+<p>SIFRA stands for <strong>System for Infrastructure Facility Resilience Analysis</strong>.
+It represents a methodology and supporting code for systematising
+<a class="reference internal" href="reportglossary.html#term-vulnerability"><span class="xref std std-term">vulnerability</span></a> analysis of lifeline infrastructure to natural hazards
+(environmental excitation).</p>
+<p>The impact assessment is based on the <a class="reference internal" href="reportglossary.html#term-fragility"><span class="xref std std-term">fragilities</span></a>
+and configuration of components that comprise the infrastructure system
+under study. The analytical process is supplemented by an assessment of
+the system functionality through the post-damage network flow analysis,
+and approximations for recovery timeframes.</p>
+<p>The current focus has been on studying responses of infrastructure facilities
+(e.g. power generation plants, high voltage substations). Considerable
+work has been done in the code backend to extend the same methodology
+to modelling network vulnerability as well
+(e.g. electricity transmission networks).</p>
+<p>Currently the software has been tested to work with earthquake hazards only.
+However, the methodology and class structure have been developed such
+that the platform is effectively hazard agnostic. The hazard attribution
+process and infrastructure models are flexible to allow for expansion
+to other hazards and new infrastructure sectors.</p>
+<p>SIFRA was developed in <a class="reference external" href="http://www.ga.gov.au/">Geoscience Australia (GA)</a>
+in support of the agency’s vision to contribute to enhancing the resilience
+of communities in Australia and its region.</p>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><strong>Open Source:</strong></dt>
+<dd>Written in Python, and there is no dependency on
+proprietary tools. It should run on OS X, Windows, and
+Linux platforms.</dd>
+<dt><strong>Flexible Infrastructure Model:</strong></dt>
+<dd>The data model is based on graph theory. All infrastructure systems
+are represented as networks. This allows an user to develop
+arbitrarily complex custom facility models – for a <a class="reference internal" href="reportglossary.html#term-facility"><span class="xref std std-term">Facility</span></a>
+or a network – for impact simulation.</dd>
+<dt><strong>Extensible Component Library:</strong></dt>
+<dd>User can define new instances of <cite>component_type</cite>
+(the building blocks of a facility) and link it to existing or
+custom fragility algorithms.</dd>
+<dt><strong>Component Criticality Analysis:</strong></dt>
+<dd>Scenario Analysis tools allow users to identify the cost of
+restoration for chosen scenarios, expected restoration times,
+and which component upgrades can most benefit the system.</dd>
+<dt><strong>Restoration Prognosis:</strong></dt>
+<dd>User can experiment with different levels of hazards and
+post-disaster resource allocation to gauge restoration
+times for facility operations.</dd>
+</dl>
+<div class="toctree-wrapper compound" id="user-docs">
+<p class="caption"><span class="caption-text">User Documentation</span><a class="headerlink" href="#user-docs" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">3.2 AWS and Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sifra-code">3.4 Running the Core SIFRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#scenario-definition-file">4.1 Scenario Definition File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#facility-definition-file">4.2 Facility Definition File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="back-matter">
+<p class="caption"><span class="caption-text">Back Matter</span><a class="headerlink" href="#back-matter" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">License</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Geoscience Australia.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
