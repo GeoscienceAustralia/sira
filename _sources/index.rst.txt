@@ -11,17 +11,20 @@ https://github.com/GeoscienceAustralia/sifra |br|
 Release: |release|
 
 SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
-It is a tool for analysing  impact of hazards (environmental excitation)
-on lifeline infrastructure.
+It represents a methodology and supporting code for systematising
+:term:`vulnerability` analysis of lifeline infrastructure to natural hazards
+(environmental excitation).
 
-It provides a method and software tools to systematise simulation of
-fragility of infrastructure to natural hazards, based on assessment
-of the fragilities and configuration of components that comprise the
-infrastructure system. The current focus has been on studying responses
-of infrastructure facilities (e.g. power generation plants, high voltage
-substations). Considerable work has been done in the code backend to
-extend the same methodology to model networks as well (e.g. electricity
-transmission networks).
+This impact assessment is based on the :term:`fragilities <fragility>`
+and configuration of components that comprise the infrastructure system
+under study. The analytical process is supplemented by an assessment of
+the system functionality through network analysis, and approximations for
+recovery timeframes.
+
+The current focus has been on studying responses of infrastructure facilities
+(e.g. power generation plants, high voltage substations). Considerable
+work has been done in the code backend to extend the same methodology
+to model networks as well (e.g. electricity transmission networks).
 
 Currently the software has been tested to work with earthquake hazards only.
 However, the methodology and class structure have been developed such
