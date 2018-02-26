@@ -13,7 +13,7 @@ Release: |release|
 SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
 It represents a methodology and supporting code for systematising
 :term:`vulnerability` analysis of lifeline infrastructure to natural hazards
-(environmental excitation).
+(i.e. response of infrastructure assets to environmental excitation).
 
 The impact assessment is based on the :term:`fragilities <fragility>`
 and configuration of components that comprise the infrastructure system

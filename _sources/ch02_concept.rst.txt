@@ -156,7 +156,7 @@ four categories:
     control building of a substation is an example of this.
 
 4.  **Transshipment nodes**: These are nodes that transform, transport, or
-    store system inputs to give effect to processes that produces the outputs
+    store system inputs to give effect to processes that produce the outputs
     required of the system. Majority of the nodes within a system fall into
     this category.
 
