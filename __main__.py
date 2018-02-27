@@ -1,21 +1,25 @@
-#usage: python sifra -v -f "sample_structure.conf"
+# usage: python sifra -v -f "sample_structure.conf"
 
-import argparse
+import logging
+from colorama import Fore, Back, Style
+from sifra.configuration import Configuration
+from sifra.scenario import Scenario
+
+formatter = '%(levelname)-8s %(message)s'
+logging.basicConfig(level=logging.INFO, format=formatter)
 
 def main():
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-infile","-f", type=str,
-                        help="enter configuration file path.")
-    parser.add_argument("-v", "--verbose", help="increase output verbosity",
-                        action="store_true")
-    args = parser.parse_args()
 
-    if args.verbose:
-        print("verbosity turned on")
+    # Construct the scenario object
+    logging.info(Style.BRIGHT + Fore.GREEN + "Loading scenario config... " + Style.RESET_ALL)
 
-    if args.infile:
-        print(args.infile)
+    config_file_path = 'C:/Users/u12089/Desktop/sifra-dev/simulation_setup/config.json'
+    config = Configuration(config_file_path)
+
+    scenario = Scenario(config)
+
 
 if __name__ == "__main__":
+
     main()
