@@ -1,9 +1,11 @@
-# class Infrastructure:
+# class Facility:
 #     def __init__(self, facility_definition_file):
 #         #read
 
-import  xlrd
+import xlrd
+
 filePath = "C:\Users\u12089\Desktop\sifra-dev\models\potable_water_treatment_plant\sysconfig_pwtp_400ML.xlsx"
+sheetNames = ["component_connections", "component_connections", "output_setup", "supply_setup", "comp_type_dmg_algo", "damage_state_def"]
 
 wb = xlrd.open_workbook(filePath)
 
