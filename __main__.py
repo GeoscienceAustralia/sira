@@ -6,7 +6,7 @@ import argparse
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-infile","-f", type=str,
+    parser.add_argument("-infile", "-f", type=str,
                         help="enter configuration file path.")
     parser.add_argument("-v", "--verbose", help="increase output verbosity",
                         action="store_true")
