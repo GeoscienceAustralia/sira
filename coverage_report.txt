@@ -1,0 +1,51 @@
+Name                                                                                           Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------------------------------------------------------------
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\concurrent\__init__.py               2      0   100%
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\concurrent\futures\__init__.py       8      2    75%   21-23
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\concurrent\futures\_base.py        306    229    25%   61-62, 65, 68, 71, 77-78, 81-83, 86-88, 91-93, 99-100, 103-104, 107-108, 114-117, 120-123, 126-127, 130-134, 137-138, 144, 147-148, 151-152, 155-173, 187-195, 216-262, 290-313, 320-326, 329-349, 352-366, 377-388, 392-393, 397-398, 402-403, 406-416, 429-433, 451-464, 484-497, 516, 542-557, 564-570, 578-585, 592, 606, 626-647, 660, 663, 666-667
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\concurrent\futures\process.py      161    127    21%   75-80, 90-93, 97-99, 103-106, 121-134, 154-172, 198-238, 244-263, 275-299, 304-317, 320-326, 329-344, 348-360
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\concurrent\futures\thread.py        96     69    28%   16-19, 42-47, 53-56, 59-68, 71-90, 106-118, 122-131, 137-151, 154-159
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\__init__.py                 1      0   100%
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\_common.py                 22     13    41%   14-17, 20-25, 30-34
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\_version.py                 5      0   100%
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\easter.py                  27     20    26%   52-89
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\parser.py                 698    602    14%   53-66, 82-175, 178, 181-185, 188, 192, 197, 202, 207, 213-214, 217-222, 225, 229, 309, 312-317, 320-325, 328-331, 334-337, 340, 343, 346-349, 352-359, 363-371, 376-378, 382-385, 389, 396-399, 402-408, 411-482, 552-615, 663-1067, 1071-1078, 1179-1182, 1197, 1200-1202, 1205-1355, 1362, 1367-1371
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\relativedelta.py          236    204    14%   99-215, 218-248, 252, 256, 259-266, 280-294, 304-388, 391, 394, 397-399, 426, 444, 464-469, 489-499, 518, 521-526, 531-542, 547
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\rrule.py                  935    824    12%   70, 84-86, 93-100, 103-108, 111-119, 122-144, 147-166, 169-177, 183-186, 192-207, 213-225, 246-266, 273-299, 425-672, 681-734, 739-748, 751-1004, 1036-1051, 1077-1083, 1093-1095, 1099-1225, 1228, 1231-1235, 1239-1250, 1253-1256, 1259-1266, 1269-1274, 1277, 1291-1297, 1300-1307, 1312, 1315, 1318, 1321, 1324-1328, 1334, 1340, 1348, 1355, 1358-1387, 1404, 1407, 1422, 1426-1433, 1436, 1442-1462, 1471-1490, 1501-1598, 1605
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\tz\__init__.py              2      0   100%
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\tz\_common.py             145    107    26%   20-24, 33-51, 66, 86-95, 105-110, 135-143, 162-168, 171, 188-208, 224-230, 256, 259-266, 269-276, 280-283, 287-316, 332-338, 341-359, 362-371, 375, 380, 383, 390
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\tz\tz.py                  712    591    17%   24-25, 37, 40, 44, 60, 68, 71-74, 80, 83, 100-107, 110, 113, 117, 121, 137, 140-143, 148, 151, 163-172, 175-181, 184-190, 194, 210-211, 215-216, 243-256, 259-262, 268, 271, 281-282, 285-290, 293-296, 307, 310-313, 316-318, 330-331, 357-378, 383-384, 387-604, 608-619, 623-630, 633-635, 657-671, 687-700, 703-713, 716-722, 725-738, 742-744, 747-749, 756, 759, 762, 765, 847-887, 903-911, 914-917, 926, 960-988, 991-1029, 1032, 1038-1043, 1048-1053, 1056-1095, 1098-1103, 1106-1109, 1112-1116, 1120, 1123, 1141-1154, 1160, 1180-1187, 1190-1203, 1206-1321, 1324, 1328-1329, 1339-1409, 1428-1440, 1463-1486, 1494, 1503, 1506, 1509
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\tz\win.py                 150    105    30%   11-13, 31-32, 51-61, 80-83, 104-113, 119, 123-126, 142-146, 149, 166-180, 183, 187, 193-228, 231, 234, 239-282, 285, 289, 292, 297-306, 311-332
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\dateutil\zoneinfo\__init__.py       59     37    37%   21-22, 27, 31-35, 40-68, 84, 112-122, 152-160, 175-183
+C:\Users\u12089\AppData\Roaming\Python\Python27\site-packages\six.py                             450    203    55%   41-47, 57, 66-68, 98-99, 108-110, 118-121, 131-133, 144-152, 192-193, 203, 216, 222-223, 486, 494, 499-505, 509-515, 528-530, 536-538, 542-550, 553, 556, 559, 564, 580-596, 608, 625-646, 649, 653, 658, 661, 673, 677, 681, 685-696, 707-708, 720, 729, 737, 742-794, 799-803, 810-816, 831, 837-848, 859-866, 875, 880-889
+sifra\__init__.py                                                                                  0      0   100%
+sifra\infrastructure_response.py                                                                 235     23    90%   439-481, 595-600, 606
+sifra\model_ingest.py                                                                            100      7    93%   73-78, 106-107
+sifra\modelling\__init__.py                                                                        0      0   100%
+sifra\modelling\component.py                                                                      23      1    96%   60
+sifra\modelling\component_graph.py                                                                43      0   100%
+sifra\modelling\hazard_levels.py                                                                  24      1    96%   47
+sifra\modelling\infrastructure_model.py                                                            4      0   100%
+sifra\modelling\infrastructure_system.py                                                         143     16    89%   21, 54, 118, 238, 255, 268-276, 363-369
+sifra\modelling\iodict.py                                                                         29      0   100%
+sifra\modelling\location.py                                                                        5      0   100%
+sifra\modelling\responsemodels.py                                                                 76     11    86%   17, 47-51, 94, 119, 137, 163-166
+sifra\modelling\structural.py                                                                    173     81    53%   76-118, 142, 153, 179-204, 281-288, 313-314, 324-328, 341, 375-378, 385-396, 404, 408
+sifra\modelling\structures.py                                                                      9      3    67%   15, 22, 26
+sifra\modelling\system_topology.py                                                                88     18    80%   32-36, 67, 75, 79, 187-197, 229
+sifra\modelling\utils.py                                                                         108      9    92%   8-13, 64, 80, 119, 171-172
+sifra\settings.py                                                                                  5      0   100%
+sifra\sifraclasses.py                                                                            103      8    92%   35-36, 265-274
+sifra\sysresponse.py                                                                             342    310     9%   72-109, 118-124, 133-175, 185-189, 207-229, 235-358, 371-413, 429-457, 468-813, 820-845, 854-855
+tests\test_component_graph.py                                                                    110      0   100%
+tests\test_diffs.py                                                                               51      0   100%
+tests\test_hazard_levels.py                                                                       44      1    98%   65
+tests\test_iodict.py                                                                              40      0   100%
+tests\test_ir_against_sysresp.py                                                                  46     31    33%   66-114, 118
+tests\test_json.py                                                                                16      0   100%
+tests\test_model_ingest.py                                                                        35      1    97%   61
+tests\test_run_scenario.py                                                                        17      0   100%
+tests\test_serialisation.py                                                                        0      0   100%
+tests\test_structural.py                                                                          39      8    79%   36, 52-56, 66-67, 191
+----------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                           5923   3662    38%
