@@ -84,9 +84,6 @@ def ingest_spreadsheet(config):
         recovery_params = {key: damage_state[key] for key in recovery_columns}
         recovery_algorithm_vals[ds_level] = RecoveryState(**recovery_params)
 
-    # testing
-    print(component_type, component_dict.__jsonify__())
-    raw_input("Press Enter to continue...")
 
     # Create a damage algorithm in the AlgorithmFactory for the components
     for component_type in component_dict.keys():

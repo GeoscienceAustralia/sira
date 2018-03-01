@@ -261,19 +261,19 @@ class IFSystem(Model):
 
         return system_outflows_sample
 
-    def calc_recov_time_given_comp_ds(self, component, damage_state, scenario):
-        '''
-        Calculates the recovery time of a component, given damage state index
-        '''
-        import scipy.stats as stats
-        recovery_parameters = component.get_recovery(damage_state)
-        damage_parameters = component.get_damage_state(damage_state)
-
-        m = recovery_parameters.recovery_mean
-        s = recovery_parameters.recovery_std
-        fn = damage_parameters.functionality
-        cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
-        return cdf + (1.0 - cdf) * fn
+    # def calc_recov_time_given_comp_ds(self, component, damage_state, scenario):
+    #     '''
+    #     Calculates the recovery time of a component, given damage state index
+    #     '''
+    #     import scipy.stats as stats
+    #     recovery_parameters = component.get_recovery(damage_state)
+    #     damage_parameters = component.get_damage_state(damage_state)
+    #
+    #     m = recovery_parameters.recovery_mean
+    #     s = recovery_parameters.recovery_std
+    #     fn = damage_parameters.functionality
+    #     cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
+    #     return cdf + (1.0 - cdf) * fn
 
     def calc_response(self, component_loss, comp_sample_func, component_damage_state_ind):
         """

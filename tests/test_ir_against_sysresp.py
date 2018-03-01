@@ -6,7 +6,7 @@ import os
 import numpy as np
 import logging
 
-from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
+# from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
 from sifra.sifraclasses import FacilitySystem, Scenario
 from sifra.infrastructure_response import calculate_response, ingest_spreadsheet
 
