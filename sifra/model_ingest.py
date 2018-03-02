@@ -15,8 +15,8 @@ from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
                                             RecoveryAlgorithm, AlgorithmFactory)
 
 import copy
-
-
+import os
+import pprint
 def ingest_spreadsheet(config):
     """
     Create an infrastructure_model from the config 
@@ -38,6 +38,13 @@ def ingest_spreadsheet(config):
 
     for index, damage_state in facility_data.fragility_data.iterrows():
         component_type = index[0]
+
+        # print("----------------------------------------------------------------------------------------")
+        # if component_dict.keys().__contains__('Processor A'):
+        #     print(component_dict.__jsonify__())
+        #     pprint.pprint(component_dict['Processor A']['frag_func'])
+        # print("----------------------------------------------------------------------------------------")
+        # print()
 
         if component_type not in component_dict:
             damage_algorithm_vals = IODict()

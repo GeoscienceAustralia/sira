@@ -10,7 +10,7 @@ import logging
 from sifra.sifraclasses import FacilitySystem, Scenario
 from sifra.infrastructure_response import calculate_response, ingest_spreadsheet
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 config_file = './tests/test_scenario_ps_coal.conf'
 ident_config_file = './tests/test_scenario_ps_coal.conf'
 

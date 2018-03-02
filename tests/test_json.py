@@ -2,13 +2,13 @@ from __future__ import print_function
 
 import unittest
 
-import logging
+# import logging
 
 from sifra.modelling.utils import jsonify, pythonify
 from sifra.modelling.infrastructure_system import IFSystem
 from sifra.model_ingest import ingest_spreadsheet
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 ident_config_file = './tests/test_scenario_ps_coal.conf'
 
 
