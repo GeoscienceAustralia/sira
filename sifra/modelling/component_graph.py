@@ -1,4 +1,4 @@
-import logging
+from sifra.rootlog import rootLogger
 
 import igraph
 
@@ -99,7 +99,7 @@ class ComponentGraph(object):
             # we need to use the two vertice id's to get the edge id
             edge_id = comp_graph.get_eid(edge[0], edge[1])
             # log the names of the vertices with the capacity of the edge
-            logging.info("{}->{} = {}".format(comp_graph.vs[edge[0]]['name'],
+            rootLogger.info("{}->{} = {}".format(comp_graph.vs[edge[0]]['name'],
                                            comp_graph.vs[edge[1]]['name'],
                                            comp_graph.es[edge_id]['capacity']))
 
