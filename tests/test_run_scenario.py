@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import unittest
-import logging
 
 from sifra.infrastructure_response import run_scenario
 
