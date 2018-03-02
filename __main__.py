@@ -14,6 +14,7 @@ python_version  : 2.7
 import time
 import argparse
 from sifra.rootlog import rootLogger
+import os
 
 
 from sifra.infrastructure_response import run_scenario
@@ -29,7 +30,7 @@ def main():
     args = parser.parse_args()
 
     rootLogger.info('Start')
-    SETUPFILE = "C:\\Users\\u12089\\Desktop\\sifra-v0.2.0\\tests\\test_simple_series_struct_dep.conf"
+    SETUPFILE = os.path.abspath("./sifra/tests/test_scenario_ps_coal.conf")
     run_scenario(SETUPFILE)
 
     rootLogger.info('End')
