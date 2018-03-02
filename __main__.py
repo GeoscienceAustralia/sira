@@ -10,27 +10,44 @@ usage           : python sifra  [OPTIONS]
 
 python_version  : 2.7
 """
-
-import time
 import argparse
-from sifra.rootlog import rootLogger
-
+from sifra.logger import rootLogger
+import logging
 
 from sifra.infrastructure_response import run_scenario
 
-def main():
 
-    # time_start = time.strftime("%Y%m%d-%H%M%S")
-    time_start = "00"
+def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose",  type=str,
                         help="choose option for logging level from: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     args = parser.parse_args()
 
+    level = logging.INFO
+
+    if args.verbose is not None:
+        if args.verbose.upper() == "DEBUG":
+            level = logging.DEBUG
+
+        elif args.verbose.upper() == "INFO":
+            level = logging.INFO
+
+        elif args.verbose.upper() == "WARNING":
+            level = logging.WARNING
+
+        elif args.verbose.upper() == "ERROR":
+            level = logging.ERROR
+
+        elif args.verbose.upper() == "CRITICAL":
+            level = logging.CRITICAL
+
+    rootLogger.set_log_level(level)
+
     rootLogger.info('Start')
-    SETUPFILE = "C:\\Users\\u12089\\Desktop\\sifra-v0.2.0\\tests\\test_simple_series_struct_dep.conf"
-    run_scenario(SETUPFILE)
+    setup_file = "C:\\Users\\u12089\\Desktop\\sifra-v0.2.0\\tests\\test_scenario_ps_coal.conf"
+
+    run_scenario(setup_file)
 
     rootLogger.info('End')
 
@@ -38,4 +55,3 @@ def main():
 if __name__ == "__main__":
 
     main()
-    # SETUPFILE = "C:\\Users\\u12089\\Desktop\\sifra-v0.2.0\\simulation_setup\\test_scenario_ps_coal.conf"
