@@ -7,7 +7,7 @@ from os.path import exists
 from sifra.sifraclasses import _readfile
 
 CONF_FILENAME = os.path.join(os.path.dirname(__file__),
-                             'C:\\Users\\u12089\\Desktop\\sifra-dev\\tests\\test_simple_series_struct_dep.conf')
+    'test_simple_series_struct_dep.conf')
 
 
 class TestInputConfFile(unittest. TestCase):

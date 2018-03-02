@@ -11,6 +11,7 @@
 
 import logging
 import datetime
+import os
 
 logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 rootLogger = logging.getLogger("rootLogger")
@@ -21,7 +22,10 @@ round_mins = 5
 now = datetime.datetime.now()
 mins = now.minute - (now.minute % round_mins)
 
-logPath = 'sifra/logs'
+logPath = os.path.abspath('./sifra/logs')
+if not os.path.exists(logPath):
+    os.makedirs(logPath)
+
 time_start = str(datetime.datetime(now.year, now.month, now.day, now.hour, mins) + datetime.timedelta(minutes=round_mins)).replace(' ', '_').replace(':', '-')
 fileHandler = logging.FileHandler("{0}/{1}.log".format(logPath, time_start), mode='a')
 fileHandler.setFormatter(logFormatter)
