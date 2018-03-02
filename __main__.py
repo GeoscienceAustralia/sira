@@ -11,24 +11,12 @@ usage           : python sifra  [OPTIONS]
 python_version  : 2.7
 """
 
-import logging
 import time
 import argparse
+from sifra.rootlog import rootLogger
 
-logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
-rootLogger = logging.getLogger()
 
-logPath='sifra/logs'
-time_start = time.strftime("%Y%m%d-%H%M%S")
-fileHandler = logging.FileHandler("{0}/{1}.log".format(logPath, time_start))
-fileHandler.setFormatter(logFormatter)
-rootLogger.addHandler(fileHandler)
-
-consoleHandler = logging.StreamHandler()
-consoleHandler.setFormatter(logFormatter)
-rootLogger.addHandler(consoleHandler)
-
-# from sifra.infrastructure_response import run_scenario
+from sifra.infrastructure_response import run_scenario
 
 def main():
 
@@ -40,30 +28,11 @@ def main():
                         help="choose option for logging level from: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     args = parser.parse_args()
 
-    if args.verbose is not None:
-        if args.verbose.upper() == "DEBUG":
-            rootLogger.setLevel(logging.DEBUG)
-
-        elif args.verbose.upper() == "INFO":
-            rootLogger.setLevel(logging.INFO)
-
-        elif args.verbose.upper() == "WARNING":
-            rootLogger.setLevel(logging.WARNING)
-
-        elif args.verbose.upper() == "ERROR":
-            rootLogger.setLevel(logging.ERROR)
-
-        elif args.verbose.upper() == "CRITICAL":
-            rootLogger.setLevel(logging.CRITICAL)
-    else:
-        # default option
-        rootLogger.setLevel(logging.INFO)
-
-    logging.info('Start')
+    rootLogger.info('Start')
     SETUPFILE = "C:\\Users\\u12089\\Desktop\\sifra-v0.2.0\\tests\\test_simple_series_struct_dep.conf"
-    # run_scenario(SETUPFILE)
+    run_scenario(SETUPFILE)
 
-    logging.info('End')
+    rootLogger.info('End')
 
 
 if __name__ == "__main__":

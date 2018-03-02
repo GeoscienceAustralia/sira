@@ -1,12 +1,13 @@
 import numpy as np
 import time
 from datetime import timedelta
-import logging
 
+from sifra.rootlog import rootLogger
 # these are required for defining the data model
 from sifra.modelling.structural import (
     Element,
     Info)
+import sys
 
 from sifra.modelling.component import Component
 from sifra.modelling.component_graph import ComponentGraph
@@ -57,6 +58,7 @@ class IFSystem(Model):
 
 
     def expose_to(self, hazard_level, scenario):
+
         """
         Exposes the components of the infrastructure to a hazard level
         within a scenario.
@@ -89,7 +91,7 @@ class IFSystem(Model):
 
         # log the elapsed time for this hazard level
         elapsed = timedelta(seconds=(time.time() - code_start_time))
-        logging.info("Hazard {} run time: {}".format(hazard_level.hazard_intensity,
+        rootLogger.info("Hazard {} run time: {}".format(hazard_level.hazard_intensity,
                                                      str(elapsed)))
 
         # We combine the result data into a dictionary for ease of use
@@ -129,14 +131,14 @@ class IFSystem(Model):
                                               dtype=int)
         # create another numpy array of random uniform [0,1.0) numbers.
         rnd = prng.uniform(size=(scenario.num_samples, num_components))
-        logging.debug("Hazard Intensity {}".format(hazard_level.hazard_intensity))
+        rootLogger.debug("Hazard Intensity {}".format(hazard_level.hazard_intensity))
         # iterate through the components
         for index, comp_key in enumerate(sorted(self.components.keys())):
             component = self.components[comp_key]
             # use the components expose_to method to retrieve the probabilities
             # of this hazard level exceeding each of the components damage levels
             component_pe_ds = np.sort(component.expose_to(hazard_level, scenario))
-            logging.debug("Component {} : pe_ds {}".format(component.component_id,
+            rootLogger.debug("Component {} : pe_ds {}".format(component.component_id,
                                                            component_pe_ds))
 
             # This little piece of numpy magic calculates the damage level by summing

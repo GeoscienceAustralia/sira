@@ -158,28 +158,28 @@ class _FacilityDataGetter(object):
     def assign_infrastructure_data(self):
         config_file = self.sys_config_file
         NODE_CONN_DF = pd.read_excel(
-            config_file, sheetname='component_connections',
+            config_file, sheet_name='component_connections',
             index_col=None, header=0,
             skiprows=3, skipinitialspace=True)
 
         COMP_DF = pd.read_excel(
-            config_file, sheetname='component_list',
+            config_file, sheet_name='component_list',
             index_col='component_id', header=0,
             skiprows=3, skipinitialspace=True)
 
         SYSOUT_SETUP = pd.read_excel(
-            config_file, sheetname='output_setup',
+            config_file, sheet_name='output_setup',
             index_col='output_node', header=0,
             skiprows=3, skipinitialspace=True)
         SYSOUT_SETUP = SYSOUT_SETUP.sort_values(by='priority', ascending=True)
 
         SYSINP_SETUP = pd.read_excel(
-            config_file, sheetname='supply_setup',
+            config_file, sheet_name='supply_setup',
             index_col='input_node', header=0,
             skiprows=3, skipinitialspace=True)
 
         FRAGILITIES = pd.read_excel(
-            config_file, sheetname='comp_type_dmg_algo',
+            config_file, sheet_name='comp_type_dmg_algo',
             index_col=[0,1], header=0,
             skiprows=3, skipinitialspace=True)
 

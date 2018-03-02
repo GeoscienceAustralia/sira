@@ -5,7 +5,6 @@ import time
 from datetime import timedelta
 import pickle
 import zipfile
-import logging
 
 import numpy as np
 import pandas as pd
@@ -22,6 +21,10 @@ from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 from sifra.modelling.system_topology import SystemTopology
 
+
+from sifra.rootlog import rootLogger
+
+
 def run_scenario(config_file):
     """
     Run a scenario by constructing a facility, and executing a scenario, with
@@ -30,28 +33,23 @@ def run_scenario(config_file):
     :return: None
     """
     # Construct the scenario object
-    logging.info(Style.BRIGHT + Fore.GREEN +
-                 "Loading scenario config... " +
-                 Style.RESET_ALL)
+    rootLogger.info("Loading scenario config... ")
 
     scenario = Scenario(config_file)
-    logging.info(Style.BRIGHT + Fore.YELLOW + "Done.\n" + Style.RESET_ALL)
+    rootLogger.info("Done.")
 
     # `IFSystem` object that contains a list of components
-    logging.info(Style.BRIGHT + Fore.GREEN +
-                 "Building infrastructure system model... " +
-                 Style.RESET_ALL)
+    rootLogger.info("Building infrastructure system model... ")
     infrastructure, algorithm_factory = ingest_spreadsheet(config_file)
+
     # assign the algorithm factory to the scenario
     scenario.algorithm_factory = algorithm_factory
 
     sys_topology_view = SystemTopology(infrastructure, scenario)
     sys_topology_view.draw_sys_topology(viewcontext="as-built")
-    logging.info(Style.BRIGHT + Fore.YELLOW + "Done.\n" + Style.RESET_ALL)
+    rootLogger.info("Done.")
 
-    logging.info(Style.BRIGHT + Fore.GREEN +
-                 "Initiating model run..." +
-                 Style.RESET_ALL)
+    rootLogger.info("Initiating model run...")
 
     post_processing_list = calculate_response(scenario, infrastructure)
     # After the response has been calculated the post processing
@@ -69,10 +67,13 @@ def run_para_scen(hazard_level, infrastructure, scenario):
     :param scenario: The Parameters for the simulation
     :return: List of results of the simulation
     """
+
     return infrastructure.expose_to(hazard_level, scenario)
 
 
 def calculate_response(scenario, infrastructure):
+
+
     """
     The response will be calculated by creating the hazard_levels,
     iterating through the range of hazards and calling the infrastructure systems
@@ -90,6 +91,8 @@ def calculate_response(scenario, infrastructure):
     # capture the results from the map call in a list
     hazard_level_response = []
     # Use the parallel option in the scenario to determine how to run
+
+
     hazard_level_response.extend(parmap.map(run_para_scen,
                                             hazard_levels.hazard_range(),
                                             infrastructure,
@@ -568,8 +571,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
         )
 
     # ------------------------------------------------------------------------
-    logging.info("Outputs saved in: \n" + " "*9 +
-                 Fore.GREEN + scenario.output_path + Fore.RESET + '\n')
+        rootLogger.info("Outputs saved in: " + scenario.output_path)
 
     # ... END POST-PROCESSING
     # ****************************************************************************
@@ -593,7 +595,7 @@ def main():
 
     run_scenario(SETUPFILE)
 
-    logging.info(Style.BRIGHT + Fore.YELLOW +
+    rootLogger.info(Style.BRIGHT + Fore.YELLOW +
                  "Total run time: %s\n" %
                  str(timedelta(seconds=(time.time() - code_start_time))) +
                  Style.RESET_ALL)

@@ -17,6 +17,8 @@ from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
 import copy
 import os
 import pprint
+import logging
+
 def ingest_spreadsheet(config):
     """
     Create an infrastructure_model from the config 
@@ -28,13 +30,14 @@ def ingest_spreadsheet(config):
     algorithm_factory = AlgorithmFactory()
 
     damage_state_df = pd.read_excel(
-        facility_data.sys_config_file, sheetname='damage_state_def',
+        facility_data.sys_config_file, sheet_name='damage_state_def',
         index_col=[0, 1], header=0,
         skiprows=3, skipinitialspace=True)
 
     damage_def_dict = {}
     for index, damage_def in damage_state_df.iterrows():
         damage_def_dict[index] = damage_def
+
 
     for index, damage_state in facility_data.fragility_data.iterrows():
         component_type = index[0]

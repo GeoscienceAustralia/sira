@@ -2,6 +2,9 @@ from __future__ import print_function
 import os
 import networkx as nx
 import re
+import logging
+
+
 # from networkx.readwrite.json_graph import node_link_data
 
 # -----------------------------------------------------------------------------
@@ -17,6 +20,8 @@ class SystemTopology(object):
     graph_label = "System Component Topology"
 
     def __init__(self, infrastructure, scenario):
+
+
         self.infrastructure = infrastructure
         self.scenario = scenario
         self.gviz = ""  # placeholder for a pygraphviz agraph
