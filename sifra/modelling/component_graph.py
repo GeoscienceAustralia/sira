@@ -1,4 +1,4 @@
-from sifra.rootlog import rootLogger
+from sifra.logger import rootLogger
 
 import igraph
 

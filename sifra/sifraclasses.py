@@ -37,8 +37,8 @@ def _readfile(setup_file):
     exec (open(setup_file).read(), discard, setup)
     return setup
 
-
 # =============================================================================
+
 
 class _IoDataGetter(object):
     """
@@ -70,7 +70,6 @@ class _IoDataGetter(object):
             os.makedirs(self.output_path)
         if not os.path.exists(self.raw_output_dir):
             os.makedirs(self.raw_output_dir)
-
 
 class _ScenarioDataGetter(object):
     """
@@ -256,24 +255,24 @@ class _FacilityDataGetter(object):
 #     #     return sup_node_list, dep_node_list, src_node_list, out_node_list
 
 
-class FacilitySystem(_FacilityDataGetter, _IoDataGetter):
-    """
-    Defines an Critical Infrastructure Facility and its parameters
-    """
-
-    def __init__(self, setup_file):
-        _FacilityDataGetter.__init__(self, setup_file)
-        _IoDataGetter.__init__(self, setup_file)
-        self.cp_types_in_system, self.cp_types_in_db = \
-            self.check_types_with_db()
-        self.uncosted_comptypes = \
-            ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
-        self.cp_types_costed, self.cpmap,\
-            self.costed_comptypes, self.comps_costed = \
-            self.list_of_components_for_cost_calculation()
-        self.cpdict, self.output_dict,\
-            self.input_dict, self.nodes_by_commoditytype = \
-            self.convert_df_to_dict()
+# class FacilitySystem(_FacilityDataGetter, _IoDataGetter):
+#     """
+#     Defines an Critical Infrastructure Facility and its parameters
+#     """
+#
+#     def __init__(self, setup_file):
+#         _FacilityDataGetter.__init__(self, setup_file)
+#         _IoDataGetter.__init__(self, setup_file)
+#         self.cp_types_in_system, self.cp_types_in_db = \
+#             self.check_types_with_db()
+#         self.uncosted_comptypes = \
+#             ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
+#         self.cp_types_costed, self.cpmap,\
+#             self.costed_comptypes, self.comps_costed = \
+#             self.list_of_components_for_cost_calculation()
+#         self.cpdict, self.output_dict,\
+#             self.input_dict, self.nodes_by_commoditytype = \
+#             self.convert_df_to_dict()
 
         # self.sys = self.build_system_model()
         # self.fragdict = self.fragility_dict()
