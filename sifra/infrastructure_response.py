@@ -20,9 +20,9 @@ from model_ingest import ingest_spreadsheet
 from sifraclasses import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 from sifra.modelling.system_topology import SystemTopology
+from sifra.configuration import Configuration
 
-
-from sifra.rootlog import rootLogger
+from sifra.logger import rootLogger
 
 
 def run_scenario(config_file):
@@ -35,6 +35,7 @@ def run_scenario(config_file):
     # Construct the scenario object
     rootLogger.info("Loading scenario config... ")
 
+    # config = Configuration(config_file)
     scenario = Scenario(config_file)
     rootLogger.info("Done.")
 

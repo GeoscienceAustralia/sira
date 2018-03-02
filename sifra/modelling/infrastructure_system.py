@@ -2,7 +2,7 @@ import numpy as np
 import time
 from datetime import timedelta
 
-from sifra.rootlog import rootLogger
+from sifra.logger import rootLogger
 # these are required for defining the data model
 from sifra.modelling.structural import (
     Element,
