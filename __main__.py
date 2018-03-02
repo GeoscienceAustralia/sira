@@ -30,7 +30,9 @@ def main():
     args = parser.parse_args()
 
     rootLogger.info('Start')
-    SETUPFILE = os.path.abspath("./sifra/tests/test_scenario_ps_coal.conf")
+    os.path.dirname(__file__)
+    SETUPFILE = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "tests/test_scenario_ps_coal.conf"))
     run_scenario(SETUPFILE)
 
     rootLogger.info('End')
