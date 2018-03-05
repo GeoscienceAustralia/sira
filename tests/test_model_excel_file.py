@@ -9,21 +9,16 @@ class TestReadingExcelFile(ut.TestCase):
     def setUp(self):
 
         self.project_folder = os.getcwd()
-        # self.project_folder = os.path.dirname(self.test_folder)
-
 
         self.models_folder = os.path.join(self.project_folder, 'models')
 
-        rootLogger.info(self.project_folder)
-        rootLogger.info(self.models_folder)
+        rootLogger.info("Project Root: "+self.project_folder)
 
         self.model_files = []
         for path, subdirs, files in os.walk(self.models_folder):
             for name in files:
                 if name.endswith(".xlsx"):
                     self.model_files.append(os.path.join(path, name))
-                    rootLogger.info(os.path.join(path, name))
-
 
         self.required_sheets = ['component_list', 'component_connections', 'supply_setup', 'output_setup',
                                 'comp_type_dmg_algo', 'damage_state_def']
