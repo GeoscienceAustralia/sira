@@ -47,10 +47,9 @@ def main():
 
     rootLogger.info('Start')
 
-    SETUPFILE = os.path.abspath(
+    setup_file = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "tests/test_scenario_ps_coal.conf"))
-    run_scenario(SETUPFILE)
-    # setup_file = "C:\\Users\\u12089\\Desktop\\sifra-v0.2.0\\tests\\test_scenario_ps_coal.conf"
+    rootLogger.info('setup_file: '+setup_file)
 
     run_scenario(setup_file)
 
