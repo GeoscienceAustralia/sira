@@ -60,7 +60,7 @@ class Configuration:
         if not os.path.exists(self.OUTPUT_PATH):
             os.makedirs(self.OUTPUT_PATH)
 
-        self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH,'RAW_OUTPUT')
+        self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
 
         # create output dir: root/SCENARIO_NAME+_timestamp/RAW_OUTPUT
         if not os.path.exists(self.RAW_OUTPUT_DIR):
