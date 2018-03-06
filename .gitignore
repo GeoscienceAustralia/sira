@@ -3,7 +3,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
 # C extensions
 *.so
 
@@ -72,6 +72,7 @@ target/
 
 # project specific files
 output/*
+logs/*
 
 # Created by .ignore support plugin (hsz.mobi)
 
