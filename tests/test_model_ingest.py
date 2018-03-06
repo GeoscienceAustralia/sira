@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import unittest as ut
-from sifra.model_ingest import ingest_spreadsheet
+from sifra.model_ingest import read_model_from_xlxs
 from sifra.modelling.structural import jsonify
-from sifra.sifraclasses import Scenario
+from sifra.scenario import Scenario
 from sifra.modelling.responsemodels import DamageAlgorithm
 
 
@@ -15,7 +15,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = './tests/test_scenario_ps_coal.conf'
 
-        if_system, _ = ingest_spreadsheet(test_conf)
+        if_system, _ = read_model_from_xlxs(test_conf)
 
         # now jsonify
         json_components = jsonify(if_system)
@@ -26,7 +26,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = './tests/test_identical_comps.conf'
 
-        if_system, _ = ingest_spreadsheet(test_conf)
+        if_system, _ = read_model_from_xlxs(test_conf)
 
         # now jsonify
         json_components = jsonify(if_system)
@@ -39,7 +39,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         test_conf = './tests/test_scenario_ps_coal.conf'
 
-        if_system, algorithm_factory = ingest_spreadsheet(test_conf)
+        if_system, algorithm_factory = read_model_from_xlxs(test_conf)
 
         self.assertTrue(len(algorithm_factory.response_algorithms) > 0)
         self.assertTrue(len(algorithm_factory.recovery_algorithms) > 0)
@@ -51,7 +51,7 @@ class TestIngestResponseModel(ut.TestCase):
     def test_algorithm_factory(self):
         test_conf = './tests/test_scenario_ps_coal.conf'
         scenario = Scenario(test_conf)
-        if_system, algorithm_factory = ingest_spreadsheet(test_conf)
+        if_system, algorithm_factory = read_model_from_xlxs(test_conf)
 
         resp_alg = algorithm_factory.get_response_algorithm('Ash Disposal System', 'earthquake')
 

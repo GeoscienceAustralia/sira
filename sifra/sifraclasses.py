@@ -432,35 +432,35 @@ class _FacilityDataGetter(object):
     #         graph_label="System Component Layout")
 
 
-class Scenario(_ScenarioDataGetter, _IoDataGetter):
-    """
-    Defines the scenario for hazard impact modelling
-    """
-
-    def __init__(self, setup_file):
-        _ScenarioDataGetter.__init__(self, setup_file)
-        _IoDataGetter.__init__(self, setup_file)
-
-        """Set up parameters for simulating hazard impact"""
-        self.num_hazard_pts = \
-            int(round((self.haz_param_max - self.haz_param_min) /
-                      float(self.haz_param_step) + 1))
-
-        self.hazard_intensity_vals = \
-            np.linspace(self.haz_param_min, self.haz_param_max,
-                        num=self.num_hazard_pts)
-        self.hazard_intensity_str = \
-            [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
-
-        # Set up parameters for simulating recovery from hazard impact
-        self.restoration_time_range, self.time_step = np.linspace(
-            0, self.restore_time_max, num=self.restore_time_max + 1,
-            endpoint=True, retstep=True)
-
-        self.num_time_steps = len(self.restoration_time_range)
-
-        self.restoration_chkpoints, self.restoration_pct_steps = \
-            np.linspace(0.0, 1.0, num=self.restore_pct_chkpoints, retstep=True)
+# class Scenario(_ScenarioDataGetter, _IoDataGetter):
+#     """
+#     Defines the scenario for hazard impact modelling
+#     """
+#
+#     def __init__(self, setup_file):
+#         _ScenarioDataGetter.__init__(self, setup_file)
+#         _IoDataGetter.__init__(self, setup_file)
+#
+#         """Set up parameters for simulating hazard impact"""
+#         self.num_hazard_pts = \
+#             int(round((self.haz_param_max - self.haz_param_min) /
+#                       float(self.haz_param_step) + 1))
+#
+#         self.hazard_intensity_vals = \
+#             np.linspace(self.haz_param_min, self.haz_param_max,
+#                         num=self.num_hazard_pts)
+#         self.hazard_intensity_str = \
+#             [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
+#
+#         # Set up parameters for simulating recovery from hazard impact
+#         self.restoration_time_range, self.time_step = np.linspace(
+#             0, self.restore_time_max, num=self.restore_time_max + 1,
+#             endpoint=True, retstep=True)
+#
+#         self.num_time_steps = len(self.restoration_time_range)
+#
+#         self.restoration_chkpoints, self.restoration_pct_steps = \
+#             np.linspace(0.0, 1.0, num=self.restore_pct_chkpoints, retstep=True)
 
 
 # class ComponentType(object):

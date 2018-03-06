@@ -6,7 +6,7 @@
 #
 # # from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
 # from sifra.sifraclasses import FacilitySystem, Scenario
-# from sifra.infrastructure_response import calculate_response, ingest_spreadsheet
+# from sifra.infrastructure_response import calculate_response, read_model_from_xlxs
 #
 # config_file = './tests/test_scenario_ps_coal.conf'
 # series_config = './tests/test_simple_series_struct.conf'
@@ -17,7 +17,7 @@
 # class TestComponentGraph(unittest.TestCase):
 #     # def test_graph_function(self):
 #     #     facility = FacilitySystem(config_file)
-#     #     infrastructure, _ = ingest_spreadsheet(config_file)
+#     #     infrastructure, _ = read_model_from_xlxs(config_file)
 #     #
 #     #     # seeding is not used
 #     #     prng = np.random.RandomState()
@@ -48,7 +48,7 @@
 #     # def test_source_break(self):
 #     #     facility = FacilitySystem(config_file)
 #     #
-#     #     infrastructure, _ = ingest_spreadsheet(config_file)
+#     #     infrastructure, _ = read_model_from_xlxs(config_file)
 #     #
 #     #     functionality = 0.316189922718
 #     #     comp_idx = 5
@@ -75,7 +75,7 @@
 #     # def test_duplicate_break(self):
 #     #     facility = FacilitySystem(config_file)
 #     #
-#     #     infrastructure, _ = ingest_spreadsheet(config_file)
+#     #     infrastructure, _ = read_model_from_xlxs(config_file)
 #     #
 #     #     functionality = 0.455400408676
 #     #     comp_idx = 16
@@ -101,7 +101,7 @@
 #     #         infrastructure._component_graph.dump_graph()
 #
 #     def test_func_changes_in_series(self):
-#         series_if, _ = ingest_spreadsheet(series_config)
+#         series_if, _ = read_model_from_xlxs(series_config)
 #         function_array = np.ones(len(series_if.components))
 #         pga_range = np.arange(1.0, 0.0, -0.001)
 #         results = np.zeros(pga_range.shape)
@@ -127,7 +127,7 @@
 #
 #     def test_func_changes_in_parallel(self):
 #         logging.info("\n")
-#         series_if, _ = ingest_spreadsheet(parallel_config)
+#         series_if, _ = read_model_from_xlxs(parallel_config)
 #         pga_range = np.arange(1.0, 0.0, -0.001)
 #
 #         for node_number in [1, 2, 3]:
@@ -146,7 +146,7 @@
 #
 #     def test_ds_iteration_in_para(self):
 #         logging.info("\n")
-#         series_if, _ = ingest_spreadsheet(parallel_config)
+#         series_if, _ = read_model_from_xlxs(parallel_config)
 #         ds_range = np.arange(0, 5)
 #
 #         for node_number in [1, 2, 3]:
@@ -169,7 +169,7 @@
 #
 #     def test_func_changes_in_dep(self):
 #         logging.info("\n")
-#         series_if, _ = ingest_spreadsheet(dependent_config)
+#         series_if, _ = read_model_from_xlxs(dependent_config)
 #         pga_range = np.arange(1.0, 0.0, -0.001)
 #
 #         for node_number in [1, 4, 3]:
@@ -188,7 +188,7 @@
 #
 #     def test_ds_iteration_in_dep(self):
 #         logging.info("\n")
-#         series_if, _ = ingest_spreadsheet(dependent_config)
+#         series_if, _ = read_model_from_xlxs(dependent_config)
 #         ds_range = np.arange(0, 5)
 #
 #         for node_number in [1, 4, 3]:

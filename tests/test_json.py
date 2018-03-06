@@ -6,7 +6,7 @@ import unittest
 
 from sifra.modelling.utils import jsonify, pythonify
 from sifra.modelling.infrastructure_system import IFSystem
-from sifra.model_ingest import ingest_spreadsheet
+from sifra.model_ingest import read_model_from_xlxs
 
 # logging.basicConfig(level=logging.INFO)
 ident_config_file = './tests/test_scenario_ps_coal.conf'
@@ -15,7 +15,7 @@ ident_config_file = './tests/test_scenario_ps_coal.conf'
 class TestNewModel(unittest.TestCase):
     def test_pythonify(self):
         config_file = './tests/test_scenario_ps_coal.conf'
-        infrastructure, alg_fact = ingest_spreadsheet(config_file)  # `IFSystem` object
+        infrastructure, alg_fact = read_model_from_xlxs(config_file)  # `IFSystem` object
         # serialise to json
         json_if = jsonify(infrastructure)
         self.assertTrue(len(json_if) > 0)

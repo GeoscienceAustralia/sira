@@ -1,0 +1,23 @@
+{
+    "0": {
+        "Unnamed: 4": null, 
+        "destination": "node_x", 
+        "link_capacity": 1, 
+        "origin": "materiel_supply", 
+        "weight": 1
+    }, 
+    "1": {
+        "Unnamed: 4": null, 
+        "destination": "node_y", 
+        "link_capacity": 1, 
+        "origin": "node_x", 
+        "weight": 1
+    }, 
+    "2": {
+        "Unnamed: 4": null, 
+        "destination": "output_1", 
+        "link_capacity": 1, 
+        "origin": "node_y", 
+        "weight": 1
+    }
+}
