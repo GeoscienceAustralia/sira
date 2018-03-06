@@ -1,0 +1,9 @@
+{
+    "output_1": {
+        "Unnamed: 5": null, 
+        "capacity_fraction": 1, 
+        "output_node_capacity": 250, 
+        "priority": 1, 
+        "production_node": "node_y"
+    }
+}

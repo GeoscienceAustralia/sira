@@ -16,46 +16,46 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from colorama import Fore, Back, Style
 
-from model_ingest import ingest_spreadsheet
-from sifraclasses import Scenario
+from model_ingest import read_model_from_xlxs
+from sifra.scenario import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 from sifra.modelling.system_topology import SystemTopology
-from sifra.configuration import Configuration
+
 
 from sifra.logger import rootLogger
 
 
-def run_scenario(config_file):
-    """
-    Run a scenario by constructing a facility, and executing a scenario, with
-    the parameters read from the config file.
-    :param config_file: Scenario setting values and the infrastructure configuration file path
-    :return: None
-    """
-    # Construct the scenario object
-    rootLogger.info("Loading scenario config... ")
-
-    # config = Configuration(config_file)
-    scenario = Scenario(config_file)
-    rootLogger.info("Done.")
-
-    # `IFSystem` object that contains a list of components
-    rootLogger.info("Building infrastructure system model... ")
-    infrastructure, algorithm_factory = ingest_spreadsheet(config_file)
-
-    # assign the algorithm factory to the scenario
-    scenario.algorithm_factory = algorithm_factory
-
-    sys_topology_view = SystemTopology(infrastructure, scenario)
-    sys_topology_view.draw_sys_topology(viewcontext="as-built")
-    rootLogger.info("Done.")
-
-    rootLogger.info("Initiating model run...")
-
-    post_processing_list = calculate_response(scenario, infrastructure)
-    # After the response has been calculated the post processing
-    # will record the results
-    post_processing(infrastructure, scenario, post_processing_list)
+# def run_scenario(config_file):
+#     """
+#     Run a scenario by constructing a facility, and executing a scenario, with
+#     the parameters read from the config file.
+#     :param config_file: Scenario setting values and the infrastructure configuration file path
+#     :return: None
+#     """
+#     # Construct the scenario object
+#     rootLogger.info("Loading scenario config... ")
+#
+#
+#     scenario = Scenario(config_file)
+#     rootLogger.info("Done.")
+#
+#     # `IFSystem` object that contains a list of components
+#     rootLogger.info("Building infrastructure system model... ")
+#     infrastructure, algorithm_factory = read_model_from_xlxs(config_file)
+#
+#     # assign the algorithm factory to the scenario
+#     scenario.algorithm_factory = algorithm_factory
+#
+#     sys_topology_view = SystemTopology(infrastructure, scenario)
+#     sys_topology_view.draw_sys_topology(viewcontext="as-built")
+#     rootLogger.info("Done.")
+#
+#     rootLogger.info("Initiating model run...")
+#
+#     post_processing_list = calculate_response(scenario, infrastructure)
+#     # After the response has been calculated the post processing
+#     # will record the results
+#     post_processing(infrastructure, scenario, post_processing_list)
 
 
 def run_para_scen(hazard_level, infrastructure, scenario):
@@ -588,18 +588,3 @@ def pe2pb(pe):
     pb = np.append(tmp, pex[-1])
     pb = np.insert(pb, 0, 1 - pex[0])
     return pb
-
-
-def main():
-    code_start_time = time.time()
-    SETUPFILE = "C:/Users/u12089/Desktop/sifra-v0.2.0/simulation_setup/test_scenario_ps_coal.conf"
-
-    run_scenario(SETUPFILE)
-
-    rootLogger.info(Style.BRIGHT + Fore.YELLOW +
-                 "Total run time: %s\n" %
-                 str(timedelta(seconds=(time.time() - code_start_time))) +
-                 Style.RESET_ALL)
-
-if __name__ == '__main__':
-    main()

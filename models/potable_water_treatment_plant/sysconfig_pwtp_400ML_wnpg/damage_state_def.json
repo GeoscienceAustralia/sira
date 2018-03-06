@@ -1,0 +1,1022 @@
+{
+    "['backup_power_supply','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['backup_power_supply','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['backup_power_supply','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['backup_power_supply','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_Fl','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_Fl','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_Fl','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_Fl','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_coag1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_coag1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_coag1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_coag1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_acid','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_acid','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_acid','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_acid','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_base','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_base','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_base','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_ph_base','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_phosphate','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_phosphate','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_phosphate','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chem_tank_phosphate','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_contact_chamber','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_contact_chamber','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_contact_chamber','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_contact_chamber','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_tank','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_tank','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_tank','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['chlorine_tank','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['clearwell_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['commercial_power_supply','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['commercial_power_supply','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['commercial_power_supply','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['commercial_power_supply','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_clearwell','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_clearwell','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_clearwell','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_clearwell','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_daf','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_daf','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_daf','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_daf','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_oz','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_oz','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_oz','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['connector_oz','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_3','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_3','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_3','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_3','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_4','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_4','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_4','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_4','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_5','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_5','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_5','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_5','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_6','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_6','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_6','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_6','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_7','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_7','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_7','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_7','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_8','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_8','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_8','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['daf_8','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['feed_pump','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['feed_pump','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['feed_pump','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['feed_pump','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_3','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_3','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_3','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_3','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_4','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_4','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_4','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_4','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_5','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_5','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_5','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_5','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_6','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_6','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_6','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_6','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_7','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_7','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_7','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_7','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_8','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_8','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_8','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['filter_tank_8','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_3','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_3','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_3','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_3','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_4','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_4','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_4','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_4','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_5','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_5','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_5','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_5','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_6','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_6','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_6','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_6','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_7','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_7','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_7','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_7','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_8','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_8','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_8','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['floc_basin_8','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['input_pipe_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['input_pipe_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['input_pipe_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['input_pipe_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['output_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['output_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['output_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['output_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['output_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['output_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['output_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['output_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_contact_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_gen','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_gen','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_gen','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['ozone_gen','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ccc_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ccc_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ccc_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ccc_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_cw','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_cw','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_cw','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_cw','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_uv_out','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_uv_out','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_uv_out','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_connector_uv_out','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_cw_out_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_3','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_3','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_3','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_3','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_4','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_4','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_4','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_4','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_5','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_5','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_5','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_5','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_6','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_6','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_6','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_6','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_7','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_7','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_7','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_7','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_8','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_8','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_8','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_fb_8','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_3','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_3','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_3','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_3','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_4','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_4','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_4','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_4','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_5','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_5','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_5','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_5','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_6','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_6','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_6','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_6','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_7','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_7','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_7','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_7','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_8','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_8','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_8','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_8','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_out_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_out_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_out_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_ft_out_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_large_fl_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_oz_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_clearwell','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_clearwell','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_clearwell','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_clearwell','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_to_distro_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pipe_uv_in_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['pump_daf','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['pump_daf','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['pump_daf','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['pump_daf','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_3','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_3','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_3','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_3','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_4','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_4','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_4','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_4','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_5','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_5','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_5','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_5','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_6','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_6','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_6','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['uv_chamber_6','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['well_1','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['well_1','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['well_1','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['well_1','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['well_2','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['well_2','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['well_2','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['well_2','DS4 Complete']": {
+        "damage_state_definition": null
+    }
+}
