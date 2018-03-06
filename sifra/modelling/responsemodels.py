@@ -94,6 +94,50 @@ class NormalCDF(DamageState):
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 
 
+class ConstantFunction(DamageState):
+    """
+    A function for defining a constant amplitude for a given range
+    """
+    amplitude = _Element('float', 'Constant amplitude of function',
+                    _Element.NO_DEFAULT, [lambda x: float(x) >= 0.])
+
+    def __call__(self, value):
+        return np.ones_like(value) * self.amplitude
+
+
+class PiecewiseDefinedFunction(DamageState):
+    """
+    x          : array of x values over which the function is calculated
+
+    boundaries : a list of floats the define the edges of the ranges
+                 within which each function is applicable
+
+    funcnames  : a list of names of functions or distributions
+
+    arglist    : a list of lists, each containing the parameters
+                 that required by the corresponding functions
+
+    These lists must meet the following criteria:
+        len(funcnames) == len(arglist) == len(boundaries)-1
+
+    """
+    boundaries = []
+    funcnames = []
+    arglist = []
+
+    def __call__(self, xvalues):
+        indices = [np.amax(np.where(xvalues <= val)) for val in self.boundaries]
+        funclist = []
+        for i in range(len(indices) - 1):
+            if i + 1 < len(indices) - 1:
+                xtmp = xvalues[indices[i]:indices[i + 1]]
+            else:
+                xtmp = xvalues[indices[i]:]
+            funclist.append(self.funcnames[i](xtmp, *self.arglist[i]))
+        allfuncs = np.concatenate(funclist)
+        return allfuncs
+
+
 class Level0Response(DamageState):
     """
     Standard response for no damage.
