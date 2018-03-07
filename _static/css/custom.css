@@ -17,11 +17,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  /* font-weight: 600;
-  font-family: "Khand", "Alegreya Sans SC", "serif" !important;*/
-  font-weight: 400;
+  font-weight: 700;
   font-family: "Noto Serif", "Fira Sans Condensed", "serif" !important;
-  color: #2962FF;
+  color: #0D47A1;
   padding: 0;
   line-height: 1.2;
 }
@@ -48,7 +46,7 @@ h3 {
 }
 
 a {
-    color: #1E88E5;
+    color: #2962FF;
     text-decoration: none;
     cursor: pointer;
 }
