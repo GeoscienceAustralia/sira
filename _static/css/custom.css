@@ -1,6 +1,6 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 /*@import url('https://fonts.googleapis.com/css?family=Khand:400,600|Alegreya+Sans+SC');*/
@@ -14,19 +14,17 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  /*color: black;*/
   /* font-weight: 600;
   font-family: "Khand", "Alegreya Sans SC", "serif" !important;*/
-  font-weight: 700;
+  font-weight: 600;
   font-family: "Roboto Condensed", "Alegreya Sans SC", "serif" !important;
-  color: #0288D1;
+  color: #01579B;
   padding: 0;
   line-height: 1.2;
 }
 
 h1 {
   font-size: 40px;
-  font-weight: 700;
   padding: 10px 30px 10px 45px;
   margin: 20px 20px 25px -45px;
   /* border-bottom: 1px solid #D8E4EF; */
@@ -44,6 +42,12 @@ h3 {
   font-size: 24px;
   margin-top: 10px;
   margin-bottom: 12px;
+}
+
+a {
+    color: #0288D1;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .toctree-wrapper .caption .caption-text {
