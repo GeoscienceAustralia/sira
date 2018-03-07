@@ -33,7 +33,6 @@ class Configuration:
         self.SYSTEM_CLASSES = config['System']['SYSTEM_CLASSES']
         self.SYSTEM_CLASS = config['System']['SYSTEM_CLASS']
         self.SYSTEM_SUBCLASS = config['System']['SYSTEM_SUBCLASS']
-        self.PS_GEN_TECH = config['System']['PS_GEN_TECH']
         self.COMMODITY_FLOW_TYPES = config['System']['COMMODITY_FLOW_TYPES']
         self.SYS_CONF_FILE_NAME = config['System']['SYS_CONF_FILE_NAME']
 

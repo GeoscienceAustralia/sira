@@ -51,32 +51,32 @@ def read_model_from_xlxs(config):
     damage_state_df = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='damage_state_def',
         index_col=[0, 1], header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     node_conn_df = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='component_connections',
         index_col=None, header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     comp_df = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='component_list',
         index_col='component_id', header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     sysout_setup = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='output_setup',
         index_col='output_node', header=0,
-        skiprows=3, skipinitialspace=True).sort_values(by='priority', ascending=True)
+        skiprows=0, skipinitialspace=True).sort_values(by='priority', ascending=True)
 
     sysinp_setup = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='supply_setup',
         index_col='input_node', header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     fragility_data = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='comp_type_dmg_algo',
         index_col=[0, 1], header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     damage_def_dict = {}
     for index, damage_def in damage_state_df.iterrows():
@@ -107,7 +107,14 @@ def read_model_from_xlxs(config):
         response_params['damage_ratio'] = damage_state['damage_ratio']
         response_params['functionality'] = damage_state['functionality']
         response_params['fragility_source'] = damage_state['fragility_source']
-        response_params['damage_state_description'] = damage_def_state['damage_state_definition']
+        try:
+            response_params['damage_state_description'] = damage_def_state['damage_state_definition']
+        except UnboundLocalError:
+            rootLogger.info("damage_def_state['damage_state_definition'] not defined for " + str(index)+" " + str(damage_state))
+        except KeyError:
+            rootLogger.info(
+                "damage_def_state['damage_state_definition'] not defined for " + str(index) + " " + str(damage_state))
+
         if damage_state['damage_function'] == 'Lognormal':
             # translate the column names
             response_params['median'] = damage_state['damage_median']

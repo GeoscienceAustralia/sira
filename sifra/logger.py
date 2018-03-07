@@ -1,6 +1,6 @@
 import datetime
 import logging
-
+import os
 
 class Logger():
     def __init__(self):
@@ -8,13 +8,14 @@ class Logger():
         # formate to display log messages
         self.logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 
-
         # define logger object to reference in modules and display logs
         self.logger = logging.getLogger("rootLogger")
 
         # path to save logs
-        self.logPath = 'sifra/logs'
-
+        if os.path.exists(os.path.join(os.getcwd(),'logs')):
+            self.logPath = 'logs'
+        else:
+            self.logPath = 'sifra/logs'
         # name of the file
         self.time_start = self.get_round_off_time()
 

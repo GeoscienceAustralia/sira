@@ -1,31 +1,25 @@
 from __future__ import print_function
 
 import unittest
-
-from sifra.infrastructure_response import run_scenario
-
+import os
+from sifra.simulation import run_scenario
+from sifra.logger import rootLogger
 
 class TestSifra(unittest.TestCase):
-    def test_run_ps_coal_scenario(self):
 
-        # SETUPFILE = '/opt/project/tests/test_scenario_ps_coal.conf'
-        SETUPFILE = './tests/test_scenario_ps_coal.conf'
-        run_scenario(SETUPFILE)
+    def setUp(self):
 
-    def test_run_series_scenario(self):
+        self.conf_file_paths = []
+        parent_folder_name = os.path.dirname(os.getcwd())
 
-        # SETUPFILE = '/opt/project/tests/test_simple_series_struct.conf'
-        SETUPFILE = './tests/test_simple_series_struct.conf'
-        run_scenario(SETUPFILE)
+        for root, dir_names, file_names in os.walk(parent_folder_name):
+            for file_name in file_names:
+                if file_name.endswith('.json'):
+                    if 'simulation_setup' in root:
+                        conf_file_path = os.path.join(root, file_name)
+                        self.conf_file_paths.append(conf_file_path)
 
-    def test_run_series_dep_scenario(self):
+    def test_run_scenario(self):
 
-        # SETUPFILE = '/opt/project/tests/test_simple_series_struct_dep.conf'
-        SETUPFILE = './tests/test_simple_series_struct_dep.conf'
-        run_scenario(SETUPFILE)
-
-    def test_run_parallel_scenario(self):
-
-        # SETUPFILE = '/opt/project/tests/test_simple_parallel_struct.conf'
-        SETUPFILE = './tests/test_simple_parallel_struct.conf'
-        run_scenario(SETUPFILE)
+        for conf_file_path in self.conf_file_paths:
+            run_scenario(conf_file_path)

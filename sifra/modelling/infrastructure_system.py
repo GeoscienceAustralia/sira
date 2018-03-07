@@ -3,13 +3,7 @@ import time
 from datetime import timedelta
 
 from sifra.logger import rootLogger
-# these are required for defining the data model
-from sifra.modelling.structural import (
-    Element,
-    Info)
-import sys
-
-from sifra.modelling.component import Component
+from sifra.modelling.structural import Element
 from sifra.modelling.component_graph import ComponentGraph
 from sifra.modelling.infrastructure_model import Model
 from sifra.modelling.iodict import IODict
@@ -399,7 +393,7 @@ class PowerStation(IFSystem):
 class PotableWaterTreatmentPlant(IFSystem):
     def __init__(self, **kwargs):
         super(PotableWaterTreatmentPlant, self).__init__(**kwargs)
-        # Initiate the power station values, which have been used in all current
+        # Initiate the water treatment plant values, which have been used in all current
         # testing
         self.uncosted_classes = ['SYSTEM INPUT', 'SYSTEM OUTPUT', 'JUNCTION POINT']
         self.ds_lims_compclasses = {
@@ -412,7 +406,7 @@ class PotableWaterTreatmentPlant(IFSystem):
             'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Basins': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Chemical Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Circular Clarification Tank': [0.0, 0.05, 0.40, 0.70, 1.00]
+            'Circular Clarification Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Horizontal Pump': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Vertical Pump': [0.0, 0.05, 0.40, 0.70, 1.00],

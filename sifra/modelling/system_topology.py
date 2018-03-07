@@ -25,6 +25,7 @@ class SystemTopology(object):
         self.component_attr = {}  # Dict for system comp attributes
         self.out_dir = ""
 
+
         for comp_id in infrastructure.components.keys():
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
