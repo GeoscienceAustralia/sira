@@ -38,7 +38,7 @@ in support of the agency's vision to contribute to enhancing the resilience
 of communities in Australia and its region.
 
 
-Features
+FEATURES
 ========
 
 **Open Source:**
