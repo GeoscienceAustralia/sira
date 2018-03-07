@@ -17,9 +17,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 400;
   font-family: "Noto Serif", "Roboto Condensed", "serif" !important;
-  color: #1565C0;
+  color: #555555;
   padding: 0;
   line-height: 1.2;
 }
