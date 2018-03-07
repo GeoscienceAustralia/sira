@@ -64,13 +64,13 @@ in the current directory.
 
 **Create AWS Instance using bash script**:
 
-The top level directory of SIFRA has the script ``create-instance.sh``
+The top level directory of SIFRA has the script ``create-aws-instance.sh``
 The script requires the `aws command line interface <https://aws.amazon.com/cli/>`_
 to be installed on the machine. It also requires access to AWS account credentials.
 
 The script is run as::
 
-    $ create-instance.sh
+    $ create-aws-instance.sh
 
 Both of these commands will use the build_sifra_box.sh to install Linux updates
 and the docker components that will be required.
@@ -108,7 +108,8 @@ this case you would start the container with::
 
 One could then, for example, run the unit tests for the modelling package with::
 
-    $ docker exec sifra python -m unittest sifra.modelling.test_structural
+    $ cd sifra/tests
+    $ python -m unittest discover .
 
 In any case, once you are done you should destroy the container with::
 
@@ -126,7 +127,7 @@ defined in the other `Dockerfiles` in the present directory, and are:
 - ``Dockerfile-api``: |br|
   Provides a web API which is used for parameterising
   model components (at this stage just response functions) and serialising them.
-  This is presently (at Feb 2017) a prototype and provides only a small subset
+  This is presently (at Feb 2018) a prototype and provides only a small subset
   of what we hope for.
 
 - ``Dockerfile-gui-dev``: |br|
@@ -259,7 +260,7 @@ The software can be run from the command line using these simple steps:
 The post-processing tools are run as simple python scripts. It should be
 noted, that the post-processing tools depend on the outputs produced by a
 full simulation run that characterises the system fragility. Therefore,
-thea full run of the SIFRA needs to be conducted on the system model of
+the full run of the SIFRA needs to be conducted on the system model of
 interest prior to running the tools for model fitting and scenario and
 restoration analysis tools. They are simply run as::
 

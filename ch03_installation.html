@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3 Installation and Usage &mdash; SIFRA v0.1.2 docs</title>
+  <title>3 Installation and Usage &mdash; SIFRA v0.2.0 docs</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="SIFRA v0.1.2 docs" href="index.html"/>
+    <link rel="top" title="SIFRA v0.2.0 docs" href="index.html"/>
         <link rel="next" title="4 Simulation Setup" href="ch04_simsetup.html"/>
         <link rel="prev" title="2 Model Concepts" href="ch02_concept.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1
+                0.2
               </div>
             
           
@@ -250,11 +250,11 @@ provisioning dev machines. A basic dev box can be setup using
 </div>
 <p>in the current directory.</p>
 <p><strong>Create AWS Instance using bash script</strong>:</p>
-<p>The top level directory of SIFRA has the script <code class="docutils literal notranslate"><span class="pre">create-instance.sh</span></code>
+<p>The top level directory of SIFRA has the script <code class="docutils literal notranslate"><span class="pre">create-aws-instance.sh</span></code>
 The script requires the <a class="reference external" href="https://aws.amazon.com/cli/">aws command line interface</a>
 to be installed on the machine. It also requires access to AWS account credentials.</p>
 <p>The script is run as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ create-instance.sh
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ create-aws-instance.sh
 </pre></div>
 </div>
 <p>Both of these commands will use the build_sifra_box.sh to install Linux updates
@@ -288,7 +288,8 @@ this case you would start the container with:</p>
 </pre></div>
 </div>
 <p>One could then, for example, run the unit tests for the modelling package with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker exec sifra python -m unittest sifra.modelling.test_structural
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd sifra/tests
+$ python -m unittest discover .
 </pre></div>
 </div>
 <p>In any case, once you are done you should destroy the container with:</p>
@@ -306,7 +307,7 @@ defined in the other <cite>Dockerfiles</cite> in the present directory, and are:
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">Dockerfile-api</span></code>: <br />
 Provides a web API which is used for parameterising
 model components (at this stage just response functions) and serialising them.
-This is presently (at Feb 2017) a prototype and provides only a small subset
+This is presently (at Feb 2018) a prototype and provides only a small subset
 of what we hope for.</p>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-dev</span></code>: <br />
@@ -429,7 +430,7 @@ line:</p>
 <p>The post-processing tools are run as simple python scripts. It should be
 noted, that the post-processing tools depend on the outputs produced by a
 full simulation run that characterises the system fragility. Therefore,
-thea full run of the SIFRA needs to be conducted on the system model of
+the full run of the SIFRA needs to be conducted on the system model of
 interest prior to running the tools for model fitting and scenario and
 restoration analysis tools. They are simply run as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">sifra</span><span class="o">/</span><span class="n">sifra</span><span class="o">/</span>
@@ -490,7 +491,7 @@ container.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.2',
+            VERSION:'0.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

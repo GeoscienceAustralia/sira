@@ -19,12 +19,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Khand", "Alegreya Sans SC", "serif" !important;*/
   font-weight: 700;
   font-family: "Roboto Condensed", "Alegreya Sans SC", "serif" !important;
+  color: #795548;
   padding: 0;
   line-height: 1.2;
 }
 
 h1 {
-  font-size: 38px;
+  font-size: 40px;
+  font-weight: 400;
   padding: 10px 30px 10px 45px;
   margin: 20px 20px 25px -45px;
   /* border-bottom: 1px solid #D8E4EF; */

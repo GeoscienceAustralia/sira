@@ -81,7 +81,6 @@ Features
    ch04_simsetup
    ch05_fragility_attribution
 
-
 .. _back-matter:
 
 .. toctree::

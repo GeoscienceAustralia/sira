@@ -64,17 +64,21 @@ Context: An Actual Infrastructure System
 The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:
 
--  **Level 1 : Infrastructure Network** |br|
+-  **Level 1 : Infrastructure Network**
+
    This is the top level of interconnected infrastructure systems where
    infrastructure facilities are connected to form a network or networks.
 
--  **Level 2 : Infrastructure Facility** |br|
+
+-  **Level 2 : Infrastructure Facility**
+
    The concept of facilities used in this framework map closely to the
    typology of macro-components as defined in the Synerg-G program
    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
    systems as defined in :cite:`Rinaldi-etal-2001`.
 
--  **Level 3 : Infrastructure Microcomponent** |br|
+-  **Level 3 : Infrastructure Microcomponent**
+
    This concept of components map closely to the typology of
    micro-components as defined in the Synerg-G program
    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
@@ -159,6 +163,7 @@ four categories:
     store system inputs to give effect to processes that produce the outputs
     required of the system. Majority of the nodes within a system fall into
     this category.
+
 
 The component configuration and redundancies are captured as edges connecting
 the nodes. Constraints on flow through specific paths, or sets of nodes, can 
