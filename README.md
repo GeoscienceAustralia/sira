@@ -304,7 +304,7 @@ or, simply run:
 To run a single test file use:
 
     $ cd sifra  # and not cd sifra/sifra
-    $ python tests\test_xyz.py
+    $python -m unittest discover tests -v test_xyz.py
 
 If you are using docker as described above, you can do this within the sifra
 container.
