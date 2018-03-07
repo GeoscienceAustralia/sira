@@ -1,11 +1,8 @@
 import numpy as np
 
 from sifra.modelling.structural import Base, Element
-from sifra.modelling.structures import XYPairs
 from sifra.modelling.structural import Element as _Element
 import scipy.stats as stats
-
-from sifra.modelling.iodict import IODict
 
 
 class ResponseModel(Base):
@@ -16,6 +13,7 @@ class ResponseModel(Base):
     def __call__(self, *args, **kwargs):
         raise NotImplementedError('__call__ is not implemented'
                                   ' on {}'.format(self.__class__.__name__))
+
 
 class DamageState(ResponseModel):
     """

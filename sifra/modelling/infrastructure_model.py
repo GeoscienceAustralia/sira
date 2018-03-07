@@ -1,9 +1,6 @@
-from sifra.modelling.structural import (
-    Element,
-    Info,
-    Base)
+from sifra.modelling.structural import Base
 
-from sifra.modelling.iodict import IODict
+# from sifra.modelling.iodict import IODict
 
 
 class Model(Base):
