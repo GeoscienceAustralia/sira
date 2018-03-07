@@ -38,7 +38,7 @@ class Configuration:
         self.SYS_CONF_FILE_NAME = config['System']['SYS_CONF_FILE_NAME']
 
         self.INPUT_DIR_NAME = config['Input']['INPUT_DIR_NAME']
-        self.SYS_CONF_FILE = os.path.join(os.getcwd(),'sifra',
+        self.SYS_CONF_FILE = os.path.join(os.getcwd(),
                                           self.INPUT_DIR_NAME,
                                           self.SYS_CONF_FILE_NAME)
 
