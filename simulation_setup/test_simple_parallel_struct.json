@@ -1,0 +1,56 @@
+{
+    "Hazard": {
+        "HAZARD_RASTER": null, 
+        "HAZARD_TYPE": "earthquake", 
+        "NUM_SAMPLES": 10, 
+        "PGA_MAX": 0.7, 
+        "PGA_MIN": 0.0, 
+        "PGA_STEP": 0.1
+    }, 
+    "Input": {
+        "INPUT_DIR_NAME": "models/test_structures/"
+    }, 
+    "Output": {
+        "OUTPUT_DIR_NAME": "output/Test_Structure_Simple_Parallel"
+    }, 
+    "Restoration": {
+        "RESTORATION_STREAMS": [
+            5, 
+            10, 
+            20
+        ], 
+        "RESTORE_PCT_CHECKPOINTS": 21, 
+        "RESTORE_TIME_MAX": 5.0, 
+        "RESTORE_TIME_STEP": 1, 
+        "TIME_UNIT": "week"
+    }, 
+    "Scenario": {
+        "INTENSITY_MEASURE_PARAM": "PGA", 
+        "INTENSITY_MEASURE_UNIT": "g", 
+        "SCENARIO_HAZARD_VALUES": [
+            0.5
+        ], 
+        "SCENARIO_NAME": "Test_Structure_Simple_Parallel"
+    }, 
+    "Switches": {
+        "MULTIPROCESS": 1, 
+        "RUN_CONTEXT": 0
+    }, 
+    "System": {
+        "COMMODITY_FLOW_TYPES": 2, 
+        "PS_GEN_TECH": "Gas Fired", 
+        "SYSTEM_CLASS": "PowerStation", 
+        "SYSTEM_CLASSES": [
+            "PowerStation", 
+            "Substation", 
+            "WaterTreatmentPlant"
+        ], 
+        "SYSTEM_SUBCLASS": "Gas Fired", 
+        "SYS_CONF_FILE_NAME": "sysconfig_simple_parallel.xlsx"
+    }, 
+    "Test": {
+        "FIT_PE_DATA": true, 
+        "FIT_RESTORATION_DATA": true, 
+        "SAVE_VARS_NPY": true
+    }
+}

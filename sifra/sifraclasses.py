@@ -1,105 +1,105 @@
-#!/usr/bin/env python
-
-"""
-Class definitions for sifra.py
-"""
-
-from __future__ import print_function
-import os
-import numpy as np
-import pandas as pd
-import igraph
-import networkx as nx
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import seaborn as sns
-import re
-import copy
-from scipy import stats
-import time
-
-# =============================================================================
-
-def _readfile(setup_file):
-    """
-    Module for reading in scenario data file
-    """
-    discard = {}
-    setup = {}
-    # try:
-    #     with open(setup_file) as fh:
-    #         exec(fh.read(), discard, setup)
-    # except IOError as err:
-    #     print("{0}".format(err))
-    #     raise SystemExit()
-    if not os.path.isfile(setup_file):
-        print("[ERROR] could not read file: {}".format(setup_file))
-        raise SystemExit()
-    exec (open(setup_file).read(), discard, setup)
-    return setup
-
-# =============================================================================
-
-
-class _IoDataGetter(object):
-    """
-    Class for reading in scenario setup information
-    """
-    def __init__(self, setup_file):
-        self.setup = _readfile(setup_file)
-        self.input_dir_name = self.setup["INPUT_DIR_NAME"]
-        self.output_dir_name = self.setup["OUTPUT_DIR_NAME"]
-        self.sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
-        self.input_path = None
-        self.output_path = None
-        self.root_dir = os.path.dirname(
-            os.path.dirname(os.path.abspath(__file__)))
-        self.raw_output_dir = None
-        self.set_io_dirs()
-
-    def set_io_dirs(self):
-        self.input_path = os.path.join(self.root_dir,
-                                       self.input_dir_name)
-        timestamp = time.strftime('_%Y%m%d_%H%M%S')
-        output_dir_timestamped = self.output_dir_name + timestamp
-        self.output_path = os.path.join(self.root_dir,
-                                        output_dir_timestamped)
-        self.raw_output_dir = os.path.join(self.output_path,
-                                           'raw_output')
-
-        if not os.path.exists(self.output_path):
-            os.makedirs(self.output_path)
-        if not os.path.exists(self.raw_output_dir):
-            os.makedirs(self.raw_output_dir)
-
-class _ScenarioDataGetter(object):
-    """
-    Class for reading in simulation scenario parameters
-    """
-    def __init__(self, setup_file):
-        self.setup = _readfile(setup_file)
-        self.fit_pe_data = self.setup["FIT_PE_DATA"]
-        self.fit_restoration_data = self.setup["FIT_RESTORATION_DATA"]
-        self.save_vars_npy = self.setup["SAVE_VARS_NPY"]
-        self.intensity_measure_param = self.setup["INTENSITY_MEASURE_PARAM"]
-        self.intensity_measure_unit = self.setup["INTENSITY_MEASURE_UNIT"]
-        self.haz_param_min = self.setup["PGA_MIN"]
-        self.haz_param_max = self.setup["PGA_MAX"]
-        self.haz_param_step = self.setup["PGA_STEP"]
-        self.num_samples = self.setup["NUM_SAMPLES"]
-        self.hazard_type = self.setup.get("HAZARD_TYPE", 'earthquake')
-        # TODO Add logic to read NetCDF file to provide a raster
-        self.level_factor_raster = self.setup.get("HAZARD_RASTER", None)
-        self.time_unit = self.setup["TIME_UNIT"]
-        self.run_parallel_proc = self.setup["MULTIPROCESS"]
-        self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
-        self.run_context = self.setup["RUN_CONTEXT"]
-        # self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
-        self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
-        self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
-        self.restoration_streams = self.setup["RESTORATION_STREAMS"]
-
+# #!/usr/bin/env python
+#
+# """
+# Class definitions for sifra.py
+# """
+#
+# from __future__ import print_function
+# import os
+# import numpy as np
+# import pandas as pd
+# import igraph
+# import networkx as nx
+# import matplotlib
+# matplotlib.use('Agg')
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# import re
+# import copy
+# from scipy import stats
+# import time
+#
+# # =============================================================================
+#
+# def _readfile(setup_file):
+#     """
+#     Module for reading in scenario data file
+#     """
+#     discard = {}
+#     setup = {}
+#     # try:
+#     #     with open(setup_file) as fh:
+#     #         exec(fh.read(), discard, setup)
+#     # except IOError as err:
+#     #     print("{0}".format(err))
+#     #     raise SystemExit()
+#     if not os.path.isfile(setup_file):
+#         print("[ERROR] could not read file: {}".format(setup_file))
+#         raise SystemExit()
+#     exec (open(setup_file).read(), discard, setup)
+#     return setup
+#
+# # =============================================================================
+#
+#
+# class _IoDataGetter(object):
+#     """
+#     Class for reading in scenario setup information
+#     """
+#     def __init__(self, setup_file):
+#         self.setup = _readfile(setup_file)
+#         self.input_dir_name = self.setup["INPUT_DIR_NAME"]
+#         self.output_dir_name = self.setup["OUTPUT_DIR_NAME"]
+#         self.sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
+#         self.input_path = None
+#         self.output_path = None
+#         self.root_dir = os.path.dirname(
+#             os.path.dirname(os.path.abspath(__file__)))
+#         self.raw_output_dir = None
+#         self.set_io_dirs()
+#
+#     def set_io_dirs(self):
+#         self.input_path = os.path.join(self.root_dir,
+#                                        self.input_dir_name)
+#         timestamp = time.strftime('_%Y%m%d_%H%M%S')
+#         output_dir_timestamped = self.output_dir_name + timestamp
+#         self.output_path = os.path.join(self.root_dir,
+#                                         output_dir_timestamped)
+#         self.raw_output_dir = os.path.join(self.output_path,
+#                                            'raw_output')
+#
+#         if not os.path.exists(self.output_path):
+#             os.makedirs(self.output_path)
+#         if not os.path.exists(self.raw_output_dir):
+#             os.makedirs(self.raw_output_dir)
+#
+# class _ScenarioDataGetter(object):
+#     """
+#     Class for reading in simulation scenario parameters
+#     """
+#     def __init__(self, setup_file):
+#         self.setup = _readfile(setup_file)
+#         self.fit_pe_data = self.setup["FIT_PE_DATA"]
+#         self.fit_restoration_data = self.setup["FIT_RESTORATION_DATA"]
+#         self.save_vars_npy = self.setup["SAVE_VARS_NPY"]
+#         self.intensity_measure_param = self.setup["INTENSITY_MEASURE_PARAM"]
+#         self.intensity_measure_unit = self.setup["INTENSITY_MEASURE_UNIT"]
+#         self.haz_param_min = self.setup["PGA_MIN"]
+#         self.haz_param_max = self.setup["PGA_MAX"]
+#         self.haz_param_step = self.setup["PGA_STEP"]
+#         self.num_samples = self.setup["NUM_SAMPLES"]
+#         self.hazard_type = self.setup.get("HAZARD_TYPE", 'earthquake')
+#         # TODO Add logic to read NetCDF file to provide a raster
+#         self.level_factor_raster = self.setup.get("HAZARD_RASTER", None)
+#         self.time_unit = self.setup["TIME_UNIT"]
+#         self.run_parallel_proc = self.setup["MULTIPROCESS"]
+#         self.scenario_hazard_values = self.setup["SCENARIO_HAZARD_VALUES"]
+#         self.run_context = self.setup["RUN_CONTEXT"]
+#         # self.restore_time_step = self.setup["RESTORE_TIME_STEP"]
+#         self.restore_pct_chkpoints = self.setup["RESTORE_PCT_CHKPOINTS"]
+#         self.restore_time_max = self.setup["RESTORE_TIME_MAX"]
+#         self.restoration_streams = self.setup["RESTORATION_STREAMS"]
+#
 
 # class _RestorationDataGetter(object):
 #     """
@@ -113,78 +113,78 @@ class _ScenarioDataGetter(object):
 #         self.restoration_streams = self.setup["RESTORATION_STREAMS"]
 
 
-class _FacilityDataGetter(object):
-    """
-    Module for reading in scenario setup information.
-    It is a wrapper to protect the core classes from being affected by
-    changes to variable names (e.g. if new units for hazard intensity
-    are introduced), and changes to input file formats.
-    """
-    def __init__(self, setup_file):
-        self.setup = _readfile(setup_file)
-        # self.system_classes = self.setup["SYSTEM_CLASSES"]
-        self.system_class = self.setup["SYSTEM_CLASS"]
-        self.system_subclass = self.setup["SYSTEM_SUBCLASS"]
-        # self.commodity_flow_types = self.setup["COMMODITY_FLOW_TYPES"]
-        sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
-        self.input_dir_name = self.setup["INPUT_DIR_NAME"]
-        self.sys_config_file = os.path.join(os.getcwd(),
-                                            self.input_dir_name,
-                                            sys_config_file_name)
-        self.comp_df, self.fragility_data,\
-        self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
-            self.assign_infrastructure_data()
+# class _FacilityDataGetter(object):
+#     """
+#     Module for reading in scenario setup information.
+#     It is a wrapper to protect the core classes from being affected by
+#     changes to variable names (e.g. if new units for hazard intensity
+#     are introduced), and changes to input file formats.
+#     """
+    # def __init__(self, setup_file):
+    #     self.setup = _readfile(setup_file)
+    #     # self.system_classes = self.setup["SYSTEM_CLASSES"]
+    #     self.system_class = self.setup["SYSTEM_CLASS"]
+    #     self.system_subclass = self.setup["SYSTEM_SUBCLASS"]
+    #     # self.commodity_flow_types = self.setup["COMMODITY_FLOW_TYPES"]
+    #     sys_config_file_name = self.setup["SYS_CONF_FILE_NAME"]
+    #     self.input_dir_name = self.setup["INPUT_DIR_NAME"]
+    #     self.sys_config_file = os.path.join(os.getcwd(),
+    #                                         self.input_dir_name,
+    #                                         sys_config_file_name)
+    #     self.comp_df, self.fragility_data,\
+    #     self.sysinp_setup, self.sysout_setup, self.node_conn_df = \
+    #         self.assign_infrastructure_data()
+    #
+    #     self.nominal_production = \
+    #         self.sysout_setup['output_node_capacity'].sum()
+    #
+    #     self.sys_dmg_states = ['DS0 None',
+    #                            'DS1 Slight',
+    #                            'DS2 Moderate',
+    #                            'DS3 Extensive',
+    #                            'DS4 Complete']
+    #
+    #     # self.comp_df = pd.DataFrame()
+    #     # self.node_conn_df = pd.DataFrame()
+    #     """
+    #     Set up data for:
+    #     [1] system configuration data
+    #     [2] component fragility algorithms
+    #     Input data tables expected in the form of PANDAS DataFrames
+    #     """
+    #
+    #     self.comp_names = sorted(self.comp_df.index.tolist())
+    #     self.num_elements = len(self.comp_names)
 
-        self.nominal_production = \
-            self.sysout_setup['output_node_capacity'].sum()
-
-        self.sys_dmg_states = ['DS0 None',
-                               'DS1 Slight',
-                               'DS2 Moderate',
-                               'DS3 Extensive',
-                               'DS4 Complete']
-
-        # self.comp_df = pd.DataFrame()
-        # self.node_conn_df = pd.DataFrame()
-        """
-        Set up data for:
-        [1] system configuration data
-        [2] component fragility algorithms
-        Input data tables expected in the form of PANDAS DataFrames
-        """
-
-        self.comp_names = sorted(self.comp_df.index.tolist())
-        self.num_elements = len(self.comp_names)
-
-    def assign_infrastructure_data(self):
-        config_file = self.sys_config_file
-        NODE_CONN_DF = pd.read_excel(
-            config_file, sheet_name='component_connections',
-            index_col=None, header=0,
-            skiprows=3, skipinitialspace=True)
-
-        COMP_DF = pd.read_excel(
-            config_file, sheet_name='component_list',
-            index_col='component_id', header=0,
-            skiprows=3, skipinitialspace=True)
-
-        SYSOUT_SETUP = pd.read_excel(
-            config_file, sheet_name='output_setup',
-            index_col='output_node', header=0,
-            skiprows=3, skipinitialspace=True)
-        SYSOUT_SETUP = SYSOUT_SETUP.sort_values(by='priority', ascending=True)
-
-        SYSINP_SETUP = pd.read_excel(
-            config_file, sheet_name='supply_setup',
-            index_col='input_node', header=0,
-            skiprows=3, skipinitialspace=True)
-
-        FRAGILITIES = pd.read_excel(
-            config_file, sheet_name='comp_type_dmg_algo',
-            index_col=[0,1], header=0,
-            skiprows=3, skipinitialspace=True)
-
-        return COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF
+    # def assign_infrastructure_data(self):
+    #     config_file = self.sys_config_file
+    #     NODE_CONN_DF = pd.read_excel(
+    #         config_file, sheet_name='component_connections',
+    #         index_col=None, header=0,
+    #         skiprows=3, skipinitialspace=True)
+    #
+    #     COMP_DF = pd.read_excel(
+    #         config_file, sheet_name='component_list',
+    #         index_col='component_id', header=0,
+    #         skiprows=3, skipinitialspace=True)
+    #
+    #     SYSOUT_SETUP = pd.read_excel(
+    #         config_file, sheet_name='output_setup',
+    #         index_col='output_node', header=0,
+    #         skiprows=3, skipinitialspace=True)
+    #     SYSOUT_SETUP = SYSOUT_SETUP.sort_values(by='priority', ascending=True)
+    #
+    #     SYSINP_SETUP = pd.read_excel(
+    #         config_file, sheet_name='supply_setup',
+    #         index_col='input_node', header=0,
+    #         skiprows=3, skipinitialspace=True)
+    #
+    #     FRAGILITIES = pd.read_excel(
+    #         config_file, sheet_name='comp_type_dmg_algo',
+    #         index_col=[0,1], header=0,
+    #         skiprows=3, skipinitialspace=True)
+    #
+    #     return COMP_DF, FRAGILITIES, SYSINP_SETUP, SYSOUT_SETUP, NODE_CONN_DF
 
 
 # =============================================================================

@@ -2,18 +2,20 @@ import unittest as ut
 from netCDF4 import Dataset
 import numpy as np
 
-from sifra.sifraclasses import Scenario
+from sifra.scenario import Scenario
 from sifra.modelling.hazard_levels import HazardLevels, HazardLevel
 from sifra.modelling.location import Location
+from sifra.configuration import Configuration
 
-config_file = './tests/test_scenario_ps_coal.conf'
+config_file = './simulation_setup/test_scenario_ps_coal.json'
 
 
 class TestIngestResponseModel(ut.TestCase):
     def test_hazard_levels(self):
 
-        test_conf = './tests/test_scenario_ps_coal.conf'
-        scenario = Scenario(test_conf)
+        configuration_file_path = './simulation_setup/test_scenario_ps_coal.json'
+        config = Configuration(configuration_file_path)
+        scenario = Scenario(config)
 
         hazard_level_it = HazardLevels(scenario)
 
@@ -27,8 +29,9 @@ class TestIngestResponseModel(ut.TestCase):
             self.assertTrue(hazard_level.determine_intensity_at(location) > 0)
 
     def test_hazard_raster(self):
-        test_conf = './tests/test_scenario_ps_coal.conf'
-        scenario = Scenario(test_conf)
+        configuration_file_path = './simulation_setup/test_scenario_ps_coal.json'
+        config = Configuration(configuration_file_path)
+        scenario = Scenario(config)
 
         test_raster = Dataset("test_raster.nc", "w", format="NETCDF4")
         lats = np.arange(-90, 91, 1.0)
@@ -58,7 +61,6 @@ class TestIngestResponseModel(ut.TestCase):
 
         for hazard_level in hazard_levels:
             self.assertTrue(hazard_level.determine_intensity_at(location) > 0)
-
 
 
 if __name__ == '__main__':

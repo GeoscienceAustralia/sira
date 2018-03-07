@@ -4,6 +4,7 @@ import pandas as pd
 import numpy
 from sifra.logger import rootLogger
 
+
 class TestReadingExcelFile(ut.TestCase):
 
     def setUp(self):
@@ -11,8 +12,6 @@ class TestReadingExcelFile(ut.TestCase):
         self.project_folder = os.getcwd()
 
         self.models_folder = os.path.join(self.project_folder, 'models')
-
-        rootLogger.info("Project Root: "+self.project_folder)
 
         self.model_files = []
         for path, subdirs, files in os.walk(self.models_folder):
@@ -46,7 +45,7 @@ class TestReadingExcelFile(ut.TestCase):
 
         for model_file in self.model_files:
             component_list = pd.read_excel(model_file, sheet_name='component_list', index_col='component_id',
-                                           header=0, skiprows=3, skipinitialspace=True)
+                                           header=0, skiprows=0, skipinitialspace=True)
 
             self.assertTrue(isinstance(len(component_list.index.tolist()), int))
 
@@ -56,7 +55,7 @@ class TestReadingExcelFile(ut.TestCase):
 
         for model_file in self.model_files:
             component_connections = pd.read_excel(model_file, sheet_name='component_connections', index_col=None,
-                                                  header=0, skiprows=3, skipinitialspace=True)
+                                                  header=0, skiprows=0, skipinitialspace=True)
 
             self.assertTrue(set(required_col_names) <= set(component_connections.columns.values.tolist()),
                             "Required column name not found!")
@@ -75,7 +74,7 @@ class TestReadingExcelFile(ut.TestCase):
 
         for model_file in self.model_files:
             supply_setup = pd.read_excel(model_file, sheet_name='supply_setup', index_col='input_node',
-                                         header=0, skiprows=3, skipinitialspace=True)
+                                         header=0, skiprows=0, skipinitialspace=True)
 
             self.assertTrue(set(required_col_names) <= set(supply_setup.columns.tolist()),
                             "Required column name not found!" +
@@ -95,7 +94,7 @@ class TestReadingExcelFile(ut.TestCase):
 
         for model_file in self.model_files:
             output_setup = pd.read_excel(model_file, sheet_name='output_setup', index_col='output_node', header=0,
-                                         skiprows=3, skipinitialspace=True)
+                                         skiprows=0, skipinitialspace=True)
 
             self.assertTrue(set(required_col_names) <= set(output_setup.columns.tolist()),
                             "Required column name not found!" + '\n' +
@@ -122,7 +121,7 @@ class TestReadingExcelFile(ut.TestCase):
 
         for model_file in self.model_files:
             comp_type_dmg_algo = pd.read_excel(model_file, sheet_name='comp_type_dmg_algo', index_col=[0, 1],
-                                               header=0, skiprows=3, skipinitialspace=True)
+                                               header=0, skiprows=0, skipinitialspace=True)
 
             self.assertTrue(set(required_col_names) <= set(comp_type_dmg_algo.columns.tolist()),
                             "Required column name not found!" + '\n' +
@@ -161,7 +160,7 @@ class TestReadingExcelFile(ut.TestCase):
     def test_reading_data_from_damage_state_def(self):
         for model_file in self.model_files:
             damage_state_def = pd.read_excel(model_file, sheet_name='damage_state_def', index_col=[0, 1],
-                                                  header=0, skiprows=3, skipinitialspace=True)
+                                                  header=0, skiprows=0, skipinitialspace=True)
 
             for index, damage_def in damage_state_def.iterrows():
                 self.assertTrue(isinstance(index[0], unicode or str), type(index[0]))

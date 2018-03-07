@@ -1,0 +1,456 @@
+strict digraph  {
+	graph [center=true,
+		concentrate=true,
+		directed=True,
+		fontcolor="#444444",
+		fontname="Helvetica-Bold",
+		fontsize=26,
+		forcelabels=true,
+		label=< <BR/>System Component Topology<BR/> >,
+		labelloc=t,
+		nodesep=0.4,
+		pad=0.2,
+		rankdir=LR,
+		ranksep="1.0 equally",
+		resolution=200,
+		smoothing=graph_dist,
+		splines=spline
+	];
+	node [color=royalblue3,
+		fillcolor=white,
+		fixedsize=true,
+		fontcolor=royalblue3,
+		fontname="Helvetica-Bold",
+		fontsize=18,
+		height=1.8,
+		label="\N",
+		penwidth=1.5,
+		shape=circle,
+		style="rounded,filled",
+		width=1.8,
+		xlp="0, 0"
+	];
+	edge [arrowhead=normal,
+		arrowsize=1.0,
+		color=royalblue2,
+		penwidth=1.2,
+		style=bold
+	];
+	clearwell_1	 [label="clearwell_
+1"];
+	pipe_cw_out_1	 [label="pipe_
+cw_
+out_
+1"];
+	clearwell_1 -> pipe_cw_out_1;
+	uv_chamber_6	 [label="uv_
+chamber_
+6"];
+	pipe_connector_uv_out	 [label="pipe_
+connector_
+uv_
+out"];
+	uv_chamber_6 -> pipe_connector_uv_out;
+	uv_chamber_5	 [label="uv_
+chamber_
+5"];
+	uv_chamber_5 -> pipe_connector_uv_out;
+	clearwell_2	 [label="clearwell_
+2"];
+	pipe_cw_out_2	 [label="pipe_
+cw_
+out_
+2"];
+	clearwell_2 -> pipe_cw_out_2;
+	uv_chamber_3	 [label="uv_
+chamber_
+3"];
+	uv_chamber_3 -> pipe_connector_uv_out;
+	uv_chamber_2	 [label="uv_
+chamber_
+2"];
+	uv_chamber_2 -> pipe_connector_uv_out;
+	uv_chamber_1	 [label="uv_
+chamber_
+1"];
+	uv_chamber_1 -> pipe_connector_uv_out;
+	pipe_fb_8	 [label="pipe_
+fb_
+8"];
+	floc_basin_8	 [label="floc_
+basin_
+8"];
+	pipe_fb_8 -> floc_basin_8;
+	pipe_fb_7	 [label="pipe_
+fb_
+7"];
+	floc_basin_7	 [label="floc_
+basin_
+7"];
+	pipe_fb_7 -> floc_basin_7;
+	pipe_fb_6	 [label="pipe_
+fb_
+6"];
+	floc_basin_6	 [label="floc_
+basin_
+6"];
+	pipe_fb_6 -> floc_basin_6;
+	pipe_fb_5	 [label="pipe_
+fb_
+5"];
+	floc_basin_5	 [label="floc_
+basin_
+5"];
+	pipe_fb_5 -> floc_basin_5;
+	pipe_fb_4	 [label="pipe_
+fb_
+4"];
+	floc_basin_4	 [label="floc_
+basin_
+4"];
+	pipe_fb_4 -> floc_basin_4;
+	pipe_fb_3	 [label="pipe_
+fb_
+3"];
+	floc_basin_3	 [label="floc_
+basin_
+3"];
+	pipe_fb_3 -> floc_basin_3;
+	pipe_fb_2	 [label="pipe_
+fb_
+2"];
+	floc_basin_2	 [label="floc_
+basin_
+2"];
+	pipe_fb_2 -> floc_basin_2;
+	pipe_fb_1	 [label="pipe_
+fb_
+1"];
+	floc_basin_1	 [label="floc_
+basin_
+1"];
+	pipe_fb_1 -> floc_basin_1;
+	backup_power_supply	 [color=limegreen,
+		fontcolor=limegreen,
+		height=1.2,
+		label="backup_
+power_
+supply",
+		penwidth=2.0,
+		shape=rect,
+		width=2.2];
+	feed_pump	 [label="feed_
+pump"];
+	backup_power_supply -> feed_pump;
+	filter_tank_1	 [label="filter_
+tank_
+1"];
+	pipe_ft_out_1	 [label="pipe_
+ft_
+out_
+1"];
+	filter_tank_1 -> pipe_ft_out_1;
+	pipe_ccc_1	 [label="pipe_
+ccc_
+1"];
+	pipe_ft_out_1 -> pipe_ccc_1;
+	filter_tank_3	 [label="filter_
+tank_
+3"];
+	filter_tank_3 -> pipe_ft_out_1;
+	filter_tank_2	 [label="filter_
+tank_
+2"];
+	filter_tank_2 -> pipe_ft_out_1;
+	filter_tank_5	 [label="filter_
+tank_
+5"];
+	filter_tank_5 -> pipe_ft_out_1;
+	pipe_oz_2	 [label="pipe_
+oz_
+2"];
+	ozone_contact_2	 [label="ozone_
+contact_
+2"];
+	pipe_oz_2 -> ozone_contact_2;
+	filter_tank_7	 [label="filter_
+tank_
+7"];
+	filter_tank_7 -> pipe_ft_out_1;
+	ozone_gen	 [color=orchid,
+		fontcolor=orchid,
+		label="ozone_
+gen",
+		penwidth=3.5,
+		rank=dependency];
+	ozone_gen -> ozone_contact_2;
+	ozone_contact_1	 [label="ozone_
+contact_
+1"];
+	ozone_gen -> ozone_contact_1;
+	filter_tank_8	 [label="filter_
+tank_
+8"];
+	filter_tank_8 -> pipe_ft_out_1;
+	chem_tank_Fl	 [color=orchid,
+		fontcolor=orchid,
+		label="chem_
+tank_
+Fl",
+		penwidth=3.5,
+		rank=dependency];
+	pipe_large_fl_2	 [label="pipe_
+large_
+fl_
+2"];
+	chem_tank_Fl -> pipe_large_fl_2;
+	pipe_large_fl_1	 [label="pipe_
+large_
+fl_
+1"];
+	chem_tank_Fl -> pipe_large_fl_1;
+	uv_chamber_4	 [label="uv_
+chamber_
+4"];
+	uv_chamber_4 -> pipe_connector_uv_out;
+	pipe_to_distro_2	 [label="pipe_
+to_
+distro_
+2"];
+	pipe_large_fl_2 -> pipe_to_distro_2;
+	pipe_to_distro_1	 [label="pipe_
+to_
+distro_
+1"];
+	pipe_large_fl_1 -> pipe_to_distro_1;
+	output_1	 [color=orangered,
+		fontcolor=orangered,
+		label="output_
+1",
+		penwidth=2.0,
+		rank=sink,
+		shape=doublecircle];
+	daf_1	 [label=daf_1];
+	connector_daf	 [label="connector_
+daf"];
+	daf_1 -> connector_daf;
+	pipe_ft_4	 [label="pipe_
+ft_
+4"];
+	filter_tank_4	 [label="filter_
+tank_
+4"];
+	pipe_ft_4 -> filter_tank_4;
+	daf_3	 [label=daf_3];
+	daf_3 -> connector_daf;
+	daf_8	 [label=daf_8];
+	floc_basin_8 -> daf_8;
+	daf_5	 [label=daf_5];
+	daf_5 -> connector_daf;
+	daf_4	 [label=daf_4];
+	daf_4 -> connector_daf;
+	daf_7	 [label=daf_7];
+	daf_7 -> connector_daf;
+	daf_6	 [label=daf_6];
+	daf_6 -> connector_daf;
+	floc_basin_3 -> daf_3;
+	daf_2	 [label=daf_2];
+	floc_basin_2 -> daf_2;
+	floc_basin_1 -> daf_1;
+	floc_basin_7 -> daf_7;
+	floc_basin_6 -> daf_6;
+	floc_basin_5 -> daf_5;
+	floc_basin_4 -> daf_4;
+	connector_daf -> pipe_oz_2;
+	pipe_oz_1	 [label="pipe_
+oz_
+1"];
+	connector_daf -> pipe_oz_1;
+	output_2	 [color=orangered,
+		fontcolor=orangered,
+		label="output_
+2",
+		penwidth=2.0,
+		rank=sink,
+		shape=doublecircle];
+	chem_tank_ph_acid	 [color=orchid,
+		fontcolor=orchid,
+		label="chem_
+tank_
+ph_
+acid",
+		penwidth=3.5,
+		rank=dependency];
+	input_pipe_1	 [label="input_
+pipe_
+1"];
+	chem_tank_ph_acid -> input_pipe_1;
+	connector_oz	 [label="connector_
+oz"];
+	ozone_contact_2 -> connector_oz;
+	ozone_contact_1 -> connector_oz;
+	pipe_ft_2	 [label="pipe_
+ft_
+2"];
+	pipe_ft_2 -> filter_tank_2;
+	chem_tank_ph_base	 [color=orchid,
+		fontcolor=orchid,
+		label="chem_
+tank_
+ph_
+base",
+		penwidth=3.5,
+		rank=dependency];
+	chlorine_contact_chamber	 [label="chlorine_
+contact_
+chamber"];
+	chem_tank_ph_base -> chlorine_contact_chamber;
+	well_2	 [color=limegreen,
+		fontcolor=limegreen,
+		height=1.2,
+		label=well_2,
+		penwidth=2.0,
+		shape=rect,
+		width=2.2];
+	well_2 -> feed_pump;
+	pipe_connector_cw	 [label="pipe_
+connector_
+cw"];
+	pipe_cw_out_1 -> pipe_connector_cw;
+	pipe_cw_out_2 -> pipe_connector_cw;
+	pipe_to_clearwell	 [label="pipe_
+to_
+clearwell"];
+	connector_clearwell	 [label="connector_
+clearwell"];
+	pipe_to_clearwell -> connector_clearwell;
+	connector_clearwell -> clearwell_1;
+	connector_clearwell -> clearwell_2;
+	pipe_connector_uv_out -> pipe_large_fl_2;
+	pipe_connector_uv_out -> pipe_large_fl_1;
+	chem_tank_coag1	 [color=orchid,
+		fontcolor=orchid,
+		label="chem_
+tank_
+coag1",
+		penwidth=3.5,
+		rank=dependency];
+	chem_tank_coag1 -> input_pipe_1;
+	feed_pump -> input_pipe_1;
+	pipe_ft_7	 [label="pipe_
+ft_
+7"];
+	pipe_ft_7 -> filter_tank_7;
+	chem_tank_phosphate	 [color=orchid,
+		fontcolor=orchid,
+		label="chem_
+tank_
+phosphate",
+		penwidth=3.5,
+		rank=dependency];
+	chem_tank_phosphate -> pipe_large_fl_2;
+	chem_tank_phosphate -> pipe_large_fl_1;
+	pipe_ft_5	 [label="pipe_
+ft_
+5"];
+	pipe_ft_5 -> filter_tank_5;
+	daf_2 -> connector_daf;
+	filter_tank_6	 [label="filter_
+tank_
+6"];
+	filter_tank_6 -> pipe_ft_out_1;
+	pipe_ft_8	 [label="pipe_
+ft_
+8"];
+	pipe_ft_8 -> filter_tank_8;
+	pipe_ft_1	 [label="pipe_
+ft_
+1"];
+	pipe_ft_1 -> filter_tank_1;
+	input_pipe_1 -> pipe_fb_8;
+	input_pipe_1 -> pipe_fb_7;
+	input_pipe_1 -> pipe_fb_6;
+	input_pipe_1 -> pipe_fb_5;
+	input_pipe_1 -> pipe_fb_4;
+	input_pipe_1 -> pipe_fb_3;
+	input_pipe_1 -> pipe_fb_2;
+	input_pipe_1 -> pipe_fb_1;
+	chlorine_contact_chamber -> pipe_to_clearwell;
+	pipe_to_distro_2 -> output_2;
+	pipe_to_distro_1 -> output_1;
+	commercial_power_supply	 [color=limegreen,
+		fontcolor=limegreen,
+		height=1.2,
+		label="commercial_
+power_
+supply",
+		penwidth=2.0,
+		shape=rect,
+		width=2.2];
+	commercial_power_supply -> feed_pump;
+	pipe_ft_3	 [label="pipe_
+ft_
+3"];
+	pipe_ft_3 -> filter_tank_3;
+	pump_daf	 [color=orchid,
+		fontcolor=orchid,
+		label="pump_
+daf",
+		penwidth=3.5,
+		rank=dependency];
+	pump_daf -> daf_1;
+	pump_daf -> daf_3;
+	pump_daf -> daf_5;
+	pump_daf -> daf_4;
+	pump_daf -> daf_7;
+	pump_daf -> daf_6;
+	pump_daf -> daf_2;
+	pump_daf -> daf_8;
+	pipe_uv_in_1	 [label="pipe_
+uv_
+in_
+1"];
+	pipe_uv_in_1 -> uv_chamber_2;
+	pipe_uv_in_1 -> uv_chamber_1;
+	pipe_uv_in_2	 [label="pipe_
+uv_
+in_
+2"];
+	pipe_uv_in_2 -> uv_chamber_6;
+	pipe_uv_in_2 -> uv_chamber_5;
+	pipe_uv_in_2 -> uv_chamber_3;
+	pipe_uv_in_2 -> uv_chamber_4;
+	connector_oz -> pipe_ft_4;
+	connector_oz -> pipe_ft_2;
+	connector_oz -> pipe_ft_7;
+	connector_oz -> pipe_ft_5;
+	connector_oz -> pipe_ft_8;
+	connector_oz -> pipe_ft_1;
+	connector_oz -> pipe_ft_3;
+	pipe_ft_6	 [label="pipe_
+ft_
+6"];
+	connector_oz -> pipe_ft_6;
+	well_1	 [color=limegreen,
+		fontcolor=limegreen,
+		height=1.2,
+		label=well_1,
+		penwidth=2.0,
+		shape=rect,
+		width=2.2];
+	well_1 -> feed_pump;
+	pipe_ccc_1 -> chlorine_contact_chamber;
+	pipe_ft_6 -> filter_tank_6;
+	daf_8 -> connector_daf;
+	pipe_connector_cw -> pipe_uv_in_1;
+	pipe_connector_cw -> pipe_uv_in_2;
+	chlorine_tank	 [color=orchid,
+		fontcolor=orchid,
+		label="chlorine_
+tank",
+		penwidth=3.5,
+		rank=dependency];
+	chlorine_tank -> chlorine_contact_chamber;
+	pipe_oz_1 -> ozone_contact_1;
+	filter_tank_4 -> pipe_ft_out_1;
+}

@@ -9,17 +9,17 @@ class Serialise:
         if file_path.split('.')[1] == 'xlsx':
 
             self.component_list = pd.read_excel(file_path, sheet_name='component_list', index_col='component_id',
-                                                header=0, skiprows=3, skipinitialspace=True)
+                                                header=0, skiprows=0, skipinitialspace=True)
             self.component_connections = pd.read_excel(file_path, sheet_name='component_connections', index_col=None,
-                                                       header=0, skiprows=3, skipinitialspace=True)
+                                                       header=0, skiprows=0, skipinitialspace=True)
             self.output_setup = pd.read_excel(file_path, sheet_name='output_setup', index_col='output_node',
-                                              header=0, skiprows=3, skipinitialspace=True)
+                                              header=0, skiprows=0, skipinitialspace=True)
             self.supply_setup =pd.read_excel(file_path, sheet_name='supply_setup', index_col='input_node',
-                                             header=0, skiprows=3, skipinitialspace=True)
+                                             header=0, skiprows=0, skipinitialspace=True)
             self.comp_type_dmg_algo = pd.read_excel(file_path, sheet_name='comp_type_dmg_algo', index_col=[0, 1],
-                                                    header=0, skiprows=3, skipinitialspace=True)
+                                                    header=0, skiprows=0, skipinitialspace=True)
             self.damage_state_def = pd.read_excel(file_path, sheet_name='damage_state_def', index_col=[0, 1],
-                                                  header=0, skiprows=3, skipinitialspace=True)
+                                                  header=0, skiprows=0, skipinitialspace=True)
         elif file_path.split('.')[1] == 'json':
             self.component_list = None
             self.component_connections = None

@@ -42,14 +42,14 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
     component_list = pd.read_excel(
         excel_file_path, sheet_name='component_list',
         index_col=0, header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
     json_file_path = os.path.join(parent_folder_name, file_name, 'component_list' + '.json')
     write_json_to_file(component_list, json_file_path)
 
     node_conn_df = pd.read_excel(
         excel_file_path, sheet_name='component_connections',
         index_col=None, header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     json_file_path = os.path.join(parent_folder_name, file_name, 'component_connections' + '.json')
     write_json_to_file(node_conn_df, json_file_path)
@@ -57,7 +57,7 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
     sysinp_setup = pd.read_excel(
         excel_file_path, sheet_name='supply_setup',
         index_col='input_node', header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     json_file_path = os.path.join(parent_folder_name, file_name, 'supply_setup' + '.json')
     write_json_to_file(sysinp_setup, json_file_path)
@@ -65,7 +65,7 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
     sysout_setup = pd.read_excel(
         excel_file_path, sheet_name='output_setup',
         index_col='output_node', header=0,
-        skiprows=3, skipinitialspace=True).sort_values(by='priority', ascending=True)
+        skiprows=0, skipinitialspace=True).sort_values(by='priority', ascending=True)
 
     json_file_path = os.path.join(parent_folder_name, file_name, 'output_setup' + '.json')
     write_json_to_file(sysout_setup, json_file_path)
@@ -73,14 +73,14 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
     fragility_data = pd.read_excel(
         excel_file_path, sheet_name='comp_type_dmg_algo',
         index_col=[0, 1], header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
     json_file_path = os.path.join(parent_folder_name, file_name, 'comp_type_dmg_algo' + '.json')
     write_json_to_file(fragility_data, json_file_path)
 
     damage_state_df = pd.read_excel(
         excel_file_path, sheet_name='damage_state_def',
         index_col=[0, 1], header=0,
-        skiprows=3, skipinitialspace=True)
+        skiprows=0, skipinitialspace=True)
 
     json_file_path = os.path.join(parent_folder_name, file_name, 'damage_state_def' + '.json')
     write_json_to_file(damage_state_df, json_file_path)
