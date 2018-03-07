@@ -52,6 +52,7 @@ a {
 }
 
 .toctree-wrapper .caption .caption-text {
+  font-weight: 400;
   font-family: "Noto Serif", "Roboto Condensed", "serif" !important;
   font-size: 26px;
   color: #555555;
