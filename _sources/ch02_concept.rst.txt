@@ -105,28 +105,28 @@ in the simulation code).
    a service or generates a type of product. This term can be used to refer
    to a network or a facility. The context of the simulation will
    disambiguate its meaning.
-   |br|
+   |br| |br|
 
 -  **Component**  |br|
    It is the high-level element within the network (or graph) that
    represents the **System Model**. A collection of interconnected
    components with specific attributes and roles comprise the System
    in the context of the simulation model.
-   |br|
+   |br| |br|
 
 -  **If the context of investigation is a NETWORK**  |br|
    |rightdoubleangle|  the System Model is a Level 1 element, i.e.
    an **Infrastructure Network**, and |br|
    |rightdoubleangle|  the Components are Level 2 elements, i.e.
    **Infrastructure Facilities**
-   |br|
+   |br| |br|
 
 -  **If the context of investigation is a FACILITY**  |br|
    |rightdoubleangle|  the System Model is a Level 2 element, i.e.
    an **Infrastructure Facility**, and  |br|
    |rightdoubleangle|  the Components are Level 3 elements, i.e.
    an **Infrastructure Microcomponents**
-   |br|
+   |br| |br|
 
 .. _model-node-classification:
 
