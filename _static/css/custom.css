@@ -1,6 +1,6 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=family=Oswald:400,500');
+@import url('https://fonts.googleapis.com/css?family=family=Oswald:400,500&amp;subset=latin-ext');
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
 /*@import url('https://fonts.googleapis.com/css?family=Noto+Serif:400,700&amp;subset=greek');*/
@@ -17,10 +17,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
+  font-weight: 400;
   /*font-family: "Noto Serif", "Oswald", "serif" !important;*/
   font-family: "Oswald", "serif" !important;
-  color: #0D47A1;
+  color: #1565C0;
   padding: 0;
   line-height: 1.2;
 }
