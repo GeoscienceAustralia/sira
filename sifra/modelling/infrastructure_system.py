@@ -395,3 +395,27 @@ class PowerStation(IFSystem):
             'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
         }
+
+class PotableWaterTreatmentPlant(IFSystem):
+    def __init__(self, **kwargs):
+        super(PotableWaterTreatmentPlant, self).__init__(**kwargs)
+        # Initiate the power station values, which have been used in all current
+        # testing
+        self.uncosted_classes = ['SYSTEM INPUT', 'SYSTEM OUTPUT', 'JUNCTION POINT']
+        self.ds_lims_compclasses = {
+            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Sediment Flocculation': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chlorination Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Pump Station': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Rectangular Sedimentation Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Elevated Pipes': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Basins': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chemical Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Circular Clarification Tank': [0.0, 0.05, 0.40, 0.70, 1.00]
+            'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Horizontal Pump': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Vertical Pump': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Commercial': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Backup': [0.0, 0.05, 0.40, 0.70, 1.00],
+        }
