@@ -1,0 +1,78 @@
+{
+    "['Bus 230kV','Failure']": {
+        "damage_state_definition": null, 
+        "fragility_source": "Shinozuka, Dong, Chen, and Jin (2007)"
+    }, 
+    "['CONN_NODE','Failure']": {
+        "damage_state_definition": null, 
+        "fragility_source": "Dummy node for interconnections."
+    }, 
+    "['Capacitive Voltage Transformer 230kV','Failure']": {
+        "damage_state_definition": "Porcelain cracking or overturning", 
+        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14"
+    }, 
+    "['Capacitive Voltage Transformer 69kV','Failure']": {
+        "damage_state_definition": "Porcelain cracking or overturning", 
+        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14"
+    }, 
+    "['Control Building With Equipment','Failure']": {
+        "damage_state_definition": "Most infill walls exhibit large cracks.  Some bricks may dislodge and fall.  Some walls may bulge out-of-plane.  A few walls may fall partially or fully.  A few concrete columns or beams may fail in shear resulting in partial collapse.  Structure may exhibit permanent lateral deformation. Most partitions are cracked and many need replacement.  Ceiling \u201cT\u201d bar system exhibits extensive buckling and with many light fittings fall.  Extensive damage to exterior wall panels and most connections require inspection.", 
+        "fragility_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable."
+    }, 
+    "['Current Transformer 230kV','Failure']": {
+        "damage_state_definition": "Porcelain cracking or overturning", 
+        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g"
+    }, 
+    "['Disconnect Switch 230kV 3-Phase','Failure']": {
+        "damage_state_definition": "Anchorage failure or overturning.", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6)."
+    }, 
+    "['Disconnect Switch 69kV 3-Phase','Failure']": {
+        "damage_state_definition": "Anchorage failure or overturning.", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6) but shifted proportionately as per MN HAZUS curves in Tbale 5.7 of Syner-G (0.36g at medium with no change at threshold)."
+    }, 
+    "['Generation Source','Failure']": {
+        "damage_state_definition": null, 
+        "fragility_source": "Source. Unbreakable."
+    }, 
+    "['Grounding','Failure']": {
+        "damage_state_definition": null, 
+        "fragility_source": "Assumed same as Lightning Arrester"
+    }, 
+    "['Lightning Arrester','Failure']": {
+        "damage_state_definition": "Anchorage failure or overturning.", 
+        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)"
+    }, 
+    "['Power Circuit Breaker 1-Phase 230kV','Failure']": {
+        "damage_state_definition": "Two porcelain column breakages with damage to anchorge", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer."
+    }, 
+    "['Power Circuit Breaker 3-Phase 230kV with CTs','Failure']": {
+        "damage_state_definition": "Two porcelain column breakages with damage to anchorge", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer."
+    }, 
+    "['Power Circuit Breaker 3-Phase 69kV with CTs','Failure']": {
+        "damage_state_definition": "Two porcelain column breakages with damage to anchorge", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer.  Modified using med to low voltage adjustment made by FEMA (Syner-G Table 5.3 anchored of 0.3g at median and 0.05g at threshold)"
+    }, 
+    "['Power Transformer 100MVA 230/69','Failure']": {
+        "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)"
+    }, 
+    "['Power Transformer 2.5MVA 69/4.16','Failure']": {
+        "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+        "fragility_source": "NGCP judgement derived through concensus at Infrastructure Symposium shifted 0.12g to the right at median but no change at threshold to a lower vulnerability to reflect Syner G Table 5.11 presenting HAZUS functions."
+    }, 
+    "['Power Transformer 20MVA 69/4.36','Failure']": {
+        "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+        "fragility_source": "NGCP judgement derived through concensus at Infrastructure Symposium shifted 0.12g to the right at median but no change at threshold to a lower vulnerability to reflect Syner G Table 5.11 presenting HAZUS functions."
+    }, 
+    "['Power Transformer 50MVA 230/69','Failure']": {
+        "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+        "fragility_source": "NGCP judgement derived through consensus at Infrastrucutre Symposium .  Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)"
+    }, 
+    "['SYSTEM_OUTPUT','Failure']": {
+        "damage_state_definition": null, 
+        "fragility_source": "Sink. Unbreakable."
+    }
+}

@@ -8,7 +8,7 @@
 #
 # # from sifra.sysresponse import calc_loss_arrays, calc_sys_output, compute_output_given_ds
 # from sifra.sifraclasses import FacilitySystem, Scenario
-# from sifra.infrastructure_response import calculate_response, ingest_spreadsheet
+# from sifra.infrastructure_response import calculate_response, read_model_from_xlxs
 #
 # # logging.basicConfig(level=logging.INFO)
 # config_file = './tests/test_scenario_ps_coal.conf'
@@ -24,7 +24,7 @@
 #                                           component_resp_df,
 #                                           parallel_proc=scenario.run_parallel_proc)
 #
-#         infrastructure = ingest_spreadsheet(config_file)  # `IFSystem` object
+#         infrastructure = read_model_from_xlxs(config_file)  # `IFSystem` object
 #         scenario.algorithm_factory = infrastructure[1]
 #         if_result_list = calculate_response(scenario, infrastructure[0])
 #
@@ -39,7 +39,7 @@
 #                                           component_resp_df,
 #                                           parallel_proc=scenario.run_parallel_proc)
 #
-#         infrastructure = ingest_spreadsheet(ident_config_file)  # `IFSystem` object
+#         infrastructure = read_model_from_xlxs(ident_config_file)  # `IFSystem` object
 #         scenario.algorithm_factory = infrastructure[1]
 #         if_result_list = calculate_response(scenario, infrastructure[0])
 #
@@ -55,7 +55,7 @@
 #                                           component_resp_df,
 #                                           parallel_proc=scenario.run_parallel_proc)
 #
-#         infrastructure = ingest_spreadsheet(simple_config)  # `IFSystem` object
+#         infrastructure = read_model_from_xlxs(simple_config)  # `IFSystem` object
 #         scenario.algorithm_factory = infrastructure[1]
 #         if_result_list = calculate_response(scenario, infrastructure[0])
 #

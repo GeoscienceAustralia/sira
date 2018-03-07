@@ -1,0 +1,230 @@
+{
+    "['Ash Disposal System','DS1 Slight']": {
+        "damage_state_definition": "Minor deformation to supporting structure with some yielding of hold-down bolts."
+    }, 
+    "['Ash Disposal System','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformaton to steel supporting structure with misaligment of ash handling conveyors"
+    }, 
+    "['Ash Disposal System','DS3 Extensive']": {
+        "damage_state_definition": "Horizontal displacement of structure with failure of bracing elements and damage to ash silo structure."
+    }, 
+    "['Ash Disposal System','DS4 Complete']": {
+        "damage_state_definition": "Partial or complete collapse of ash handling system."
+    }, 
+    "['Boiler','DS1 Slight']": {
+        "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+    }, 
+    "['Boiler','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
+    }, 
+    "['Boiler','DS3 Extensive']": {
+        "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
+    }, 
+    "['Boiler','DS4 Complete']": {
+        "damage_state_definition": "Damage beyond repair"
+    }, 
+    "['Coal Yard','DS1 Slight']": {
+        "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Some deformation at hold down bolts."
+    }, 
+    "['Coal Yard','DS2 Moderate']": {
+        "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces and soem anchor bolts stretched."
+    }, 
+    "['Coal Yard','DS3 Extensive']": {
+        "damage_state_definition": "Many steel bracing elements have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Many truss arch members have buckeld in compression.  Some of the structural connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some foundation oviement due to settlement and some anchor bolts failed.  "
+    }, 
+    "['Coal Yard','DS4 Complete']": {
+        "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the shelter structure.   "
+    }, 
+    "['Cooling System','DS1 Slight']": {
+        "damage_state_definition": "Minor damage to water handling pumps and pipework.  Minor damage to pumphouse superstructure."
+    }, 
+    "['Cooling System','DS2 Moderate']": {
+        "damage_state_definition": "Moderate structural damage to pumphouse superstructure.  Deformation of pump hold-down and pipework with some leakage at flanges and valves.  Some movement of pumphouse substructure due to liquefaction."
+    }, 
+    "['Cooling System','DS3 Extensive']": {
+        "damage_state_definition": "Rupture of some water mains due to failure of  supporting strucuture. Significant movement of pumps and motors leading to some misalignment.  Extensive damage to pumphouse superstructure, power supply and control panels.  Movement of pumphouse substructure and other valve chambers leading to damage to water mains."
+    }, 
+    "['Cooling System','DS4 Complete']": {
+        "damage_state_definition": "Damage beyond repair."
+    }, 
+    "['Demineralisation Plant','DS1 Slight']": {
+        "damage_state_definition": "Minor damage to water handling pumps and pipework.  Minor damage to plant superstructure."
+    }, 
+    "['Demineralisation Plant','DS2 Moderate']": {
+        "damage_state_definition": "Moderate structural damage to demin plant superstructure.  Deformation of pump hold-down and pipework with some leakage at flanges and valves.  Some movement of pumphouse substructure due to liquefaction."
+    }, 
+    "['Demineralisation Plant','DS3 Extensive']": {
+        "damage_state_definition": "Rupture of some water mains due to failure of  supporting strucuture. Significant movement of pumps and motors leading to some misalignment.  Extensive damage to demin plant superstructure, power supply and control panels.  Movement of demin substructure and other valve chambers significant leading to damage to water mains."
+    }, 
+    "['Demineralisation Plant','DS4 Complete']": {
+        "damage_state_definition": "Damage beyond repair."
+    }, 
+    "['Electrostatic Precipitator','DS1 Slight']": {
+        "damage_state_definition": "minor damage to supporting structure and electrical equipment"
+    }, 
+    "['Electrostatic Precipitator','DS2 Moderate']": {
+        "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
+    }, 
+    "['Electrostatic Precipitator','DS3 Extensive']": {
+        "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
+    }, 
+    "['Electrostatic Precipitator','DS4 Complete']": {
+        "damage_state_definition": "Damage beyond repair. "
+    }, 
+    "['Fresh Water Supply','DS1 Slight']": {
+        "damage_state_definition": "Minor movement of intake structure and minor damage to freshwater pumps and pipework."
+    }, 
+    "['Fresh Water Supply','DS2 Moderate']": {
+        "damage_state_definition": "Partial liquefaction of soils in the vicinity of intake structure leading to some horizontal movement and rotation with attendent damage to pipework. Horizontal movement to freshwater pumps and peripheral pipework."
+    }, 
+    "['Fresh Water Supply','DS3 Extensive']": {
+        "damage_state_definition": "Extensive liquefaction leading to large scale movement of intake structures with major damage to both pipework and pumping facilities.  Control equipment damaged."
+    }, 
+    "['Fresh Water Supply','DS4 Complete']": {
+        "damage_state_definition": "Damage beyond repair"
+    }, 
+    "['Generator','DS1 Slight']": {
+        "damage_state_definition": "Minor damage to generator electrical connectivity. Some horizonrtal deformation to generator support with distortion of holding down bolts."
+    }, 
+    "['Generator','DS2 Moderate']": {
+        "damage_state_definition": "Significant horizontal deformation leading to misalignment of generator to turbine shaft."
+    }, 
+    "['Generator','DS3 Extensive']": {
+        "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to generator to turbine shaft requiring  replacement."
+    }, 
+    "['Generator','DS4 Complete']": {
+        "damage_state_definition": "Irreparable damage to generator."
+    }, 
+    "['Main Feed Conveyor','DS1 Slight']": {
+        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
+    }, 
+    "['Main Feed Conveyor','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
+    }, 
+    "['Main Feed Conveyor','DS3 Extensive']": {
+        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
+    }, 
+    "['Main Feed Conveyor','DS4 Complete']": {
+        "damage_state_definition": "Partial or complete collapse."
+    }, 
+    "['Power House','DS1 Slight']": {
+        "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Minor spalling at some precast panel corners."
+    }, 
+    "['Power House','DS2 Moderate']": {
+        "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces.  More significant spalling damage to precast panels with deformation at panel connections."
+    }, 
+    "['Power House','DS3 Extensive']": {
+        "damage_state_definition": "Most steel members have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Some of the structural members or connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some anchor bolts stretched. Partial collapse of portions of the structure may have occurred due to failed critical elements or connections."
+    }, 
+    "['Power House','DS4 Complete']": {
+        "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the building.   "
+    }, 
+    "['SYSTEM_INPUT','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_INPUT','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_INPUT','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_INPUT','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_OUTPUT','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_OUTPUT','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_OUTPUT','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['SYSTEM_OUTPUT','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['Stack','DS1 Slight']": {
+        "damage_state_definition": "Minor damage to structure with deformation of holding down bolts and with some bracing connections."
+    }, 
+    "['Stack','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement.  Yielding of bracing elements.  Damage to flue leading to gas leakage."
+    }, 
+    "['Stack','DS3 Extensive']": {
+        "damage_state_definition": "Major horizontal deformation with permanent drift.  Failure of bracing elements and extensive damage to flue with many leakage points."
+    }, 
+    "['Stack','DS4 Complete']": {
+        "damage_state_definition": "Damage beyond repair including collapse."
+    }, 
+    "['Stacker Reclaimer','DS1 Slight']": {
+        "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
+    }, 
+    "['Stacker Reclaimer','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
+    }, 
+    "['Stacker Reclaimer','DS3 Extensive']": {
+        "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
+    }, 
+    "['Stacker Reclaimer','DS4 Complete']": {
+        "damage_state_definition": "Overturning with major distortion of structural elements."
+    }, 
+    "['Stepup Transformer','DS1 Slight']": {
+        "damage_state_definition": "Porcelain Gasket Leak"
+    }, 
+    "['Stepup Transformer','DS2 Moderate']": {
+        "damage_state_definition": "Porcelain Break, Major break in Radiator"
+    }, 
+    "['Stepup Transformer','DS3 Extensive']": {
+        "damage_state_definition": "Anchorage Failure"
+    }, 
+    "['Stepup Transformer','DS4 Complete']": {
+        "damage_state_definition": "Overturn"
+    }, 
+    "['Supply Conveyor','DS1 Slight']": {
+        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
+    }, 
+    "['Supply Conveyor','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
+    }, 
+    "['Supply Conveyor','DS3 Extensive']": {
+        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
+    }, 
+    "['Supply Conveyor','DS4 Complete']": {
+        "damage_state_definition": "Partial or complete collapse."
+    }, 
+    "['Switch Yard','DS1 Slight']": {
+        "damage_state_definition": null
+    }, 
+    "['Switch Yard','DS2 Moderate']": {
+        "damage_state_definition": null
+    }, 
+    "['Switch Yard','DS3 Extensive']": {
+        "damage_state_definition": null
+    }, 
+    "['Switch Yard','DS4 Complete']": {
+        "damage_state_definition": null
+    }, 
+    "['Turbine and Condenser','DS1 Slight']": {
+        "damage_state_definition": "Minor damage to condensor pipework.  Some horizontal deformation of condensor support connections and steam supply to turbine."
+    }, 
+    "['Turbine and Condenser','DS2 Moderate']": {
+        "damage_state_definition": "Significant horizontal deformation of both condensor and turbine relative to supporting plinth leading to misalignment of turbine shaft to generator and steam leakage in pipework."
+    }, 
+    "['Turbine and Condenser','DS3 Extensive']": {
+        "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to turbine shaft to generator requiring replacement.  Internal damage to condensor requiring replacement."
+    }, 
+    "['Turbine and Condenser','DS4 Complete']": {
+        "damage_state_definition": "Irreparable damage to turbine and condensor."
+    }, 
+    "['Unloader','DS1 Slight']": {
+        "damage_state_definition": "Minor deformation to rail support and unloader bracing frame elements."
+    }, 
+    "['Unloader','DS2 Moderate']": {
+        "damage_state_definition": "Significant deformation of unloader structural elements leading to misalignment of machine components and conveyors. Minor derailment from tracks on wharf."
+    }, 
+    "['Unloader','DS3 Extensive']": {
+        "damage_state_definition": "Failure of bracing elements on unloader leading to permanent distortion of equipment.  Damage to power supply and control equipment. Major derailment."
+    }, 
+    "['Unloader','DS4 Complete']": {
+        "damage_state_definition": "Overturning with major distortion of structural elements."
+    }
+}

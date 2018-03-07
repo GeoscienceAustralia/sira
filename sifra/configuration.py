@@ -4,8 +4,11 @@ import json
 
 
 class Configuration:
-    def __init__(self, configration_file_path):
-        with open(configration_file_path, 'r') as f:
+    """
+    Reads all the simulation configuration constants to be read by other classes
+    """
+    def __init__(self, configuration_file_path):
+        with open(configuration_file_path, 'r') as f:
             config = json.load(f)
 
         # reading in simulation scenario parameters
@@ -35,6 +38,9 @@ class Configuration:
         self.SYS_CONF_FILE_NAME = config['System']['SYS_CONF_FILE_NAME']
 
         self.INPUT_DIR_NAME = config['Input']['INPUT_DIR_NAME']
+        self.SYS_CONF_FILE = os.path.join(os.getcwd(),'sifra',
+                                          self.INPUT_DIR_NAME,
+                                          self.SYS_CONF_FILE_NAME)
 
         self.OUTPUT_DIR_NAME = config['Output']['OUTPUT_DIR_NAME'] + self.SCENARIO_NAME
 

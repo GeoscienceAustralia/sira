@@ -1,0 +1,1898 @@
+{
+    "0": {
+        "destination": "CVT_230kv_01", 
+        "link_capacity": 1, 
+        "origin": "G1_SCPS", 
+        "weight": 0
+    }, 
+    "1": {
+        "destination": "CVT_230kv_02", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_01", 
+        "weight": 0
+    }, 
+    "10": {
+        "destination": "DS_230kv_15", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_06", 
+        "weight": 0
+    }, 
+    "100": {
+        "destination": "DS_230kv_06", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_01", 
+        "weight": 0
+    }, 
+    "101": {
+        "destination": "PCB_230kv_3p_01", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_06", 
+        "weight": 0
+    }, 
+    "102": {
+        "destination": "XNODE_B84_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_06", 
+        "weight": 0
+    }, 
+    "103": {
+        "destination": "DS_230kv_06", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B84_A", 
+        "weight": 0
+    }, 
+    "104": {
+        "destination": "DS_230kv_46", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B84_A", 
+        "weight": 0
+    }, 
+    "105": {
+        "destination": "XNODE_B84_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_46", 
+        "weight": 0
+    }, 
+    "106": {
+        "destination": "CVT_230kv_AMAL2", 
+        "link_capacity": 1, 
+        "origin": "LA_02", 
+        "weight": 0
+    }, 
+    "107": {
+        "destination": "CVT_230kv_AMAL2", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_46", 
+        "weight": 0
+    }, 
+    "108": {
+        "destination": "AMADEO_L2", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_AMAL2", 
+        "weight": 0
+    }, 
+    "109": {
+        "destination": "DS_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B84_A", 
+        "weight": 0
+    }, 
+    "11": {
+        "destination": "DS_230kv_16", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_06", 
+        "weight": 0
+    }, 
+    "110": {
+        "destination": "XNODE_B84_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_07", 
+        "weight": 0
+    }, 
+    "111": {
+        "destination": "PCB_230kv_3p_02", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_07", 
+        "weight": 0
+    }, 
+    "112": {
+        "destination": "DS_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_02", 
+        "weight": 0
+    }, 
+    "113": {
+        "destination": "DS_230kv_08", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_02", 
+        "weight": 0
+    }, 
+    "114": {
+        "destination": "PCB_230kv_3p_02", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_08", 
+        "weight": 0
+    }, 
+    "115": {
+        "destination": "XNODE_B84_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_08", 
+        "weight": 0
+    }, 
+    "116": {
+        "destination": "DS_230kv_08", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B84_B", 
+        "weight": 0
+    }, 
+    "117": {
+        "destination": "DS_230kv_09", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B84_B", 
+        "weight": 0
+    }, 
+    "118": {
+        "destination": "XNODE_B84_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_09", 
+        "weight": 0
+    }, 
+    "119": {
+        "destination": "PCB_230kv_3p_03", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_09", 
+        "weight": 0
+    }, 
+    "12": {
+        "destination": "PCB_230kv_3p_06", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_16", 
+        "weight": 0
+    }, 
+    "120": {
+        "destination": "DS_230kv_09", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_03", 
+        "weight": 0
+    }, 
+    "121": {
+        "destination": "DS_230kv_10", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_03", 
+        "weight": 0
+    }, 
+    "122": {
+        "destination": "PCB_230kv_3p_03", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_10", 
+        "weight": 0
+    }, 
+    "123": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_10", 
+        "weight": 0
+    }, 
+    "124": {
+        "destination": "DS_230kv_10", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_B", 
+        "weight": 0
+    }, 
+    "125": {
+        "destination": "DS_230kv_01", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B84_B", 
+        "weight": 0
+    }, 
+    "126": {
+        "destination": "XNODE_B84_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_01", 
+        "weight": 0
+    }, 
+    "127": {
+        "destination": "DS_230kv_01", 
+        "link_capacity": 1, 
+        "origin": "LA_09", 
+        "weight": 0
+    }, 
+    "128": {
+        "destination": "PTR_50MVA", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_01", 
+        "weight": 0
+    }, 
+    "129": {
+        "destination": "PHIL_STEEL_CORP", 
+        "link_capacity": 1, 
+        "origin": "PTR_50MVA", 
+        "weight": 0
+    }, 
+    "13": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_16", 
+        "weight": 0
+    }, 
+    "130": {
+        "destination": "DS_230kv_02", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "131": {
+        "destination": "PCB_230kv_1p_16", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_02", 
+        "weight": 0
+    }, 
+    "132": {
+        "destination": "PCB_230kv_1p_17", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_16", 
+        "weight": 0
+    }, 
+    "133": {
+        "destination": "PCB_230kv_1p_18", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_17", 
+        "weight": 0
+    }, 
+    "134": {
+        "destination": "CT_230kv_28", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_18", 
+        "weight": 0
+    }, 
+    "135": {
+        "destination": "CT_230kv_29", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_28", 
+        "weight": 0
+    }, 
+    "136": {
+        "destination": "CT_230kv_30", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_29", 
+        "weight": 0
+    }, 
+    "137": {
+        "destination": "CT_230kv_31", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_30", 
+        "weight": 0
+    }, 
+    "138": {
+        "destination": "CT_230kv_32", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_31", 
+        "weight": 0
+    }, 
+    "139": {
+        "destination": "PTR_100MVA", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_32", 
+        "weight": 0
+    }, 
+    "14": {
+        "destination": "DS_230kv_16", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_B", 
+        "weight": 0
+    }, 
+    "140": {
+        "destination": "PTR_100MVA", 
+        "link_capacity": 1, 
+        "origin": "LA_08", 
+        "weight": 0
+    }, 
+    "141": {
+        "destination": "CALACA_LOCAL", 
+        "link_capacity": 1, 
+        "origin": "PTR_100MVA", 
+        "weight": 0
+    }, 
+    "142": {
+        "destination": "DS_230kv_17", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "143": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_17", 
+        "weight": 0
+    }, 
+    "144": {
+        "destination": "PCB_230kv_3p_07", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_17", 
+        "weight": 0
+    }, 
+    "145": {
+        "destination": "DS_230kv_17", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_07", 
+        "weight": 0
+    }, 
+    "146": {
+        "destination": "DS_230kv_18", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_07", 
+        "weight": 0
+    }, 
+    "147": {
+        "destination": "PCB_230kv_3p_07", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_18", 
+        "weight": 0
+    }, 
+    "148": {
+        "destination": "XNODE_B82_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_18", 
+        "weight": 0
+    }, 
+    "149": {
+        "destination": "DS_230kv_18", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B82_A", 
+        "weight": 0
+    }, 
+    "15": {
+        "destination": "PCB_230kv_3p_05", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_14", 
+        "weight": 0
+    }, 
+    "150": {
+        "destination": "DS_230kv_19", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B82_A", 
+        "weight": 0
+    }, 
+    "151": {
+        "destination": "XNODE_B82_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_19", 
+        "weight": 0
+    }, 
+    "152": {
+        "destination": "PCB_230kv_3p_08", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_19", 
+        "weight": 0
+    }, 
+    "153": {
+        "destination": "DS_230kv_19", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_08", 
+        "weight": 0
+    }, 
+    "154": {
+        "destination": "DS_230kv_20", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_08", 
+        "weight": 0
+    }, 
+    "155": {
+        "destination": "PCB_230kv_3p_08", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_20", 
+        "weight": 0
+    }, 
+    "156": {
+        "destination": "XNODE_B82_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_20", 
+        "weight": 0
+    }, 
+    "157": {
+        "destination": "DS_230kv_20", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B82_B", 
+        "weight": 0
+    }, 
+    "158": {
+        "destination": "DS_230kv_21", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B82_B", 
+        "weight": 0
+    }, 
+    "159": {
+        "destination": "XNODE_B82_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_21", 
+        "weight": 0
+    }, 
+    "16": {
+        "destination": "DS_230kv_14", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_05", 
+        "weight": 0
+    }, 
+    "160": {
+        "destination": "PCB_230kv_3p_09", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_21", 
+        "weight": 0
+    }, 
+    "161": {
+        "destination": "DS_230kv_21", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_09", 
+        "weight": 0
+    }, 
+    "162": {
+        "destination": "DS_230kv_22", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_09", 
+        "weight": 0
+    }, 
+    "163": {
+        "destination": "PCB_230kv_3p_09", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_22", 
+        "weight": 0
+    }, 
+    "164": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_22", 
+        "weight": 0
+    }, 
+    "165": {
+        "destination": "DS_230kv_22", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_B", 
+        "weight": 0
+    }, 
+    "166": {
+        "destination": "DS_230kv_48", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B82_A", 
+        "weight": 0
+    }, 
+    "167": {
+        "destination": "XNODE_B82_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_48", 
+        "weight": 0
+    }, 
+    "168": {
+        "destination": "CVT_230kv_BINAN", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_48", 
+        "weight": 0
+    }, 
+    "169": {
+        "destination": "CVT_230kv_BINAN", 
+        "link_capacity": 1, 
+        "origin": "LA_04", 
+        "weight": 0
+    }, 
+    "17": {
+        "destination": "DS_230kv_13", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_05", 
+        "weight": 0
+    }, 
+    "170": {
+        "destination": "BINAN", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_BINAN", 
+        "weight": 0
+    }, 
+    "171": {
+        "destination": "DS_230kv_42", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B82_B", 
+        "weight": 0
+    }, 
+    "172": {
+        "destination": "SEM_CAL_ASSETS", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_42", 
+        "weight": 0
+    }, 
+    "173": {
+        "destination": "DS_230kv_29", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "174": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_29", 
+        "weight": 0
+    }, 
+    "175": {
+        "destination": "CT_230kv_01", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_29", 
+        "weight": 0
+    }, 
+    "176": {
+        "destination": "CT_230kv_02", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_01", 
+        "weight": 0
+    }, 
+    "177": {
+        "destination": "CT_230kv_01", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_02", 
+        "weight": 0
+    }, 
+    "178": {
+        "destination": "CT_230kv_03", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_02", 
+        "weight": 0
+    }, 
+    "179": {
+        "destination": "CT_230kv_02", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_03", 
+        "weight": 0
+    }, 
+    "18": {
+        "destination": "PCB_230kv_3p_05", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_13", 
+        "weight": 0
+    }, 
+    "180": {
+        "destination": "CT_230kv_04", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_03", 
+        "weight": 0
+    }, 
+    "181": {
+        "destination": "CT_230kv_03", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_04", 
+        "weight": 0
+    }, 
+    "182": {
+        "destination": "CT_230kv_05", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_04", 
+        "weight": 0
+    }, 
+    "183": {
+        "destination": "CT_230kv_04", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_05", 
+        "weight": 0
+    }, 
+    "184": {
+        "destination": "PCB_230kv_1p_01", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_05", 
+        "weight": 0
+    }, 
+    "185": {
+        "destination": "CT_230kv_05", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_01", 
+        "weight": 0
+    }, 
+    "186": {
+        "destination": "PCB_230kv_1p_02", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_01", 
+        "weight": 0
+    }, 
+    "187": {
+        "destination": "PCB_230kv_1p_01", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_02", 
+        "weight": 0
+    }, 
+    "188": {
+        "destination": "PCB_230kv_1p_03", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_02", 
+        "weight": 0
+    }, 
+    "189": {
+        "destination": "PCB_230kv_1p_02", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_03", 
+        "weight": 0
+    }, 
+    "19": {
+        "destination": "XNODE_B83_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_13", 
+        "weight": 0
+    }, 
+    "190": {
+        "destination": "DS_230kv_30", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_03", 
+        "weight": 0
+    }, 
+    "191": {
+        "destination": "PCB_230kv_1p_03", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_30", 
+        "weight": 0
+    }, 
+    "192": {
+        "destination": "CVT_230kv_RITA2", 
+        "link_capacity": 1, 
+        "origin": "G5_STA_RITA_L2", 
+        "weight": 0
+    }, 
+    "193": {
+        "destination": "CVT_230kv_RITA2", 
+        "link_capacity": 1, 
+        "origin": "LA_06", 
+        "weight": 0
+    }, 
+    "194": {
+        "destination": "DS_230kv_50", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_RITA2", 
+        "weight": 0
+    }, 
+    "195": {
+        "destination": "XNODE_B85_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_50", 
+        "weight": 0
+    }, 
+    "196": {
+        "destination": "DS_230kv_30", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B85_A", 
+        "weight": 0
+    }, 
+    "197": {
+        "destination": "DS_230kv_31", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B85_A", 
+        "weight": 0
+    }, 
+    "198": {
+        "destination": "XNODE_B85_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_30", 
+        "weight": 0
+    }, 
+    "199": {
+        "destination": "XNODE_B85_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_31", 
+        "weight": 0
+    }, 
+    "2": {
+        "destination": "CVT_230kv_03", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_02", 
+        "weight": 0
+    }, 
+    "20": {
+        "destination": "DS_230kv_13", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B83_A", 
+        "weight": 0
+    }, 
+    "200": {
+        "destination": "CT_230kv_06", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_31", 
+        "weight": 0
+    }, 
+    "201": {
+        "destination": "DS_230kv_31", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_06", 
+        "weight": 0
+    }, 
+    "202": {
+        "destination": "CT_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_06", 
+        "weight": 0
+    }, 
+    "203": {
+        "destination": "CT_230kv_06", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_07", 
+        "weight": 0
+    }, 
+    "204": {
+        "destination": "CT_230kv_08", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_07", 
+        "weight": 0
+    }, 
+    "205": {
+        "destination": "CT_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_08", 
+        "weight": 0
+    }, 
+    "206": {
+        "destination": "PCB_230kv_1p_04", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_08", 
+        "weight": 0
+    }, 
+    "207": {
+        "destination": "CT_230kv_08", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_04", 
+        "weight": 0
+    }, 
+    "208": {
+        "destination": "PCB_230kv_1p_05", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_04", 
+        "weight": 0
+    }, 
+    "209": {
+        "destination": "PCB_230kv_1p_04", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_05", 
+        "weight": 0
+    }, 
+    "21": {
+        "destination": "DS_230kv_12", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B83_A", 
+        "weight": 0
+    }, 
+    "210": {
+        "destination": "PCB_230kv_1p_06", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_05", 
+        "weight": 0
+    }, 
+    "211": {
+        "destination": "PCB_230kv_1p_05", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_06", 
+        "weight": 0
+    }, 
+    "212": {
+        "destination": "CT_230kv_09", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_06", 
+        "weight": 0
+    }, 
+    "213": {
+        "destination": "PCB_230kv_1p_06", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_09", 
+        "weight": 0
+    }, 
+    "214": {
+        "destination": "CT_230kv_10", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_09", 
+        "weight": 0
+    }, 
+    "215": {
+        "destination": "CT_230kv_09", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_10", 
+        "weight": 0
+    }, 
+    "216": {
+        "destination": "CT_230kv_11", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_10", 
+        "weight": 0
+    }, 
+    "217": {
+        "destination": "CT_230kv_10", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_11", 
+        "weight": 0
+    }, 
+    "218": {
+        "destination": "DS_230kv_32", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_11", 
+        "weight": 0
+    }, 
+    "219": {
+        "destination": "CT_230kv_11", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_32", 
+        "weight": 0
+    }, 
+    "22": {
+        "destination": "XNODE_B83_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_12", 
+        "weight": 0
+    }, 
+    "220": {
+        "destination": "DS_230kv_33", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_32", 
+        "weight": 0
+    }, 
+    "221": {
+        "destination": "DS_230kv_32", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_33", 
+        "weight": 0
+    }, 
+    "222": {
+        "destination": "DS_230kv_34", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_33", 
+        "weight": 0
+    }, 
+    "223": {
+        "destination": "DS_230kv_33", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_34", 
+        "weight": 0
+    }, 
+    "224": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_34", 
+        "weight": 0
+    }, 
+    "225": {
+        "destination": "DS_230kv_34", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_B", 
+        "weight": 0
+    }, 
+    "226": {
+        "destination": "DS_230kv_35", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "227": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_35", 
+        "weight": 0
+    }, 
+    "228": {
+        "destination": "CT_230kv_12", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_35", 
+        "weight": 0
+    }, 
+    "229": {
+        "destination": "DS_230kv_35", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_12", 
+        "weight": 0
+    }, 
+    "23": {
+        "destination": "DS_230kv_47", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B83_A", 
+        "weight": 0
+    }, 
+    "230": {
+        "destination": "CT_230kv_13", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_12", 
+        "weight": 0
+    }, 
+    "231": {
+        "destination": "CT_230kv_12", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_13", 
+        "weight": 0
+    }, 
+    "232": {
+        "destination": "CT_230kv_14", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_13", 
+        "weight": 0
+    }, 
+    "233": {
+        "destination": "CT_230kv_13", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_14", 
+        "weight": 0
+    }, 
+    "234": {
+        "destination": "CT_230kv_15", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_14", 
+        "weight": 0
+    }, 
+    "235": {
+        "destination": "CT_230kv_14", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_15", 
+        "weight": 0
+    }, 
+    "236": {
+        "destination": "CT_230kv_16", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_15", 
+        "weight": 0
+    }, 
+    "237": {
+        "destination": "CT_230kv_15", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_16", 
+        "weight": 0
+    }, 
+    "238": {
+        "destination": "PCB_230kv_1p_07", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_16", 
+        "weight": 0
+    }, 
+    "239": {
+        "destination": "CT_230kv_16", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_07", 
+        "weight": 0
+    }, 
+    "24": {
+        "destination": "XNODE_B83_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_47", 
+        "weight": 0
+    }, 
+    "240": {
+        "destination": "PCB_230kv_1p_08", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_07", 
+        "weight": 0
+    }, 
+    "241": {
+        "destination": "PCB_230kv_1p_07", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_08", 
+        "weight": 0
+    }, 
+    "242": {
+        "destination": "PCB_230kv_1p_09", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_08", 
+        "weight": 0
+    }, 
+    "243": {
+        "destination": "PCB_230kv_1p_08", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_09", 
+        "weight": 0
+    }, 
+    "244": {
+        "destination": "DS_230kv_36", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_09", 
+        "weight": 0
+    }, 
+    "245": {
+        "destination": "PCB_230kv_1p_09", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_36", 
+        "weight": 0
+    }, 
+    "246": {
+        "destination": "XNODE_B86_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_36", 
+        "weight": 0
+    }, 
+    "247": {
+        "destination": "CVT_230kv_RITA1", 
+        "link_capacity": 1, 
+        "origin": "G4_STA_RITA_L1", 
+        "weight": 0
+    }, 
+    "248": {
+        "destination": "CVT_230kv_RITA1", 
+        "link_capacity": 1, 
+        "origin": "LA_07", 
+        "weight": 0
+    }, 
+    "249": {
+        "destination": "DS_230kv_51", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_RITA1", 
+        "weight": 0
+    }, 
+    "25": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_BUS_A", 
+        "weight": 0
+    }, 
+    "250": {
+        "destination": "XNODE_B86_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_51", 
+        "weight": 0
+    }, 
+    "251": {
+        "destination": "DS_230kv_36", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B86_A", 
+        "weight": 0
+    }, 
+    "252": {
+        "destination": "DS_230kv_37", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B86_A", 
+        "weight": 0
+    }, 
+    "253": {
+        "destination": "XNODE_B86_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_37", 
+        "weight": 0
+    }, 
+    "254": {
+        "destination": "CT_230kv_17", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_37", 
+        "weight": 0
+    }, 
+    "255": {
+        "destination": "DS_230kv_37", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_17", 
+        "weight": 0
+    }, 
+    "256": {
+        "destination": "CT_230kv_18", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_17", 
+        "weight": 0
+    }, 
+    "257": {
+        "destination": "CT_230kv_17", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_18", 
+        "weight": 0
+    }, 
+    "258": {
+        "destination": "CT_230kv_19", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_18", 
+        "weight": 0
+    }, 
+    "259": {
+        "destination": "CT_230kv_18", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_19", 
+        "weight": 0
+    }, 
+    "26": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_BUS_B", 
+        "weight": 0
+    }, 
+    "260": {
+        "destination": "PCB_230kv_1p_10", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_19", 
+        "weight": 0
+    }, 
+    "261": {
+        "destination": "CT_230kv_19", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_10", 
+        "weight": 0
+    }, 
+    "262": {
+        "destination": "PCB_230kv_1p_11", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_10", 
+        "weight": 0
+    }, 
+    "263": {
+        "destination": "PCB_230kv_1p_10", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_11", 
+        "weight": 0
+    }, 
+    "264": {
+        "destination": "PCB_230kv_1p_12", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_11", 
+        "weight": 0
+    }, 
+    "265": {
+        "destination": "PCB_230kv_1p_11", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_12", 
+        "weight": 0
+    }, 
+    "266": {
+        "destination": "CT_230kv_20", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_12", 
+        "weight": 0
+    }, 
+    "267": {
+        "destination": "PCB_230kv_1p_12", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_20", 
+        "weight": 0
+    }, 
+    "268": {
+        "destination": "CT_230kv_21", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_20", 
+        "weight": 0
+    }, 
+    "269": {
+        "destination": "CT_230kv_20", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_21", 
+        "weight": 0
+    }, 
+    "27": {
+        "destination": "DS_230kv_47", 
+        "link_capacity": 1, 
+        "origin": "LA_03", 
+        "weight": 0
+    }, 
+    "270": {
+        "destination": "CT_230kv_22", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_21", 
+        "weight": 0
+    }, 
+    "271": {
+        "destination": "CT_230kv_21", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_22", 
+        "weight": 0
+    }, 
+    "272": {
+        "destination": "DS_230kv_38", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_22", 
+        "weight": 0
+    }, 
+    "273": {
+        "destination": "CT_230kv_22", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_38", 
+        "weight": 0
+    }, 
+    "274": {
+        "destination": "XNODE_B86_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_38", 
+        "weight": 0
+    }, 
+    "275": {
+        "destination": "DS_230kv_38", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B86_B", 
+        "weight": 0
+    }, 
+    "276": {
+        "destination": "DS_230kv_39", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B86_B", 
+        "weight": 0
+    }, 
+    "277": {
+        "destination": "XNODE_B86_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_39", 
+        "weight": 0
+    }, 
+    "278": {
+        "destination": "PCB_230kv_1p_13", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_39", 
+        "weight": 0
+    }, 
+    "279": {
+        "destination": "DS_230kv_39", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_13", 
+        "weight": 0
+    }, 
+    "28": {
+        "destination": "CVT_230kv_AMAL1", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_47", 
+        "weight": 0
+    }, 
+    "280": {
+        "destination": "PCB_230kv_1p_14", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_13", 
+        "weight": 0
+    }, 
+    "281": {
+        "destination": "PCB_230kv_1p_13", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_14", 
+        "weight": 0
+    }, 
+    "282": {
+        "destination": "PCB_230kv_1p_15", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_14", 
+        "weight": 0
+    }, 
+    "283": {
+        "destination": "PCB_230kv_1p_14", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_15", 
+        "weight": 0
+    }, 
+    "284": {
+        "destination": "CT_230kv_23", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_15", 
+        "weight": 0
+    }, 
+    "285": {
+        "destination": "PCB_230kv_1p_15", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_23", 
+        "weight": 0
+    }, 
+    "286": {
+        "destination": "CT_230kv_24", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_23", 
+        "weight": 0
+    }, 
+    "287": {
+        "destination": "CT_230kv_23", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_24", 
+        "weight": 0
+    }, 
+    "288": {
+        "destination": "CT_230kv_25", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_24", 
+        "weight": 0
+    }, 
+    "289": {
+        "destination": "CT_230kv_24", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_25", 
+        "weight": 0
+    }, 
+    "29": {
+        "destination": "AMADEO_L1", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_AMAL1", 
+        "weight": 0
+    }, 
+    "290": {
+        "destination": "CT_230kv_26", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_25", 
+        "weight": 0
+    }, 
+    "291": {
+        "destination": "CT_230kv_25", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_26", 
+        "weight": 0
+    }, 
+    "292": {
+        "destination": "CT_230kv_27", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_26", 
+        "weight": 0
+    }, 
+    "293": {
+        "destination": "CT_230kv_26", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_27", 
+        "weight": 0
+    }, 
+    "294": {
+        "destination": "DS_230kv_40", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_27", 
+        "weight": 0
+    }, 
+    "295": {
+        "destination": "CT_230kv_27", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_40", 
+        "weight": 0
+    }, 
+    "296": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_40", 
+        "weight": 0
+    }, 
+    "297": {
+        "destination": "DS_230kv_40", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_B", 
+        "weight": 0
+    }, 
+    "298": {
+        "destination": "CVT_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "G3_SLPGC", 
+        "weight": 0
+    }, 
+    "299": {
+        "destination": "CVT_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "LA_10", 
+        "weight": 0
+    }, 
+    "3": {
+        "destination": "DS_230kv_41", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_03", 
+        "weight": 0
+    }, 
+    "30": {
+        "destination": "PCB_230kv_3p_04", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_12", 
+        "weight": 0
+    }, 
+    "300": {
+        "destination": "DS_230kv_44", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_07", 
+        "weight": 0
+    }, 
+    "301": {
+        "destination": "CVT_230kv_07", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_44", 
+        "weight": 0
+    }, 
+    "302": {
+        "destination": "XNODE_B86_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_44", 
+        "weight": 0
+    }, 
+    "303": {
+        "destination": "G1_SCPS", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "304": {
+        "destination": "G2_SCPS", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "305": {
+        "destination": "G3_SLPGC", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "306": {
+        "destination": "G4_STA_RITA_L1", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "307": {
+        "destination": "G5_STA_RITA_L2", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "308": {
+        "destination": "PHIL_STEEL_CORP", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "309": {
+        "destination": "CALACA_LOCAL", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "31": {
+        "destination": "DS_230kv_12", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_04", 
+        "weight": 0
+    }, 
+    "310": {
+        "destination": "SEM_CAL_ASSETS", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "311": {
+        "destination": "BACNOTAN_STEEL", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "312": {
+        "destination": "AMADEO_L2", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "313": {
+        "destination": "AMADEO_L1", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "314": {
+        "destination": "BINAN", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "315": {
+        "destination": "STA_ROSA", 
+        "link_capacity": 1, 
+        "origin": "CTRL_BLDG", 
+        "weight": 0
+    }, 
+    "32": {
+        "destination": "DS_230kv_11", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_04", 
+        "weight": 0
+    }, 
+    "33": {
+        "destination": "PCB_230kv_3p_04", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_11", 
+        "weight": 0
+    }, 
+    "34": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_11", 
+        "weight": 0
+    }, 
+    "35": {
+        "destination": "DS_230kv_11", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "36": {
+        "destination": "CVT_230kv_04", 
+        "link_capacity": 1, 
+        "origin": "G2_SCPS", 
+        "weight": 0
+    }, 
+    "37": {
+        "destination": "CVT_230kv_05", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_04", 
+        "weight": 0
+    }, 
+    "38": {
+        "destination": "CVT_230kv_06", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_05", 
+        "weight": 0
+    }, 
+    "39": {
+        "destination": "DS_230kv_43", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_06", 
+        "weight": 0
+    }, 
+    "4": {
+        "destination": "XNODE_B83_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_41", 
+        "weight": 0
+    }, 
+    "40": {
+        "destination": "XNODE_B81_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_43", 
+        "weight": 0
+    }, 
+    "41": {
+        "destination": "DS_230kv_26", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B81_B", 
+        "weight": 0
+    }, 
+    "42": {
+        "destination": "DS_230kv_27", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B81_B", 
+        "weight": 0
+    }, 
+    "43": {
+        "destination": "XNODE_B81_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_26", 
+        "weight": 0
+    }, 
+    "44": {
+        "destination": "XNODE_B81_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_27", 
+        "weight": 0
+    }, 
+    "45": {
+        "destination": "PCB_230kv_3p_12", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_27", 
+        "weight": 0
+    }, 
+    "46": {
+        "destination": "DS_230kv_27", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_12", 
+        "weight": 0
+    }, 
+    "47": {
+        "destination": "DS_230kv_28", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_12", 
+        "weight": 0
+    }, 
+    "48": {
+        "destination": "PCB_230kv_3p_12", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_28", 
+        "weight": 0
+    }, 
+    "49": {
+        "destination": "BUS_230kV_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_28", 
+        "weight": 0
+    }, 
+    "5": {
+        "destination": "DS_230kv_14", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B83_B", 
+        "weight": 0
+    }, 
+    "50": {
+        "destination": "DS_230kv_28", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_B", 
+        "weight": 0
+    }, 
+    "51": {
+        "destination": "PCB_230kv_3p_11", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_26", 
+        "weight": 0
+    }, 
+    "52": {
+        "destination": "DS_230kv_26", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_11", 
+        "weight": 0
+    }, 
+    "53": {
+        "destination": "DS_230kv_25", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_11", 
+        "weight": 0
+    }, 
+    "54": {
+        "destination": "PCB_230kv_3p_11", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_25", 
+        "weight": 0
+    }, 
+    "55": {
+        "destination": "XNODE_B81_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_25", 
+        "weight": 0
+    }, 
+    "56": {
+        "destination": "DS_230kv_25", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B81_A", 
+        "weight": 0
+    }, 
+    "57": {
+        "destination": "DS_230kv_24", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B81_A", 
+        "weight": 0
+    }, 
+    "58": {
+        "destination": "XNODE_B81_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_24", 
+        "weight": 0
+    }, 
+    "59": {
+        "destination": "DS_230kv_49", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B81_A", 
+        "weight": 0
+    }, 
+    "6": {
+        "destination": "DS_230kv_15", 
+        "link_capacity": 1, 
+        "origin": "XNODE_B83_B", 
+        "weight": 0
+    }, 
+    "60": {
+        "destination": "XNODE_B81_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_49", 
+        "weight": 0
+    }, 
+    "61": {
+        "destination": "DS_230kv_49", 
+        "link_capacity": 1, 
+        "origin": "LA_05", 
+        "weight": 0
+    }, 
+    "62": {
+        "destination": "CVT_230kv_SROSA", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_49", 
+        "weight": 0
+    }, 
+    "63": {
+        "destination": "STA_ROSA", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_SROSA", 
+        "weight": 0
+    }, 
+    "64": {
+        "destination": "PCB_230kv_3p_10", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_24", 
+        "weight": 0
+    }, 
+    "65": {
+        "destination": "DS_230kv_24", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_10", 
+        "weight": 0
+    }, 
+    "66": {
+        "destination": "DS_230kv_23", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_10", 
+        "weight": 0
+    }, 
+    "67": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_23", 
+        "weight": 0
+    }, 
+    "68": {
+        "destination": "DS_230kv_23", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "69": {
+        "destination": "DS_230kv_03", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "7": {
+        "destination": "XNODE_B83_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_14", 
+        "weight": 0
+    }, 
+    "70": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_03", 
+        "weight": 0
+    }, 
+    "71": {
+        "destination": "CT_230kv_33", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_03", 
+        "weight": 0
+    }, 
+    "72": {
+        "destination": "DS_230kv_03", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_33", 
+        "weight": 0
+    }, 
+    "73": {
+        "destination": "CT_230kv_34", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_33", 
+        "weight": 0
+    }, 
+    "74": {
+        "destination": "CT_230kv_33", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_34", 
+        "weight": 0
+    }, 
+    "75": {
+        "destination": "CT_230kv_35", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_34", 
+        "weight": 0
+    }, 
+    "76": {
+        "destination": "CT_230kv_34", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_35", 
+        "weight": 0
+    }, 
+    "77": {
+        "destination": "PCB_230kv_1p_19", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_35", 
+        "weight": 0
+    }, 
+    "78": {
+        "destination": "CT_230kv_35", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_19", 
+        "weight": 0
+    }, 
+    "79": {
+        "destination": "PCB_230kv_1p_20", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_19", 
+        "weight": 0
+    }, 
+    "8": {
+        "destination": "XNODE_B83_B", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_15", 
+        "weight": 0
+    }, 
+    "80": {
+        "destination": "PCB_230kv_1p_19", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_20", 
+        "weight": 0
+    }, 
+    "81": {
+        "destination": "PCB_230kv_1p_21", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_20", 
+        "weight": 0
+    }, 
+    "82": {
+        "destination": "PCB_230kv_1p_20", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_21", 
+        "weight": 0
+    }, 
+    "83": {
+        "destination": "CT_230kv_36", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_1p_21", 
+        "weight": 0
+    }, 
+    "84": {
+        "destination": "PCB_230kv_1p_21", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_36", 
+        "weight": 0
+    }, 
+    "85": {
+        "destination": "CT_230kv_37", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_36", 
+        "weight": 0
+    }, 
+    "86": {
+        "destination": "CT_230kv_36", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_37", 
+        "weight": 0
+    }, 
+    "87": {
+        "destination": "CT_230kv_38", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_37", 
+        "weight": 0
+    }, 
+    "88": {
+        "destination": "CT_230kv_37", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_38", 
+        "weight": 0
+    }, 
+    "89": {
+        "destination": "DS_230kv_04", 
+        "link_capacity": 1, 
+        "origin": "CT_230kv_38", 
+        "weight": 0
+    }, 
+    "9": {
+        "destination": "PCB_230kv_3p_06", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_15", 
+        "weight": 0
+    }, 
+    "90": {
+        "destination": "CT_230kv_38", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_04", 
+        "weight": 0
+    }, 
+    "91": {
+        "destination": "DS_230kv_45", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_04", 
+        "weight": 0
+    }, 
+    "92": {
+        "destination": "DS_230kv_04", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_45", 
+        "weight": 0
+    }, 
+    "93": {
+        "destination": "DS_230kv_45", 
+        "link_capacity": 1, 
+        "origin": "LA_01", 
+        "weight": 0
+    }, 
+    "94": {
+        "destination": "CVT_230kv_BACNO", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_45", 
+        "weight": 0
+    }, 
+    "95": {
+        "destination": "BACNOTAN_STEEL", 
+        "link_capacity": 1, 
+        "origin": "CVT_230kv_BACNO", 
+        "weight": 0
+    }, 
+    "96": {
+        "destination": "DS_230kv_05", 
+        "link_capacity": 1, 
+        "origin": "BUS_230kV_A", 
+        "weight": 0
+    }, 
+    "97": {
+        "destination": "BUS_230kV_A", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_05", 
+        "weight": 0
+    }, 
+    "98": {
+        "destination": "PCB_230kv_3p_01", 
+        "link_capacity": 1, 
+        "origin": "DS_230kv_05", 
+        "weight": 0
+    }, 
+    "99": {
+        "destination": "DS_230kv_05", 
+        "link_capacity": 1, 
+        "origin": "PCB_230kv_3p_01", 
+        "weight": 0
+    }
+}
