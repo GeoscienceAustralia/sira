@@ -17,8 +17,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  font-family: "Noto Serif", "Fira Sans Condensed", "serif" !important;
+  font-weight: 600;
+  /*font-family: "Noto Serif", "Fira Sans Condensed", "serif" !important;*/
+  font-family: "Fira Sans Condensed", "serif" !important;
   color: #0D47A1;
   padding: 0;
   line-height: 1.2;
