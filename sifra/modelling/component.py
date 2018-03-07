@@ -6,7 +6,7 @@ from sifra.modelling.structural import (Element,
 
 from sifra.modelling.iodict import IODict
 
-from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
+# from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
 from sifra.modelling.location import Location
 
 

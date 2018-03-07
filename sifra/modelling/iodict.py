@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from sifra.modelling.utils import jsonify, pythonify
+# from sifra.modelling.utils import jsonify, pythonify
 
 from sifra.modelling.structural import Base
 
