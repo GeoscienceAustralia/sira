@@ -1,0 +1,27 @@
+{
+    "G1_SCPS": {
+        "capacity_fraction": 0.1683501684, 
+        "commodity_type": "electricity", 
+        "input_capacity": 300
+    }, 
+    "G2_SCPS": {
+        "capacity_fraction": 0.1683501684, 
+        "commodity_type": "electricity", 
+        "input_capacity": 300
+    }, 
+    "G3_SLPGC": {
+        "capacity_fraction": 0.0, 
+        "commodity_type": "electricity", 
+        "input_capacity": 0
+    }, 
+    "G4_STA_RITA_L1": {
+        "capacity_fraction": 0.1851851852, 
+        "commodity_type": "electricity", 
+        "input_capacity": 330
+    }, 
+    "G5_STA_RITA_L2": {
+        "capacity_fraction": 0.4781144781, 
+        "commodity_type": "electricity", 
+        "input_capacity": 852
+    }
+}

@@ -5,7 +5,7 @@ from ast import parse
 
 DESCRIPTION = 'SIFRA: System for Infrastructure Facility Resilience Analysis'
 MAINTAINER = 'Maruf Rahman'
-CONTRIBUTORS = ['Maruf Rahman', 'Sudipta Basak']
+CONTRIBUTORS = ['Maruf Rahman', 'Sudipta Basak', 'Sheece Gardezi']
 MAINTAINER_EMAIL = 'maruf.rahman@ga.gov.au'
 URL = 'https://github.com/GeoscienceAustralia/sifra'
 LICENSE = 'Apache v2.0'

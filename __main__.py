@@ -12,10 +12,13 @@ python_version  : 2.7
 """
 import argparse
 import os
-from sifra.logger import rootLogger
 import logging
-
-from sifra.infrastructure_response import run_scenario
+from sifra.logger import rootLogger
+from sifra.configuration import Configuration
+from sifra.scenario import Scenario
+from sifra.model_ingest import ingest_model
+from sifra.modelling.system_topology import SystemTopology
+from sifra.infrastructure_response import calculate_response, post_processing
 
 
 def main():
@@ -47,15 +50,23 @@ def main():
 
     rootLogger.info('Start')
 
-    setup_file = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "tests/test_scenario_ps_coal.conf"))
-    rootLogger.info('setup_file: '+setup_file)
 
-    run_scenario(setup_file)
+    configuration_file_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "simulation_setup/config.json"))
+
+    rootLogger.info('New')
+    config = Configuration(configuration_file_path)
+    scenario = Scenario(config)
+
+    infrastructure, algorithm_factory = ingest_model(config)
+    scenario.algorithm_factory = algorithm_factory
+    sys_topology_view = SystemTopology(infrastructure, scenario)
+    sys_topology_view.draw_sys_topology(viewcontext="as-built")
+    post_processing_list = calculate_response(scenario, infrastructure)
+    post_processing(infrastructure, scenario, post_processing_list)
 
     rootLogger.info('End')
 
 
 if __name__ == "__main__":
-
     main()

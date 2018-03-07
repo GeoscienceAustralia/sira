@@ -7,7 +7,7 @@
 # from sifra.modelling.utils import pythonify
 # from sifra.modelling.sifra_db import save_model, load_model, save_component
 # from sifra.modelling.structural import Base
-# from sifra.model_ingest import ingest_spreadsheet
+# from sifra.model_ingest import read_model_from_xlxs
 
 
 # class TestSifraDB(unittest.TestCase):
@@ -21,7 +21,7 @@
 #
 #     def test_save_spreadsheet(self):
 #         config_file = './test_scenario_ps_coal.conf'
-#         infrastructure, _ = ingest_spreadsheet(config_file)
+#         infrastructure, _ = read_model_from_xlxs(config_file)
 #         oid = save_model(infrastructure)
 #
 #         self.assertTrue(oid is not None)
