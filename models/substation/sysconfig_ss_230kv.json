@@ -1,0 +1,3827 @@
+{
+    "component_list": {
+        "AMADEO_L1": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "AMADEO_L2": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY84_A", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "BACNOTAN_STEEL": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY87_A", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "BINAN": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY82_A", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "BUS_230kV_A": {
+            "component_class": "Bus", 
+            "component_type": "Bus 230kV", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "BUS_230kV_B": {
+            "component_class": "Bus", 
+            "component_type": "Bus 230kV", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CALACA_LOCAL": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY87_B", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "CTRL_BLDG": {
+            "component_class": "Control Building", 
+            "component_type": "Control Building With Equipment", 
+            "cost_fraction": 0.2575840954, 
+            "node_cluster": null, 
+            "node_type": "dependency", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_01": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_02": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_03": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_04": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_05": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_06": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_07": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_08": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_09": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_10": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_11": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_12": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_13": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_14": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_15": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_16": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_17": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_18": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_19": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_20": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_21": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_22": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_23": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_24": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_25": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_26": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_27": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_28": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_29": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_30": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_31": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_32": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_33": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_34": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_35": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_36": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_37": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CT_230kv_38": {
+            "component_class": "Current Transformer", 
+            "component_type": "Current Transformer 230kV", 
+            "cost_fraction": 0.0012879205, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_01": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_02": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_03": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_04": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_05": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_06": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_07": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY86_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_AMAL1": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_AMAL2": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY84_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_BACNO": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY87_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_BINAN": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY82_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_BUS_A": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": null, 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_BUS_B": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": null, 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_RITA1": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY86_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_RITA2": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY85_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "CVT_230kv_SROSA": {
+            "component_class": "Voltage Transformer", 
+            "component_type": "Capacitive Voltage Transformer 230kV", 
+            "cost_fraction": 0.0009366694, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_01": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "SUBSTN69_L4", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_02": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_03": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_04": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_05": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_06": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_07": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_08": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_09": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_10": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_11": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_12": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_13": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_14": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_15": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_16": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_17": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_18": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_19": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_20": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_21": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_22": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_23": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_24": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_25": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_26": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_27": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_28": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_29": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_30": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_31": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_32": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_33": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_34": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_35": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_36": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_37": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_38": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_39": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_40": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_41": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_42": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_43": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_44": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_45": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY87_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_46": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY84_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_47": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_48": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY82_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_49": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_50": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY85_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "DS_230kv_51": {
+            "component_class": "Disconnect Switch", 
+            "component_type": "Disconnect Switch 230kV 3-Phase", 
+            "cost_fraction": 0.0013932958, 
+            "node_cluster": "BAY86_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "G1_SCPS": {
+            "component_class": "Generation Source", 
+            "component_type": "Generation Source", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "supply", 
+            "op_capacity": 1
+        }, 
+        "G2_SCPS": {
+            "component_class": "Generation Source", 
+            "component_type": "Generation Source", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "supply", 
+            "op_capacity": 1
+        }, 
+        "G3_SLPGC": {
+            "component_class": "Generation Source", 
+            "component_type": "Generation Source", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "supply", 
+            "op_capacity": 1
+        }, 
+        "G4_STA_RITA_L1": {
+            "component_class": "Generation Source", 
+            "component_type": "Generation Source", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "supply", 
+            "op_capacity": 1
+        }, 
+        "G5_STA_RITA_L2": {
+            "component_class": "Generation Source", 
+            "component_type": "Generation Source", 
+            "cost_fraction": 0.0, 
+            "node_cluster": null, 
+            "node_type": "supply", 
+            "op_capacity": 1
+        }, 
+        "LA_01": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY87_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_02": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY84_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_03": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY83_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_04": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY82_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_05": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_06": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY85_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_07": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY86_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_08": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_09": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "SUBSTN69_L4", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "LA_10": {
+            "component_class": "Lightning Arrester", 
+            "component_type": "Lightning Arrester", 
+            "cost_fraction": 0.000351251, 
+            "node_cluster": "BAY86_A", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_01": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_02": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_03": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_04": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_05": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_06": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_07": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_08": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_09": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_10": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_11": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_12": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_13": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_14": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_15": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_16": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_17": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_18": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_19": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_20": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_1p_21": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 1-Phase 230kV", 
+            "cost_fraction": 0.0070250208, 
+            "node_cluster": "BAY87", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_01": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_02": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_03": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_04": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_05": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_06": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_07": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_08": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_09": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_10": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_11": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PCB_230kv_3p_12": {
+            "component_class": "Circuit Breaker", 
+            "component_type": "Power Circuit Breaker 3-Phase 230kV with CTs", 
+            "cost_fraction": 0.0145183763, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PHIL_STEEL_CORP": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY84_B", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "PTR_100MVA": {
+            "component_class": "Power Transformer", 
+            "component_type": "Power Transformer 100MVA 230/69", 
+            "cost_fraction": 0.1510379468, 
+            "node_cluster": "SUBSTN69_L2", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "PTR_50MVA": {
+            "component_class": "Power Transformer", 
+            "component_type": "Power Transformer 50MVA 230/69", 
+            "cost_fraction": 0.1311337213, 
+            "node_cluster": "SUBSTN69_L4", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "SEM_CAL_ASSETS": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY82_A", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "STA_ROSA": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY81_A", 
+            "node_type": "sink", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B81_A": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B81_B": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY81", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B82_A": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B82_B": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY82", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B83_A": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B83_B": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY83", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B84_A": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B84_B": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY84", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B85_A": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY85", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B86_A": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }, 
+        "XNODE_B86_B": {
+            "component_class": "JUNCTION POINT", 
+            "component_type": "CONN_NODE", 
+            "cost_fraction": 0.0, 
+            "node_cluster": "BAY86", 
+            "node_type": "transshipment", 
+            "op_capacity": 1
+        }
+    }, 
+    "damage_state_df": {
+        "['Bus 230kV','Failure']": {
+            "damage_state_definition": "not available", 
+            "fragility_source": "Shinozuka, Dong, Chen, and Jin (2007)"
+        }, 
+        "['CONN_NODE','Failure']": {
+            "damage_state_definition": "not available", 
+            "fragility_source": "Dummy node for interconnections."
+        }, 
+        "['Capacitive Voltage Transformer 230kV','Failure']": {
+            "damage_state_definition": "Porcelain cracking or overturning", 
+            "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14"
+        }, 
+        "['Capacitive Voltage Transformer 69kV','Failure']": {
+            "damage_state_definition": "Porcelain cracking or overturning", 
+            "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14"
+        }, 
+        "['Control Building With Equipment','Failure']": {
+            "damage_state_definition": "Most infill walls exhibit large cracks.  Some bricks may dislodge and fall.  Some walls may bulge out-of-plane.  A few walls may fall partially or fully.  A few concrete columns or beams may fail in shear resulting in partial collapse.  Structure may exhibit permanent lateral deformation. Most partitions are cracked and many need replacement.  Ceiling \u201cT\u201d bar system exhibits extensive buckling and with many light fittings fall.  Extensive damage to exterior wall panels and most connections require inspection.", 
+            "fragility_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable."
+        }, 
+        "['Current Transformer 230kV','Failure']": {
+            "damage_state_definition": "Porcelain cracking or overturning", 
+            "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g"
+        }, 
+        "['Disconnect Switch 230kV 3-Phase','Failure']": {
+            "damage_state_definition": "Anchorage failure or overturning.", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6)."
+        }, 
+        "['Disconnect Switch 69kV 3-Phase','Failure']": {
+            "damage_state_definition": "Anchorage failure or overturning.", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6) but shifted proportionately as per MN HAZUS curves in Tbale 5.7 of Syner-G (0.36g at medium with no change at threshold)."
+        }, 
+        "['Generation Source','Failure']": {
+            "damage_state_definition": "not available", 
+            "fragility_source": "Source. Unbreakable."
+        }, 
+        "['Grounding','Failure']": {
+            "damage_state_definition": "not available", 
+            "fragility_source": "Assumed same as Lightning Arrester"
+        }, 
+        "['Lightning Arrester','Failure']": {
+            "damage_state_definition": "Anchorage failure or overturning.", 
+            "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)"
+        }, 
+        "['Power Circuit Breaker 1-Phase 230kV','Failure']": {
+            "damage_state_definition": "Two porcelain column breakages with damage to anchorge", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer."
+        }, 
+        "['Power Circuit Breaker 3-Phase 230kV with CTs','Failure']": {
+            "damage_state_definition": "Two porcelain column breakages with damage to anchorge", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer."
+        }, 
+        "['Power Circuit Breaker 3-Phase 69kV with CTs','Failure']": {
+            "damage_state_definition": "Two porcelain column breakages with damage to anchorge", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer.  Modified using med to low voltage adjustment made by FEMA (Syner-G Table 5.3 anchored of 0.3g at median and 0.05g at threshold)"
+        }, 
+        "['Power Transformer 100MVA 230/69','Failure']": {
+            "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)"
+        }, 
+        "['Power Transformer 2.5MVA 69/4.16','Failure']": {
+            "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+            "fragility_source": "NGCP judgement derived through concensus at Infrastructure Symposium shifted 0.12g to the right at median but no change at threshold to a lower vulnerability to reflect Syner G Table 5.11 presenting HAZUS functions."
+        }, 
+        "['Power Transformer 20MVA 69/4.36','Failure']": {
+            "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+            "fragility_source": "NGCP judgement derived through concensus at Infrastructure Symposium shifted 0.12g to the right at median but no change at threshold to a lower vulnerability to reflect Syner G Table 5.11 presenting HAZUS functions."
+        }, 
+        "['Power Transformer 50MVA 230/69','Failure']": {
+            "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator", 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastrucutre Symposium .  Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)"
+        }, 
+        "['SYSTEM_OUTPUT','Failure']": {
+            "damage_state_definition": "not available", 
+            "fragility_source": "Sink. Unbreakable."
+        }
+    }, 
+    "fragility_data": {
+        "['Bus 230kV','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.37, 
+            "damage_logstd": 0.01, 
+            "damage_median": 99.0, 
+            "damage_ratio": 0.95, 
+            "fragility_source": "Assigned extremely high fragility as Bus is not modelled", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 7, 
+            "recovery_std": 1.22, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Bus','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.37, 
+            "damage_logstd": 0.2, 
+            "damage_median": 0.69, 
+            "damage_ratio": 0.95, 
+            "fragility_source": "Shinozuka, Dong, Chen, and Jin (2007)", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 7, 
+            "recovery_std": 1.22, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['CONN_NODE','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.01, 
+            "damage_logstd": 0.01, 
+            "damage_median": 99.0, 
+            "damage_ratio": 0.01, 
+            "fragility_source": "Dummy node for interconnections.", 
+            "functionality": 1, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 1, 
+            "recovery_std": 0.01, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Capacitive Voltage Transformer 230kV','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.1824668705, 
+            "damage_logstd": 0.26, 
+            "damage_median": 0.6, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 4.26, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Capacitive Voltage Transformer 69kV','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.1824668705, 
+            "damage_logstd": 0.25, 
+            "damage_median": 0.6, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 4.26, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Control Building With Equipment BAK','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -1.71, 
+            "damage_logstd": 0.4, 
+            "damage_median": 0.65, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 75, 
+            "recovery_std": 9.12, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Control Building With Equipment SDL0.4g','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -1.71, 
+            "damage_logstd": 0.38, 
+            "damage_median": 0.86, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 75, 
+            "recovery_std": 9.12, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Control Building With Equipment','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -1.71, 
+            "damage_logstd": 0.38, 
+            "damage_median": 0.86, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 75, 
+            "recovery_std": 9.12, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Current Transformer 230kV','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.69, 
+            "damage_logstd": 0.2, 
+            "damage_median": 0.51, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 4.26, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Disconnect Switch 230kV 3-Phase','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.29, 
+            "damage_logstd": 0.28, 
+            "damage_median": 0.6, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 7, 
+            "recovery_std": 1.22, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Disconnect Switch 69kV 3-Phase','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.18, 
+            "damage_logstd": 0.43, 
+            "damage_median": 0.96, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6) but shifted proportionately as per MN HAZUS curves in Tbale 5.7 of Syner-G (0.36g at medium with no change at threshold).", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 7, 
+            "recovery_std": 1.22, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Generation Source','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.01, 
+            "damage_logstd": 0.01, 
+            "damage_median": 4.0, 
+            "damage_ratio": 0.01, 
+            "fragility_source": "Source. Unbreakable.", 
+            "functionality": 1, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 1, 
+            "recovery_std": 0.01, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Grounding','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.08, 
+            "damage_logstd": 0.54, 
+            "damage_median": 1.08, 
+            "damage_ratio": 0.95, 
+            "fragility_source": "Assumed same as Lightning Arrester", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 1, 
+            "recovery_std": 0.61, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Lightning Arrester','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.08, 
+            "damage_logstd": 0.3, 
+            "damage_median": 0.55, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 5, 
+            "recovery_std": 0.61, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Circuit Breaker 1-Phase 230kV','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.03, 
+            "damage_logstd": 0.2, 
+            "damage_median": 0.55, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 14, 
+            "recovery_std": 2.43, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Circuit Breaker 3-Phase 230kV with CTs','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.1, 
+            "damage_logstd": 0.2, 
+            "damage_median": 0.55, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 4.26, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Circuit Breaker 3-Phase 69kV with CTs','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.0, 
+            "damage_logstd": 0.3, 
+            "damage_median": 0.85, 
+            "damage_ratio": 1.0, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium with some validation to performance testing of CB by manufacturer.  Modified using med to low voltage adjustment made by FEMA (Syner-G Table 5.3 anchored of 0.3g at median and 0.05g at threshold)", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 4.26, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Transformer 100MVA 230/69','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": null, 
+            "damage_logstd": 0.2, 
+            "damage_median": 0.55, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastructure Symposium .  Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 4.26, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Transformer 2.5MVA 69/4.16','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.29, 
+            "damage_logstd": 0.3, 
+            "damage_median": 0.67, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "NGCP judgement derived through concensus at Infrastructure Symposium shifted 0.12g to the right at median but no change at threshold to a lower vulnerability to reflect Syner G Table 5.11 presenting HAZUS functions.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 10, 
+            "recovery_std": 1.22, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Transformer 20MVA 69/4.36','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": -0.29, 
+            "damage_logstd": 0.3, 
+            "damage_median": 0.67, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "NGCP judgement derived through concensus at Infrastructure Symposium shifted 0.12g to the right at median but no change at threshold to a lower vulnerability to reflect Syner G Table 5.11 presenting HAZUS functions.", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 1.82, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['Power Transformer 50MVA 230/69','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": null, 
+            "damage_logstd": 0.2, 
+            "damage_median": 0.55, 
+            "damage_ratio": 0.3, 
+            "fragility_source": "NGCP judgement derived through consensus at Infrastrucutre Symposium .  Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)", 
+            "functionality": 0, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 21, 
+            "recovery_std": 3.04, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }, 
+        "['SYSTEM_OUTPUT','Failure']": {
+            "damage_function": "Lognormal", 
+            "damage_lambda": 0.01, 
+            "damage_logstd": 0.01, 
+            "damage_median": 99.0, 
+            "damage_ratio": 0.01, 
+            "fragility_source": "Sink. Unbreakable.", 
+            "functionality": 1, 
+            "minimum": null, 
+            "mode": 1, 
+            "recovery_95percentile": null, 
+            "recovery_mean": 1, 
+            "recovery_std": 0.01, 
+            "sigma_1": null, 
+            "sigma_2": null
+        }
+    }, 
+    "node_conn_df": {
+        "0": {
+            "destination": "CVT_230kv_01", 
+            "link_capacity": 1, 
+            "origin": "G1_SCPS", 
+            "weight": 0
+        }, 
+        "1": {
+            "destination": "CVT_230kv_02", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_01", 
+            "weight": 0
+        }, 
+        "10": {
+            "destination": "DS_230kv_15", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_06", 
+            "weight": 0
+        }, 
+        "100": {
+            "destination": "DS_230kv_06", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_01", 
+            "weight": 0
+        }, 
+        "101": {
+            "destination": "PCB_230kv_3p_01", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_06", 
+            "weight": 0
+        }, 
+        "102": {
+            "destination": "XNODE_B84_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_06", 
+            "weight": 0
+        }, 
+        "103": {
+            "destination": "DS_230kv_06", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B84_A", 
+            "weight": 0
+        }, 
+        "104": {
+            "destination": "DS_230kv_46", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B84_A", 
+            "weight": 0
+        }, 
+        "105": {
+            "destination": "XNODE_B84_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_46", 
+            "weight": 0
+        }, 
+        "106": {
+            "destination": "CVT_230kv_AMAL2", 
+            "link_capacity": 1, 
+            "origin": "LA_02", 
+            "weight": 0
+        }, 
+        "107": {
+            "destination": "CVT_230kv_AMAL2", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_46", 
+            "weight": 0
+        }, 
+        "108": {
+            "destination": "AMADEO_L2", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_AMAL2", 
+            "weight": 0
+        }, 
+        "109": {
+            "destination": "DS_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B84_A", 
+            "weight": 0
+        }, 
+        "11": {
+            "destination": "DS_230kv_16", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_06", 
+            "weight": 0
+        }, 
+        "110": {
+            "destination": "XNODE_B84_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_07", 
+            "weight": 0
+        }, 
+        "111": {
+            "destination": "PCB_230kv_3p_02", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_07", 
+            "weight": 0
+        }, 
+        "112": {
+            "destination": "DS_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_02", 
+            "weight": 0
+        }, 
+        "113": {
+            "destination": "DS_230kv_08", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_02", 
+            "weight": 0
+        }, 
+        "114": {
+            "destination": "PCB_230kv_3p_02", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_08", 
+            "weight": 0
+        }, 
+        "115": {
+            "destination": "XNODE_B84_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_08", 
+            "weight": 0
+        }, 
+        "116": {
+            "destination": "DS_230kv_08", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B84_B", 
+            "weight": 0
+        }, 
+        "117": {
+            "destination": "DS_230kv_09", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B84_B", 
+            "weight": 0
+        }, 
+        "118": {
+            "destination": "XNODE_B84_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_09", 
+            "weight": 0
+        }, 
+        "119": {
+            "destination": "PCB_230kv_3p_03", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_09", 
+            "weight": 0
+        }, 
+        "12": {
+            "destination": "PCB_230kv_3p_06", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_16", 
+            "weight": 0
+        }, 
+        "120": {
+            "destination": "DS_230kv_09", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_03", 
+            "weight": 0
+        }, 
+        "121": {
+            "destination": "DS_230kv_10", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_03", 
+            "weight": 0
+        }, 
+        "122": {
+            "destination": "PCB_230kv_3p_03", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_10", 
+            "weight": 0
+        }, 
+        "123": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_10", 
+            "weight": 0
+        }, 
+        "124": {
+            "destination": "DS_230kv_10", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_B", 
+            "weight": 0
+        }, 
+        "125": {
+            "destination": "DS_230kv_01", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B84_B", 
+            "weight": 0
+        }, 
+        "126": {
+            "destination": "XNODE_B84_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_01", 
+            "weight": 0
+        }, 
+        "127": {
+            "destination": "DS_230kv_01", 
+            "link_capacity": 1, 
+            "origin": "LA_09", 
+            "weight": 0
+        }, 
+        "128": {
+            "destination": "PTR_50MVA", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_01", 
+            "weight": 0
+        }, 
+        "129": {
+            "destination": "PHIL_STEEL_CORP", 
+            "link_capacity": 1, 
+            "origin": "PTR_50MVA", 
+            "weight": 0
+        }, 
+        "13": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_16", 
+            "weight": 0
+        }, 
+        "130": {
+            "destination": "DS_230kv_02", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "131": {
+            "destination": "PCB_230kv_1p_16", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_02", 
+            "weight": 0
+        }, 
+        "132": {
+            "destination": "PCB_230kv_1p_17", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_16", 
+            "weight": 0
+        }, 
+        "133": {
+            "destination": "PCB_230kv_1p_18", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_17", 
+            "weight": 0
+        }, 
+        "134": {
+            "destination": "CT_230kv_28", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_18", 
+            "weight": 0
+        }, 
+        "135": {
+            "destination": "CT_230kv_29", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_28", 
+            "weight": 0
+        }, 
+        "136": {
+            "destination": "CT_230kv_30", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_29", 
+            "weight": 0
+        }, 
+        "137": {
+            "destination": "CT_230kv_31", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_30", 
+            "weight": 0
+        }, 
+        "138": {
+            "destination": "CT_230kv_32", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_31", 
+            "weight": 0
+        }, 
+        "139": {
+            "destination": "PTR_100MVA", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_32", 
+            "weight": 0
+        }, 
+        "14": {
+            "destination": "DS_230kv_16", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_B", 
+            "weight": 0
+        }, 
+        "140": {
+            "destination": "PTR_100MVA", 
+            "link_capacity": 1, 
+            "origin": "LA_08", 
+            "weight": 0
+        }, 
+        "141": {
+            "destination": "CALACA_LOCAL", 
+            "link_capacity": 1, 
+            "origin": "PTR_100MVA", 
+            "weight": 0
+        }, 
+        "142": {
+            "destination": "DS_230kv_17", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "143": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_17", 
+            "weight": 0
+        }, 
+        "144": {
+            "destination": "PCB_230kv_3p_07", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_17", 
+            "weight": 0
+        }, 
+        "145": {
+            "destination": "DS_230kv_17", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_07", 
+            "weight": 0
+        }, 
+        "146": {
+            "destination": "DS_230kv_18", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_07", 
+            "weight": 0
+        }, 
+        "147": {
+            "destination": "PCB_230kv_3p_07", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_18", 
+            "weight": 0
+        }, 
+        "148": {
+            "destination": "XNODE_B82_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_18", 
+            "weight": 0
+        }, 
+        "149": {
+            "destination": "DS_230kv_18", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B82_A", 
+            "weight": 0
+        }, 
+        "15": {
+            "destination": "PCB_230kv_3p_05", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_14", 
+            "weight": 0
+        }, 
+        "150": {
+            "destination": "DS_230kv_19", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B82_A", 
+            "weight": 0
+        }, 
+        "151": {
+            "destination": "XNODE_B82_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_19", 
+            "weight": 0
+        }, 
+        "152": {
+            "destination": "PCB_230kv_3p_08", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_19", 
+            "weight": 0
+        }, 
+        "153": {
+            "destination": "DS_230kv_19", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_08", 
+            "weight": 0
+        }, 
+        "154": {
+            "destination": "DS_230kv_20", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_08", 
+            "weight": 0
+        }, 
+        "155": {
+            "destination": "PCB_230kv_3p_08", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_20", 
+            "weight": 0
+        }, 
+        "156": {
+            "destination": "XNODE_B82_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_20", 
+            "weight": 0
+        }, 
+        "157": {
+            "destination": "DS_230kv_20", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B82_B", 
+            "weight": 0
+        }, 
+        "158": {
+            "destination": "DS_230kv_21", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B82_B", 
+            "weight": 0
+        }, 
+        "159": {
+            "destination": "XNODE_B82_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_21", 
+            "weight": 0
+        }, 
+        "16": {
+            "destination": "DS_230kv_14", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_05", 
+            "weight": 0
+        }, 
+        "160": {
+            "destination": "PCB_230kv_3p_09", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_21", 
+            "weight": 0
+        }, 
+        "161": {
+            "destination": "DS_230kv_21", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_09", 
+            "weight": 0
+        }, 
+        "162": {
+            "destination": "DS_230kv_22", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_09", 
+            "weight": 0
+        }, 
+        "163": {
+            "destination": "PCB_230kv_3p_09", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_22", 
+            "weight": 0
+        }, 
+        "164": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_22", 
+            "weight": 0
+        }, 
+        "165": {
+            "destination": "DS_230kv_22", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_B", 
+            "weight": 0
+        }, 
+        "166": {
+            "destination": "DS_230kv_48", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B82_A", 
+            "weight": 0
+        }, 
+        "167": {
+            "destination": "XNODE_B82_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_48", 
+            "weight": 0
+        }, 
+        "168": {
+            "destination": "CVT_230kv_BINAN", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_48", 
+            "weight": 0
+        }, 
+        "169": {
+            "destination": "CVT_230kv_BINAN", 
+            "link_capacity": 1, 
+            "origin": "LA_04", 
+            "weight": 0
+        }, 
+        "17": {
+            "destination": "DS_230kv_13", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_05", 
+            "weight": 0
+        }, 
+        "170": {
+            "destination": "BINAN", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_BINAN", 
+            "weight": 0
+        }, 
+        "171": {
+            "destination": "DS_230kv_42", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B82_B", 
+            "weight": 0
+        }, 
+        "172": {
+            "destination": "SEM_CAL_ASSETS", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_42", 
+            "weight": 0
+        }, 
+        "173": {
+            "destination": "DS_230kv_29", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "174": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_29", 
+            "weight": 0
+        }, 
+        "175": {
+            "destination": "CT_230kv_01", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_29", 
+            "weight": 0
+        }, 
+        "176": {
+            "destination": "CT_230kv_02", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_01", 
+            "weight": 0
+        }, 
+        "177": {
+            "destination": "CT_230kv_01", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_02", 
+            "weight": 0
+        }, 
+        "178": {
+            "destination": "CT_230kv_03", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_02", 
+            "weight": 0
+        }, 
+        "179": {
+            "destination": "CT_230kv_02", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_03", 
+            "weight": 0
+        }, 
+        "18": {
+            "destination": "PCB_230kv_3p_05", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_13", 
+            "weight": 0
+        }, 
+        "180": {
+            "destination": "CT_230kv_04", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_03", 
+            "weight": 0
+        }, 
+        "181": {
+            "destination": "CT_230kv_03", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_04", 
+            "weight": 0
+        }, 
+        "182": {
+            "destination": "CT_230kv_05", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_04", 
+            "weight": 0
+        }, 
+        "183": {
+            "destination": "CT_230kv_04", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_05", 
+            "weight": 0
+        }, 
+        "184": {
+            "destination": "PCB_230kv_1p_01", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_05", 
+            "weight": 0
+        }, 
+        "185": {
+            "destination": "CT_230kv_05", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_01", 
+            "weight": 0
+        }, 
+        "186": {
+            "destination": "PCB_230kv_1p_02", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_01", 
+            "weight": 0
+        }, 
+        "187": {
+            "destination": "PCB_230kv_1p_01", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_02", 
+            "weight": 0
+        }, 
+        "188": {
+            "destination": "PCB_230kv_1p_03", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_02", 
+            "weight": 0
+        }, 
+        "189": {
+            "destination": "PCB_230kv_1p_02", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_03", 
+            "weight": 0
+        }, 
+        "19": {
+            "destination": "XNODE_B83_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_13", 
+            "weight": 0
+        }, 
+        "190": {
+            "destination": "DS_230kv_30", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_03", 
+            "weight": 0
+        }, 
+        "191": {
+            "destination": "PCB_230kv_1p_03", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_30", 
+            "weight": 0
+        }, 
+        "192": {
+            "destination": "CVT_230kv_RITA2", 
+            "link_capacity": 1, 
+            "origin": "G5_STA_RITA_L2", 
+            "weight": 0
+        }, 
+        "193": {
+            "destination": "CVT_230kv_RITA2", 
+            "link_capacity": 1, 
+            "origin": "LA_06", 
+            "weight": 0
+        }, 
+        "194": {
+            "destination": "DS_230kv_50", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_RITA2", 
+            "weight": 0
+        }, 
+        "195": {
+            "destination": "XNODE_B85_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_50", 
+            "weight": 0
+        }, 
+        "196": {
+            "destination": "DS_230kv_30", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B85_A", 
+            "weight": 0
+        }, 
+        "197": {
+            "destination": "DS_230kv_31", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B85_A", 
+            "weight": 0
+        }, 
+        "198": {
+            "destination": "XNODE_B85_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_30", 
+            "weight": 0
+        }, 
+        "199": {
+            "destination": "XNODE_B85_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_31", 
+            "weight": 0
+        }, 
+        "2": {
+            "destination": "CVT_230kv_03", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_02", 
+            "weight": 0
+        }, 
+        "20": {
+            "destination": "DS_230kv_13", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B83_A", 
+            "weight": 0
+        }, 
+        "200": {
+            "destination": "CT_230kv_06", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_31", 
+            "weight": 0
+        }, 
+        "201": {
+            "destination": "DS_230kv_31", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_06", 
+            "weight": 0
+        }, 
+        "202": {
+            "destination": "CT_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_06", 
+            "weight": 0
+        }, 
+        "203": {
+            "destination": "CT_230kv_06", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_07", 
+            "weight": 0
+        }, 
+        "204": {
+            "destination": "CT_230kv_08", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_07", 
+            "weight": 0
+        }, 
+        "205": {
+            "destination": "CT_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_08", 
+            "weight": 0
+        }, 
+        "206": {
+            "destination": "PCB_230kv_1p_04", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_08", 
+            "weight": 0
+        }, 
+        "207": {
+            "destination": "CT_230kv_08", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_04", 
+            "weight": 0
+        }, 
+        "208": {
+            "destination": "PCB_230kv_1p_05", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_04", 
+            "weight": 0
+        }, 
+        "209": {
+            "destination": "PCB_230kv_1p_04", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_05", 
+            "weight": 0
+        }, 
+        "21": {
+            "destination": "DS_230kv_12", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B83_A", 
+            "weight": 0
+        }, 
+        "210": {
+            "destination": "PCB_230kv_1p_06", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_05", 
+            "weight": 0
+        }, 
+        "211": {
+            "destination": "PCB_230kv_1p_05", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_06", 
+            "weight": 0
+        }, 
+        "212": {
+            "destination": "CT_230kv_09", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_06", 
+            "weight": 0
+        }, 
+        "213": {
+            "destination": "PCB_230kv_1p_06", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_09", 
+            "weight": 0
+        }, 
+        "214": {
+            "destination": "CT_230kv_10", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_09", 
+            "weight": 0
+        }, 
+        "215": {
+            "destination": "CT_230kv_09", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_10", 
+            "weight": 0
+        }, 
+        "216": {
+            "destination": "CT_230kv_11", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_10", 
+            "weight": 0
+        }, 
+        "217": {
+            "destination": "CT_230kv_10", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_11", 
+            "weight": 0
+        }, 
+        "218": {
+            "destination": "DS_230kv_32", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_11", 
+            "weight": 0
+        }, 
+        "219": {
+            "destination": "CT_230kv_11", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_32", 
+            "weight": 0
+        }, 
+        "22": {
+            "destination": "XNODE_B83_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_12", 
+            "weight": 0
+        }, 
+        "220": {
+            "destination": "DS_230kv_33", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_32", 
+            "weight": 0
+        }, 
+        "221": {
+            "destination": "DS_230kv_32", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_33", 
+            "weight": 0
+        }, 
+        "222": {
+            "destination": "DS_230kv_34", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_33", 
+            "weight": 0
+        }, 
+        "223": {
+            "destination": "DS_230kv_33", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_34", 
+            "weight": 0
+        }, 
+        "224": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_34", 
+            "weight": 0
+        }, 
+        "225": {
+            "destination": "DS_230kv_34", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_B", 
+            "weight": 0
+        }, 
+        "226": {
+            "destination": "DS_230kv_35", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "227": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_35", 
+            "weight": 0
+        }, 
+        "228": {
+            "destination": "CT_230kv_12", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_35", 
+            "weight": 0
+        }, 
+        "229": {
+            "destination": "DS_230kv_35", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_12", 
+            "weight": 0
+        }, 
+        "23": {
+            "destination": "DS_230kv_47", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B83_A", 
+            "weight": 0
+        }, 
+        "230": {
+            "destination": "CT_230kv_13", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_12", 
+            "weight": 0
+        }, 
+        "231": {
+            "destination": "CT_230kv_12", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_13", 
+            "weight": 0
+        }, 
+        "232": {
+            "destination": "CT_230kv_14", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_13", 
+            "weight": 0
+        }, 
+        "233": {
+            "destination": "CT_230kv_13", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_14", 
+            "weight": 0
+        }, 
+        "234": {
+            "destination": "CT_230kv_15", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_14", 
+            "weight": 0
+        }, 
+        "235": {
+            "destination": "CT_230kv_14", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_15", 
+            "weight": 0
+        }, 
+        "236": {
+            "destination": "CT_230kv_16", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_15", 
+            "weight": 0
+        }, 
+        "237": {
+            "destination": "CT_230kv_15", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_16", 
+            "weight": 0
+        }, 
+        "238": {
+            "destination": "PCB_230kv_1p_07", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_16", 
+            "weight": 0
+        }, 
+        "239": {
+            "destination": "CT_230kv_16", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_07", 
+            "weight": 0
+        }, 
+        "24": {
+            "destination": "XNODE_B83_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_47", 
+            "weight": 0
+        }, 
+        "240": {
+            "destination": "PCB_230kv_1p_08", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_07", 
+            "weight": 0
+        }, 
+        "241": {
+            "destination": "PCB_230kv_1p_07", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_08", 
+            "weight": 0
+        }, 
+        "242": {
+            "destination": "PCB_230kv_1p_09", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_08", 
+            "weight": 0
+        }, 
+        "243": {
+            "destination": "PCB_230kv_1p_08", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_09", 
+            "weight": 0
+        }, 
+        "244": {
+            "destination": "DS_230kv_36", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_09", 
+            "weight": 0
+        }, 
+        "245": {
+            "destination": "PCB_230kv_1p_09", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_36", 
+            "weight": 0
+        }, 
+        "246": {
+            "destination": "XNODE_B86_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_36", 
+            "weight": 0
+        }, 
+        "247": {
+            "destination": "CVT_230kv_RITA1", 
+            "link_capacity": 1, 
+            "origin": "G4_STA_RITA_L1", 
+            "weight": 0
+        }, 
+        "248": {
+            "destination": "CVT_230kv_RITA1", 
+            "link_capacity": 1, 
+            "origin": "LA_07", 
+            "weight": 0
+        }, 
+        "249": {
+            "destination": "DS_230kv_51", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_RITA1", 
+            "weight": 0
+        }, 
+        "25": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_BUS_A", 
+            "weight": 0
+        }, 
+        "250": {
+            "destination": "XNODE_B86_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_51", 
+            "weight": 0
+        }, 
+        "251": {
+            "destination": "DS_230kv_36", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B86_A", 
+            "weight": 0
+        }, 
+        "252": {
+            "destination": "DS_230kv_37", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B86_A", 
+            "weight": 0
+        }, 
+        "253": {
+            "destination": "XNODE_B86_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_37", 
+            "weight": 0
+        }, 
+        "254": {
+            "destination": "CT_230kv_17", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_37", 
+            "weight": 0
+        }, 
+        "255": {
+            "destination": "DS_230kv_37", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_17", 
+            "weight": 0
+        }, 
+        "256": {
+            "destination": "CT_230kv_18", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_17", 
+            "weight": 0
+        }, 
+        "257": {
+            "destination": "CT_230kv_17", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_18", 
+            "weight": 0
+        }, 
+        "258": {
+            "destination": "CT_230kv_19", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_18", 
+            "weight": 0
+        }, 
+        "259": {
+            "destination": "CT_230kv_18", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_19", 
+            "weight": 0
+        }, 
+        "26": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_BUS_B", 
+            "weight": 0
+        }, 
+        "260": {
+            "destination": "PCB_230kv_1p_10", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_19", 
+            "weight": 0
+        }, 
+        "261": {
+            "destination": "CT_230kv_19", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_10", 
+            "weight": 0
+        }, 
+        "262": {
+            "destination": "PCB_230kv_1p_11", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_10", 
+            "weight": 0
+        }, 
+        "263": {
+            "destination": "PCB_230kv_1p_10", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_11", 
+            "weight": 0
+        }, 
+        "264": {
+            "destination": "PCB_230kv_1p_12", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_11", 
+            "weight": 0
+        }, 
+        "265": {
+            "destination": "PCB_230kv_1p_11", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_12", 
+            "weight": 0
+        }, 
+        "266": {
+            "destination": "CT_230kv_20", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_12", 
+            "weight": 0
+        }, 
+        "267": {
+            "destination": "PCB_230kv_1p_12", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_20", 
+            "weight": 0
+        }, 
+        "268": {
+            "destination": "CT_230kv_21", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_20", 
+            "weight": 0
+        }, 
+        "269": {
+            "destination": "CT_230kv_20", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_21", 
+            "weight": 0
+        }, 
+        "27": {
+            "destination": "DS_230kv_47", 
+            "link_capacity": 1, 
+            "origin": "LA_03", 
+            "weight": 0
+        }, 
+        "270": {
+            "destination": "CT_230kv_22", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_21", 
+            "weight": 0
+        }, 
+        "271": {
+            "destination": "CT_230kv_21", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_22", 
+            "weight": 0
+        }, 
+        "272": {
+            "destination": "DS_230kv_38", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_22", 
+            "weight": 0
+        }, 
+        "273": {
+            "destination": "CT_230kv_22", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_38", 
+            "weight": 0
+        }, 
+        "274": {
+            "destination": "XNODE_B86_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_38", 
+            "weight": 0
+        }, 
+        "275": {
+            "destination": "DS_230kv_38", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B86_B", 
+            "weight": 0
+        }, 
+        "276": {
+            "destination": "DS_230kv_39", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B86_B", 
+            "weight": 0
+        }, 
+        "277": {
+            "destination": "XNODE_B86_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_39", 
+            "weight": 0
+        }, 
+        "278": {
+            "destination": "PCB_230kv_1p_13", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_39", 
+            "weight": 0
+        }, 
+        "279": {
+            "destination": "DS_230kv_39", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_13", 
+            "weight": 0
+        }, 
+        "28": {
+            "destination": "CVT_230kv_AMAL1", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_47", 
+            "weight": 0
+        }, 
+        "280": {
+            "destination": "PCB_230kv_1p_14", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_13", 
+            "weight": 0
+        }, 
+        "281": {
+            "destination": "PCB_230kv_1p_13", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_14", 
+            "weight": 0
+        }, 
+        "282": {
+            "destination": "PCB_230kv_1p_15", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_14", 
+            "weight": 0
+        }, 
+        "283": {
+            "destination": "PCB_230kv_1p_14", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_15", 
+            "weight": 0
+        }, 
+        "284": {
+            "destination": "CT_230kv_23", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_15", 
+            "weight": 0
+        }, 
+        "285": {
+            "destination": "PCB_230kv_1p_15", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_23", 
+            "weight": 0
+        }, 
+        "286": {
+            "destination": "CT_230kv_24", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_23", 
+            "weight": 0
+        }, 
+        "287": {
+            "destination": "CT_230kv_23", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_24", 
+            "weight": 0
+        }, 
+        "288": {
+            "destination": "CT_230kv_25", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_24", 
+            "weight": 0
+        }, 
+        "289": {
+            "destination": "CT_230kv_24", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_25", 
+            "weight": 0
+        }, 
+        "29": {
+            "destination": "AMADEO_L1", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_AMAL1", 
+            "weight": 0
+        }, 
+        "290": {
+            "destination": "CT_230kv_26", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_25", 
+            "weight": 0
+        }, 
+        "291": {
+            "destination": "CT_230kv_25", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_26", 
+            "weight": 0
+        }, 
+        "292": {
+            "destination": "CT_230kv_27", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_26", 
+            "weight": 0
+        }, 
+        "293": {
+            "destination": "CT_230kv_26", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_27", 
+            "weight": 0
+        }, 
+        "294": {
+            "destination": "DS_230kv_40", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_27", 
+            "weight": 0
+        }, 
+        "295": {
+            "destination": "CT_230kv_27", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_40", 
+            "weight": 0
+        }, 
+        "296": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_40", 
+            "weight": 0
+        }, 
+        "297": {
+            "destination": "DS_230kv_40", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_B", 
+            "weight": 0
+        }, 
+        "298": {
+            "destination": "CVT_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "G3_SLPGC", 
+            "weight": 0
+        }, 
+        "299": {
+            "destination": "CVT_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "LA_10", 
+            "weight": 0
+        }, 
+        "3": {
+            "destination": "DS_230kv_41", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_03", 
+            "weight": 0
+        }, 
+        "30": {
+            "destination": "PCB_230kv_3p_04", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_12", 
+            "weight": 0
+        }, 
+        "300": {
+            "destination": "DS_230kv_44", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_07", 
+            "weight": 0
+        }, 
+        "301": {
+            "destination": "CVT_230kv_07", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_44", 
+            "weight": 0
+        }, 
+        "302": {
+            "destination": "XNODE_B86_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_44", 
+            "weight": 0
+        }, 
+        "303": {
+            "destination": "G1_SCPS", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "304": {
+            "destination": "G2_SCPS", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "305": {
+            "destination": "G3_SLPGC", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "306": {
+            "destination": "G4_STA_RITA_L1", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "307": {
+            "destination": "G5_STA_RITA_L2", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "308": {
+            "destination": "PHIL_STEEL_CORP", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "309": {
+            "destination": "CALACA_LOCAL", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "31": {
+            "destination": "DS_230kv_12", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_04", 
+            "weight": 0
+        }, 
+        "310": {
+            "destination": "SEM_CAL_ASSETS", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "311": {
+            "destination": "BACNOTAN_STEEL", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "312": {
+            "destination": "AMADEO_L2", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "313": {
+            "destination": "AMADEO_L1", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "314": {
+            "destination": "BINAN", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "315": {
+            "destination": "STA_ROSA", 
+            "link_capacity": 1, 
+            "origin": "CTRL_BLDG", 
+            "weight": 0
+        }, 
+        "32": {
+            "destination": "DS_230kv_11", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_04", 
+            "weight": 0
+        }, 
+        "33": {
+            "destination": "PCB_230kv_3p_04", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_11", 
+            "weight": 0
+        }, 
+        "34": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_11", 
+            "weight": 0
+        }, 
+        "35": {
+            "destination": "DS_230kv_11", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "36": {
+            "destination": "CVT_230kv_04", 
+            "link_capacity": 1, 
+            "origin": "G2_SCPS", 
+            "weight": 0
+        }, 
+        "37": {
+            "destination": "CVT_230kv_05", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_04", 
+            "weight": 0
+        }, 
+        "38": {
+            "destination": "CVT_230kv_06", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_05", 
+            "weight": 0
+        }, 
+        "39": {
+            "destination": "DS_230kv_43", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_06", 
+            "weight": 0
+        }, 
+        "4": {
+            "destination": "XNODE_B83_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_41", 
+            "weight": 0
+        }, 
+        "40": {
+            "destination": "XNODE_B81_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_43", 
+            "weight": 0
+        }, 
+        "41": {
+            "destination": "DS_230kv_26", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B81_B", 
+            "weight": 0
+        }, 
+        "42": {
+            "destination": "DS_230kv_27", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B81_B", 
+            "weight": 0
+        }, 
+        "43": {
+            "destination": "XNODE_B81_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_26", 
+            "weight": 0
+        }, 
+        "44": {
+            "destination": "XNODE_B81_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_27", 
+            "weight": 0
+        }, 
+        "45": {
+            "destination": "PCB_230kv_3p_12", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_27", 
+            "weight": 0
+        }, 
+        "46": {
+            "destination": "DS_230kv_27", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_12", 
+            "weight": 0
+        }, 
+        "47": {
+            "destination": "DS_230kv_28", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_12", 
+            "weight": 0
+        }, 
+        "48": {
+            "destination": "PCB_230kv_3p_12", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_28", 
+            "weight": 0
+        }, 
+        "49": {
+            "destination": "BUS_230kV_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_28", 
+            "weight": 0
+        }, 
+        "5": {
+            "destination": "DS_230kv_14", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B83_B", 
+            "weight": 0
+        }, 
+        "50": {
+            "destination": "DS_230kv_28", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_B", 
+            "weight": 0
+        }, 
+        "51": {
+            "destination": "PCB_230kv_3p_11", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_26", 
+            "weight": 0
+        }, 
+        "52": {
+            "destination": "DS_230kv_26", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_11", 
+            "weight": 0
+        }, 
+        "53": {
+            "destination": "DS_230kv_25", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_11", 
+            "weight": 0
+        }, 
+        "54": {
+            "destination": "PCB_230kv_3p_11", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_25", 
+            "weight": 0
+        }, 
+        "55": {
+            "destination": "XNODE_B81_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_25", 
+            "weight": 0
+        }, 
+        "56": {
+            "destination": "DS_230kv_25", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B81_A", 
+            "weight": 0
+        }, 
+        "57": {
+            "destination": "DS_230kv_24", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B81_A", 
+            "weight": 0
+        }, 
+        "58": {
+            "destination": "XNODE_B81_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_24", 
+            "weight": 0
+        }, 
+        "59": {
+            "destination": "DS_230kv_49", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B81_A", 
+            "weight": 0
+        }, 
+        "6": {
+            "destination": "DS_230kv_15", 
+            "link_capacity": 1, 
+            "origin": "XNODE_B83_B", 
+            "weight": 0
+        }, 
+        "60": {
+            "destination": "XNODE_B81_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_49", 
+            "weight": 0
+        }, 
+        "61": {
+            "destination": "DS_230kv_49", 
+            "link_capacity": 1, 
+            "origin": "LA_05", 
+            "weight": 0
+        }, 
+        "62": {
+            "destination": "CVT_230kv_SROSA", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_49", 
+            "weight": 0
+        }, 
+        "63": {
+            "destination": "STA_ROSA", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_SROSA", 
+            "weight": 0
+        }, 
+        "64": {
+            "destination": "PCB_230kv_3p_10", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_24", 
+            "weight": 0
+        }, 
+        "65": {
+            "destination": "DS_230kv_24", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_10", 
+            "weight": 0
+        }, 
+        "66": {
+            "destination": "DS_230kv_23", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_10", 
+            "weight": 0
+        }, 
+        "67": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_23", 
+            "weight": 0
+        }, 
+        "68": {
+            "destination": "DS_230kv_23", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "69": {
+            "destination": "DS_230kv_03", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "7": {
+            "destination": "XNODE_B83_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_14", 
+            "weight": 0
+        }, 
+        "70": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_03", 
+            "weight": 0
+        }, 
+        "71": {
+            "destination": "CT_230kv_33", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_03", 
+            "weight": 0
+        }, 
+        "72": {
+            "destination": "DS_230kv_03", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_33", 
+            "weight": 0
+        }, 
+        "73": {
+            "destination": "CT_230kv_34", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_33", 
+            "weight": 0
+        }, 
+        "74": {
+            "destination": "CT_230kv_33", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_34", 
+            "weight": 0
+        }, 
+        "75": {
+            "destination": "CT_230kv_35", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_34", 
+            "weight": 0
+        }, 
+        "76": {
+            "destination": "CT_230kv_34", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_35", 
+            "weight": 0
+        }, 
+        "77": {
+            "destination": "PCB_230kv_1p_19", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_35", 
+            "weight": 0
+        }, 
+        "78": {
+            "destination": "CT_230kv_35", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_19", 
+            "weight": 0
+        }, 
+        "79": {
+            "destination": "PCB_230kv_1p_20", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_19", 
+            "weight": 0
+        }, 
+        "8": {
+            "destination": "XNODE_B83_B", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_15", 
+            "weight": 0
+        }, 
+        "80": {
+            "destination": "PCB_230kv_1p_19", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_20", 
+            "weight": 0
+        }, 
+        "81": {
+            "destination": "PCB_230kv_1p_21", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_20", 
+            "weight": 0
+        }, 
+        "82": {
+            "destination": "PCB_230kv_1p_20", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_21", 
+            "weight": 0
+        }, 
+        "83": {
+            "destination": "CT_230kv_36", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_1p_21", 
+            "weight": 0
+        }, 
+        "84": {
+            "destination": "PCB_230kv_1p_21", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_36", 
+            "weight": 0
+        }, 
+        "85": {
+            "destination": "CT_230kv_37", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_36", 
+            "weight": 0
+        }, 
+        "86": {
+            "destination": "CT_230kv_36", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_37", 
+            "weight": 0
+        }, 
+        "87": {
+            "destination": "CT_230kv_38", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_37", 
+            "weight": 0
+        }, 
+        "88": {
+            "destination": "CT_230kv_37", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_38", 
+            "weight": 0
+        }, 
+        "89": {
+            "destination": "DS_230kv_04", 
+            "link_capacity": 1, 
+            "origin": "CT_230kv_38", 
+            "weight": 0
+        }, 
+        "9": {
+            "destination": "PCB_230kv_3p_06", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_15", 
+            "weight": 0
+        }, 
+        "90": {
+            "destination": "CT_230kv_38", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_04", 
+            "weight": 0
+        }, 
+        "91": {
+            "destination": "DS_230kv_45", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_04", 
+            "weight": 0
+        }, 
+        "92": {
+            "destination": "DS_230kv_04", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_45", 
+            "weight": 0
+        }, 
+        "93": {
+            "destination": "DS_230kv_45", 
+            "link_capacity": 1, 
+            "origin": "LA_01", 
+            "weight": 0
+        }, 
+        "94": {
+            "destination": "CVT_230kv_BACNO", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_45", 
+            "weight": 0
+        }, 
+        "95": {
+            "destination": "BACNOTAN_STEEL", 
+            "link_capacity": 1, 
+            "origin": "CVT_230kv_BACNO", 
+            "weight": 0
+        }, 
+        "96": {
+            "destination": "DS_230kv_05", 
+            "link_capacity": 1, 
+            "origin": "BUS_230kV_A", 
+            "weight": 0
+        }, 
+        "97": {
+            "destination": "BUS_230kV_A", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_05", 
+            "weight": 0
+        }, 
+        "98": {
+            "destination": "PCB_230kv_3p_01", 
+            "link_capacity": 1, 
+            "origin": "DS_230kv_05", 
+            "weight": 0
+        }, 
+        "99": {
+            "destination": "DS_230kv_05", 
+            "link_capacity": 1, 
+            "origin": "PCB_230kv_3p_01", 
+            "weight": 0
+        }
+    }, 
+    "sysinp_setup": {
+        "G1_SCPS": {
+            "capacity_fraction": 0.1683501684, 
+            "commodity_type": "electricity", 
+            "input_capacity": 300
+        }, 
+        "G2_SCPS": {
+            "capacity_fraction": 0.1683501684, 
+            "commodity_type": "electricity", 
+            "input_capacity": 300
+        }, 
+        "G3_SLPGC": {
+            "capacity_fraction": 0.0, 
+            "commodity_type": "electricity", 
+            "input_capacity": 0
+        }, 
+        "G4_STA_RITA_L1": {
+            "capacity_fraction": 0.1851851852, 
+            "commodity_type": "electricity", 
+            "input_capacity": 330
+        }, 
+        "G5_STA_RITA_L2": {
+            "capacity_fraction": 0.4781144781, 
+            "commodity_type": "electricity", 
+            "input_capacity": 852
+        }
+    }, 
+    "sysout_setup": {
+        "AMADEO_L1": {
+            "capacity_fraction": 0.2255892256, 
+            "output_node_capacity": 402, 
+            "priority": 1, 
+            "production_node": "CVT_230kv_AMAL1"
+        }, 
+        "AMADEO_L2": {
+            "capacity_fraction": 0.2104377104, 
+            "output_node_capacity": 375, 
+            "priority": 2, 
+            "production_node": "CVT_230kv_AMAL2"
+        }, 
+        "BACNOTAN_STEEL": {
+            "capacity_fraction": 0.0359147026, 
+            "output_node_capacity": 64, 
+            "priority": 5, 
+            "production_node": "CVT_230kv_BACNO"
+        }, 
+        "BINAN": {
+            "capacity_fraction": 0.2379349046, 
+            "output_node_capacity": 424, 
+            "priority": 4, 
+            "production_node": "CVT_230kv_BINAN"
+        }, 
+        "CALACA_LOCAL": {
+            "capacity_fraction": 0.0314253648, 
+            "output_node_capacity": 56, 
+            "priority": 7, 
+            "production_node": "PTR_100MVA"
+        }, 
+        "PHIL_STEEL_CORP": {
+            "capacity_fraction": 0.0022446689, 
+            "output_node_capacity": 4, 
+            "priority": 8, 
+            "production_node": "PTR_50MVA"
+        }, 
+        "SEM_CAL_ASSETS": {
+            "capacity_fraction": 0.0056116723, 
+            "output_node_capacity": 10, 
+            "priority": 6, 
+            "production_node": "DS_230kv_43"
+        }, 
+        "STA_ROSA": {
+            "capacity_fraction": 0.2508417508, 
+            "output_node_capacity": 447, 
+            "priority": 3, 
+            "production_node": "CVT_230kv_SROSA"
+        }
+    }
+}

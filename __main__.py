@@ -51,7 +51,8 @@ def main():
     rootLogger.info('Start')
 
     configuration_file_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "simulation_setup/scenario_ps_test_2.json"))
+        os.path.join(os.path.dirname(__file__), "simulation_setup/test_ps.json"))
+    print(configuration_file_path )
 
     rootLogger.info('New')
     config = Configuration(configuration_file_path)

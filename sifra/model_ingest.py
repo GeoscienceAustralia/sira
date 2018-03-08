@@ -1,5 +1,6 @@
 import pandas as pd
 import copy
+import json
 from sifra.modelling.iodict import IODict
 from sifra.modelling.infrastructure_system import IFSystemFactory
 from sifra.modelling.component import (Component, ConnectionValues)
@@ -15,6 +16,15 @@ def ingest_model(config):
     extention = os.path.splitext(config.SYS_CONF_FILE)[1][1:].strip().lower()
 
     if extention == 'json':
+
+        damage_state_df_file = os.path.join(os.getcwd(),
+                                          config.INPUT_DIR_NAME,
+                                          'damage_state_def.json')
+
+        with open(damage_state_df_file, 'r') as f:
+            damage_state_df = json.load(f)
+
+
         return read_model_from_json(config)
     elif extention == 'xlsx':
         return read_model_from_xlxs(config)
