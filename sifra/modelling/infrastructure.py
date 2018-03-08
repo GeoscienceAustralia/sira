@@ -9,7 +9,7 @@ from sifra.modelling.infrastructure_model import Model
 from sifra.modelling.iodict import IODict
 
 
-class IFSystemFactory(object):
+class InfrastructureFactory(object):
     @staticmethod
     def create_model(config):
         if config['system_class'].lower() == 'substation':
@@ -18,7 +18,7 @@ class IFSystemFactory(object):
             return PowerStation(**config)
 
 
-class IFSystem(Model):
+class Infrastructure(Model):
     """
     The top level representation of a system that can respond to a
     range of hazards. It encapsulates a number of components that are
@@ -43,7 +43,7 @@ class IFSystem(Model):
         Construct the infrastructure object
         :param kwargs: Objects making up the infrastructure
         """
-        super(IFSystem, self).__init__(**kwargs)
+        super(Infrastructure, self).__init__(**kwargs)
 
         if not getattr(self, "components", None):
             self.components = IODict()
@@ -354,7 +354,7 @@ class IFSystem(Model):
             yield component.component_class
 
 
-class SubStation(IFSystem):
+class SubStation(Infrastructure):
     def __init__(self, **kwargs):
         super(SubStation, self).__init__(**kwargs)
         # Initiate the substation, note: this may not have been tested in this
@@ -371,7 +371,7 @@ class SubStation(IFSystem):
             'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]}
 
 
-class PowerStation(IFSystem):
+class PowerStation(Infrastructure):
     def __init__(self, **kwargs):
         super(PowerStation, self).__init__(**kwargs)
         # Initiate the power station values, which have been used in all current
@@ -390,7 +390,7 @@ class PowerStation(IFSystem):
             'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
         }
 
-class PotableWaterTreatmentPlant(IFSystem):
+class PotableWaterTreatmentPlant(Infrastructure):
     def __init__(self, **kwargs):
         super(PotableWaterTreatmentPlant, self).__init__(**kwargs)
         # Initiate the water treatment plant values, which have been used in all current

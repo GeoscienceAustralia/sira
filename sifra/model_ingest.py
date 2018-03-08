@@ -2,7 +2,7 @@ import pandas as pd
 import copy
 import json
 from sifra.modelling.iodict import IODict
-from sifra.modelling.infrastructure_system import IFSystemFactory
+from sifra.modelling.infrastructure import InfrastructureFactory
 from sifra.modelling.component import (Component, ConnectionValues)
 from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
                                             Level0Response, Level0Recovery,
@@ -40,10 +40,19 @@ def read_model_from_json(config):
     :return:
     """
     component_dict = {}
-    algorithm_factory = AlgorithmFactory()
+
+    algorithm = AlgorithmFactory()
+    infrastructure_values = None
 
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
+
+    config.SYS_CONF_FILE
+    with open(config.SYS_CONF_FILE, 'r') as f:
+        config = json.load(f)
+
+    return InfrastructureFactory.create_model(infrastructure_values), algorithm
+
 
 
 def read_model_from_xlxs(config):
@@ -58,41 +67,41 @@ def read_model_from_xlxs(config):
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
 
-    damage_state_df = pd.read_excel(
+    damage_state_def = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='damage_state_def',
         index_col=[0, 1], header=0,
         skiprows=0, skipinitialspace=True)
 
-    node_conn_df = pd.read_excel(
+    component_connections = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='component_connections',
         index_col=None, header=0,
         skiprows=0, skipinitialspace=True)
 
-    comp_df = pd.read_excel(
+    component_list = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='component_list',
         index_col='component_id', header=0,
         skiprows=0, skipinitialspace=True)
 
-    sysout_setup = pd.read_excel(
+    output_setup = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='output_setup',
         index_col='output_node', header=0,
         skiprows=0, skipinitialspace=True).sort_values(by='priority', ascending=True)
 
-    sysinp_setup = pd.read_excel(
+    supply_setup = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='supply_setup',
         index_col='input_node', header=0,
         skiprows=0, skipinitialspace=True)
 
-    fragility_data = pd.read_excel(
+    comp_type_dmg_algo = pd.read_excel(
         config.SYS_CONF_FILE, sheet_name='comp_type_dmg_algo',
         index_col=[0, 1], header=0,
         skiprows=0, skipinitialspace=True)
 
     damage_def_dict = {}
-    for index, damage_def in damage_state_df.iterrows():
+    for index, damage_def in damage_state_def.iterrows():
         damage_def_dict[index] = damage_def
 
-    for index, damage_state in fragility_data.iterrows():
+    for index, damage_state in comp_type_dmg_algo.iterrows():
         component_type = index[0]
 
         if component_type not in component_dict:
@@ -117,14 +126,8 @@ def read_model_from_xlxs(config):
         response_params['damage_ratio'] = damage_state['damage_ratio']
         response_params['functionality'] = damage_state['functionality']
         response_params['fragility_source'] = damage_state['fragility_source']
-        try:
-            response_params['damage_state_description'] = damage_def_state['damage_state_definition']
-        except UnboundLocalError:
-            rootLogger.info("damage_def_state['damage_state_definition'] not defined for " + str(index)+" " + str(damage_state))
-        except KeyError:
-            rootLogger.info(
-                "damage_def_state['damage_state_definition'] not defined for " + str(index) + " " + str(damage_state))
-
+        # response_params['damage_state_description'] = damage_def_state['damage_state_definition']
+        print(response_params)
         if damage_state['damage_function'] == 'Lognormal':
             # translate the column names
             response_params['median'] = damage_state['damage_median']
@@ -153,14 +156,14 @@ def read_model_from_xlxs(config):
         algorithm_factory.add_response_algorithm(component_type,
                                                  'earthquake',
                                                  component_dict[component_type]['frag_func'])
-
+        print("ALGO: "+ str(component_dict[component_type]['frag_func']))
         algorithm_factory.add_recovery_algorithm(component_type,
                                                  'earthquake',
                                                  component_dict[component_type]['recovery_func'])
 
     # add the other component attributes and make a component dict
     system_components = {}
-    for component_id, component_details in comp_df.iterrows():
+    for component_id, component_details in component_list.iterrows():
         component_type = component_details['component_type']
         if component_type in component_dict:
             component_values = copy.deepcopy(component_dict[component_type])
@@ -179,7 +182,7 @@ def read_model_from_xlxs(config):
         system_components[component_id] = Component(**component_values)
 
     # now we add children!
-    for index, connection_values in node_conn_df.iterrows():
+    for index, connection_values in component_connections.iterrows():
         component_id = connection_values['origin']
         system_component = system_components[component_id]
         destiny = system_component.destination_components
@@ -197,7 +200,7 @@ def read_model_from_xlxs(config):
 
     # create the supply and output node dictionaries
     supply_nodes = {}
-    for index, supply_values in sysinp_setup.iterrows():
+    for index, supply_values in supply_setup.iterrows():
         sv_dict = {}
         sv_dict['input_capacity'] = supply_values['input_capacity']
         sv_dict['capacity_fraction'] = float(supply_values['capacity_fraction'])
@@ -207,7 +210,7 @@ def read_model_from_xlxs(config):
     if_system_values['supply_nodes'] = supply_nodes
 
     output_nodes = {}
-    for index, output_values in sysout_setup.iterrows():
+    for index, output_values in output_setup.iterrows():
         op_dict = {}
         op_dict['production_node']=output_values['production_node']
         op_dict['output_node_capacity'] = output_values['output_node_capacity']
@@ -220,4 +223,4 @@ def read_model_from_xlxs(config):
     # set the system class
     if_system_values['system_class'] = system_class
 
-    return IFSystemFactory.create_model(if_system_values), algorithm_factory
+    return InfrastructureFactory.create_model(if_system_values), algorithm_factory
