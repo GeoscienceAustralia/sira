@@ -9,7 +9,7 @@ from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
                                             DamageAlgorithm, RecoveryState,
                                             RecoveryAlgorithm, AlgorithmFactory)
 import os
-from sifra.logger import rootLogger
+
 
 def ingest_model(config):
 
@@ -29,7 +29,7 @@ def ingest_model(config):
     elif extention == 'xlsx':
         return read_model_from_xlxs(config)
     else:
-        rootLogger.critical("Invalid model file type! Accepted types are json or xlsx.")
+        # rootLogger.critical("Invalid model file type! Accepted types are json or xlsx.")
         raise ValueError('Invalid model file type! Accepted types are json or xlsx. File supplied: '+config.SYS_CONF_FILE)
 
 
@@ -42,7 +42,7 @@ def read_model_from_json(config):
     component_dict = {}
 
     algorithm = AlgorithmFactory()
-    infrastructure_values = None
+    infrastructure = None
 
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
@@ -51,7 +51,8 @@ def read_model_from_json(config):
     with open(config.SYS_CONF_FILE, 'r') as f:
         config = json.load(f)
 
-    return InfrastructureFactory.create_model(infrastructure_values), algorithm
+
+    return InfrastructureFactory.create_model(infrastructure), algorithm
 
 
 
@@ -191,7 +192,7 @@ def read_model_from_xlxs(config):
         edge_values = {}
         edge_values['link_capacity'] = float(connection_values['link_capacity'])
         edge_values['weight'] = float(connection_values['weight'])
-        destiny[connection_values['destination']] = ConnectionValues(**edge_values)
+        # destiny[connection_values['destination']] = ConnectionValues(**edge_values)
 
     if_system_values = dict()
     if_system_values['name'] = system_class + " : " \

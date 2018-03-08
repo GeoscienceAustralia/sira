@@ -2,7 +2,6 @@ import numpy as np
 import time
 from datetime import timedelta
 
-from sifra.logger import rootLogger
 from sifra.modelling.structural import Element
 from sifra.modelling.component_graph import ComponentGraph
 from sifra.modelling.infrastructure_model import Model

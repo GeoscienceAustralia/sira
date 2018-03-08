@@ -1,5 +1,3 @@
-from sifra.logger import rootLogger
-
 import igraph
 
 
@@ -99,9 +97,7 @@ class ComponentGraph(object):
             # we need to use the two vertice id's to get the edge id
             edge_id = comp_graph.get_eid(edge[0], edge[1])
             # log the names of the vertices with the capacity of the edge
-            rootLogger.info("{}->{} = {}".format(comp_graph.vs[edge[0]]['name'],
-                                           comp_graph.vs[edge[1]]['name'],
-                                           comp_graph.es[edge_id]['capacity']))
+
 
     def maxflow(self, supply_comp_id, output_comp_id):
         """Computes the maximum flow between two nodes."""
