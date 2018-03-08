@@ -22,7 +22,7 @@ from sifra.modelling.hazard_levels import HazardLevels
 from sifra.modelling.system_topology import SystemTopology
 
 
-from sifra.logger import rootLogger
+
 
 
 # def run_scenario(config_file):
