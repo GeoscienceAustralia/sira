@@ -1,20 +1,50 @@
-import openpyxl
+import json
+from sifra.configuration import Configuration
+import pandas as pd
 
-# read excel file
-# remove the first three lines from the 5 requrired sheets
-# create a news sheet with name and format as described in the one
+jsonFileName="C:\\Users\\u12089\\Desktop\\sifra\\config_test.json"
+config = Configuration(jsonFileName)
+with open(config.SYS_CONF_FILE, 'r') as f:
+    model = json.load(f)
 
-def main():
-    fileName='C:\\Users\\u12089\\Desktop\\sifra\\models\potable_water_treatment_plant\\sysconfig_pwtp_400ML_delete.xlsx'
-    book = openpyxl.load_workbook(fileName)
-
-    required_sheets = ['component_list', 'component_connections', 'supply_setup', 'output_setup',
-                            'comp_type_dmg_algo', 'damage_state_def']
-    for sheet in book.sheetnames:
-        if sheet in required_sheets:
-            print(sheet)
-
+component_list = model['component_list']
+node_conn_df = model['node_conn_df']
+sysinp_setup = model['sysinp_setup']
+sysout_setup = model['sysout_setup']
+fragility_data = model['fragility_data']
 
 
-if __name__ == "__main__":
-    main()
+
+
+print('*******************************JSON***************************************************')
+
+
+damage_state_df = model['damage_state_df']
+
+for var in damage_state_df:
+    # index = (unicode(eval(var)[0]), unicode(eval(var)[1]))
+    # print(damage_state_df[var])
+    # print(pd.to_json(damage_state_df[var]))
+    break
+
+print('*******************************XLSX***************************************************')
+
+xlsxFileName = config.SYS_CONF_FILE.split('.')[0]+'.xlsx'
+damage_state_def = pd.read_excel(
+    xlsxFileName, sheet_name='damage_state_def',
+    index_col=[0, 1], header=0,
+    skiprows=0, skipinitialspace=True)
+
+damage_def_dict={}
+for index, damage_def in damage_state_def.iterrows():
+    # print(damage_def.values)
+
+    # print(damage_def.values)
+    # damage_def_dict[index] = damage_def
+    break
+
+from sifra.model_ingest import ingest_model
+
+
+config.SYS_CONF_FILE=xlsxFileName
+ingest_model(config)

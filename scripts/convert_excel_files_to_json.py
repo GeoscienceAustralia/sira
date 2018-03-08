@@ -5,7 +5,6 @@ import json
 
 def write_json_to_file(json_data, jsonFilePath):
 
-    print(json_data)
     parsed = json.loads(json_data)
     parsed = json.dumps(parsed, indent=4, sort_keys=True)
     obj = open(jsonFilePath, 'w')
@@ -33,6 +32,9 @@ def standardize_json_string(json_string):
                 standard_json_string += json_string[i]
         else:
             standard_json_string += json_string[i]
+
+        # Note: json object cant have python lists as keys
+        # standard_json_string= standard_json_string.replace("\"[","[").replace("]\"","]")
     return standard_json_string
 
 
@@ -90,7 +92,6 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
 
 
     json_file_path = os.path.join(parent_folder_name, file_name + '.json')
-    print(json_file_path )
     write_json_to_file(main_json_obj, json_file_path)
 
 
