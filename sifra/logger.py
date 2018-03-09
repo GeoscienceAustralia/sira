@@ -60,4 +60,4 @@ class Logger():
         self.logger.critical(msg)
 
 
-
+rootLogger = Logger()

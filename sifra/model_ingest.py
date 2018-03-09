@@ -128,7 +128,7 @@ def read_model_from_xlxs(config):
         response_params['functionality'] = damage_state['functionality']
         response_params['fragility_source'] = damage_state['fragility_source']
         # response_params['damage_state_description'] = damage_def_state['damage_state_definition']
-        print(response_params)
+
         if damage_state['damage_function'] == 'Lognormal':
             # translate the column names
             response_params['median'] = damage_state['damage_median']
@@ -157,7 +157,6 @@ def read_model_from_xlxs(config):
         algorithm_factory.add_response_algorithm(component_type,
                                                  'earthquake',
                                                  component_dict[component_type]['frag_func'])
-        print("ALGO: "+ str(component_dict[component_type]['frag_func']))
         algorithm_factory.add_recovery_algorithm(component_type,
                                                  'earthquake',
                                                  component_dict[component_type]['recovery_func'])
@@ -186,13 +185,13 @@ def read_model_from_xlxs(config):
     for index, connection_values in component_connections.iterrows():
         component_id = connection_values['origin']
         system_component = system_components[component_id]
-        destiny = system_component.destination_components
-        if not destiny:
-            destiny = system_component.destination_components = {}
+
+        if not system_component.destination_components:
+            system_component.destination_components = {}
         edge_values = {}
         edge_values['link_capacity'] = float(connection_values['link_capacity'])
         edge_values['weight'] = float(connection_values['weight'])
-        # destiny[connection_values['destination']] = ConnectionValues(**edge_values)
+        system_component.destination_components[connection_values['destination']] = ConnectionValues(**edge_values)
 
     if_system_values = dict()
     if_system_values['name'] = system_class + " : " \
