@@ -6,7 +6,7 @@ from sifra.modelling.structural import Element
 from sifra.modelling.component_graph import ComponentGraph
 from sifra.modelling.infrastructure_model import Model
 from sifra.modelling.iodict import IODict
-
+from sifra.logger import rootLogger
 
 class InfrastructureFactory(object):
     @staticmethod

@@ -20,7 +20,7 @@ from model_ingest import read_model_from_xlxs
 from sifra.scenario import Scenario
 from sifra.modelling.hazard_levels import HazardLevels
 from sifra.modelling.system_topology import SystemTopology
-
+from sifra.logger import rootLogger
 
 
 
