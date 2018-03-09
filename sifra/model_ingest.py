@@ -51,7 +51,6 @@ def read_model_from_json(config):
     with open(config.SYS_CONF_FILE, 'r') as f:
         config = json.load(f)
 
-
     return InfrastructureFactory.create_model(infrastructure), algorithm
 
 
