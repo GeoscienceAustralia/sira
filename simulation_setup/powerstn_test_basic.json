@@ -8,7 +8,7 @@
         "PGA_STEP": 0.1
     }, 
     "Input": {
-        "INPUT_DIR_NAME": "sifra/models/powerstation_coal/"
+        "INPUT_DIR_NAME": "models/powerstation_coal/"
     }, 
     "Output": {
         "OUTPUT_DIR_NAME": "output/Test_PS_ver020"

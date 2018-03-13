@@ -1,6 +1,8 @@
+import os
 import pandas as pd
 import copy
 import json
+from sifra.logger import rootLogger
 from sifra.modelling.iodict import IODict
 from sifra.modelling.infrastructure import InfrastructureFactory
 from sifra.modelling.component import (Component, ConnectionValues)
@@ -8,27 +10,24 @@ from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
                                             Level0Response, Level0Recovery,
                                             DamageAlgorithm, RecoveryState,
                                             RecoveryAlgorithm, AlgorithmFactory)
-import os
 
 
 def ingest_model(config):
-
+    """
+    Reads a model file into python objects
+    :param config: path to json or xlsx file containing system model
+    :return:    -List of algorithms for each component in particular damage state
+                -Object of class infrastructure
+    """
     extension = os.path.splitext(config.SYS_CONF_FILE)[1][1:].strip().lower()
 
     if extension == 'json':
-
-        damage_state_df_file = os.path.join(os.getcwd(),
-                                            config.INPUT_DIR_NAME,
-                                            config.SYS_CONF_FILE_NAME)
-
-        with open(damage_state_df_file, 'r') as f:
-            damage_state_df = json.load(f)
-
         return read_model_from_json(config)
+
     elif extension == 'xlsx':
         return read_model_from_xlxs(config)
     else:
-        # rootLogger.critical("Invalid model file type! Accepted types are json or xlsx.")
+        rootLogger.critical("Invalid model file type! Accepted types are json or xlsx.")
         raise ValueError('Invalid model file type! Accepted types are json or xlsx. File supplied: '+config.SYS_CONF_FILE)
 
 
@@ -186,14 +185,6 @@ def read_model_from_json(config):
 
     # set the system class
     if_system_values['system_class'] = system_class
-
-    # print(if_system_values.keys())
-    # print(if_system_values['output_nodes'])
-    # print(if_system_values['system_class'])
-    # print(if_system_values['name'])
-    # print(if_system_values['supply_nodes'])
-    #
-    # print(if_system_values['components'].keys())
 
     return InfrastructureFactory.create_model(if_system_values), algorithm_factory
 
