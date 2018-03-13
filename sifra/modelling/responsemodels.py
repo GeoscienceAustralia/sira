@@ -208,6 +208,7 @@ class RecoveryAlgorithm(Base):
         return 1.0
 
 
+# entry point
 class AlgorithmFactory(object):
     def __init__(self):
         self.response_algorithms = dict()
