@@ -9,7 +9,7 @@ from sifra.model_ingest import ingest_model
 from sifra.modelling.system_topology import SystemTopology
 from sifra.infrastructure_response import calculate_response, post_processing
 
-jsonFileName = "C:\\Users\\u12089\\Desktop\\sifra\\config_test.json"
+jsonFileName = "config_test.json"
 config = Configuration(jsonFileName)
 scenario=Scenario(config)
 infrastructure, algorithm_factory = ingest_model(config)

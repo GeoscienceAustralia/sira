@@ -37,9 +37,15 @@ class Configuration:
         self.SYS_CONF_FILE_NAME = config['System']['SYS_CONF_FILE_NAME']
 
         self.INPUT_DIR_NAME = config['Input']['INPUT_DIR_NAME']
-        self.SYS_CONF_FILE = os.path.join(os.getcwd(),
+
+        root = os.getcwd()
+        if 'sifra' in root:
+            root = os.path.dirname(root)
+
+        self.SYS_CONF_FILE = os.path.join(root,
                                           self.INPUT_DIR_NAME,
                                           self.SYS_CONF_FILE_NAME)
+
 
         self.OUTPUT_DIR_NAME = config['Output']['OUTPUT_DIR_NAME'] + self.SCENARIO_NAME
 
