@@ -38,9 +38,7 @@ class Configuration:
 
         self.INPUT_DIR_NAME = config['Input']['INPUT_DIR_NAME']
 
-        root = os.getcwd()
-        if 'sifra' in root:
-            root = os.path.dirname(root)
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
         self.SYS_CONF_FILE = os.path.join(root,
                                           self.INPUT_DIR_NAME,
