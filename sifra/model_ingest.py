@@ -13,9 +13,9 @@ import os
 
 def ingest_model(config):
 
-    extention = os.path.splitext(config.SYS_CONF_FILE)[1][1:].strip().lower()
+    extension = os.path.splitext(config.SYS_CONF_FILE)[1][1:].strip().lower()
 
-    if extention == 'json':
+    if extension == 'json':
 
         damage_state_df_file = os.path.join(os.getcwd(),
                                             config.INPUT_DIR_NAME,
@@ -25,7 +25,7 @@ def ingest_model(config):
             damage_state_df = json.load(f)
 
         return read_model_from_json(config)
-    elif extention == 'xlsx':
+    elif extension == 'xlsx':
         return read_model_from_xlxs(config)
     else:
         # rootLogger.critical("Invalid model file type! Accepted types are json or xlsx.")
@@ -174,6 +174,13 @@ def read_model_from_json(config):
         op_dict['capacity_fraction'] = float(sysout_setup[index]['capacity_fraction'])
         op_dict['priority'] = sysout_setup[index]['priority']
         output_nodes[index] = op_dict
+
+    if_system_values['sys_dmg_states'] = []
+    for key in fragility_data:
+        state = eval(key)[1]
+        if state not in if_system_values['sys_dmg_states']:
+            if_system_values['sys_dmg_states'].append(state)
+    if_system_values['sys_dmg_states'].append('DS0 None')
 
     if_system_values['output_nodes'] = output_nodes
 
@@ -357,12 +364,11 @@ def read_model_from_xlxs(config):
     # set the system class
     if_system_values['system_class'] = system_class
 
-    # print(if_system_values.keys())
-    # print(if_system_values['output_nodes'])
-    # print(if_system_values['system_class'])
-    # print(if_system_values['name'])
-    # print(if_system_values['supply_nodes'])
-    #
-    # print(if_system_values['components'].keys())
+    if_system_values['sys_dmg_states'] = []
+    for index, damage_state in comp_type_dmg_algo.iterrows():
+        state = index[1]
+        if state not in if_system_values['sys_dmg_states']:
+            if_system_values['sys_dmg_states'].append(state)
+    if_system_values['sys_dmg_states'].append('DS0 None')
 
     return InfrastructureFactory.create_model(if_system_values), algorithm_factory
