@@ -24,6 +24,8 @@ from sifra.infrastructure_response import calculate_response, post_processing
 def main():
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--ifile", type=str,
+                        help="choose option for logging level from: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     parser.add_argument("-v", "--verbose",  type=str,
                         help="choose option for logging level from: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     args = parser.parse_args()
@@ -50,20 +52,19 @@ def main():
 
     rootLogger.info('Start')
 
-    configuration_file_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "simulation_setup/test_ps.json"))
-    print(configuration_file_path )
+    if args.ifile is not None:
+        configuration_file_path = args.ifile
+        config = Configuration(configuration_file_path)
+        scenario = Scenario(config)
+        infrastructure, algorithm_factory = ingest_model(config)
+        scenario.algorithm_factory = algorithm_factory
+        sys_topology_view = SystemTopology(infrastructure, scenario)
+        sys_topology_view.draw_sys_topology(viewcontext="as-built")
+        post_processing_list = calculate_response(scenario, infrastructure)
+        post_processing(infrastructure, scenario, post_processing_list)
+    else:
+        print("Input file not found: " + args.ifile )
 
-    rootLogger.info('New')
-    config = Configuration(configuration_file_path)
-    scenario = Scenario(config)
-
-    infrastructure, algorithm_factory = ingest_model(config)
-    scenario.algorithm_factory = algorithm_factory
-    sys_topology_view = SystemTopology(infrastructure, scenario)
-    sys_topology_view.draw_sys_topology(viewcontext="as-built")
-    post_processing_list = calculate_response(scenario, infrastructure)
-    post_processing(infrastructure, scenario, post_processing_list)
 
     rootLogger.info('End')
 

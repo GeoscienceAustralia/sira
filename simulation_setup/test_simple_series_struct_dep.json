@@ -8,7 +8,7 @@
         "PGA_STEP": 0.1
     }, 
     "Input": {
-        "INPUT_DIR_NAME": "models/test_structures/"
+        "INPUT_DIR_NAME": "sifra/models/test_structures/"
     }, 
     "Output": {
         "OUTPUT_DIR_NAME": "output/Test_Structure_Simple_Series_DEPENDENCY"
