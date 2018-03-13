@@ -8,7 +8,7 @@
         "PGA_STEP": 0.5
     }, 
     "Input": {
-        "INPUT_DIR_NAME": "models/test_structures/"
+        "INPUT_DIR_NAME": "models/substation/"
     }, 
     "Output": {
         "OUTPUT_DIR_NAME": "output/Scenario_test"
@@ -50,7 +50,7 @@
             "WWTP"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_simple_parallel.json"
+        "SYS_CONF_FILE_NAME": "sysconfig_ss_230kv.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 
