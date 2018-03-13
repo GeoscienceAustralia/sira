@@ -15,7 +15,7 @@ class Logger():
         if os.path.exists(os.path.join(os.getcwd(),'logs')):
             self.logPath = 'logs'
         else:
-            self.logPath = 'logs'
+            self.logPath = 'sifra/logs'
         # name of the file
         self.time_start = self.get_round_off_time()
 
