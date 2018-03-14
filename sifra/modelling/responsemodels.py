@@ -3,6 +3,23 @@ import scipy.stats as stats
 from structural import Info, Base, Element
 from sifra.modelling.structural import Element as _Element
 
+
+class Algorithm:
+
+    def factory(algo_name, response_params):
+        if algo_name == "Lognormal":
+            return LogNormalCDF(**response_params)
+        if algo_name == "Normal":
+            return NormalCDF(**response_params)
+        if algo_name == "StepFunc":
+            return StepFunc(**response_params)
+        if algo_name == "Level0Response":
+            return Level0Response()
+        raise ValueError("No response model "
+                         "matches {}".format(algo_name))
+
+    factory = staticmethod(factory)
+
 class XYPairs(Base):
     """
     A list of float values that implement a step function.

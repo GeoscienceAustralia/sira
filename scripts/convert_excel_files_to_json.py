@@ -88,8 +88,7 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
     damage_state_df = damage_state_df.to_json(orient='index')
     damage_state_df = standardize_json_string(damage_state_df)
 
-    main_json_obj='{ "component_list": '+component_list+',"node_conn_df": '+node_conn_df+', "sysinp_setup": '+sysinp_setup+', "sysout_setup": '+sysout_setup+', "fragility_data": '+fragility_data+', "damage_state_df": '+damage_state_df+'}'
-
+    main_json_obj = '{ "component_list": '+component_list+',"node_conn_df": '+node_conn_df+', "sysinp_setup": '+sysinp_setup+', "sysout_setup": '+sysout_setup+', "fragility_data": '+fragility_data+', "damage_state_df": '+damage_state_df+'}'
 
     json_file_path = os.path.join(parent_folder_name, file_name + '.json')
     write_json_to_file(main_json_obj, json_file_path)
@@ -98,8 +97,7 @@ def convert_to_json(excel_file_path, parent_folder_name, file_name):
 def main():
 
     model_file_paths = []
-    for root, dir_names, file_names in os.walk(os.getcwd()):
-
+    for root, dir_names, file_names in os.walk(os.path.dirname(os.getcwd())):
         for file_name in file_names:
             if file_name.endswith('.xlsx'):
                 if 'models' in root:

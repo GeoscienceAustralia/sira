@@ -116,7 +116,7 @@ class TestReadingExcelFile(ut.TestCase):
 
     def test_reading_data_from_comp_type_dmg_algo(self):
 
-        required_col_names = ['damage_median', 'damage_logstd', 'damage_ratio', 'functionality', 'minimum',
+        required_col_names = ['median', 'beta', 'damage_ratio', 'functionality', 'minimum',
          'sigma_1', 'sigma_2', 'recovery_mean', 'recovery_std', 'recovery_95percentile', 'fragility_source']
 
         for model_file in self.model_files:
@@ -142,8 +142,8 @@ class TestReadingExcelFile(ut.TestCase):
                                 "file name : " + model_file)
 
                 self.assertTrue(isinstance(int(damage_state['mode']), int))
-                self.assertTrue(isinstance(float(damage_state['damage_median']), float))
-                self.assertTrue(isinstance(float(damage_state['damage_logstd']), float))
+                self.assertTrue(isinstance(float(damage_state['median']), float))
+                self.assertTrue(isinstance(float(damage_state['beta']), float))
                 self.assertTrue(isinstance(float(damage_state['damage_ratio']), float))
                 self.assertTrue(isinstance(float(damage_state['functionality']), float))
                 self.assertTrue(isinstance(float(damage_state['recovery_mean']), float))
