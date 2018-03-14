@@ -38,12 +38,12 @@ print(pe_ds)
 
 
 # main program
-# jsonFileName = "config_test.json"
-# config = Configuration(jsonFileName)
-# scenario=Scenario(config)
-# infrastructure, algorithm_factory = ingest_model(config)
-# scenario.algorithm_factory = algorithm_factory
-# sys_topology_view = SystemTopology(infrastructure, scenario)
-# sys_topology_view.draw_sys_topology(viewcontext="as-built")
-# post_processing_list = calculate_response(scenario, infrastructure)
-# post_processing(infrastructure, scenario, post_processing_list)
+jsonFileName = "config_test.json"
+config = Configuration(jsonFileName)
+scenario=Scenario(config)
+infrastructure, algorithm_factory = ingest_model(config)
+scenario.algorithm_factory = algorithm_factory
+sys_topology_view = SystemTopology(infrastructure, scenario)
+sys_topology_view.draw_sys_topology(viewcontext="as-built")
+post_processing_list = calculate_response(scenario, infrastructure)
+post_processing(infrastructure, scenario, post_processing_list)

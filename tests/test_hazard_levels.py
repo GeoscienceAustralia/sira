@@ -4,7 +4,7 @@ import numpy as np
 
 from sifra.scenario import Scenario
 from sifra.modelling.hazard_levels import HazardLevels, HazardLevel
-from sifra.modelling.location import Location
+from sifra.modelling.component import Location
 from sifra.configuration import Configuration
 
 config_file = './simulation_setup/test_scenario_ps_coal.json'

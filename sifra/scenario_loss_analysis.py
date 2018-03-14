@@ -1,5 +1,5 @@
+# TODO need to move to new implementation of scenario and infrastructure
 from __future__ import print_function
-from sifraclasses import *
 
 import numpy as np
 import scipy.stats as stats

@@ -30,26 +30,6 @@ class TestInputConfFile(unittest. TestCase):
         for conf_file_path in self.conf_file_paths:
             self.assertEqual(exists(conf_file_path), True)
 
-    # def test_dose_file_have_all_required_properties(self):
-    #     self.assertEqual(len(self.conf), 26)
-
-    # def test_dose_file_have_all_required_properties(self):
-    #
-    #     list_of_required_setting=['SYSTEM_CLASSES','RESTORE_TIME_STEP','INPUT_DIR_NAME',
-    #                                                     'OUTPUT_DIR_NAME','FIT_PE_DATA','NUM_SAMPLES',
-    #                                                     'SYS_CONF_FILE_NAME','PGA_STEP','SYSTEM_SUBCLASS',
-    #                                                     'SYSTEM_CLASS','FIT_RESTORATION_DATA','TIME_UNIT',
-    #                                                     'PGA_MIN','PS_GEN_TECH','INTENSITY_MEASURE_UNIT',
-    #                                                     'RESTORE_TIME_MAX','MULTIPROCESS','SCENARIO_HAZARD_VALUES',
-    #                                                     'RESTORATION_STREAMS','RESTORE_PCT_CHKPOINTS','PGA_MAX',
-    #                                                     'INTENSITY_MEASURE_PARAM','RUN_CONTEXT','COMMODITY_FLOW_TYPES',
-    #                                                     'SCENARIO_NAME','SAVE_VARS_NPY]'].sort()
-    #
-    #     list_of_setting_read_from_file = [setting for setting in self.conf].sort()
-    #
-    #     self.assertEqual(list_of_required_setting, list_of_setting_read_from_file)
-    #
-
     def test_datatype_of_SCENARIO_NAME(self):
 
         for conf in self.confs:

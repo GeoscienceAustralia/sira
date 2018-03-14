@@ -6,15 +6,15 @@ palettes, and functions for customising and improving plot aesthetics
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import brewer2mpl
+import re
+
 mpl.rcParams['legend.numpoints'] = 2
 mpl.rcParams['xtick.direction'] = 'out'
 mpl.rcParams['ytick.direction'] = 'out'
 mpl.rcParams['font.family'] = 'Open Sans', 'sans-serif'
 mpl.rcParams['text.usetex'] = True
 
-import numpy as np
-import brewer2mpl
-import re
 
 # ----------------------------------------------------------------------------
 
@@ -22,13 +22,9 @@ COLR_DARK2 = brewer2mpl.get_map('Dark2', 'Qualitative', 8).mpl_colors
 COLR_SET1 = brewer2mpl.get_map('Set1', 'Qualitative', 9).mpl_colors
 COLR_SET2 = brewer2mpl.get_map('Set2', 'Qualitative', 8).mpl_colors
 COLR_SET3 = brewer2mpl.get_map('Set3', 'Qualitative', 12).mpl_colors
-# COLR_RDYLGN = brewer2mpl.get_map('RdYlGn', 'Diverging', 11).mpl_colors
 COLR_PAIR = brewer2mpl.get_map('Paired', 'Qualitative', 12).mpl_colors
-# COLR_SPECTRAL = brewer2mpl.get_map('Spectral', 'Diverging', 11).mpl_colors
 COLR_DS = [COLR_PAIR[9], COLR_PAIR[3], COLR_PAIR[1],
            COLR_PAIR[7], COLR_PAIR[5]]
-# COLR_MIX = COLR_SET1 + COLR_DARK2
-
 # ----------------------------------------------------------------------------
 
 
