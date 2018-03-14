@@ -3,35 +3,13 @@ matplotlib.use('Agg')
 
 import unittest as ut
 from sifra.model_ingest import read_model_from_xlxs
-from sifra.modelling.structural import jsonify
 from sifra.modelling.responsemodels import DamageAlgorithm
 from sifra.configuration import Configuration
 
 
 class TestIngestResponseModel(ut.TestCase):
-    def test_ingest_1(self):
-        test_conf_file_path = './simulation_setup/test_scenario_ps_coal.json'
 
-        test_conf = Configuration(test_conf_file_path)
 
-        if_system, _ = read_model_from_xlxs(test_conf)
-
-        # now jsonify
-        json_components = jsonify(if_system)
-
-        self.assertTrue(len(json_components) > 0)
-
-    def test_ingest_2(self):
-        test_conf_file_path = './simulation_setup/test_identical_comps.json'
-
-        test_conf = Configuration(test_conf_file_path)
-
-        if_system, _ = read_model_from_xlxs(test_conf)
-
-        # now jsonify
-        json_components = jsonify(if_system)
-
-        self.assertTrue(len(json_components) > 0)
 
     def test_algorithm_factory_population(self):
         # Damage and recovery algorithms are now separated
