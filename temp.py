@@ -8,33 +8,6 @@ from sifra.infrastructure_response import calculate_response, post_processing
 
 #test algorithms class and functions
 
-class DamageState():
-    """
-    The allocated damage state for a given component
-    """
-    damage_state = 'test damage state'
-    # damage_state_description = Element('str', 'A description of what the damage state means')
-    mode = 2
-    functionality = 1.1
-    # fragility_source = Element('str', 'The source of the parameter values')
-    damage_ratio = 0.1
-    hazard_intensity = 1
-
-
-
-damage_states = []
-damage_states.append(DamageState())
-damage_states.append(DamageState())
-damage_states.append(DamageState())
-
-pe_ds = np.zeros(len(damage_states))
-
-for offset, damage_state in enumerate(damage_states):
-    # if damage_state.mode != 1:
-    #     raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
-    pe_ds[offset] = damage_state.hazard_intensity
-
-print(pe_ds)
 
 
 # main program

@@ -132,8 +132,8 @@ def comp_recovery_given_haz(facility, compname, hazval, t,
 
     ct = compdict['component_type'][compname]
     
-    m = [fragdict['damage_median'][ct][ds] for ds in comptype_dmg_states]
-    b = [fragdict['damage_logstd'][ct][ds] for ds in comptype_dmg_states]
+    m = [fragdict['median'][ct][ds] for ds in comptype_dmg_states]
+    b = [fragdict['beta'][ct][ds] for ds in comptype_dmg_states]
     # fn  = sorted(fragdict['functionality'][ct].values(), reverse=True)
     comp_fn = component_response.loc[(compname, 'func_mean'), ('%0.3f'% hazval)]
     

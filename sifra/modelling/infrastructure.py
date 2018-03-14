@@ -32,11 +32,7 @@ class Infrastructure(Base):
     if_nominal_output = None
     system_class = None
 
-    sys_dmg_states = ['DS0 None',
-                      'DS1 Slight',
-                      'DS2 Moderate',
-                      'DS3 Extensive',
-                      'DS4 Complete']
+    sys_dmg_states = None
 
     def __init__(self, **kwargs):
         """
