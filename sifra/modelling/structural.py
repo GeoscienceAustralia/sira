@@ -1,6 +1,6 @@
 import inspect
 from copy import deepcopy
-from sifra.modelling.utils import jsonify, pythonify, class_getter
+from sifra.modelling.utils import class_getter
 
 
 class NoDefaultException(Exception):
@@ -65,59 +65,6 @@ class MultipleBasesOfTypeBaseError(ValueError):
     pass
 
 
-# def _merge_data_and_metadata(meta, data):
-#     """
-#     .. note:: It is pretty inefficient duplicating the data as much as we do in
-#         this method. It would be possible to do this based on the value alone
-#         (getting the json_desc as required) in the browser. The only trick is,
-#         being able to differentiate between a list and a dict in javascript.
-#     """
-#
-#     if not isinstance(data, dict):
-#         meta['_value'] = data
-#         return
-#
-#     if 'class' in data and meta['class'] != '.'.join(data['class']):
-#         if not issubclass(
-#                 class_getter(data['class']),
-#                 class_getter(meta['class'].rsplit('.', 1))):
-#             raise Exception('inconsisent class structure')
-#         meta.update(deepcopy(class_getter(data['class']).__json_desc__))
-#
-#     meta['_value'] = data
-#     for k, v in data.iteritems():
-#         if k == 'class' or k not in meta:
-#             continue
-#         if isinstance(v, dict):
-#             _merge_data_and_metadata(meta[k], v)
-#             if meta[k]['class'] == '__builtin__.dict':
-#                 meta[k]['_items'] = {}
-#                 for k1, v1 in v.iteritems():
-#                     # note that the following line implies that dicts can
-#                     # only contain classes that extend sifra.structural.Base, or
-#                     # at least have __json_desc__ defined
-#                     nextMeta = deepcopy(class_getter(v1['class']).__json_desc__)
-#                     meta[k]['_items'][k1] = nextMeta
-#                     _merge_data_and_metadata(nextMeta, v1)
-#         elif isinstance(v, list):
-#             # check that meta thinks we are dealing with a dict... should
-#             # be debug time assert when happy with this.
-#             if meta[k]['class'] != '__builtin__.list':
-#                 raise Exception('inconsistent value and description')
-#             meta[k]['_value'] = v
-#             meta[k]['_items'] = []
-#             for v1 in v:
-#                 # note that the following line implys that dicts can
-#                 # only contain classes that extend sifra.structural.Base, or
-#                 # at least have __json_desc__ defined
-#                 nextMeta = deepcopy(class_getter(v1['class']).__json_desc__)
-#                 meta[k]['_items'].append(nextMeta)
-#                 _merge_data_and_metadata(nextMeta, v1)
-#
-#         else:
-#             _merge_data_and_metadata(meta[k], data[k])
-
-
 class Info(str):
     """
     Strings that provide 'metadata' on classes. At present, this is only used to
@@ -152,56 +99,6 @@ class Element(object):
         if self._default is False:
             raise NoDefaultException()
         return self._default() if callable(self._default) else self._default
-
-    # def to_json(self, val):
-    #     """
-    #     Convert *val* to a form that can be JSON serialised.
-    #     """
-    #
-    #     self.__validate__(val)
-    #     return jsonify(val)
-
-    # def __validate__(self, val):
-    #     """
-    #     Validate *val*. This checks that *val* is of subclass ``eval(self.cls)``
-    #     and that no :py:attr:`validators` either return *False* or raise
-    #     exceptions.
-    #
-    #     :py:raises:`ValidationError`.
-    #     """
-    #
-    #     # Ideally, we'd like to do the following manipulation of self.cls in
-    #     # the constructor. However, at the time the constructor is called, we
-    #     # don't have self.cls_module, which is set on this instance in the
-    #     # metaclass StructuralMeta at the time the elements are handled. We
-    #     # could get around this by defining the element class for a module in
-    #     # a way similar to that employed in generate_element_base.
-    #     if isinstance(self.cls, basestring):
-    #         self.cls = [self.cls_module, self.cls]
-    #     try:
-    #         cls = class_getter(self.cls)
-    #         self.cls = [cls.__module__, cls.__name__]
-    #     except Exception as exc:
-    #         # hope that we have a builtin
-    #         cls = eval(self.cls[1])
-    #         self.cls = ['__builtin__', self.cls[1]]
-    #
-    #     if not isinstance(val, cls):
-    #         try:
-    #             val = cls(val)
-    #         except:
-    #             raise ValidationError('value is not instance of {}'.format(
-    #                 '.'.join(self.cls)))
-    #
-    #     if self.validators is not None:
-    #         for v in self.validators:
-    #             try:
-    #                 if v(val) is False:
-    #                     raise ValidationError('validator {} returned False'.format(str(v)))
-    #             except ValidationError as e:
-    #                 raise e
-    #             except Exception as e:
-    #                 raise ValidationError(str(e))
 
 class StructuralMeta(type):
     """
@@ -283,7 +180,7 @@ class StructuralMeta(type):
                         except NoDefaultException:
                             pass
                         else:
-                            default = jsonify(default)
+                            # default = jsonify(default)
                             if default:
                                 cls.__json_desc__[k]['default'] = default
             except:
@@ -314,98 +211,3 @@ class Base(object):
                         raise ValueError('Must provide value for {}'.format(k))
         for k, v in kwargs.iteritems():
             setattr(self, k, v)
-
-    @property
-    def predecessor(self):
-        """
-        The objects predecessor. This goes back to the database if required.
-        """
-
-        if not isinstance(self._predecessor, self.__class__):
-            _id = self._predecessor
-            self._predecessor = pythonify(self.get_db().get(self._predecessor))
-            self._predecessor._id = _id
-        return self._predecessor
-
-    @classmethod
-    def get_db(cls):
-        """
-        Get the db to be used by this instance.
-
-        .. todo:: This gets the provider from the instance, which allows the
-            provider to differ between instances. Not sure if this is desirable
-            or not. It may be better to get the provider from the class and,
-            perhaps, even make the provider immutable.
-        """
-
-        return cls._provider.get_db()
-
-    # def __validate__(self):
-    #     """
-    #     Validate this instance.
-    #     """
-    #
-    #     pass
-
-    def __jsonify__(self):
-        """
-        Validate this instance and transform it into an object suitable for
-        JSON serialisation.
-        """
-
-        # self.__validate__()
-        res = {'class': [type(self).__module__, type(self).__name__]}
-
-        for k, v in vars(self).items():
-            if hasattr(v, '__jsonify__'):
-                res[k] = v.__jsonify__()
-            elif k[0:1] != '_':
-                res[k] = jsonify(v)
-
-        return res
-
-    # def jsonify_with_metadata(self):
-    #     """
-    #     .. note:: It is pretty inefficient duplicating the data as much as we do in
-    #         this method. It would be possible to do this based on the value alone
-    #         (getting the json_desc as required) in the browser. The only trick is,
-    #         being able to differentiate between a list and a dict in javascript.
-    #     """
-    #
-    #     meta = deepcopy(self.__json_desc__)
-    #     data = jsonify(self)
-    #     _merge_data_and_metadata(meta, data)
-    #     return meta
-
-    def save(self, attributes=None):
-        """
-        Save this instance.
-        """
-
-        res = self.__jsonify__()
-
-        if isinstance(self._predecessor, self.__class__):
-            res['predecessor'] = self._predecessor._id
-        elif self._predecessor is not None:
-            res['predecessor'] = self._predecessor
-
-        self._predecessor = self.get_db().save(
-            res,
-            attributes=attributes)
-
-        return self._predecessor
-
-    @classmethod
-    def load(cls, object_id):
-        """
-        Load a previously saved instance.
-        """
-
-        return pythonify(cls._provider.get_db().get(object_id))
-
-    @classmethod
-    def set_provider(cls, provider):
-        cls._provider = provider
-
-# from sifra.modelling.serialisation import SqliteSerialisationProvider
-# Base.set_provider(SqliteSerialisationProvider())

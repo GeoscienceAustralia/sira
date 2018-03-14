@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from sifra.modelling.structural import Element
 from sifra.modelling.component_graph import ComponentGraph
-from sifra.modelling.infrastructure_model import Model
+from sifra.modelling.structural import Base
 from sifra.modelling.iodict import IODict
 from sifra.logger import rootLogger
 
@@ -18,7 +18,7 @@ class InfrastructureFactory(object):
             return PowerStation(**config)
 
 
-class Infrastructure(Model):
+class Infrastructure(Base):
     """
     The top level representation of a system that can respond to a
     range of hazards. It encapsulates a number of components that are

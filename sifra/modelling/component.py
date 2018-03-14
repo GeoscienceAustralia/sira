@@ -1,13 +1,14 @@
+# these are required for defining the data model
+from sifra.modelling.structural import (Element,Base)
+from sifra.modelling.iodict import IODict
 import numpy as np
 
-# these are required for defining the data model
-from sifra.modelling.structural import (Element,
-                                        Base)
 
-from sifra.modelling.iodict import IODict
-
-# from sifra.modelling.responsemodels import DamageAlgorithm, RecoveryAlgorithm
-from sifra.modelling.location import Location
+class Location(object):
+    def __init__(self, lat_p=0.0, lon_p=0.0, height_p=0.0):
+        self.lat = lat_p
+        self.lon = lon_p
+        self.height = height_p
 
 
 class Component(Base):

@@ -1,5 +1,4 @@
 from __future__ import print_function
-from sifraclasses import *
 
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
