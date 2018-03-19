@@ -9,7 +9,7 @@ from sifra.modelling.component import (Component, ConnectionValues)
 from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
                                             Level0Response, Level0Recovery,
                                             DamageAlgorithm, RecoveryState,
-                                            RecoveryAlgorithm, AlgorithmFactory, Algorithm)
+                                            RecoveryAlgorithm, AlgorithmFactory)
 
 
 def ingest_model(config):
@@ -38,7 +38,6 @@ def read_model_from_json(config):
     :return:
     """
     component_dict = {}
-    algorithm_factory = AlgorithmFactory()
 
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
@@ -52,8 +51,6 @@ def read_model_from_json(config):
     sysinp_setup = model['sysinp_setup']
     sysout_setup = model['sysout_setup']
     fragility_data = model['fragility_data']
-    damage_state_df = model['damage_state_df']
-
 
     # for index, damage_state in fragility_data:
     for index in fragility_data:
@@ -63,36 +60,23 @@ def read_model_from_json(config):
             component_dict[component_id] = {}
             component_dict[component_id]['component_type'] = component_id
 
-            damage_algorithm_vals = IODict()
-            component_dict[component_id]['frag_func'] = DamageAlgorithm(damage_states=damage_algorithm_vals)
+            component_dict[component_id]['frag_func'] = DamageAlgorithm(damage_states=IODict())
 
-            recovery_algorithm_vals = {}
-            component_dict[component_id]['recovery_func'] = RecoveryAlgorithm(recovery_states=recovery_algorithm_vals)
+            component_dict[component_id]['recovery_func'] = RecoveryAlgorithm(recovery_states={})
 
         damage_state_level = eval(index)[1]
+
+        component_dict[component_id]['frag_func'].damage_states[damage_state_level] = AlgorithmFactory.factory(fragility_data[index])
+
         response_params = {}
-        for key in fragility_data[index].keys():
-            response_params[key] = fragility_data[index][key]
+        for key in fragility_data[index]["recovery_parameters"].keys():
+            response_params[key] = fragility_data[index]["recovery_parameters"][key]
 
-        if index in damage_state_df.keys():
-            response_params['damage_state_description'] = damage_state_df[index]
-        else:
-            response_params['damage_state_description'] = "NA"
-
-        component_dict[component_id]['frag_func'].damage_states[damage_state_level] = Algorithm.factory(fragility_data[index]['damage_function'], response_params)
         component_dict[component_id]['recovery_func'].recovery_states[damage_state_level] = RecoveryState(**response_params)
-
-    # Create a damage algorithm in the AlgorithmFactory for the components
-    for component_type in component_dict.keys():
-        algorithm_factory.add_response_algorithm(component_type,
-                                                 'earthquake',
-                                                 component_dict[component_type]['frag_func'])
-        algorithm_factory.add_recovery_algorithm(component_type,
-                                                 'earthquake',
-                                                 component_dict[component_type]['recovery_func'])
 
     # add the other component attributes and make a component dict
     system_components = {}
+
     for component_id in component_list:
         component_type = component_list[component_id]['component_type']
         if component_type in component_dict:
@@ -108,6 +92,10 @@ def read_model_from_json(config):
         component_values['node_type'] = component_list[component_id]['node_type']
         component_values['node_cluster'] = component_list[component_id]['node_cluster']
         component_values['operating_capacity'] = component_list[component_id]['op_capacity']
+
+        component_values['operating_capacity'] = [1, 4]
+
+        component_values['response_algorithm'] = component_dict[component_list[component_id]['component_type']]['frag_func']
 
         system_components[component_id] = Component(**component_values)
 
@@ -159,7 +147,7 @@ def read_model_from_json(config):
     # set the system class
     if_system_values['system_class'] = system_class
 
-    return InfrastructureFactory.create_model(if_system_values), algorithm_factory
+    return InfrastructureFactory.create_model(if_system_values)
 
 
 def read_model_from_xlxs(config):
@@ -169,7 +157,6 @@ def read_model_from_xlxs(config):
     :return:
     """
     component_dict = {}
-    algorithm_factory = AlgorithmFactory()
 
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
@@ -259,14 +246,7 @@ def read_model_from_xlxs(config):
         recovery_params = {key: damage_state[key] for key in recovery_columns}
         recovery_algorithm_vals[ds_level] = RecoveryState(**recovery_params)
 
-    # Create a damage algorithm in the AlgorithmFactory for the components
-    for component_type in component_dict.keys():
-        algorithm_factory.add_response_algorithm(component_type,
-                                                 config.HAZARD_TYPE,
-                                                 component_dict[component_type]['frag_func'])
-        algorithm_factory.add_recovery_algorithm(component_type,
-                                                 config.HAZARD_TYPE,
-                                                 component_dict[component_type]['recovery_func'])
+
 
     # add the other component attributes and make a component dict
     system_components = {}
@@ -336,4 +316,4 @@ def read_model_from_xlxs(config):
         if state not in if_system_values['sys_dmg_states']:
             if_system_values['sys_dmg_states'].append(state)
 
-    return InfrastructureFactory.create_model(if_system_values), algorithm_factory
+    return InfrastructureFactory.create_model(if_system_values)

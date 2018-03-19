@@ -22,27 +22,9 @@ class Scenario:
 
         self.num_samples = configuration.NUM_SAMPLES
         self.save_vars_npy = configuration.SAVE_VARS_NPY
-        self.haz_param_max = configuration.PGA_MAX
-        self.haz_param_min = configuration.PGA_MIN
-        self.haz_param_step = configuration.PGA_STEP
-
-        self.hazard_type = configuration.HAZARD_TYPE
-        self.intensity_measure_param = configuration.INTENSITY_MEASURE_PARAM
-        self.intensity_measure_unit = configuration.INTENSITY_MEASURE_UNIT
-        self.level_factor_raster = configuration.HAZARD_RASTER
 
         self.run_context = configuration.RUN_CONTEXT
         self.run_parallel_proc = configuration.MULTIPROCESS
-        """Set up parameters for simulating hazard impact"""
-        self.num_hazard_pts = \
-            int(round((self.haz_param_max - self.haz_param_min) /
-                      float(self.haz_param_step) + 1))
-
-        self.hazard_intensity_vals = \
-            np.linspace(self.haz_param_min, self.haz_param_max,
-                        num=self.num_hazard_pts)
-        self.hazard_intensity_str = \
-            [('%0.3f' % np.float(x)) for x in self.hazard_intensity_vals]
 
         # Set up parameters for simulating recovery from hazard impact
         self.restoration_time_range, self.time_step = np.linspace(

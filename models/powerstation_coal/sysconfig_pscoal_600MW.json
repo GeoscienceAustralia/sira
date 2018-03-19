@@ -497,7 +497,7 @@
     }, 
     "fragility_data": {
         "['Ash Disposal System SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.28, 
             "damage_ratio": 0.05, 
@@ -512,7 +512,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.43, 
             "damage_ratio": 0.3, 
@@ -527,7 +527,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.6, 
             "damage_ratio": 0.75, 
@@ -542,7 +542,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.85, 
             "damage_ratio": 1.0, 
@@ -557,7 +557,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.37, 
             "damage_ratio": 0.05, 
@@ -572,7 +572,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.32, 
             "median": 0.55, 
             "damage_ratio": 0.3, 
@@ -587,7 +587,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.42, 
             "median": 0.75, 
             "damage_ratio": 0.75, 
@@ -602,7 +602,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.46, 
             "median": 1.05, 
             "damage_ratio": 1.0, 
@@ -617,7 +617,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.45, 
             "damage_ratio": 0.05, 
@@ -632,7 +632,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 0.59, 
             "damage_ratio": 0.3, 
@@ -647,7 +647,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.775, 
             "damage_ratio": 0.75, 
@@ -662,7 +662,7 @@
             "sigma_2": null
         }, 
         "['Ash Disposal System','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -677,7 +677,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.26, 
             "median": 0.28, 
             "damage_ratio": 0.1, 
@@ -692,7 +692,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.31, 
             "median": 0.42, 
             "damage_ratio": 0.3, 
@@ -707,7 +707,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.67, 
             "damage_ratio": 0.9, 
@@ -722,7 +722,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 1.7, 
             "damage_ratio": 1.3, 
@@ -737,7 +737,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.4, 
             "damage_ratio": 0.1, 
@@ -752,7 +752,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.65, 
             "median": 0.62, 
             "damage_ratio": 0.3, 
@@ -767,7 +767,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.95, 
             "damage_ratio": 0.9, 
@@ -782,7 +782,7 @@
             "sigma_2": null
         }, 
         "['Boiler SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.65, 
             "median": 1.9, 
             "damage_ratio": 1.3, 
@@ -797,7 +797,7 @@
             "sigma_2": null
         }, 
         "['Boiler','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.23, 
             "median": 0.46, 
             "damage_ratio": 0.1, 
@@ -812,7 +812,7 @@
             "sigma_2": null
         }, 
         "['Boiler','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.57, 
             "damage_ratio": 0.3, 
@@ -827,7 +827,7 @@
             "sigma_2": null
         }, 
         "['Boiler','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.825, 
             "damage_ratio": 0.9, 
@@ -842,7 +842,7 @@
             "sigma_2": null
         }, 
         "['Boiler','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 1.8, 
             "damage_ratio": 1.3, 
@@ -857,7 +857,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.67, 
             "damage_ratio": 0.06, 
@@ -872,7 +872,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.85, 
             "damage_ratio": 0.3, 
@@ -887,7 +887,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.05, 
             "damage_ratio": 0.75, 
@@ -902,7 +902,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.35, 
             "damage_ratio": 1.0, 
@@ -917,7 +917,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.67, 
             "damage_ratio": 0.06, 
@@ -932,7 +932,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.85, 
             "damage_ratio": 0.3, 
@@ -947,7 +947,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.05, 
             "damage_ratio": 0.75, 
@@ -962,7 +962,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.35, 
             "damage_ratio": 1.0, 
@@ -977,7 +977,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.67, 
             "damage_ratio": 0.06, 
@@ -992,7 +992,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.85, 
             "damage_ratio": 0.3, 
@@ -1007,7 +1007,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.05, 
             "damage_ratio": 0.75, 
@@ -1022,7 +1022,7 @@
             "sigma_2": null
         }, 
         "['Coal Yard','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.35, 
             "damage_ratio": 1.0, 
@@ -1037,7 +1037,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 0.27, 
             "damage_ratio": 0.1, 
@@ -1052,7 +1052,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 0.42, 
             "damage_ratio": 0.3, 
@@ -1067,7 +1067,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.63, 
             "damage_ratio": 0.75, 
@@ -1082,7 +1082,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 1.18, 
             "damage_ratio": 1.0, 
@@ -1097,7 +1097,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.47, 
             "damage_ratio": 0.1, 
@@ -1112,7 +1112,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.62, 
             "damage_ratio": 0.3, 
@@ -1127,7 +1127,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 0.83, 
             "damage_ratio": 0.75, 
@@ -1142,7 +1142,7 @@
             "sigma_2": null
         }, 
         "['Cooling System SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 1.38, 
             "damage_ratio": 1.0, 
@@ -1157,7 +1157,7 @@
             "sigma_2": null
         }, 
         "['Cooling System','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.375, 
             "median": 0.42, 
             "damage_ratio": 0.1, 
@@ -1172,7 +1172,7 @@
             "sigma_2": null
         }, 
         "['Cooling System','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.375, 
             "median": 0.57, 
             "damage_ratio": 0.3, 
@@ -1187,7 +1187,7 @@
             "sigma_2": null
         }, 
         "['Cooling System','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.475, 
             "median": 0.78, 
             "damage_ratio": 0.75, 
@@ -1202,7 +1202,7 @@
             "sigma_2": null
         }, 
         "['Cooling System','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.475, 
             "median": 1.33, 
             "damage_ratio": 1.0, 
@@ -1217,7 +1217,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.27, 
             "damage_ratio": 0.1, 
@@ -1232,7 +1232,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.42, 
             "damage_ratio": 0.3, 
@@ -1247,7 +1247,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.63, 
             "damage_ratio": 0.75, 
@@ -1262,7 +1262,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 1.18, 
             "damage_ratio": 1.0, 
@@ -1277,7 +1277,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.35, 
             "damage_ratio": 0.1, 
@@ -1292,7 +1292,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.48, 
             "damage_ratio": 0.3, 
@@ -1307,7 +1307,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.63, 
             "damage_ratio": 0.75, 
@@ -1322,7 +1322,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.93, 
             "damage_ratio": 1.0, 
@@ -1337,7 +1337,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.16, 
             "median": 0.42, 
             "damage_ratio": 0.1, 
@@ -1352,7 +1352,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.57, 
             "damage_ratio": 0.3, 
@@ -1367,7 +1367,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.78, 
             "damage_ratio": 0.75, 
@@ -1382,7 +1382,7 @@
             "sigma_2": null
         }, 
         "['Demineralisation Plant','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.33, 
             "damage_ratio": 1.0, 
@@ -1397,7 +1397,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.28, 
             "damage_ratio": 0.1, 
@@ -1412,7 +1412,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.45, 
             "damage_ratio": 0.3, 
@@ -1427,7 +1427,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.6, 
             "damage_ratio": 0.75, 
@@ -1442,7 +1442,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.85, 
             "damage_ratio": 1.0, 
@@ -1457,7 +1457,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.35, 
             "damage_ratio": 0.1, 
@@ -1472,7 +1472,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.48, 
             "damage_ratio": 0.3, 
@@ -1487,7 +1487,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.63, 
             "damage_ratio": 0.75, 
@@ -1502,7 +1502,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.93, 
             "damage_ratio": 1.0, 
@@ -1517,7 +1517,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.35, 
             "damage_ratio": 0.1, 
@@ -1532,7 +1532,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.55, 
             "damage_ratio": 0.3, 
@@ -1547,7 +1547,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.75, 
             "damage_ratio": 0.75, 
@@ -1562,7 +1562,7 @@
             "sigma_2": null
         }, 
         "['Electrostatic Precipitator','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -1577,7 +1577,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.27, 
             "damage_ratio": 0.1, 
@@ -1592,7 +1592,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.42, 
             "damage_ratio": 0.3, 
@@ -1607,7 +1607,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.63, 
             "damage_ratio": 0.75, 
@@ -1622,7 +1622,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 1.18, 
             "damage_ratio": 1.0, 
@@ -1637,7 +1637,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.7, 
             "median": 0.25, 
             "damage_ratio": 0.1, 
@@ -1652,7 +1652,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.65, 
             "median": 0.46, 
             "damage_ratio": 0.3, 
@@ -1667,7 +1667,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.65, 
             "median": 0.76, 
             "damage_ratio": 0.75, 
@@ -1682,7 +1682,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.8, 
             "median": 1.6, 
             "damage_ratio": 1.0, 
@@ -1697,7 +1697,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.16, 
             "median": 0.43, 
             "damage_ratio": 0.1, 
@@ -1712,7 +1712,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.57, 
             "damage_ratio": 0.3, 
@@ -1727,7 +1727,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.78, 
             "damage_ratio": 0.75, 
@@ -1742,7 +1742,7 @@
             "sigma_2": null
         }, 
         "['Fresh Water Supply','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.33, 
             "damage_ratio": 1.0, 
@@ -1757,7 +1757,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.65, 
             "damage_ratio": 0.03, 
@@ -1772,7 +1772,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 0.9, 
             "damage_ratio": 0.15, 
@@ -1787,7 +1787,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.23, 
             "damage_ratio": 0.4, 
@@ -1802,7 +1802,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.45, 
             "damage_ratio": 1.2, 
@@ -1817,7 +1817,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.8, 
             "damage_ratio": 0.03, 
@@ -1832,7 +1832,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 1.05, 
             "damage_ratio": 0.15, 
@@ -1847,7 +1847,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.38, 
             "damage_ratio": 0.4, 
@@ -1862,7 +1862,7 @@
             "sigma_2": null
         }, 
         "['Generator SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.6, 
             "damage_ratio": 1.2, 
@@ -1877,7 +1877,7 @@
             "sigma_2": null
         }, 
         "['Generator','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.75, 
             "damage_ratio": 0.03, 
@@ -1892,7 +1892,7 @@
             "sigma_2": null
         }, 
         "['Generator','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 1.0, 
             "damage_ratio": 0.15, 
@@ -1907,7 +1907,7 @@
             "sigma_2": null
         }, 
         "['Generator','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.33, 
             "damage_ratio": 0.4, 
@@ -1922,7 +1922,7 @@
             "sigma_2": null
         }, 
         "['Generator','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.55, 
             "damage_ratio": 1.2, 
@@ -1937,7 +1937,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.28, 
             "damage_ratio": 0.06, 
@@ -1952,7 +1952,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.43, 
             "damage_ratio": 0.3, 
@@ -1967,7 +1967,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.6, 
             "damage_ratio": 0.75, 
@@ -1982,7 +1982,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.85, 
             "damage_ratio": 1.0, 
@@ -1997,7 +1997,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.21, 
             "median": 0.37, 
             "damage_ratio": 0.06, 
@@ -2012,7 +2012,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.26, 
             "median": 0.55, 
             "damage_ratio": 0.3, 
@@ -2027,7 +2027,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.36, 
             "median": 0.75, 
             "damage_ratio": 0.75, 
@@ -2042,7 +2042,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.05, 
             "damage_ratio": 1.0, 
@@ -2057,7 +2057,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.45, 
             "damage_ratio": 0.06, 
@@ -2072,7 +2072,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.295, 
             "median": 0.585, 
             "damage_ratio": 0.3, 
@@ -2087,7 +2087,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.75, 
             "damage_ratio": 0.75, 
@@ -2102,7 +2102,7 @@
             "sigma_2": null
         }, 
         "['Main Feed Conveyor','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -2117,7 +2117,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.28, 
             "damage_ratio": 0.06, 
@@ -2132,7 +2132,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.43, 
             "damage_ratio": 0.3, 
@@ -2147,7 +2147,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.6, 
             "damage_ratio": 0.75, 
@@ -2162,7 +2162,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.85, 
             "damage_ratio": 1.0, 
@@ -2177,7 +2177,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.27, 
             "damage_ratio": 0.06, 
@@ -2192,7 +2192,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.32, 
             "median": 0.45, 
             "damage_ratio": 0.3, 
@@ -2207,7 +2207,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.65, 
             "damage_ratio": 0.75, 
@@ -2222,7 +2222,7 @@
             "sigma_2": null
         }, 
         "['Power House SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.95, 
             "damage_ratio": 1.0, 
@@ -2237,7 +2237,7 @@
             "sigma_2": null
         }, 
         "['Power House','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.475, 
             "damage_ratio": 0.06, 
@@ -2252,7 +2252,7 @@
             "sigma_2": null
         }, 
         "['Power House','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.33, 
             "median": 0.615, 
             "damage_ratio": 0.3, 
@@ -2267,7 +2267,7 @@
             "sigma_2": null
         }, 
         "['Power House','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.77, 
             "damage_ratio": 0.75, 
@@ -2282,7 +2282,7 @@
             "sigma_2": null
         }, 
         "['Power House','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -2297,7 +2297,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2312,7 +2312,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2327,7 +2327,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2342,7 +2342,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2357,7 +2357,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2372,7 +2372,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2387,7 +2387,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2402,7 +2402,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -2417,7 +2417,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.67, 
             "damage_ratio": 0.1, 
@@ -2432,7 +2432,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.85, 
             "damage_ratio": 0.4, 
@@ -2447,7 +2447,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.05, 
             "damage_ratio": 0.8, 
@@ -2462,7 +2462,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.35, 
             "damage_ratio": 1.2, 
@@ -2477,7 +2477,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.67, 
             "damage_ratio": 0.1, 
@@ -2492,7 +2492,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.85, 
             "damage_ratio": 0.4, 
@@ -2507,7 +2507,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.05, 
             "damage_ratio": 0.8, 
@@ -2522,7 +2522,7 @@
             "sigma_2": null
         }, 
         "['Stack SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.35, 
             "damage_ratio": 1.2, 
@@ -2537,7 +2537,7 @@
             "sigma_2": null
         }, 
         "['Stack','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.2, 
             "median": 0.67, 
             "damage_ratio": 0.1, 
@@ -2552,7 +2552,7 @@
             "sigma_2": null
         }, 
         "['Stack','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.85, 
             "damage_ratio": 0.4, 
@@ -2567,7 +2567,7 @@
             "sigma_2": null
         }, 
         "['Stack','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.05, 
             "damage_ratio": 0.8, 
@@ -2582,7 +2582,7 @@
             "sigma_2": null
         }, 
         "['Stack','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 1.35, 
             "damage_ratio": 1.2, 
@@ -2597,7 +2597,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.3, 
             "damage_ratio": 0.06, 
@@ -2612,7 +2612,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.5, 
             "damage_ratio": 0.2, 
@@ -2627,7 +2627,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.7, 
             "damage_ratio": 0.8, 
@@ -2642,7 +2642,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.46, 
             "median": 0.9, 
             "damage_ratio": 1.2, 
@@ -2657,7 +2657,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.4, 
             "damage_ratio": 0.06, 
@@ -2672,7 +2672,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.6, 
             "damage_ratio": 0.2, 
@@ -2687,7 +2687,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.8, 
             "damage_ratio": 0.8, 
@@ -2702,7 +2702,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.46, 
             "median": 1.0, 
             "damage_ratio": 1.2, 
@@ -2717,7 +2717,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.39, 
             "damage_ratio": 0.06, 
@@ -2732,7 +2732,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.61, 
             "median": 0.595, 
             "damage_ratio": 0.2, 
@@ -2747,7 +2747,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.595, 
             "median": 0.795, 
             "damage_ratio": 0.8, 
@@ -2762,7 +2762,7 @@
             "sigma_2": null
         }, 
         "['Stacker Reclaimer','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.505, 
             "median": 1.0, 
             "damage_ratio": 1.2, 
@@ -2777,7 +2777,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 0.4, 
             "damage_ratio": 0.03, 
@@ -2792,7 +2792,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.32, 
             "median": 0.75, 
             "damage_ratio": 0.1, 
@@ -2807,7 +2807,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 1.1, 
             "damage_ratio": 0.15, 
@@ -2822,7 +2822,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.17, 
             "median": 1.5, 
             "damage_ratio": 1.0, 
@@ -2837,7 +2837,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.32, 
             "median": 0.6, 
             "damage_ratio": 0.03, 
@@ -2852,7 +2852,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.24, 
             "median": 0.95, 
             "damage_ratio": 0.1, 
@@ -2867,7 +2867,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.19, 
             "median": 1.3, 
             "damage_ratio": 0.15, 
@@ -2882,7 +2882,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.09, 
             "median": 1.7, 
             "damage_ratio": 1.0, 
@@ -2897,7 +2897,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 0.55, 
             "damage_ratio": 0.03, 
@@ -2912,7 +2912,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.26, 
             "median": 0.9, 
             "damage_ratio": 0.1, 
@@ -2927,7 +2927,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.21, 
             "median": 1.25, 
             "damage_ratio": 0.15, 
@@ -2942,7 +2942,7 @@
             "sigma_2": null
         }, 
         "['Stepup Transformer','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.11, 
             "median": 1.65, 
             "damage_ratio": 1.0, 
@@ -2957,7 +2957,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 0.24, 
             "damage_ratio": 0.1, 
@@ -2972,7 +2972,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.37, 
             "median": 0.42, 
             "damage_ratio": 0.4, 
@@ -2987,7 +2987,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 0.6, 
             "damage_ratio": 0.8, 
@@ -3002,7 +3002,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.45, 
             "median": 0.85, 
             "damage_ratio": 1.0, 
@@ -3017,7 +3017,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.27, 
             "median": 0.37, 
             "damage_ratio": 0.1, 
@@ -3032,7 +3032,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.32, 
             "median": 0.55, 
             "damage_ratio": 0.4, 
@@ -3047,7 +3047,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.42, 
             "median": 0.85, 
             "damage_ratio": 0.8, 
@@ -3062,7 +3062,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.46, 
             "median": 1.05, 
             "damage_ratio": 1.0, 
@@ -3077,7 +3077,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.275, 
             "median": 0.335, 
             "damage_ratio": 0.1, 
@@ -3092,7 +3092,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 0.5, 
             "damage_ratio": 0.4, 
@@ -3107,7 +3107,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.435, 
             "median": 0.75, 
             "damage_ratio": 0.8, 
@@ -3122,7 +3122,7 @@
             "sigma_2": null
         }, 
         "['Supply Conveyor','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.455, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -3137,7 +3137,7 @@
             "sigma_2": null
         }, 
         "['Switch Yard','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.7, 
             "median": 0.11, 
             "damage_ratio": 0.3, 
@@ -3152,7 +3152,7 @@
             "sigma_2": null
         }, 
         "['Switch Yard','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.75, 
             "median": 0.15, 
             "damage_ratio": 0.6, 
@@ -3167,7 +3167,7 @@
             "sigma_2": null
         }, 
         "['Switch Yard','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.75, 
             "median": 0.2, 
             "damage_ratio": 0.8, 
@@ -3182,7 +3182,7 @@
             "sigma_2": null
         }, 
         "['Switch Yard','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.7, 
             "median": 0.47, 
             "damage_ratio": 1.0, 
@@ -3197,7 +3197,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.6, 
             "damage_ratio": 0.1, 
@@ -3212,7 +3212,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 0.8, 
             "damage_ratio": 0.3, 
@@ -3227,7 +3227,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.18, 
             "damage_ratio": 0.85, 
@@ -3242,7 +3242,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.4, 
             "damage_ratio": 1.2, 
@@ -3257,7 +3257,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.8, 
             "damage_ratio": 0.1, 
@@ -3272,7 +3272,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 1.05, 
             "damage_ratio": 0.3, 
@@ -3287,7 +3287,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.38, 
             "damage_ratio": 0.85, 
@@ -3302,7 +3302,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.6, 
             "damage_ratio": 1.2, 
@@ -3317,7 +3317,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.75, 
             "damage_ratio": 0.1, 
@@ -3332,7 +3332,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 1.0, 
             "damage_ratio": 0.3, 
@@ -3347,7 +3347,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.33, 
             "damage_ratio": 0.85, 
@@ -3362,7 +3362,7 @@
             "sigma_2": null
         }, 
         "['Turbine and Condenser','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.55, 
             "damage_ratio": 1.2, 
@@ -3377,7 +3377,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL1','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.3, 
             "damage_ratio": 0.06, 
@@ -3392,7 +3392,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL1','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.5, 
             "damage_ratio": 0.2, 
@@ -3407,7 +3407,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL1','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.7, 
             "damage_ratio": 0.8, 
@@ -3422,7 +3422,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL1','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.46, 
             "median": 0.9, 
             "damage_ratio": 1.2, 
@@ -3437,7 +3437,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL3','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.5, 
             "damage_ratio": 0.06, 
@@ -3452,7 +3452,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL3','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.6, 
             "median": 0.7, 
             "damage_ratio": 0.2, 
@@ -3467,7 +3467,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL3','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.9, 
             "damage_ratio": 0.8, 
@@ -3482,7 +3482,7 @@
             "sigma_2": null
         }, 
         "['Unloader SDL3','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.46, 
             "median": 1.1, 
             "damage_ratio": 1.2, 
@@ -3497,7 +3497,7 @@
             "sigma_2": null
         }, 
         "['Unloader','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.55, 
             "median": 0.44, 
             "damage_ratio": 0.06, 
@@ -3512,7 +3512,7 @@
             "sigma_2": null
         }, 
         "['Unloader','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.61, 
             "median": 0.645, 
             "damage_ratio": 0.2, 
@@ -3527,7 +3527,7 @@
             "sigma_2": null
         }, 
         "['Unloader','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.595, 
             "median": 0.845, 
             "damage_ratio": 0.8, 
@@ -3542,7 +3542,7 @@
             "sigma_2": null
         }, 
         "['Unloader','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.505, 
             "median": 1.05, 
             "damage_ratio": 1.2, 

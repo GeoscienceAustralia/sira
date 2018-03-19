@@ -137,7 +137,7 @@
     }, 
     "fragility_data": {
         "['Perturbator','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.475, 
             "damage_ratio": 0.06, 
@@ -152,7 +152,7 @@
             "sigma_2": null
         }, 
         "['Perturbator','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.33, 
             "median": 0.615, 
             "damage_ratio": 0.3, 
@@ -167,7 +167,7 @@
             "sigma_2": null
         }, 
         "['Perturbator','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.77, 
             "damage_ratio": 0.75, 
@@ -182,7 +182,7 @@
             "sigma_2": null
         }, 
         "['Perturbator','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -197,7 +197,7 @@
             "sigma_2": null
         }, 
         "['Processor A','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.375, 
             "median": 0.42, 
             "damage_ratio": 0.1, 
@@ -212,7 +212,7 @@
             "sigma_2": null
         }, 
         "['Processor A','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.375, 
             "median": 0.57, 
             "damage_ratio": 0.3, 
@@ -227,7 +227,7 @@
             "sigma_2": null
         }, 
         "['Processor A','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.475, 
             "median": 0.78, 
             "damage_ratio": 0.75, 
@@ -242,7 +242,7 @@
             "sigma_2": null
         }, 
         "['Processor A','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.475, 
             "median": 1.33, 
             "damage_ratio": 1.0, 
@@ -257,7 +257,7 @@
             "sigma_2": null
         }, 
         "['Processor B','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.35, 
             "damage_ratio": 0.1, 
@@ -272,7 +272,7 @@
             "sigma_2": null
         }, 
         "['Processor B','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.5, 
             "median": 0.55, 
             "damage_ratio": 0.3, 
@@ -287,7 +287,7 @@
             "sigma_2": null
         }, 
         "['Processor B','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.75, 
             "damage_ratio": 0.75, 
@@ -302,7 +302,7 @@
             "sigma_2": null
         }, 
         "['Processor B','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 1.0, 
             "damage_ratio": 1.0, 
@@ -317,7 +317,7 @@
             "sigma_2": null
         }, 
         "['Processor C','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 0.75, 
             "damage_ratio": 0.03, 
@@ -332,7 +332,7 @@
             "sigma_2": null
         }, 
         "['Processor C','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.3, 
             "median": 1.0, 
             "damage_ratio": 0.15, 
@@ -347,7 +347,7 @@
             "sigma_2": null
         }, 
         "['Processor C','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.34, 
             "median": 1.33, 
             "damage_ratio": 0.4, 
@@ -362,7 +362,7 @@
             "sigma_2": null
         }, 
         "['Processor C','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.28, 
             "median": 1.55, 
             "damage_ratio": 1.2, 
@@ -377,7 +377,7 @@
             "sigma_2": null
         }, 
         "['Processor D','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.25, 
             "median": 0.28, 
             "damage_ratio": 0.05, 
@@ -392,7 +392,7 @@
             "sigma_2": null
         }, 
         "['Processor D','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.35, 
             "median": 0.43, 
             "damage_ratio": 0.3, 
@@ -407,7 +407,7 @@
             "sigma_2": null
         }, 
         "['Processor D','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.6, 
             "damage_ratio": 0.75, 
@@ -422,7 +422,7 @@
             "sigma_2": null
         }, 
         "['Processor D','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.4, 
             "median": 0.85, 
             "damage_ratio": 1.0, 
@@ -437,7 +437,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -452,7 +452,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -467,7 +467,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -482,7 +482,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_INPUT','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -497,7 +497,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS1 Slight']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -512,7 +512,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS2 Moderate']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -527,7 +527,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS3 Extensive']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
@@ -542,7 +542,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','DS4 Complete']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "beta": 0.01, 
             "median": 10.0, 
             "damage_ratio": 0.01, 
