@@ -13,8 +13,9 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sifra.modelling.hazard_levels import HazardLevels
+from sifra.modelling.hazard import Hazard
 from sifra.logger import rootLogger
+from sifra.configuration import Configuration
 
 
 def run_para_scen(hazard_level, infrastructure, scenario):
@@ -31,9 +32,7 @@ def run_para_scen(hazard_level, infrastructure, scenario):
     return infrastructure.expose_to(hazard_level, scenario)
 
 
-def calculate_response(scenario, infrastructure):
-
-
+def calculate_response(scenario, infrastructure, hazard):
     """
     The response will be calculated by creating the hazard_levels,
     iterating through the range of hazards and calling the infrastructure systems
@@ -44,26 +43,34 @@ def calculate_response(scenario, infrastructure):
     :param infrastructure: Model of the infrastructure.
     :return: List of results for each hazard level.
     """
-    hazard_levels = HazardLevels(scenario)  # Hazard intensity Value, &
-                                            # Parameter, Unit
+
 
     code_start_time = time.time() # start of the overall response calculation
     # capture the results from the map call in a list
     hazard_level_response = []
     # Use the parallel option in the scenario to determine how to run
 
+    print("Start Remove parallel run")
+    for hazard_level in hazard.hazard_range:
+        hazard_level_response.append(infrastructure.expose_to(hazard_level, scenario))
+    print("End Remove parallel run")
+    #
+    # hazard_level_response.extend(parmap.map(run_para_scen,
+    #                                         hazard_levels.hazard_range(),
+    #                                         infrastructure,
+    #                                         scenario,
+    #                                         parallel=scenario.run_parallel_proc))
 
-    hazard_level_response.extend(parmap.map(run_para_scen,
-                                            hazard_levels.hazard_range(),
-                                            infrastructure,
-                                            scenario,
-                                            parallel=scenario.run_parallel_proc))
+
+    # TODO add test case to compare the hazard response values!
+
     # combine the responses into one list
     post_processing_list = [{},  # hazard level vs component damage state index
                             {},  # hazard level vs infrastructure output
                             {},  # hazard level vs component response
                             [],  # infrastructure output for sample
                             []]  # infrastructure econ loss for sample
+
     # iterate through the hazard levels
     for hazard_level_values in hazard_level_response:
         # iterate through the hazard level lists
@@ -96,15 +103,15 @@ def calculate_response(scenario, infrastructure):
 # BEGIN POST-PROCESSING ...
 # ****************************************************************************
 
-def plot_mean_econ_loss(sc, economic_loss_array):
+def plot_mean_econ_loss(sc, economic_loss_array,hazard):
     """Draws and saves a boxplot of mean economic loss"""
 
     hazvals_ext = [[str(i)] * sc.num_samples
-                   for i in list(sc.hazard_intensity_vals)]
+                   for i in list(hazard.hazard_intensity_vals)]
     x1 = np.ndarray.flatten(np.array(hazvals_ext))
 
     smpl = range(1, sc.num_samples+1, 1)
-    x2 = np.array(smpl * sc.num_hazard_pts)
+    x2 = np.array(smpl * hazard.num_hazard_pts)
 
     arrays = [x1, x2]
     econ_loss = np.array(economic_loss_array)
@@ -138,9 +145,9 @@ def plot_mean_econ_loss(sc, economic_loss_array):
     ax.tick_params(axis='y', left='off', right='off',
                    width=0.8, labelsize=8, pad=5, color='#555555')
 
-    ax.set_xticklabels(sc.hazard_intensity_vals)
+    ax.set_xticklabels(hazard.hazard_intensity_vals)
     intensity_label \
-        = sc.intensity_measure_param+' ('+sc.intensity_measure_unit+')'
+        = hazard.intensity_measure_param+' ('+hazard.intensity_measure_unit+')'
     ax.set_xlabel(intensity_label, labelpad=9, size=10)
     ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
 
@@ -152,7 +159,7 @@ def plot_mean_econ_loss(sc, economic_loss_array):
     plt.close(fig)
 
 
-def post_processing(infrastructure, scenario, response_list):
+def post_processing(infrastructure, scenario, response_list,hazard):
     """
     Post simulation processing.
 
@@ -164,10 +171,11 @@ def post_processing(infrastructure, scenario, response_list):
     :return: None
     """
     write_system_response(response_list, scenario)
-    loss_by_comp_type(response_list, infrastructure, scenario)
+    loss_by_comp_type(response_list, infrastructure, scenario,hazard)
     economic_loss_array = response_list[4]
-    plot_mean_econ_loss(scenario, economic_loss_array)
-    pe_by_component_class(response_list, infrastructure, scenario)
+    plot_mean_econ_loss(scenario, economic_loss_array,hazard)
+
+    pe_by_component_class(response_list, infrastructure, scenario, hazard)
 
 
 def write_system_response(response_list, scenario):
@@ -221,7 +229,7 @@ def write_system_response(response_list, scenario):
                         handle)
 
 
-def loss_by_comp_type(response_list, infrastructure, scenario):
+def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
     """
     Aggregate the economic loss statistics by component type.
     :param response_list: list of simulation results
@@ -240,16 +248,19 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
              (comp_type, 'func_std'))
         )
 
+    hazard_intensity_str = \
+        [('%0.3f' % np.float(x)) for x in hazard.hazard_intensity_vals]
+
     mindex = pd.MultiIndex.from_tuples(
         tp_ct,
         names=['component_type', 'response'])
     comptype_resp_df = pd.DataFrame(
         index=mindex,
-        columns=[scenario.hazard_intensity_str])
+        columns=[hazard_intensity_str])
     comptype_resp_dict = {}
 
     component_resp_dict = response_list[2]
-    for p in scenario.hazard_intensity_str:
+    for p in hazard_intensity_str:
         if p not in comptype_resp_dict:
             comptype_resp_dict[p] = dict()
 
@@ -305,7 +316,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
     economic_loss_array = response_list[4]
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
-    for j, hazard_level in enumerate(scenario.hazard_intensity_str):
+    for j, hazard_level in enumerate(hazard_intensity_str):
         for i in range(scenario.num_samples):
             # system output and economic loss
             sys_frag[i, j] = \
@@ -314,9 +325,9 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
     # Calculating Probability of Exceedence:
     pe_sys_econloss = np.zeros(
         (len(infrastructure.get_system_damage_states()),
-         scenario.num_hazard_pts)
+         hazard.num_hazard_pts)
     )
-    for j in range(scenario.num_hazard_pts):
+    for j in range(hazard.num_hazard_pts):
         for i in range(len(infrastructure.get_system_damage_states())):
             pe_sys_econloss[i, j] = \
                 np.sum(sys_frag[:, j] >= i) / float(scenario.num_samples)
@@ -366,12 +377,13 @@ def loss_by_comp_type(response_list, infrastructure, scenario):
     )
 
 
-def pe_by_component_class(response_list, infrastructure, scenario):
+def pe_by_component_class(response_list, infrastructure, scenario,hazard):
     """
     Calculated  probability of exceedence based on component classes
     :param response_list:
     :param infrastructure:
     :param scenario:
+    :param hazard:
     :return:
     """
     # ------------------------------------------------------------------------
@@ -384,6 +396,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     # ------------------------------------------------------------------------
 
     cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
+    hazard_intensity_str = [('%0.3f' % np.float(x)) for x in hazard.hazard_intensity_vals]
 
     cp_class_map = {k: [] for k in cp_classes_in_system}
     for comp_id, component in infrastructure.components.items():
@@ -408,7 +421,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
             {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
              for cc in cp_classes_costed}
 
-        for j, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
+        for j, hazard_level in enumerate(hazard.hazard_range):
             for i in range(scenario.num_samples):
                 for compclass in cp_classes_costed:
                     for c in cp_class_map[compclass]:
@@ -445,11 +458,17 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     # ------------------------------------------------------------------------
 
     exp_damage_ratio = np.zeros((len(infrastructure.components),
-                                 scenario.num_hazard_pts))
-    for l, hazard_level in enumerate(HazardLevels(scenario).hazard_range()):
+                                 hazard.num_hazard_pts))
+    for l, hazard_level in enumerate(hazard.hazard_range):
         # compute expected damage ratio
         for j, component in enumerate(infrastructure.components.values()):
-            pb = pe2pb(component.expose_to(hazard_level, scenario))
+            # TODO remove invalid Component accesses !!
+
+            hazard_intensity = hazard_level.determine_intensity_at(component.get_location())
+            component_pe_ds = component.response_algorithm.pe_ds(hazard_intensity)[1:]
+
+            pb = pe2pb(component_pe_ds)
+
             dr = np.array([component.frag_func.damage_states[ds].damage_ratio
                            for ds in infrastructure.sys_dmg_states])
             cf = component.cost_fraction
@@ -472,7 +491,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
     economic_loss_array = response_list[4]
     calculated_output_array = response_list[3]
 
-    outdat = {out_cols[0]: scenario.hazard_intensity_vals,
+    outdat = {out_cols[0]: hazard.hazard_intensity_vals,
               out_cols[1]: np.mean(economic_loss_array, axis=0),
               out_cols[2]: np.mean(calculated_output_array, axis=0)}
     df = pd.DataFrame(outdat)
@@ -486,7 +505,7 @@ def pe_by_component_class(response_list, infrastructure, scenario):
                                      'component_response.csv')
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.index.names = ['component_id', 'response']
-    component_resp_df.columns = scenario.hazard_intensity_str
+    component_resp_df.columns = hazard_intensity_str
     component_resp_df.to_csv(
         outfile_comp_resp, sep=',',
         index_label=['component_id', 'response']

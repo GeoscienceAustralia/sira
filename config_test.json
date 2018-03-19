@@ -2,10 +2,10 @@
     "Hazard": {
         "HAZARD_RASTER": null, 
         "HAZARD_TYPE": "earthquake", 
-        "NUM_SAMPLES": 250, 
-        "PGA_MAX": 1.0, 
+        "NUM_SAMPLES": 20,
+        "PGA_MAX": 20.0,
         "PGA_MIN": 0.0, 
-        "PGA_STEP": 0.5
+        "PGA_STEP": 2
     }, 
     "Input": {
         "INPUT_DIR_NAME": "models/test_structures/"

@@ -4,62 +4,44 @@ from structural import Info, Base, Element
 from sifra.modelling.structural import Element as _Element
 
 
-class Algorithm:
+class AlgorithmFactory:
 
-    def factory(algo_name, response_params):
-        if algo_name == "Lognormal":
-            return LogNormalCDF(**response_params)
-        if algo_name == "Normal":
-            return NormalCDF(**response_params)
-        if algo_name == "StepFunc":
-            return StepFunc(**response_params)
-        if algo_name == "Level0Response":
-            return Level0Response()
+    @staticmethod
+    def factory(fragility_data): #algo_name, response_params):
+        if len(fragility_data["damage_functions"]) <= 1:
+
+            response_params = {}
+            for key in fragility_data["damage_functions"][0].keys():
+                response_params[key] = fragility_data["damage_functions"][0][key]
+            algo_name = fragility_data["damage_functions"][0]["damage_function_name"]
+
+            if algo_name == "StepFunc":
+                return StepFunc(**response_params)
+            elif algo_name == "LogNormalCDF":
+                return LogNormalCDF(**response_params)
+            elif algo_name == "NormalCDF":
+                return NormalCDF(**response_params)
+            elif algo_name == "ConstantFunction":
+                return ConstantFunction(**response_params)
+            elif algo_name == "Level0Response":
+                return Level0Response(**response_params)
+            elif algo_name == "Level0Recovery":
+                return Level0Recovery()
+        else:
+            return PiecewiseFunction(**fragility_data)
+    # add picewise funtion
         raise ValueError("No response model "
                          "matches {}".format(algo_name))
 
-    factory = staticmethod(factory)
-
-class XYPairs(Base):
-    """
-    A list of float values that implement a step function.
-    """
-    description = Info("The (x, f(x)) pairs defining a step function.")
-
-    def __init__(self, pairs):
-        """
-        Create the tuple list containing the float values.
-        :param pairs: An iterable container of tuples containing floats
-        """
-        self.pairs = pairs
-
-    def __iter__(self):
-        """
-        Return the XYPairs
-        :return: iterator over the XYPairs
-        """
-        return iter(self.pairs)
-
-    def __jsonify__(self):
-        """Called by jsonify to serialise this data"""
-        return {
-            'class': [type(self).__module__, type(self).__name__],
-            'pairs': [[float(p[0]), float(p[1])] for p in self.pairs]}
-
-class ResponseModel(Base):
-    """
-    Statistical model that assesses the response (amount of likely
-    damage) for a given hazard
-    """
-    def __call__(self, *args, **kwargs):
-        raise NotImplementedError('__call__ is not implemented'
-                                  ' on {}'.format(self.__class__.__name__))
 
 
-class DamageState(ResponseModel):
+
+class DamageState(Base):
     """
     The allocated damage state for a given component
+    Holds reference to the algorithum as value
     """
+
     damage_state = Element('str', 'Damage state name')
     # damage_state_description = Element('str', 'A description of what the damage state means')
     mode = Element('int','The mode used to estimate the damage')
@@ -69,6 +51,51 @@ class DamageState(ResponseModel):
     damage_ratio = Element('float', 'damage ratio',
                            0.0, [lambda x: float(x) >= 0.0])
 
+
+class DamageAlgorithm(Base):
+    """
+    The collection of damage states that will calculate
+    the component's response to a hazard.
+    """
+    damage_states = Element('IODict', 'Response models for the damage states',
+        [lambda x: [isinstance(y, DamageState) for y in x.itervalues()]])
+
+    def pe_ds(self, hazard_intensity):
+        """Calculate the probabilities that this component will
+        exceed the range of damage states."""
+        pe_ds = np.zeros(len(self.damage_states))
+
+        for offset, damage_state in enumerate(self.damage_states.values()):
+            pe_ds[offset] = damage_state(hazard_intensity)
+
+        return pe_ds
+
+
+class RecoveryState(Base):
+    """
+    The recovery parameters for a given damage level.
+    """
+    recovery_mean = Element('float', 'Recovery mean',
+                            0.0, [lambda x: float(x) > 0.0])
+    recovery_std = Element('float', 'Recovery standard deviation',
+                           0.0, [lambda x: float(x) > 0.0])
+    # recovery_95percentile = Element('float', 'Recovery 95th percentile',
+    #                                 0.0, [lambda x: float(x) > 0.0])
+
+
+# TODO Complete the recovery algorithm
+class RecoveryAlgorithm(Base):
+    """
+    Collection of recovery states for a component.
+    """
+    recovery_states = Element('IODict', 'Recovery models for the damage states',
+        [lambda x: [isinstance(y, RecoveryState) for y in x.itervalues()]])
+
+    def __call__(self, intensity_param, state):
+        for recovery_state in self.recovery_states:
+            recovery_state(intensity_param)
+
+        return 1.0
 
 class StepFunc(DamageState):
     """
@@ -86,7 +113,6 @@ class StepFunc(DamageState):
         for x, y in self.xys:
             if value < x:
                 return y
-
         raise ValueError('value is greater than all xs!')
 
 
@@ -143,40 +169,6 @@ class ConstantFunction(DamageState):
     def __call__(self, value):
         return np.ones_like(value) * self.amplitude
 
-
-class PiecewiseDefinedFunction(DamageState):
-    """
-    x          : array of x values over which the function is calculated
-
-    boundaries : a list of floats the define the edges of the ranges
-                 within which each function is applicable
-
-    funcnames  : a list of names of functions or distributions
-
-    arglist    : a list of lists, each containing the parameters
-                 that required by the corresponding functions
-
-    These lists must meet the following criteria:
-        len(funcnames) == len(arglist) == len(boundaries)-1
-
-    """
-    boundaries = []
-    funcnames = []
-    arglist = []
-
-    def __call__(self, xvalues):
-        indices = [np.amax(np.where(xvalues <= val)) for val in self.boundaries]
-        funclist = []
-        for i in range(len(indices) - 1):
-            if i + 1 < len(indices) - 1:
-                xtmp = xvalues[indices[i]:indices[i + 1]]
-            else:
-                xtmp = xvalues[indices[i]:]
-            funclist.append(self.funcnames[i](xtmp, *self.arglist[i]))
-        allfuncs = np.concatenate(funclist)
-        return allfuncs
-
-
 class Level0Response(DamageState):
     """
     Standard response for no damage.
@@ -201,74 +193,93 @@ class Level0Recovery(DamageState):
     def __call__(self, hazard_level):
         return 0.0
 
-
-class DamageAlgorithm(Base):
+class XYPairs(Base):
     """
-    The collection of damage states that will calculate
-    the component's response to a hazard.
+    A list of float values that implement a step function.
     """
-    damage_states = Element('IODict', 'Response models for the damage states',
-        [lambda x: [isinstance(y, DamageState) for y in x.itervalues()]])
+    description = Info("The (x, f(x)) pairs defining a step function.")
 
-    def pe_ds(self, hazard_intensity):
-        """Calculate the probabilities that this component will
-        exceed the range of damage states."""
-        pe_ds = np.zeros(len(self.damage_states))
+    def __init__(self, pairs):
+        """
+        Create the tuple list containing the float values.
+        :param pairs: An iterable container of tuples containing floats
+        """
+        self.pairs = pairs
 
-        for offset, damage_state in enumerate(self.damage_states.values()):
-            if damage_state.mode != 1:
-                raise RuntimeError("Mode {} not implemented".format(damage_state.mode))
-            pe_ds[offset] = damage_state(hazard_intensity)
-        return pe_ds
+    def __iter__(self):
+        """
+        Return the XYPairs
+        :return: iterator over the XYPairs
+        """
+        return iter(self.pairs)
 
-
-class RecoveryState(Base):
+class PiecewiseFunction(DamageState):
     """
-    The recovery parameters for a given damage level.
+    first function will only have one value if anything less than that always use that function
+    last function will also have one value if anything greater than use that function
+    in-between function will always have two range values they will only be defined for those values
+
+    input: hazard value
+    output: probability
     """
-    recovery_mean = Element('float', 'Recovery mean',
-                            0.0, [lambda x: float(x) > 0.0])
-    recovery_std = Element('float', 'Recovery standard deviation',
-                           0.0, [lambda x: float(x) > 0.0])
-    # recovery_95percentile = Element('float', 'Recovery 95th percentile',
-    #                                 0.0, [lambda x: float(x) > 0.0])
+
+    def __init__(self, *arg, **kwargs):
+
+        self.funtions = []
+        for k, v in kwargs.iteritems():
+            setattr(self, k, v)
+
+        for damage_function in self.damage_functions:
+            if damage_function["damage_function_name"] == "StepFunc":
+                self.funtions.append(StepFunc(**damage_function))
+            elif damage_function["damage_function_name"] == "LogNormalCDF":
+                self.funtions.append(LogNormalCDF(**damage_function))
+            elif damage_function["damage_function_name"] == "NormalCDF":
+                self.funtions.append(NormalCDF(**damage_function))
+            elif damage_function["damage_function_name"] == "ConstantFunction":
+                self.funtions.append(ConstantFunction(**damage_function))
+            elif damage_function["damage_function_name"] == "Level0Response":
+                self.funtions.append(Level0Response(**damage_function))
+            elif damage_function["damage_function_name"] == "Level0Recovery":
+                self.funtions.append(Level0Recovery(**damage_function))
 
 
-# TODO Complete the recovery algorithm
-class RecoveryAlgorithm(Base):
-    """
-    Collection of recovery states for a component.
-    """
-    recovery_states = Element('IODict', 'Recovery models for the damage states',
-        [lambda x: [isinstance(y, RecoveryState) for y in x.itervalues()]])
+    def __call__(self, hazard_intensity):
 
-    def __call__(self, intensity_param, state):
-        for recovery_state in self.recovery_states:
-            recovery_state(intensity_param)
+        for i, function in enumerate(self.funtions):
+            if i == 0:
+                if hazard_intensity < function.lower_limit:
+                    return self.funtions[0]
+            elif i == len(self.funtions)-1:
+                if hazard_intensity < function.upper_limit:
+                    return self.funtions[-1](hazard_intensity)
+            else:
+                if hazard_intensity < function.upper_limit and hazard_intensity > function.lower_limit:
+                    return self.funtions[i](hazard_intensity)
 
-        return 1.0
 
-
-# entry point
-class AlgorithmFactory(object):
-    def __init__(self):
-        self.response_algorithms = dict()
-        self.recovery_algorithms = dict()
-
-    def get_response_algorithm(self, component_type, hazard_type):
-        return self.response_algorithms[hazard_type][component_type]
-
-    def add_response_algorithm(self, component_type, hazard_type, algorithm):
-        if hazard_type not in self.response_algorithms:
-            self.response_algorithms[hazard_type] = {}
-
-        self.response_algorithms[hazard_type][component_type] = algorithm
-
-    # def get_recovery_algorithm(self, component_type, hazard_type):
-    #     return self.recovery_algorithms[hazard_type][component_type]
-
-    def add_recovery_algorithm(self, component_type, hazard_type, algorithm):
-        if hazard_type not in self.recovery_algorithms:
-            self.recovery_algorithms[hazard_type] = {}
-
-        self.recovery_algorithms[hazard_type][component_type] = algorithm
+# class PWFunction(DamageState):
+#     damage_functions = _Element('Funtions', 'A list of funtions.', list)
+#
+#     def __init__(self, functions):
+#         """
+#         :param functions: list of items with somehting like (bounds, function)
+#
+#         functions: list(((lower, upper), 'StepFunc', ), ...)
+#         """
+#
+#         FUNC_MAP = {'StepFunc': StepFunc}
+#         def get_damage_func(func_name):
+#
+#
+#         for f1, f2 in zip(functions[:-1], functions[1:]):
+#             if f1.bounds['upper_limit'] != f2.bounds['lower_limit']:
+#                 raise Exception()
+#
+#         def __call__(self, intensity):
+#             for f in self.damage_functions:
+#                 if f.bounds['upper_limit'] < intensity:
+#                     continue
+#                 return f(intensity)
+#
+#     def __call__

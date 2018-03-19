@@ -1497,7 +1497,7 @@
     }, 
     "fragility_data": {
         "['Bus 230kV','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.37, 
             "beta": 0.01, 
             "median": 99.0, 
@@ -1513,7 +1513,7 @@
             "sigma_2": null
         }, 
         "['Bus','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.37, 
             "beta": 0.2, 
             "median": 0.69, 
@@ -1529,7 +1529,7 @@
             "sigma_2": null
         }, 
         "['CONN_NODE','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.01, 
             "beta": 0.01, 
             "median": 99.0, 
@@ -1545,7 +1545,7 @@
             "sigma_2": null
         }, 
         "['Capacitive Voltage Transformer 230kV','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.1824668705, 
             "beta": 0.26, 
             "median": 0.6, 
@@ -1561,7 +1561,7 @@
             "sigma_2": null
         }, 
         "['Capacitive Voltage Transformer 69kV','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.1824668705, 
             "beta": 0.25, 
             "median": 0.6, 
@@ -1577,7 +1577,7 @@
             "sigma_2": null
         }, 
         "['Control Building With Equipment BAK','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -1.71, 
             "beta": 0.4, 
             "median": 0.65, 
@@ -1593,7 +1593,7 @@
             "sigma_2": null
         }, 
         "['Control Building With Equipment SDL0.4g','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -1.71, 
             "beta": 0.38, 
             "median": 0.86, 
@@ -1609,7 +1609,7 @@
             "sigma_2": null
         }, 
         "['Control Building With Equipment','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -1.71, 
             "beta": 0.38, 
             "median": 0.86, 
@@ -1625,7 +1625,7 @@
             "sigma_2": null
         }, 
         "['Current Transformer 230kV','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.69, 
             "beta": 0.2, 
             "median": 0.51, 
@@ -1641,7 +1641,7 @@
             "sigma_2": null
         }, 
         "['Disconnect Switch 230kV 3-Phase','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.29, 
             "beta": 0.28, 
             "median": 0.6, 
@@ -1657,7 +1657,7 @@
             "sigma_2": null
         }, 
         "['Disconnect Switch 69kV 3-Phase','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.18, 
             "beta": 0.43, 
             "median": 0.96, 
@@ -1673,7 +1673,7 @@
             "sigma_2": null
         }, 
         "['Generation Source','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.01, 
             "beta": 0.01, 
             "median": 4.0, 
@@ -1689,7 +1689,7 @@
             "sigma_2": null
         }, 
         "['Grounding','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.08, 
             "beta": 0.54, 
             "median": 1.08, 
@@ -1705,7 +1705,7 @@
             "sigma_2": null
         }, 
         "['Lightning Arrester','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.08, 
             "beta": 0.3, 
             "median": 0.55, 
@@ -1721,7 +1721,7 @@
             "sigma_2": null
         }, 
         "['Power Circuit Breaker 1-Phase 230kV','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.03, 
             "beta": 0.2, 
             "median": 0.55, 
@@ -1737,7 +1737,7 @@
             "sigma_2": null
         }, 
         "['Power Circuit Breaker 3-Phase 230kV with CTs','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.1, 
             "beta": 0.2, 
             "median": 0.55, 
@@ -1753,7 +1753,7 @@
             "sigma_2": null
         }, 
         "['Power Circuit Breaker 3-Phase 69kV with CTs','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.0, 
             "beta": 0.3, 
             "median": 0.85, 
@@ -1769,7 +1769,7 @@
             "sigma_2": null
         }, 
         "['Power Transformer 100MVA 230/69','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": null, 
             "beta": 0.2, 
             "median": 0.55, 
@@ -1785,7 +1785,7 @@
             "sigma_2": null
         }, 
         "['Power Transformer 2.5MVA 69/4.16','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.29, 
             "beta": 0.3, 
             "median": 0.67, 
@@ -1801,7 +1801,7 @@
             "sigma_2": null
         }, 
         "['Power Transformer 20MVA 69/4.36','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": -0.29, 
             "beta": 0.3, 
             "median": 0.67, 
@@ -1817,7 +1817,7 @@
             "sigma_2": null
         }, 
         "['Power Transformer 50MVA 230/69','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": null, 
             "beta": 0.2, 
             "median": 0.55, 
@@ -1833,7 +1833,7 @@
             "sigma_2": null
         }, 
         "['SYSTEM_OUTPUT','Failure']": {
-            "damage_function": "Lognormal", 
+            "damage_function": "LogNormalCDF", 
             "damage_lambda": 0.01, 
             "beta": 0.01, 
             "median": 99.0, 

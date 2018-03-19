@@ -2,7 +2,7 @@
 from sifra.modelling.structural import (Element,Base)
 from sifra.modelling.iodict import IODict
 import numpy as np
-
+from sifra.modelling.responsemodels import DamageAlgorithm
 
 class Location(object):
     def __init__(self, lat_p=0.0, lon_p=0.0, height_p=0.0):
@@ -25,23 +25,11 @@ class Component(Base):
     cost_fraction = Element('float', 'Cost as a fraction of total value of system')
 
     destination_components = Element('IODict', 'List of connected components', IODict)
+    response_algorithm = Element('DamageAlgorithm', 'List of damage states containing their damage algorithms.', DamageAlgorithm)
+    # response_algorithm = Element('DamageAlgorithm', 'List of connected components', DamageAlgorithm)
 
-    def expose_to(self, hazard_level, scenario):
-        """
-        Expose the component to the hazard using the
-        damage algorithm.
-        :param hazard_level: the hazard level
-        :param scenario: Additional parameters that may be required to assess hazard damage.
-        :return: The array of probabilities that each damage level was exceeded.
-        """
-        hazard_intensity = hazard_level.determine_intensity_at(self.get_location())
 
-        frag_func = scenario.algorithm_factory.get_response_algorithm(self.component_type,
-                                                                      hazard_level.hazard_type)
 
-        component_pe_ds = frag_func.pe_ds(hazard_intensity)
-        # for now just return the raw probabilities
-        return component_pe_ds[1:]
 
     def get_damage_state(self, ds_index):
         """
@@ -49,7 +37,7 @@ class Component(Base):
         :param ds_index: The index of the damage state, as supplied by expose_to method.
         :return: The fragility function object
         """
-        return self.frag_func.damage_states.index(ds_index)
+        return self.response_algorithm.damage_states.index(ds_index)
 
     def get_recovery(self, ds_index):
         """
