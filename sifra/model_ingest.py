@@ -3,14 +3,9 @@ import pandas as pd
 import copy
 import json
 from sifra.logger import rootLogger
-from sifra.modelling.iodict import IODict
 from collections import OrderedDict
 from sifra.modelling.infrastructure import InfrastructureFactory
 from sifra.modelling.component import (Component, ConnectionValues)
-from sifra.modelling.responsemodels import (LogNormalCDF, NormalCDF, StepFunc,
-                                            Level0Response, Level0Recovery,
-                                            DamageAlgorithm, RecoveryState,
-                                            RecoveryAlgorithm, AlgorithmFactory)
 
 
 def ingest_model(config):
@@ -44,59 +39,39 @@ def read_model_from_json(config):
     system_subclass = config.SYSTEM_SUBCLASS
 
     with open(config.SYS_CONF_FILE, 'r') as f:
-        #ensure that damge states are ordered
+        # ensure that damage states are ordered
         model = json.load(f, object_pairs_hook=OrderedDict)
 
-    #read the lists from json
+    # read the lists from json
     component_list = model['component_list']
     node_conn_df = model['node_conn_df']
     sysinp_setup = model['sysinp_setup']
     sysout_setup = model['sysout_setup']
-    fragility_data = model['fragility_data']
 
-    # for index, damage_state in fragility_data:
-    for index in fragility_data:
-        component_id = eval(index)[0]
-        if component_id not in component_dict:
 
-            component_dict[component_id] = {}
-            component_dict[component_id]['component_type'] = component_id
-
-            component_dict[component_id]['frag_func'] = DamageAlgorithm(damage_states=IODict())
-
-            component_dict[component_id]['recovery_func'] = RecoveryAlgorithm(recovery_states={})
-
-        damage_state_level = eval(index)[1]
-        component_dict[component_id]['frag_func'].damage_states[damage_state_level] = AlgorithmFactory.factory(fragility_data[index])
-
-        response_params = {}
-        for key in fragility_data[index]["recovery_parameters"].keys():
-            response_params[key] = fragility_data[index]["recovery_parameters"][key]
-
-        component_dict[component_id]['recovery_func'].recovery_states[damage_state_level] = RecoveryState(**response_params)
-
-    # add the other component attributes and make a component dict
     system_components = {}
 
     for component_id in component_list:
-        component_type = component_list[component_id]['component_type']
-        if component_type in component_dict:
-            component_values = copy.deepcopy(component_dict[component_type])
-        else:
-            print("Unknown component {}".format(component_type))
-            continue
+        component_values = {}
 
         component_values['component_id'] = component_id
-        component_values['component_type'] = component_list[component_id]['component_type']
         component_values['component_class'] = component_list[component_id]['component_class']
+        component_values['component_type'] = component_list[component_id]['component_type']
         component_values['cost_fraction'] = component_list[component_id]['cost_fraction']
-        component_values['node_type'] = component_list[component_id]['node_type']
         component_values['node_cluster'] = component_list[component_id]['node_cluster']
-        component_values['operating_capacity'] = component_list[component_id]['op_capacity']
-        component_values['response_algorithm'] = component_dict[component_list[component_id]['component_type']]['frag_func']
+        component_values['node_type'] = component_list[component_id]['node_type']
+        component_values['operating_capacity'] = component_list[component_id]['operating_capacity']
+        component_values['longitude'] = component_list[component_id]['longitude']
+        component_values['latitude'] = component_list[component_id]['latitude']
+
+        component_values['damages_states_constructor'] = component_list[component_id]['damages_states_constructor']
+
+        # list of damage states with a function assignment!
 
         system_components[component_id] = Component(**component_values)
 
+    # TODO refractor code below, combine the two high level variables in input json
+    # and make corresponding changes in code below
 
     # now we add children!
     for index in node_conn_df:
@@ -110,9 +85,9 @@ def read_model_from_json(config):
         edge_values['weight'] = float(node_conn_df[index]['weight'])
         system_component.destination_components[node_conn_df[index]['destination']] = ConnectionValues(**edge_values)
 
-    if_system_values = dict()
-    if_system_values['name'] = system_class + " : " + system_subclass
-    if_system_values['components'] = system_components
+    infrastructure_system_constructor = dict()
+    infrastructure_system_constructor['name'] = system_class + " : " + system_subclass
+    infrastructure_system_constructor['components'] = system_components
 
     # create the supply and output node dictionaries
     supply_nodes = {}
@@ -123,7 +98,7 @@ def read_model_from_json(config):
         sv_dict['commodity_type'] = sysinp_setup[index]['commodity_type']
         supply_nodes[index] = sv_dict
 
-    if_system_values['supply_nodes'] = supply_nodes
+    infrastructure_system_constructor['supply_nodes'] = supply_nodes
 
     output_nodes = {}
     for index in sysout_setup:
@@ -134,18 +109,18 @@ def read_model_from_json(config):
         op_dict['priority'] = sysout_setup[index]['priority']
         output_nodes[index] = op_dict
 
-    if_system_values['sys_dmg_states'] = []
-    for key in fragility_data:
-        state = eval(key)[1]
-        if state not in if_system_values['sys_dmg_states']:
-            if_system_values['sys_dmg_states'].append(state)
+    infrastructure_system_constructor['sys_dmg_states'] = []
+    for key in component_list:
+        for damages_state in component_list[key]["damages_states_constructor"]:
+            if damages_state not in infrastructure_system_constructor['sys_dmg_states']:
+                infrastructure_system_constructor['sys_dmg_states'].append(damages_state)
 
-    if_system_values['output_nodes'] = output_nodes
+    infrastructure_system_constructor['output_nodes'] = output_nodes
 
     # set the system class
-    if_system_values['system_class'] = system_class
+    infrastructure_system_constructor['system_class'] = system_class
 
-    return InfrastructureFactory.create_model(if_system_values)
+    return InfrastructureFactory.create_model(infrastructure_system_constructor)
 
 def read_model_from_xlxs(config):
     return None
