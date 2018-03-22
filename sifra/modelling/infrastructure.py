@@ -1,16 +1,12 @@
 import numpy as np
 np.set_printoptions(threshold='nan')
-import time
-from datetime import timedelta
+
 
 from sifra.modelling.structural import Element
 from sifra.modelling.component_graph import ComponentGraph
 from sifra.modelling.structural import Base
 from sifra.modelling.iodict import IODict
-from sifra.logger import rootLogger
 
-
-from sifra.simulation import probable_ds_hazard_level
 
 class InfrastructureFactory(object):
     @staticmethod
@@ -50,56 +46,7 @@ class Infrastructure(Base):
         self._component_graph = ComponentGraph(self.components)
 
 
-    def expose_to(self, hazard_level, scenario):
 
-        """
-        Exposes the components of the infrastructure to a hazard level
-        within a scenario.
-        :param hazard_level: The hazard level that the infrastructure is to be exposed to.
-        :param scenario: The parameters for the scenario being simulated.
-        :return: The state of the infrastructure after the exposure.
-        """
-
-        code_start_time = time.time() # keep track of the length of time the exposure takes
-
-        # calculate the damage state probabilities
-        print("START")
-
-        print("Calculate System Response")
-        component_damage_state_ind = probable_ds_hazard_level(self, hazard_level, scenario)
-
-        print("System Response: ")
-
-        # calculate the component loss, functionality, output,
-        #  economic loss and recovery output over time
-        component_sample_loss, \
-        comp_sample_func, \
-        if_sample_output, \
-        if_sample_economic_loss = self.calc_output_loss(scenario, component_damage_state_ind)
-
-        # Construct the dictionary containing the statistics of the response
-        component_response = self.calc_response(component_sample_loss,
-                                                comp_sample_func,
-                                                component_damage_state_ind)
-
-        # determine average output for the output components
-        if_output = {}
-        for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
-            if_output[output_comp_id] = np.mean(if_sample_output[:, output_index])
-
-        # log the elapsed time for this hazard level
-        elapsed = timedelta(seconds=(time.time() - code_start_time))
-        rootLogger.info("Hazard {} run time: {}".format(hazard_level.hazard_intensity,
-                                                     str(elapsed)))
-
-        # We combine the result data into a dictionary for ease of use
-        response_dict = {hazard_level.hazard_intensity: [component_damage_state_ind,
-                                                         if_output,
-                                                         component_response,
-                                                         if_sample_output,
-                                                         if_sample_economic_loss]}
-
-        return response_dict
 
 
     def calc_output_loss(self, scenario, component_damage_state_ind):
@@ -140,6 +87,7 @@ class Infrastructure(Base):
                 # get the damage state for the component
                 damage_state = component.get_damage_state(component_ds[component_index])
                 # use the damage state attributes to calculate the loss and functionality for the component sample
+                print(damage_state )
                 loss = damage_state.damage_ratio * component.cost_fraction
                 comp_sample_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
@@ -245,7 +193,7 @@ class Infrastructure(Base):
                 = np.std(comp_sample_func[:, comp_index])
 
             comp_resp_dict[(comp_id, 'num_failures')] \
-                = np.mean(component_damage_state_ind[:, comp_index] >= (len(component.frag_func.damage_states) - 1))
+                = np.mean(component_damage_state_ind[:, comp_index] >= (len(component.damage_states) - 1))
 
         return comp_resp_dict
 

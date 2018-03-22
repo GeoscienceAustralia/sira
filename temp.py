@@ -1,9 +1,10 @@
 import numpy as np
 from sifra.configuration import Configuration
 from sifra.scenario import Scenario
+from sifra.simulation import calculate_response
 from sifra.model_ingest import ingest_model
 from sifra.modelling.system_topology import SystemTopology
-from sifra.infrastructure_response import calculate_response, post_processing
+from sifra.infrastructure_response import  post_processing
 from sifra.modelling.hazard import Hazard
 
 # main program
@@ -22,19 +23,3 @@ post_processing(infrastructure, scenario, post_processing_list,hazard)
 # graphs
 sys_topology_view = SystemTopology(infrastructure, scenario)
 sys_topology_view.draw_sys_topology(viewcontext="as-built")
-
-#
-# class Base(object):
-#     def __init__(self, *arg, **kwargs):
-#
-#         for a in arg:
-#             print(a)
-#         for k, v in kwargs.iteritems():
-#             setattr(self, k, v)
-#
-#
-# dictnry = {"a": 1, "b": 2}
-# lst=['a','b']
-# new = Base(*lst, **dictnry)
-# print(new.a)
-# print(new.b)

@@ -4,100 +4,49 @@ from structural import Info, Base, Element
 from sifra.modelling.structural import Element as _Element
 
 
-class AlgorithmFactory:
+class Algorithm:
+
 
     @staticmethod
-    def factory(fragility_data): #algo_name, response_params):
-        if len(fragility_data["damage_functions"]) <= 1:
+    def factory(response_params):
 
-            response_params = {}
-            for key in fragility_data["damage_functions"][0].keys():
-                response_params[key] = fragility_data["damage_functions"][0][key]
-            algo_name = fragility_data["damage_functions"][0]["damage_function_name"]
+        function_name = response_params["function_name"]
+        # piecewise_function_constructor
+        if function_name == "StepFunc":
+            return StepFunc(**response_params)
+        elif function_name == "LogNormalCDF":
+            return LogNormalCDF(**response_params)
+        elif function_name == "NormalCDF":
+            return NormalCDF(**response_params)
+        elif function_name == "ConstantFunction":
+            return ConstantFunction(**response_params)
+        elif function_name == "Level0Response":
+            return Level0Response(**response_params)
+        elif function_name == "Level0Recovery":
+            return Level0Recovery()
+        elif function_name == "PiecewiseFunction":
+            return PiecewiseFunction(**response_params)
+        elif function_name == "RecoveryFunction":
+            return RecoveryFunction(**response_params)
 
-            if algo_name == "StepFunc":
-                return StepFunc(**response_params)
-            elif algo_name == "LogNormalCDF":
-                return LogNormalCDF(**response_params)
-            elif algo_name == "NormalCDF":
-                return NormalCDF(**response_params)
-            elif algo_name == "ConstantFunction":
-                return ConstantFunction(**response_params)
-            elif algo_name == "Level0Response":
-                return Level0Response(**response_params)
-            elif algo_name == "Level0Recovery":
-                return Level0Recovery()
-        else:
-            return PiecewiseFunction(**fragility_data)
-    # add picewise funtion
         raise ValueError("No response model "
-                         "matches {}".format(algo_name))
+                         "matches {}".format(function_name))
 
 
+class RecoveryFunction(Base):
 
-
-class DamageState(Base):
-    """
-    The allocated damage state for a given component
-    Holds reference to the algorithum as value
-    """
-
-    damage_state = Element('str', 'Damage state name')
-    # damage_state_description = Element('str', 'A description of what the damage state means')
-    mode = Element('int','The mode used to estimate the damage')
-    functionality = Element('float', 'Level of functionality for this damage level',
-                            0.0, [lambda x: float(x) >= 0.0])
-    # fragility_source = Element('str', 'The source of the parameter values')
-    damage_ratio = Element('float', 'damage ratio',
-                           0.0, [lambda x: float(x) >= 0.0])
-
-
-class DamageAlgorithm(Base):
-    """
-    The collection of damage states that will calculate
-    the component's response to a hazard.
-    """
-    damage_states = Element('IODict', 'Response models for the damage states',
-        [lambda x: [isinstance(y, DamageState) for y in x.itervalues()]])
-
-    def pe_ds(self, hazard_intensity):
-        """Calculate the probabilities that this component will
-        exceed the range of damage states."""
-        pe_ds = np.zeros(len(self.damage_states))
-
-        for offset, damage_state in enumerate(self.damage_states.values()):
-            pe_ds[offset] = damage_state(hazard_intensity)
-
-        return pe_ds
-
-
-class RecoveryState(Base):
-    """
-    The recovery parameters for a given damage level.
-    """
     recovery_mean = Element('float', 'Recovery mean',
                             0.0, [lambda x: float(x) > 0.0])
     recovery_std = Element('float', 'Recovery standard deviation',
                            0.0, [lambda x: float(x) > 0.0])
-    # recovery_95percentile = Element('float', 'Recovery 95th percentile',
-    #                                 0.0, [lambda x: float(x) > 0.0])
-
-
-# TODO Complete the recovery algorithm
-class RecoveryAlgorithm(Base):
-    """
-    Collection of recovery states for a component.
-    """
-    recovery_states = Element('IODict', 'Recovery models for the damage states',
-        [lambda x: [isinstance(y, RecoveryState) for y in x.itervalues()]])
+    recovery_95percentile = Element('float', 'Recovery 95th percentile',
+                                     0.0, [lambda x: float(x) > 0.0])
 
     def __call__(self, intensity_param, state):
-        for recovery_state in self.recovery_states:
-            recovery_state(intensity_param)
-
         return 1.0
 
-class StepFunc(DamageState):
+
+class StepFunc(Base):
     """
     A response model that does not have a cumulative distribution
     function, rather a series of steps for damage.
@@ -109,22 +58,21 @@ class StepFunc(DamageState):
         """
         Note that intervals are closed on the right.
         """
-
         for x, y in self.xys:
             if value < x:
                 return y
         raise ValueError('value is greater than all xs!')
 
 
-class LogNormalCDF(DamageState):
+class LogNormalCDF(Base):
     """
     The log normal CDF response model for components.
     """
     median = _Element('float', 'Median of the log normal CDF.',
-            _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
+                      _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
     beta = _Element('float', 'Log standard deviation of the log normal CDF',
-            _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
+                    _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_intensity):
         """
@@ -138,7 +86,7 @@ class LogNormalCDF(DamageState):
         return stats.lognorm.cdf(hazard_intensity, self.beta, loc=0, scale=self.median)
 
 
-class NormalCDF(DamageState):
+class NormalCDF(Base):
     """
     The normal CDF response model for components
     """
@@ -159,7 +107,7 @@ class NormalCDF(DamageState):
         return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
 
 
-class ConstantFunction(DamageState):
+class ConstantFunction(Base):
     """
     A function for defining a constant amplitude for a given range
     """
@@ -169,7 +117,8 @@ class ConstantFunction(DamageState):
     def __call__(self, value):
         return np.ones_like(value) * self.amplitude
 
-class Level0Response(DamageState):
+
+class Level0Response(Base):
     """
     Standard response for no damage.
     """
@@ -183,7 +132,7 @@ class Level0Response(DamageState):
         return 0.0
 
 
-class Level0Recovery(DamageState):
+class Level0Recovery(Base):
     """
     Standard recovery for no damage.
     """
@@ -192,6 +141,7 @@ class Level0Recovery(DamageState):
 
     def __call__(self, hazard_level):
         return 0.0
+
 
 class XYPairs(Base):
     """
@@ -213,7 +163,8 @@ class XYPairs(Base):
         """
         return iter(self.pairs)
 
-class PiecewiseFunction(DamageState):
+
+class PiecewiseFunction(Base):
     """
     first function will only have one value if anything less than that always use that function
     last function will also have one value if anything greater than use that function
@@ -222,64 +173,35 @@ class PiecewiseFunction(DamageState):
     input: hazard value
     output: probability
     """
+    piecewise_function_constructor = None
+    piecewise_functions = None
 
     def __init__(self, *arg, **kwargs):
 
-        self.funtions = []
+        self.piecewise_functions = []
         for k, v in kwargs.iteritems():
             setattr(self, k, v)
 
-        for damage_function in self.damage_functions:
-            if damage_function["damage_function_name"] == "StepFunc":
-                self.funtions.append(StepFunc(**damage_function))
-            elif damage_function["damage_function_name"] == "LogNormalCDF":
-                self.funtions.append(LogNormalCDF(**damage_function))
-            elif damage_function["damage_function_name"] == "NormalCDF":
-                self.funtions.append(NormalCDF(**damage_function))
-            elif damage_function["damage_function_name"] == "ConstantFunction":
-                self.funtions.append(ConstantFunction(**damage_function))
-            elif damage_function["damage_function_name"] == "Level0Response":
-                self.funtions.append(Level0Response(**damage_function))
-            elif damage_function["damage_function_name"] == "Level0Recovery":
-                self.funtions.append(Level0Recovery(**damage_function))
+        for function_constructor in self.piecewise_function_constructor:
+            function_params = {}
+            for key in function_constructor.keys():
+                function_params[key] = function_constructor[key]
 
+            self.piecewise_functions.append(Algorithm.factory(function_params))
 
     def __call__(self, hazard_intensity):
 
-        for i, function in enumerate(self.funtions):
+        for i, piecewise_function in enumerate(self.piecewise_functions):
+            # check if lower limit function
             if i == 0:
-                if hazard_intensity < function.lower_limit:
-                    return self.funtions[0]
-            elif i == len(self.funtions)-1:
-                if hazard_intensity < function.upper_limit:
-                    return self.funtions[-1](hazard_intensity)
+                if hazard_intensity <= piecewise_function.lower_limit:
+                    return self.piecewise_functions[0]
+            # check if upper limit function
+            elif i == len(self.piecewise_functions)-1:
+                if hazard_intensity < piecewise_function.upper_limit:
+
+                    return self.piecewise_functions[-1](hazard_intensity)
+            # any other function between the limits
             else:
-                if hazard_intensity < function.upper_limit and hazard_intensity > function.lower_limit:
-                    return self.funtions[i](hazard_intensity)
-
-
-# class PWFunction(DamageState):
-#     damage_functions = _Element('Funtions', 'A list of funtions.', list)
-#
-#     def __init__(self, functions):
-#         """
-#         :param functions: list of items with somehting like (bounds, function)
-#
-#         functions: list(((lower, upper), 'StepFunc', ), ...)
-#         """
-#
-#         FUNC_MAP = {'StepFunc': StepFunc}
-#         def get_damage_func(func_name):
-#
-#
-#         for f1, f2 in zip(functions[:-1], functions[1:]):
-#             if f1.bounds['upper_limit'] != f2.bounds['lower_limit']:
-#                 raise Exception()
-#
-#         def __call__(self, intensity):
-#             for f in self.damage_functions:
-#                 if f.bounds['upper_limit'] < intensity:
-#                     continue
-#                 return f(intensity)
-#
-#     def __call__
+                if piecewise_function.lower_limit <= hazard_intensity < piecewise_function.upper_limit:
+                    return self.piecewise_functions[i](hazard_intensity)

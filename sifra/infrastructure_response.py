@@ -32,72 +32,7 @@ def run_para_scen(hazard_level, infrastructure, scenario):
     return infrastructure.expose_to(hazard_level, scenario)
 
 
-def calculate_response(scenario, infrastructure, hazard):
-    """
-    The response will be calculated by creating the hazard_levels,
-    iterating through the range of hazards and calling the infrastructure systems
-    expose_to method. This will return the results of the infrastructure to each hazard level
-    exposure. A parameter in the scenario file determines whether the parmap.map function spawns threads
-    that will perform parallel calculations.
-    :param scenario: Parameters for the simulation.
-    :param infrastructure: Model of the infrastructure.
-    :return: List of results for each hazard level.
-    """
 
-
-    code_start_time = time.time() # start of the overall response calculation
-    # capture the results from the map call in a list
-    hazard_level_response = []
-    # Use the parallel option in the scenario to determine how to run
-
-    print("Start Remove parallel run")
-    for hazard_level in hazard.hazard_range:
-        hazard_level_response.append(infrastructure.expose_to(hazard_level, scenario))
-    print("End Remove parallel run")
-    #
-    # hazard_level_response.extend(parmap.map(run_para_scen,
-    #                                         hazard_levels.hazard_range(),
-    #                                         infrastructure,
-    #                                         scenario,
-    #                                         parallel=scenario.run_parallel_proc))
-
-
-    # TODO add test case to compare the hazard response values!
-
-    # combine the responses into one list
-    post_processing_list = [{},  # hazard level vs component damage state index
-                            {},  # hazard level vs infrastructure output
-                            {},  # hazard level vs component response
-                            [],  # infrastructure output for sample
-                            []]  # infrastructure econ loss for sample
-
-    # iterate through the hazard levels
-    for hazard_level_values in hazard_level_response:
-        # iterate through the hazard level lists
-        for key, value_list in hazard_level_values.items():
-            for list_number in range(5):
-                # the first three lists are dicts
-                if list_number <= 2:
-                    post_processing_list[list_number]['%0.3f' % np.float(key)] \
-                        = value_list[list_number]
-                else:
-                    # the last three are lists
-                    post_processing_list[list_number]. \
-                        append(value_list[list_number])
-
-    # Convert the last 3 lists into arrays
-    for list_number in range(3, 5):
-        post_processing_list[list_number] \
-            = np.array(post_processing_list[list_number])
-
-    # Convert the calculated output array into the correct format
-    post_processing_list[3] = np.sum(post_processing_list[3], axis=2).transpose()
-    post_processing_list[4] = post_processing_list[4].transpose()
-
-    # elapsed = timedelta(seconds=(time.time() - code_start_time))
-    # logging.info("[ Run time: %s ]\n" % str(elapsed))
-
-    return post_processing_list
 
 # ****************************************************************************
 # BEGIN POST-PROCESSING ...
@@ -464,12 +399,17 @@ def pe_by_component_class(response_list, infrastructure, scenario,hazard):
         for j, component in enumerate(infrastructure.components.values()):
             # TODO remove invalid Component accesses !!
 
-            hazard_intensity = hazard_level.determine_intensity_at(component.get_location())
-            component_pe_ds = component.response_algorithm.pe_ds(hazard_intensity)[1:]
+            hazard_intensity = hazard_level.determine_intensity_at()
+
+            component_pe_ds = np.zeros(len(component.damage_states))
+            for damage_state_index in component.damage_states.keys():
+                component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(
+                    hazard_intensity)
+            component_pe_ds = component_pe_ds[1:]
 
             pb = pe2pb(component_pe_ds)
 
-            dr = np.array([component.frag_func.damage_states[ds].damage_ratio
+            dr = np.array([component.damage_states[int(ds)].damage_ratio
                            for ds in infrastructure.sys_dmg_states])
             cf = component.cost_fraction
             loss_list = dr * cf

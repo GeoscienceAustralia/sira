@@ -41,13 +41,6 @@ class HazardLevel(object):
             self.level_factor_raster = None
         self.hazard_intensity = hazard_intensity
 
-    def determine_intensity_at(self, location=None):
-        if not location or (location.lon is np.NAN):
+    def determine_intensity_at(self):
             return self.hazard_intensity
-        else:
-            # TODO Implement validation of parameters with the raster
-            if not self.level_factor_raster:
-                raise RuntimeError("A location was given, but a location raster has not been configured")
-            # use the lat long to offset into the NetCDF
-            return self.level_factor_raster.variables['pga_factor'][location.lat, location.lon]*self.hazard_intensity
 
