@@ -4,7 +4,7 @@ from sifra.scenario import Scenario
 from sifra.simulation import calculate_response
 from sifra.model_ingest import ingest_model
 from sifra.modelling.system_topology import SystemTopology
-from sifra.infrastructure_response import  post_processing
+from sifra.infrastructure_response import  write_system_response, loss_by_comp_type, plot_mean_econ_loss, pe_by_component_class
 from sifra.modelling.hazard import Hazard
 
 # main program
@@ -15,10 +15,25 @@ hazard = Hazard(config)
 
 infrastructure = ingest_model(config)
 
-post_processing_list = calculate_response(scenario, infrastructure, hazard)
+"""
+Run simulation.
+Get the results of running a simulation
+"""
+response_list = calculate_response(scenario, infrastructure, hazard)
 
-# response
-post_processing(infrastructure, scenario, post_processing_list,hazard)
+"""
+Post simulation processing.
+After the simulation has run the results are aggregated, saved
+and the system fragility is calculated.
+"""
+write_system_response(response_list, scenario)
+loss_by_comp_type(response_list, infrastructure, scenario, hazard)
+economic_loss_array = response_list[4]
+plot_mean_econ_loss(scenario, economic_loss_array, hazard)
+
+if not config.HAZARD_RASTER:
+    pe_by_component_class(response_list, infrastructure, scenario, hazard)
+
 
 # graphs
 sys_topology_view = SystemTopology(infrastructure, scenario)
