@@ -76,11 +76,12 @@ class Hazard(object):
 
         return scenario_hazard_data, hazard_scenario_list
 
-    def get_hazard_intensity_at_location(self, hazard_scenario_name, long, lat):
+    def get_hazard_intensity_at_location(self, hazard_scenario_name, longitude, latitude):
 
         for comp in self.scenario_hazard_data[hazard_scenario_name]:
-            if float(comp["longitude"]) == float(long):
-                if float(comp["latitude"]) == float(lat):
+
+            if round(float(comp["longitude"]), 2) == round(float(longitude), 2):
+                if round(float(comp["latitude"]), 2) == round(float(latitude), 2):
                     return comp["hazard_intensity"]
 
         raise Exception("Invalid Values for Longitude or Latitude")
