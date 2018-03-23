@@ -39,7 +39,7 @@ def run_para_scen(hazard_level, infrastructure, scenario):
 
 def plot_mean_econ_loss(scenario, economic_loss_array, hazard):
     """Draws and saves a boxplot of mean economic loss"""
-    hazvals_ext = [[str(i)] * scenario.num_samples for i in hazard.hazard_intensity_str]
+    hazvals_ext = [[str(i)] * scenario.num_samples for i in hazard.hazard_scenario_list]
 
     x1 = np.ndarray.flatten(np.array(hazvals_ext))
 
@@ -78,7 +78,7 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazard):
     ax.tick_params(axis='y', left='off', right='off',
                    width=0.8, labelsize=8, pad=5, color='#555555')
 
-    ax.set_xticklabels(hazard.hazard_intensity_str)
+    ax.set_xticklabels(hazard.hazard_scenario_list)
     intensity_label \
         = hazard.intensity_measure_param+' ('+hazard.intensity_measure_unit+')'
     ax.set_xlabel(intensity_label, labelpad=9, size=10)
@@ -170,11 +170,11 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
         names=['component_type', 'response'])
     comptype_resp_df = pd.DataFrame(
         index=mindex,
-        columns=[hazard.hazard_intensity_str])
+        columns=[hazard.hazard_scenario_list])
     comptype_resp_dict = {}
 
     component_resp_dict = response_list[2]
-    for p in hazard.hazard_intensity_str:
+    for p in hazard.hazard_scenario_list:
         if p not in comptype_resp_dict:
             comptype_resp_dict[p] = dict()
 
@@ -230,7 +230,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
     economic_loss_array = response_list[4]
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
-    for j, hazard_level in enumerate(hazard.hazard_intensity_str):
+    for j, hazard_level in enumerate(hazard.hazard_scenario_list):
         for i in range(scenario.num_samples):
             # system output and economic loss
             sys_frag[i, j] = \
@@ -387,14 +387,17 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
 
     exp_damage_ratio = np.zeros((len(infrastructure.components),
                                  hazard.num_hazard_pts))
-    for l, hazard_intensity in enumerate(hazard.hazard_range):
+    for l, hazard_scenario_name in enumerate(hazard.hazard_scenario_list):
         # compute expected damage ratio
         for j, component in enumerate(infrastructure.components.values()):
             # TODO remove invalid Component accesses !!
 
             component_pe_ds = np.zeros(len(component.damage_states))
             for damage_state_index in component.damage_states.keys():
-                component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(hazard_intensity)
+                long, lat = component.get_location()
+                hazard_intensity = hazard.get_hazard_intensity_at_location(hazard_scenario_name, long, lat)
+                component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(
+                    hazard_intensity)
 
             component_pe_ds = component_pe_ds[1:]
 
@@ -422,7 +425,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
     economic_loss_array = response_list[4]
     calculated_output_array = response_list[3]
 
-    outdat = {out_cols[0]: hazard.hazard_intensity_str,
+    outdat = {out_cols[0]: hazard.hazard_scenario_list,
               out_cols[1]: np.mean(economic_loss_array, axis=0),
               out_cols[2]: np.mean(calculated_output_array, axis=0)}
     df = pd.DataFrame(outdat)
@@ -436,7 +439,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
                                      'component_response.csv')
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.index.names = ['component_id', 'response']
-    component_resp_df.columns = hazard.hazard_intensity_str
+    component_resp_df.columns = hazard.hazard_scenario_list
     component_resp_df.to_csv(
         outfile_comp_resp, sep=',',
         index_label=['component_id', 'response']

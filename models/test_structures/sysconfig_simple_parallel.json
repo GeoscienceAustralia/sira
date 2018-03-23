@@ -7,8 +7,8 @@
       "node_cluster": "INPUT",
       "node_type": "supply",
       "operating_capacity": 1,
-      "longitude": 1,
-      "latitude": 1,
+      "longitude": 0,
+      "latitude": 0,
       "damages_states_constructor": {
         "0": {
           "damage_state_name": "DS0 None",
@@ -146,8 +146,8 @@
       "node_cluster": "Raw Material Supply",
       "node_type": "transshipment",
       "operating_capacity": 1,
-      "longitude": 1,
-      "latitude": 1,
+      "longitude": 0,
+      "latitude": 0,
       "damages_states_constructor": {
         "0": {
           "damage_state_name": "DS0 None",
@@ -254,8 +254,8 @@
       "node_cluster": "Transformer",
       "node_type": "transshipment",
       "operating_capacity": 1,
-      "longitude": 1,
-      "latitude": 1,
+      "longitude": 0,
+      "latitude": 0,
       "damages_states_constructor": {
         "0": {
           "damage_state_name": "DS0 None",
@@ -362,8 +362,8 @@
       "node_cluster": "Transformer",
       "node_type": "transshipment",
       "operating_capacity": 1,
-      "longitude": 1,
-      "latitude": 1,
+      "longitude": 0,
+      "latitude": 0,
       "damages_states_constructor": {
         "0": {
           "damage_state_name": "DS0 None",
@@ -470,8 +470,8 @@
       "node_cluster": "Producer",
       "node_type": "transshipment",
       "operating_capacity": 1,
-      "longitude": 1,
-      "latitude": 1,
+      "longitude": 0,
+      "latitude": 0,
       "damages_states_constructor": {
         "0": {
           "damage_state_name": "DS0 None",
@@ -578,8 +578,8 @@
       "node_cluster": "OUTPUT",
       "node_type": "sink",
       "operating_capacity": 1,
-      "longitude": 1,
-      "latitude": 1,
+      "longitude": 0,
+      "latitude": 0,
       "damages_states_constructor": {
         "0": {
           "damage_state_name": "DS0 None",

@@ -9,12 +9,14 @@ from sifra.modelling.system_topology import SystemTopology
 from sifra.infrastructure_response import  write_system_response, loss_by_comp_type, plot_mean_econ_loss, pe_by_component_class
 from sifra.modelling.hazard import Hazard
 
-# main program
+"""
+Configure simulation model.
+Read data and control parameters and construct objects.
+"""
 jsonFileName = "config_test.json"
 config = Configuration(jsonFileName)
 scenario = Scenario(config)
 hazard = Hazard(config)
-
 infrastructure = ingest_model(config)
 
 """
