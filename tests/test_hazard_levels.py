@@ -17,7 +17,7 @@ class TestIngestResponseModel(ut.TestCase):
         config = Configuration(configuration_file_path)
         hazard_level_it = Hazard(config)
 
-        hazard_levels = list(hazard_level_it.hazard_range())
+        hazard_levels = list(hazard_level_it.hazard_scenario_list())
 
         self.assertTrue(len(hazard_levels) > 4)
 
@@ -51,7 +51,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         hazard_levels = Hazard(config)
 
-        hazard_levels = list(hazard_levels.hazard_range())
+        hazard_levels = list(hazard_levels.hazard_scenario_list())
 
         self.assertTrue(len(hazard_levels) > 4)
 

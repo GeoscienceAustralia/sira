@@ -1,11 +1,13 @@
 {
     "Hazard": {
-        "HAZARD_RASTER": null, 
-        "HAZARD_TYPE": "earthquake", 
+        "HAZARD_INPUT_METHOD": "hazard_array",
+        "_comment": "scenario_file",
+        "HAZARD_TYPE": "earthquake",
         "NUM_SAMPLES": 10,
         "INTENSITY_MEASURE_MAX": 20.0,
         "INTENSITY_MEASURE_MIN": 0.0,
-        "INTENSITY_MEASURE_STEP": 2
+        "INTENSITY_MEASURE_STEP": 2,
+        "SCENARIO_FILE" :  "data.csv"
     }, 
     "Input": {
         "INPUT_DIR_NAME": "models/test_structures/"
@@ -38,6 +40,7 @@
         "RUN_CONTEXT": 1
     }, 
     "System": {
+        "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
         "PS_GEN_TECH": null, 
         "SYSTEM_CLASS": "PowerStation", 
