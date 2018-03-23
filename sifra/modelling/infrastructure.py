@@ -79,6 +79,7 @@ class Infrastructure(Base):
             comp_sample_loss = np.zeros(len(self.components))
             comp_sample_func = np.zeros(len(self.components))
             # Extract the array of damage states for this sample
+
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
             count=0
@@ -87,7 +88,6 @@ class Infrastructure(Base):
                 # get the damage state for the component
                 damage_state = component.get_damage_state(component_ds[component_index])
                 # use the damage state attributes to calculate the loss and functionality for the component sample
-                print(damage_state )
                 loss = damage_state.damage_ratio * component.cost_fraction
                 comp_sample_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
