@@ -6,12 +6,10 @@ from sifra.modelling.structural import Element as _Element
 
 class Algorithm:
 
-
     @staticmethod
     def factory(response_params):
 
         function_name = response_params["function_name"]
-        # piecewise_function_constructor
         if function_name == "StepFunc":
             return StepFunc(**response_params)
         elif function_name == "LogNormalCDF":
@@ -40,7 +38,7 @@ class RecoveryFunction(Base):
     recovery_std = Element('float', 'Recovery standard deviation',
                            0.0, [lambda x: float(x) > 0.0])
     recovery_95percentile = Element('float', 'Recovery 95th percentile',
-                                     0.0, [lambda x: float(x) > 0.0])
+                                    0.0, [lambda x: float(x) > 0.0])
 
     def __call__(self, intensity_param, state):
         return 1.0

@@ -84,7 +84,6 @@ def calculate_response(scenario, infrastructure, hazard):
     #                                         scenario,
     #                                         parallel=scenario.run_parallel_proc))
 
-
     # TODO add test case to compare the hazard response values!
 
     # combine the responses into one list
