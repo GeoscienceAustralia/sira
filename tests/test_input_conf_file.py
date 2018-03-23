@@ -35,17 +35,17 @@ class TestInputConfFile(unittest. TestCase):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.SCENARIO_NAME, unicode or str))
 
-    def test_datatype_of_PGA_MIN(self):
+    def test_datatype_of_INTENSITY_MEASURE_MIN(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.PGA_MIN, float))
+            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_MIN, float))
 
-    def test_datatype_of_PGA_MAX(self):
+    def test_datatype_of_INTENSITY_MEASURE_MAX(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.PGA_MAX, float))
+            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_MAX, float))
 
-    def test_datatype_of_PGA_STEP(self):
+    def test_datatype_of_INTENSITY_MEASURE_STEP(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.PGA_STEP, float))
+            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_STEP, float))
 
     def test_datatype_of_NUM_SAMPLES(self):
         for conf in self.confs:

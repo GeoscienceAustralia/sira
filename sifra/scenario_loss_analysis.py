@@ -113,7 +113,7 @@ def comp_recovery_given_haz(facility, compname, hazval, t,
     Calculates level of recovery of component at time t after impact
 
     Currently implemented for earthquake only.
-    Hazard transfer parameter is PGA.
+    Hazard transfer parameter is INTENSITY_MEASURE.
 
     TEST PARAMETERS:
     Example from HAZUS MH MR3, Technical Manual, Ch.8, p8-73

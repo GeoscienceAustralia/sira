@@ -3,9 +3,9 @@
         "HAZARD_RASTER": null, 
         "HAZARD_TYPE": "earthquake", 
         "NUM_SAMPLES": 20, 
-        "PGA_MAX": 0.6, 
-        "PGA_MIN": 0.1, 
-        "PGA_STEP": 0.1
+        "INTENSITY_MEASURE_MAX": 0.6,
+        "INTENSITY_MEASURE_MIN": 0.1,
+        "INTENSITY_MEASURE_STEP": 0.1
     }, 
     "Input": {
         "INPUT_DIR_NAME": "models/powerstation_coal/"

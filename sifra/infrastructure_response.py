@@ -413,7 +413,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
     # --- Output File --- summary output ---
     outfile_sys_response = os.path.join(
         scenario.output_path, 'system_response.csv')
-    out_cols = ['PGA',
+    out_cols = ['INTENSITY_MEASURE',
                 'Economic Loss',
                 'Mean Output']
 

@@ -48,17 +48,17 @@ def convert_confi_object_to_json(setup):
     data['Hazard'] = collections.OrderedDict()
 
     try:
-        data['Hazard']['PGA_MIN'] = setup['PGA_MIN']
+        data['Hazard']['INTENSITY_MEASURE_MIN'] = setup['INTENSITY_MEASURE_MIN']
     except KeyError:
-        data['Hazard']['PGA_MIN'] = None
+        data['Hazard']['INTENSITY_MEASURE_MIN'] = None
     try:
-        data['Hazard']['PGA_MAX'] = setup['PGA_MAX']
+        data['Hazard']['INTENSITY_MEASURE_MAX'] = setup['INTENSITY_MEASURE_MAX']
     except KeyError:
-        data['Hazard']['PGA_MAX'] = None
+        data['Hazard']['INTENSITY_MEASURE_MAX'] = None
     try:
-        data['Hazard']['PGA_STEP'] = setup['PGA_STEP']
+        data['Hazard']['INTENSITY_MEASURE_STEP'] = setup['INTENSITY_MEASURE_STEP']
     except KeyError:
-        data['Hazard']['PGA_STEP'] = None
+        data['Hazard']['INTENSITY_MEASURE_STEP'] = None
     try:
         data['Hazard']['NUM_SAMPLES'] = setup['NUM_SAMPLES']
     except KeyError:
