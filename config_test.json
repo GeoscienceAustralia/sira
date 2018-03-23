@@ -42,8 +42,7 @@
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
-        "PS_GEN_TECH": null, 
-        "SYSTEM_CLASS": "PowerStation", 
+        "SYSTEM_CLASS": "PowerStation",
         "SYSTEM_CLASSES": [
             "PowerStation", 
             "Substation", 

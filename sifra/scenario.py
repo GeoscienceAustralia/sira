@@ -9,6 +9,7 @@ class Scenario:
 
     def __init__(self, configuration):
 
+        self.infrastructure_level = configuration.INFRASTRUCTURE_LEVEL
         self.input_dir_name = configuration.INPUT_DIR_NAME
         self.raw_output_dir = configuration.RAW_OUTPUT_DIR
 
@@ -17,7 +18,7 @@ class Scenario:
 
         self.output_path = configuration.OUTPUT_PATH
 
-        #need to convert excel doc into json and update the ingest class
+        # need to convert excel doc into json and update the ingest class
         self.algorithm_factory = None
 
         self.num_samples = configuration.NUM_SAMPLES
@@ -33,5 +34,5 @@ class Scenario:
 
         self.num_time_steps = len(self.restoration_time_range)
 
-        self.restoration_chkpoints, self.restoration_pct_steps = \
+        self.restoration_checkpoints, self.restoration_pct_steps = \
             np.linspace(0.0, 1.0, num=configuration.RESTORE_PCT_CHECKPOINTS, retstep=True)

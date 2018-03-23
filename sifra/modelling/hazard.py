@@ -34,9 +34,11 @@ class Hazard(object):
                                                     configuration.INTENSITY_MEASURE_MAX,
                                                     num=self.num_hazard_pts)
 
-            self.scenario_hazard_data = Hazard.populate_scenario_hazard_data_using_hazard_array(self.num_hazard_pts)
+            # containing hazard value for each location
+            self.scenario_hazard_data, self.hazard_scenario_list = \
+                Hazard.populate_scenario_hazard_data_using_hazard_array(self.hazard_scenario_list)
 
-        self.hazard_scenario_name = [hazard_scenario for hazard_scenario in self.hazard_scenario_list]
+        self.hazard_scenario_name = self.hazard_scenario_list
 
     @staticmethod
     def populate_scenario_hazard_data_using_hazard_file(scenario_file):
@@ -67,7 +69,18 @@ class Hazard(object):
     def populate_scenario_hazard_data_using_hazard_array(num_hazard_pts):
 
         scenario_hazard_data = {}
+        hazard_scenario_list = []
         for i, hazard_intensity in enumerate(num_hazard_pts):
+            hazard_scenario_list.append("s_"+str(i))
             scenario_hazard_data["s_"+str(i)] = [{"longitude": 0, "latitude": 0, "hazard_intensity": hazard_intensity}]
 
-        return scenario_hazard_data
+        return scenario_hazard_data, hazard_scenario_list
+
+    def get_hazard_intensity_at_location(self, hazard_scenario_name, long, lat):
+
+        for comp in self.scenario_hazard_data[hazard_scenario_name]:
+            if float(comp["longitude"]) == float(long):
+                if float(comp["latitude"]) == float(lat):
+                    return comp["hazard_intensity"]
+
+        raise Exception("Invalid Values for Longitude or Latitude")

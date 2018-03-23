@@ -74,8 +74,8 @@ def calculate_response(scenario, infrastructure, hazard):
     # Use the parallel option in the scenario to determine how to run
 
     print("Start Remove parallel run")
-    for hazard_intensity in hazard.hazard_range:
-        hazard_level_response.append(infrastructure_expose_to(infrastructure, hazard_intensity, scenario))
+    for hazard_scenario_name in hazard.hazard_scenario_name:
+        hazard_level_response.append(infrastructure_expose_to(infrastructure, hazard_scenario_name, scenario,hazard))
     print("End Remove parallel run")
     #
     # hazard_level_response.extend(parmap.map(run_para_scen,
@@ -101,7 +101,7 @@ def calculate_response(scenario, infrastructure, hazard):
             for list_number in range(5):
                 # the first three lists are dicts
                 if list_number <= 2:
-                    post_processing_list[list_number]['%0.3f' % np.float(key)] \
+                    post_processing_list[list_number][key] \
                         = value_list[list_number]
                 else:
                     # the last three are lists
@@ -123,7 +123,7 @@ def calculate_response(scenario, infrastructure, hazard):
     return post_processing_list
 
 
-def infrastructure_expose_to(infrastructure, hazard_intensity, scenario):
+def infrastructure_expose_to(infrastructure, hazard_scenario_name, scenario, hazard):
     """
     Exposes the components of the infrastructure to a hazard level
     within a scenario.
@@ -139,7 +139,7 @@ def infrastructure_expose_to(infrastructure, hazard_intensity, scenario):
     print("START")
 
     print("Calculate System Response")
-    component_damage_state_ind = probable_ds_hazard_level(infrastructure, hazard_intensity, scenario)
+    component_damage_state_ind = probable_ds_hazard_level(infrastructure, hazard_scenario_name, scenario, hazard)
 
     print("System Response: ")
 
@@ -159,10 +159,10 @@ def infrastructure_expose_to(infrastructure, hazard_intensity, scenario):
 
     # log the elapsed time for this hazard level
     elapsed = timedelta(seconds=(time.time() - code_start_time))
-    rootLogger.info("Hazard {} run time: {}".format(hazard_intensity, str(elapsed)))
+    rootLogger.info("Hazard {} run time: {}".format(hazard_scenario_name, str(elapsed)))
 
     # We combine the result data into a dictionary for ease of use
-    response_dict = {hazard_intensity: [component_damage_state_ind,
+    response_dict = {hazard_scenario_name: [component_damage_state_ind,
                                                      if_output,
                                                      component_response,
                                                      if_sample_output,
@@ -170,7 +170,7 @@ def infrastructure_expose_to(infrastructure, hazard_intensity, scenario):
     return response_dict
 
 
-def probable_ds_hazard_level(infrastructure, hazard_intensity, scenario):
+def probable_ds_hazard_level(infrastructure, hazard_scenario_name, scenario,hazard):
     """
     Calculate the probability that being exposed to a hazard level
     will exceed the given damage levels for each component. A monte
@@ -199,7 +199,7 @@ def probable_ds_hazard_level(infrastructure, hazard_intensity, scenario):
                                           dtype=int)
     # create another numpy array of random uniform [0,1.0) numbers.
     rnd = random_number.uniform(size=(scenario.num_samples, num_components))
-    rootLogger.debug("Hazard Intensity {}".format(hazard_intensity))
+    rootLogger.debug("Hazard Intensity {}".format(hazard_scenario_name))
     # iterate through the components
     for index, comp_key in enumerate(sorted(infrastructure.components.keys())):
         component = infrastructure.components[comp_key]
@@ -211,6 +211,8 @@ def probable_ds_hazard_level(infrastructure, hazard_intensity, scenario):
         component_pe_ds = np.zeros(len(component.damage_states))
 
         for damage_state_index in component.damage_states.keys():
+            long, lat = component.get_location()
+            hazard_intensity = hazard.get_hazard_intensity_at_location(hazard_scenario_name, long, lat)
             component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(hazard_intensity)
 
         component_pe_ds = component_pe_ds[1:]
