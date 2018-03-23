@@ -1,49 +1,73 @@
 import numpy as np
+import os
+import csv
 
 
 class Hazard(object):
     """
-    A range of hazard levels that are created from the scenario values.
-
     The idea is to abstract the number and type of hazards to allow greater
     flexibility in the type and number of hazards to be modelled.
     """
     def __init__(self, configuration):
-        """Create the list of hazard levels from the scenario values"""
-        # str name of hazard
+
+        # string variables
         self.hazard_type = configuration.HAZARD_TYPE
-
-        self.num_hazard_pts = \
-            int(round((configuration.INTENSITY_MEASURE_MAX - configuration.INTENSITY_MEASURE_MIN) /
-                      float(configuration.INTENSITY_MEASURE_STEP) + 1))
-
-        # using the limits and step generate a list of hazard intensity values
-        self.hazard_range = np.linspace(configuration.INTENSITY_MEASURE_MIN,
-                                                 configuration.INTENSITY_MEASURE_MAX,
-                                                 num=self.num_hazard_pts)
-
-        # self.hazard_range = [HazardLevel(configuration, hazard_intensity)
-        #                      for hazard_intensity in self.hazard_intensity_vals]
-
         self.intensity_measure_param = configuration.INTENSITY_MEASURE_PARAM
         self.intensity_measure_unit = configuration.INTENSITY_MEASURE_UNIT
 
-        self.hazard_intensity_str =  [('%0.3f' % np.float(x)) for x in self.hazard_range]
+        # get hazard data from scenario file
+        if configuration.HAZARD_INPUT_METHOD == "scenario_file":
+            self.scenario_hazard_data, self.hazard_scenario_list = \
+                Hazard.populate_scenario_hazard_data_using_hazard_file(configuration.SCENARIO_FILE)
 
+            self.num_hazard_pts = len(self.hazard_scenario_list)
 
+        # get hazard data from an array of hazard intensity values
+        elif configuration.HAZARD_INPUT_METHOD == "hazard_array":
 
-# class HazardLevel(object):
-#     """A particular level of hazard in the range of hazard levels."""
-#     def __init__(self, configuration, hazard_intensity):
-#         """Only the intensity is currently used."""
-#         self.hazard_type = configuration.HAZARD_TYPE
-#
-#         if configuration.HAZARD_RASTER:
-#             self.level_factor_raster = configuration.HAZARD_RASTER
-#         else:
-#             self.level_factor_raster = None
-#         self.hazard_intensity = hazard_intensity
-#
-#     def determine_intensity_at(self):
-#             return self.hazard_intensity
+            self.num_hazard_pts = \
+                int(round((configuration.INTENSITY_MEASURE_MAX - configuration.INTENSITY_MEASURE_MIN) /
+                          float(configuration.INTENSITY_MEASURE_STEP) + 1))
 
+            # using the limits and step generate a list of hazard intensity values
+            self.hazard_scenario_list = np.linspace(configuration.INTENSITY_MEASURE_MIN,
+                                                    configuration.INTENSITY_MEASURE_MAX,
+                                                    num=self.num_hazard_pts)
+
+            self.scenario_hazard_data = Hazard.populate_scenario_hazard_data_using_hazard_array(self.num_hazard_pts)
+
+        self.hazard_scenario_name = [hazard_scenario for hazard_scenario in self.hazard_scenario_list]
+
+    @staticmethod
+    def populate_scenario_hazard_data_using_hazard_file(scenario_file):
+        root = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(root, "hazard", scenario_file )
+        scenario_hazard_data = {}
+
+        with open(csv_path, "rb") as f_obj:
+            reader = csv.DictReader(f_obj, delimiter=',')
+
+            hazard_scenario_list = [scenario for scenario in reader.fieldnames if
+                                    scenario not in ["longitude", "latitude"]]
+
+            for scenario in hazard_scenario_list:
+                scenario_hazard_data[scenario] = []
+
+            for row in reader:
+                for col in row:
+                    if col not in ["longitude", "latitude"]:
+                        hazard_intensity = row[col]
+                        scenario_hazard_data[col].append(
+                            {"longitude": row["longitude"], "latitude": row["latitude"],
+                             "hazard_intensity": hazard_intensity})
+
+        return scenario_hazard_data, hazard_scenario_list
+
+    @staticmethod
+    def populate_scenario_hazard_data_using_hazard_array(num_hazard_pts):
+
+        scenario_hazard_data = {}
+        for i, hazard_intensity in enumerate(num_hazard_pts):
+            scenario_hazard_data["s_"+str(i)] = [{"longitude": 0, "latitude": 0, "hazard_intensity": hazard_intensity}]
+
+        return scenario_hazard_data

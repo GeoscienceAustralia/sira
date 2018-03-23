@@ -1,6 +1,7 @@
 {
     "Hazard": {
-        "HAZARD_RASTER": null, 
+        "HAZARD_INPUT_METHOD": "hazard_array",
+        "_comment": "scenario_file",
         "HAZARD_TYPE": "earthquake", 
         "NUM_SAMPLES": 10, 
         "INTENSITY_MEASURE_MAX": 0.7,
