@@ -17,9 +17,9 @@ class Configuration:
         self.INTENSITY_MEASURE_UNIT = config['Scenario']['INTENSITY_MEASURE_UNIT']
         self.SCENARIO_HAZARD_VALUES = config['Scenario']['SCENARIO_HAZARD_VALUES']
 
-        self.PGA_MIN = config['Hazard']['PGA_MIN']
-        self.PGA_MAX = config['Hazard']['PGA_MAX']
-        self.PGA_STEP = config['Hazard']['PGA_STEP']
+        self.INTENSITY_MEASURE_MIN = config['Hazard']['INTENSITY_MEASURE_MIN']
+        self.INTENSITY_MEASURE_MAX = config['Hazard']['INTENSITY_MEASURE_MAX']
+        self.INTENSITY_MEASURE_STEP = config['Hazard']['INTENSITY_MEASURE_STEP']
         self.NUM_SAMPLES = config['Hazard']['NUM_SAMPLES']
         self.HAZARD_TYPE = config['Hazard']['HAZARD_TYPE']
         self.HAZARD_RASTER = config['Hazard']['HAZARD_RASTER']

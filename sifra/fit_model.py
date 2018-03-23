@@ -295,7 +295,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
     spl.format_fig(ax,
                    figtitle='System Fragility: ' + fc.system_class,
                    x_lab='Peak Ground Acceleration (g)',
-                   y_lab='P($D_s$ > $d_s$ | PGA)',
+                   y_lab='P($D_s$ > $d_s$ | INTENSITY_MEASURE)',
                    x_scale=None,
                    y_scale=None,
                    x_tick_val=None,

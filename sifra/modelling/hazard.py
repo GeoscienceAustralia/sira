@@ -14,12 +14,12 @@ class Hazard(object):
         self.hazard_type = configuration.HAZARD_TYPE
 
         self.num_hazard_pts = \
-            int(round((configuration.PGA_MAX - configuration.PGA_MIN) /
-                      float(configuration.PGA_STEP) + 1))
+            int(round((configuration.INTENSITY_MEASURE_MAX - configuration.INTENSITY_MEASURE_MIN) /
+                      float(configuration.INTENSITY_MEASURE_STEP) + 1))
 
         # using the limits and step generate a list of hazard intensity values
-        self.hazard_range = np.linspace(configuration.PGA_MIN,
-                                                 configuration.PGA_MAX,
+        self.hazard_range = np.linspace(configuration.INTENSITY_MEASURE_MIN,
+                                                 configuration.INTENSITY_MEASURE_MAX,
                                                  num=self.num_hazard_pts)
 
         # self.hazard_range = [HazardLevel(configuration, hazard_intensity)
@@ -28,7 +28,7 @@ class Hazard(object):
         self.intensity_measure_param = configuration.INTENSITY_MEASURE_PARAM
         self.intensity_measure_unit = configuration.INTENSITY_MEASURE_UNIT
 
-        self.hazard_intensity_str = [('%0.3f' % np.float(x)) for x in self.hazard_range]
+        self.hazard_intensity_str =  [('%0.3f' % np.float(x)) for x in self.hazard_range]
 
 
 
