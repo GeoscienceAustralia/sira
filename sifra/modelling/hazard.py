@@ -4,10 +4,25 @@ import csv
 
 class Hazard(object):
     """
-handel a singloe    """
+    handel a singloe
+    """
 
+    def __init__(self,hazard_scenario_name, scenario_hazard_data):
+        self.hazard_scenario_name = hazard_scenario_name
+        self.scenario_hazard_data = scenario_hazard_data
+        self.round_off = 2
 
-class Hazards(object):
+    def get_hazard_intensity_at_location(self, longitude, latitude):
+
+        for comp in self.scenario_hazard_data:
+
+            if round(float(comp["longitude"]), self.round_off) == round(float(longitude), self.round_off):
+                if round(float(comp["latitude"]), self.round_off) == round(float(latitude), self.round_off):
+                    return comp["hazard_intensity"]
+
+        raise Exception("Invalid Values for Longitude or Latitude")
+
+class HazardsContainer(object):
     """
     The idea is to abstract the number and type of hazards to allow greater
     flexibility in the type and number of hazards to be modelled.
@@ -15,6 +30,7 @@ class Hazards(object):
     def __init__(self, configuration):
 
         # string variables
+        self.listOfhazards = []
         self.hazard_type = configuration.HAZARD_TYPE
         self.intensity_measure_param = configuration.INTENSITY_MEASURE_PARAM
         self.intensity_measure_unit = configuration.INTENSITY_MEASURE_UNIT
@@ -22,7 +38,7 @@ class Hazards(object):
         # get hazard data from scenario file
         if configuration.HAZARD_INPUT_METHOD == "scenario_file":
             self.scenario_hazard_data, self.hazard_scenario_list = \
-                Hazards.populate_scenario_hazard_data_using_hazard_file(configuration.SCENARIO_FILE)
+                HazardsContainer.populate_scenario_hazard_data_using_hazard_file(configuration.SCENARIO_FILE)
 
             self.num_hazard_pts = len(self.hazard_scenario_list)
 
@@ -40,7 +56,10 @@ class Hazards(object):
 
             # containing hazard value for each location
             self.scenario_hazard_data, self.hazard_scenario_list = \
-                Hazards.populate_scenario_hazard_data_using_hazard_array(self.hazard_scenario_list)
+                HazardsContainer.populate_scenario_hazard_data_using_hazard_array(self.hazard_scenario_list)
+
+        for hazard_scenario_name in self.scenario_hazard_data.keys():
+            self.listOfhazards.append(Hazard(hazard_scenario_name, self.scenario_hazard_data[hazard_scenario_name]))
 
         self.hazard_scenario_name = self.hazard_scenario_list
 
@@ -80,12 +99,4 @@ class Hazards(object):
 
         return scenario_hazard_data, hazard_scenario_list
 
-    def get_hazard_intensity_at_location(self, hazard_scenario_name, longitude, latitude):
 
-        for comp in self.scenario_hazard_data[hazard_scenario_name]:
-
-            if round(float(comp["longitude"]), 2) == round(float(longitude), 2):
-                if round(float(comp["latitude"]), 2) == round(float(latitude), 2):
-                    return comp["hazard_intensity"]
-
-        raise Exception("Invalid Values for Longitude or Latitude")
