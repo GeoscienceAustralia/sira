@@ -47,7 +47,7 @@
             "WaterTreatmentPlant"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_identical_comps.xlsx"
+        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_identical_comps.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

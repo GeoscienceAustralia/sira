@@ -12,7 +12,7 @@ class Algorithm:
         function_name = response_params["function_name"]
         if function_name == "StepFunc":
             return StepFunc(**response_params)
-        elif function_name == "LogNormalCDF":
+        elif function_name == "LogNormalCDF" or function_name == "Lognormal":
             return LogNormalCDF(**response_params)
         elif function_name == "NormalCDF":
             return NormalCDF(**response_params)
@@ -27,8 +27,7 @@ class Algorithm:
         elif function_name == "RecoveryFunction":
             return RecoveryFunction(**response_params)
 
-        raise ValueError("No response model "
-                         "matches {}".format(function_name))
+        raise ValueError("No response model matches {}".format(function_name))
 
 
 class RecoveryFunction(Base):
@@ -52,6 +51,11 @@ class StepFunc(Base):
     xys = _Element('XYPairs', 'A list of X, Y pairs.', list,
         [lambda xy: [(float(x), float(y)) for x, y in xy]])
 
+    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+
     def __call__(self, value):
         """
         Note that intervals are closed on the right.
@@ -66,6 +70,12 @@ class LogNormalCDF(Base):
     """
     The log normal CDF response model for components.
     """
+
+    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+
     median = _Element('float', 'Median of the log normal CDF.',
                       _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
@@ -94,6 +104,11 @@ class NormalCDF(Base):
     stddev = _Element('float', 'Standard deviation of the normal CDF',
                       _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
+    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+
     def __call__(self, value):
         """
         In scipy normal CDF is implemented thus:
@@ -112,6 +127,11 @@ class ConstantFunction(Base):
     amplitude = _Element('float', 'Constant amplitude of function',
                     _Element.NO_DEFAULT, [lambda x: float(x) >= 0.])
 
+    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+
     def __call__(self, value):
         return np.ones_like(value) * self.amplitude
 
@@ -126,6 +146,11 @@ class Level0Response(Base):
     beta = 0.0
     median = 1.0
 
+    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+
     def __call__(self, hazard_level):
         return 0.0
 
@@ -136,6 +161,11 @@ class Level0Recovery(Base):
     """
     recovery_mean = 0.00001
     recovery_std = 0.00001
+
+    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
+    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
+                           None, [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_level):
         return 0.0

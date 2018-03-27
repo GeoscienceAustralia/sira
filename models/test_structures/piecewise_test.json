@@ -141,12 +141,41 @@
                         "recovery_std": 0.303978416
                     }, 
                     "response_function_constructor": {
-                        "beta": 0.375, 
-                        "damage_state_definition": "Not Available.", 
-                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
-                        "function_name": "Lognormal", 
-                        "median": 0.42, 
-                        "minimum": null
+                        "function_name": "PiecewiseFunction", 
+                        "piecewise_function_constructor": [
+                            {
+                                "beta": 0.375, 
+                                "damage_state_definition": "Not Available.", 
+                                "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                                "function_name": "Lognormal", 
+                                "median": 2.0, 
+                                "minimum": null
+                            }, 
+                            {
+                                "beta": 0.375, 
+                                "damage_state_definition": "Not Available.", 
+                                "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                                "function_name": "Lognormal", 
+                                "median": 2.0, 
+                                "minimum": null
+                            }, 
+                            {
+                                "beta": 0.375, 
+                                "damage_state_definition": "Not Available.", 
+                                "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                                "function_name": "Lognormal", 
+                                "median": 2.0, 
+                                "minimum": null
+                            }, 
+                            {
+                                "beta": 0.375, 
+                                "damage_state_definition": "Not Available.", 
+                                "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                                "function_name": "Lognormal", 
+                                "median": 2.0, 
+                                "minimum": null
+                            }
+                        ]
                     }
                 }, 
                 "2": {

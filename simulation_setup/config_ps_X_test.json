@@ -51,7 +51,7 @@
             "WWTP"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_test_case.xlsx"
+        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_test_case.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

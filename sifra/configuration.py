@@ -107,5 +107,5 @@ class Configuration:
 
 
 if __name__ == '__main__':
-    configuration = Configuration("C:/Users/u12089/Desktop/sifra-dev/config_test.json")
+    configuration = Configuration("C:/Users/u12089/Desktop/sifra-dev/test_config.json")
     print(configuration)

@@ -2,8 +2,12 @@ import numpy as np
 import os
 import csv
 
-
 class Hazard(object):
+    """
+handel a singloe    """
+
+
+class Hazards(object):
     """
     The idea is to abstract the number and type of hazards to allow greater
     flexibility in the type and number of hazards to be modelled.
@@ -18,7 +22,7 @@ class Hazard(object):
         # get hazard data from scenario file
         if configuration.HAZARD_INPUT_METHOD == "scenario_file":
             self.scenario_hazard_data, self.hazard_scenario_list = \
-                Hazard.populate_scenario_hazard_data_using_hazard_file(configuration.SCENARIO_FILE)
+                Hazards.populate_scenario_hazard_data_using_hazard_file(configuration.SCENARIO_FILE)
 
             self.num_hazard_pts = len(self.hazard_scenario_list)
 
@@ -36,7 +40,7 @@ class Hazard(object):
 
             # containing hazard value for each location
             self.scenario_hazard_data, self.hazard_scenario_list = \
-                Hazard.populate_scenario_hazard_data_using_hazard_array(self.hazard_scenario_list)
+                Hazards.populate_scenario_hazard_data_using_hazard_array(self.hazard_scenario_list)
 
         self.hazard_scenario_name = self.hazard_scenario_list
 

@@ -2,7 +2,7 @@ import numpy as np
 
 from sifra.configuration import Configuration
 from sifra.logger import rootLogger
-from sifra.modelling.hazard import Hazard
+from sifra.modelling.hazard import Hazards
 from sifra.scenario import Scenario
 from sifra.model_ingest import ingest_model
 import time
@@ -19,7 +19,7 @@ class Simulation:
         self.config = Configuration(configuration_file_path)
         self.scenario = Scenario(self.config)
         self.infrastructure, algorithm_factory = ingest_model(self.config)
-        self.hazard = Hazard(self.config)
+        self.hazard = Hazards(self.config)
 
         # variable to hold the states of all the components
 
@@ -236,5 +236,4 @@ def probable_ds_hazard_level(infrastructure, hazard_scenario_name, scenario,haza
 
         component_damage_state_ind[:, index] = \
             np.sum(component_pe_ds > rnd[:, index][:, np.newaxis], axis=1)
-        print(component_damage_state_ind)
     return component_damage_state_ind

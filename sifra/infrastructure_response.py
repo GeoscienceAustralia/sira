@@ -13,7 +13,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sifra.modelling.hazard import Hazard
+from sifra.modelling.hazard import Hazards
 from sifra.logger import rootLogger
 from sifra.configuration import Configuration
 
