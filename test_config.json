@@ -52,7 +52,7 @@
             "WWTP"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_simple_parallel.json"
+        "SYS_CONF_FILE_NAME": "piecewise_test.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

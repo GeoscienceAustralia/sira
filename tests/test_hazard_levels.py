@@ -3,7 +3,7 @@ from netCDF4 import Dataset
 import numpy as np
 
 from sifra.scenario import Scenario
-from sifra.modelling.hazard import Hazard, HazardLevel
+from sifra.modelling.hazard import Hazards, HazardLevel
 from sifra.modelling.component import Location
 from sifra.configuration import Configuration
 
@@ -15,7 +15,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         configuration_file_path = './simulation_setup/test_scenario_ps_coal.json'
         config = Configuration(configuration_file_path)
-        hazard_level_it = Hazard(config)
+        hazard_level_it = Hazards(config)
 
         hazard_levels = list(hazard_level_it.hazard_scenario_list())
 
@@ -49,7 +49,7 @@ class TestIngestResponseModel(ut.TestCase):
 
         scenario.level_factor_raster = test_raster
 
-        hazard_levels = Hazard(config)
+        hazard_levels = Hazards(config)
 
         hazard_levels = list(hazard_levels.hazard_scenario_list())
 

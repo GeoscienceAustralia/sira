@@ -1,0 +1,736 @@
+{
+  "component_list": {
+    "materiel_supply": {
+      "component_class": "Material Delivery and Storage",
+      "component_type": "SYSTEM_INPUT",
+      "cost_fraction": 0.0,
+      "node_cluster": "INPUT",
+      "node_type": "supply",
+      "operating_capacity": 1,
+      "longitude": 0,
+      "latitude": 0,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "PiecewiseFunction",
+            "piecewise_function_constructor": [
+              {
+                "upper_limit": 0,
+                "lower_limit": null,
+                "function_name": "LogNormalCDF",
+                "beta": 0.4,
+                "median": 0.35,
+                "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                "minimum": null,
+                "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+              },
+              {
+                "upper_limit": 0,
+                "lower_limit": 10,
+                "function_name": "LogNormalCDF",
+                "beta": 0.4,
+                "median": 0.35,
+                "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                "minimum": null,
+                "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+              },
+              {
+                "upper_limit": null,
+                "lower_limit": 10,
+                "function_name": "LogNormalCDF",
+                "beta": 0.4,
+                "median": 0.35,
+                "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                "minimum": null,
+                "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+              }
+            ]
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Slight",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Moderate",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Extensive",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "4": {
+          "damage_state_name": "DS4 Complete",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        }
+      }
+    },
+    "node_1": {
+      "component_class": "Stage 1 processing",
+      "component_type": "Processor A",
+      "cost_fraction": 0.4,
+      "node_cluster": "Raw Material Supply",
+      "node_type": "transshipment",
+      "operating_capacity": 1,
+      "longitude": 0,
+      "latitude": 0,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 0,
+          "damage_ratio": 0.75,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Slight",
+          "functionality": 1,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.375,
+            "median": 0.42,
+            "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+            "minimum": null,
+            "damage_state_definition": "Minor deformation to supporting structure with some yielding of hold-down bolts."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Moderate",
+          "damage_ratio": 0.3,
+          "functionality": 0,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.375,
+            "median": 0.57,
+            "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+            "minimum": null,
+            "damage_state_definition": "Significant deformaton to steel supporting structure with misaligment of ash handling conveyors"
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 1.0,
+            "recovery_mean": 3.0,
+            "recovery_std": 0.6079568319,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Extensive",
+          "functionality": 0,
+          "damage_ratio": 0.75,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.475,
+            "median": 0.78,
+            "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+            "minimum": null,
+            "damage_state_definition": "Horizontal displacement of structure with failure of bracing elements and damage to ash silo structure."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 3.0,
+            "recovery_mean": 15.0,
+            "recovery_std": 1.8238704957,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "4": {
+          "damage_state_name": "DS4 Complete",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.475,
+            "median": 1.33,
+            "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+            "minimum": null,
+            "damage_state_definition": "Partial or complete collapse of ash handling system."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 4.0,
+            "recovery_mean": 30.0,
+            "recovery_std": 2.4318273276,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        }
+      }
+    },
+    "node_2": {
+      "component_class": "Stage 2 processing",
+      "component_type": "Processor B",
+      "cost_fraction": 0.2,
+      "node_cluster": "Transformer",
+      "node_type": "transshipment",
+      "operating_capacity": 1,
+      "longitude": 0,
+      "latitude": 0,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_funtions": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.35
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Slight",
+          "functionality": 0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.35,
+            "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+            "minimum": null,
+            "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 5.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Moderate",
+          "functionality": 0,
+          "damage_ratio": 0.3,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.35,
+            "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+            "minimum": null,
+            "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 1.0,
+            "recovery_mean": 17.0,
+            "recovery_std": 0.6079568319,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Extensive",
+          "functionality": 0,
+          "damage_ratio": 0.75,
+          "response_function_constructor": {
+            "upper_limit": 10,
+            "lower_limit": 0,
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.75,
+            "fragility_source": "Sim to main feed conveyor Not nessory ",
+            "minimum": null,
+            "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 2.0,
+            "recovery_mean": 37.0,
+            "recovery_std": 1.2159136638,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "4": {
+          "damage_state_name": "DS4 Complete",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 1.0,
+            "fragility_source": "Sim to main feed conveyor",
+            "minimum": null,
+            "damage_state_definition": "Damage beyond repair."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 4.0,
+            "recovery_mean": 77.1428571429,
+            "recovery_std": 2.4318273276,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        }
+      }
+    },
+    "node_4": {
+      "component_class": "Stage 2 processing",
+      "component_type": "Processor D",
+      "cost_fraction": 0.15,
+      "node_cluster": "Transformer",
+      "node_type": "transshipment",
+      "operating_capacity": 1,
+      "longitude": 0,
+      "latitude": 0,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 5.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Slight",
+          "functionality": 0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.35,
+            "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+            "minimum": null,
+            "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 5.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Moderate",
+          "functionality": 0,
+          "damage_ratio": 0.3,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.5,
+            "median": 0.55,
+            "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+            "minimum": null,
+            "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 1.0,
+            "recovery_mean": 17.0,
+            "recovery_std": 0.6079568319,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Extensive",
+          "functionality": 0,
+          "damage_ratio": 0.75,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.5,
+            "median": 0.55,
+            "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+            "minimum": null,
+            "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 2.0,
+            "recovery_mean": 37.0,
+            "recovery_std": 1.2159136638,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "4": {
+          "damage_state_name": "DS4 Complete",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 1.0,
+            "fragility_source": "Sim to main feed conveyor",
+            "minimum": null,
+            "damage_state_definition": "Damage beyond repair."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 4.0,
+            "recovery_mean": 77.1428571429,
+            "recovery_std": 2.4318273276,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        }
+      }
+    },
+    "node_3": {
+      "component_class": "Stage 3 processing",
+      "component_type": "Processor C",
+      "cost_fraction": 0.25,
+      "node_cluster": "Producer",
+      "node_type": "transshipment",
+      "operating_capacity": 1,
+      "longitude": 0,
+      "latitude": 0,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 0,
+          "damage_ratio": 1.2,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "not available"
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Slight",
+          "functionality": 1,
+          "damage_ratio": 0.05,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.25,
+            "median": 0.28,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Some deformation at hold down bolts."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.5,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.303978416,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Moderate",
+          "damage_ratio": 0.3,
+          "functionality": 0,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.35,
+            "median": 0.43,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces and soem anchor bolts stretched."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 1.5,
+            "recovery_mean": 3.0,
+            "recovery_std": 0.9119352479,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Extensive",
+          "functionality": 0,
+          "damage_ratio": 0.75,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.6,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Many steel bracing elements have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Many truss arch members have buckeld in compression.  Some of the structural connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some foundation oviement due to settlement and some anchor bolts failed."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 3.5,
+            "recovery_mean": 7.0,
+            "recovery_std": 2.1278489117,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "4": {
+          "damage_state_name": "DS4 Complete",
+          "functionality": 0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.4,
+            "median": 0.85,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the shelter structure."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 15.0,
+            "recovery_mean": 30.0,
+            "recovery_std": 9.1193524787,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        }
+      }
+    },
+    "output_1": {
+      "component_class": "SYSTEM OUTPUT",
+      "component_type": "SYSTEM_OUTPUT",
+      "cost_fraction": 0.0,
+      "node_cluster": "OUTPUT",
+      "node_type": "sink",
+      "operating_capacity": 1,
+      "longitude": 0,
+      "latitude": 0,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Slight",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Moderate",
+          "damage_ratio": 0.01,
+          "functionality": 1,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Extensive",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "4": {
+          "damage_state_name": "DS4 Complete",
+          "functionality": 1,
+          "damage_ratio": 0.01,
+          "response_function_constructor": {
+            "function_name": "LogNormalCDF",
+            "beta": 0.01,
+            "median": 10.0,
+            "fragility_source": null,
+            "minimum": null,
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "recovery_95percentile": 0.1,
+            "recovery_mean": 1.0,
+            "recovery_std": 0.0607956832,
+            "function_name": "RecoveryFunction",
+            "recovery_state_definition": "Not Available."
+          }
+        }
+      }
+    }
+  },
+  "node_conn_df": {
+    "0": {
+      "destination": "node_1",
+      "link_capacity": 1,
+      "origin": "materiel_supply",
+      "weight": 1
+    },
+    "1": {
+      "destination": "node_2",
+      "link_capacity": 1,
+      "origin": "node_1",
+      "weight": 1
+    },
+    "2": {
+      "destination": "node_3",
+      "link_capacity": 1,
+      "origin": "node_2",
+      "weight": 1
+    },
+    "3": {
+      "destination": "node_4",
+      "link_capacity": 1,
+      "origin": "node_1",
+      "weight": 1
+    },
+    "4": {
+      "destination": "node_3",
+      "link_capacity": 1,
+      "origin": "node_4",
+      "weight": 1
+    },
+    "5": {
+      "destination": "output_1",
+      "link_capacity": 1,
+      "origin": "node_3",
+      "weight": 1
+    }
+  },
+  "sysinp_setup": {
+    "materiel_supply": {
+      "capacity_fraction": 1,
+      "commodity_type": "coal",
+      "input_capacity": 100
+    }
+  },
+  "sysout_setup": {
+    "output_1": {
+      "capacity_fraction": 1,
+      "output_node_capacity": 250,
+      "priority": 1,
+      "production_node": "node_y"
+    }
+  }
+}

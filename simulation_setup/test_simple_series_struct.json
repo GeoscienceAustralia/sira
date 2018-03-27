@@ -47,7 +47,7 @@
             "WaterTreatmentPlant"
         ], 
         "SYSTEM_SUBCLASS": "Gas Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_simple_linear.xlsx"
+        "SYS_CONF_FILE_NAME": "sysconfig_simple_linear.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 
