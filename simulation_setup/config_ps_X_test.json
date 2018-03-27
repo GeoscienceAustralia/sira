@@ -39,6 +39,7 @@
         "RUN_CONTEXT": 1
     }, 
     "System": {
+        "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
         "PS_GEN_TECH": null, 
         "SYSTEM_CLASS": "PowerStation", 

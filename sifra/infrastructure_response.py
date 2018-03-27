@@ -13,23 +13,23 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sifra.modelling.hazard import Hazards
+from sifra.modelling.hazard import HazardsContainer
 from sifra.logger import rootLogger
 from sifra.configuration import Configuration
 
 
-def run_para_scen(hazard_level, infrastructure, scenario):
-    """
-    The parmap.map function requires a module level function as a parameter.
-    So this function satisfies that requirement by calling the infrastructure's
-    exponse_to method within this one.
-    :param hazard_level: The hazard level that the infrastructure will be exposed to
-    :param infrastructure: The infrastructure model that is being simulated
-    :param scenario: The Parameters for the simulation
-    :return: List of results of the simulation
-    """
-
-    return infrastructure.expose_to(hazard_level, scenario)
+# def run_para_scen(hazard_level, infrastructure, scenario):
+#     """
+#     The parmap.map function requires a module level function as a parameter.
+#     So this function satisfies that requirement by calling the infrastructure's
+#     exponse_to method within this one.
+#     :param hazard_level: The hazard level that the infrastructure will be exposed to
+#     :param infrastructure: The infrastructure model that is being simulated
+#     :param scenario: The Parameters for the simulation
+#     :return: List of results of the simulation
+#     """
+#
+#     return infrastructure.expose_to(hazard_level, scenario)
 
 
 # ****************************************************************************
@@ -37,14 +37,14 @@ def run_para_scen(hazard_level, infrastructure, scenario):
 # ****************************************************************************
 
 
-def plot_mean_econ_loss(scenario, economic_loss_array, hazard):
+def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     """Draws and saves a boxplot of mean economic loss"""
-    hazvals_ext = [[str(i)] * scenario.num_samples for i in hazard.hazard_scenario_list]
+    hazvals_ext = [[str(i)] * scenario.num_samples for i in hazards.hazard_scenario_list]
 
     x1 = np.ndarray.flatten(np.array(hazvals_ext))
 
     smpl = range(1, scenario.num_samples + 1, 1)
-    x2 = np.array(smpl * hazard.num_hazard_pts)
+    x2 = np.array(smpl * hazards.num_hazard_pts)
 
     arrays = [x1, x2]
     econ_loss = np.array(economic_loss_array)
@@ -78,9 +78,9 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazard):
     ax.tick_params(axis='y', left='off', right='off',
                    width=0.8, labelsize=8, pad=5, color='#555555')
 
-    ax.set_xticklabels(hazard.hazard_scenario_list)
+    ax.set_xticklabels(hazards.hazard_scenario_list)
     intensity_label \
-        = hazard.intensity_measure_param+' ('+hazard.intensity_measure_unit+')'
+        = hazards.intensity_measure_param+' ('+hazards.intensity_measure_unit+')'
     ax.set_xlabel(intensity_label, labelpad=9, size=10)
     ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
 
@@ -144,7 +144,7 @@ def write_system_response(response_list, scenario):
                         handle)
 
 
-def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
+def loss_by_comp_type(response_list, infrastructure, scenario, hazards):
     """
     Aggregate the economic loss statistics by component type.
     :param response_list: list of simulation results
@@ -170,11 +170,11 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
         names=['component_type', 'response'])
     comptype_resp_df = pd.DataFrame(
         index=mindex,
-        columns=[hazard.hazard_scenario_list])
+        columns=[hazards.hazard_scenario_list])
     comptype_resp_dict = {}
 
     component_resp_dict = response_list[2]
-    for p in hazard.hazard_scenario_list:
+    for p in hazards.hazard_scenario_list:
         if p not in comptype_resp_dict:
             comptype_resp_dict[p] = dict()
 
@@ -230,7 +230,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
     economic_loss_array = response_list[4]
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
-    for j, hazard_level in enumerate(hazard.hazard_scenario_list):
+    for j, hazard_level in enumerate(hazards.hazard_scenario_list):
         for i in range(scenario.num_samples):
             # system output and economic loss
             sys_frag[i, j] = \
@@ -239,9 +239,9 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
     # Calculating Probability of Exceedence:
     pe_sys_econloss = np.zeros(
         (len(infrastructure.get_system_damage_states()),
-         hazard.num_hazard_pts)
+         hazards.num_hazard_pts)
     )
-    for j in range(hazard.num_hazard_pts):
+    for j in range(hazards.num_hazard_pts):
         for i in range(len(infrastructure.get_system_damage_states())):
             pe_sys_econloss[i, j] = \
                 np.sum(sys_frag[:, j] >= i) / float(scenario.num_samples)
@@ -291,7 +291,7 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazard):
     )
 
 
-def pe_by_component_class(response_list, infrastructure, scenario, hazard):
+def pe_by_component_class(response_list, infrastructure, scenario, hazards):
     """
     Calculated  probability of exceedence based on component classes
     :param response_list:
@@ -349,7 +349,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
         #                 np.sum(comp_class_failures[compclass][i, j] > \
         #                        infrastructure.ds_lims_compclasses[compclass])
 
-        for j, hazard_intensity in enumerate(hazard.hazard_range):
+        for j, hazard_intensity in enumerate(hazards.hazard_range):
             for i in range(scenario.num_samples):
                 for compclass in cp_classes_costed:
                     for c in cp_class_map[compclass]:
@@ -386,8 +386,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
     # ------------------------------------------------------------------------
 
     exp_damage_ratio = np.zeros((len(infrastructure.components),
-                                 hazard.num_hazard_pts))
-    for l, hazard_scenario_name in enumerate(hazard.hazard_scenario_list):
+                                 hazards.num_hazard_pts))
+    for l, hazard in enumerate(hazards.listOfhazards):
         # compute expected damage ratio
         for j, component in enumerate(infrastructure.components.values()):
             # TODO remove invalid Component accesses !!
@@ -395,7 +395,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
             component_pe_ds = np.zeros(len(component.damage_states))
             for damage_state_index in component.damage_states.keys():
                 long, lat = component.get_location()
-                hazard_intensity = hazard.get_hazard_intensity_at_location(hazard_scenario_name, long, lat)
+                hazard_intensity = hazard.get_hazard_intensity_at_location( long, lat)
                 component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(
                     hazard_intensity)
 
@@ -425,7 +425,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
     economic_loss_array = response_list[4]
     calculated_output_array = response_list[3]
 
-    outdat = {out_cols[0]: hazard.hazard_scenario_list,
+    outdat = {out_cols[0]: hazards.hazard_scenario_list,
               out_cols[1]: np.mean(economic_loss_array, axis=0),
               out_cols[2]: np.mean(calculated_output_array, axis=0)}
     df = pd.DataFrame(outdat)
@@ -439,7 +439,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazard):
                                      'component_response.csv')
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.index.names = ['component_id', 'response']
-    component_resp_df.columns = hazard.hazard_scenario_list
+    component_resp_df.columns = hazards.hazard_scenario_list
     component_resp_df.to_csv(
         outfile_comp_resp, sep=',',
         index_label=['component_id', 'response']

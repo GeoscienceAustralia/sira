@@ -18,14 +18,23 @@ class Configuration:
         self.INTENSITY_MEASURE_UNIT = config['Scenario']['INTENSITY_MEASURE_UNIT']
         self.SCENARIO_HAZARD_VALUES = config['Scenario']['SCENARIO_HAZARD_VALUES']
 
-        self.INTENSITY_MEASURE_MIN = config['Hazard']['INTENSITY_MEASURE_MIN']
-        self.INTENSITY_MEASURE_MAX = config['Hazard']['INTENSITY_MEASURE_MAX']
-        self.INTENSITY_MEASURE_STEP = config['Hazard']['INTENSITY_MEASURE_STEP']
+
+
         self.NUM_SAMPLES = config['Hazard']['NUM_SAMPLES']
         self.HAZARD_TYPE = config['Hazard']['HAZARD_TYPE']
 
         self.HAZARD_INPUT_METHOD = config['Hazard']['HAZARD_INPUT_METHOD']
-        self.SCENARIO_FILE = config['Hazard']['SCENARIO_FILE']
+
+        if config['Hazard']['HAZARD_INPUT_METHOD'] is "scenario_file":
+            self.INTENSITY_MEASURE_MIN = None
+            self.INTENSITY_MEASURE_MAX = None
+            self.INTENSITY_MEASURE_STEP = None
+            self.SCENARIO_FILE = config['Hazard']['SCENARIO_FILE']
+        else:
+            self.SCENARIO_FILE = None
+            self.INTENSITY_MEASURE_MIN = config['Hazard']['INTENSITY_MEASURE_MIN']
+            self.INTENSITY_MEASURE_MAX = config['Hazard']['INTENSITY_MEASURE_MAX']
+            self.INTENSITY_MEASURE_STEP = config['Hazard']['INTENSITY_MEASURE_STEP']
 
         self.TIME_UNIT = config['Restoration']['TIME_UNIT']
         self.RESTORE_PCT_CHECKPOINTS = config['Restoration']['RESTORE_PCT_CHECKPOINTS']

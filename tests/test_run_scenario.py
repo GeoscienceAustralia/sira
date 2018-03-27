@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import unittest
 import os
-fromrun_scenario sifra.simulation import
+from sifra.simulation import run_scenario
 from sifra.logger import rootLogger
 
 class TestSifra(unittest.TestCase):

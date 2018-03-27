@@ -38,6 +38,7 @@
         "RUN_CONTEXT": 0
     }, 
     "System": {
+        "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
         "PS_GEN_TECH": "Gas Fired", 
         "SYSTEM_CLASS": "PowerStation", 
