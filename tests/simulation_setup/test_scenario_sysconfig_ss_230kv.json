@@ -1,18 +1,17 @@
 {
     "Hazard": {
         "HAZARD_INPUT_METHOD": "hazard_array",
-        "_comment": "scenario_file",
-        "HAZARD_TYPE": "earthquake", 
-        "NUM_SAMPLES": 250, 
-        "INTENSITY_MEASURE_MAX": 10.0,
+        "HAZARD_TYPE": "earthquake",
+        "NUM_SAMPLES": 10,
+        "INTENSITY_MEASURE_MAX": 5.0,
         "INTENSITY_MEASURE_MIN": 0.0,
-        "INTENSITY_MEASURE_STEP": 10.0
+        "INTENSITY_MEASURE_STEP": 1
     }, 
     "Input": {
-        "INPUT_DIR_NAME": "models/powerstation_coal/"
+        "INPUT_DIR_NAME": "models/substation/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/Scenario_X"
+        "OUTPUT_DIR_NAME": "output/sysconfig_ss_230kv"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -21,38 +20,34 @@
             20
         ], 
         "RESTORE_PCT_CHECKPOINTS": 21, 
-        "RESTORE_TIME_MAX": 300.0, 
+        "RESTORE_TIME_MAX": 5.0, 
         "RESTORE_TIME_STEP": 1, 
-        "TIME_UNIT": "weeks"
+        "TIME_UNIT": "week"
     }, 
     "Scenario": {
         "INTENSITY_MEASURE_PARAM": "PGA", 
         "INTENSITY_MEASURE_UNIT": "g", 
         "SCENARIO_HAZARD_VALUES": [
-            0.4, 
-            0.56
+            0.5
         ], 
-        "SCENARIO_NAME": "Scenario_X"
+        "SCENARIO_NAME": "sysconfig_ss_230kv"
     }, 
     "Switches": {
-        "MULTIPROCESS": 0, 
-        "RUN_CONTEXT": 1
+        "MULTIPROCESS": 1, 
+        "RUN_CONTEXT": 0
     }, 
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
-        "PS_GEN_TECH": null, 
+        "PS_GEN_TECH": "Gas Fired", 
         "SYSTEM_CLASS": "PowerStation", 
         "SYSTEM_CLASSES": [
             "PowerStation", 
             "Substation", 
-            "PotableWaterTreatmentPlant", 
-            "PWTP", 
-            "WasteWaterTreatmentPlant", 
-            "WWTP"
+            "WaterTreatmentPlant"
         ], 
-        "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_test_case.json"
+        "SYSTEM_SUBCLASS": "Gas Fired", 
+        "SYS_CONF_FILE_NAME": "sysconfig_ss_230kv.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

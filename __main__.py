@@ -11,14 +11,14 @@ usage           : python sifra  [OPTIONS]
 python_version  : 2.7
 """
 import argparse
-import os
-import logging
-from sifra.logger import rootLogger
+from sifra.logger import logging, rootLogger
 from sifra.configuration import Configuration
 from sifra.scenario import Scenario
+from sifra.modelling.hazard import HazardsContainer
 from sifra.model_ingest import ingest_model
+from sifra.simulation import calculate_response
 from sifra.modelling.system_topology import SystemTopology
-from sifra.infrastructure_response import calculate_response, post_processing
+from sifra.infrastructure_response import write_system_response, loss_by_comp_type, plot_mean_econ_loss, pe_by_component_class
 
 
 def main():
@@ -53,18 +53,43 @@ def main():
     rootLogger.info('Start')
 
     if args.ifile is not None:
-        configuration_file_path = args.ifile
-        config = Configuration(configuration_file_path)
+
+        """
+        Configure simulation model.
+        Read data and control parameters and construct objects.
+        """
+        config = Configuration(args.ifile)
         scenario = Scenario(config)
-        infrastructure, algorithm_factory = ingest_model(config)
-        scenario.algorithm_factory = algorithm_factory
+        hazards = HazardsContainer(config)
+        infrastructure = ingest_model(config)
+
+        """
+        Run simulation.
+        Get the results of running a simulation
+        """
+        response_list= calculate_response(scenario, infrastructure, hazards)
+
+        """
+        Post simulation processing.
+        After the simulation has run the results are aggregated, saved
+        and the system fragility is calculated.
+        """
+        write_system_response(response_list, scenario)
+        loss_by_comp_type(response_list, infrastructure, scenario, hazards)
+        economic_loss_array = response_list[4]
+        plot_mean_econ_loss(scenario, economic_loss_array, hazards)
+
+        if config.HAZARD_INPUT_METHOD == "hazard_array":
+            pe_by_component_class(response_list, infrastructure, scenario, hazards)
+
+        """
+        Visualizations
+        Construct visualization for system topology 
+        """
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
-        post_processing_list = calculate_response(scenario, infrastructure)
-        post_processing(infrastructure, scenario, post_processing_list)
     else:
-        print("Input file not found: " + args.ifile )
-
+        print("Input file not found: " + args.ifile)
 
     rootLogger.info('End')
 

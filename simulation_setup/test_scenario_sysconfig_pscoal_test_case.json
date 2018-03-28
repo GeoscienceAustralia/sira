@@ -1,17 +1,18 @@
 {
     "Hazard": {
         "HAZARD_INPUT_METHOD": "hazard_array",
-        "HAZARD_TYPE": "earthquake",
+        "_comment": "scenario_file",
+        "HAZARD_TYPE": "earthquake", 
         "NUM_SAMPLES": 1,
         "INTENSITY_MEASURE_MAX": 1.0,
         "INTENSITY_MEASURE_MIN": 1.0,
         "INTENSITY_MEASURE_STEP": 1
-    },
+    }, 
     "Input": {
-        "INPUT_DIR_NAME": "models/test_structures/"
+        "INPUT_DIR_NAME": "models/powerstation_coal/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/Scenario_test"
+        "OUTPUT_DIR_NAME": "output/sysconfig_pscoal_test_case"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -34,13 +35,14 @@
         "SCENARIO_NAME": "Scenario_X"
     }, 
     "Switches": {
-        "MULTIPROCESS": 0, 
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
     }, 
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
-        "SYSTEM_CLASS": "PowerStation",
+        "PS_GEN_TECH": null, 
+        "SYSTEM_CLASS": "PowerStation", 
         "SYSTEM_CLASSES": [
             "PowerStation", 
             "Substation", 
@@ -50,7 +52,7 @@
             "WWTP"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_three_nodes.json"
+        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_test_case.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

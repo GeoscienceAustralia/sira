@@ -1,18 +1,17 @@
 {
     "Hazard": {
         "HAZARD_INPUT_METHOD": "hazard_array",
-        "_comment": "scenario_file",
-        "HAZARD_TYPE": "earthquake", 
-        "NUM_SAMPLES": 20, 
-        "INTENSITY_MEASURE_MAX": 0.6,
-        "INTENSITY_MEASURE_MIN": 0.1,
-        "INTENSITY_MEASURE_STEP": 0.1
-    }, 
+        "HAZARD_TYPE": "earthquake",
+        "NUM_SAMPLES": 10,
+        "INTENSITY_MEASURE_MAX": 5.0,
+        "INTENSITY_MEASURE_MIN": 0.0,
+        "INTENSITY_MEASURE_STEP": 1
+    },
     "Input": {
         "INPUT_DIR_NAME": "models/powerstation_coal/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/Test_Scenario_Coal_PS"
+        "OUTPUT_DIR_NAME": "output/sysconfig_pscoal_identical_comps"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -21,7 +20,7 @@
             20
         ], 
         "RESTORE_PCT_CHECKPOINTS": 21, 
-        "RESTORE_TIME_MAX": 5.0, 
+        "RESTORE_TIME_MAX": 10.0, 
         "RESTORE_TIME_STEP": 1, 
         "TIME_UNIT": "week"
     }, 
@@ -31,7 +30,7 @@
         "SCENARIO_HAZARD_VALUES": [
             0.5
         ], 
-        "SCENARIO_NAME": "Test_Scenario_Coal_PS"
+        "SCENARIO_NAME": "sysconfig_pscoal_identical_comps"
     }, 
     "Switches": {
         "MULTIPROCESS": 1, 
@@ -48,7 +47,7 @@
             "WaterTreatmentPlant"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_600MW.json"
+        "SYS_CONF_FILE_NAME": "sysconfig_pscoal_identical_comps.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

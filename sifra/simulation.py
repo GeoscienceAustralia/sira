@@ -1,58 +1,7 @@
-import numpy as np
-
-from sifra.configuration import Configuration
-from sifra.logger import rootLogger
-from sifra.modelling.hazard import HazardsContainer
-from sifra.scenario import Scenario
-from sifra.model_ingest import ingest_model
 import time
 from datetime import timedelta
-
-
-class Simulation:
-
-    def __init__(self, configuration_file_path):
-
-        # a variable to store a list of simulation_results
-
-        # think weather copies of these variable need to be kept this is direct binding very bad practise
-        self.config = Configuration(configuration_file_path)
-        self.scenario = Scenario(self.config)
-        self.infrastructure, algorithm_factory = ingest_model(self.config)
-        self.hazard = HazardsContainer(self.config)
-
-        # variable to hold the states of all the components
-
-    # a function to get a single simulation result ie probability of components
-    # a function to loop over different types of hazard values
-
-    # def main_container(self, configuration_file_path):
-    #     """
-    #     Run a scenario by constructing a facility, and executing a scenario, with
-    #     the parameters read from the config file.
-    #     :param configuration_file_path: Scenario setting values and the infrastructure configuration file path
-    #     :return: None
-    #     """
-    #
-    #     rootLogger.info("Loading scenario config... ")
-    #     config = Configuration(configuration_file_path)
-    #     rootLogger.info("Done.")
-    #
-    #
-    #     rootLogger.info("constructing scenario... ")
-    #     scenario = Scenario(config)
-    #     rootLogger.info("Done.")
-    #
-    #     hazard_level_response = []
-    #     for hazard_level in self.hazard.hazard_range:
-    #
-    #         hazard_level_response.append(infrastructure.expose_to(hazard_level, scenario))
-    #
-    #         component_damage_state_ind = self.probable_ds_hazard_level(hazard_level, scenario)
-    #
-    #             run_simulation(infrastructure, hazard_level, sceanario)
-    #
-    #         print()
+import numpy as np
+from sifra.logger import rootLogger
 
 
 def calculate_response(scenario, infrastructure, hazards):
@@ -64,21 +13,21 @@ def calculate_response(scenario, infrastructure, hazards):
     that will perform parallel calculations.
     :param scenario: Parameters for the simulation.
     :param infrastructure: Model of the infrastructure.
-    :param hazard: hazards container.
+    :param hazards: hazards container.
     :return: List of results for each hazard level.
     """
 
     # code_start_time = time.time() # start of the overall response calculation
     # capture the results from the map call in a list
-    hazard_level_response = []
+    hazards_response = []
     # Use the parallel option in the scenario to determine how to run
 
-    print("Start Remove parallel run")
+    rootLogger.info("Start Remove parallel run")
     for hazard in hazards.listOfhazards:
-        hazard_level_response.append(infrastructure_expose_to(infrastructure, scenario,hazard))
-    print("End Remove parallel run")
-    #
-    # hazard_level_response.extend(parmap.map(run_para_scen,
+        hazards_response.append(calculate_response_for_hazard(infrastructure, scenario, hazard))
+    rootLogger.info("End Remove parallel run")
+
+    # hazards_response.extend(parmap.map(run_para_scen,
     #                                         hazard_levels.hazard_range(),
     #                                         infrastructure,
     #                                         scenario,
@@ -93,10 +42,11 @@ def calculate_response(scenario, infrastructure, hazards):
                             [],  # infrastructure output for sample
                             []]  # infrastructure econ loss for sample
 
-    # iterate through the hazard levels
-    for hazard_level_values in hazard_level_response:
-        # iterate through the hazard level lists
-        for key, value_list in hazard_level_values.items():
+    # iterate through the hazards
+    for hazard_response in hazards_response:
+
+        # iterate through the hazard response dictionary
+        for key, value_list in hazard_response.items():
             for list_number in range(5):
                 # the first three lists are dicts
                 if list_number <= 2:
@@ -122,102 +72,106 @@ def calculate_response(scenario, infrastructure, hazards):
     return post_processing_list
 
 
-def infrastructure_expose_to(infrastructure, scenario, hazard):
+def calculate_response_for_hazard(infrastructure, scenario, hazard):
     """
     Exposes the components of the infrastructure to a hazard level
     within a scenario.
     :param infrastructure: containing for components
-    :param hazard_level: The hazard level that the infrastructure is to be exposed to.
+    :param hazard: The hazard  that the infrastructure is to be exposed to.
     :param scenario: The parameters for the scenario being simulated.
     :return: The state of the infrastructure after the exposure.
     """
 
-    code_start_time = time.time() # keep track of the length of time the exposure takes
+    code_start_time = time.time()  # keep track of the length of time the exposure takes
 
     # calculate the damage state probabilities
-    print("START")
-
-    print("Calculate System Response")
-    component_damage_state_ind = probable_ds_hazard_level(infrastructure, scenario, hazard)
-
-    print("System Response: ")
+    rootLogger.info("Calculate System Response")
+    expected_damage_state_of_components_for_n_simulations = \
+        calculate_expected_damage_state_of_components_for_n_simulations(infrastructure, scenario, hazard)
+    rootLogger.info("System Response: ")
 
     # calculate the component loss, functionality, output,
     #  economic loss and recovery output over time
-    component_sample_loss, comp_sample_func, if_sample_output, if_sample_economic_loss \
-        = infrastructure.calc_output_loss(scenario, component_damage_state_ind)
+    component_sample_loss, comp_sample_func, infrastructure_sample_output, infrastructure_sample_economic_loss \
+        = infrastructure.calc_output_loss(scenario, expected_damage_state_of_components_for_n_simulations)
 
     # Construct the dictionary containing the statistics of the response
     component_response = \
-        infrastructure.calc_response(component_sample_loss, comp_sample_func, component_damage_state_ind)
+        infrastructure.calc_response(component_sample_loss, comp_sample_func, expected_damage_state_of_components_for_n_simulations)
 
     # determine average output for the output components
-    if_output = {}
+    infrastructure_output = {}
     for output_index, (output_comp_id, output_comp) in enumerate(infrastructure.output_nodes.iteritems()):
-        if_output[output_comp_id] = np.mean(if_sample_output[:, output_index])
+        infrastructure_output[output_comp_id] = np.mean(infrastructure_sample_output[:, output_index])
 
     # log the elapsed time for this hazard level
     elapsed = timedelta(seconds=(time.time() - code_start_time))
     rootLogger.info("Hazard {} run time: {}".format(hazard.hazard_scenario_name, str(elapsed)))
 
     # We combine the result data into a dictionary for ease of use
-    response_dict = {hazard.hazard_scenario_name: [component_damage_state_ind,
-                                                     if_output,
-                                                     component_response,
-                                                     if_sample_output,
-                                                     if_sample_economic_loss]}
-    return response_dict
+    response_for_a_hazard = {hazard.hazard_scenario_name: [expected_damage_state_of_components_for_n_simulations,
+                                                   infrastructure_output,
+                                                   component_response,
+                                                   infrastructure_sample_output,
+                                                   infrastructure_sample_economic_loss]}
+    return response_for_a_hazard
 
 
-def probable_ds_hazard_level(infrastructure, scenario,hazard):
+def calculate_expected_damage_state_of_components_for_n_simulations(infrastructure, scenario, hazard):
     """
     Calculate the probability that being exposed to a hazard level
     will exceed the given damage levels for each component. A monte
     carlo approach is taken by simulating the exposure for the number
     of samples given in the scenario.
     :param infrastructure: containing for components
-    :param hazard_level: Level of the hazard
+    :param hazard: Level of the hazard
     :param scenario: Parameters for the scenario
     :return: An array of the probability that each of the damage states were exceeded.
     """
-    # if scenario.run_context:
-    #     # Use seeding for this test run for reproducibility, the seeding
-    #     # is generated by converting the hazard intensity to an integer
-    #     # after shifting by two decimal places.
-    #     random_number = np.random.RandomState(int(hazard_level.hazard_intensity * 100))
-    # else:
-    #     # seeding was not used
-    random_number = np.random.RandomState()
+    if scenario.run_context:
+        random_number = np.random.RandomState(seed=hazard.get_seed())
+    else:
+        # seeding was not used
+        random_number = np.random.RandomState(seed=2)
 
-    # record the number of elements for use
-    num_components = len(infrastructure.components)
+    # record the number of component in infrastructure
+    number_of_components = len(infrastructure.components)
 
     # construct a zeroed numpy array that can contain the number of samples for
     # each element.
-    component_damage_state_ind = np.zeros((scenario.num_samples, num_components),
-                                          dtype=int)
-    # create another numpy array of random uniform [0,1.0) numbers.
-    rnd = random_number.uniform(size=(scenario.num_samples, num_components))
+    component_damage_state_ind = np.zeros((scenario.num_samples, number_of_components), dtype=int)
+
+    # create numpy array of uniformly distributed random numbers between (0,1)
+    rnd = random_number.uniform(size=(scenario.num_samples, number_of_components))
     rootLogger.debug("Hazard Intensity {}".format(hazard.hazard_scenario_name))
+
     # iterate through the components
-    for index, comp_key in enumerate(sorted(infrastructure.components.keys())):
-        component = infrastructure.components[comp_key]
+    for index, component_key in enumerate(sorted(infrastructure.components.keys())):
+        component = infrastructure.components[component_key]
         # use the components expose_to method to retrieve the probabilities
         # of this hazard level exceeding each of the components damage levels
 
-        print("Start calculating probability of component in a damage state.")
+        rootLogger.info("Start calculating probability of component in a damage state.")
 
+        # create numpy array of length equal to the number of damage states for the component
         component_pe_ds = np.zeros(len(component.damage_states))
 
+        # iterate through each damage state for the component
         for damage_state_index in component.damage_states.keys():
-            long, lat = component.get_location()
-            hazard_intensity = hazard.get_hazard_intensity_at_location( long, lat)
+
+            # find the hazard intensity component is exposed too
+            longitude, latitude = component.get_location()
+            hazard_intensity = hazard.get_hazard_intensity_at_location(longitude, latitude)
+
+            #
             component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(hazard_intensity)
 
+
+        # Drop the default state (DS0 None) because its response will always be zero which will be always be greater than random variable
         component_pe_ds = component_pe_ds[1:]
-        print("Calculate System Response")
-        rootLogger.debug("Component {} : pe_ds {}".format(component.component_id,
-                                                          component_pe_ds))
+
+        rootLogger.info("Calculate System Response")
+        rootLogger.info("Component {} : pe_ds {}".format(component.component_id, component_pe_ds))
 
         # This little piece of numpy magic calculates the damage level by summing
         # how many damage states were exceeded.
@@ -234,6 +188,5 @@ def probable_ds_hazard_level(infrastructure, scenario,hazard):
         # damage level. This will complete the comparison for all of the samples
         # for this component
 
-        component_damage_state_ind[:, index] = \
-            np.sum(component_pe_ds > rnd[:, index][:, np.newaxis], axis=1)
+        component_damage_state_ind[:, index] = np.sum(component_pe_ds > rnd[:, index][:, np.newaxis], axis=1)
     return component_damage_state_ind

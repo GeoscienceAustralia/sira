@@ -22,6 +22,19 @@ class Hazard(object):
 
         raise Exception("Invalid Values for Longitude or Latitude")
 
+    def get_seed(self):
+        seed = 0
+        for i, letter in enumerate(self.hazard_scenario_name):
+            seed = seed + (i + 1) * ord(letter)
+        return seed
+
+    def __str__(self):
+
+        output = self.hazard_scenario_name+'\n'
+        for hazrd in self.scenario_hazard_data:
+            output = output + "longitude: "+str(hazrd["longitude"]) + " latitude: " + str(hazrd["latitude"]) +" hazard_intensity: "+ str(hazrd["hazard_intensity"]) +'\n'
+        return output
+
 class HazardsContainer(object):
     """
     The idea is to abstract the number and type of hazards to allow greater

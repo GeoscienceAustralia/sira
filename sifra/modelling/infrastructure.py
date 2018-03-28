@@ -45,10 +45,6 @@ class Infrastructure(Base):
 
         self._component_graph = ComponentGraph(self.components)
 
-
-
-
-
     def calc_output_loss(self, scenario, component_damage_state_ind):
         """
         Calculate the results to the infrastructure given the damage state
@@ -82,7 +78,7 @@ class Infrastructure(Base):
 
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
-            count=0
+            count = 0
             for component_index, comp_key in enumerate(sorted(self.components.keys())):
                 component = self.components[comp_key]
                 # get the damage state for the component
