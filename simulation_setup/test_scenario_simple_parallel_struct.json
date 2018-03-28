@@ -3,16 +3,16 @@
         "HAZARD_INPUT_METHOD": "hazard_array",
         "_comment": "scenario_file",
         "HAZARD_TYPE": "earthquake", 
-        "NUM_SAMPLES": 1500, 
-        "INTENSITY_MEASURE_MAX": 0.7,
-        "INTENSITY_MEASURE_MIN": 0.1,
-        "INTENSITY_MEASURE_STEP": 0.1
+        "NUM_SAMPLES": 1,
+        "INTENSITY_MEASURE_MAX": 1.0,
+        "INTENSITY_MEASURE_MIN": 1.0,
+        "INTENSITY_MEASURE_STEP": 1
     }, 
     "Input": {
         "INPUT_DIR_NAME": "models/test_structures/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/Test_Structure_Simple_Series"
+        "OUTPUT_DIR_NAME": "output/sysconfig_simple_parallel"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -31,7 +31,7 @@
         "SCENARIO_HAZARD_VALUES": [
             0.5
         ], 
-        "SCENARIO_NAME": "Test_Structure_Simple_Series"
+        "SCENARIO_NAME": "Test_Structure_Simple_Parallel"
     }, 
     "Switches": {
         "MULTIPROCESS": 1, 
@@ -48,7 +48,7 @@
             "WaterTreatmentPlant"
         ], 
         "SYSTEM_SUBCLASS": "Gas Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_simple_linear.json"
+        "SYS_CONF_FILE_NAME": "sysconfig_simple_parallel.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

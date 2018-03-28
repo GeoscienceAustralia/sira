@@ -56,12 +56,12 @@ class StepFunc(Base):
     upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
                            None, [lambda x: float(x) > 0.])
 
-    def __call__(self, value):
+    def __call__(self, hazard_intensity):
         """
         Note that intervals are closed on the right.
         """
         for x, y in self.xys:
-            if value < x:
+            if hazard_intensity < x:
                 return y
         raise ValueError('value is greater than all xs!')
 
@@ -109,7 +109,7 @@ class NormalCDF(Base):
     upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
                            None, [lambda x: float(x) > 0.])
 
-    def __call__(self, value):
+    def __call__(self, hazard_intensity):
         """
         In scipy normal CDF is implemented thus:
             scipy.stats.norm.cdf(x, loc=0, scale=1)
@@ -117,7 +117,7 @@ class NormalCDF(Base):
         loc = Mean
         scale = Standard Deviation i.e. square root of Variance
         """
-        return stats.norm.cdf(value, loc=self.mean, scale=self.stddev)
+        return stats.norm.cdf(hazard_intensity, loc=self.mean, scale=self.stddev)
 
 
 class ConstantFunction(Base):
@@ -132,8 +132,8 @@ class ConstantFunction(Base):
     upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
                            None, [lambda x: float(x) > 0.])
 
-    def __call__(self, value):
-        return np.ones_like(value) * self.amplitude
+    def __call__(self, hazard_intensity):
+        return self.amplitude
 
 
 class Level0Response(Base):

@@ -36,7 +36,7 @@
                         "damage_state_definition": "Not Available.",
                         "fragility_source": "Not Available.",
                         "function_name": "ConstantFunction",
-                        "amplitude": 1
+                        "amplitude": 0
                     }
 
                 }
@@ -83,7 +83,7 @@
                         "damage_state_definition": "Not Available.",
                         "fragility_source": "Not Available.",
                         "function_name": "ConstantFunction",
-                        "amplitude": 1
+                        "amplitude": 0
                     }
                 }
             },
@@ -129,7 +129,7 @@
                         "damage_state_definition": "Not Available.",
                         "fragility_source": "Not Available.",
                         "function_name": "ConstantFunction",
-                        "amplitude": 1
+                        "amplitude": 0
                     }
                 }
             },
@@ -164,9 +164,9 @@
     },
     "sysout_setup": {
         "output_node": {
-            "capacity_fraction": 1, 
-            "output_node_capacity": 250, 
-            "priority": 1, 
+            "capacity_fraction": 1,
+            "output_node_capacity": 250,
+            "priority": 1,
             "production_node": "node_y"
         }
     }

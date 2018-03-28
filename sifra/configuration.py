@@ -18,8 +18,6 @@ class Configuration:
         self.INTENSITY_MEASURE_UNIT = config['Scenario']['INTENSITY_MEASURE_UNIT']
         self.SCENARIO_HAZARD_VALUES = config['Scenario']['SCENARIO_HAZARD_VALUES']
 
-
-
         self.NUM_SAMPLES = config['Hazard']['NUM_SAMPLES']
         self.HAZARD_TYPE = config['Hazard']['HAZARD_TYPE']
 

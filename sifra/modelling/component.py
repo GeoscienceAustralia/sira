@@ -24,11 +24,10 @@ class DamageState(Base):
         for k, v in kwargs.iteritems():
             if k == 'response_function_constructor':
                 self.response_function = Algorithm.factory(v)
-                print(self.response_function)
+
             if k == 'recovery_function_constructor':
                 self.recovery_function = Algorithm.factory(v)
             setattr(self, k, v)
-        print(self.response_function)
 
 
 class Component(Base):
@@ -69,7 +68,6 @@ class Component(Base):
                 params = {}
                 for key in v.keys():
                     params[key] = v[key]
-
                 self.damage_states[int(k)] = DamageState(**params)
 
     def get_location(self):
@@ -103,11 +101,30 @@ class Component(Base):
         """
         return self.damage_states[ds_index].recovery_function
 
+    def __str__(self):
+
+        return "component_id:" + str(self.component_id) + " {" + '\n' +\
+               "component_class: "+str(self.component_class)+ '\n' +\
+               "component_type: " + str(self.component_type) + '\n' +\
+               "cost_fraction: " + str(self.cost_fraction) + '\n' +\
+               "node_cluster: " + str(self.node_cluster) + '\n' +\
+               "node_type: " + str(self.node_type) + '\n' +\
+               "operating_capacity: " + str(self.operating_capacity) + '\n' +\
+               "longitude: " + str(self.longitude) + '\n' + \
+               "latitude: " + str(self.latitude) + '\n' + \
+               "damage_states: " + str([self.damage_states[damage_state].damage_state_name for damage_state in self.damage_states]) + '\n' + \
+               "destination_components: " + str([destination_components for destination_components in self.destination_components]) + " }"
+
+
 
 class ConnectionValues(Base):
     """
     Each connection between two components has a capacity and
     a weight.
     """
-    # link_capacity = Element('float', 'Link capacity', 0.0)
-    # weight = Element('float', 'Weight', 0.0)
+    link_capacity = Element('float', 'Link capacity', 0.0)
+    weight = Element('float', 'Weight', 0.0)
+
+    def __str__(self):
+        return "{ " + "weight: " + str(self.weight) + '\n' + \
+               "link_capacity: " + str(self.link_capacity) + " }"

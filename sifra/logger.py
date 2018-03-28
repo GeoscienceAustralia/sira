@@ -10,12 +10,15 @@ class Logger():
 
         # define logger object to reference in modules and display logs
         self.logger = logging.getLogger("rootLogger")
+        self.logger.setLevel(logging.INFO)
 
         # path to save logs
-        if os.path.exists(os.path.join(os.getcwd(),'logs')):
-            self.logPath = 'logs'
-        else:
-            self.logPath = 'sifra/logs'
+
+        ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        if os.path.exists(os.path.join(ROOT_DIR,'logs')):
+            self.logPath = os.path.join(ROOT_DIR,'logs')
+
         # name of the file
         self.time_start = self.get_round_off_time()
 
@@ -30,7 +33,7 @@ class Logger():
         self.logger.addHandler(self.consoleHandler)
 
         # default option
-        self.logger.setLevel(logging.INFO)
+
 
     def get_round_off_time(self):
         round_mins = 5
