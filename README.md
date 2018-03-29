@@ -163,19 +163,6 @@ To run tests use unittest. Move into sifra folder:
     $ cd sifra
     $ python -m unittest discover tests
 
-or, simply run:
-
-    $ nosetest
-
-Prior to running the tests you may need to delete the temporary database. 
-Assuming you are in the root project directory:
-
-    $ cd db
-    $ rm sqlite.db 
-
-
-:grey_exclamation: NOTE: We need to demonstrate code coverage of the tests.
-
 ## Todo
 
 - Restructure of Python code. While the simulation has been integrated with
