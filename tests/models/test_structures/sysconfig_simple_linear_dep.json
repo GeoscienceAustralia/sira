@@ -1,0 +1,699 @@
+{
+    "component_list": {
+        "materiel_supply": {
+            "component_class": "Material Delivery and Storage", 
+            "component_type": "SYSTEM_INPUT", 
+            "cost_fraction": 0.0, 
+            "damages_states_constructor": {
+                "0": {
+                    "damage_ratio": 0.0, 
+                    "damage_state_name": "DS0 None", 
+                    "functionality": 1.0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0, 
+                        "recovery_mean": 0.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.5
+                    }, 
+                    "response_function_constructor": {
+                        "damage_state_definition": "Not Available.", 
+                        "function_name": "Level0Response"
+                    }
+                }, 
+                "1": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS1 Slight", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }, 
+                "2": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS2 Moderate", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }, 
+                "3": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS3 Extensive", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }, 
+                "4": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS4 Complete", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }
+            }, 
+            "latitude": 0, 
+            "longitude": 0, 
+            "node_cluster": "INPUT", 
+            "node_type": "supply", 
+            "operating_capacity": 1
+        }, 
+        "node_1": {
+            "component_class": "Stage 1 processing", 
+            "component_type": "Processor A", 
+            "cost_fraction": 0.4, 
+            "damages_states_constructor": {
+                "0": {
+                    "damage_ratio": 0.0, 
+                    "damage_state_name": "DS0 None", 
+                    "functionality": 1.0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0, 
+                        "recovery_mean": 0.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.5
+                    }, 
+                    "response_function_constructor": {
+                        "damage_state_definition": "Not Available.", 
+                        "function_name": "Level0Response"
+                    }
+                }, 
+                "1": {
+                    "damage_ratio": 0.1, 
+                    "damage_state_name": "DS1 Slight", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.5, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.303978416
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.375, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                        "function_name": "Lognormal", 
+                        "median": 0.42, 
+                        "minimum": null
+                    }
+                }, 
+                "2": {
+                    "damage_ratio": 0.3, 
+                    "damage_state_name": "DS2 Moderate", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 1.0, 
+                        "recovery_mean": 3.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.6079568319
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.375, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                        "function_name": "Lognormal", 
+                        "median": 0.57, 
+                        "minimum": null
+                    }
+                }, 
+                "3": {
+                    "damage_ratio": 0.75, 
+                    "damage_state_name": "DS3 Extensive", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 3.0, 
+                        "recovery_mean": 15.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 1.8238704957
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.475, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                        "function_name": "Lognormal", 
+                        "median": 0.78, 
+                        "minimum": null
+                    }
+                }, 
+                "4": {
+                    "damage_ratio": 1.0, 
+                    "damage_state_name": "DS4 Complete", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 4.0, 
+                        "recovery_mean": 30.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 2.4318273276
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.475, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
+                        "function_name": "Lognormal", 
+                        "median": 1.33, 
+                        "minimum": null
+                    }
+                }
+            }, 
+            "latitude": 0, 
+            "longitude": 0, 
+            "node_cluster": "Raw Material Supply", 
+            "node_type": "transshipment", 
+            "operating_capacity": 1
+        }, 
+        "node_2": {
+            "component_class": "Stage 2 processing", 
+            "component_type": "Processor B", 
+            "cost_fraction": 0.2, 
+            "damages_states_constructor": {
+                "0": {
+                    "damage_ratio": 0.0, 
+                    "damage_state_name": "DS0 None", 
+                    "functionality": 1.0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0, 
+                        "recovery_mean": 0.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.5
+                    }, 
+                    "response_function_constructor": {
+                        "damage_state_definition": "Not Available.", 
+                        "function_name": "Level0Response"
+                    }
+                }, 
+                "1": {
+                    "damage_ratio": 0.1, 
+                    "damage_state_name": "DS1 Slight", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.5, 
+                        "recovery_mean": 5.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.303978416
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.4, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
+                        "function_name": "Lognormal", 
+                        "median": 0.35, 
+                        "minimum": null
+                    }
+                }, 
+                "2": {
+                    "damage_ratio": 0.3, 
+                    "damage_state_name": "DS2 Moderate", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 1.0, 
+                        "recovery_mean": 17.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.6079568319
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.5, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
+                        "function_name": "Lognormal", 
+                        "median": 0.55, 
+                        "minimum": null
+                    }
+                }, 
+                "3": {
+                    "damage_ratio": 0.75, 
+                    "damage_state_name": "DS3 Extensive", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 2.0, 
+                        "recovery_mean": 37.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 1.2159136638
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.4, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Sim to main feed conveyor", 
+                        "function_name": "Lognormal", 
+                        "median": 0.75, 
+                        "minimum": null
+                    }
+                }, 
+                "4": {
+                    "damage_ratio": 1.0, 
+                    "damage_state_name": "DS4 Complete", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 4.0, 
+                        "recovery_mean": 77.1428571429, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 2.4318273276
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.4, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Sim to main feed conveyor", 
+                        "function_name": "Lognormal", 
+                        "median": 1.0, 
+                        "minimum": null
+                    }
+                }
+            }, 
+            "latitude": 0, 
+            "longitude": 0, 
+            "node_cluster": "Transformer", 
+            "node_type": "transshipment", 
+            "operating_capacity": 1
+        }, 
+        "node_3": {
+            "component_class": "Stage 3 processing", 
+            "component_type": "Processor C", 
+            "cost_fraction": 0.25, 
+            "damages_states_constructor": {
+                "0": {
+                    "damage_ratio": 0.0, 
+                    "damage_state_name": "DS0 None", 
+                    "functionality": 1.0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0, 
+                        "recovery_mean": 0.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.5
+                    }, 
+                    "response_function_constructor": {
+                        "damage_state_definition": "Not Available.", 
+                        "function_name": "Level0Response"
+                    }
+                }, 
+                "1": {
+                    "damage_ratio": 0.03, 
+                    "damage_state_name": "DS1 Slight", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 1.0, 
+                        "recovery_mean": 3.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.6079568319
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.28, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
+                        "function_name": "Lognormal", 
+                        "median": 0.75, 
+                        "minimum": null
+                    }
+                }, 
+                "2": {
+                    "damage_ratio": 0.15, 
+                    "damage_state_name": "DS2 Moderate", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 2.0, 
+                        "recovery_mean": 20.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 1.2159136638
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.3, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
+                        "function_name": "Lognormal", 
+                        "median": 1.0, 
+                        "minimum": null
+                    }
+                }, 
+                "3": {
+                    "damage_ratio": 0.4, 
+                    "damage_state_name": "DS3 Extensive", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 4.0, 
+                        "recovery_mean": 60.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 2.4318273276
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.34, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
+                        "function_name": "Lognormal", 
+                        "median": 1.33, 
+                        "minimum": null
+                    }
+                }, 
+                "4": {
+                    "damage_ratio": 1.2, 
+                    "damage_state_name": "DS4 Complete", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 8.0, 
+                        "recovery_mean": 102.8571428571, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 4.8636546553
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.28, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
+                        "function_name": "Lognormal", 
+                        "median": 1.55, 
+                        "minimum": null
+                    }
+                }
+            }, 
+            "latitude": 0, 
+            "longitude": 0, 
+            "node_cluster": "Producer", 
+            "node_type": "transshipment", 
+            "operating_capacity": 1
+        }, 
+        "node_4": {
+            "component_class": "Stage 2 processing", 
+            "component_type": "Processor D", 
+            "cost_fraction": 0.15, 
+            "damages_states_constructor": {
+                "0": {
+                    "damage_ratio": 0.0, 
+                    "damage_state_name": "DS0 None", 
+                    "functionality": 1.0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0, 
+                        "recovery_mean": 0.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.5
+                    }, 
+                    "response_function_constructor": {
+                        "damage_state_definition": "Not Available.", 
+                        "function_name": "Level0Response"
+                    }
+                }, 
+                "1": {
+                    "damage_ratio": 0.05, 
+                    "damage_state_name": "DS1 Slight", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.5, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.303978416
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.25, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 0.28, 
+                        "minimum": null
+                    }
+                }, 
+                "2": {
+                    "damage_ratio": 0.3, 
+                    "damage_state_name": "DS2 Moderate", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 1.5, 
+                        "recovery_mean": 3.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.9119352479
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.35, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 0.43, 
+                        "minimum": null
+                    }
+                }, 
+                "3": {
+                    "damage_ratio": 0.75, 
+                    "damage_state_name": "DS3 Extensive", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 3.5, 
+                        "recovery_mean": 7.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 2.1278489117
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.4, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 0.6, 
+                        "minimum": null
+                    }
+                }, 
+                "4": {
+                    "damage_ratio": 1.0, 
+                    "damage_state_name": "DS4 Complete", 
+                    "functionality": 0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 15.0, 
+                        "recovery_mean": 30.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 9.1193524787
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.4, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 0.85, 
+                        "minimum": null
+                    }
+                }
+            }, 
+            "latitude": 0, 
+            "longitude": 0, 
+            "node_cluster": "Transformer", 
+            "node_type": "dependency", 
+            "operating_capacity": 1
+        }, 
+        "output_1": {
+            "component_class": "SYSTEM OUTPUT", 
+            "component_type": "SYSTEM_OUTPUT", 
+            "cost_fraction": 0.0, 
+            "damages_states_constructor": {
+                "0": {
+                    "damage_ratio": 0.0, 
+                    "damage_state_name": "DS0 None", 
+                    "functionality": 1.0, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0, 
+                        "recovery_mean": 0.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.5
+                    }, 
+                    "response_function_constructor": {
+                        "damage_state_definition": "Not Available.", 
+                        "function_name": "Level0Response"
+                    }
+                }, 
+                "1": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS1 Slight", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }, 
+                "2": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS2 Moderate", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }, 
+                "3": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS3 Extensive", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }, 
+                "4": {
+                    "damage_ratio": 0.01, 
+                    "damage_state_name": "DS4 Complete", 
+                    "functionality": 1, 
+                    "recovery_function_constructor": {
+                        "function_name": "RecoveryFunction", 
+                        "recovery_95percentile": 0.1, 
+                        "recovery_mean": 1.0, 
+                        "recovery_state_definition": "Not Available.", 
+                        "recovery_std": 0.0607956832
+                    }, 
+                    "response_function_constructor": {
+                        "beta": 0.01, 
+                        "damage_state_definition": "Not Available.", 
+                        "fragility_source": "Not Available.", 
+                        "function_name": "Lognormal", 
+                        "median": 10.0, 
+                        "minimum": null
+                    }
+                }
+            }, 
+            "latitude": 0, 
+            "longitude": 0, 
+            "node_cluster": "OUTPUT", 
+            "node_type": "sink", 
+            "operating_capacity": 1
+        }
+    }, 
+    "node_conn_df": {
+        "0": {
+            "destination": "node_1", 
+            "link_capacity": 1, 
+            "origin": "materiel_supply", 
+            "weight": 1
+        }, 
+        "1": {
+            "destination": "node_2", 
+            "link_capacity": 1, 
+            "origin": "node_1", 
+            "weight": 1
+        }, 
+        "2": {
+            "destination": "node_3", 
+            "link_capacity": 1, 
+            "origin": "node_2", 
+            "weight": 1
+        }, 
+        "3": {
+            "destination": "node_2", 
+            "link_capacity": 1, 
+            "origin": "node_4", 
+            "weight": 1
+        }, 
+        "4": {
+            "destination": "output_1", 
+            "link_capacity": 1, 
+            "origin": "node_3", 
+            "weight": 1
+        }
+    }, 
+    "sysinp_setup": {
+        "materiel_supply": {
+            "capacity_fraction": 1, 
+            "commodity_type": "coal", 
+            "input_capacity": 100
+        }
+    }, 
+    "sysout_setup": {
+        "output_1": {
+            "capacity_fraction": 1, 
+            "output_node_capacity": 250, 
+            "priority": 1, 
+            "production_node": "node_y"
+        }
+    }
+}

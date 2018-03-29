@@ -37,7 +37,7 @@ for conf_file_path in conf_file_paths:
     """
     response_list = calculate_response(scenario, infrastructure, hazards)
 
-    print("response_list[3]: ",response_list[3])
+    print("response_list[3]: ", response_list[3])
 
     """
     Post simulation processing.
@@ -47,7 +47,7 @@ for conf_file_path in conf_file_paths:
     write_system_response(response_list, scenario)
     loss_by_comp_type(response_list, infrastructure, scenario, hazards)
     economic_loss_array = response_list[4]
-    print("economic_loss_array , ",economic_loss_array )
+    print("economic_loss_array , ", economic_loss_array)
     plot_mean_econ_loss(scenario, economic_loss_array, hazards)
 
     if config.HAZARD_INPUT_METHOD == "hazard_array":
