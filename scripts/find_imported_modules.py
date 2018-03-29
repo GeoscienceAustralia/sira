@@ -1,46 +1,52 @@
-import os
+# import os
+#
+# python_file_paths = []
+# for root, dir_names, file_names in os.walk(os.getcwd()):
+#     for file_name in file_names:
+#         if file_name.endswith('.py'):
+#             python_file_paths.append(os.path.join(root, file_name))
+#
+# packages=[]
+# for python_file_path in python_file_paths:
+#     with open(python_file_path, 'r') as infile:
+#         for line in infile:
+#             line = line.strip()
+#
+#             if len(line)>2:
+#                 if 'sifra' not in line and line[0] != '#':
+#                     if 'import' in line:
+#                         if 'import' in line[0:6]:
+#                             line=line.replace('import','').strip()
+#                             if 'as' in line:
+#                                 line=line.split('as')[0].strip()
+#                                 line = line.strip()
+#                                 if line not in packages:
+#                                     packages.append(line)
+#                             else:
+#                                 line = line.strip()
+#
+#                                 if line not in packages:
+#                                     packages.append(line)
+#                         else:
+#                             if '__future__' not in line:
+#                                 if 'from' in line:
+#                                     line = line.replace('from','').strip()
+#                                     line = line .split('import')[0]
+#
+#                                     if '.' in line:
+#                                         line = line.split('.')[0]
+#                                     line = line.strip()
+#                                     if line not in packages:
+#                                         packages.append(line)
+# for pkg in packages:
+#     print(pkg)
+import pip
+installed_packages = pip.get_installed_distributions()
+installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
+     for i in installed_packages])
 
-python_file_paths = []
-for root, dir_names, file_names in os.walk(os.getcwd()):
-    for file_name in file_names:
-        if file_name.endswith('.py'):
-            python_file_paths.append(os.path.join(root, file_name))
-
-packages=[]
-for python_file_path in python_file_paths:
-    with open(python_file_path, 'r') as infile:
-        for line in infile:
-            line = line.strip()
-
-            if len(line)>2:
-                if 'sifra' not in line and line[0] != '#':
-                    if 'import' in line:
-                        if 'import' in line[0:6]:
-                            line=line.replace('import','').strip()
-                            if 'as' in line:
-                                line=line.split('as')[0].strip()
-                                line = line.strip()
-                                if line not in packages:
-                                    packages.append(line)
-                            else:
-                                line = line.strip()
-
-                                if line not in packages:
-                                    packages.append(line)
-                        else:
-                            if '__future__' not in line:
-                                if 'from' in line:
-                                    line = line.replace('from','').strip()
-                                    line = line .split('import')[0]
-
-                                    if '.' in line:
-                                        line = line.split('.')[0]
-                                    line = line.strip()
-                                    if line not in packages:
-                                        packages.append(line)
-for pkg in packages:
-    print(pkg)
-
+for installed_package in installed_packages_list:
+    print(installed_package )
 """
 setuptools
 itertools
