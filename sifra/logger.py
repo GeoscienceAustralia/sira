@@ -16,8 +16,11 @@ class Logger():
 
         ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-        if os.path.exists(os.path.join(ROOT_DIR,'logs')):
-            self.logPath = os.path.join(ROOT_DIR,'logs')
+        if not os.path.exists(os.path.join(ROOT_DIR,'logs')):
+            os.makedirs(os.path.join(ROOT_DIR,'logs'))
+
+        self.logPath = os.path.join(ROOT_DIR,'logs')
+
 
         # name of the file
         self.time_start = self.get_round_off_time()
