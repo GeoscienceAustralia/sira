@@ -62,6 +62,30 @@ class TestSystemSanity(unittest.TestCase):
 
         self.assertTrue(int(response_list[3][0][0]) == int(0))
 
+    def test_compare_economic_loss_for_existing_models(self):
+
+        conf_file_paths = []
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+        for root, dir_names, file_names in os.walk(root_dir):
+            for file_name in file_names:
+                if "simulation_setup" in root:
+                    conf_file_paths.append(os.path.join(root, file_name))
+
+        for conf_file_path in conf_file_paths:
+            if os.path.isfile(conf_file_path):
+                config = Configuration(conf_file_path)
+                scenario = Scenario(config)
+                hazards = HazardsContainer(config)
+                infrastructure = ingest_model(config)
+
+                response_list = calculate_response(scenario, infrastructure, hazards)
+                economic_loss_of_model = response_list[4]
+
+                pickel_flename = os.path.join(root_dir, 'historical_data', "economic_loss_for_"+config.SCENARIO_NAME + '.p')
+                history_economic_loss_for_model = pickle.load(open(pickel_flename, 'rb'))
+
+                self.assertTrue(np.array_equal(economic_loss_of_model, history_economic_loss_for_model))
+
 
 if __name__ == '__main__':
     unittest.main()

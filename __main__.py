@@ -49,7 +49,6 @@ def main():
             level = logging.CRITICAL
 
     rootLogger.set_log_level(level)
-
     rootLogger.info('Start')
 
     if args.ifile is not None:

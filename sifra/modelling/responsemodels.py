@@ -1,4 +1,3 @@
-import numpy as np
 import scipy.stats as stats
 from structural import Info, Base, Element
 from sifra.modelling.structural import Element as _Element

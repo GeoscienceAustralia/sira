@@ -8,10 +8,10 @@
         "INTENSITY_MEASURE_STEP": 1
     },
     "Input": {
-        "INPUT_DIR_NAME": "models/potable_water_treatment_plant/"
+        "INPUT_DIR_NAME": "tests/models/test_structures/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/sysconfig_pwtp_400ML"
+        "OUTPUT_DIR_NAME": "output/lower_limit"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -20,34 +20,38 @@
             20
         ], 
         "RESTORE_PCT_CHECKPOINTS": 21, 
-        "RESTORE_TIME_MAX": 5.0, 
+        "RESTORE_TIME_MAX": 300.0, 
         "RESTORE_TIME_STEP": 1, 
-        "TIME_UNIT": "week"
+        "TIME_UNIT": "weeks"
     }, 
     "Scenario": {
         "INTENSITY_MEASURE_PARAM": "PGA", 
         "INTENSITY_MEASURE_UNIT": "g", 
         "SCENARIO_HAZARD_VALUES": [
-            0.5
+            0.4, 
+            0.56
         ], 
-        "SCENARIO_NAME": "sysconfig_pwtp_400ML"
+        "SCENARIO_NAME": "lower_limit"
     }, 
     "Switches": {
-        "MULTIPROCESS": 1, 
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
-    }, 
+    },
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
-        "PS_GEN_TECH": "Gas Fired", 
+        "PS_GEN_TECH": null, 
         "SYSTEM_CLASS": "PowerStation", 
         "SYSTEM_CLASSES": [
             "PowerStation", 
             "Substation", 
-            "WaterTreatmentPlant"
+            "PotableWaterTreatmentPlant", 
+            "PWTP", 
+            "WasteWaterTreatmentPlant", 
+            "WWTP"
         ], 
-        "SYSTEM_SUBCLASS": "Gas Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_pwtp_400ML.json"
+        "SYSTEM_SUBCLASS": "Coal Fired", 
+        "SYS_CONF_FILE_NAME": "lower_limit.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

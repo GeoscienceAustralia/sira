@@ -8,10 +8,10 @@
         "INTENSITY_MEASURE_STEP": 1
     },
     "Input": {
-        "INPUT_DIR_NAME": "models/test_structures/"
+        "INPUT_DIR_NAME": "tests/models/test_structures/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/sysconfig_simple_linear"
+        "OUTPUT_DIR_NAME": "output/simple_linear"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -30,7 +30,7 @@
         "SCENARIO_HAZARD_VALUES": [
             0.5
         ], 
-        "SCENARIO_NAME": "sysconfig_simple_linear"
+        "SCENARIO_NAME": "simple_linear"
     }, 
     "Switches": {
         "MULTIPROCESS": 1, 
@@ -47,7 +47,7 @@
             "WaterTreatmentPlant"
         ], 
         "SYSTEM_SUBCLASS": "Gas Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_simple_linear.json"
+        "SYS_CONF_FILE_NAME": "simple_linear.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 
