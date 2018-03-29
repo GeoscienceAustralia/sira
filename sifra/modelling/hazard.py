@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import csv
+from collections import OrderedDict
 
 class Hazard(object):
     """
@@ -104,7 +105,7 @@ class HazardsContainer(object):
     @staticmethod
     def populate_scenario_hazard_data_using_hazard_array(num_hazard_pts):
 
-        scenario_hazard_data = {}
+        scenario_hazard_data = OrderedDict()
         hazard_scenario_list = []
         for i, hazard_intensity in enumerate(num_hazard_pts):
             hazard_scenario_list.append("s_"+str(i))

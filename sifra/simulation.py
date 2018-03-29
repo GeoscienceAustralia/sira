@@ -44,7 +44,6 @@ def calculate_response(scenario, infrastructure, hazards):
 
     # iterate through the hazards
     for hazard_response in hazards_response:
-
         # iterate through the hazard response dictionary
         for key, value_list in hazard_response.items():
             for list_number in range(5):
@@ -129,6 +128,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(infrastructu
     :return: An array of the probability that each of the damage states were exceeded.
     """
     if scenario.run_context:
+        # TODO check weather to use seed for actual runs or not
         random_number = np.random.RandomState(seed=hazard.get_seed())
     else:
         # seeding was not used
