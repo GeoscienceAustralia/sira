@@ -142,36 +142,26 @@ be found [here](https://help.github.com/articles/cloning-a-repository/).
 
     $ git clone https://github.com/GeoscienceAustralia/sifra.git sifra
 
-Move into the root directory for the ``SIFRA`` code:
+Move on top of root directory for the ``SIFRA`` code:
 
-    $ cd sifra    # NOT cd sifra/sifra
+    $ cd desktop    # if cd desktop/sifra
 
-Run the `sifra` code as a module, with the requisite configuration
+Run the `sifra` code as following, supplying with the requisite configuration
 file:
 
-    $ python -m  simulation_setup/config_file.conf
+    $ python sifra -f config_file.conf
+
+Sample configuration files are located in sifra\simulation_setup
 
 Depending on the scale of the model, and simulation parameters chosen,
 it may take between a few minutes and a few days to complete a run.
 
-To fit a system fragility for the facility to the simulated data
-generated in the previous step, and a simple normal restoration
-model, run the command:
-
-    $ python sifra/fit_model.py simulation_setup/config_file.conf
-
-To simulate the `component type` loss analysis, restoration prognosis,
-and generate the component criticality plot, run the command:
-
-    $ python sifra/scenario_loss_analysis.py simulation_setup/config_file.conf
-
 ## Testing
 
-To run tests use either nose or unittest. Example (from the first level 
-'sifra' directory):
+To run tests use unittest. Move into sifra folder:
 
-    $ cd sifra/tests
-    $ python -m unittest discover .
+    $ cd sifra
+    $ python -m unittest discover tests
 
 or, simply run:
 

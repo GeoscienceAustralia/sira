@@ -88,7 +88,7 @@ def main():
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
     else:
-        print("Input file not found: " + args.ifile)
+        print("Input file not found: " + str(args.ifile))
 
     rootLogger.info('End')
 

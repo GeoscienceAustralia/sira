@@ -19,7 +19,7 @@ class TestSystemSanity(unittest.TestCase):
     def test_economic_loss_comparison_for_system_sanity(self):
 
         root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir, "simulation_setup", "test_scenario_sysconfig_pscoal_600MW.json")
+        conf_file_path = os.path.join(root_dir, "simulation_setup", "test_scenario_pscoal_600MW.json")
 
         config = Configuration(conf_file_path)
         scenario = Scenario(config)
@@ -32,11 +32,11 @@ class TestSystemSanity(unittest.TestCase):
         input_pickle_filename = os.path.join(root_dir, 'historical_data', "economic_loss_for_system_sanity_testing.p")
         historical_economic_loss_array = pickle.load(open(input_pickle_filename, 'rb'))
 
-        self.assertTrue(np.array_equal(economic_loss_array, historical_economic_loss_array))
+        self.assertTrue(np.array_equal(economic_loss_array, historical_economic_loss_array),str(len(economic_loss_array))+'\n'+str(len(historical_economic_loss_array)))
 
     def test_run_scenario_lower_limit(self):
         root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir, "simulation_setup", "test_scenario_test_run_scenario_lower_limit.json")
+        conf_file_path = os.path.join(root_dir, "simulation_setup", "test_scenario_lower_limit.json")
 
         config = Configuration(conf_file_path)
         scenario = Scenario(config)
@@ -53,7 +53,7 @@ class TestSystemSanity(unittest.TestCase):
 
     def test_run_scenario_upper_limit(self):
         root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir, "simulation_setup", "test_scenario_test_run_scenario_upper_limit.json")
+        conf_file_path = os.path.join(root_dir, "simulation_setup", "test_scenario_upper_limit.json")
         config = Configuration(conf_file_path)
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
@@ -68,8 +68,11 @@ class TestSystemSanity(unittest.TestCase):
         root_dir = os.path.dirname(os.path.abspath(__file__))
         for root, dir_names, file_names in os.walk(root_dir):
             for file_name in file_names:
-                if "simulation_setup" in root:
-                    conf_file_paths.append(os.path.join(root, file_name))
+                if "tests" in root:
+                    if "simulation_setup" in root:
+                        # adjusted to keep track of old values in old branches
+                        if 'test_scenario_pscoal_600MW' not in file_name:
+                            conf_file_paths.append(os.path.join(root, file_name))
 
         for conf_file_path in conf_file_paths:
             if os.path.isfile(conf_file_path):
@@ -84,7 +87,7 @@ class TestSystemSanity(unittest.TestCase):
                 pickel_flename = os.path.join(root_dir, 'historical_data', "economic_loss_for_"+config.SCENARIO_NAME + '.p')
                 history_economic_loss_for_model = pickle.load(open(pickel_flename, 'rb'))
 
-                self.assertTrue(np.array_equal(economic_loss_of_model, history_economic_loss_for_model))
+                self.assertTrue(np.array_equal(economic_loss_of_model, history_economic_loss_for_model),conf_file_path)
 
 
 if __name__ == '__main__':
