@@ -8,7 +8,7 @@
         "INTENSITY_MEASURE_STEP": 1
     },
     "Input": {
-        "INPUT_DIR_NAME": "models/test_structures/"
+        "INPUT_DIR_NAME": "tests/models/test_structures/"
     }, 
     "Output": {
         "OUTPUT_DIR_NAME": "output/piecewise_test"

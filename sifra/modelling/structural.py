@@ -1,5 +1,4 @@
 import inspect
-from copy import deepcopy
 from sifra.modelling.utils import class_getter
 
 

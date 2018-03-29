@@ -6,12 +6,12 @@
         "INTENSITY_MEASURE_MAX": 5.0,
         "INTENSITY_MEASURE_MIN": 0.0,
         "INTENSITY_MEASURE_STEP": 1
-    }, 
+    },
     "Input": {
-        "INPUT_DIR_NAME": "models/substation/"
+        "INPUT_DIR_NAME": "tests/models/test_structures/"
     }, 
     "Output": {
-        "OUTPUT_DIR_NAME": "output/sysconfig_ss_230kv"
+        "OUTPUT_DIR_NAME": "output/simple_linear_dep"
     }, 
     "Restoration": {
         "RESTORATION_STREAMS": [
@@ -20,7 +20,7 @@
             20
         ], 
         "RESTORE_PCT_CHECKPOINTS": 21, 
-        "RESTORE_TIME_MAX": 5.0, 
+        "RESTORE_TIME_MAX": 300.0, 
         "RESTORE_TIME_STEP": 1, 
         "TIME_UNIT": "week"
     }, 
@@ -30,7 +30,7 @@
         "SCENARIO_HAZARD_VALUES": [
             0.5
         ], 
-        "SCENARIO_NAME": "sysconfig_ss_230kv"
+        "SCENARIO_NAME": "simple_linear_dep"
     }, 
     "Switches": {
         "MULTIPROCESS": 1, 
@@ -39,15 +39,15 @@
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
-        "PS_GEN_TECH": "Gas Fired", 
+        "PS_GEN_TECH": "Coal Fired", 
         "SYSTEM_CLASS": "PowerStation", 
         "SYSTEM_CLASSES": [
             "PowerStation", 
             "Substation", 
             "WaterTreatmentPlant"
         ], 
-        "SYSTEM_SUBCLASS": "Gas Fired", 
-        "SYS_CONF_FILE_NAME": "sysconfig_ss_230kv.json"
+        "SYSTEM_SUBCLASS": "Coal Fired", 
+        "SYS_CONF_FILE_NAME": "simple_linear_dep.json"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 
