@@ -2,7 +2,8 @@ import time
 from datetime import timedelta
 import numpy as np
 from sifra.logger import rootLogger
-
+import parmap
+import zipfile
 
 def calculate_response(scenario, infrastructure, hazards):
     """
@@ -22,18 +23,22 @@ def calculate_response(scenario, infrastructure, hazards):
     hazards_response = []
     # Use the parallel option in the scenario to determine how to run
 
-    rootLogger.info("Start Remove parallel run")
-    for hazard in hazards.listOfhazards:
-        hazards_response.append(calculate_response_for_hazard(infrastructure, scenario, hazard))
-    rootLogger.info("End Remove parallel run")
 
-    # hazards_response.extend(parmap.map(run_para_scen,
-    #                                         hazard_levels.hazard_range(),
-    #                                         infrastructure,
-    #                                         scenario,
-    #                                         parallel=scenario.run_parallel_proc))
+    if scenario.run_parallel_proc:
+        # TODO fix parallel processes
+        rootLogger.info("Start parallel run")
+        hazards_response.extend(parmap.map(run_para_scen,
+                                           hazards.get_listOfhazards,
+                                           scenario,
+                                           infrastructure,
+                                           parallel=scenario.run_parallel_proc))
+        rootLogger.info("End parallel run")
+    else:
+        rootLogger.info("Start serial run")
+        for hazard in hazards.listOfhazards:
+            hazards_response.append(calculate_response_for_hazard(infrastructure, scenario, hazard))
+        rootLogger.info("End serial run")
 
-    # TODO add test case to compare the hazard response values!
 
     # combine the responses into one list
     post_processing_list = [{},  # hazard level vs component damage state index
@@ -71,7 +76,20 @@ def calculate_response(scenario, infrastructure, hazards):
     return post_processing_list
 
 
-def calculate_response_for_hazard(infrastructure, scenario, hazard):
+def run_para_scen(hazard, scenario, infrastructure):
+    """
+    The parmap.map function requires a module level function as a parameter.
+    So this function satisfies that requirement by calling the infrastructure's
+    exponse_to method within this one.
+    :param hazard: The hazard level that the infrastructure will be exposed to
+    :param infrastructure: The infrastructure model that is being simulated
+    :param scenario: The Parameters for the simulation
+    :return: List of results of the simulation
+    """
+    return calculate_response_for_hazard(hazard, scenario, infrastructure)
+
+
+def calculate_response_for_hazard(hazard, scenario, infrastructure):
     """
     Exposes the components of the infrastructure to a hazard level
     within a scenario.
