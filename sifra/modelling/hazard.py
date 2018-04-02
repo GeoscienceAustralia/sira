@@ -29,6 +29,7 @@ class Hazard(object):
             seed = seed + (i + 1) * ord(letter)
         return seed
 
+
     def __str__(self):
 
         output = self.hazard_scenario_name+'\n'
@@ -76,6 +77,10 @@ class HazardsContainer(object):
             self.listOfhazards.append(Hazard(hazard_scenario_name, self.scenario_hazard_data[hazard_scenario_name]))
 
         self.hazard_scenario_name = self.hazard_scenario_list
+
+    def get_listOfhazards(self):
+        for hazard_intensity in self.listOfhazards:
+            yield hazard_intensity
 
     @staticmethod
     def populate_scenario_hazard_data_using_hazard_file(scenario_file):
