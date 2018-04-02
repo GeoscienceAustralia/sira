@@ -27,8 +27,8 @@ def calculate_response(scenario, infrastructure, hazards):
     if scenario.run_parallel_proc:
         # TODO fix parallel processes
         rootLogger.info("Start parallel run")
-        hazards_response.extend(parmap.map(run_para_scen,
-                                           hazards.get_listOfhazards,
+        hazards_response.extend(parmap.map(calculate_response_for_hazard,
+                                           hazards.get_listOfhazards(),
                                            scenario,
                                            infrastructure,
                                            parallel=scenario.run_parallel_proc))
@@ -36,7 +36,7 @@ def calculate_response(scenario, infrastructure, hazards):
     else:
         rootLogger.info("Start serial run")
         for hazard in hazards.listOfhazards:
-            hazards_response.append(calculate_response_for_hazard(infrastructure, scenario, hazard))
+            hazards_response.append(calculate_response_for_hazard(hazard, infrastructure, scenario))
         rootLogger.info("End serial run")
 
 
@@ -74,20 +74,6 @@ def calculate_response(scenario, infrastructure, hazards):
     # logging.info("[ Run time: %s ]\n" % str(elapsed))
 
     return post_processing_list
-
-
-def run_para_scen(hazard, scenario, infrastructure):
-    """
-    The parmap.map function requires a module level function as a parameter.
-    So this function satisfies that requirement by calling the infrastructure's
-    exponse_to method within this one.
-    :param hazard: The hazard level that the infrastructure will be exposed to
-    :param infrastructure: The infrastructure model that is being simulated
-    :param scenario: The Parameters for the simulation
-    :return: List of results of the simulation
-    """
-    return calculate_response_for_hazard(hazard, scenario, infrastructure)
-
 
 def calculate_response_for_hazard(hazard, scenario, infrastructure):
     """
