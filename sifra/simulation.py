@@ -25,7 +25,6 @@ def calculate_response(scenario, infrastructure, hazards):
 
 
     if scenario.run_parallel_proc:
-        # TODO fix parallel processes
         rootLogger.info("Start parallel run")
         hazards_response.extend(parmap.map(calculate_response_for_hazard,
                                            hazards.get_listOfhazards(),
