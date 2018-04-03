@@ -83,8 +83,8 @@ from Github. The details of the script are in `build-sifra-box.sh`
 
 Creating the environment is done using the following commands:
 ```
-cd sifra/installation
-docker build -t sifra .
+cd sifra
+docker build -t sifra -f 'installation/Dockerfile'.
 ```
 
 Find the container Id using:
