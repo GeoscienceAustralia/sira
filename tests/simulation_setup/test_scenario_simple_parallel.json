@@ -33,9 +33,9 @@
         "SCENARIO_NAME": "simple_parallel"
     }, 
     "Switches": {
-        "MULTIPROCESS": 1, 
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
-    }, 
+    },
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 

@@ -33,7 +33,7 @@
         "SCENARIO_NAME": "pwtp_400ML_wnpg"
     }, 
     "Switches": {
-        "MULTIPROCESS": 1, 
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
     }, 
     "System": {

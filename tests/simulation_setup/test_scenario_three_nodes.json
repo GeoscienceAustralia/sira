@@ -34,9 +34,9 @@
         "SCENARIO_NAME": "three_nodes"
     }, 
     "Switches": {
-        "MULTIPROCESS": 1,
+        "MULTIPROCESS": 0,
         "RUN_CONTEXT": 0
-    }, 
+    },
     "System": {
         "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 

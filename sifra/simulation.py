@@ -5,7 +5,7 @@ from sifra.logger import rootLogger
 import parmap
 import zipfile
 
-def calculate_response(scenario, infrastructure, hazards):
+def calculate_response(hazards, scenario, infrastructure):
     """
     The response will be calculated by creating the hazard_levels,
     iterating through the range of hazards and calling the infrastructure systems
@@ -35,7 +35,7 @@ def calculate_response(scenario, infrastructure, hazards):
     else:
         rootLogger.info("Start serial run")
         for hazard in hazards.listOfhazards:
-            hazards_response.append(calculate_response_for_hazard(hazard, infrastructure, scenario))
+            hazards_response.append(calculate_response_for_hazard(hazard, scenario, infrastructure))
         rootLogger.info("End serial run")
 
 
@@ -136,6 +136,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(infrastructu
     else:
         # seeding was not used
         random_number = np.random.RandomState(seed=2)
+
 
     # record the number of component in infrastructure
     number_of_components = len(infrastructure.components)

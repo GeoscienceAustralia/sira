@@ -33,7 +33,7 @@
         "SCENARIO_NAME": "upper_limit"
     }, 
     "Switches": {
-        "MULTIPROCESS": 1, 
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
     }, 
     "System": {

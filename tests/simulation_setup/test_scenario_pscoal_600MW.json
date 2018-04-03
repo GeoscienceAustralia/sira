@@ -34,7 +34,7 @@
         "SCENARIO_NAME": "pscoal_600MW"
     },
     "Switches": {
-        "MULTIPROCESS": 0,
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
     },
     "System": {

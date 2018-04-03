@@ -33,7 +33,7 @@
         "SCENARIO_NAME": "simple_linear_dep"
     }, 
     "Switches": {
-        "MULTIPROCESS": 1, 
+        "MULTIPROCESS": 1,
         "RUN_CONTEXT": 0
     }, 
     "System": {
