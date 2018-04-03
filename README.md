@@ -70,7 +70,7 @@ To get the aws credentials follow this [guide](https://docs.aws.amazon.com/IAM/l
 export AWS_ACCESS_KEY = <AWS ACCESS KEY>
 export AWS_SECRET_KEY = <AWS SECRET KEY>
 
-packer build build.json
+packer build "installation\build.json"
 ```
 
 in the current directory. The details, and options, for installation
