@@ -66,7 +66,7 @@ def main():
         Run simulation.
         Get the results of running a simulation
         """
-        response_list= calculate_response(scenario, infrastructure, hazards)
+        response_list= calculate_response(hazards, scenario, infrastructure)
 
         """
         Post simulation processing.

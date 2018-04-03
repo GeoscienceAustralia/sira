@@ -26,7 +26,7 @@ class TestSystemSanity(unittest.TestCase):
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
 
-        response_list = calculate_response(scenario, infrastructure, hazards)
+        response_list = calculate_response(hazards, scenario, infrastructure)
         economic_loss_array = response_list[4]
 
         input_pickle_filename = os.path.join(root_dir, 'historical_data', "economic_loss_for_system_sanity_testing.p")
@@ -42,7 +42,7 @@ class TestSystemSanity(unittest.TestCase):
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
-        response_list = calculate_response(scenario, infrastructure, hazards)
+        response_list = calculate_response(hazards, scenario, infrastructure)
 
         output_node_capacity = 0
         with open(config.SYS_CONF_FILE, 'r') as f:
@@ -58,7 +58,7 @@ class TestSystemSanity(unittest.TestCase):
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
-        response_list = calculate_response(scenario, infrastructure, hazards)
+        response_list = calculate_response(hazards, scenario, infrastructure)
 
         self.assertTrue(int(response_list[3][0][0]) == int(0))
 
@@ -81,7 +81,7 @@ class TestSystemSanity(unittest.TestCase):
                 hazards = HazardsContainer(config)
                 infrastructure = ingest_model(config)
 
-                response_list = calculate_response(scenario, infrastructure, hazards)
+                response_list = calculate_response(hazards, scenario, infrastructure)
                 economic_loss_of_model = response_list[4]
 
                 pickel_flename = os.path.join(root_dir, 'historical_data', "economic_loss_for_"+config.SCENARIO_NAME + '.p')
