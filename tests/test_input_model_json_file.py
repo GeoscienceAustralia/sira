@@ -19,8 +19,9 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
         for root, dir_names, file_names in os.walk(self.project_root_dir):
             for file_name in file_names:
                 if "models" in root:
-                    if ".json" in file_name:
-                        self.model_json_files.append(os.path.join(root, file_name))
+                    if "config" not in root:
+                        if ".json" in file_name:
+                            self.model_json_files.append(os.path.join(root, file_name))
 
     def test_folder_structure(self):
 
