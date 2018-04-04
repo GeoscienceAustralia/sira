@@ -64,8 +64,6 @@ To be able to have a easily replicable and deployable environment to run and
 test the code, we use AWS for provisioning dev machines. A basic dev instance can 
 be setup using [Packer](https://www.packer.io/intro/), by running:
 
-To get the aws credentials follow this [guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
-
 ```
 export AWS_ACCESS_KEY = <AWS ACCESS KEY>
 export AWS_SECRET_KEY = <AWS SECRET KEY>
@@ -73,8 +71,9 @@ export AWS_SECRET_KEY = <AWS SECRET KEY>
 packer build "installation\build.json"
 ```
 
-in the current directory. The details, and options, for installation
-are detailed in 
+in the current directory.
+
+To get the aws credentials follow this [guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
 ### Docker
 The packer command that creates the AWS instance will run a 
