@@ -5,7 +5,6 @@ title           : __main__.py
 description     : entry point for core sifra component
 usage           : python sifra  [OPTIONS]
                   -f                    Display this usage message
-                  -c config             Hostname to connect to
                   -l [LEVEL]            Choose logging level DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 python_version  : 2.7
