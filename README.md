@@ -4,10 +4,11 @@ See the full [documentation on GitHub Pages](http://geoscienceaustralia.github.i
 # What is it?
 
 SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
+
 It comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
-components that comprises the facility. Currently the system is
+components that comprises the facility. Currently the system is 
 designed to work with earthquake hazards only.
 
 The following are some key features of this tool:
