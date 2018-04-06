@@ -71,8 +71,9 @@ class TestReadingExcelFile(ut.TestCase):
         for model_file in self.model_xlsx_files:
             component_list = pd.read_excel(model_file,
                                            sheet_name='component_list',
-                                           header=0, skiprows=0,
-                                           index_col=0,
+                                           header=0,
+                                           skiprows=0,
+                                           index_col=None,
                                            skipinitialspace=True)
 
             self.assertTrue(isinstance(len(component_list.index.tolist()), int))
@@ -84,8 +85,9 @@ class TestReadingExcelFile(ut.TestCase):
         for model_file in self.model_xlsx_files:
             component_connections = pd.read_excel(model_file,
                                                   sheet_name='component_connections',
+                                                  header=0,
+                                                  skiprows=0,
                                                   index_col=None,
-                                                  header=0, skiprows=0,
                                                   skipinitialspace=True)
 
             self.assertTrue(set(required_col_names) <= set(component_connections.columns.values.tolist()),
@@ -104,8 +106,12 @@ class TestReadingExcelFile(ut.TestCase):
         required_col_names = ['input_capacity', 'capacity_fraction', 'commodity_type']
 
         for model_file in self.model_xlsx_files:
-            supply_setup = pd.read_excel(model_file, sheet_name='supply_setup', index_col='input_node',
-                                         header=0, skiprows=0, skipinitialspace=True)
+            supply_setup = pd.read_excel(model_file,
+                                         sheet_name='supply_setup',
+                                         index_col=0,
+                                         header=0,
+                                         skiprows=0,
+                                         skipinitialspace=True)
 
             self.assertTrue(set(required_col_names) <= set(supply_setup.columns.tolist()),
                             "Required column name not found!" +
@@ -120,7 +126,7 @@ class TestReadingExcelFile(ut.TestCase):
                 self.assertTrue(isinstance((index[0]), unicode or str))
 
     def test_reading_data_from_output_setup(self):
-        # index coloum ingnored : 'output_node'
+        # index column ignored : 'output_node'
         required_col_names = ['production_node',
                               'output_node_capacity',
                               'capacity_fraction',
@@ -227,7 +233,7 @@ class TestReadingExcelFile(ut.TestCase):
                 self.assertTrue(isinstance(index[0], unicode or str), type(index[0]))
                 self.assertTrue(isinstance(index[1], unicode or str), str(index[1]))
 
-                # TODO excel files not standard form make them standardise
+                # TODO excel files not in standard form -- need to standardise
                 # self.assertTrue(isinstance(damage_def['damage_state_definition'], unicode or str or numpy.float64), type(damage_def['damage_state_definition'])+model_file)
                 # self.assertTrue(isinstance(str(damage_def['fragility_source']), unicode or str), model_file)
 
