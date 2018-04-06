@@ -213,6 +213,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         # This will complete the comparison for all of the samples
         # for this component.
 
+        component_pe_ds[np.isnan(component_pe_ds)] = -np.inf
         component_damage_state_ind[:, index] = \
             np.sum(component_pe_ds > rnd[:, index][:, np.newaxis], axis=1)
 
