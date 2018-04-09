@@ -13,26 +13,28 @@ designed to work with earthquake hazards only.
 
 The following are some key features of this tool:
 
-- Open Source: It is written in Python, and there is no
-  dependency on proprietary tools. It should run on OS X, Windows, and
-  Linux platforms.
+- Open Source: Written in Python, and there is no dependency on
+  proprietary tools. It should run on OS X, Windows, and Linux 
+  platforms.
 
-- Flexible Facility Model: ``facility`` data model is based on network
-  theory, allowing the user to develop arbitrarily complex custom
-  facility models for simulation.
+- Flexible Facility Model: The data model is based on graph 
+  theory. All infrastructure systems are represented as 
+  networks. This allows an user to develop arbitrarily complex 
+  custom ``facility`` models – for a Facility or a network – for 
+  impact simulation.
 
-- Extensible Component Library: User can define new ``component types``
-  (the building blocks of a facility) and link it to existing or
-  custom fragility algorithms.
+- Extensible Component Library: User can define new ``component 
+  types`` (the building blocks of a facility) and link it to 
+  existing or custom fragility algorithms.
 
 - Component Criticality: Scenario Analysis tools allow users to
   identify the cost of restoration for chosen scenarios, expected
-  restoration times, and which component upgrades can most benefit
-  the system.
+  restoration times, and which component upgrades can most 
+  benefit the system.
 
-- Restoration Prognosis: User can experiment with different levels of
-  hazards and post-disaster resource allocation to gauge restoration
-  times for facility operations.
+- Restoration Prognosis: User can experiment with different 
+  levels of hazards and post-disaster resource allocation to 
+  gauge restoration times for facility operations.
 
 
 We are currently extending the system to provide facilities for sharing models
@@ -61,9 +63,11 @@ The AWS and Docker configuration is now the preferred way to deploy and develop
 
 ### Building an AMI for Dev Machines
 
-To be able to have a easily replicable and deployable environment to run and 
-test the code, we use AWS for provisioning dev machines. A basic dev instance can 
-be setup using [Packer](https://www.packer.io/intro/), by running:
+To be able to have a easily replicable and deployable 
+environment to run and test the code, we use AWS for 
+provisioning dev machines. A basic dev instance can be setup 
+using [Packer](https://www.packer.io/intro/), by running the 
+following instructions in the current directory:
 
 ```
 export AWS_ACCESS_KEY = <AWS ACCESS KEY>
@@ -71,8 +75,6 @@ export AWS_SECRET_KEY = <AWS SECRET KEY>
 
 packer build "installation\build.json"
 ```
-
-in the current directory.
 
 To get the aws credentials follow this [guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
