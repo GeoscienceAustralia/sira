@@ -16,7 +16,7 @@ import seaborn as sns
 from sifra.modelling.hazard import HazardsContainer
 from sifra.logger import rootLogger
 from sifra.configuration import Configuration
-
+from sifra.modelling import infrastructure
 
 # def run_para_scen(hazard_level, infrastructure, scenario):
 #     """
@@ -39,7 +39,8 @@ from sifra.configuration import Configuration
 
 def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     """Draws and saves a boxplot of mean economic loss"""
-    hazvals_ext = [[str(i)] * scenario.num_samples for i in hazards.hazard_scenario_list]
+    hazvals_ext = [[str(i)] * scenario.num_samples
+                   for i in hazards.hazard_scenario_list]
 
     x1 = np.ndarray.flatten(np.array(hazvals_ext))
 
@@ -58,7 +59,8 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     fig = plt.figure(figsize=(9, 5), facecolor='white')
     sns.set(style='ticks', palette='Set2')
     # whitesmoke='#F5F5F5', coral='#FF7F50'
-    ax = sns.boxplot(x=x1, y='Econ Loss Ratio', data=econ_loss_df,
+    ax = sns.boxplot(x=x1, y='Econ Loss Ratio',
+                     data=econ_loss_df,
                      linewidth=0.8, color='whitesmoke',
                      showmeans=True,
                      meanprops=dict(marker='o',
@@ -80,10 +82,10 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
 
     ax.set_xticklabels(hazards.hazard_scenario_list)
     intensity_label \
-        = hazards.intensity_measure_param+' ('+hazards.intensity_measure_unit+')'
+        = hazards.intensity_measure_param+' ('+\
+          hazards.intensity_measure_unit+')'
     ax.set_xlabel(intensity_label, labelpad=9, size=10)
     ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
-
     ax.set_title('Loss Ratio', loc='center', y=1.04)
     ax.title.set_fontsize(12)
 
@@ -92,9 +94,7 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     plt.close(fig)
 
 
-
 def write_system_response(response_list, scenario):
-
     # ------------------------------------------------------------------------
     # 'ids_comp_vs_haz' is a dict of numpy arrays
     # We pickle it for archival. But the file size can get very large.
@@ -162,8 +162,6 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazards):
              (comp_type, 'loss_tot'), (comp_type, 'func_mean'),
              (comp_type, 'func_std'))
         )
-
-
 
     mindex = pd.MultiIndex.from_tuples(
         tp_ct,
@@ -302,11 +300,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
     """
     # ------------------------------------------------------------------------
     # For Probability of Exceedence calculations based on component failures
-    # ------------------------------------------------------------------------
-    #
     #   Damage state boundaries for Component Type Failures (Substations) are
     #   based on HAZUS MH MR3, p 8-66 to 8-68
-    #
     # ------------------------------------------------------------------------
 
     cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
@@ -315,11 +310,6 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
     for comp_id, component in infrastructure.components.items():
         cp_class_map[component.component_class].append(component)
 
-    # ------------------------------------------------------------------------
-    # For Probability of Exceedence calculations based on component failures:
-    #   Damage state boundaries for Component Type Failures (Substations) are
-    #   based on HAZUS MH MR3, p 8-66 to 8-68
-    # ------------------------------------------------------------------------
     if infrastructure.system_class == 'Substation':
         cp_classes_costed = \
             [x for x in cp_classes_in_system
@@ -327,11 +317,11 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
         # --- System fragility - Based on Failure of Component Classes ---
         comp_class_failures = \
-            {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
+            {cc: np.zeros((scenario.num_samples, hazards.num_hazard_pts))
              for cc in cp_classes_costed}
 
         comp_class_frag = \
-            {cc: np.zeros((scenario.num_samples, scenario.num_hazard_pts))
+            {cc: np.zeros((scenario.num_samples, hazards.num_hazard_pts))
              for cc in cp_classes_costed}
 
         # TODO check or correctness
@@ -349,13 +339,20 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
         #                 np.sum(comp_class_failures[compclass][i, j] > \
         #                        infrastructure.ds_lims_compclasses[compclass])
 
-        for j, hazard_intensity in enumerate(hazards.hazard_range):
+        # for j, hazard_intensity in enumerate(hazards.hazard_range):
+
+        for j, (scenario_name, hazard_data) in \
+                enumerate(hazards.scenario_hazard_data.items()):
             for i in range(scenario.num_samples):
                 for compclass in cp_classes_costed:
-                    for c in cp_class_map[compclass]:
+                    # **************************************************
+                    # TODO: CHECK COMPONENETS ARE SAVED IN CORRECT ORDER
+                    # **************************************************
+                    for comptype in cp_class_map[compclass]:
+                        comp_ndx = infrastructure.components.keys().\
+                            index(comptype.component_id)
                         comp_class_failures[compclass][i, j] += \
-                            response_list[hazard_intensity]\
-                                         [i, infrastructure.components[c]]
+                            response_list[0][scenario_name][i, comp_ndx]
                     comp_class_failures[compclass][i, j] /= \
                         len(cp_class_map[compclass])
 
@@ -365,9 +362,9 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
         # Probability of Exceedence -- Based on Failure of Component Classes
         pe_sys_cpfailrate = np.zeros(
-            (len(infrastructure.sys_dmg_states), scenario.num_hazard_pts)
+            (len(infrastructure.sys_dmg_states), hazards.num_hazard_pts)
         )
-        for p in range(scenario.num_hazard_pts):
+        for p in range(hazards.num_hazard_pts):
             for d in range(len(infrastructure.sys_dmg_states)):
                 ds_ss_ix = []
                 for compclass in cp_classes_costed:
@@ -395,12 +392,13 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
             component_pe_ds = np.zeros(len(component.damage_states))
             for damage_state_index in component.damage_states.keys():
                 long, lat = component.get_location()
-                hazard_intensity = hazard.get_hazard_intensity_at_location( long, lat)
-                component_pe_ds[damage_state_index] = component.damage_states[damage_state_index].response_function(
-                    hazard_intensity)
+                hazard_intensity \
+                    = hazard.get_hazard_intensity_at_location(long, lat)
+                component_pe_ds[damage_state_index] \
+                    = component.damage_states[damage_state_index].\
+                      response_function(hazard_intensity)
 
             component_pe_ds = component_pe_ds[1:]
-
             pb = pe2pb(component_pe_ds)
 
             dr = np.array([component.damage_states[int(ds)].damage_ratio
