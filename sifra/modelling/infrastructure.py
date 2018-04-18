@@ -11,10 +11,15 @@ from sifra.modelling.iodict import IODict
 class InfrastructureFactory(object):
     @staticmethod
     def create_model(config):
-        if config['system_class'].lower() == 'substation':
-            return SubStation(**config)
-        elif config['system_class'].lower() == 'powerstation':
+        if config['system_class'].lower() \
+                == 'substation':
+            return Substation(**config)
+        elif config['system_class'].lower() \
+                == 'powerstation':
             return PowerStation(**config)
+        elif config['system_class'].lower() \
+                == 'PotableWaterTreatmentPlant'.lower():
+            return PotableWaterTreatmentPlant(**config)
 
 
 class Infrastructure(Base):
@@ -247,21 +252,28 @@ class Infrastructure(Base):
             yield component.component_class
 
 
-class SubStation(Infrastructure):
+class Substation(Infrastructure):
     def __init__(self, **kwargs):
-        super(SubStation, self).__init__(**kwargs)
+        super(Substation, self).__init__(**kwargs)
         # Initiate the substation, note: this may not have been tested in this
         # version of the code.
-        self.uncosted_classes = ['JUNCTION POINT',
+
+        # TODO: Decide whether to model cost of 'Lightning Arrester' / 'Surge Protection'
+        self.uncosted_classes = ['JUNCTION POINT', 'MODEL ARTEFACT',
                                  'SYSTEM INPUT', 'SYSTEM OUTPUT',
-                                 'Generator', 'Bus', 'Lightning Arrester']
+                                 'Generator']
         self.ds_lims_compclasses = {
+            'Bus': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Disconnect Switch': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Circuit Breaker': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Autotransformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
-            'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00]}
+            'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00],
+            'Surge Protection': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'System Control': [0.05, 0.40, 0.70, 0.99, 1.00],
+        }
 
 
 class PowerStation(Infrastructure):
