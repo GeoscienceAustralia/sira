@@ -1,0 +1,59 @@
+{
+    "Hazard": {
+        "HAZARD_INPUT_METHOD": "hazard_array",
+        "_comment": "scenario_file",
+        "HAZARD_TYPE": "earthquake", 
+        "NUM_SAMPLES": 5,
+        "INTENSITY_MEASURE_MAX": 1.2, 
+        "INTENSITY_MEASURE_MIN": 0.0, 
+        "INTENSITY_MEASURE_STEP": 0.2
+    }, 
+    "Input": {
+        "INPUT_DIR_NAME": "/Users/marufr/code/EIRAPSI-SYS-MODELS"
+    }, 
+    "Output": {
+        "OUTPUT_DIR_NAME": "output/"
+    }, 
+    "Restoration": {
+        "RESTORATION_STREAMS": [
+            5, 
+            15
+        ], 
+        "RESTORE_PCT_CHECKPOINTS": 21, 
+        "RESTORE_TIME_MAX": 300.0, 
+        "RESTORE_TIME_STEP": 1, 
+        "TIME_UNIT": "week"
+    }, 
+    "Scenario": {
+        "INTENSITY_MEASURE_PARAM": "PGA", 
+        "INTENSITY_MEASURE_UNIT": "g", 
+        "SCENARIO_HAZARD_VALUES": [
+            0.4
+        ], 
+        "SCENARIO_NAME": "Tx Substation 330kV"
+    },
+    "Switches": {
+        "MULTIPROCESS": 1, 
+        "RUN_CONTEXT": 1
+    }, 
+    "System": {
+        "INFRASTRUCTURE_LEVEL" : "facility",
+        "COMMODITY_FLOW_TYPES": 2, 
+        "SYSTEM_CLASS": "Substation", 
+        "SYSTEM_CLASSES": [
+            "PowerStation", 
+            "Substation", 
+            "PotableWaterTreatmentPlant", 
+            "PWTP", 
+            "WasteWaterTreatmentPlant", 
+            "WWTP"
+        ], 
+        "SYSTEM_SUBCLASS": "Medium Voltage Substation", 
+        "SYS_CONF_FILE_NAME": "nt_ss_330kv_v01.xlsx"
+    }, 
+    "Test": {
+        "FIT_PE_DATA": true, 
+        "FIT_RESTORATION_DATA": true, 
+        "SAVE_VARS_NPY": true
+    }
+}
