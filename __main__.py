@@ -3,9 +3,10 @@
 """
 title           : __main__.py
 description     : entry point for core sifra component
-usage           : python sifra  [OPTIONS]
-                  -f                    Display this usage message
-                  -l [LEVEL]            Choose logging level DEBUG, INFO, WARNING, ERROR, CRITICAL
+usage           : python sifra [OPTIONS]
+                  -f                Display this usage message
+                  -l [LEVEL]        Choose logging level DEBUG, INFO,
+                                    WARNING, ERROR, CRITICAL
 
 python_version  : 2.7
 """
@@ -17,16 +18,23 @@ from sifra.modelling.hazard import HazardsContainer
 from sifra.model_ingest import ingest_model
 from sifra.simulation import calculate_response
 from sifra.modelling.system_topology import SystemTopology
-from sifra.infrastructure_response import write_system_response, loss_by_comp_type, plot_mean_econ_loss, pe_by_component_class
+from sifra.infrastructure_response import (
+    write_system_response,
+    loss_by_comp_type,
+    plot_mean_econ_loss,
+    pe_by_component_class
+    )
 
 
 def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--ifile", type=str,
-                        help="choose option for logging level from: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+                        help="choose option for logging level from: \n"
+                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     parser.add_argument("-v", "--verbose",  type=str,
-                        help="choose option for logging level from: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+                        help="choose option for logging level from: \n"
+                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     args = parser.parse_args()
 
     level = logging.INFO
@@ -65,7 +73,7 @@ def main():
         Run simulation.
         Get the results of running a simulation
         """
-        response_list= calculate_response(hazards, scenario, infrastructure)
+        response_list = calculate_response(hazards, scenario, infrastructure)
 
         """
         Post simulation processing.
@@ -78,7 +86,8 @@ def main():
         plot_mean_econ_loss(scenario, economic_loss_array, hazards)
 
         if config.HAZARD_INPUT_METHOD == "hazard_array":
-            pe_by_component_class(response_list, infrastructure, scenario, hazards)
+            pe_by_component_class(response_list, infrastructure,
+                                  scenario, hazards)
 
         """
         Visualizations
