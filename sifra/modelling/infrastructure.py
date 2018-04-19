@@ -25,11 +25,15 @@ class InfrastructureFactory(object):
 class Infrastructure(Base):
     """
     The top level representation of a system that can respond to a
-    range of hazards. It encapsulates a number of components that are
-    used to estimate the response to various hazard levels.
+    range of hazards. It encapsulates a number of components that
+    are used to estimate the response to various hazard levels.
     """
-    supply_nodes = Element('dict', 'The components that supply the infrastructure system', dict)
-    output_nodes = Element('dict', 'The components that output from the infrastructure system', dict)
+    supply_nodes = Element('dict',
+                           'The components that supply '
+                           'the infrastructure system', dict)
+    output_nodes = Element('dict',
+                           'The components that output from '
+                           'the infrastructure system', dict)
 
     # supply_total = None
     _component_graph = None
@@ -55,7 +59,8 @@ class Infrastructure(Base):
         Calculate the results to the infrastructure given the damage state
         parameter
         :param scenario: Details of the scenario being run
-        :param component_damage_state_ind: The array of the component's damage state samples
+        :param component_damage_state_ind:  The array of the component's
+                                            damage state samples
         :return: 5 lists of calculations
         """
         # Component loss caused by the damage
@@ -65,13 +70,20 @@ class Infrastructure(Base):
         if_level_economic_loss = np.zeros(scenario.num_samples,
                                           dtype=np.float64)
         # Component functionality
-        if_level_functionality = np.zeros((scenario.num_samples, len(self.components)),
-                                          dtype=np.float64)
+        if_level_functionality = \
+            np.zeros((scenario.num_samples, len(self.components)),
+                     dtype=np.float64)
         # output for the level of damage
-        if_level_output = np.zeros((scenario.num_samples, len(self.output_nodes)),
-                                   dtype=np.float64)
+        if_level_output = \
+            np.zeros((scenario.num_samples, len(self.output_nodes)),
+                     dtype=np.float64)
+
+        # ********************
+        # NOT YET IMPLEMENTED:
         # output available as recovery progresses
-        # if_output_given_recovery = np.zeros((scenario.num_samples, scenario.num_time_steps), dtype=np.float64)
+        # if_output_given_recovery = \
+        #     np.zeros((scenario.num_samples, scenario.num_time_steps),
+        #              dtype=np.float64)
 
         # iterate through the samples
         for sample_index in range(scenario.num_samples):
@@ -84,11 +96,14 @@ class Infrastructure(Base):
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
             count = 0
-            for component_index, comp_key in enumerate(sorted(self.components.keys())):
+            for component_index, comp_key in \
+                    enumerate(sorted(self.components.keys())):
                 component = self.components[comp_key]
                 # get the damage state for the component
-                damage_state = component.get_damage_state(component_ds[component_index])
-                # use the damage state attributes to calculate the loss and functionality for the component sample
+                damage_state = \
+                    component.get_damage_state(component_ds[component_index])
+                # use the damage state attributes to calculate the loss and
+                # functionality for the component sample
                 loss = damage_state.damage_ratio * component.cost_fraction
                 comp_sample_loss[component_index] = loss
                 comp_sample_func[component_index] = damage_state.functionality
@@ -96,11 +111,12 @@ class Infrastructure(Base):
             # save this sample's component loss and functionality
             if_level_loss[sample_index, :] = comp_sample_loss
             if_level_functionality[sample_index, :] = comp_sample_func
-            # the infrastructure's economic loss for this sample is the sum of all
-            # component losses
+            # the infrastructure's economic loss for this sample is the sum
+            # of all component losses
             if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
             # estimate the output for this sample's component functionality
-            if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
+            if_level_output[sample_index, :] \
+                = self.compute_output_given_ds(comp_sample_func)
 
         return if_level_loss, \
                if_level_functionality, \
@@ -124,34 +140,47 @@ class Infrastructure(Base):
         """
         Using the graph of components, the output is calculated
         from the component functionality parameter.
-        :param comp_level_func: An array that indicates the functionality level for each component.
+        :param comp_level_func: An array that indicates the functionality
+                                level for each component.
         :return: An array of the output level for each output node.
         """
         # Create the component graph if one does not yet exist
         if not self._component_graph:
-            self._component_graph = ComponentGraph(self.components, comp_level_func)
+            self._component_graph = ComponentGraph(
+                self.components, comp_level_func)
         else:
-            self._component_graph.update_capacity(self.components, comp_level_func)
+            self._component_graph.update_capacity(
+                self.components, comp_level_func)
 
         # calculate the capacity
         # system_flows_sample = []
         system_outflows_sample = np.zeros(len(self.output_nodes))
-        for output_index, (output_comp_id, output_comp) in enumerate(self.output_nodes.iteritems()):
+        for output_index, (output_comp_id, output_comp) in \
+                enumerate(self.output_nodes.iteritems()):
             # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
-            for supply_index, (supply_comp_id, supply_comp) in enumerate(self.supply_nodes.iteritems()):
-                if_flow_fraction = self._component_graph.maxflow(supply_comp_id, output_comp_id)
-                if_sample_flow = if_flow_fraction * supply_comp['capacity_fraction']
+            for supply_index, (supply_comp_id, supply_comp) in \
+                    enumerate(self.supply_nodes.iteritems()):
+                if_flow_fraction = self._component_graph.maxflow(
+                    supply_comp_id, output_comp_id
+                    )
+                if_sample_flow = if_flow_fraction * \
+                                 supply_comp['capacity_fraction']
 
-                if supply_comp['commodity_type'] not in total_supply_flow_by_source:
-                    total_supply_flow_by_source[supply_comp['commodity_type']] = if_sample_flow
+                if supply_comp['commodity_type'] not in \
+                        total_supply_flow_by_source:
+                    total_supply_flow_by_source[supply_comp['commodity_type']] \
+                        = if_sample_flow
                 else:
-                    total_supply_flow_by_source[supply_comp['commodity_type']] += if_sample_flow
+                    total_supply_flow_by_source[supply_comp['commodity_type']] \
+                        += if_sample_flow
 
             total_available_flow = min(total_supply_flow_by_source.itervalues())
 
-            estimated_capacity_fraction = min(total_available_flow, output_comp['capacity_fraction'])
-            system_outflows_sample[output_index] = estimated_capacity_fraction * self.get_nominal_output()
+            estimated_capacity_fraction \
+                = min(total_available_flow, output_comp['capacity_fraction'])
+            system_outflows_sample[output_index] \
+                = estimated_capacity_fraction * self.get_nominal_output()
 
         return system_outflows_sample
 
@@ -169,7 +198,10 @@ class Infrastructure(Base):
     #     cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
     #     return cdf + (1.0 - cdf) * fn
 
-    def calc_response(self, component_loss, comp_sample_func, component_damage_state_ind):
+    def calc_response(self,
+                      component_loss,
+                      comp_sample_func,
+                      component_damage_state_ind):
         """
         Convert the arrays into dicts for subsequent analysis
         :param component_loss: The array of component loss values
@@ -194,7 +226,8 @@ class Infrastructure(Base):
                 = np.std(comp_sample_func[:, comp_index])
 
             comp_resp_dict[(comp_id, 'num_failures')] \
-                = np.mean(component_damage_state_ind[:, comp_index] >= (len(component.damage_states) - 1))
+                = np.mean(component_damage_state_ind[:, comp_index]
+                          >= (len(component.damage_states) - 1))
 
         return comp_resp_dict
 
@@ -258,9 +291,11 @@ class Substation(Infrastructure):
         # Initiate the substation, note: this may not have been tested in this
         # version of the code.
 
-        # TODO: Decide whether to model cost of 'Lightning Arrester' / 'Surge Protection'
-        self.uncosted_classes = ['JUNCTION POINT', 'MODEL ARTEFACT',
-                                 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+        # TODO: Decide whether to model cost of 'LA' / 'Surge Protection'
+        self.uncosted_classes = ['JUNCTION POINT',
+                                 'MODEL ARTEFACT',
+                                 'SYSTEM INPUT',
+                                 'SYSTEM OUTPUT',
                                  'Generator']
         self.ds_lims_compclasses = {
             'Bus': [0.05, 0.40, 0.70, 0.99, 1.00],
@@ -279,9 +314,11 @@ class Substation(Infrastructure):
 class PowerStation(Infrastructure):
     def __init__(self, **kwargs):
         super(PowerStation, self).__init__(**kwargs)
-        # Initiate the power station values, which have been used in all current
-        # testing
-        self.uncosted_classes = ['JUNCTION POINT', 'SYSTEM INPUT', 'SYSTEM OUTPUT']
+        # Initiate the power station values, which have been used in all
+        # current testing
+        self.uncosted_classes = ['JUNCTION POINT',
+                                 'SYSTEM INPUT',
+                                 'SYSTEM OUTPUT']
         self.ds_lims_compclasses = {
             'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -298,9 +335,11 @@ class PowerStation(Infrastructure):
 class PotableWaterTreatmentPlant(Infrastructure):
     def __init__(self, **kwargs):
         super(PotableWaterTreatmentPlant, self).__init__(**kwargs)
-        # Initiate the water treatment plant values, which have been used in all current
-        # testing
-        self.uncosted_classes = ['SYSTEM INPUT', 'SYSTEM OUTPUT', 'JUNCTION POINT']
+        # Initiate the water treatment plant values, which have been used
+        # in all current testing
+        self.uncosted_classes = ['SYSTEM INPUT',
+                                 'SYSTEM OUTPUT',
+                                 'JUNCTION POINT']
         self.ds_lims_compclasses = {
             'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Sediment Flocculation': [0.0, 0.05, 0.40, 0.70, 1.00],
