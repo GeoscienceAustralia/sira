@@ -29,9 +29,9 @@ from sifra.infrastructure_response import (
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--ifile", type=str,
-                        help="choose option for logging level from: \n"
-                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+    parser.add_argument("-s", "--setup", type=str,
+                        help="Setup file for simulation scenario, and \n"
+                             "locations of inputs, outputs, and system model.")
     parser.add_argument("-v", "--verbose",  type=str,
                         help="choose option for logging level from: \n"
                              "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
@@ -58,13 +58,13 @@ def main():
     rootLogger.set_log_level(level)
     rootLogger.info('Start')
 
-    if args.ifile is not None:
+    if args.setup is not None:
 
         """
         Configure simulation model.
         Read data and control parameters and construct objects.
         """
-        config = Configuration(args.ifile)
+        config = Configuration(args.setup)
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
@@ -96,7 +96,7 @@ def main():
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
     else:
-        print("Input file not found: " + str(args.ifile))
+        print("Input file not found: " + str(args.setup))
 
     rootLogger.info('End')
 
