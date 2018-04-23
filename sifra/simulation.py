@@ -9,9 +9,10 @@ import zipfile
 def calculate_response(hazards, scenario, infrastructure):
     """
     The response will be calculated by creating the hazard_levels,
-    iterating through the range of hazards and calling the infrastructure systems
-    expose_to method. This will return the results of the infrastructure to each hazard level
-    exposure. A parameter in the scenario file determines whether the parmap.map function spawns threads
+    iterating through the range of hazards and calling the infrastructure
+    systems expose_to method. This will return the results of the
+    infrastructure to each hazard level exposure. A parameter in the
+    scenario file determines whether the parmap.map function spawns threads
     that will perform parallel calculations.
     :param scenario: Parameters for the simulation.
     :param infrastructure: Model of the infrastructure.
@@ -86,7 +87,8 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
     :return: The state of the infrastructure after the exposure.
     """
 
-    code_start_time = time.time()  # keep track of the length of time the exposure takes
+    # keep track of the length of time the exposure takes
+    code_start_time = time.time()
 
     # calculate the damage state probabilities
     rootLogger.info("Calculate System Response")
@@ -97,14 +99,19 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
 
     # calculate the component loss, functionality, output,
     #  economic loss and recovery output over time
-    component_sample_loss, comp_sample_func, infrastructure_sample_output, infrastructure_sample_economic_loss \
-        = infrastructure.calc_output_loss(scenario,
-                                          expected_damage_state_of_components_for_n_simulations)
+    component_sample_loss, \
+    comp_sample_func, \
+    infrastructure_sample_output, \
+    infrastructure_sample_economic_loss = \
+        infrastructure.calc_output_loss(
+            scenario,
+            expected_damage_state_of_components_for_n_simulations)
 
     # Construct the dictionary containing the statistics of the response
     component_response = \
-        infrastructure.calc_response(component_sample_loss, comp_sample_func,
-                                     expected_damage_state_of_components_for_n_simulations)
+        infrastructure.calc_response(
+            component_sample_loss, comp_sample_func,
+            expected_damage_state_of_components_for_n_simulations)
 
     # determine average output for the output components
     infrastructure_output = {}
@@ -138,10 +145,11 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
     :param infrastructure: containing for components
     :param hazard: Level of the hazard
     :param scenario: Parameters for the scenario
-    :return: An array of the probability that each of the damage states were exceeded.
+    :return: An array of the probability that each of the damage states
+             were exceeded.
     """
     if scenario.run_context:
-        # TODO check weather to use seed for actual runs or not
+        # TODO check whether to use seed for actual runs or not
         random_number = np.random.RandomState(seed=hazard.get_seed())
     else:
         # seeding was not used
@@ -150,8 +158,8 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
     # record the number of component in infrastructure
     number_of_components = len(infrastructure.components)
 
-    # construct a zeroed numpy array that can contain the number of samples for
-    # each element.
+    # construct a zeroed numpy array that can contain the number of samples
+    # for each element.
     component_damage_state_ind = np.zeros(
         (scenario.num_samples, number_of_components), dtype=int)
 
@@ -170,7 +178,8 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         rootLogger.info(
             "Start calculating probability of component in a damage state.")
 
-        # create numpy array of length equal to the number of damage states for the component
+        # create numpy array of length equal to the number of
+        # damage states for the component
         component_pe_ds = np.zeros(len(component.damage_states))
 
         # iterate through each damage state for the component
@@ -200,9 +209,11 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         # component_pe_ds is usually something like [0.01, 0.12, 0.21, 0.33]
         # rnd[:, index] gives the random numbers created for this component
         # with the first axis (denoted by :) containing the samples for this
-        # hazard intensity. The [:, np.newaxis] broadcasts
-        # (https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html)
-        # each random number across the supplied component_pe_ds.
+        # hazard intensity. The [:, np.newaxis] broadcasts each
+        # random number across the supplied component_pe_ds.
+        #
+        # LINK:
+        # https://docs.scipy.org/doc/numpy-1.13.0/user/basics.broadcasting.html
         #
         # If the last two numbers in component_pe_ds are greater than the
         # sample number, the comparison > will return:
