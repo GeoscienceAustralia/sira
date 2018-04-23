@@ -13,9 +13,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sifra.modelling.hazard import HazardsContainer
 from sifra.logger import rootLogger
-from sifra.configuration import Configuration
+from sifra.modelling.hazard import HazardsContainer
 from sifra.modelling import infrastructure
 
 # def run_para_scen(hazard_level, infrastructure, scenario):
@@ -304,7 +303,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
     #   based on HAZUS MH MR3, p 8-66 to 8-68
     # ------------------------------------------------------------------------
 
-    cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
+    cp_classes_in_system = np.unique(list(infrastructure.
+                                          get_component_class_list()))
 
     cp_class_map = {k: [] for k in cp_classes_in_system}
     for comp_id, component in infrastructure.components.items():
