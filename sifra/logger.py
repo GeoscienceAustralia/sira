@@ -1,50 +1,54 @@
-import datetime
-import logging
+import time
+import coloredlogs, logging
 import os
+
+coloredlogs.DEFAULT_LOG_FORMAT = \
+    '%(asctime)s [%(threadName)s] ' \
+    '%(levelname)-8.8s %(message)s'
+
+coloredlogs.COLOREDLOGS_LEVEL_STYLES = \
+    'spam=22;debug=28;verbose=34;' \
+    'notice=220;warning=202;success=118,bold;' \
+    'error=124;critical=background=red'
+
+# # Original colorerlog format defaults:
+# coloredlogs.DEFAULT_LOG_FORMAT = \
+#     '%(asctime)s %(name)s[%(process)d] ' \
+#     '%(levelname)s %(message)s'
 
 class Logger():
     def __init__(self):
 
-        # formate to display log messages
-        self.logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
-
         # define logger object to reference in modules and display logs
-        self.logger = logging.getLogger("rootLogger")
-        self.logger.setLevel(logging.INFO)
+        logging.captureWarnings(True)
+        self.logger = logging.getLogger('py.warnings')
+        self.logger.setLevel(logging.DEBUG)
 
         # path to save logs
-
         ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
         if not os.path.exists(os.path.join(ROOT_DIR,'logs')):
             os.makedirs(os.path.join(ROOT_DIR,'logs'))
 
-        self.logPath = os.path.join(ROOT_DIR,'logs')
-
+        self.log_path = os.path.join(ROOT_DIR,'logs')
 
         # name of the file
-        self.time_start = self.get_round_off_time()
+        self.timestamp = time.strftime('%Y%m%d_%H%M%S')
+        self.logfile = os.path.join(self.log_path,
+                                    'sifralog_'+str(self.timestamp)+'.log')
 
-        # handler to save logs to file
-        self.fileHandler = logging.FileHandler("{0}/{1}.log".format(self.logPath, self.time_start), mode='a')
+        # handler to display LOGS to CONSOLE
+        # ---------------------------------------------------------------------
+        coloredlogs.install(level='DEBUG')
+        coloredlogs.install(milliseconds=True)
+
+        # handler to save LOGS to FILE
+        # ---------------------------------------------------------------------
+        self.logFormatter \
+            = logging.Formatter("%(asctime)s [%(threadName)s] "
+                                "%(levelname)-8.8s  %(message)s")
+        self.fileHandler = logging.FileHandler(self.logfile, mode='a')
         self.fileHandler.setFormatter(self.logFormatter)
         self.logger.addHandler(self.fileHandler)
-
-        # handler to display logs to console
-        self.consoleHandler = logging.StreamHandler()
-        self.consoleHandler.setFormatter(self.logFormatter)
-        self.logger.addHandler(self.consoleHandler)
-
-        # default option
-
-
-    def get_round_off_time(self):
-        round_mins = 5
-        now = datetime.datetime.now()
-        mins = now.minute - (now.minute % round_mins)
-        time_start = str(datetime.datetime(now.year, now.month, now.day, now.hour, mins) + datetime.timedelta(
-            minutes=round_mins)).replace(' ', '_').replace(':', '-')
-        return time_start
 
     # change log level, it has to be a logging.level object eg logging.INFO
     def set_log_level(self,level):
