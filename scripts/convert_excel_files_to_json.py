@@ -177,14 +177,14 @@ def read_excel_to_json(excel_file_path):
 
     sysinp_setup = pd.read_excel(
         excel_file_path, sheet_name='supply_setup',
-        index_col='input_node', header=0,
+        index_col=0, header=0,
         skiprows=0, skipinitialspace=True)
     sysinp_setup = sysinp_setup.to_json(orient='index')
     sysinp_setup = standardize_json_string(sysinp_setup)
 
     sysout_setup = pd.read_excel(
         excel_file_path, sheet_name='output_setup',
-        index_col='output_node', header=0,
+        index_col=0, header=0,
         skiprows=0, skipinitialspace=True).sort_values(by='priority', ascending=True)
     sysout_setup = sysout_setup.to_json(orient='index')
     sysout_setup = standardize_json_string(sysout_setup)
