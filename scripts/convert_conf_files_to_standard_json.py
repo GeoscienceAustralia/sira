@@ -41,9 +41,9 @@ def convert_confi_object_to_json(setup):
     except KeyError:
         data['Scenario']['INTENSITY_MEASURE_UNIT'] = None
     try:
-        data['Scenario']['SCENARIO_HAZARD_VALUES'] = setup['SCENARIO_HAZARD_VALUES']
+        data['Scenario']['FOCAL_HAZARD_SCENARIOS'] = setup['FOCAL_HAZARD_SCENARIOS']
     except KeyError:
-        data['Scenario']['SCENARIO_HAZARD_VALUES'] = None
+        data['Scenario']['FOCAL_HAZARD_SCENARIOS'] = None
 
     data['Hazard'] = collections.OrderedDict()
 
