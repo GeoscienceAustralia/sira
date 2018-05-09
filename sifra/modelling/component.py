@@ -33,7 +33,7 @@ class DamageState(Base):
         self.response_function = None
         self.recovery_function = None
 
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             if k == 'response_function_constructor':
                 self.response_function = Algorithm.factory(v)
 
@@ -75,12 +75,12 @@ class Component(Base):
             self.damage_states = {}
             self.destination_components = IODict()
 
-            for k, v in kwargs.iteritems():
+            for k, v in kwargs.items():
                 setattr(self, k, v)
 
             # TODO a check about the order of the damage state
             # the key of the damage state
-            for k, v in self.damages_states_constructor.iteritems():
+            for k, v in self.damages_states_constructor.items():
                 # json file only takes string as keys, convert the
                 # index representing the damage state to int
                 params = {}
