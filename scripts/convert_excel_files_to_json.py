@@ -13,7 +13,7 @@ def write_json_to_file(json_data, json_file_path):
     obj.close()
 
 
-# replace " with ' if the occour within brackets
+# replace " with ' if the occur within brackets
 # eg {"key":"["Key":"value"]"} => {"key":"['Key':'value']"}
 def standardize_json_string(json_string):
 
@@ -35,7 +35,8 @@ def standardize_json_string(json_string):
             standard_json_string += json_string[i]
 
         # Note: json object cant have python lists as keys
-        # standard_json_string= standard_json_string.replace("\"[","[").replace("]\"","]")
+        # standard_json_string \
+        #     = standard_json_string.replace("\"[","[").replace("]\"","]")
     return standard_json_string
 
 
@@ -56,42 +57,104 @@ def update_json_structure(main_json_obj):
     new_json_structure["component_list"] = OrderedDict()
 
     for component in component_list:
+
         new_json_structure["component_list"][component] = OrderedDict()
-        new_json_structure["component_list"][component]["component_class"] = component_list[component]["component_class"]
-        new_json_structure["component_list"][component]["component_type"] = component_list[component]["component_type"]
-        new_json_structure["component_list"][component]["cost_fraction"] = component_list[component]["cost_fraction"]
-        new_json_structure["component_list"][component]["node_cluster"] = component_list[component]["node_cluster"]
-        new_json_structure["component_list"][component]["node_type"] = component_list[component]["node_type"]
-        new_json_structure["component_list"][component]["operating_capacity"] = component_list[component]["op_capacity"]
+
+        new_json_structure["component_list"][component]["component_class"] \
+            = component_list[component]["component_class"]
+
+        new_json_structure["component_list"][component]["component_type"] \
+            = component_list[component]["component_type"]
+
+        new_json_structure["component_list"][component]["cost_fraction"] \
+            = component_list[component]["cost_fraction"]
+
+        new_json_structure["component_list"][component]["node_cluster"] \
+            = component_list[component]["node_cluster"]
+
+        new_json_structure["component_list"][component]["node_type"] \
+            = component_list[component]["node_type"]
+
+        new_json_structure["component_list"][component]["operating_capacity"] \
+            = component_list[component]["op_capacity"]
+
         new_json_structure["component_list"][component]["longitude"] = 0
+
         new_json_structure["component_list"][component]["latitude"] = 0
-        new_json_structure["component_list"][component]["damages_states_constructor"] = OrderedDict()
 
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"] = OrderedDict()
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["damage_state_name"] = "DS0 None"
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["functionality"] = 1.0
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["damage_ratio"] = 0.0
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"] = OrderedDict()
 
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["response_function_constructor"] = OrderedDict()
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["response_function_constructor"]["function_name"] = "Level0Response"
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["response_function_constructor"]["damage_state_definition"] = "Not Available."
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"] = OrderedDict()
 
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["recovery_function_constructor"] = OrderedDict()
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["recovery_function_constructor"]["recovery_95percentile"] = 0
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["recovery_function_constructor"]["recovery_mean"] = 0.0
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["recovery_function_constructor"]["recovery_std"] = 0.5
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["recovery_function_constructor"]["function_name"] = "RecoveryFunction"
-        new_json_structure["component_list"][component]["damages_states_constructor"]["0"]["recovery_function_constructor"]["recovery_state_definition"] = "Not Available."
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]["damage_state_name"] \
+            = "DS0 None"
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]["functionality"] = 1.0
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]["damage_ratio"] = 0.0
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["response_function_constructor"] = OrderedDict()
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["response_function_constructor"]["function_name"] \
+            = "Level0Response"
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["response_function_constructor"]["damage_state_definition"]\
+            = "Not Available."
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["recovery_function_constructor"]\
+            = OrderedDict()
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["recovery_function_constructor"]["recovery_95percentile"] = 0
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["recovery_function_constructor"]["recovery_mean"] = 0.0
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["recovery_function_constructor"]["recovery_std"] = 0.5
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["recovery_function_constructor"]["function_name"]\
+            = "RecoveryFunction"
+
+        new_json_structure["component_list"][component]\
+            ["damages_states_constructor"]["0"]\
+            ["recovery_function_constructor"]["recovery_state_definition"]\
+            = "Not Available."
 
         counter = 0
 
         for key in fragility_data.keys():
-            # for key in [eval(component_type)[1] for component_type in fragility_data.keys() ]:
+            # for key in [eval(component_type)[1]
+            #   for component_type in fragility_data.keys() ]:
             component_type = eval(key)[1]
             damage_state = eval(key)[2]
 
             if component_type == component_list[component]["component_type"]:
-                damage_states_in_component = [new_json_structure["component_list"][component]["damages_states_constructor"][ds]["damage_state_name"] for ds in new_json_structure["component_list"][component]["damages_states_constructor"]]
+                damage_states_in_component = [
+                    new_json_structure["component_list"][component]\
+                    ["damages_states_constructor"][ds]["damage_state_name"]
+                    for ds in
+                    new_json_structure["component_list"][component]\
+                    ["damages_states_constructor"]
+                    ]
                 if damage_state not in damage_states_in_component:
 
                     counter = counter + 1
@@ -181,11 +244,11 @@ def read_excel_to_json(excel_file_path):
         skiprows=0, skipinitialspace=True)
     sysinp_setup = sysinp_setup.to_json(orient='index')
     sysinp_setup = standardize_json_string(sysinp_setup)
-
     sysout_setup = pd.read_excel(
         excel_file_path, sheet_name='output_setup',
         index_col=0, header=0,
-        skiprows=0, skipinitialspace=True).sort_values(by='priority', ascending=True)
+        skiprows=0, skipinitialspace=True).\
+        sort_values(by='priority', ascending=True)
     sysout_setup = sysout_setup.to_json(orient='index')
     sysout_setup = standardize_json_string(sysout_setup)
 
@@ -203,7 +266,14 @@ def read_excel_to_json(excel_file_path):
     damage_state_df = damage_state_df.to_json(orient='index')
     damage_state_df = standardize_json_string(damage_state_df)
 
-    return '{ "component_list": '+component_list+',"node_conn_df": '+node_conn_df+', "sysinp_setup": '+sysinp_setup+', "sysout_setup": '+sysout_setup+', "fragility_data": '+fragility_data+', "damage_state_df": '+damage_state_df+'}'
+    sys_model_json = '{ "component_list": ' + component_list + ',' \
+                    '"node_conn_df": ' + node_conn_df + ',' \
+                    '"sysinp_setup": ' + sysinp_setup + ',' \
+                    '"sysout_setup": ' + sysout_setup + ',' \
+                    '"fragility_data": ' + fragility_data + ',' \
+                    '"damage_state_df": ' + damage_state_df + '}'
+
+    return sys_model_json
 
 
 def main():
@@ -222,7 +292,8 @@ def main():
         parent_folder_name = os.path.dirname(excel_file_path)
         file_name = os.path.splitext(os.path.basename(excel_file_path))[0]
 
-        json_obj = json.loads(read_excel_to_json(excel_file_path), object_pairs_hook=OrderedDict)
+        json_obj = json.loads(read_excel_to_json(excel_file_path),
+                              object_pairs_hook=OrderedDict)
         new_json_structure_obj = update_json_structure(json_obj)
 
         parsed = json.dumps(new_json_structure_obj, indent=4, sort_keys=True)
