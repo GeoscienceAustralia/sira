@@ -15,7 +15,7 @@ class Hazard(object):
 
     def get_hazard_intensity_at_location(self, longitude, latitude):
 
-        for comp in self.scenario_hazard_data:
+        for comp in self.scenario_hazard_data:   
 
             if round(float(comp["longitude"]), self.round_off) \
                     == round(float(longitude), self.round_off):
@@ -54,6 +54,7 @@ class HazardsContainer(object):
         self.hazard_type = configuration.HAZARD_TYPE
         self.intensity_measure_param = configuration.INTENSITY_MEASURE_PARAM
         self.intensity_measure_unit = configuration.INTENSITY_MEASURE_UNIT
+        self.focal_hazard_scenarios = configuration.FOCAL_HAZARD_SCENARIOS
 
         # get hazard data from scenario file
         if configuration.HAZARD_INPUT_METHOD == "scenario_file":
@@ -81,9 +82,11 @@ class HazardsContainer(object):
                               num=self.num_hazard_pts)
 
             # containing hazard value for each location
-            self.scenario_hazard_data, self.hazard_scenario_list = \
+            self.scenario_hazard_data, self.hazard_scenario_name = \
                 HazardsContainer.populate_scenario_hazard_using_hazard_array(
                     self.hazard_scenario_list)
+            self.hazard_scenario_list = ["%0.3f" % np.float(x)
+                                         for x in self.hazard_scenario_list]
 
         for hazard_scenario_name in self.scenario_hazard_data.keys():
             self.listOfhazards.append(
@@ -93,7 +96,7 @@ class HazardsContainer(object):
                     )
                 )
 
-        self.hazard_scenario_name = self.hazard_scenario_list
+        # self.hazard_scenario_name = self.hazard_scenario_list
 
     def get_listOfhazards(self):
         for hazard_intensity in self.listOfhazards:
@@ -130,13 +133,13 @@ class HazardsContainer(object):
     def populate_scenario_hazard_using_hazard_array(num_hazard_pts):
 
         scenario_hazard_data = OrderedDict()
-        hazard_scenario_list = []
+        hazard_scenario_name = []
         for i, hazard_intensity in enumerate(num_hazard_pts):
-            hazard_scenario_list.append("s_"+str(i))
+            hazard_scenario_name.append("s_"+str(i))
             scenario_hazard_data["s_"+str(i)] \
                 = [{"longitude": 0,
                     "latitude": 0,
                     "hazard_intensity": hazard_intensity}]
 
-        return scenario_hazard_data, hazard_scenario_list
+        return scenario_hazard_data, hazard_scenario_name
 
