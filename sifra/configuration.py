@@ -97,11 +97,10 @@ class Configuration:
         self.INPUT_PATH \
             = os.path.join(self.ROOT_DIR, self.INPUT_DIR_NAME)
 
-        # self.timestamp = time.strftime('_%Y%m%d_%H%M%S')
         self.timestamp = rootLogger.timestamp
 
         if run_mode=='impact':
-            output_dir_timestamped = self.OUTPUT_DIR_NAME + self.timestamp
+            output_dir_timestamped = self.OUTPUT_DIR_NAME + "_" + self.timestamp
             self.OUTPUT_PATH = os.path.join(self.ROOT_DIR, output_dir_timestamped)
 
             # create output dir: root/SCENARIO_NAME+self.timestamp
