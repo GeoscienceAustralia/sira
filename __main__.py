@@ -4,7 +4,7 @@
 title           : __main__.py
 description     : entry point for core sifra component
 usage           : python sifra [OPTIONS]
-                  -f                Display this usage message
+                  -s                Display this usage message
                   -l [LEVEL]        Choose logging level DEBUG, INFO,
                                     WARNING, ERROR, CRITICAL
 
@@ -33,11 +33,11 @@ def main():
                         help="Setup file for simulation scenario, and \n"
                              "locations of inputs, outputs, and system model.")
     parser.add_argument("-v", "--verbose",  type=str,
-                        help="choose option for logging level from: \n"
+                        help="Choose option for logging level from: \n"
                              "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     args = parser.parse_args()
 
-    level = logging.INFO
+    level = logging.DEBUG
 
     if args.verbose is not None:
         if args.verbose.upper() == "DEBUG":
@@ -56,9 +56,9 @@ def main():
             level = logging.CRITICAL
 
     rootLogger.set_log_level(level)
-    rootLogger.info('Start')
 
     if args.setup is not None:
+        rootLogger.info('Simulation initiated...')
 
         """
         Configure simulation model.
@@ -95,6 +95,7 @@ def main():
         """
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
+
     else:
         print("Input file not found: " + str(args.setup))
 
