@@ -1,6 +1,6 @@
 import os
-import time
 import json
+from sifra.logger import rootLogger
 
 
 class Configuration:
@@ -9,7 +9,14 @@ class Configuration:
     by other classes
     """
 
-    def __init__(self, configuration_file_path):
+    def __init__(self, configuration_file_path,
+                 run_mode='impact', output_path=''):
+        """
+        :param configuration_file_path: path to the config file
+        :param run_mode: Default is 'impact' - this runs the full MC simulation
+                         If option is 'analysis' then new output folders are
+                         not created
+        """
         with open(configuration_file_path, 'r') as f:
             config = json.load(f)
 
@@ -20,8 +27,12 @@ class Configuration:
             = config['Scenario']['INTENSITY_MEASURE_PARAM']
         self.INTENSITY_MEASURE_UNIT \
             = config['Scenario']['INTENSITY_MEASURE_UNIT']
-        self.SCENARIO_HAZARD_VALUES \
-            = config['Scenario']['SCENARIO_HAZARD_VALUES']
+
+        # Set of scenario(s) to investigate in detail
+        #   - List of strings
+        #   - Used in post processing stage
+        self.FOCAL_HAZARD_SCENARIOS \
+            = config['Scenario']['FOCAL_HAZARD_SCENARIOS']
 
         self.NUM_SAMPLES = config['Hazard']['NUM_SAMPLES']
         self.HAZARD_TYPE = config['Hazard']['HAZARD_TYPE']
@@ -71,7 +82,6 @@ class Configuration:
                                           self.INPUT_DIR_NAME,
                                           self.SYS_CONF_FILE_NAME)
 
-
         self.FIT_PE_DATA = config['Test']['FIT_PE_DATA']
         self.FIT_RESTORATION_DATA = config['Test']['FIT_RESTORATION_DATA']
         self.SAVE_VARS_NPY = config['Test']['SAVE_VARS_NPY']
@@ -87,29 +97,55 @@ class Configuration:
         self.INPUT_PATH \
             = os.path.join(self.ROOT_DIR, self.INPUT_DIR_NAME)
 
-        timestamp = time.strftime('_%Y%m%d_%H%M%S')
-        output_dir_timestamped = self.OUTPUT_DIR_NAME + timestamp
+        # self.timestamp = time.strftime('_%Y%m%d_%H%M%S')
+        self.timestamp = rootLogger.timestamp
 
-        self.OUTPUT_PATH = os.path.join(self.ROOT_DIR, output_dir_timestamped)
+        if run_mode=='impact':
+            output_dir_timestamped = self.OUTPUT_DIR_NAME + self.timestamp
+            self.OUTPUT_PATH = os.path.join(self.ROOT_DIR, output_dir_timestamped)
 
-        # create output dir: root/SCENARIO_NAME+_timestamp
-        if not os.path.exists(self.OUTPUT_PATH):
-            os.makedirs(self.OUTPUT_PATH)
+            # create output dir: root/SCENARIO_NAME+self.timestamp
+            if not os.path.exists(self.OUTPUT_PATH):
+                os.makedirs(self.OUTPUT_PATH)
 
-        self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
+            self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
+            # create output dir: root/SCENARIO_NAME+self.timestamp/RAW_OUTPUT
+            if not os.path.exists(self.RAW_OUTPUT_DIR):
+                os.makedirs(self.RAW_OUTPUT_DIR)
+        elif run_mode=='analysis':
+            self.OUTPUT_PATH = output_path
+            self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
 
-        # create output dir: root/SCENARIO_NAME+_timestamp/RAW_OUTPUT
-        if not os.path.exists(self.RAW_OUTPUT_DIR):
-            os.makedirs(self.RAW_OUTPUT_DIR)
+        self.record_dirs()
+
 
     def __str__(self):
-        line = "\n---------------------------------------\n"
+        line = "\n----------------------------------------\n"
         excluded = ['SCENARIO_NAME', 'SYSTEM_CLASSES']
         attr = '\n'.join(('{} = {}'.format(item, self.__dict__[item])
                           for item in self.__dict__
                           if item not in excluded))
         note = line + str(self.SCENARIO_NAME) + line + attr + line
         return note
+
+
+    def record_dirs(self):
+        rootLogger.info("System model   : " + self.SYS_CONF_FILE_NAME)
+        rootLogger.info("Input dir      : " + self.INPUT_PATH)
+        rootLogger.info("Output dir     : " + self.OUTPUT_PATH)
+        rootLogger.info("Raw output dir : " + self.RAW_OUTPUT_DIR)
+        rootLogger.info("----------------")
+
+        self.dir_dict = {}
+        self.dir_dict["SYS_CONF_FILE_NAME"] = self.SYS_CONF_FILE_NAME
+        self.dir_dict["INPUT_PATH"] = self.INPUT_PATH
+        self.dir_dict["OUTPUT_PATH"] = self.OUTPUT_PATH
+        self.dir_dict["RAW_OUTPUT_DIR"] = self.RAW_OUTPUT_DIR
+
+        self.file_with_dirs \
+            = os.path.splitext(rootLogger.logfile)[0]+"_dirs.json"
+        with open(self.file_with_dirs, 'w') as dirfile:
+            json.dump(self.dir_dict, dirfile)
 
 
 if __name__ == '__main__':
