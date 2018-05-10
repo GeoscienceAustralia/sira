@@ -62,9 +62,9 @@ class TestInputConfFile(unittest. TestCase):
             self.assertTrue(isinstance(conf.INTENSITY_MEASURE_UNIT, unicode or str))
 
 
-    def test_datatype_of_SCENARIO_HAZARD_VALUES(self):
+    def test_datatype_of_FOCAL_HAZARD_SCENARIOS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SCENARIO_HAZARD_VALUES, list))
+            self.assertTrue(isinstance(conf.FOCAL_HAZARD_SCENARIOS, list))
 
     def test_datatype_of_TIME_UNIT(self):
         for conf in self.confs:
