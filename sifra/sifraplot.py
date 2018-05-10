@@ -13,8 +13,7 @@ mpl.rcParams['legend.numpoints'] = 2
 mpl.rcParams['xtick.direction'] = 'out'
 mpl.rcParams['ytick.direction'] = 'out'
 mpl.rcParams['font.family'] = 'Open Sans', 'sans-serif'
-mpl.rcParams['text.usetex'] = True
-
+# mpl.rcParams['text.usetex'] = True
 
 # ----------------------------------------------------------------------------
 
