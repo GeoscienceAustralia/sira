@@ -28,8 +28,8 @@
     "Scenario": {
         "INTENSITY_MEASURE_PARAM": "PGA", 
         "INTENSITY_MEASURE_UNIT": "g", 
-        "SCENARIO_HAZARD_VALUES": [
-            0.5
+        "FOCAL_HAZARD_SCENARIOS": [
+            "0.500"
         ], 
         "SCENARIO_NAME": "Scenario_X"
     }, 
