@@ -26,12 +26,13 @@ class Scenario:
         self.num_samples = configuration.NUM_SAMPLES
 
         # Set up parameters for simulating recovery from hazard impact
+        self.time_unit = configuration.TIME_UNIT
+        self.restoration_streams = configuration.RESTORATION_STREAMS
         self.restoration_time_range, self.time_step \
             = np.linspace(0, configuration.RESTORE_TIME_MAX,
                           num=configuration.RESTORE_TIME_MAX + 1,
                           endpoint=True,
                           retstep=True)
-
         self.num_time_steps = len(self.restoration_time_range)
 
         self.restoration_checkpoints, self.restoration_pct_steps \
