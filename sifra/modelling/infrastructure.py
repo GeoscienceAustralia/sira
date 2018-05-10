@@ -242,7 +242,7 @@ class Infrastructure(Base):
 
         component_types = set()
 
-        for component in self.components.itervalues():
+        for component in self.components.values():
             if component.component_type not in uncosted_comptypes:
                 component_types.add(component.component_type)
 
@@ -254,7 +254,7 @@ class Infrastructure(Base):
         :param component_type: A string representing a component type
         :return: List of components with the matching component type.
         """
-        for component in self.components.itervalues():
+        for component in self.components.values():
             if component.component_type == component_type:
                 yield component.component_id
 
@@ -281,7 +281,7 @@ class Infrastructure(Base):
         it seems unnecessary
         :return: A generator for the list.
         """
-        for component in self.components.itervalues():
+        for component in self.components.values():
             yield component.component_class
 
 
