@@ -97,10 +97,11 @@ description, and representative values.
     :Example:       500
 
 
-`SCENARIO_HAZARD_VALUES`
-    :Description:   The value(s) at which to assess facility response
+`FOCAL_HAZARD_SCENARIOS`
+    :Description:   The value(s) or scenario(s) at which to assess facility
+       response is assessed
 
-    :Data Type:     List of floats
+    :Data Type:     List of strings
 
     :Example:       [0.50, 0.55]
 
