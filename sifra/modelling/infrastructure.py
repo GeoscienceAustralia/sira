@@ -131,7 +131,7 @@ class Infrastructure(Base):
         """
         if not self.if_nominal_output:
             self.if_nominal_output = 0
-            for output_comp_id, output_comp in self.output_nodes.iteritems():
+            for output_comp_id, output_comp in self.output_nodes.items():
                 self.if_nominal_output += output_comp['output_node_capacity']
 
         return self.if_nominal_output
@@ -156,11 +156,11 @@ class Infrastructure(Base):
         # system_flows_sample = []
         system_outflows_sample = np.zeros(len(self.output_nodes))
         for output_index, (output_comp_id, output_comp) in \
-                enumerate(self.output_nodes.iteritems()):
+                enumerate(self.output_nodes.items()):
             # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
             for supply_index, (supply_comp_id, supply_comp) in \
-                    enumerate(self.supply_nodes.iteritems()):
+                    enumerate(self.supply_nodes.items()):
                 if_flow_fraction = self._component_graph.maxflow(
                     supply_comp_id, output_comp_id
                     )
@@ -175,7 +175,7 @@ class Infrastructure(Base):
                     total_supply_flow_by_source[supply_comp['commodity_type']] \
                         += if_sample_flow
 
-            total_available_flow = min(total_supply_flow_by_source.itervalues())
+            total_available_flow = min(total_supply_flow_by_source.values())
 
             estimated_capacity_fraction \
                 = min(total_available_flow, output_comp['capacity_fraction'])
