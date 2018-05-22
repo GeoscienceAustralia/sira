@@ -172,7 +172,8 @@ def read_model_from_xlsx(config):
     for component_id in component_list:
         component_values = {}
 
-        component_values['component_id'] = component_id
+        component_values['component_id']\
+            = component_id
         component_values['component_class'] \
             = component_list[component_id]['component_class']
         component_values['component_type'] \
