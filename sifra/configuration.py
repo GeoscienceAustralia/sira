@@ -132,8 +132,7 @@ class Configuration:
         rootLogger.info("System model   : " + self.SYS_CONF_FILE_NAME)
         rootLogger.info("Input dir      : " + self.INPUT_PATH)
         rootLogger.info("Output dir     : " + self.OUTPUT_PATH)
-        rootLogger.info("Raw output dir : " + self.RAW_OUTPUT_DIR)
-        rootLogger.info("----------------")
+        rootLogger.info("Raw output dir : " + self.RAW_OUTPUT_DIR + "\n")
 
         self.dir_dict = {}
         self.dir_dict["SYS_CONF_FILE_NAME"] = self.SYS_CONF_FILE_NAME
