@@ -60,27 +60,35 @@ def update_json_structure(main_json_obj):
 
         new_json_structure["component_list"][component] = OrderedDict()
 
-        new_json_structure["component_list"][component]["component_class"] \
+        new_json_structure["component_list"][component]\
+            ["component_class"] \
             = component_list[component]["component_class"]
 
-        new_json_structure["component_list"][component]["component_type"] \
+        new_json_structure["component_list"][component]\
+            ["component_type"] \
             = component_list[component]["component_type"]
 
-        new_json_structure["component_list"][component]["cost_fraction"] \
+        new_json_structure["component_list"][component]\
+            ["cost_fraction"] \
             = component_list[component]["cost_fraction"]
 
-        new_json_structure["component_list"][component]["node_cluster"] \
+        new_json_structure["component_list"][component]\
+            ["node_cluster"] \
             = component_list[component]["node_cluster"]
 
-        new_json_structure["component_list"][component]["node_type"] \
+        new_json_structure["component_list"][component]\
+            ["node_type"] \
             = component_list[component]["node_type"]
 
-        new_json_structure["component_list"][component]["operating_capacity"] \
+        new_json_structure["component_list"][component]\
+            ["operating_capacity"] \
             = component_list[component]["op_capacity"]
 
-        new_json_structure["component_list"][component]["longitude"] = 0
+        new_json_structure["component_list"][component]\
+            ["longitude"] = 0
 
-        new_json_structure["component_list"][component]["latitude"] = 0
+        new_json_structure["component_list"][component]\
+            ["latitude"] = 0
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"] = OrderedDict()
@@ -93,23 +101,28 @@ def update_json_structure(main_json_obj):
             = "DS0 None"
 
         new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]["functionality"] = 1.0
+            ["damages_states_constructor"]["0"]["functionality"]\
+            = 1.0
 
         new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]["damage_ratio"] = 0.0
+            ["damages_states_constructor"]["0"]["damage_ratio"]\
+            = 0.0
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
-            ["response_function_constructor"] = OrderedDict()
+            ["response_function_constructor"]\
+            = OrderedDict()
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
-            ["response_function_constructor"]["function_name"] \
+            ["response_function_constructor"]\
+            ["function_name"] \
             = "Level0Response"
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
-            ["response_function_constructor"]["damage_state_definition"]\
+            ["response_function_constructor"]\
+            ["damage_state_definition"]\
             = "Not Available."
 
         new_json_structure["component_list"][component]\
@@ -119,20 +132,8 @@ def update_json_structure(main_json_obj):
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
-            ["recovery_function_constructor"]["recovery_95percentile"] = 0
-
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["recovery_function_constructor"]["recovery_mean"] = 0.0
-
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["recovery_function_constructor"]["recovery_std"] = 0.5
-
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
             ["recovery_function_constructor"]["function_name"]\
-            = "RecoveryFunction"
+            = "Level0Response"
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
@@ -142,8 +143,6 @@ def update_json_structure(main_json_obj):
         counter = 0
 
         for key in fragility_data.keys():
-            # for key in [eval(component_type)[1]
-            #   for component_type in fragility_data.keys() ]:
             component_type = eval(key)[1]
             damage_state = eval(key)[2]
 
@@ -159,65 +158,168 @@ def update_json_structure(main_json_obj):
 
                     counter = counter + 1
 
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter] = OrderedDict()
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["damage_state_name"] = damage_state
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["functionality"] = fragility_data[key]["functionality"]
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["damage_ratio"] = fragility_data[key]["damage_ratio"]
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        = OrderedDict()
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["damage_state_name"]\
+                        = damage_state
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["functionality"]\
+                        = fragility_data[key]["functionality"]
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["damage_ratio"]\
+                        = fragility_data[key]["damage_ratio"]
 
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"] = OrderedDict()
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["response_function_constructor"]\
+                        = OrderedDict()
 
                     if fragility_data[key]["is_piecewise"] == "no":
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["function_name"] = fragility_data[key]["damage_function"]
+                        # -----------------------------------------------------
+                        # <BEGIN> Non-piecewise damage function
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["function_name"]\
+                            = fragility_data[key]["damage_function"]
 
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["beta"] = fragility_data[key]["beta"]
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["median"] = fragility_data[key]["median"]
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["fragility_source"] = fragility_data[key]["fragility_source"]
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["minimum"] = fragility_data[key]["minimum"]
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["median"]\
+                            = fragility_data[key]["median"]
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["beta"]\
+                            = fragility_data[key]["beta"]
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["location"]\
+                            = fragility_data[key]["location"]
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["fragility_source"]\
+                            = fragility_data[key]["fragility_source"]
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["minimum"]\
+                            = fragility_data[key]["minimum"]
 
                         if key in damage_state_df.keys():
-                            new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["damage_state_definition"] = damage_state_df[str(eval(key).pop(0))]
+                            new_json_structure["component_list"][component]\
+                                ["damages_states_constructor"][counter]\
+                                ["response_function_constructor"]\
+                                ["damage_state_definition"]\
+                                = damage_state_df[str(eval(key).pop(0))]
                         else:
-                            new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["damage_state_definition"] = "Not Available."
+                            new_json_structure["component_list"][component]\
+                                ["damages_states_constructor"][counter]\
+                                ["response_function_constructor"]\
+                                ["damage_state_definition"]\
+                                = "Not Available."
+                    # <END> Non-piecewise damage function
+                    # ---------------------------------------------------------
+                    # <BEGIN> Piecewise defined damage function
                     else:
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["function_name"] = "PiecewiseFunction"
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["piecewise_function_constructor"] = []
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["function_name"] = "PiecewiseFunction"
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["piecewise_function_constructor"] = []
 
                         tempDic = OrderedDict()
-                        tempDic["function_name"] = fragility_data[key]["damage_function"]
-                        tempDic["beta"] = fragility_data[key]["beta"]
-                        tempDic["median"] = fragility_data[key]["median"]
-                        tempDic["fragility_source"] = fragility_data[key]["fragility_source"]
-                        tempDic["minimum"] = fragility_data[key]["minimum"]
+                        tempDic["function_name"]\
+                            = fragility_data[key]["damage_function"]
+                        tempDic["median"]\
+                            = fragility_data[key]["median"]
+                        tempDic["beta"]\
+                            = fragility_data[key]["beta"]
+                        tempDic["location"]\
+                            = fragility_data[key]["location"]
+                        tempDic["fragility_source"]\
+                            = fragility_data[key]["fragility_source"]
+                        tempDic["minimum"]\
+                            = fragility_data[key]["minimum"]
 
                         if key in damage_state_df.keys():
-                            tempDic["damage_state_definition"] = damage_state_df[str(eval(key).pop(0))]
+                            tempDic["damage_state_definition"]\
+                                = damage_state_df[str(eval(key).pop(0))]
                         else:
-                            tempDic["damage_state_definition"] = "Not Available."
+                            tempDic["damage_state_definition"]\
+                                = "Not Available."
 
-                        new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["piecewise_function_constructor"].append(tempDic)
+                        new_json_structure["component_list"][component]\
+                            ["damages_states_constructor"][counter]\
+                            ["response_function_constructor"]\
+                            ["piecewise_function_constructor"].append(tempDic)
 
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["recovery_function_constructor"] = OrderedDict()
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["recovery_function_constructor"]["recovery_95percentile"] = fragility_data[key]["recovery_95percentile"]
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["recovery_function_constructor"]["recovery_mean"] = fragility_data[key]["recovery_mean"]
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["recovery_function_constructor"]["recovery_std"] = fragility_data[key]["recovery_std"]
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["recovery_function_constructor"]["function_name"] = "RecoveryFunction"
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["recovery_function_constructor"]["recovery_state_definition"] = "Not Available."
+                    # <END> Piecewise defined damage function
+                    # ---------------------------------------------------------
+
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["recovery_function_constructor"]\
+                        = OrderedDict()
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["recovery_function_constructor"]\
+                        ["function_name"]\
+                        = fragility_data[key]["recovery_function"]
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["recovery_function_constructor"]\
+                        ["norm_mean"]\
+                        = fragility_data[key]["recovery_mean"]
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["recovery_function_constructor"]\
+                        ["norm_stddev"]\
+                        = fragility_data[key]["recovery_std"]
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["recovery_function_constructor"]\
+                        ["recovery_state_definition"]\
+                        = "Not Available."
 
                 else:
                     tempDic = OrderedDict()
 
-                    tempDic["function_name"] = fragility_data[key]["damage_function"]
-                    tempDic["beta"] = fragility_data[key]["beta"]
-                    tempDic["median"] = fragility_data[key]["median"]
-                    tempDic["fragility_source"] = fragility_data[key]["fragility_source"]
-                    tempDic["minimum"] = fragility_data[key]["minimum"]
+                    tempDic["function_name"]\
+                        = fragility_data[key]["damage_function"]
+                    tempDic["median"]\
+                        = fragility_data[key]["median"]
+                    tempDic["beta"]\
+                        = fragility_data[key]["beta"]
+                    tempDic["location"]\
+                        = fragility_data[key]["location"]
+                    tempDic["fragility_source"]\
+                        = fragility_data[key]["fragility_source"]
+                    tempDic["minimum"]\
+                        = fragility_data[key]["minimum"]
 
                     if key in damage_state_df.keys():
-                        tempDic["damage_state_definition"] = damage_state_df[str(eval(key).pop(0))]
+                        tempDic["damage_state_definition"]\
+                            = damage_state_df[str(eval(key).pop(0))]
                     else:
-                        tempDic["damage_state_definition"] = "Not Available."
+                        tempDic["damage_state_definition"]\
+                            = "Not Available."
 
-                    new_json_structure["component_list"][component]["damages_states_constructor"][counter]["response_function_constructor"]["piecewise_function_constructor"].append(tempDic)
+                    new_json_structure["component_list"][component]\
+                        ["damages_states_constructor"][counter]\
+                        ["response_function_constructor"]\
+                        ["piecewise_function_constructor"].append(tempDic)
 
     return new_json_structure
 
