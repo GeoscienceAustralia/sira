@@ -2,7 +2,7 @@
     "Hazard": {
         "HAZARD_INPUT_METHOD": "hazard_array",
         "_comment": "scenario_file",
-        "HAZARD_TYPE": "earthquake", 
+        "HAZARD_TYPE": "Earthquake",
         "NUM_SAMPLES": 5,
         "INTENSITY_MEASURE_MAX": 1.2, 
         "INTENSITY_MEASURE_MIN": 0.0, 
@@ -17,7 +17,8 @@
     "Restoration": {
         "RESTORATION_STREAMS": [
             5, 
-            15
+            15,
+            25
         ], 
         "RESTORE_PCT_CHECKPOINTS": 21, 
         "RESTORE_TIME_MAX": 300.0, 
