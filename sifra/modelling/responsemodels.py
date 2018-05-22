@@ -1,4 +1,5 @@
 import scipy.stats as stats
+import numpy as np
 from structural import Info, Base, Element
 from sifra.modelling.structural import Element as _Element
 
@@ -11,9 +12,15 @@ class Algorithm:
         function_name = response_params["function_name"]
         if function_name == "StepFunc":
             return StepFunc(**response_params)
-        elif function_name == "LogNormalCDF" or function_name == "Lognormal":
+        elif function_name.lower() in ["lognormal",
+                                       "lognormalcdf",
+                                       "lognormal cdf",
+                                       "lognormal_cdf"]:
             return LogNormalCDF(**response_params)
-        elif function_name == "NormalCDF":
+        elif function_name.lower() in ["normal",
+                                       "normalcdf",
+                                       "normal cdf",
+                                       "normal_cdf"]:
             return NormalCDF(**response_params)
         elif function_name == "ConstantFunction":
             return ConstantFunction(**response_params)
@@ -35,8 +42,6 @@ class RecoveryFunction(Base):
                             0.0, [lambda x: float(x) > 0.0])
     recovery_std = Element('float', 'Recovery standard deviation',
                            0.0, [lambda x: float(x) > 0.0])
-    recovery_95percentile = Element('float', 'Recovery 95th percentile',
-                                    0.0, [lambda x: float(x) > 0.0])
 
     def __call__(self, intensity_param, state):
         return 1.0
@@ -50,10 +55,17 @@ class StepFunc(Base):
     xys = _Element('XYPairs', 'A list of X, Y pairs.', list,
         [lambda xy: [(float(x), float(y)) for x, y in xy]])
 
-    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
+    lower_limit = _Element(
+        'float',
+        'lower limit of function if part of piecewise function',
+        None,
+        [lambda x: float(x) > 0.])
+
+    upper_limit = _Element(
+        'float',
+        'upper limit of function  if part of piecewise function',
+        None,
+        [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_intensity):
         """
@@ -70,16 +82,23 @@ class LogNormalCDF(Base):
     The log normal CDF response model for components.
     """
 
-    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-
     median = _Element('float', 'Median of the log normal CDF.',
                       _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
     beta = _Element('float', 'Log standard deviation of the log normal CDF',
                     _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
+
+    lower_limit = _Element(
+        'float',
+        'lower limit of function if part of piecewise function',
+        None,
+        [lambda x: float(x) > 0.])
+
+    upper_limit = _Element(
+        'float',
+        'upper limit of function  if part of piecewise function',
+        None,
+        [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_intensity):
         """
@@ -90,25 +109,39 @@ class LogNormalCDF(Base):
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        return stats.lognorm.cdf(hazard_intensity, self.beta, loc=0, scale=self.median)
+        return stats.lognorm.cdf(hazard_intensity,
+                                 self.beta, loc=0, scale=self.median)
 
 
 class NormalCDF(Base):
     """
     The normal CDF response model for components
     """
-    mean = _Element('float', 'Mean of the normal or Gaussian CDF',
-                    _Element.NO_DEFAULT, [lambda x: float(x) >= 0.])
+    # -----------------------------------------------
+    norm_mean = _Element(
+        'float',
+        'Mean of the normal or Gaussian CDF',
+        _Element.NO_DEFAULT,
+        [lambda x: float(x) >= 0.])
+    norm_stddev = _Element(
+        'float',
+        'Standard deviation of the normal CDF',
+        _Element.NO_DEFAULT,
+        [lambda x: float(x) > 0.])
+    # -----------------------------------------------
+    lower_limit = _Element(
+        'float',
+        'lower limit of function if part of piecewise function',
+        -np.inf,
+        [lambda x: float(x) > 0.])
+    upper_limit = _Element(
+        'float',
+        'upper limit of function  if part of piecewise function',
+        np.inf,
+        [lambda x: float(x) > 0.])
+    # -----------------------------------------------
 
-    stddev = _Element('float', 'Standard deviation of the normal CDF',
-                      _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
-
-    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-
-    def __call__(self, hazard_intensity):
+    def __call__(self, data_point, inverse=False):
         """
         In scipy normal CDF is implemented thus:
             scipy.stats.norm.cdf(x, loc=0, scale=1)
@@ -116,7 +149,15 @@ class NormalCDF(Base):
         loc = Mean
         scale = Standard Deviation i.e. square root of Variance
         """
-        return stats.norm.cdf(hazard_intensity, loc=self.mean, scale=self.stddev)
+        if not inverse:
+            return stats.norm.cdf(data_point,
+                                  loc=self.norm_mean,
+                                  scale=self.norm_stddev)
+        elif inverse:
+            return stats.norm.ppf(data_point,
+                                  loc=self.norm_mean,
+                                  scale=self.norm_stddev)
+
 
 
 class ConstantFunction(Base):
