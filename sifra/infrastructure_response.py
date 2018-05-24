@@ -170,8 +170,10 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazards):
         columns=[hazards.hazard_scenario_list])
     comptype_resp_dict = {}
 
+    # hazard level vs component response
     component_resp_dict = response_list[2]
-    for p in hazards.hazard_scenario_list:
+
+    for p in hazards.hazard_scenario_name:
         if p not in comptype_resp_dict:
             comptype_resp_dict[p] = dict()
 
@@ -224,6 +226,8 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazards):
 
     # ------------------------------------------------------------------------
     # Calculating system fragility:
+
+    # infrastructure econ loss for sample
     economic_loss_array = response_list[4]
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
