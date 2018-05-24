@@ -82,7 +82,7 @@ class SystemTopology(object):
             self.connector_type = 'spline'
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw graph using pygraphviz, and define general node & edge attributes
-        G = self.infrastructure._component_graph.comp_graph
+        G = self.infrastructure._component_graph.digraph
         graphml_file = os.path.join(output_path, fname + '.graphml')
         G.write_graphml(graphml_file)
 
