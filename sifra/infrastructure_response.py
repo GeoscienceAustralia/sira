@@ -93,7 +93,7 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     plt.close(fig)
 
 
-def write_system_response(response_list, scenario):
+def write_system_response(response_list, infrastructure, scenario, hazards):
     # ------------------------------------------------------------------------
     # 'ids_comp_vs_haz' is a dict of numpy arrays
     # We pickle it for archival. But the file size can get very large.
@@ -142,93 +142,25 @@ def write_system_response(response_list, scenario):
             pickle.dump({response_key: component_resp_dict[response_key]},
                         handle)
 
-
-def loss_by_comp_type(response_list, infrastructure, scenario, hazards):
-    """
-    Aggregate the economic loss statistics by component type.
-    :param response_list: list of simulation results
-    :param infrastructure: simulated infrastructure
-    :param scenario: values used in simulation
-    :return: None
-    """
     # ------------------------------------------------------------------------
-    # Loss calculations by Component Type
+    # Hazard response for component types
     # ------------------------------------------------------------------------
-    tp_ct = []
-    for comp_type in infrastructure.get_component_types():
-        tp_ct.extend(
-            ((comp_type, 'loss_mean'), (comp_type, 'loss_std'),
-             (comp_type, 'loss_tot'), (comp_type, 'func_mean'),
-             (comp_type, 'func_std'))
-        )
-
-    mindex = pd.MultiIndex.from_tuples(
-        tp_ct,
-        names=['component_type', 'response'])
-    comptype_resp_df = pd.DataFrame(
-        index=mindex,
-        columns=[hazards.hazard_scenario_list])
-    comptype_resp_dict = {}
-
-    # hazard level vs component response
-    component_resp_dict = response_list[2]
-
-    for p in hazards.hazard_scenario_name:
-        if p not in comptype_resp_dict:
-            comptype_resp_dict[p] = dict()
-
-        for component_type in infrastructure.get_component_types():
-
-            components_of_type \
-                = list(infrastructure.get_components_for_type(component_type))
-
-            ct_loss_mean_list \
-                = [component_resp_dict[p][(comp_id, 'loss_mean')]
-                   for comp_id in components_of_type]
-
-            comptype_resp_dict[p][(component_type, 'loss_mean')] \
-                = np.mean(ct_loss_mean_list)
-
-            ct_loss_mean_list \
-                = [component_resp_dict[p][(comp_id, 'loss_mean')]
-                   for comp_id in components_of_type]
-
-            comptype_resp_dict[p][(component_type, 'loss_tot')] \
-                = np.sum(ct_loss_mean_list)
-
-            ct_loss_std_list \
-                = [component_resp_dict[p][(comp_id, 'loss_std')]
-                   for comp_id in components_of_type]
-
-            comptype_resp_dict[p][(component_type, 'loss_std')] \
-                = np.mean(ct_loss_std_list)
-
-            ct_func_mean_list \
-                = [component_resp_dict[p][(comp_id, 'func_mean')]
-                   for comp_id in components_of_type]
-
-            comptype_resp_dict[p][(component_type, 'func_mean')] \
-                = np.mean(ct_func_mean_list)
-
-            ct_func_std_list \
-                = [component_resp_dict[p][(comp_id, 'func_std')]
-                   for comp_id in components_of_type]
-
-            comptype_resp_dict[p][(component_type, 'func_std')] \
-                = np.mean(ct_func_std_list)
-
-            ct_num_failures_list \
-                = [component_resp_dict[p][(comp_id, 'num_failures')]
-                   for comp_id in components_of_type]
-
-            comptype_resp_dict[p][(component_type, 'num_failures')] \
-                = np.mean(ct_num_failures_list)
+    comptype_resp_dict = response_list[3]
+    outfile_comptype_resp = os.path.join(
+        scenario.output_path, 'comptype_response.csv')
+    comptype_resp_df = pd.DataFrame(comptype_resp_dict)
+    comptype_resp_df.index.names = ['component_type', 'response']
+    comptype_resp_df.to_csv(
+        outfile_comptype_resp, sep=',',
+        index_label=['component_type', 'response']
+    )
 
     # ------------------------------------------------------------------------
     # Calculating system fragility:
+    # ------------------------------------------------------------------------
 
     # infrastructure econ loss for sample
-    economic_loss_array = response_list[4]
+    economic_loss_array = response_list[5]
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
     if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
     for j, hazard_level in enumerate(hazards.hazard_scenario_list):
@@ -247,49 +179,16 @@ def loss_by_comp_type(response_list, infrastructure, scenario, hazards):
             pe_sys_econloss[i, j] = \
                 np.sum(sys_frag[:, j] >= i) / float(scenario.num_samples)
 
-    # --- Output File --- response of each COMPONENT TYPE to hazard ---
-    outfile_comptype_resp = os.path.join(
-        scenario.output_path, 'comptype_response.csv')
-    comptype_resp_df = pd.DataFrame(comptype_resp_dict)
-    comptype_resp_df.index.names = ['component_type', 'response']
-    comptype_resp_df.to_csv(
-        outfile_comptype_resp, sep=',',
-        index_label=['component_type', 'response']
-    )
-
-    # --- Output File --- mean loss of component type ---
-    outfile_comptype_loss = os.path.join(
-        scenario.output_path, 'comptype_meanloss.csv')
-    comptype_loss_df = comptype_resp_df.iloc[
-        comptype_resp_df.index.get_level_values(1) == 'loss_mean']
-    comptype_loss_df.reset_index(level='response', inplace=True)
-    comptype_loss_df = comptype_loss_df.drop('response', axis=1)
-    comptype_loss_df.to_csv(
-        outfile_comptype_loss, sep=',',
-        index_label=['component_type']
-    )
-
-    # --- Output File --- mean failures for component types ---
-    outfile_comptype_failures = os.path.join(
-        scenario.output_path, 'comptype_meanfailures.csv')
-    comptype_failure_df = comptype_resp_df.iloc[
-        comptype_resp_df.index.get_level_values(1) == 'num_failures']
-    comptype_failure_df.reset_index(level='response', inplace=True)
-    comptype_failure_df = comptype_failure_df.drop('response', axis=1)
-    comptype_failure_df.to_csv(
-        outfile_comptype_failures, sep=',',
-        index_label=['component_type']
-    )
-
     np.save(
         os.path.join(scenario.raw_output_dir, 'sys_frag.npy'),
         sys_frag
-    )
+        )
 
     np.save(
         os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'),
         pe_sys_econloss
-    )
+        )
+# ------------------------------------------------------------------------------
 
 
 def pe_by_component_class(response_list, infrastructure, scenario, hazards):
@@ -424,8 +323,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
     # create the arrays
     comp_response_list = response_list[2]
-    economic_loss_array = response_list[4]
-    calculated_output_array = response_list[3]
+    economic_loss_array = response_list[5]
+    calculated_output_array = response_list[4]
 
     outdat = {out_cols[0]: hazards.hazard_scenario_list,
               out_cols[1]: np.mean(economic_loss_array, axis=0),
@@ -441,7 +340,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                                      'component_response.csv')
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.index.names = ['component_id', 'response']
-    component_resp_df.columns = hazards.hazard_scenario_list
+    component_resp_df.columns = hazards.hazard_scenario_name
     component_resp_df.to_csv(
         outfile_comp_resp, sep=',',
         index_label=['component_id', 'response']
