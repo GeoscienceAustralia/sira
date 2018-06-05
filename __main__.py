@@ -20,7 +20,6 @@ from sifra.simulation import calculate_response
 from sifra.modelling.system_topology import SystemTopology
 from sifra.infrastructure_response import (
     write_system_response,
-    loss_by_comp_type,
     plot_mean_econ_loss,
     pe_by_component_class
     )
@@ -60,41 +59,49 @@ def main():
     if args.setup is not None:
         rootLogger.info('Simulation initiated...')
 
-        """
-        Configure simulation model.
-        Read data and control parameters and construct objects.
-        """
+        # ---------------------------------------------------------------------
+        # Configure simulation model.
+        # Read data and control parameters and construct objects.
+
         config = Configuration(args.setup)
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
 
-        """
-        Run simulation.
-        Get the results of running a simulation
-        """
+        # ---------------------------------------------------------------------
+        # Run simulation.
+        # Get the results of running a simulation
+        #
+        # response_list = [
+        #     {},  # hazard level vs component damage state index
+        #     {},  # hazard level vs infrastructure output
+        #     {},  # hazard level vs component response
+        #     {},  # hazard level vs component type response
+        #     [],  # array of infrastructure output for each sample
+        #     []]  # array infrastructure econ loss for each sample
+
         response_list = calculate_response(hazards, scenario, infrastructure)
 
-        """
-        Post simulation processing.
-        After the simulation has run the results are aggregated, saved
-        and the system fragility is calculated.
-        """
-        write_system_response(response_list, scenario)
-        loss_by_comp_type(response_list, infrastructure, scenario, hazards)
-        economic_loss_array = response_list[4]
+        # ---------------------------------------------------------------------
+        # Post simulation processing.
+        # After the simulation has run the results are aggregated, saved
+        # and the system fragility is calculated.
+
+        write_system_response(response_list, infrastructure, scenario, hazards)
+        economic_loss_array = response_list[5]
         plot_mean_econ_loss(scenario, economic_loss_array, hazards)
 
         if config.HAZARD_INPUT_METHOD == "hazard_array":
             pe_by_component_class(response_list, infrastructure,
                                   scenario, hazards)
 
-        """
-        Visualizations
-        Construct visualization for system topology 
-        """
+        # ---------------------------------------------------------------------
+        # Visualizations
+        # Construct visualization for system topology
+
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
+        # ---------------------------------------------------------------------
 
     else:
         print("Input file not found: " + str(args.setup))
