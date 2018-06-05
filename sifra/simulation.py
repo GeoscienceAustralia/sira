@@ -44,32 +44,33 @@ def calculate_response(hazards, scenario, infrastructure):
     post_processing_list = [{},  # hazard level vs component damage state index
                             {},  # hazard level vs infrastructure output
                             {},  # hazard level vs component response
-                            [],  # infrastructure output for sample
-                            []]  # infrastructure econ loss for sample
+                            {},  # hazard level vs component type response
+                            [],  # array of infrastructure output per sample
+                            []]  # array infrastructure econ loss per sample
 
     # iterate through the hazards
     for hazard_response in hazards_response:
         # iterate through the hazard response dictionary
         for key, value_list in hazard_response.items():
-            for list_number in range(5):
-                # the first three lists are dicts
-                if list_number <= 2:
+            for list_number in range(6):
+                # the first four are dicts
+                if list_number <= 3:
                     post_processing_list[list_number][key] \
                         = value_list[list_number]
                 else:
-                    # the last three are lists
+                    # the last two are lists
                     post_processing_list[list_number]. \
                         append(value_list[list_number])
 
-    # Convert the last 3 lists into arrays
-    for list_number in range(3, 5):
+    # Convert the last 2 lists into arrays
+    for list_number in range(4, 6):
         post_processing_list[list_number] \
             = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
-    post_processing_list[3] = np.sum(post_processing_list[3],
+    post_processing_list[4] = np.sum(post_processing_list[4],
                                      axis=2).transpose()
-    post_processing_list[4] = post_processing_list[4].transpose()
+    post_processing_list[5] = post_processing_list[5].transpose()
 
     # elapsed = timedelta(seconds=(time.time() - code_start_time))
     # logging.info("[ Run time: %s ]\n" % str(elapsed))
@@ -108,15 +109,16 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
             expected_damage_state_of_components_for_n_simulations)
 
     # Construct the dictionary containing the statistics of the response
-    component_response = \
+    component_response_dict, comptype_response_dict = \
         infrastructure.calc_response(
-            component_sample_loss, comp_sample_func,
+            component_sample_loss,
+            comp_sample_func,
             expected_damage_state_of_components_for_n_simulations)
 
     # determine average output for the output components
     infrastructure_output = {}
     for output_index, (output_comp_id, output_comp) in enumerate(
-            infrastructure.output_nodes.iteritems()):
+            infrastructure.output_nodes.items()):
         infrastructure_output[output_comp_id] = np.mean(
             infrastructure_sample_output[:, output_index])
 
@@ -129,7 +131,8 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
     response_for_a_hazard = {hazard.hazard_scenario_name: [
         expected_damage_state_of_components_for_n_simulations,
         infrastructure_output,
-        component_response,
+        component_response_dict,
+        comptype_response_dict,
         infrastructure_sample_output,
         infrastructure_sample_economic_loss]}
     return response_for_a_hazard
