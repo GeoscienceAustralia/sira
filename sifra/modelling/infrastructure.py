@@ -184,6 +184,7 @@ class Infrastructure(Base):
 
         return system_outflows_sample
 
+    # TODO: FIX `calc_recov_time_given_comp_ds`
     # def calc_recov_time_given_comp_ds(self, component, damage_state, scenario):
     #     '''
     #     Calculates the recovery time of a component, given damage state index
@@ -206,13 +207,19 @@ class Infrastructure(Base):
         Convert the arrays into dicts for subsequent analysis
         :param component_loss: The array of component loss values
         :param comp_sample_func: The array of component functionality values
-        :param component_damage_state_ind: The array of component damage state indicators
+        :param component_damage_state_ind: The array of component damage state
+            indicators
         :return: A dict of component response statistics
         """
+        component_list_sorted = np.sort(self.components.keys())
+        num_samples = np.shape(component_loss)[0]
         comp_resp_dict = dict()
-
-        for comp_index, comp_id in enumerate(np.sort(self.components.keys())):
+        comptype_resp_dict = dict()
+        # ---------------------------------------------------------------
+        # Collate response of individual components:
+        for comp_index, comp_id in enumerate(component_list_sorted):
             component = self.components[comp_id]
+
             comp_resp_dict[(comp_id, 'loss_mean')] \
                 = np.mean(component_loss[:, comp_index])
 
@@ -229,7 +236,34 @@ class Infrastructure(Base):
                 = np.mean(component_damage_state_ind[:, comp_index]
                           >= (len(component.damage_states) - 1))
 
-        return comp_resp_dict
+        # ---------------------------------------------------------------
+        # Collate aggregate response of component grouped by their type:
+        for ct_index, ct_id in enumerate(self.get_component_types()):
+            comps_of_a_type = sorted(list(self.get_components_for_type(ct_id)))
+            ct_pos_index = [list(component_list_sorted).index(x)
+                            for x in comps_of_a_type]
+
+            comptype_resp_dict[(ct_id, 'loss_mean')] \
+                = np.mean(component_loss[:, ct_pos_index])
+
+            comptype_resp_dict[(ct_id, 'loss_std')] \
+                = np.std(component_loss[:, ct_pos_index])
+
+            comptype_resp_dict[(ct_id, 'loss_tot')] \
+                = np.sum(component_loss[:, ct_pos_index]) / num_samples
+
+            comptype_resp_dict[(ct_id, 'func_mean')] \
+                = np.mean(comp_sample_func[:, ct_pos_index])
+
+            comptype_resp_dict[(ct_id, 'func_std')] \
+                = np.std(comp_sample_func[:, ct_pos_index])
+
+            acomponent = self.components[comps_of_a_type[0]]
+            comptype_resp_dict[(ct_id, 'num_failures')] \
+                = np.mean(component_damage_state_ind[:, ct_pos_index]
+                          >= (len(acomponent.damage_states) - 1))
+        # ---------------------------------------------------------------
+        return comp_resp_dict, comptype_resp_dict
 
     def get_component_types(self):
         """
