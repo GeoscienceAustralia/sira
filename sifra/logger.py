@@ -11,7 +11,7 @@ coloredlogs.COLOREDLOGS_LEVEL_STYLES = \
     'notice=220;warning=202;success=118,bold;' \
     'error=124;critical=background=red'
 
-# # Original colorerlog format defaults:
+# # Original coloredlog format defaults:
 # coloredlogs.DEFAULT_LOG_FORMAT = \
 #     '%(asctime)s %(name)s[%(process)d] ' \
 #     '%(levelname)s %(message)s'
