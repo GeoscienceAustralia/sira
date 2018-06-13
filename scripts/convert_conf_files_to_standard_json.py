@@ -1,7 +1,7 @@
 import json
 import collections
 import os
-import pprint
+import argparse
 
 def _readfile(setup_file):
     """
@@ -179,28 +179,50 @@ def convert_confi_object_to_json(setup):
     return json_data
 
 
+def convert_to_json(conf_file_path):
+    print(conf_file_path)
+    parent_folder_name = os.path.dirname(conf_file_path)
+    file_name = os.path.splitext(os.path.basename(conf_file_path))[0]
+    json_filename = os.path.join(parent_folder_name, file_name + '.json')
+    setup = _readfile(conf_file_path)
+    json_data = convert_confi_object_to_json(setup)
+    obj = open(json_filename, 'w')
+    obj.write(json_data)
+    obj.close()
+
+
 def main():
 
-    conf_file_paths = []
-    for root, dir_names, file_names in os.walk(os.getcwd()):
-        for file_name in file_names:
-            if file_name.endswith('.conf'):
-                if 'simulation_setup' in root:
-                    conf_file_path = os.path.join(root, file_name)
-                    conf_file_paths.append(conf_file_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-f", "--file", type=str,
+        help="Convert specified setup file from `conf` to json")
+    parser.add_argument(
+        "-a", "--all", action="store_true",
+        help="Covert all files under specified directory to json.")
+    args = parser.parse_args()
 
-    for conf_file_path in conf_file_paths:
-        print(conf_file_path )
-        parent_folder_name = os.path.dirname(conf_file_path)
-        file_name = os.path.splitext(os.path.basename(conf_file_path))[0]
-        json_filename = os.path.join(parent_folder_name, file_name+'.json')
+    if args.file:
+        conf_file_path = args.file
+        convert_to_json(conf_file_path)
 
-        setup = _readfile(conf_file_path)
-        json_data = convert_confi_object_to_json(setup)
+    # ***********************************************
+    # The default location of simulation setup files:
+    sim_setup_dir = "../simulation_setup"
+    # ***********************************************
 
-        obj = open(json_filename, 'w')
-        obj.write(json_data)
-        obj.close()
+    if args.all:
+        conf_file_paths = []
+        for root, dir_names, file_names in os.walk(sim_setup_dir):
+            for file_name in file_names:
+                if file_name.endswith('.conf'):
+                    if 'simulation_setup' in root:
+                        conf_file_path = os.path.join(root, file_name)
+                        conf_file_paths.append(conf_file_path)
+
+        for conf_file_path in conf_file_paths:
+            convert_to_json(conf_file_path)
+
 
 if __name__ == "__main__":
     main()
