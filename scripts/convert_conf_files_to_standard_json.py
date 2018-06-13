@@ -33,34 +33,46 @@ def convert_confi_object_to_json(setup):
         data['Scenario']['SCENARIO_NAME'] = None
 
     try:
-        data['Scenario']['INTENSITY_MEASURE_PARAM'] = setup['INTENSITY_MEASURE_PARAM']
+        data['Scenario']['INTENSITY_MEASURE_PARAM']\
+            = setup['INTENSITY_MEASURE_PARAM']
     except KeyError:
         data['Scenario']['INTENSITY_MEASURE_PARAM'] = None
     try:
-        data['Scenario']['INTENSITY_MEASURE_UNIT'] = setup['INTENSITY_MEASURE_UNIT']
+        data['Scenario']['INTENSITY_MEASURE_UNIT']\
+            = setup['INTENSITY_MEASURE_UNIT']
     except KeyError:
         data['Scenario']['INTENSITY_MEASURE_UNIT'] = None
     try:
-        data['Scenario']['FOCAL_HAZARD_SCENARIOS'] = setup['FOCAL_HAZARD_SCENARIOS']
+        data['Scenario']['FOCAL_HAZARD_SCENARIOS']\
+            = setup['FOCAL_HAZARD_SCENARIOS']
     except KeyError:
         data['Scenario']['FOCAL_HAZARD_SCENARIOS'] = None
 
     data['Hazard'] = collections.OrderedDict()
 
     try:
-        data['Hazard']['INTENSITY_MEASURE_MIN'] = setup['INTENSITY_MEASURE_MIN']
+        data['Hazard']['HAZARD_INPUT_METHOD']\
+            = setup['HAZARD_INPUT_METHOD']
+    except KeyError:
+        data['Hazard']['HAZARD_INPUT_METHOD'] = None
+    try:
+        data['Hazard']['INTENSITY_MEASURE_MIN']\
+            = setup['INTENSITY_MEASURE_MIN']
     except KeyError:
         data['Hazard']['INTENSITY_MEASURE_MIN'] = None
     try:
-        data['Hazard']['INTENSITY_MEASURE_MAX'] = setup['INTENSITY_MEASURE_MAX']
+        data['Hazard']['INTENSITY_MEASURE_MAX']\
+            = setup['INTENSITY_MEASURE_MAX']
     except KeyError:
         data['Hazard']['INTENSITY_MEASURE_MAX'] = None
     try:
-        data['Hazard']['INTENSITY_MEASURE_STEP'] = setup['INTENSITY_MEASURE_STEP']
+        data['Hazard']['INTENSITY_MEASURE_STEP']\
+            = setup['INTENSITY_MEASURE_STEP']
     except KeyError:
         data['Hazard']['INTENSITY_MEASURE_STEP'] = None
     try:
-        data['Hazard']['NUM_SAMPLES'] = setup['NUM_SAMPLES']
+        data['Hazard']['NUM_SAMPLES']\
+            = setup['NUM_SAMPLES']
     except KeyError:
         data['Hazard']['NUM_SAMPLES'] = None
 
@@ -84,29 +96,40 @@ def convert_confi_object_to_json(setup):
         data['Restoration']['TIME_UNIT'] = None
 
     try:
-        data['Restoration']['RESTORE_PCT_CHECKPOINTS'] = setup['RESTORE_PCT_CHKPOINTS']
+        data['Restoration']['RESTORE_PCT_CHECKPOINTS']\
+            = setup['RESTORE_PCT_CHKPOINTS']
     except KeyError:
         data['Restoration']['RESTORE_PCT_CHECKPOINTS'] = None
 
     try:
-        data['Restoration']['RESTORE_TIME_STEP'] = setup['RESTORE_TIME_STEP']
+        data['Restoration']['RESTORE_TIME_STEP']\
+            = setup['RESTORE_TIME_STEP']
     except KeyError:
         data['Restoration']['RESTORE_TIME_STEP'] = None
 
     try:
-        data['Restoration']['RESTORE_TIME_MAX'] = setup['RESTORE_TIME_MAX']
+        data['Restoration']['RESTORE_TIME_MAX']\
+            = setup['RESTORE_TIME_MAX']
     except KeyError:
         data['Restoration']['RESTORE_TIME_MAX'] = None
 
     try:
-        data['Restoration']['RESTORATION_STREAMS'] = setup['RESTORATION_STREAMS']
+        data['Restoration']['RESTORATION_STREAMS']\
+            = setup['RESTORATION_STREAMS']
     except KeyError:
         data['Restoration']['RESTORATION_STREAMS'] = None
 
     data['System'] = collections.OrderedDict()
 
     try:
-        data['System']['SYSTEM_CLASSES'] = setup['SYSTEM_CLASSES']
+        data['System']['INFRASTRUCTURE_LEVEL']\
+            = setup['INFRASTRUCTURE_LEVEL']
+    except KeyError:
+        data['System']['INFRASTRUCTURE_LEVEL'] = None
+
+    try:
+        data['System']['SYSTEM_CLASSES']\
+            = setup['SYSTEM_CLASSES']
     except KeyError:
         data['System']['SYSTEM_CLASSES'] = None
 
@@ -208,7 +231,8 @@ def main():
 
     # ***********************************************
     # The default location of simulation setup files:
-    sim_setup_dir = "../simulation_setup"
+    par_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    sim_setup_dir = os.path.join(par_dir, "simulation_setup")
     # ***********************************************
 
     if args.all:
