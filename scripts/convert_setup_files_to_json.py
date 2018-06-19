@@ -2,26 +2,46 @@ import json
 import collections
 import os
 import argparse
+import configparser
+import ast
 
-def _readfile(setup_file):
+
+def _read_file(setup_file):
     """
     Module for reading in scenario data file
     """
-    discard = {}
-    setup = {}
-    # try:
-    #     with open(setup_file) as fh:
-    #         exec(fh.read(), discard, setup)
-    # except IOError as err:
-    #     print("{0}".format(err))
-    #     raise SystemExit()
     if not os.path.isfile(setup_file):
         print("[ERROR] could not read file: {}".format(setup_file))
         raise SystemExit()
-    exec (open(setup_file).read(), discard, setup)
-    return setup
 
-def convert_confi_object_to_json(setup):
+    file_name, file_ext = os.path.splitext(os.path.basename(setup_file))
+
+    if file_ext=='.conf':
+        discard = {}
+        setup = {}
+        exec (open(setup_file).read(), discard, setup)
+    elif file_ext=='.ini':
+        setup = configparser.ConfigParser()
+        setup.optionxform = str
+        setup.read(setup_file.decode('utf-8'))
+    return setup, file_ext
+
+
+def convert_ini_object_to_json(setup):
+    data = collections.OrderedDict()
+    for section in setup.sections():
+        data[section] = collections.OrderedDict()
+        for param in setup[section].keys():
+            try:
+                data[section][param] = \
+                    ast.literal_eval(setup.get(section, param))
+            except KeyError:
+                data[section][param] = None
+    json_data = json.dumps(data, indent=4, sort_keys=True)
+    return json_data
+
+
+def convert_conf_object_to_json(setup):
 
     data = collections.OrderedDict()
 
@@ -207,8 +227,13 @@ def convert_to_json(conf_file_path):
     parent_folder_name = os.path.dirname(conf_file_path)
     file_name = os.path.splitext(os.path.basename(conf_file_path))[0]
     json_filename = os.path.join(parent_folder_name, file_name + '.json')
-    setup = _readfile(conf_file_path)
-    json_data = convert_confi_object_to_json(setup)
+    setup, file_type = _read_file(conf_file_path)
+    if file_type == '.conf':
+        json_data = convert_conf_object_to_json(setup)
+    elif file_type == '.ini':
+        json_data = convert_ini_object_to_json(setup)
+    else:
+        print("\n[ERROR] Incompatible file type for setup file.\n")
     obj = open(json_filename, 'w')
     obj.write(json_data)
     obj.close()
