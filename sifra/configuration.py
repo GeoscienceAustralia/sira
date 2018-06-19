@@ -1,6 +1,7 @@
 import os
 import json
 from sifra.logger import rootLogger
+import scripts.convert_setup_files_to_json as converter
 
 
 class Configuration:
@@ -8,7 +9,6 @@ class Configuration:
     Reads all the simulation configuration constants to be read
     by other classes
     """
-
     def __init__(self, configuration_file_path,
                  run_mode='impact', output_path=''):
         """
@@ -17,12 +17,19 @@ class Configuration:
                          If option is 'analysis' then new output folders are
                          not created
         """
+        file_ext = \
+            os.path.splitext(os.path.basename(configuration_file_path))[1]
+        if file_ext != '.json':
+            configuration_file_path = converter.convert_to_json(
+                configuration_file_path)
+
         with open(configuration_file_path, 'r') as f:
             config = json.load(f)
 
         # reading in simulation scenario parameters
         self.SCENARIO_NAME \
             = config['Scenario']['SCENARIO_NAME']
+        # print(config['Scenario']['SCENARIO_NAME'])
         self.INTENSITY_MEASURE_PARAM \
             = config['Scenario']['INTENSITY_MEASURE_PARAM']
         self.INTENSITY_MEASURE_UNIT \
