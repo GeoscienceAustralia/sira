@@ -1,12 +1,11 @@
 {
     "Hazard": {
-        "HAZARD_INPUT_METHOD": "hazard_array",
-        "_comment": "scenario_file",
-        "HAZARD_TYPE": "Earthquake",
-        "NUM_SAMPLES": 5,
-        "INTENSITY_MEASURE_MAX": 1.2, 
+        "HAZARD_INPUT_METHOD": "hazard_array", 
+        "HAZARD_TYPE": "Earthquake", 
+        "INTENSITY_MEASURE_MAX": 1.0, 
         "INTENSITY_MEASURE_MIN": 0.0, 
-        "INTENSITY_MEASURE_STEP": 0.2
+        "INTENSITY_MEASURE_STEP": 0.2, 
+        "NUM_SAMPLES": 1000
     }, 
     "Input": {
         "INPUT_DIR_NAME": "/Users/marufr/code/EIRAPSI-SYS-MODELS"
@@ -17,7 +16,7 @@
     "Restoration": {
         "RESTORATION_STREAMS": [
             5, 
-            15,
+            15, 
             25
         ], 
         "RESTORE_PCT_CHECKPOINTS": 21, 
@@ -26,20 +25,21 @@
         "TIME_UNIT": "week"
     }, 
     "Scenario": {
-        "INTENSITY_MEASURE_PARAM": "PGA", 
-        "INTENSITY_MEASURE_UNIT": "g", 
         "FOCAL_HAZARD_SCENARIOS": [
             "0.400"
-        ],
-        "SCENARIO_NAME": "Tx Substation 330kV"
-    },
+        ], 
+        "INTENSITY_MEASURE_PARAM": "PGA", 
+        "INTENSITY_MEASURE_UNIT": "g", 
+        "SCENARIO_NAME": "Tx Substation 330kV", 
+        "_comment": "scenario_file_ini"
+    }, 
     "Switches": {
         "MULTIPROCESS": 1, 
         "RUN_CONTEXT": 1
     }, 
     "System": {
-        "INFRASTRUCTURE_LEVEL" : "facility",
         "COMMODITY_FLOW_TYPES": 2, 
+        "INFRASTRUCTURE_LEVEL": "facility", 
         "SYSTEM_CLASS": "Substation", 
         "SYSTEM_CLASSES": [
             "PowerStation", 
