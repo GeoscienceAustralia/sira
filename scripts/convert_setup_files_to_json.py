@@ -237,6 +237,8 @@ def convert_to_json(conf_file_path):
     obj = open(json_filename, 'w')
     obj.write(json_data)
     obj.close()
+    json_filepath = os.path.abspath(json_filename)
+    return os.path.abspath(json_filepath)
 
 
 def main():
