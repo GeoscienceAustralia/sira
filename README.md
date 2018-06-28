@@ -148,10 +148,15 @@ Move on top of root directory for the ``SIFRA`` code:
 
     $ cd desktop    # if cd desktop/sifra
 
-Run the `sifra` code as following, supplying with the requisite configuration
-file:
 
-    $ python sifra -f config_file.conf
+The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: `ini`, `conf`, or `json`. The code first
+converts any setup file to json first before running.
+
+To run the code: move into the root directory of `sifra` code, and use the
+following commmand format, supplying with the requisite configuration file.
+
+    $ python sifra -s simulation_setup/scenario_ss_330kv.ini
 
 Sample configuration files are located in sifra\simulation_setup
 
