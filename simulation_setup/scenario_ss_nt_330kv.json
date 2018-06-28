@@ -22,7 +22,7 @@
         "RESTORE_PCT_CHECKPOINTS": 21, 
         "RESTORE_TIME_MAX": 300.0, 
         "RESTORE_TIME_STEP": 1, 
-        "TIME_UNIT": "week"
+        "TIME_UNIT": "days"
     }, 
     "Scenario": {
         "FOCAL_HAZARD_SCENARIOS": [
