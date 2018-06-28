@@ -4,7 +4,6 @@ import numpy as np
 import scipy.stats as stats
 import pandas as pd
 import json
-# import igraph
 
 import os
 import copy
@@ -12,9 +11,10 @@ import itertools
 from colorama import Fore, Back, init, Style
 init()
 
-import sifraplot as spl
+import sifra.sifraplot as spl
 
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as PathEffects
 from matplotlib import gridspec
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')
@@ -119,15 +119,16 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
 # ============================================================================
 
 
-def comp_recovery_given_hazard_and_time(component, component_response,
+def comp_recovery_given_hazard_and_time(component,
+                                        component_response,
                                         comptype_dmg_states,
-                                        scenario_header, hazval, t,
+                                        scenario_header,
+                                        hazval,
+                                        time_after_impact,
                                         comps_avl_for_int_replacement,
                                         threshold = 0.98):
     """
     Calculates level of recovery of component at time t after impact
-
-    Currently implemented for earthquake only.
     Hazard transfer parameter is INTENSITY_MEASURE.
 
     TEST PARAMETERS:
@@ -148,20 +149,21 @@ def comp_recovery_given_hazard_and_time(component, component_response,
     recovery_functions = [component.damage_states[i].recovery_function
                           for i, ds in enumerate(comptype_dmg_states)]
 
-
     comp_fn = component_response.loc[(component.component_id, 'func_mean'),
                                      scenario_header]
+    damage_ratios = [component.damage_states[i].damage_ratio
+                     for i in range(0, len(comptype_dmg_states), 1)]
 
     num_dmg_states = len(comptype_dmg_states)
-    ptmp = []
     pe = np.array(np.zeros(num_dmg_states))
     pb = np.array(np.zeros(num_dmg_states))
     recov = np.array(np.zeros(num_dmg_states))
     reqtime = np.array(np.zeros(num_dmg_states))
 
-    for d in range(0,num_dmg_states,1)[::-1]:
+    reqtime_X = np.array(np.zeros(num_dmg_states))
+
+    for d in range(0,num_dmg_states,1):
         pe[d] = damage_functions[d](hazval)
-        ptmp.append(pe[d])
 
     for dmg_index in range(0, num_dmg_states, 1):
         if dmg_index == 0:
@@ -172,7 +174,7 @@ def comp_recovery_given_hazard_and_time(component, component_response,
             pb[dmg_index] = pe[dmg_index]
 
     # **************************************************************************
-    # TODO: implement alternate functions for tempotary restoration
+    # TODO: implement alternate functions for temporary restoration
     # if comps_avl_for_int_replacement >= 1:
     #     # Parameters for Temporary Restoration:
     #     rmu = [fragdict['tmp_rst_mean'][ct][ds] for ds in comptype_dmg_states]
@@ -182,19 +184,37 @@ def comp_recovery_given_hazard_and_time(component, component_response,
     #     rmu = [fragdict['recovery_mean'][ct][ds] for ds in comptype_dmg_states]
     #     rsd = [fragdict['recovery_std'][ct][ds] for ds in comptype_dmg_states]
     # **************************************************************************
+    compounded_dmg_ratio = sum(pb*damage_ratios)
+    inverse_dmg_ratio = 1 - compounded_dmg_ratio
     for dmg_index, ds in enumerate(comptype_dmg_states):
         if ds == 'DS0 None' or dmg_index == 0:
             recov[dmg_index] = 1.0
             reqtime[dmg_index] = 0.00
         else:
-            recov[dmg_index] = recovery_functions[dmg_index](t)
+            recov[dmg_index] = recovery_functions[dmg_index](time_after_impact)
             reqtime[dmg_index] = \
                 recovery_functions[dmg_index](threshold, inverse=True) - \
                 recovery_functions[dmg_index](comp_fn, inverse=True)
 
+            # xxxxxxxxxxxxxxxxxxxxx
+            # reqtime_X[dmg_index] = \
+            #     recovery_functions[dmg_index](threshold, inverse=True) - \
+            #     recovery_functions[dmg_index](inverse_dmg_ratio, inverse=True)
+            # xxxxxxxxxxxxxxxxxxxxx
+
+
     comp_status_agg = sum(pb*recov)
     restoration_time_agg = sum(pb*reqtime)
-    # restoration_time_agg = reqtime[num_dmg_states-1]
+    # restoration_time_agg_X = sum(pb*reqtime_X)
+
+    # if ct == "Autotransformer 245-490MVA":
+    #     print("===")
+    #     print("time_after_impact    : ", time_after_impact)
+    #     print("pb                   : ", pb)
+    #     print("recov                : ", recov)
+    #     print("comp_status_agg      : ", comp_status_agg)
+    #     print("restoration_time_agg : ", restoration_time_agg)
+    #     print("restoration_time_aggX: ", restoration_time_agg_X)
 
     return comp_status_agg, restoration_time_agg
 
@@ -311,7 +331,7 @@ def calc_restoration_setup(component_meanloss,
                            repair_list_combined,
                            rst_stream, RESTORATION_OFFSET,
                            comp_fullrst_time, output_path,
-                           scenario_header, scenario_tag,
+                           scenario_header, filename,
                            buffer_time_to_commission=0.00):
     """
     Calculates the timeline for full repair of all output lines of the system
@@ -437,7 +457,7 @@ def calc_restoration_setup(component_meanloss,
 
     # add a column for 'component_meanloss'
     rst_setup_df.to_csv(
-        os.path.join(output_path, 'restoration_setup_'+scenario_tag+'.csv'),
+        os.path.join(output_path, filename),
         index_label=['NodesToRepair'], sep=','
     )
 
@@ -511,11 +531,14 @@ def vis_restoration_process(scenario,
     ax2 = plt.subplot(gs[-8:])
     ticklabelsize = 12
 
+    colours = spl.ColourPalettes()
+    linecolour1 = colours.BrewerSet2[2]  # '#8DA0CB'
+
     # ----------------------------------------------------------------------
     # Component restoration plot
 
     ax1.hlines(y, rst_setup_df['RstStart'], rst_setup_df['RstEnd'],
-               linewidth=lineht, color=spl.COLR_SET2[2])
+               linewidth=lineht, color=linecolour1)
     ax1.set_title('Component Restoration Timeline: '+str(num_rst_steams)+
                   ' Simultaneous Repairs', loc='left', y=1.01, size=18)
     ax1.set_ylim([0.5,max(y)+0.5])
@@ -549,7 +572,9 @@ def vis_restoration_process(scenario,
     ax2.set_xticklabels(xtiks, size=ticklabelsize, rotation=0)
     ax2.set_xlabel('Restoration Time ('+scenario.time_unit+')', size=16)
     ax2.set_ylabel('System Capacity (%)', size=16)
-    
+
+    supply_rst_clr = "#377EB8"
+
     rst_time_line = np.zeros((len(out_node_list), xmax))
     line_rst_times = {}
     for x, onode in enumerate(out_node_list):
@@ -557,9 +582,9 @@ def vis_restoration_process(scenario,
             max(rst_setup_df.loc[repair_path[onode]]['RstEnd'])
         
         ax1.axvline(line_rst_times[onode], linestyle=':', 
-                    color=spl.COLR_SET1[2], alpha=0.8)
+                    color=supply_rst_clr, alpha=0.8)
         ax2.axvline(line_rst_times[onode], linestyle=':', 
-                    color=spl.COLR_SET1[2], alpha=0.8)
+                    color=supply_rst_clr, alpha=0.8)
         ax2.annotate(onode, xy=(line_rst_times[onode], 105),
                      ha='center', va='bottom', rotation=90, 
                      fontname='Open Sans', size=ticklabelsize, color='k',
@@ -572,10 +597,9 @@ def vis_restoration_process(scenario,
 
     xrst = np.array(range(0, xmax, 1))
     yrst = np.sum(rst_time_line, axis=0)
-    ax2.step(xrst, yrst, where='post', color=spl.COLR_SET1[2], clip_on=False)
+    ax2.step(xrst, yrst, where='post', color=supply_rst_clr, clip_on=False)
     fill_between_steps(ax2, xrst, yrst, 0, step_where='post',
-                       alpha=0.25, color=spl.COLR_SET1[2])
-
+                       alpha=0.25, color=supply_rst_clr)
 
     fig.savefig(
         os.path.join(scenario.output_path, fig_name),
@@ -587,7 +611,6 @@ def vis_restoration_process(scenario,
     return rst_time_line, line_rst_times
 
 # ============================================================================
-
 
 def component_criticality(infrastructure,
                           scenario,
@@ -605,15 +628,6 @@ def component_criticality(infrastructure,
      3. remove label overlap
     **************************************************************************
     """
-
-    # sns.set(style="ticks",
-    #         rc={"axes.facecolor": '#EAEAF2',
-    #             "axes.linewidth": 0.75,
-    #             "grid.color": 'white',
-    #             "grid.linestyle": '-',
-    #             "grid.linewidth": 1.5,
-    #             "xtick.major.size": 8,
-    #             "ytick.major.size": 8})
 
     sns.set(style="darkgrid",
             rc={"axes.edgecolor": '0.15',
@@ -657,7 +671,9 @@ def component_criticality(infrastructure,
                             connectionstyle = 'arc3,rad=0.0',
                             color='dodgerblue',
                             alpha=0.8,
-                            linewidth=0.5),)
+                            linewidth=0.5),
+            path_effects=[PathEffects.withStroke(linewidth=2, foreground="w")]
+            )
 
         plt.annotate(
             "{0:>2.0f}   {1:<s}".format(cid, name), 
@@ -684,14 +700,15 @@ def component_criticality(infrastructure,
     ax.set_xticklabels([int(x) for x in [0, max(xlim)*0.5, max(xlim)]],
                        size=12)
     
-    # plt.grid(linewidth=3.0)
-    ax.set_title('Component Criticality', size=13, y=1.04)
+    ax.set_title('COMPONENT CRITICALITY GRID',
+                 size=14, y=1.04, weight='bold')
     ax.set_xlabel('Time to Restoration (' +scenario.time_unit+')',
-                  size=13, labelpad=14)
-    ax.set_ylabel('System Loss (%)', size=13, labelpad=14)
+                  size=13, labelpad=10)
+    ax.set_ylabel('System Loss (%)',
+                  size=13, labelpad=10)
 
     sns.despine(left=False, bottom=False, right=True, top=True,
-                offset=12, trim=True)
+                offset=15, trim=True)
 
     figfile = os.path.join(scenario.output_path, fig_name)
     fig.savefig(figfile, format='png', bbox_inches='tight', dpi=300)
@@ -700,7 +717,7 @@ def component_criticality(infrastructure,
 # ============================================================================
 
 
-def draw_component_loss_barchart_v1(ctype_loss_vals_tot,
+def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
                                     ctype_loss_by_type,
                                     ctype_lossbytype_rank,
                                     ctype_resp_sorted,
@@ -811,19 +828,20 @@ def draw_component_loss_barchart_v1(ctype_loss_vals_tot,
 # ============================================================================
 
 
-def draw_component_loss_barchart_v2(ctype_loss_vals_tot,
-                                    ctype_loss_by_type,
-                                    ctype_resp_sorted,
+def draw_component_loss_barchart_s1(ctype_resp_sorted,
                                     scenario_tag,
                                     hazard_type,
                                     output_path,
                                     fig_name):
     """ Plots bar charts of direct economic losses for components types """
 
+    ctype_loss_tot_mean = ctype_resp_sorted['loss_tot'].values * 100
+    ctype_loss_by_type = ctype_resp_sorted['loss_per_type'].values * 100
+
     bar_width = 0.36
     bar_offset = 0.02
-    bar_clr_1 = spl.COLR_SET1[0]
-    bar_clr_2 = spl.COLR_SET1[1]
+    bar_clr_1 = spl.ColourPalettes().BrewerSet1[0]  # '#E41A1C'
+    bar_clr_2 = spl.ColourPalettes().BrewerSet1[1]  # '#377EB8'
     grid_clr = "#BBBBBB"
 
     cpt = [spl.split_long_label(x,delims=[' ', '_'], max_chars_per_line=22)
@@ -839,20 +857,20 @@ def draw_component_loss_barchart_v2(ctype_loss_vals_tot,
     #   - Percentage econ loss for all components of a specific type
 
     axes.barh(
-        pos-bar_width/2.0-bar_offset, ctype_loss_vals_tot, bar_width,
+        pos-bar_width/2.0-bar_offset, ctype_loss_tot_mean, bar_width,
         align='center',
-        color=bar_clr_1, alpha=0.80, edgecolor=None,
+        color=bar_clr_1, alpha=0.7, edgecolor=None,
         label="% loss of total system value (for a component type)"
     )
 
     axes.barh(
         pos+bar_width/2.0+bar_offset, ctype_loss_by_type, bar_width,
         align='center',
-        color=bar_clr_2, alpha=0.80, edgecolor=None,
+        color=bar_clr_2, alpha=0.7, edgecolor=None,
         label="% loss for component type"
-    )
+        )
 
-    for p, c, cv in zip(pos, cpt, ctype_loss_vals_tot):
+    for p, c, cv in zip(pos, cpt, ctype_loss_tot_mean):
         axes.annotate(('%0.1f' % np.float(cv))+'%',
                       xy=(cv+0.7, p-bar_width/2.0-bar_offset),
                       xycoords=('data', 'data'),
@@ -873,10 +891,10 @@ def draw_component_loss_barchart_v2(ctype_loss_vals_tot,
         fontname='Open Sans', size=10, color='k', weight='bold',
         annotation_clip=False)
     axes.annotate(
-        "Hazard: " + hazard_type + scenario_tag,
+        "Hazard: " + hazard_type + " " + scenario_tag,
         xy=(0.0, -1.2), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans', size=10, color='slategray', weight='bold',
+        fontname='Open Sans', size=10, color='slategrey', weight='bold',
         annotation_clip=False)
 
     lgnd = axes.legend(loc="upper left", ncol=1, bbox_to_anchor=(-0.1, -0.04),
@@ -888,18 +906,16 @@ def draw_component_loss_barchart_v2(ctype_loss_vals_tot,
                  lw=0.6, ls='-', color='#444444', clip_on=False)
 
     # ------------------------------------------------------------------------
-    spines_to_remove = ['top', 'bottom']
+    spines_to_remove = ['top', 'bottom', 'right']
     for spine in spines_to_remove:
         axes.spines[spine].set_visible(False)
     axes.spines['left'].set_color(grid_clr)
     axes.spines['left'].set_linewidth(0.5)
-    axes.spines['right'].set_color(grid_clr)
-    axes.spines['right'].set_linewidth(0.5)
 
     axes.set_xlim(0, 100)
     axes.set_xticks(np.linspace(0, 100, 5, endpoint=True))
     axes.set_xticklabels([''])
-    axes.xaxis.grid(True, color=grid_clr, linewidth=0.5, linestyle='-')
+    axes.xaxis.grid(False)
 
     axes.set_ylim([pos.max()+bar_width*1.5, pos.min()-bar_width*1.5])
     axes.set_yticks(pos)
@@ -909,7 +925,6 @@ def draw_component_loss_barchart_v2(ctype_loss_vals_tot,
     axes.tick_params(top='off', bottom='off', left='off', right='off')
 
     # ------------------------------------------------------------------------
-
     fig.savefig(
         os.path.join(output_path, fig_name),
         format='png', bbox_inches='tight', dpi=400
@@ -919,6 +934,382 @@ def draw_component_loss_barchart_v2(ctype_loss_vals_tot,
 
 # ============================================================================
 
+def draw_component_loss_barchart_s2(ctype_resp_sorted,
+                                    scenario_tag,
+                                    hazard_type,
+                                    output_path,
+                                    fig_name):
+    """ Plots bar charts of direct economic losses for components types """
+
+    ctype_loss_tot_mean = ctype_resp_sorted['loss_tot'].values * 100
+    ctype_loss_mean_by_type = ctype_resp_sorted['loss_per_type'].values * 100
+    ctype_loss_std_by_type = ctype_resp_sorted['loss_per_type_std'].values * 100
+
+    bar_width = 0.35
+    bar_space_index = 1.9
+    # bar_clr_1 = spl.ColourPalettes().BrewerSet1[1]  # '#377EB8'
+    bar_clr_1 = '#3288BD'
+    grid_clr = 'dimgrey'
+    header_size = 9
+
+    comptypes_sorted = \
+        [spl.split_long_label(x,delims=[' ', '_'], max_chars_per_line=18)
+         for x in ctype_resp_sorted.index.tolist()]
+
+    barpos = np.arange(0, len(comptypes_sorted)*bar_width*bar_space_index,
+                       bar_width*bar_space_index)
+
+    fig = plt.figure(figsize=(5.0, len(barpos)*0.6), facecolor='white')
+    num_grids = 7 + len(comptypes_sorted)
+    gs = gridspec.GridSpec(num_grids, 1)
+    ax1 = plt.subplot(gs[:-3])
+    ax2 = plt.subplot(gs[-2:])
+
+    # ==========================================================================
+    # Percentage of lost value for each `component type`
+    # ==========================================================================
+
+    ax1.barh(
+        barpos, 100, bar_width,
+        align='center',
+        color='gainsboro', alpha=0.7, edgecolor=None,
+        label='',
+        )
+    ax1.barh(
+        barpos, ctype_loss_mean_by_type, bar_width,
+        align='center',
+        color=bar_clr_1, alpha=0.75, edgecolor=None,
+        label="% loss for component type",
+        xerr=ctype_loss_std_by_type,
+        error_kw={'ecolor':'lightcoral', 'capsize':2,
+                  'elinewidth':0.7, 'markeredgewidth':0.7}
+        )
+
+    for p, c, cv in zip(barpos, comptypes_sorted, ctype_loss_mean_by_type):
+        ax1.annotate(('%0.1f' % np.float(cv))+'%',
+                     xy=(cv+0.7, p-bar_width*0.42),
+                     xycoords=('data', 'data'),
+                     ha='left', va='center',
+                     size=8, color=bar_clr_1,
+                     annotation_clip=False)
+
+    ax1.annotate(
+        "HAZARD: " + hazard_type + " " + scenario_tag,
+        xy=(0.0, -1.2), xycoords=('axes fraction', 'data'),
+        ha='left', va='top',
+        fontname='Open Sans',
+        size=header_size, color='slategrey', weight='bold',
+        annotation_clip=False)
+
+    ax1.annotate(
+        "LOSS METRIC: % loss for each Component Type",
+        xy=(0.0, -0.8), xycoords=('axes fraction', 'data'),
+        ha='left', va='top',
+        fontname='Open Sans',
+        size=header_size, color='k', weight='bold',
+        annotation_clip=False)
+
+    ax1.axhline(y=barpos.max()+bar_width*(bar_space_index-0.5),
+                xmin=0, xmax=0.25, lw=0.6, ls='-',
+                color='grey', clip_on=False)
+
+    # ---------------------------------------------------
+    spines_to_remove = ['top', 'bottom', 'right', 'left']
+    for spine in spines_to_remove:
+        ax1.spines[spine].set_visible(False)
+
+    ax1.xaxis.grid(False)
+    ax1.set_xlim(0, 100)
+    ax1.set_xticks(np.linspace(0, 100, 5, endpoint=True))
+    ax1.set_xticklabels([''])
+
+    ax1.yaxis.grid(False)
+    ax1.set_ylim([barpos.max()+bar_width, barpos.min()-bar_width])
+    ax1.set_yticks(barpos)
+    ax1.set_yticklabels(comptypes_sorted, size=7, color='k')
+
+    ax1.tick_params(top='off', bottom='off', left='off', right ='off')
+    ax1.yaxis.set_tick_params(
+        which='major',
+        labelleft='on',
+        labelright='off',
+        labelsize=8,
+        pad=18)
+
+    # ==========================================================================
+    # Stacked Bar Chart: demonstrates relative contribution of `component types`
+    # to the aggregated direct economic loss of the system.
+    # ==========================================================================
+
+    stacked_bar_width = 0.5
+
+    colours = spl.ColourPalettes()
+    if len(comptypes_sorted) <= 11:
+        COLR_SET = colours.BrewerSpectral
+    elif len(comptypes_sorted) <= 20:
+        COLR_SET = colours.Trubetskoy
+    else:
+        COLR_SET = colours.Tartarize269
+
+    scaled_tot_loss = [x*100/sum(ctype_loss_tot_mean)
+                       for x in ctype_loss_tot_mean]
+
+    leftpos = 0.0
+    for ind, loss, pos in zip(range(len(comptypes_sorted)),
+                              scaled_tot_loss,
+                              barpos):
+        ax2.barh(0.0, loss, stacked_bar_width,
+                 left=leftpos, color=COLR_SET[ind])
+        leftpos += loss
+        ax1.annotate(u"$\u25FC$", xy=(-2.0, pos),
+                     xycoords=('data', 'data'),
+                     color=COLR_SET[ind], size=10,
+                     ha='right', va='center',
+                     annotation_clip=False)
+
+    # ---------------------------------------------------
+    ax2.xaxis.grid(False)
+    ax2.set_xticklabels([])
+    ax2.set_xlim(0, 100)
+    agg_sys_loss = sum(ctype_resp_sorted['loss_tot'].values)
+    ax2.set_xlabel(
+        "Aggregated loss as fraction of System Value: {:.0f}% "
+            .format(round(agg_sys_loss*100)), size=8, labelpad=12)
+
+    ax2.yaxis.grid(False)
+    ax2.set_yticklabels([])
+    ax2.set_ylim([-stacked_bar_width*0.5, stacked_bar_width*1.1])
+
+    ax2.tick_params(top='off', bottom='off', left='off', right='off')
+
+    ax2.annotate(
+        "LOSS METRIC: relative contributions to system loss",
+        xy=(0.0, 0.7), xycoords=('axes fraction', 'data'),
+        ha='left', va='top',
+        fontname='Open Sans',
+        size=header_size, color='k', weight='bold',
+        annotation_clip=False)
+
+    for spine in ['top', 'right', 'left', 'bottom']:
+        ax2.spines[spine].set_visible(False)
+
+    arrowprops = dict(arrowstyle="|-|, widthA=0.4, widthB=0.4",
+                      linewidth=0.7,
+                      facecolor=grid_clr, edgecolor=grid_clr,
+                      shrinkA=0, shrinkB=0,
+                      clip_on=False)
+    ax2.annotate('', xy=(0.0, -stacked_bar_width),
+                 xytext=(1.0, -stacked_bar_width),
+                 xycoords=('axes fraction', 'data'),
+                 arrowprops=arrowprops)
+
+    # ---------------------------------------------------
+    fig.savefig(
+        os.path.join(output_path, fig_name),
+        format='png', bbox_inches='tight', dpi=400
+    )
+
+    plt.close(fig)
+
+
+def draw_component_loss_barchart_s3(ctype_resp_sorted,
+                                    scenario_tag,
+                                    hazard_type,
+                                    output_path,
+                                    fig_name):
+    """ Plots bar charts of direct economic losses for components types """
+
+    ctype_loss_tot_mean = ctype_resp_sorted['loss_tot'].values * 100
+    ctype_loss_mean_by_type = ctype_resp_sorted['loss_per_type'].values * 100
+    ctype_loss_std_by_type = ctype_resp_sorted['loss_per_type_std'].values * 100
+
+    bar_width = 0.35
+    bar_clr_1 = spl.ColourPalettes().BrewerSet1[0]  # '#E41A1C'
+    grid_clr = "dimgrey"
+    bg_box_clr = 'gainsboro'
+
+    comptypes_sorted = ctype_resp_sorted.index.tolist()
+    barpos = np.arange(0, len(comptypes_sorted))
+
+    fig = plt.figure(figsize=(5.0, len(barpos)*0.6), facecolor='white')
+    num_grids = 8 + len(comptypes_sorted)
+    gs = gridspec.GridSpec(num_grids, 1)
+    ax1 = plt.subplot(gs[:-4])
+    ax2 = plt.subplot(gs[-3:])
+
+    colours = spl.ColourPalettes()
+    if len(comptypes_sorted) <= 11:
+        COLR_SET = colours.BrewerSpectral
+    elif len(comptypes_sorted) <= 20:
+        COLR_SET = colours.Trubetskoy
+    else:
+        COLR_SET = colours.Tartarize269
+
+    # ==========================================================================
+    # Percentage of lost value for each `component type`
+    # ==========================================================================
+
+    ax1.barh(
+        barpos, 100, bar_width,
+        align='center',
+        color=bg_box_clr, alpha=0.85, edgecolor=None,
+        label='',
+        )
+    ax1.barh(
+        barpos, ctype_loss_mean_by_type, bar_width,
+        align='center',
+        color=bar_clr_1, alpha=0.75, edgecolor=None,
+        label="% loss for component type",
+        xerr=ctype_loss_std_by_type,
+        error_kw={'ecolor':'cornflowerblue', 'capsize':0,
+                  'elinewidth':1.2, 'markeredgewidth':0.0}
+
+        )
+
+    def selective_rounding(fltval):
+        return "{:>4.0f}%".format(round(fltval)) if fltval > 1.0 \
+            else "{:>4.1f}%".format(fltval)
+
+    for p, ct, loss_ct, loss_sys in zip(barpos,
+                                        comptypes_sorted,
+                                        ctype_loss_mean_by_type,
+                                        ctype_loss_tot_mean):
+        ax1.annotate(
+            ct,
+            xy=(3, p-bar_width), xycoords=('data', 'data'),
+            ha='left', va='center', size=7, color='k',
+            annotation_clip=False)
+
+        ax1.annotate(
+            selective_rounding(loss_ct),
+            xy=(100, p-bar_width), xycoords=('data', 'data'),
+            ha='right', va='center', size=7, color=bar_clr_1,
+            annotation_clip=False)
+
+    ax1.annotate(
+        "HAZARD: " + hazard_type + " " + scenario_tag,
+        xy=(0.0, -1.8), xycoords=('axes fraction', 'data'),
+        ha='left', va='top',
+        fontname='Open Sans', size=9, color='slategrey', weight='bold',
+        annotation_clip=False)
+
+    ax1.annotate(
+        "LOSS METRIC: % loss for each Component Type",
+        xy=(0.0, -1.25), xycoords=('axes fraction', 'data'),
+        ha='left', va='top',
+        fontname='Open Sans', size=9, color='k', weight='bold',
+        annotation_clip=False)
+
+    ax1.axhline(y=barpos.max()+bar_width*2.0,
+                xmin=0, xmax=0.20,
+                lw=0.6, ls='-', color='grey', clip_on=False)
+
+    # ---------------------------------------------------
+    spines_to_remove = ['top', 'bottom', 'right', 'left']
+    for spine in spines_to_remove:
+        ax1.spines[spine].set_visible(False)
+
+    ax1.xaxis.grid(False)
+    ax1.set_xlim(0, 100)
+    ax1.set_xticks(np.linspace(0, 100, 5, endpoint=True))
+    ax1.set_xticklabels([''])
+
+    ax1.yaxis.grid(False)
+    ax1.set_ylim([barpos.max()+bar_width, barpos.min()-bar_width])
+    ax1.set_yticks(barpos)
+    ax1.set_yticklabels([''])
+
+    ax1.tick_params(top='off', bottom='off', left='off', right ='off')
+    ax1.yaxis.set_tick_params(
+        which='major',
+        labelleft='on',
+        labelright='off',
+        labelsize=8,
+        pad=20)
+
+    # ==========================================================================
+    # Stacked Bar Chart: demonstrates relative contribution of `component types`
+    # to the aggregated direct economic loss of the system.
+    # ==========================================================================
+
+    stacked_bar_width = 1.0
+
+    scaled_tot_loss = [x*100/sum(ctype_loss_tot_mean)
+                       for x in ctype_loss_tot_mean]
+
+    leftpos = 0.0
+    rank = 1
+    for ind, loss, sysloss, pos in zip(range(len(comptypes_sorted)),
+                                       scaled_tot_loss,
+                                       ctype_loss_tot_mean,
+                                       barpos):
+        ax2.barh(0.0, loss, stacked_bar_width,
+                 left=leftpos, color=COLR_SET[ind])
+
+        # Annotate the values for the top five contributors
+        if rank <= 5:
+            xt = (2*leftpos + loss)/2.0
+            yt = stacked_bar_width * 0.6
+            ax2.text(
+                xt, yt, selective_rounding(sysloss),
+                ha='center', va='bottom', size=7, color='k', weight='bold',
+                path_effects=[PathEffects.withStroke(linewidth=1,
+                                                     foreground="w")])
+            rank += 1
+
+        leftpos += loss
+        ax1.annotate(u"$\u25FC$",
+                     xy=(-0.4, pos-bar_width),
+                     xycoords=('data', 'data'),
+                     color=COLR_SET[ind], size=8,
+                     ha='left', va='center',
+                     annotation_clip=False)
+
+    # ---------------------------------------------------
+    for spine in ['top', 'right', 'left', 'bottom']:
+        ax2.spines[spine].set_visible(False)
+
+    ax2.xaxis.grid(False)
+    ax2.set_xticklabels([])
+    ax2.set_xlim(0, 100)
+    agg_sys_loss = sum(ctype_resp_sorted['loss_tot'].values)
+    ax2.set_xlabel(
+        "Aggregated loss as fraction of System Value: {:.0f}% "
+            .format(round(agg_sys_loss*100)), size=8, labelpad=8)
+
+    ax2.yaxis.grid(False)
+    ax2.set_yticklabels([])
+    ax2.set_ylim([-stacked_bar_width*0.7, stacked_bar_width*1.8])
+
+    ax2.tick_params(top='off', bottom='off', left='off', right='off')
+
+    ax2.annotate(
+        "LOSS METRIC: % system loss attributed to Component Types",
+        xy=(0.0, stacked_bar_width*1.5), xycoords=('axes fraction', 'data'),
+        ha='left', va='bottom',
+        fontname='Open Sans', size=9, color='k', weight='bold',
+        annotation_clip=False)
+
+    arrow_ypos = -stacked_bar_width*1.2
+    arrowprops = dict(arrowstyle="|-|, widthA=0.4, widthB=0.4",
+                      linewidth=0.7,
+                      facecolor=grid_clr, edgecolor=grid_clr,
+                      shrinkA=0, shrinkB=0,
+                      clip_on=False)
+    ax2.annotate('', xy=(0.0, arrow_ypos*0.9),
+                 xytext=(1.0, arrow_ypos*0.9),
+                 xycoords=('axes fraction', 'data'),
+                 arrowprops=arrowprops)
+
+    # ---------------------------------------------------
+    fig.savefig(
+        os.path.join(output_path, fig_name),
+        format='png', bbox_inches='tight', dpi=400
+    )
+
+    plt.close(fig)
+
+# ==============================================================================
 
 def draw_component_failure_barchart(uncosted_comptypes,
                                     ctype_failure_mean,
@@ -941,7 +1332,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
            for x in cptypes]
     pos = np.arange(len(cptypes))
 
-    fig = plt.figure(figsize=(4.5, len(pos)*0.55),
+    fig = plt.figure(figsize=(4.5, len(pos)*0.5),
                      facecolor='white')
     ax = fig.add_subplot(111)
     bar_width = 0.4
@@ -949,7 +1340,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
     grid_clr = "#BBBBBB"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    spines_to_remove = ['top', 'bottom']
+    spines_to_remove = ['top', 'bottom', 'right']
     for spine in spines_to_remove:
         ax.spines[spine].set_visible(False)
     ax.spines['left'].set_color(grid_clr)
@@ -975,7 +1366,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
 
     # add the numbers to the side of each bar
     for p, c, cv in zip(pos, cptypes, cpt_failure_vals):
-        plt.annotate(('%0.1f' % cv)+'%', xy=(cv+0.5, p),
+        plt.annotate(('%0.1f' % cv)+'%', xy=(cv+0.6, p),
                      va='center', size=8, color="#CA1C1D",
                      annotation_clip=False)
 
@@ -983,11 +1374,11 @@ def draw_component_failure_barchart(uncosted_comptypes,
                 xy=(0.0, -1.45), xycoords=('axes fraction', 'data'),
                 ha='left', va='top', annotation_clip=False,
                 fontname='Open Sans', size=10, weight='bold', color='k')
-    ax.annotate('Hazard: ' + hazard_type + scenario_tag,
+    ax.annotate('Hazard: ' + hazard_type + " " + scenario_tag,
                 xy=(0.0, -1.0), xycoords=('axes fraction', 'data'),
                 ha='left', va='top', annotation_clip=False,
                 fontname='Open Sans', size=10, weight='bold',
-                color='slategray')
+                color='slategrey')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     fig.savefig(
@@ -997,7 +1388,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
 
     plt.close(fig)
 
-# ============================================================================
+# ==============================================================================
 
 
 def calc_comptype_damage_scenario_given_hazard(infrastructure,
@@ -1046,6 +1437,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
 
     comp_rst = {t: {n: 0 for n in nodes_costed}
                 for t in scenario.restoration_time_range}
+    restoration_time_agg = {nc: 0 for nc in nodes_costed}
     for c in nodes_costed:
         ct = infrastructure.components[c].component_type
         haz_ix = hazards.hazard_scenario_name.index(scenario_header)
@@ -1062,15 +1454,16 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
              list(infrastructure.components[c].damage_states.values())]
 
         for t in scenario.restoration_time_range:
-            comp_rst[t][c] = comp_recovery_given_hazard_and_time(
-                infrastructure.components[c],
-                component_response,
-                comp_type_ds,
-                scenario_header,
-                sc_haz_val,
-                t,
-                comps_avl_for_int_replacement,
-                threshold=RESTORATION_THRESHOLD)[0]
+            comp_rst[t][c], restoration_time_agg[c] = \
+                comp_recovery_given_hazard_and_time(
+                    infrastructure.components[c],
+                    component_response,
+                    comp_type_ds,
+                    scenario_header,
+                    sc_haz_val,
+                    t,
+                    comps_avl_for_int_replacement,
+                    threshold=RESTORATION_THRESHOLD)
 
     comp_rst_df = pd.DataFrame(comp_rst,
                                index=nodes_costed,
@@ -1157,14 +1550,6 @@ def main():
     RESTORATION_STREAMS = scenario.restoration_streams
     FOCAL_HAZARD_SCENARIOS = hazards.focal_hazard_scenarios
 
-    if config.HAZARD_INPUT_METHOD == "hazard_array":
-        hazard_intensity_vals = \
-            [hazard_data[0]['hazard_intensity']
-             for hazard_data in
-             hazards.scenario_hazard_data.values()]
-        haz_vals_str = [('%0.3f' % np.float(x))
-                        for x in hazard_intensity_vals]
-
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # READ in raw output files from prior analysis of system fragility
 
@@ -1184,7 +1569,7 @@ def main():
         np.load(os.path.join(
             RAW_OUTPUT_DIR, 'sys_frag.npy'))
 
-    # TODO: NOT IMPLEMENTED -- need to.
+    # TODO: NEED TO IMPLEMENT.
     # output_array_given_recovery = \
     #     np.load(os.path.join(
     #         RAW_OUTPUT_DIR, 'output_array_given_recovery.npy'))
@@ -1239,26 +1624,6 @@ def main():
     ctype_failure_mean = comptype_resp_df.xs('num_failures', level='response')
     ctype_failure_mean.columns.names = ['Scenario Name']
 
-    # ctype_loss_mean = \
-    #     ct_resp_flat[ct_resp_flat['response'] == 'loss_mean'].\
-    #     drop('response', axis=1)
-
-    # ctype_loss_tot = \
-    #     ct_resp_flat[ct_resp_flat['response'] == 'loss_tot'].\
-    #     drop('response', axis=1)
-
-    # ctype_loss_std = \
-    #     ct_resp_flat[ct_resp_flat['response'] == 'loss_std'].\
-    #     drop('response', axis=1)
-
-    # ctype_func_mean = \
-    #     ct_resp_flat[ct_resp_flat['response'] == 'func_mean'].\
-    #     drop('response', axis=1)
-
-    # ctype_func_std = \
-    #     ct_resp_flat[ct_resp_flat['response'] == 'func_std'].\
-    #     drop('response', axis=1)
-
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Value of component types relative to system value
 
@@ -1283,6 +1648,7 @@ def main():
 
     comptype_resp_df = comptype_resp_df.drop(
         uncosted_comptypes, level='component_type', axis=0)
+
 
     # TODO : ADD THIS BACK IN!!
     # # Read in the <SYSTEM FRAGILITY MODEL> fitted to simulated data
@@ -1329,9 +1695,8 @@ def main():
                 hazards.hazard_scenario_list.index(sc_haz_str)]
         elif config.HAZARD_INPUT_METHOD == "scenario_file":
             scenario_header = sc_haz_str
-        scenario_tag = str(sc_haz_str)+ " " + hazards.intensity_measure_unit +\
-                       " | " + hazards.intensity_measure_param
-
+        scenario_tag = str(sc_haz_str)+ " " + hazards.intensity_measure_unit \
+                       + " " + hazards.intensity_measure_param
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Extract scenario-specific values from the 'hazard response' dataframe
@@ -1342,15 +1707,16 @@ def main():
             = comptype_resp_df[scenario_header].unstack(level=-1)
         ctype_resp_scenario = ctype_resp_scenario.sort_index()
 
-        # uncosted_comptypes_in_df \
-        #     = list(set(ctype_resp_scenario.index.tolist()) &
-        #            set(uncosted_comptypes))
-        # if uncosted_comptypes_in_df:
-        #     ctype_resp_scenario = ctype_resp_scenario.drop(
-        #         uncosted_comptypes_in_df, axis=0)
-
         ctype_resp_scenario['loss_per_type']\
             = ctype_resp_scenario['loss_mean']/comptype_value_list
+
+        # Number of components in system of each component type:
+        # comp_type_count = {ct: len(infrastructure.get_components_for_type(ct))
+        #                    for ct in cp_types_costed}
+        ctype_resp_scenario['loss_per_type_std']\
+            = ctype_resp_scenario['loss_std'] \
+              * [len(list(infrastructure.get_components_for_type(ct)))
+                 for ct in ctype_resp_scenario.index.values.tolist()]
 
         ctype_resp_sorted = ctype_resp_scenario.sort_values(
             by='loss_tot', ascending=False)
@@ -1366,20 +1732,32 @@ def main():
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Economic loss percentage for component types
 
-        fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_v1.png'
-        draw_component_loss_barchart_v1(ctype_loss_vals_tot,
-                                        ctype_loss_by_type,
-                                        ctype_lossbytype_rank,
-                                        ctype_resp_sorted,
+        # fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s0.png'
+        # draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
+        #                                 ctype_loss_by_type,
+        #                                 ctype_lossbytype_rank,
+        #                                 ctype_resp_sorted,
+        #                                 scenario_tag,
+        #                                 hazards.hazard_type,
+        #                                 OUTPUT_PATH,
+        #                                 fig_name)
+
+        fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s1.png'
+        draw_component_loss_barchart_s1(ctype_resp_sorted,
                                         scenario_tag,
                                         hazards.hazard_type,
                                         OUTPUT_PATH,
                                         fig_name)
 
-        fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_v2.png'
-        draw_component_loss_barchart_v2(ctype_loss_vals_tot,
-                                        ctype_loss_by_type,
-                                        ctype_resp_sorted,
+        fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s2.png'
+        draw_component_loss_barchart_s2(ctype_resp_sorted,
+                                        scenario_tag,
+                                        hazards.hazard_type,
+                                        OUTPUT_PATH,
+                                        fig_name)
+
+        fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s3.png'
+        draw_component_loss_barchart_s3(ctype_resp_sorted,
                                         scenario_tag,
                                         hazards.hazard_type,
                                         OUTPUT_PATH,
@@ -1423,6 +1801,10 @@ def main():
         for num_rst_steams in RESTORATION_STREAMS:
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             # SYSTEM RESTORATION for given scenario & restoration setup
+            rst_setup_filename = 'restoration_setup_' + sc_haz_str + '_' \
+                                 + hazards.intensity_measure_unit + '_' \
+                                 + hazards.intensity_measure_param + '.csv'
+
             rst_setup_df = calc_restoration_setup(
                 component_meanloss,
                 output_node_list,
@@ -1433,7 +1815,7 @@ def main():
                 component_fullrst_time,
                 scenario.output_path,
                 scenario_header,
-                scenario_tag
+                rst_setup_filename
             )
 
             fig_rst_gantt_name = 'fig_SC_' + sc_haz_str + '_str' +\
@@ -1465,8 +1847,8 @@ def main():
     # --------------------------------------------------------------------------
     # *** END : FOCAL_HAZARD_SCENARIOS FOR LOOP ***
 
-    line_rst_times_csv = os.path.join(
-        OUTPUT_PATH, 'line_restoration_prognosis.csv')
+    line_rst_times_csv = os.path.join(OUTPUT_PATH,
+                                      'line_restoration_prognosis.csv')
     line_rst_times_df.to_csv(line_rst_times_csv, sep=',')
 
     print("--- --- --- --- --- --- --- --- ---")
@@ -1478,7 +1860,7 @@ def main():
 
 if __name__ == "__main__":
     print()
-    print(Back.WHITE + Fore.BLUE + Style.BRIGHT +
-          " >> Scenario loss analysis initiated ... " +
+    print(Fore.CYAN + Back.BLACK + Style.BRIGHT +
+          ">> Scenario loss analysis initiated ... " +
           Style.RESET_ALL + "\n")
     main()
