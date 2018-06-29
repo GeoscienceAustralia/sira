@@ -28,7 +28,7 @@ class TestSystemSanity(unittest.TestCase):
         infrastructure = ingest_model(config)
 
         response_list = calculate_response(hazards, scenario, infrastructure)
-        economic_loss_array = response_list[4]
+        economic_loss_array = response_list[5]
 
         input_pickle_filename \
             = os.path.join(root_dir, "historical_data",
@@ -64,7 +64,7 @@ class TestSystemSanity(unittest.TestCase):
                   ["sysout_setup"]["output_node"]["output_node_capacity"]
 
         self.assertTrue(
-            int(response_list[3][0][0]) == int(output_node_capacity)
+            int(response_list[4][0][0]) == int(output_node_capacity)
         )
 
     def test_run_scenario_upper_limit(self):
@@ -78,7 +78,7 @@ class TestSystemSanity(unittest.TestCase):
         infrastructure = ingest_model(config)
         response_list = calculate_response(hazards, scenario, infrastructure)
 
-        self.assertTrue(int(response_list[3][0][0]) == int(0))
+        self.assertTrue(int(response_list[4][0][0]) == int(0))
 
     def test_compare_economic_loss_for_existing_models(self):
 
@@ -102,7 +102,7 @@ class TestSystemSanity(unittest.TestCase):
                 response_list = calculate_response(hazards,
                                                    scenario,
                                                    infrastructure)
-                economic_loss_of_model = response_list[4]
+                economic_loss_of_model = response_list[5]
                 pickel_flename = os.path.join(
                     root_dir,
                     'historical_data',
