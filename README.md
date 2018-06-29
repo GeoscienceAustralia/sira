@@ -137,17 +137,12 @@ The following direcotories must be marked as 'Sources Root' in PyCharm.
 - sifra
 - sifra-api
 
-## Running the Code in Conda
+## Running the Code
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
 
     $ git clone https://github.com/GeoscienceAustralia/sifra.git sifra
-
-Move on top of root directory for the ``SIFRA`` code:
-
-    $ cd desktop    # if cd desktop/sifra
-
 
 The code needs a setup file for configuring the model and simulation scenario.
 It can be in any of three formats: `ini`, `conf`, or `json`. The code first
