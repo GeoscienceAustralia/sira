@@ -151,12 +151,20 @@ converts any setup file to json first before running.
 To run the code: move into the root directory of `sifra` code, and use the
 following commmand format, supplying with the requisite configuration file.
 
-    $ python sifra -s simulation_setup/scenario_ss_330kv.ini
+    $ python sifra -s simulation_setup/scenario_ss_x.ini
 
 Sample configuration files are located in sifra\simulation_setup
 
 Depending on the scale of the model, and simulation parameters chosen,
 it may take between a few minutes and a few days to complete a run.
+
+To run the post-simulation analysis on the generated output data, we need to
+supply the setup file used to run the original simulation and the log file that
+stores the directory locations for the the stored output data. For example:
+
+    $ python sifra/scenario_loss_analysis.py
+        -s simulation_setup/scenario_ss_x.ini
+        -d logs/sifralog_20180619_155612_dirs.json
 
 ## Testing
 
