@@ -161,9 +161,9 @@ class TestReadingExcelFile(ut.TestCase):
                               'damage_function',
                               'damage_ratio',
                               'functionality',
+                              'recovery_function',
                               'recovery_mean',
-                              'recovery_std',
-                              'recovery_95percentile']
+                              'recovery_std']
 
         for model_file in self.model_xlsx_files:
             comp_type_dmg_algo = pd.read_excel(model_file,
@@ -215,7 +215,7 @@ class TestReadingExcelFile(ut.TestCase):
                 self.assertTrue(isinstance(float(damage_state['functionality']), float))
                 self.assertTrue(isinstance(float(damage_state['recovery_mean']), float))
                 self.assertTrue(isinstance(float(damage_state['recovery_std']), float))
-                self.assertTrue(isinstance(float(damage_state['recovery_95percentile']), float))
+                # self.assertTrue(isinstance(float(damage_state['recovery_95percentile']), float))
 
                 # TODO damage_state['fragility_source'] not used in code
                 # self.assertTrue(isinstance(str(damage_state['fragility_source']), unicode or str), type(damage_state['fragility_source']))
