@@ -45,7 +45,7 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_INTENSITY_MEASURE_STEP(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_STEP, int))
+            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_STEP, float))
 
     def test_datatype_of_NUM_SAMPLES(self):
         for conf in self.confs:
