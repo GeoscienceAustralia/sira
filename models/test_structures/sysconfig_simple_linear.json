@@ -10,11 +10,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -26,17 +23,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -46,17 +43,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -66,17 +63,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -86,17 +83,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -118,11 +115,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -134,17 +128,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.375, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.42, 
                         "minimum": null
                     }
@@ -154,17 +148,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 3.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 3.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.375, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.57, 
                         "minimum": null
                     }
@@ -174,17 +168,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 3.0, 
-                        "recovery_mean": 15.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.8238704957
+                        "function_name": "Normal", 
+                        "norm_mean": 15.0, 
+                        "norm_stddev": 1.8238704957, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.475, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.78, 
                         "minimum": null
                     }
@@ -194,17 +188,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 30.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 30.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.475, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
@@ -226,11 +220,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -242,17 +233,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.35, 
                         "minimum": null
                     }
@@ -262,17 +253,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.5, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -282,17 +273,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -302,17 +293,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -334,11 +325,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -350,17 +338,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -370,17 +358,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -390,17 +378,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -410,17 +398,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 1, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }

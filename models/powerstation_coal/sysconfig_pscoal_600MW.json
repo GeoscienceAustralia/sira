@@ -10,11 +10,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -26,17 +23,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 0.2, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 0.2, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.2, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "SIM to supply conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.45, 
                         "minimum": null
                     }
@@ -46,17 +43,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 0.5, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 0.5, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.3, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "SIM to supply conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.59, 
                         "minimum": null
                     }
@@ -66,17 +63,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "SIM to supply conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.775, 
                         "minimum": null
                     }
@@ -86,17 +83,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 4.3, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 4.3, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "SIM to supply conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -118,11 +115,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -134,17 +128,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 3.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 3.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.23, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.46, 
                         "minimum": null
                     }
@@ -154,17 +148,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 20.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 20.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.25, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.57, 
                         "minimum": null
                     }
@@ -174,17 +168,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 60.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 60.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.825, 
                         "minimum": null
                     }
@@ -194,17 +188,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 8.0, 
-                        "recovery_mean": 102.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 4.8636546553
+                        "function_name": "Normal", 
+                        "norm_mean": 102.8571428571, 
+                        "norm_stddev": 4.8636546553, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.6, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.8, 
                         "minimum": null
                     }
@@ -226,11 +220,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -242,17 +233,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 3.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 3.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.23, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.46, 
                         "minimum": null
                     }
@@ -262,17 +253,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 20.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 20.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.25, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.57, 
                         "minimum": null
                     }
@@ -282,17 +273,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 60.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 60.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.825, 
                         "minimum": null
                     }
@@ -302,17 +293,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 8.0, 
-                        "recovery_mean": 102.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 4.8636546553
+                        "function_name": "Normal", 
+                        "norm_mean": 102.8571428571, 
+                        "norm_stddev": 4.8636546553, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.6, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.8, 
                         "minimum": null
                     }
@@ -334,11 +325,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -350,17 +338,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -370,17 +358,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -390,17 +378,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -410,17 +398,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -442,11 +430,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -458,17 +443,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 0.2, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 0.2, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.2, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.67, 
                         "minimum": null
                     }
@@ -478,17 +463,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 0.5, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 0.5, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.27, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.85, 
                         "minimum": null
                     }
@@ -498,17 +483,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.05, 
                         "minimum": null
                     }
@@ -518,17 +503,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 4.3, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 4.3, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.35, 
                         "minimum": null
                     }
@@ -550,11 +535,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -566,17 +548,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.3, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.1823870496
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.1823870496, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.16, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.42, 
                         "minimum": null
                     }
@@ -586,17 +568,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 10.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 10.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.57, 
                         "minimum": null
                     }
@@ -606,17 +588,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 3.0, 
-                        "recovery_mean": 21.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.8238704957
+                        "function_name": "Normal", 
+                        "norm_mean": 21.0, 
+                        "norm_stddev": 1.8238704957, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.78, 
                         "minimum": null
                     }
@@ -626,17 +608,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 42.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 42.8571428571, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
@@ -658,11 +640,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -674,17 +653,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.2, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.45, 
                         "minimum": null
                     }
@@ -694,17 +673,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.295, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.585, 
                         "minimum": null
                     }
@@ -714,17 +693,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -734,17 +713,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -766,11 +745,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -782,17 +758,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.2, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.45, 
                         "minimum": null
                     }
@@ -802,17 +778,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.295, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.585, 
                         "minimum": null
                     }
@@ -822,17 +798,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -842,17 +818,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -874,11 +850,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -890,17 +863,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 3.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 3.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -910,17 +883,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 20.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 20.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.3, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -930,17 +903,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 60.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 60.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
@@ -950,17 +923,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 8.0, 
-                        "recovery_mean": 102.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 4.8636546553
+                        "function_name": "Normal", 
+                        "norm_mean": 102.8571428571, 
+                        "norm_stddev": 4.8636546553, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.55, 
                         "minimum": null
                     }
@@ -982,11 +955,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -998,17 +968,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 3.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 3.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -1018,17 +988,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 20.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 20.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.3, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -1038,17 +1008,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 60.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 60.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
@@ -1058,17 +1028,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 8.0, 
-                        "recovery_mean": 102.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 4.8636546553
+                        "function_name": "Normal", 
+                        "norm_mean": 102.8571428571, 
+                        "norm_stddev": 4.8636546553, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.55, 
                         "minimum": null
                     }
@@ -1090,11 +1060,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1106,17 +1073,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1126,17 +1093,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1146,17 +1113,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1166,17 +1133,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1198,11 +1165,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1214,17 +1178,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1234,17 +1198,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1254,17 +1218,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1274,17 +1238,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.1, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.0607956832
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.0607956832, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.01, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 10.0, 
                         "minimum": null
                     }
@@ -1306,11 +1270,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1322,17 +1283,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.35, 
                         "minimum": null
                     }
@@ -1342,17 +1303,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.5, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -1362,17 +1323,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -1382,17 +1343,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -1414,11 +1375,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1430,17 +1388,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.35, 
                         "minimum": null
                     }
@@ -1450,17 +1408,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.5, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -1470,17 +1428,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -1490,17 +1448,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -1522,11 +1480,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1538,17 +1493,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.35, 
                         "minimum": null
                     }
@@ -1558,17 +1513,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.5, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -1578,17 +1533,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -1598,17 +1553,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -1630,11 +1585,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1646,17 +1598,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.35, 
                         "minimum": null
                     }
@@ -1666,17 +1618,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.5, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -1686,17 +1638,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -1706,17 +1658,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Sim to main feed conveyor", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -1738,11 +1690,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1754,17 +1703,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.25, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.475, 
                         "minimum": null
                     }
@@ -1774,17 +1723,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.33, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.615, 
                         "minimum": null
                     }
@@ -1794,17 +1743,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.77, 
                         "minimum": null
                     }
@@ -1814,17 +1763,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -1846,11 +1795,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1862,17 +1808,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.2, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.67, 
                         "minimum": null
                     }
@@ -1882,17 +1828,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.27, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.85, 
                         "minimum": null
                     }
@@ -1902,17 +1848,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.05, 
                         "minimum": null
                     }
@@ -1922,17 +1868,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.35, 
                         "minimum": null
                     }
@@ -1954,11 +1900,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -1970,17 +1913,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.2, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.67, 
                         "minimum": null
                     }
@@ -1990,17 +1933,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.27, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.85, 
                         "minimum": null
                     }
@@ -2010,17 +1953,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.05, 
                         "minimum": null
                     }
@@ -2030,17 +1973,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.35, 
                         "minimum": null
                     }
@@ -2062,11 +2005,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2078,17 +2018,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.55, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.39, 
                         "minimum": null
                     }
@@ -2098,17 +2038,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.61, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.595, 
                         "minimum": null
                     }
@@ -2118,17 +2058,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.595, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.795, 
                         "minimum": null
                     }
@@ -2138,17 +2078,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.505, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2170,11 +2110,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2186,17 +2123,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.55, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.39, 
                         "minimum": null
                     }
@@ -2206,17 +2143,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.61, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.595, 
                         "minimum": null
                     }
@@ -2226,17 +2163,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.595, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.795, 
                         "minimum": null
                     }
@@ -2246,17 +2183,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.505, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2278,11 +2215,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2294,17 +2228,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.55, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.39, 
                         "minimum": null
                     }
@@ -2314,17 +2248,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.61, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.595, 
                         "minimum": null
                     }
@@ -2334,17 +2268,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.595, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.795, 
                         "minimum": null
                     }
@@ -2354,17 +2288,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.505, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2386,11 +2320,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2402,17 +2333,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.275, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.335, 
                         "minimum": null
                     }
@@ -2422,17 +2353,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.5, 
                         "minimum": null
                     }
@@ -2442,17 +2373,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.435, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -2462,17 +2393,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.455, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2494,11 +2425,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2510,17 +2438,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.275, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.335, 
                         "minimum": null
                     }
@@ -2530,17 +2458,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.5, 
                         "minimum": null
                     }
@@ -2550,17 +2478,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.435, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -2570,17 +2498,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.455, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2602,11 +2530,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2618,17 +2543,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.275, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.335, 
                         "minimum": null
                     }
@@ -2638,17 +2563,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.5, 
                         "minimum": null
                     }
@@ -2658,17 +2583,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.435, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -2678,17 +2603,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.455, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2710,11 +2635,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2726,17 +2648,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.275, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.335, 
                         "minimum": null
                     }
@@ -2746,17 +2668,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.5, 
                         "minimum": null
                     }
@@ -2766,17 +2688,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.435, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -2786,17 +2708,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.455, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -2818,11 +2740,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2834,17 +2753,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -2854,17 +2773,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.26, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.9, 
                         "minimum": null
                     }
@@ -2874,17 +2793,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.21, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.25, 
                         "minimum": null
                     }
@@ -2894,17 +2813,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.11, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.65, 
                         "minimum": null
                     }
@@ -2926,11 +2845,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -2942,17 +2858,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.55, 
                         "minimum": null
                     }
@@ -2962,17 +2878,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.26, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.9, 
                         "minimum": null
                     }
@@ -2982,17 +2898,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.21, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.25, 
                         "minimum": null
                     }
@@ -3002,17 +2918,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.11, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.65, 
                         "minimum": null
                     }
@@ -3034,11 +2950,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -3050,17 +2963,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -3070,17 +2983,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 20.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 20.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.3, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -3090,17 +3003,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 50.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 50.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
@@ -3110,17 +3023,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 8.0, 
-                        "recovery_mean": 102.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 4.8636546553
+                        "function_name": "Normal", 
+                        "norm_mean": 102.8571428571, 
+                        "norm_stddev": 4.8636546553, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.55, 
                         "minimum": null
                     }
@@ -3142,11 +3055,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -3158,17 +3068,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.75, 
                         "minimum": null
                     }
@@ -3178,17 +3088,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 20.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 20.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.3, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.0, 
                         "minimum": null
                     }
@@ -3198,17 +3108,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 50.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 50.0, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.34, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
@@ -3218,17 +3128,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 8.0, 
-                        "recovery_mean": 102.8571428571, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 4.8636546553
+                        "function_name": "Normal", 
+                        "norm_mean": 102.8571428571, 
+                        "norm_stddev": 4.8636546553, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.28, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.55, 
                         "minimum": null
                     }
@@ -3250,11 +3160,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -3266,17 +3173,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.55, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.44, 
                         "minimum": null
                     }
@@ -3286,17 +3193,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.6, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.61, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.645, 
                         "minimum": null
                     }
@@ -3306,17 +3213,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.2, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.595, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.845, 
                         "minimum": null
                     }
@@ -3326,17 +3233,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.505, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.05, 
                         "minimum": null
                     }
@@ -3358,11 +3265,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -3374,17 +3278,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 5.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 5.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.55, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.44, 
                         "minimum": null
                     }
@@ -3394,17 +3298,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.6, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.0, 
-                        "recovery_mean": 17.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.6079568319
+                        "function_name": "Normal", 
+                        "norm_mean": 17.0, 
+                        "norm_stddev": 0.6079568319, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.61, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.645, 
                         "minimum": null
                     }
@@ -3414,17 +3318,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.2, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 2.0, 
-                        "recovery_mean": 37.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.2159136638
+                        "function_name": "Normal", 
+                        "norm_mean": 37.0, 
+                        "norm_stddev": 1.2159136638, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.595, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.845, 
                         "minimum": null
                     }
@@ -3434,17 +3338,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 4.0, 
-                        "recovery_mean": 77.1428571429, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 2.4318273276
+                        "function_name": "Normal", 
+                        "norm_mean": 77.1428571429, 
+                        "norm_stddev": 2.4318273276, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.505, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.05, 
                         "minimum": null
                     }
@@ -3466,11 +3370,8 @@
                     "damage_state_name": "DS0 None", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0, 
-                        "recovery_mean": 0.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.5
+                        "function_name": "Level0Response", 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.", 
@@ -3482,17 +3383,17 @@
                     "damage_state_name": "DS1 Slight", 
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.2, 
-                        "recovery_mean": 1.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.1215913664
+                        "function_name": "Normal", 
+                        "norm_mean": 1.0, 
+                        "norm_stddev": 0.1215913664, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.16, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "HAZUS-MH MR3 Table 8.6 Small Pumping Plants", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.43, 
                         "minimum": null
                     }
@@ -3502,17 +3403,17 @@
                     "damage_state_name": "DS2 Moderate", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 0.5, 
-                        "recovery_mean": 4.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.303978416
+                        "function_name": "Normal", 
+                        "norm_mean": 4.0, 
+                        "norm_stddev": 0.303978416, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.27, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.57, 
                         "minimum": null
                     }
@@ -3522,17 +3423,17 @@
                     "damage_state_name": "DS3 Extensive", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 1.5, 
-                        "recovery_mean": 8.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 0.9119352479
+                        "function_name": "Normal", 
+                        "norm_mean": 8.0, 
+                        "norm_stddev": 0.9119352479, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.35, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 0.78, 
                         "minimum": null
                     }
@@ -3542,17 +3443,17 @@
                     "damage_state_name": "DS4 Complete", 
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
-                        "function_name": "RecoveryFunction", 
-                        "recovery_95percentile": 3.0, 
-                        "recovery_mean": 12.0, 
-                        "recovery_state_definition": "Not Available.", 
-                        "recovery_std": 1.8238704957
+                        "function_name": "Normal", 
+                        "norm_mean": 12.0, 
+                        "norm_stddev": 1.8238704957, 
+                        "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
                         "beta": 0.4, 
                         "damage_state_definition": "Not Available.", 
                         "fragility_source": "Not Available.", 
                         "function_name": "Lognormal", 
+                        "location": 0, 
                         "median": 1.33, 
                         "minimum": null
                     }
