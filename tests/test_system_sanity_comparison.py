@@ -89,7 +89,8 @@ class TestSystemSanity(unittest.TestCase):
                 if "tests" in root:
                     if "simulation_setup" in root:
                         # adjusted to keep track of old values in old branches
-                        if 'test_scenario_pscoal_600MW' not in file_name:
+                        if 'test_scenario_pscoal_600MW' not in file_name and \
+                                'test_setup' not in file_name:
                             conf_file_paths.append(os.path.join(root,
                                                                 file_name))
 
@@ -111,12 +112,14 @@ class TestSystemSanity(unittest.TestCase):
                 history_economic_loss_for_model \
                     = pickle.load(open(pickel_flename, 'rb'))
 
+                print("\nMatching results for : " +
+                      os.path.basename(conf_file_path))
                 self.assertTrue(
                     np.array_equal(economic_loss_of_model,
                                    history_economic_loss_for_model),
                     conf_file_path
                 )
-
+                print("OK")
 
 if __name__ == '__main__':
     unittest.main()
