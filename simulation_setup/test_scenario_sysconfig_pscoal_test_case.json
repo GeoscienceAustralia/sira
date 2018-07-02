@@ -6,7 +6,7 @@
         "NUM_SAMPLES": 1,
         "INTENSITY_MEASURE_MAX": 1.0,
         "INTENSITY_MEASURE_MIN": 1.0,
-        "INTENSITY_MEASURE_STEP": 1
+        "INTENSITY_MEASURE_STEP": 1.0
     }, 
     "Input": {
         "INPUT_DIR_NAME": "models/powerstation_coal/"
