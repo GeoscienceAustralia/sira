@@ -4,7 +4,7 @@ body {
   background-color: #edf0f2;
   margin: 0;
   padding: 0;
-  font-family: "Lato", "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   color: #333;
   line-height: 1.5;
@@ -12,13 +12,13 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: black;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0;
   font-family: "Khand", "Alegreya Sans SC", "serif";
 }
 
 h1 {
-  font-size: 38px;
+  font-size: 40px;
   padding: 10px 10px 10px 45px;
   margin: 20px 0 25px -45px;
   background-color: none;
