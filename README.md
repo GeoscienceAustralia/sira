@@ -1,4 +1,4 @@
-[Full documentation on GitHub Pages](http://geoscienceaustralia.github.io/sifra/index.html).
+[Full documentation on GitHub Pages](http://geoscienceaustralia.github.io/sifra/)
 
 
 # What is it?
@@ -53,7 +53,7 @@ The virtual environments were initally described and implemented using
 microservices implemented in docker containers. If you have docker installed on
 your system it is probably easiest to use the containers as described below.
 
-## Building the Run Environment
+## Building the Run Environment Using Docker
 
 The AWS and Docker configuration is now the preferred way to deploy and develop
  the application.
