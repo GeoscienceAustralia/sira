@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-###################
-SIFRA Documentation
-###################
+##########################################################################
+SIFRA: A System for Investigating Vulnerability of Lifeline Infrastructure
+##########################################################################
 
 https://github.com/GeoscienceAustralia/sifra |br|
 Release: |release|
