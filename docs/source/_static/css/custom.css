@@ -1,10 +1,12 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
 body {
   background-color: #edf0f2;
   margin: 0;
   padding: 0;
-  font-family: "Roboto", "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', 'Open Sans', Helvetica, sans-serif;
   font-size: 16px;
   color: #333;
   line-height: 1.5;
@@ -12,9 +14,9 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: black;
-  font-weight: 600;
+  font-weight: 700;
   padding: 0;
-  font-family: "Khand", "Alegreya Sans SC", "serif";
+  font-family: 'Merriweather', 'PT Serif' 'serif', 'Khand';
 }
 
 h1 {
