@@ -1,4 +1,4 @@
-See the full [documentation on GitHub Pages](http://geoscienceaustralia.github.io/sifra/index.html).
+[Full documentation on GitHub Pages](http://geoscienceaustralia.github.io/sifra/index.html).
 
 
 # What is it?
@@ -8,40 +8,37 @@ SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 It comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
 hazards, based on assessment of the fragilities and configuration of
-components that comprises the facility. Currently the system is 
-designed to work with earthquake hazards only.
+components that comprise the facility. Currently the system is designed
+to work with earthquake hazards only. However, in the development of the
+methodology and classes, there is a strong emphasis on making the
+hazard attribution process and infrastructure models flexible to allow
+for expansion to other hazards and new infrastructure sectors.
 
-The following are some key features of this tool:
+SIFRA was developed in [Geoscience Australia (GA)](<http://www.ga.gov.au/)
+in support of the agency's vision to contribute to enhancing the resilience
+of communities in Australia and its region.
 
-- Open Source: Written in Python, and there is no dependency on
-  proprietary tools. It should run on OS X, Windows, and Linux 
-  platforms.
+Some key features of this tool:
 
-- Flexible Facility Model: The data model is based on graph 
-  theory. All infrastructure systems are represented as 
-  networks. This allows an user to develop arbitrarily complex 
-  custom ``facility`` models – for a Facility or a network – for 
-  impact simulation.
+- Open Source: Written in Python, and there is no dependency on proprietary
+  tools. It should run on OS X, Windows, and Linux platforms.
 
-- Extensible Component Library: User can define new ``component 
-  types`` (the building blocks of a facility) and link it to 
+- Flexible Infrastructure Model: The data model is based on graph theory.
+  All infrastructure systems are represented as networks.
+  This allows an user to develop arbitrarily complex custom facility models -
+  for a Facility or a network – for impact simulation.
+
+- Extensible Component Library: User can define new instances of
+  `component_type` (the building blocks of a facility) and link it to
   existing or custom fragility algorithms.
 
-- Component Criticality: Scenario Analysis tools allow users to
-  identify the cost of restoration for chosen scenarios, expected
-  restoration times, and which component upgrades can most 
-  benefit the system.
+- Component Criticality: Scenario Analysis tools allow users to identify
+  the cost of restoration for chosen scenarios, expected restoration times,
+  and which component upgrades can most benefit the system.
 
-- Restoration Prognosis: User can experiment with different 
-  levels of hazards and post-disaster resource allocation to 
-  gauge restoration times for facility operations.
-
-
-We are currently extending the system to provide facilities for sharing models
-and model "components" (we are still working on the nomenclature... hence the
-quotes) such as infrastrure, response functions and entire system models. This
-system is not integrated into the modelling system proper at present but will be
-over the course of coming months (as at Feb 2017).
+- Restoration Prognosis: Users can experiment with different levels of
+  hazards and post-disaster resource allocation to gauge restoration
+  times for facility operations.
 
 
 # Setup Instructions
@@ -72,7 +69,6 @@ following instructions in the current directory:
 ```
 export AWS_ACCESS_KEY = <AWS ACCESS KEY>
 export AWS_SECRET_KEY = <AWS SECRET KEY>
-
 packer build "installation\build.json"
 ```
 
@@ -106,7 +102,6 @@ or, simply run:
 docker run -it -v "$(pwd):/sifra" --name sifra sifra
 ```
 
-
 This will give you a terminal inside the container in which you can execute
 commands. Inside the container you can find the current directory mapped at
 `/sifra`. You can modify files either within the container or the host and the
@@ -137,7 +132,7 @@ The following direcotories must be marked as 'Sources Root' in PyCharm.
 - sifra
 - sifra-api
 
-## Running the Code
+# Running the Code
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
@@ -148,7 +143,7 @@ The code needs a setup file for configuring the model and simulation scenario.
 It can be in any of three formats: `ini`, `conf`, or `json`. The code first
 converts any setup file to json first before running.
 
-To run the code: move into the root directory of `sifra` code, and use the
+**To run the code:** move into the root directory of `sifra` code, and use the
 following commmand format, supplying with the requisite configuration file.
 
     $ python sifra -s simulation_setup/scenario_ss_x.ini
@@ -157,6 +152,8 @@ Sample configuration files are located in sifra\simulation_setup
 
 Depending on the scale of the model, and simulation parameters chosen,
 it may take between a few minutes and a few days to complete a run.
+
+## Run Analysis on Previously Run Simulation Data
 
 To run the post-simulation analysis on the generated output data, we need to
 supply the setup file used to run the original simulation and the log file that
@@ -173,7 +170,8 @@ To run tests use unittest. Move into sifra folder:
     $ cd sifra
     $ python -m unittest discover tests
 
-## Todo
+
+# Todo
 
 - Restructure of Python code. While the simulation has been integrated with
   the json serialisation/deserialisation logic, the redundant classes should
