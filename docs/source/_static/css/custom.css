@@ -19,11 +19,20 @@ body {
   line-height: 1.5;
 }
 
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    font-weight: 500;
+    /*font-family: 'Zilla Slab', "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;*/
+    font-family: 'Zilla Slab', 'Lora', serif;
+}
+.toctree-wrapper {
+    font-size: 30px;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #333333;
   font-weight: 400;
   padding: 0;
-  font-family: 'Lora', 'Zilla Slab', serif;
+  font-family: 'Zilla Slab', 'Lora', serif;
 }
 
 h1 {
@@ -38,7 +47,7 @@ h1 {
 h2 {
   padding: 10px 10px 10px 0px;
   margin: 10px 0 5px 0px;
-  font-size: 31px;
+  font-size: 30px;
 }
 
 h3 {
