@@ -1,13 +1,19 @@
-/* Sphinx theme customisation
--------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:700');
-@import url('https://fonts.googleapis.com/css?family=Khand:600');
+/*
+-------------------------------
+Sphinx theme customisation
+-------------------------------
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lora:400');
+@import url('https://fonts.googleapis.com/css?family=Zilla+Slab:500');
+
+
 
 body {
   background-color: #edf0f2;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', 'Open Sans', 'Helvetica', sans-serif;
+  font-family: 'Roboto', 'Lato', 'Helvetica', sans-serif;
   font-size: 16px;
   color: #333333;
   line-height: 1.5;
@@ -15,25 +21,29 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: #333333;
-  font-weight: 700;
+  font-weight: 400;
   padding: 0;
-  font-family: 'Roboto Slab', 'Khand', 'PT Serif', serif;
+  font-family: 'Lora', 'Zilla Slab', serif;
 }
 
 h1 {
-  font-size: 38px;
-  padding: 10px 10px 10px 45px;
-  margin: 20px 0 25px -45px;
+  font-size: 39px;
+  padding: 10px 45px 10px 0px;
+  margin: 20px 0px 20px 0px;
   background-color: none;
   width: calc(100% + 90px);
-  line-height: 110%;
-  /* border-bottom: 1px solid #D8E4EF; */
+  line-height: 115%;
 }
 
 h2 {
-  font-size: 30px;
+  padding: 10px 10px 10px 0px;
+  margin: 10px 0 5px 0px;
+  font-size: 31px;
 }
 
 h3 {
-  font-size: 24px;
+  padding: 10px 10px 10px 0px;
+  margin: 10px 0 5px 0px;
+  font-size: 26px;
+  border-top: 1px solid #D8E4EF;
 }
