@@ -3,70 +3,91 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-##############################################################
-SIFRA: A Tool for Analysis of Hazard Impacts on Infrastructure
-##############################################################
+###################
+SIFRA Documentation
+###################
 
 https://github.com/GeoscienceAustralia/sifra |br|
 Release: |release|
 
-SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
-It comprises a method and software tools that provide a framework
-for simulating the fragility of infrastructure facilities to natural
-hazards, based on assessment of the fragilities and configuration of
-components that comprise the facility. Currently the system is designed
-to work with earthquake hazards only. However, in the development of the
-methodology and classes, there is a strong emphasis on making the
-hazard attribution process and infrastructure models flexible to allow
-for expansion to other hazards and new infrastructure sectors.
+SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
+It represents a methodology and supporting code for systematising
+:term:`vulnerability` analysis of lifeline infrastructure to natural hazards
+(i.e. response of infrastructure assets to environmental excitation).
+
+The impact assessment is based on the :term:`fragilities <fragility>`
+and configuration of components that comprise the infrastructure system
+under study. The analytical process is supplemented by an assessment of
+the system functionality through the post-damage network flow analysis,
+and approximations for recovery timeframes.
+
+The current focus has been on studying responses of infrastructure facilities
+(e.g. power generation plants, high voltage substations). Considerable
+work has been done in the code backend to extend the same methodology
+to modelling network vulnerability as well
+(e.g. electricity transmission networks).
+
+Currently the software has been tested to work with earthquake hazards only.
+However, the methodology and class structure have been developed such
+that the platform is effectively hazard agnostic. The hazard attribution
+process and infrastructure models are flexible to allow for expansion
+to other hazards and new infrastructure sectors.
 
 SIFRA was developed in `Geoscience Australia (GA) <http://www.ga.gov.au/>`_
 in support of the agency's vision to contribute to enhancing the resilience
 of communities in Australia and its region.
 
 
-Features
+FEATURES
 ========
 
-- **Open Source:** |br|
+**Open Source:**
+    Written in Python, and there is no dependency on
+    proprietary tools. It should run on OS X, Windows, and
+    Linux platforms.
 
-  Written in Python, and there is no dependency on
-  proprietary tools. It should run on OS X, Windows, and
-  Linux platforms. |br|
+**Flexible Infrastructure Model:**
+    The data model is based on graph theory. All infrastructure systems
+    are represented as networks. This allows an user to develop
+    arbitrarily complex custom facility models -- for a :term:`Facility`
+    or a network -- for impact simulation.
 
-- **Flexible Facility Model:** |br|
+**Extensible Component Library:**
+    User can define new instances of `component_type`
+    (the building blocks of a facility) and link it to existing or
+    custom fragility algorithms.
 
-  :term:`Facility` data model is based on graph theory, allowing
-  the user to develop arbitrarily complex custom facility models
-  for simulation. |br|
+**Component Criticality Analysis:**
+    Scenario Analysis tools allow users to identify the cost of
+    restoration for chosen scenarios, expected restoration times,
+    and which component upgrades can most benefit the system.
 
-- **Extensible Component Library:** |br|
-
-  User can define new instances of `component_type`
-  (the building blocks of a facility) and link it to existing or
-  custom fragility algorithms. |br|
-
-- **Component Criticality Analysis:** |br|
-
-  Scenario Analysis tools allow users to identify the cost of
-  restoration for chosen scenarios, expected restoration times,
-  and which component upgrades can most benefit the system.|br|
-
-- **Restoration Prognosis:** |br|
-
-  User can experiment with different levels of hazards and
-  post-disaster resource allocation to gauge restoration
-  times for facility operations. |br|
+**Restoration Prognosis:**
+    User can experiment with different levels of hazards and
+    post-disaster resource allocation to gauge restoration
+    times for facility operations.
 
 
-Contents
-========
-
-.. include:: chapters_for_toc.txt
+.. _user-docs:
 
 .. toctree::
+   :numbered:
+   :maxdepth: 2
+   :caption: User Documentation
 
-    bibliography
-    reportglossary
+   ch01_intro
+   ch02_concept
+   ch03_installation
+   ch04_simsetup
+   ch05_fragility_attribution
 
-.. include:: copyrightnotice.rst
+
+.. _back-matter:
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Back Matter
+
+   bibliography
+   reportglossary
+   copyrightnotice
