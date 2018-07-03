@@ -25,6 +25,6 @@ h1 {
   margin: 20px 0 25px -45px;
   background-color: none;
   width: calc(100% + 90px);
-  line-height: 105%;
+  line-height: 50%;
   /* border-bottom: 1px solid #D8E4EF; */
 }
