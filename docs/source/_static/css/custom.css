@@ -1,6 +1,6 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto|PT+Serif:700');
 
 body {
   background-color: #edf0f2;
@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
   color: black;
   font-weight: 700;
   padding: 0;
-  font-family: 'Merriweather', 'PT Serif', 'serif', 'Khand';
+  font-family: 'PT Serif', 'Merriweather', 'serif', 'Khand';
 }
 
 h1 {
