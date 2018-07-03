@@ -1,6 +1,6 @@
 /* Sphinx theme customisation
 -------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Roboto|Markazi+Text:600,700|PT+Serif:700');
+@import url('https://fonts.googleapis.com/css?family=Roboto|PT+Serif:700');
 
 body {
   background-color: #edf0f2;
@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
   color: black;
   font-weight: 600;
   padding: 0;
-  font-family: 'Markazi Text', 'PT Serif', serif, 'Khand';
+  font-family: 'PT Serif', serif, 'Khand';
 }
 
 h1 {
@@ -25,6 +25,6 @@ h1 {
   margin: 20px 0 25px -45px;
   background-color: none;
   width: calc(100% + 90px);
-  line-height: 80%;
+  line-height: 90%;
   /* border-bottom: 1px solid #D8E4EF; */
 }
