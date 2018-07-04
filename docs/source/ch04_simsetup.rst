@@ -285,8 +285,8 @@ following subsections:
 
 .. _inputdata__component_list:
 
-List of Component: *component_list*
------------------------------------
+List of Component: component_list
+---------------------------------
 
 The *component_list* has the following parameters:
 
@@ -378,8 +378,8 @@ The *component_list* has the following parameters:
 
 .. _inputdata__component_connections:
 
-Connections between Components: *component_connections*
--------------------------------------------------------
+Connections between Components: component_connections
+-----------------------------------------------------
 
 `origin`
   :Description: The node (component) to which the tail of a
@@ -429,8 +429,8 @@ Connections between Components: *component_connections*
 
 .. _inputdata__supply_setup:
 
-Configuration of Supply Nodes: *supply_setup*
----------------------------------------------
+Configuration of Supply Nodes: supply_setup
+-------------------------------------------
 
 `input_node`
   :Description: The `component_id` of the input node.
@@ -480,8 +480,8 @@ Configuration of Supply Nodes: *supply_setup*
 
 .. _inputdata__output_setup:
 
-Configuration of Output Nodes: *output_setup*
----------------------------------------------
+Configuration of Output Nodes: output_setup
+-------------------------------------------
 
 `output_node`
   :Description: These are the 'sink' nodes representing the load or
@@ -546,8 +546,8 @@ Configuration of Output Nodes: *output_setup*
 
 .. _inputdata__comp_type_dmg_algo:
 
-Component Type Damage Algorithms: *comp_type_dmg_algo*
-------------------------------------------------------
+Component Type Damage Algorithms: comp_type_dmg_algo
+----------------------------------------------------
 
 .. _dmg_algo_component_type:
 
@@ -735,8 +735,8 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
 .. _inputdata__damage_state_def:
 
-Definition of Damage States: *damage_state_def*
------------------------------------------------
+Definition of Damage States: damage_state_def
+---------------------------------------------
 
 This table documents the physical damage characteristics that are implied
 by the damage states used to model the fragility of the system components.
