@@ -1,4 +1,6 @@
-﻿License
+﻿:orphan:
+
+License
 =======
 
 Copyright 201sudo, Geoscience Australia
