@@ -8,7 +8,6 @@ Sphinx theme customisation
 @import url('https://fonts.googleapis.com/css?family=Lora:400');
 
 
-
 body {
     background-color: #edf0f2;
     margin: 0;
@@ -20,8 +19,10 @@ body {
 }
 
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    color: #333333;
     font-weight: 500;
     font-family: 'Zilla Slab', 'Roboto Slab', 'Lora', serif;
+    line-height: 115%;
 }
 
 h2, .rst-content .toctree-wrapper p.caption {
@@ -31,13 +32,15 @@ h2, .rst-content .toctree-wrapper p.caption {
     font-size: 30px;
 }
 
-
+/*
 h1, h2, h3, h4, h5, h6 {
     color: #333333;
     padding: 0;
     font-weight: 500;
     font-family: 'Zilla Slab', 'Lora', serif;
+    line-height: 115%;
 }
+*/
 
 h1 {
     font-size: 39px;
@@ -45,7 +48,6 @@ h1 {
     margin: 20px 0px 20px 0px;
     background-color: none;
     width: calc(100% + 90px);
-    line-height: 115%;
 }
 
 h2 {
@@ -57,14 +59,14 @@ h2 {
 h2:before {
     content: ' ';
     display: block;
-    width: 70px;
-    padding-top: 5px;
-    border-top: 10px solid #555;
+    width: 80px;
+    padding-top: 15px;
+    border-top: 10px solid #555555;
 }
 
 h3 {
   padding: 10px 10px 10px 0px;
-  margin: 10px 0 5px 0px;
+  margin: 10px 0 10px 0px;
   font-size: 26px;
-  border-top: 1px solid #aaaaaa;
+  border-top: 1px solid #DDDDDD;
 }
