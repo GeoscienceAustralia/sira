@@ -101,7 +101,6 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['epilog.rst',
-                    'copyrightnotice.rst',
                     '.DS_Store',
                     'tex',
                     '.bak']
