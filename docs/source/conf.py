@@ -65,7 +65,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'SIFRA'
-copyright = u'2017, Geoscience Australia'
+copyright = u'2018, Geoscience Australia'
 author = u'Maruf Rahman'
 
 # Version info for the project.
