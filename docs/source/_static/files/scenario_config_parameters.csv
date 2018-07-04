@@ -5,5 +5,5 @@ Example:,'PGA'
 ,
 **TEST_UNIT**
 Data Type:,String
-Description:,Demand Parameter Unit
+Description:,Demand Parameter Unit :math:`{\{x \in \mathbb{R} \mid 0 \le x \le 1\}}`
 Example:,'g'
