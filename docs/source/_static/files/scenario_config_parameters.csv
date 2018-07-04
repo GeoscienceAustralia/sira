@@ -1,9 +1,9 @@
-**HAZARD_TRANSFER**,
+**HAZARD_TRANSFER**
 Data Type:,String
 Description:,Engineering Demand Parameter
 Example:,'PGA'
 ,
-**TEST_UNIT**,
+**TEST_UNIT**
 Data Type:,String
 Description:,Demand Parameter Unit
 Example:,'g'
