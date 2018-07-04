@@ -2,6 +2,7 @@
 Data Type:,String
 Description:,Engineering Demand Parameter
 Example:,'PGA'
+,
 **HAZARD_TRANSFER_UNIT**,
 Data Type:,String
 Description:,Demand Parameter Unit
