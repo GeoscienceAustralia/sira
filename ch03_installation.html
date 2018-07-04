@@ -406,22 +406,25 @@ for your Windows platform (32 or 64 bit):</p>
 </div>
 <div class="section" id="running-the-core-sifra-code">
 <span id="running-sifra"></span><h2>3.4 Running the Core SIFRA Code<a class="headerlink" href="#running-the-core-sifra-code" title="Permalink to this headline">¶</a></h2>
-<p>For the purposes of discussion, it is assumed that the name of the
-configuration file is <code class="docutils literal"><span class="pre">config_x.conf</span></code>, and it is located in the
-directory <code class="docutils literal"><span class="pre">/Users/user_x/sifra/simulation_setup/</span></code>.</p>
+<p>The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: <cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The code first
+converts any setup file to json first before running. For the purposes of
+discussion, it is assumed that the name of the configuration file is
+<code class="docutils literal"><span class="pre">config_x.ini</span></code>, and it is located in the directory
+<code class="docutils literal"><span class="pre">/Users/user_x/sifra/simulation_setup/</span></code>.</p>
 <p>The software can be run from the command line using these simple steps:</p>
 <ol class="arabic">
 <li><p class="first">Open a command terminal</p>
 </li>
 <li><p class="first">Change to the directory that has the <code class="docutils literal"><span class="pre">sifra</span></code> code. If the code is
 in the directorty <code class="docutils literal"><span class="pre">/Users/user_x/sifra</span></code>, then run:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">sifra</span><span class="o">/</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd ~/sifra/
 </pre></div>
 </div>
 </li>
 <li><p class="first">Run the primary fragility characterisation module from the command
 line:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sifra</span> <span class="n">simulation_setup</span><span class="o">/</span><span class="n">config_x</span><span class="o">.</span><span class="n">conf</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python sifra -s simulation_setup/config_x.ini
 </pre></div>
 </div>
 </li>
@@ -430,24 +433,23 @@ line:</p>
 noted, that the post-processing tools depend on the outputs produced by a
 full simulation run that characterises the system fragility. Therefore,
 the full run of the SIFRA needs to be conducted on the system model of
-interest prior to running the tools for model fitting and scenario and
-restoration analysis tools. They are simply run as:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">sifra</span><span class="o">/</span><span class="n">sifra</span><span class="o">/</span>
-<span class="n">python</span> <span class="n">fit_model</span><span class="o">.</span><span class="n">py</span> <span class="o">../</span><span class="n">simulation_setup</span><span class="o">/</span><span class="n">config_x</span><span class="o">.</span><span class="n">conf</span>
-<span class="n">python</span> <span class="n">scenario_loss_analysis</span><span class="o">.</span><span class="n">py</span> <span class="o">../</span><span class="n">simulation_setup</span><span class="o">/</span><span class="n">config_x</span><span class="o">.</span><span class="n">conf</span>
+interest prior to running the tools for the loss scenario and
+restoration analysis tools.</p>
+<p>To run the post-simulation analysis on the generated output data, we need to
+supply the setup file used to run the original simulation and the log file that
+stores the directory locations for the the stored output data. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python sifra/scenario_loss_analysis.py
+    -s simulation_setup/scenario_ss_x.ini
+    -d logs/sifralog_20180619_155612_dirs.json
 </pre></div>
 </div>
 </div>
 <div class="section" id="running-code-tests">
 <h2>3.5 Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
-<p>To run tests use either <code class="docutils literal"><span class="pre">nose</span></code> or <code class="docutils literal"><span class="pre">unittest</span></code>.
-Example (from the first level ‘sifra’ directory):</p>
+<p>To run tests use <code class="docutils literal"><span class="pre">unittest</span></code>. The tests need to be run from the root of
+the <cite>sifra</cite> code directory:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ cd sifra   # and not cd sifra/sifra
 $ python -m unittest discover tests
-</pre></div>
-</div>
-<p>or, simply run:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ nosetest
 </pre></div>
 </div>
 <p>If you are using docker as described above, you can do this within the sifra
@@ -468,7 +470,7 @@ container.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Geoscience Australia.
+        &copy; Copyright 2018, Geoscience Australia.
 
     </p>
   </div>
