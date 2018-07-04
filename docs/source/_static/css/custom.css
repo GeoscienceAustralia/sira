@@ -78,7 +78,7 @@ table td {
     border: none;
     border-collapse: collapse;
     background-color: transparent;
-    vertical-align: middle;
+    vertical-align: top;
     font-size: 90%;
     margin: 0;
     overflow: visible;
