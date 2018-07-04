@@ -261,7 +261,7 @@ SCENARIO CONFIG PARAMETERS:
 
 .. csv-table::
    :header-rows: 0
-   :widths: 30, 90
+   :widths: 20, 80
    :stub-columns: 0
    :file: ./_static/files/scenario_config_parameters.csv
 
