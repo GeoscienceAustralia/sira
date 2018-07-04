@@ -170,6 +170,9 @@ To run tests use unittest. Move into sifra folder:
     $ cd sifra
     $ python -m unittest discover tests
 
+If you are using docker as described above, you can do this within the sifra
+container.
+
 
 # Todo
 
