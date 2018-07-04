@@ -14,26 +14,27 @@ their parameters, data layout, and sample input data are presented in the
 remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind::
 
-    .
-    ├── LICENSE                  <-- License file: Apache 2
-    ├── README.md                <-- Summary documentation
-    │
-    ├── docs                     <-- Sphinx documentation files
-    │   └── source
-    │       ├── _static
-    │       ├── _templates
-    │       └── extensions
-    │
-    ├── models                   <-- Facility system models reside here
-    │   └── <facility_type>      <-- Dir for models of specified type
-    │
-    ├── output                   <-- Simulation results are stored here
-    │   └── scenario_X           <-- Simulation project name
-    │       └── raw_output       <-- Raw data/binary outputs for provenance &
-    │                                  post-processing
-    ├── sifra                    <-- The MODULES/SCRIPTS
-    ├── simulation_setup         <-- Scenario config files
-    └── tests                    <-- Test scripts
+   .
+   ├── docs                        <-- Sphinx documentation files
+   │   └── source
+   ├── hazard                      <-- Hazard scenario files for networks
+   ├── installation                <-- Installation scripts for dev envs
+   ├── logs
+   ├── models                      <-- Infrastructure models reside here
+   ├── output                      <-- Default location for simulation results
+   ├── scripts
+   ├── sifra                       <-- The core code reside here
+   │   └── modelling
+   ├── simulation_setup            <-- Scenario configuration files
+   ├── tests                       <-- Test scripts + data for sanity checks
+   │   ├── historical_data
+   │   ├── models
+   │   └── simulation_setup
+   │
+   ├── LICENSE                      <-- License file
+   ├── README.md                    <-- Summary documentation
+   ├── setup.py                     <-- Package setup file
+   └── __main__.py                  <-- Entry point for running the code
 
 
 .. _scenario-config-file:
@@ -41,6 +42,9 @@ to the keep the directory structure of the code in mind::
 Scenario Definition File
 ========================
 
+The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: `ini`, `conf`, or `json`. The code first
+converts any setup file to json first before running.
 The simulation 'scenario' definition file is located in the following directory
 (relative to the root dir of source code)::
 
@@ -48,6 +52,14 @@ The simulation 'scenario' definition file is located in the following directory
 
 The following table lists the parameters in the config file, their
 description, and representative values.
+
+`INTENSITY_MEASURE_PARAM`
+    :Description:   Engineering Demand Parameter
+
+    :Data Type:     String
+
+    :Example:       'PGA'
+
 
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
@@ -65,24 +77,24 @@ description, and representative values.
     :Example:       'g'
 
 
-`PGA_MIN`
-    :Description:   Minimum value for PGA
+`INTENSITY_MEASURE_MIN`
+    :Description:   Minimum value for internsity measurement (IM) parameter
 
     :Data Type:     Float
 
     :Example:       0.0
 
 
-`PGA_MAX`
-    :Description:   Maximum value for PGA
+`INTENSITY_MEASURE_MAX`
+    :Description:   Maximum value for internsity measurement (IM) parameter
 
     :Data Type:     Float
 
     :Example:       1.5
 
 
-`PGA_STEP`
-    :Description:   Step size for incrementing PGA
+`INTENSITY_MEASURE_STEP`
+    :Description:   Step size for incrementing the IM param
 
     :Data Type:     Float
 
@@ -246,7 +258,7 @@ description, and representative values.
     :Example:       1
 
 
-.. .. csv-table::
+.. csv-table::
    :header-rows: 1
    :widths: 30, 70
    :stub-columns: 0
