@@ -55,9 +55,10 @@ h2 {
 }
 
 h2:before {
-    content:' ';
-    display:block;
+    content: ' ';
+    display: block;
     width: 70px;
+    padding-top: 5px;
     border-top: 10px solid #555;
 }
 
@@ -65,5 +66,5 @@ h3 {
   padding: 10px 10px 10px 0px;
   margin: 10px 0 5px 0px;
   font-size: 26px;
-  border-top: 1px solid #D8E4EF;
+  border-top: 1px solid #aaaaaa;
 }
