@@ -58,8 +58,7 @@ h2:before {
     content:' ';
     display:block;
     width: 70px;
-    padding-top: 10px;
-    border-top:10px solid #555;
+    border-top: 10px solid #555;
 }
 
 h3 {
