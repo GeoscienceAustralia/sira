@@ -67,24 +67,21 @@ as being structured in a three-level hierarchy:
 
 
 -  **Level 1 : Infrastructure Network**
-
    This is the top level of interconnected infrastructure systems where
-   infrastructure facilities are connected to form a network or networks.
+   infrastructure facilities are connected to form a network or networks.|br|
 
 
 -  **Level 2 : Infrastructure Facility**
-
    The concept of facilities used in this framework map closely to the
    typology of macro-components as defined in the Synerg-G program
    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
-   systems as defined in :cite:`Rinaldi-etal-2001`.
+   systems as defined in :cite:`Rinaldi-etal-2001`.|br|
 
 -  **Level 3 : Infrastructure Microcomponent**
-
    This concept of components map closely to the typology of
    micro-components as defined in the Synerg-G program
    :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
-   definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.
+   definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.|br|
 
 This applies to discussions on a *complete* that is responsible for
 delivering some service. This also applies to classification of assets,

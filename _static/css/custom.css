@@ -4,46 +4,69 @@ Sphinx theme customisation
 -------------------------------
 */
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Lora:400');
 @import url('https://fonts.googleapis.com/css?family=Zilla+Slab:500');
-
+@import url('https://fonts.googleapis.com/css?family=Lora:400');
 
 
 body {
-  background-color: #edf0f2;
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', 'Lato', 'Helvetica', sans-serif;
-  font-size: 16px;
-  color: #333333;
-  line-height: 1.5;
+    background-color: #edf0f2;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', 'Lato', 'Helvetica', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #333333;
-  font-weight: 400;
-  padding: 0;
-  font-family: 'Lora', 'Zilla Slab', serif;
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    color: #333333;
+    font-weight: 500;
+    font-family: 'Zilla Slab', 'Roboto Slab', 'Lora', serif;
+    line-height: 115%;
 }
+
+h2, .rst-content .toctree-wrapper p.caption {
+    padding: 10px 10px 10px 0px;
+    margin: 10px 0 5px 0px;
+    padding-top: 15px;
+    font-size: 30px;
+}
+
+/*
+h1, h2, h3, h4, h5, h6 {
+    color: #333333;
+    padding: 0;
+    font-weight: 500;
+    font-family: 'Zilla Slab', 'Lora', serif;
+    line-height: 115%;
+}
+*/
 
 h1 {
-  font-size: 39px;
-  padding: 10px 45px 10px 0px;
-  margin: 20px 0px 20px 0px;
-  background-color: none;
-  width: calc(100% + 90px);
-  line-height: 115%;
+    font-size: 39px;
+    padding: 10px 45px 10px 0px;
+    margin: 20px 0px 20px 0px;
+    background-color: none;
+    width: calc(100% + 90px);
 }
 
 h2 {
-  padding: 10px 10px 10px 0px;
-  margin: 10px 0 5px 0px;
-  font-size: 31px;
+    padding: 10px 10px 10px 0px;
+    margin: 10px 0 5px 0px;
+    font-size: 30px;
+}
+
+h2:before {
+    content: ' ';
+    display: block;
+    width: 80px;
+    padding-top: 15px;
+    border-top: 10px solid #555555;
 }
 
 h3 {
   padding: 10px 10px 10px 0px;
-  margin: 10px 0 5px 0px;
+  margin: 10px 0 10px 0px;
   font-size: 26px;
-  border-top: 1px solid #D8E4EF;
+  border-top: 1px solid #DDDDDD;
 }
