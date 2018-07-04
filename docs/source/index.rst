@@ -88,7 +88,6 @@ Features
    :maxdepth: 1
    :caption: Back Matter
 
+   copyrightnotice.rst
    bibliography.rst
    reportglossary.rst
-   copyrightnotice.rst
-
