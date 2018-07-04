@@ -262,7 +262,8 @@ description, and representative values.
    :header-rows: 1
    :widths: 30, 70
    :stub-columns: 0
-   :file: _static/files/scenario_config_parameters.csv
+
+   :file: ./_static/files/scenario_config_parameters.csv
 
 
 .. _facility-config-file:
@@ -705,7 +706,8 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
 
 `recovery_95percentile`
-  :Description: Some times it is difficult to get the concept of
+  :Description: [Optional paramter]
+                Some times it is difficult to get the concept of
                 standard deviation across to an audience of
                 infrastructure experts, and hence it is difficult
                 to get a reliable value for it. In such cases we can
