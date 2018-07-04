@@ -239,9 +239,12 @@ Install the downloaded `wheels` (\*.whl files) with pip::
 Running the Core SIFRA Code
 ===========================
 
-For the purposes of discussion, it is assumed that the name of the
-configuration file is ``config_x.conf``, and it is located in the
-directory ``/Users/user_x/sifra/simulation_setup/``.
+The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: `ini`, `conf`, or `json`. The code first
+converts any setup file to json first before running. For the purposes of
+discussion, it is assumed that the name of the configuration file is
+``config_x.ini``, and it is located in the directory
+``/Users/user_x/sifra/simulation_setup/``.
 
 The software can be run from the command line using these simple steps:
 
@@ -250,38 +253,38 @@ The software can be run from the command line using these simple steps:
 2.  Change to the directory that has the ``sifra`` code. If the code is
     in the directorty ``/Users/user_x/sifra``, then run::
 
-        cd ~/sifra/
+        $ cd ~/sifra/
 
 3.  Run the primary fragility characterisation module from the command
     line::
 
-        python -m sifra simulation_setup/config_x.conf
+        $ python sifra -s simulation_setup/config_x.ini
 
 The post-processing tools are run as simple python scripts. It should be
 noted, that the post-processing tools depend on the outputs produced by a
 full simulation run that characterises the system fragility. Therefore,
 the full run of the SIFRA needs to be conducted on the system model of
-interest prior to running the tools for model fitting and scenario and
-restoration analysis tools. They are simply run as::
+interest prior to running the tools for the loss scenario and
+restoration analysis tools.
 
-    cd ~/sifra/sifra/
-    python fit_model.py ../simulation_setup/config_x.conf
-    python scenario_loss_analysis.py ../simulation_setup/config_x.conf
+To run the post-simulation analysis on the generated output data, we need to
+supply the setup file used to run the original simulation and the log file that
+stores the directory locations for the the stored output data. For example::
+
+        $ python sifra/scenario_loss_analysis.py
+            -s simulation_setup/scenario_ss_x.ini
+            -d logs/sifralog_20180619_155612_dirs.json
 
 
 Running Code Tests
 ==================
 
 
-To run tests use either ``nose`` or ``unittest``.
-Example (from the first level 'sifra' directory)::
+To run tests use ``unittest``. The tests need to be run from the root of
+the `sifra` code directory::
 
     $ cd sifra   # and not cd sifra/sifra
     $ python -m unittest discover tests
-
-or, simply run::
-
-    $ nosetest
 
 If you are using docker as described above, you can do this within the sifra
 container.
