@@ -257,12 +257,12 @@ description, and representative values.
 
     :Example:       1
 
+SCENARIO CONFIG PARAMETERS:
 
 .. csv-table::
    :header-rows: 1
    :widths: 30, 70
    :stub-columns: 0
-
    :file: ./_static/files/scenario_config_parameters.csv
 
 
