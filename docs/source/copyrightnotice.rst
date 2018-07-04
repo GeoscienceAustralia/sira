@@ -1,7 +1,7 @@
 ﻿:orphan:
 
-License
-=======
+Copyright Notice
+================
 
 Copyright 2018, Geoscience Australia
 
