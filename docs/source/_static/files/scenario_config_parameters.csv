@@ -1,8 +1,8 @@
 Parameter Name,Explanation
 ``HAZARD_TRANSFER_PARAM``,
-,Data Type:,String
-,Description:,Engineering Demand Parameter
-,Example:,'PGA'
+Data Type:,String
+Description:,Engineering Demand Parameter
+Example:,'PGA'
 ``HAZARD_TRANSFER_UNIT``,
 Data Type:,String
 Description:,Demand Parameter Unit
