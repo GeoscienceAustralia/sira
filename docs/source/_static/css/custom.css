@@ -105,18 +105,38 @@ table td {
 }
 
 .rst-content cite {
+    font-family: Consolas, "Andale Mono", "Lucida Console", monospace;
     font-weight: 700;
     font-style: normal;
     font-size: 100%;
-    color: #0070C0; /*#CD0C19;#FF5052;#CC4851*/
+    color: #E74C3C; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
 }
 
-a:link {
+a {
     color: #044CFF;
     cursor: pointer;
     text-decoration: none;
 }
 
+a:visited {
+    text-decoration: none;
+}
+
 a:hover {
     border-bottom: 1px solid;
+}
+
+.wy-menu-vertical a:hover {
+    background-color: #4e4a4a;
+    cursor: pointer;
+}
+
+.wy-menu a:hover {
+    text-decoration: none;
+    border: none;
+}
+
+.wy-side-nav-search > a:hover, .wy-side-nav-search .wy-dropdown > a:hover {
+    border: none;
+    text-decoration: none;
 }
