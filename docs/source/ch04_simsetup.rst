@@ -53,6 +53,17 @@ The simulation 'scenario' definition file is located in the following directory
 The following table lists the parameters in the config file, their
 description, and representative values.
 
+SCENARIO CONFIG PARAMETERS:
+
+.. csv-table::
+   :header-rows: 0
+   :widths: 10,50
+   :stub-columns: 0
+   :file: ./_static/files/scenario_config_parameters.csv
+
+
+
+
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
 
@@ -256,14 +267,6 @@ description, and representative values.
     :Data Type:     Integer
 
     :Example:       1
-
-SCENARIO CONFIG PARAMETERS:
-
-.. csv-table::
-   :header-rows: 0
-   :widths: 10,50
-   :stub-columns: 0
-   :file: ./_static/files/scenario_config_parameters.csv
 
 
 .. _facility-config-file:
