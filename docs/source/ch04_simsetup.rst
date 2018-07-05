@@ -37,17 +37,6 @@ to the keep the directory structure of the code in mind::
    └── __main__.py                  <-- Entry point for running the code
 
 
-TEST TABLE:
-
-+-------+--------+----------+
-| Long Label                |
-+-------+--------+----------+
-| Adam  | 3.4    | 03/02/15 |
-+-------+--------+----------+
-| Smith | 4.2    | 12/11/14 |
-+-------+--------+----------+
-
-
 .. _scenario-config-file:
 
 Scenario Definition File
