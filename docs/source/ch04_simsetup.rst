@@ -37,6 +37,23 @@ to the keep the directory structure of the code in mind::
    └── __main__.py                  <-- Entry point for running the code
 
 
+
+Scenario Definition File TEST
+=============================
+
+
+SCENARIO CONFIG PARAMETERS:
+
+.. include::
+   ./_static/files/scenario_config_parameters.txt
+
+.. .. csv-table::
+   :header-rows: 0
+   :widths: 10,50
+   :stub-columns: 0
+   :file: ./_static/files/scenario_config_parameters.csv
+
+
 .. _scenario-config-file:
 
 Scenario Definition File
@@ -52,26 +69,6 @@ The simulation 'scenario' definition file is located in the following directory
 
 The following table lists the parameters in the config file, their
 description, and representative values.
-
-SCENARIO CONFIG PARAMETERS:
-
-.. .. csv-table::
-   :header-rows: 0
-   :widths: 10,50
-   :stub-columns: 0
-   :file: ./_static/files/scenario_config_parameters.csv
-
-.. include::
-   ./_static/files/scenario_config_parameters.txt
-
-
-`INTENSITY_MEASURE_PARAM`
-    :Description:   Engineering Demand Parameter
-
-    :Data Type:     String
-
-    :Example:       'PGA'
-
 
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
