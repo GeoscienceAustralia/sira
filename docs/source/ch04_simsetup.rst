@@ -59,6 +59,7 @@ SCENARIO CONFIG PARAMETERS:
    :header-rows: 0
    :widths: 10,50
    :stub-columns: 0
+   :delimiter: ":"
    :file: ./_static/files/scenario_config_parameters.csv
 
 
