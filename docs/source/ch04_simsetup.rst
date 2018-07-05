@@ -62,7 +62,7 @@ SCENARIO CONFIG PARAMETERS:
    :file: ./_static/files/scenario_config_parameters.csv
 
 .. include::
-   :file: ./_static/files/scenario_config_parameters.txt
+   ./_static/files/scenario_config_parameters.txt
 
 
 `INTENSITY_MEASURE_PARAM`
