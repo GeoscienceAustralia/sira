@@ -55,13 +55,14 @@ description, and representative values.
 
 SCENARIO CONFIG PARAMETERS:
 
-.. csv-table::
+.. .. csv-table::
    :header-rows: 0
    :widths: 10,50
    :stub-columns: 0
    :file: ./_static/files/scenario_config_parameters.csv
 
-
+.. include::
+   :file: ./_static/files/scenario_config_parameters.txt
 
 
 `INTENSITY_MEASURE_PARAM`
