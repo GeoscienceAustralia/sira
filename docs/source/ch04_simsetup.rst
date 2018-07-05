@@ -252,14 +252,12 @@ description, and representative values.
     :Description:   Switch to indicate whether to run a full simulation,
                     or run test code.
                     0 |rightarrow| run tests, 1 |rightarrow| normal run.
-
     :Data Type:     Integer
-
     :Example:       1
 
 SCENARIO CONFIG PARAMETERS:
 
-.. csv-table::
+.. .. csv-table::
    :header-rows: 0
    :stub-columns: 0
    :file: ./_static/files/scenario_config_parameters.csv
