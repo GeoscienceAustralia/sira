@@ -33,3 +33,8 @@
 "Data Type:",Integer
 "Example:",500
 
+`FOCAL_HAZARD_SCENARIOS`
+"Description:","The value(s) or scenario(s) at which to assess facility response is assessed"
+"Data Type:",List of strings
+"Example:",[0.50, 0.55]
+
