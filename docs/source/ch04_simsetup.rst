@@ -290,7 +290,7 @@ List of Component: component_list
 
 The *component_list* has the following parameters:
 
-`component_id`
+**component_id**
   :Description: Unique id for component in system. This is an instance
                 of `component_type`
 

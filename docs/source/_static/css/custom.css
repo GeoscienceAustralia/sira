@@ -44,14 +44,14 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 39px;
-    padding: 10px 20px 10px 0px;
+    padding: 10px 0px 10px 0px;
     margin: 20px 0px 20px 0px;
     background-color: none;
-    width: calc(100% + 90px);
+    width: 100%;
 }
 
 h2 {
-    padding: 10px 10px 10px 0px;
+    padding: 10px 5px 10px 0px;
     margin: 10px 0 5px 0px;
     font-size: 30px;
 }
@@ -92,4 +92,10 @@ table td {
 
 .rst-content table.docutils {
     border: none;
+}
+
+.rst-content table.field-list .field-name {
+    padding: 5px 10px 5px 10px;
+    text-align: left;
+    white-space: nowrap;
 }
