@@ -71,8 +71,6 @@ h3 {
     border-top: 1px solid #DDDDDD;
 }
 
-.wy-table td,
-.wy-table-bordered-all td,
 .rst-content table.docutils td,
 table td {
     border: none;
@@ -82,7 +80,7 @@ table td {
     font-size: 90%;
     margin: 0;
     overflow: visible;
-    padding: 5px 3px;
+    padding: 5px 5px;
     border-image-width: 0;
 }
 
@@ -95,7 +93,18 @@ table td {
 }
 
 .rst-content table.field-list .field-name {
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px;
     text-align: left;
     white-space: nowrap;
+}
+
+.rst-content table.field-list .field-body {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.rst-content dl dt {
+    font-weight: bold;
+    font-style: oblique;
+    color: #CC4851; /*#CD0C19;#FF5052;#CC4851*/
 }
