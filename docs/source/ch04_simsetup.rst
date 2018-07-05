@@ -290,7 +290,7 @@ List of Component: component_list
 
 The *component_list* has the following parameters:
 
-**component_id**
+`component_id`
   :Description: Unique id for component in system. This is an instance
                 of `component_type`
 
@@ -302,7 +302,7 @@ The *component_list* has the following parameters:
   :Example:     'stack_1'
 
 
-``component_type``
+`component_type`
   :Description: The :term:`typology` of a system component.
                 Represents a broad category of equipment.
 
@@ -314,7 +314,7 @@ The *component_list* has the following parameters:
   :Example:     'Stack'
 
 
-*component_class*
+`component_class`
   :Description: The general category of equipment. A number of
                 component types can be grouped under this, e.g.
                 'Power Transformer 100MVA 230/69' and

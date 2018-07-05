@@ -103,8 +103,9 @@ table td {
     padding-left: 5px;
 }
 
-.rst-content dl dt {
-    font-weight: bold;
-    font-style: oblique;
-    color: #CC4851; /*#CD0C19;#FF5052;#CC4851*/
+.rst-content cite {
+    font-weight: 600;
+    font-style: normal;
+    color: #AA0000; /*#CD0C19;#FF5052;#CC4851*/
 }
+
