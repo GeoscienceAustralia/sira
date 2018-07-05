@@ -114,11 +114,11 @@ Data Type:,Boolean
 Example:,True
 
 `MULTIPROCESS`
-Description:,Switch to indicate whether to use multi-core processing. 0 |rightarrow| False, 1 |rightarrow| True
+Description:,"Switch to indicate whether to use multi-core processing. 0 |rightarrow| False, 1 |rightarrow| True"
 Data Type:,Integer
 Example:,1
 
 `RUN_CONTEXT`
-Description:,Switch to indicate whether to run a full simulation, or run test code. 0 |rightarrow| run tests, 1 |rightarrow| normal run.
+Description:,"Switch to indicate whether to run a full simulation, or run test code. 0 |rightarrow| run tests, 1 |rightarrow| normal run."
 Data Type:,Integer
 Example:,1
