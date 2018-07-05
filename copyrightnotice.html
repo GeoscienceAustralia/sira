@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5 Component Fragility Attribution &mdash; SIFRA v0.2.1 docs</title>
+  <title>Copyright Notice &mdash; SIFRA v0.2.1 docs</title>
   
 
   
@@ -38,8 +38,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="SIFRA v0.2.1 docs" href="index.html"/>
-        <link rel="next" title="Copyright Notice" href="copyrightnotice.html"/>
-        <link rel="prev" title="4 Simulation Setup" href="ch04_simsetup.html"/> 
+        <link rel="next" title="References" href="bibliography.html"/>
+        <link rel="prev" title="5 Component Fragility Attribution" href="ch05_fragility_attribution.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -93,7 +93,7 @@
             
             
               <p class="caption"><span class="caption-text">User Documentation</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a><ul>
@@ -132,11 +132,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">5 Component Fragility Attribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Back Matter</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
@@ -183,7 +183,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>5 Component Fragility Attribution</li>
+      <li>Copyright Notice</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,56 +200,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="component-fragility-attribution">
-<span id="fragility-attribution"></span><h1>5 Component Fragility Attribution<a class="headerlink" href="#component-fragility-attribution" title="Permalink to this headline">¶</a></h1>
-<p>As earthquake induced ground shaking at a facility increases in intensity,
-the individual components respond and sustain progressively more damage.
-Fragility functions are used to define this susceptibility of components
-to damage by quantifying the likelihood that a level of damage will be
-exceeded for a given level of shaking. This approach entails the definition
-of one or more earthquake damage states for each component and the selection
-of a ground shaking measure that is highly correlated to the component damage.</p>
-<p>Each component within a facility is strictly unique. However, for a given
-component it can be classed into a category of asset referred to as a
-<code class="docutils literal"><span class="pre">component</span> <span class="pre">type</span></code>, in which all components have similar vulnerability.
-The assignment of component type fragility algorithms for each damage state
-is based on asset typology and the design levels under consideration.
-The fragility algorithm defines a cumulative probability of exceedance for
-each damage state that captures the variability of the vulnerability within
-a “component type” and the effect of variability in component response to
-ground motion on damage severity.  The form of these functions can take a
-range of mathematical forms.  The most common form is log normal and defined
-by a median (θ) and log standard deviation (β), which is the form
-that SIFRA uses.</p>
-<p>Component type fragility models need to be representative of the assets they
-characterise. Models can be developed or sourced using the following
-hierarchy of approaches which is in order of increasing uncertainty:</p>
-<ol class="arabic simple">
-<li>Direct consultation with industry asset managers to reach agreement on
-component fragilities by adjusting the most appropriate published models
-and drawing upon construction specifications, manufacturer’s shake table
-proof testing (if available) and observed earthquake performance
-(if possible).</li>
-<li>Selection of the most applicable model from published models in the
-literature.</li>
-<li>Utilisation of heuristic engineering judgment in adapting damage models
-for other components assessed to have similar fragility. There are many
-fragility models published in the literature.  The literature review and
-model compilation produced by the Syner-G Project <a class="reference internal" href="bibliography.html#pitilakis-etal-2014" id="id1">[7]</a>.
-sponsored by the European Commission presents a wide range of electricity
-sector component models.  Its key references included works by
-Vanzi <a class="reference internal" href="bibliography.html#vanzi1996" id="id2">[12]</a>, Anagnos <a class="reference internal" href="bibliography.html#anagnos1999" id="id3">[1]</a> and
-the HAZUS Technical Manual <a class="reference internal" href="bibliography.html#fema2003" id="id4">[5]</a>.
-HAZUS includes fragility functions for a wider range of facility
-components than those presented in the Syner-G Project.</li>
-</ol>
-<p>Each damage state has a description of the typical severity of physical
-component damage which has implications for the use of the component.
-Hence, each damage state also has an operational level for the damaged
-component, a cost to repair (as a proportion of the replacement cost) and
-a resource requirement in terms of number of technicians and time. This
-is used to assess the utility of the facility immediately after an extreme
-event and to assess the restoration prognosis.</p>
+  <div class="section" id="copyright-notice">
+<h1>Copyright Notice<a class="headerlink" href="#copyright-notice" title="Permalink to this headline">¶</a></h1>
+<p>Copyright 2018, Geoscience Australia</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:</p>
+<p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
 </div>
 
 

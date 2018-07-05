@@ -122,12 +122,12 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4 Simulation Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">4.1 Scenario Definition File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#facility-definition-file">4.2 Facility Definition File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: <em>output_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-component-component-list">4.2.1 List of Component: component_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: component_connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: damage_state_def</a></li>
 </ul>
 </li>
 </ul>
@@ -136,6 +136,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Back Matter</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
@@ -211,30 +212,34 @@ their parameters, data layout, and sample input data are presented in the
 remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>.
-├── LICENSE                  &lt;-- License file: Apache 2
-├── README.md                &lt;-- Summary documentation
+├── docs                        &lt;-- Sphinx documentation files
+│   └── source
+├── hazard                      &lt;-- Hazard scenario files for networks
+├── installation                &lt;-- Installation scripts for dev envs
+├── logs
+├── models                      &lt;-- Infrastructure models reside here
+├── output                      &lt;-- Default location for simulation results
+├── scripts
+├── sifra                       &lt;-- The core code reside here
+│   └── modelling
+├── simulation_setup            &lt;-- Scenario configuration files
+├── tests                       &lt;-- Test scripts + data for sanity checks
+│   ├── historical_data
+│   ├── models
+│   └── simulation_setup
 │
-├── docs                     &lt;-- Sphinx documentation files
-│   └── source
-│       ├── _static
-│       ├── _templates
-│       └── extensions
-│
-├── models                   &lt;-- Facility system models reside here
-│   └── &lt;facility_type&gt;      &lt;-- Dir for models of specified type
-│
-├── output                   &lt;-- Simulation results are stored here
-│   └── scenario_X           &lt;-- Simulation project name
-│       └── raw_output       &lt;-- Raw data/binary outputs for provenance &amp;
-│                                  post-processing
-├── sifra                    &lt;-- The MODULES/SCRIPTS
-├── simulation_setup         &lt;-- Scenario config files
-└── tests                    &lt;-- Test scripts
+├── LICENSE                      &lt;-- License file
+├── README.md                    &lt;-- Summary documentation
+├── setup.py                     &lt;-- Package setup file
+└── __main__.py                  &lt;-- Entry point for running the code
 </pre></div>
 </div>
 <div class="section" id="scenario-definition-file">
 <span id="scenario-config-file"></span><h2>4.1 Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
-<p>The simulation ‘scenario’ definition file is located in the following directory
+<p>The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: <cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The code first
+converts any setup file to json first before running.
+The simulation ‘scenario’ definition file is located in the following directory
 (relative to the root dir of source code):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">simulation_setup</span><span class="o">/</span>
 </pre></div>
@@ -242,6 +247,20 @@ to the keep the directory structure of the code in mind:</p>
 <p>The following table lists the parameters in the config file, their
 description, and representative values.</p>
 <dl class="docutils">
+<dt><cite>INTENSITY_MEASURE_PARAM</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Engineering Demand Parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘PGA’</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>INTENSITY_MEASURE_PARAM</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -270,12 +289,12 @@ description, and representative values.</p>
 </tbody>
 </table>
 </dd>
-<dt><cite>PGA_MIN</cite></dt>
+<dt><cite>INTENSITY_MEASURE_MIN</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Minimum value for PGA</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Minimum value for internsity measurement (IM) parameter</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
 </tr>
@@ -284,12 +303,12 @@ description, and representative values.</p>
 </tbody>
 </table>
 </dd>
-<dt><cite>PGA_MAX</cite></dt>
+<dt><cite>INTENSITY_MEASURE_MAX</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Maximum value for PGA</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Maximum value for internsity measurement (IM) parameter</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
 </tr>
@@ -298,12 +317,12 @@ description, and representative values.</p>
 </tbody>
 </table>
 </dd>
-<dt><cite>PGA_STEP</cite></dt>
+<dt><cite>INTENSITY_MEASURE_STEP</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Step size for incrementing PGA</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Step size for incrementing the IM param</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
 </tr>
@@ -584,6 +603,42 @@ or run test code.
 </table>
 </dd>
 </dl>
+<p>SCENARIO CONFIG PARAMETERS:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><cite>HAZARD</cite></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-odd"><td>Description:</td>
+<td>Engineering Demand Parameter</td>
+</tr>
+<tr class="row-even"><td>Example:</td>
+<td>‘PGA’</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><cite>TEST_UNIT</cite></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Data Type:</td>
+<td>String</td>
+</tr>
+<tr class="row-even"><td>Description:</td>
+<td>Demand Parameter Unit <br /> <span class="math">\({\{x \in \mathbb{R} \mid 0 \le x \le 1\}}\)</span></td>
+</tr>
+<tr class="row-odd"><td>Example:</td>
+<td>‘g’</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="facility-definition-file">
 <span id="facility-config-file"></span><h2>4.2 Facility Definition File<a class="headerlink" href="#facility-definition-file" title="Permalink to this headline">¶</a></h2>
@@ -598,7 +653,7 @@ It contains five worksheets. The names of the worksheets are fixed.
 The function and format of these worksheets are described in the
 following subsections:</p>
 <div class="section" id="list-of-component-component-list">
-<span id="inputdata-component-list"></span><h3>4.2.1 List of Component: <em>component_list</em><a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-component-list"></span><h3>4.2.1 List of Component: component_list<a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
 <dl class="docutils">
 <dt><cite>component_id</cite></dt>
@@ -732,7 +787,7 @@ would have a value of 1.0.</td>
 </dl>
 </div>
 <div class="section" id="connections-between-components-component-connections">
-<span id="inputdata-component-connections"></span><h3>4.2.2 Connections between Components: <em>component_connections</em><a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-component-connections"></span><h3>4.2.2 Connections between Components: component_connections<a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>origin</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -809,7 +864,7 @@ of edges.</td>
 </dl>
 </div>
 <div class="section" id="configuration-of-supply-nodes-supply-setup">
-<span id="inputdata-supply-setup"></span><h3>4.2.3 Configuration of Supply Nodes: <em>supply_setup</em><a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-supply-setup"></span><h3>4.2.3 Configuration of Supply Nodes: supply_setup<a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>input_node</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -886,7 +941,7 @@ For a water treatment plant, it is waster water.</p>
 </dl>
 </div>
 <div class="section" id="configuration-of-output-nodes-output-setup">
-<span id="inputdata-output-setup"></span><h3>4.2.4 Configuration of Output Nodes: <em>output_setup</em><a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-output-setup"></span><h3>4.2.4 Configuration of Output Nodes: output_setup<a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>output_node</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -986,7 +1041,7 @@ where <cite>n</cite> is the total number of output nodes</td>
 </dl>
 </div>
 <div class="section" id="component-type-damage-algorithms-comp-type-dmg-algo">
-<span id="inputdata-comp-type-dmg-algo"></span><h3>4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em><a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-comp-type-dmg-algo"></span><h3>4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo<a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils" id="dmg-algo-component-type">
 <dt><cite>component_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -1233,7 +1288,8 @@ to follow the normal distribution.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Some times it is difficult to get the concept of
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">[Optional paramter]
+Some times it is difficult to get the concept of
 standard deviation across to an audience of
 infrastructure experts, and hence it is difficult
 to get a reliable value for it. In such cases we can
@@ -1270,7 +1326,7 @@ how it was adapted, or how it was developed.</td>
 </dl>
 </div>
 <div class="section" id="definition-of-damage-states-damage-state-def">
-<span id="inputdata-damage-state-def"></span><h3>4.2.6 Definition of Damage States: <em>damage_state_def</em><a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-damage-state-def"></span><h3>4.2.6 Definition of Damage States: damage_state_def<a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
 <p>This table documents the physical damage characteristics that are implied
 by the damage states used to model the fragility of the system components.</p>
 <dl class="docutils">

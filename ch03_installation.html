@@ -122,12 +122,12 @@
 <li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#scenario-definition-file">4.1 Scenario Definition File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#facility-definition-file">4.2 Facility Definition File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-component-component-list">4.2.1 List of Component: <em>component_list</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">4.2.2 Connections between Components: <em>component_connections</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: <em>supply_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: <em>output_setup</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: <em>comp_type_dmg_algo</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: <em>damage_state_def</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-component-component-list">4.2.1 List of Component: component_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">4.2.2 Connections between Components: component_connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: damage_state_def</a></li>
 </ul>
 </li>
 </ul>
@@ -136,6 +136,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Back Matter</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
@@ -240,7 +241,7 @@ Use of AWS for Web applications is the current direction for GA.</p>
 <h3>3.2.1 Installation of SIFRA on AWS with Docker<a class="headerlink" href="#installation-of-sifra-on-aws-with-docker" title="Permalink to this headline">¶</a></h3>
 <p>This requires building an AWS instance and then building the environments
 using Docker.</p>
-<p><strong>Create AWS Instance using Packer</strong>:
+<p><strong>Create AWS Instance using Packer:</strong> <br />
 We’re we come from, if we don’t have a laptop handy, we like to use AWS for
 provisioning dev machines. A basic dev box can be setup using
 <a class="reference external" href="https://www.packer.io/intro/">Packer</a>, by running:</p>
@@ -248,10 +249,11 @@ provisioning dev machines. A basic dev box can be setup using
 </pre></div>
 </div>
 <p>in the current directory.</p>
-<p><strong>Create AWS Instance using bash script</strong>:</p>
-<p>The top level directory of SIFRA has the script <code class="docutils literal"><span class="pre">create-aws-instance.sh</span></code>
+<p><strong>Create AWS Instance using bash script:</strong> <br />
+The top level directory of SIFRA has the script <code class="docutils literal"><span class="pre">create-aws-instance.sh</span></code>
 The script requires the <a class="reference external" href="https://aws.amazon.com/cli/">aws command line interface</a>
-to be installed on the machine. It also requires access to AWS account credentials.</p>
+to be installed on the machine. It also requires access to AWS account
+credentials.</p>
 <p>The script is run as:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ create-aws-instance.sh
 </pre></div>

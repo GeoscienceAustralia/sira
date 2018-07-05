@@ -288,11 +288,11 @@ effectively a proxy representing the deployment of trained personnel and
 material for the repair tasks. Additional optional offsets can be factored 
 in to capture specific contexts: 
 
-a) *Restoration Offset* – this is a time allowance for assessment of
+a) *Restoration Offset* - this is a time allowance for assessment of
    damage to the system and for securing the site to assure it is safe
    for commencement of repairs;
 
-b) *Testing and Commission Interval*: this is a time allowance for testing
+b) *Testing and Commission Interval* - this is a time allowance for testing
    conformity with operational and safety parameters for the system, or a
    part thereof.
 

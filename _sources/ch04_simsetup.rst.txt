@@ -14,26 +14,27 @@ their parameters, data layout, and sample input data are presented in the
 remainder of this Section. In the course of the discussion it should be useful
 to the keep the directory structure of the code in mind::
 
-    .
-    ├── LICENSE                  <-- License file: Apache 2
-    ├── README.md                <-- Summary documentation
-    │
-    ├── docs                     <-- Sphinx documentation files
-    │   └── source
-    │       ├── _static
-    │       ├── _templates
-    │       └── extensions
-    │
-    ├── models                   <-- Facility system models reside here
-    │   └── <facility_type>      <-- Dir for models of specified type
-    │
-    ├── output                   <-- Simulation results are stored here
-    │   └── scenario_X           <-- Simulation project name
-    │       └── raw_output       <-- Raw data/binary outputs for provenance &
-    │                                  post-processing
-    ├── sifra                    <-- The MODULES/SCRIPTS
-    ├── simulation_setup         <-- Scenario config files
-    └── tests                    <-- Test scripts
+   .
+   ├── docs                        <-- Sphinx documentation files
+   │   └── source
+   ├── hazard                      <-- Hazard scenario files for networks
+   ├── installation                <-- Installation scripts for dev envs
+   ├── logs
+   ├── models                      <-- Infrastructure models reside here
+   ├── output                      <-- Default location for simulation results
+   ├── scripts
+   ├── sifra                       <-- The core code reside here
+   │   └── modelling
+   ├── simulation_setup            <-- Scenario configuration files
+   ├── tests                       <-- Test scripts + data for sanity checks
+   │   ├── historical_data
+   │   ├── models
+   │   └── simulation_setup
+   │
+   ├── LICENSE                      <-- License file
+   ├── README.md                    <-- Summary documentation
+   ├── setup.py                     <-- Package setup file
+   └── __main__.py                  <-- Entry point for running the code
 
 
 .. _scenario-config-file:
@@ -41,6 +42,9 @@ to the keep the directory structure of the code in mind::
 Scenario Definition File
 ========================
 
+The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: `ini`, `conf`, or `json`. The code first
+converts any setup file to json first before running.
 The simulation 'scenario' definition file is located in the following directory
 (relative to the root dir of source code)::
 
@@ -48,6 +52,14 @@ The simulation 'scenario' definition file is located in the following directory
 
 The following table lists the parameters in the config file, their
 description, and representative values.
+
+`INTENSITY_MEASURE_PARAM`
+    :Description:   Engineering Demand Parameter
+
+    :Data Type:     String
+
+    :Example:       'PGA'
+
 
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
@@ -65,24 +77,24 @@ description, and representative values.
     :Example:       'g'
 
 
-`PGA_MIN`
-    :Description:   Minimum value for PGA
+`INTENSITY_MEASURE_MIN`
+    :Description:   Minimum value for internsity measurement (IM) parameter
 
     :Data Type:     Float
 
     :Example:       0.0
 
 
-`PGA_MAX`
-    :Description:   Maximum value for PGA
+`INTENSITY_MEASURE_MAX`
+    :Description:   Maximum value for internsity measurement (IM) parameter
 
     :Data Type:     Float
 
     :Example:       1.5
 
 
-`PGA_STEP`
-    :Description:   Step size for incrementing PGA
+`INTENSITY_MEASURE_STEP`
+    :Description:   Step size for incrementing the IM param
 
     :Data Type:     Float
 
@@ -245,12 +257,13 @@ description, and representative values.
 
     :Example:       1
 
+SCENARIO CONFIG PARAMETERS:
 
-.. .. csv-table::
-   :header-rows: 1
-   :widths: 30, 70
+.. csv-table::
+   :header-rows: 0
+   :widths: 40, 80
    :stub-columns: 0
-   :file: _static/files/scenario_config_parameters.csv
+   :file: ./_static/files/scenario_config_parameters.csv
 
 
 .. _facility-config-file:
@@ -272,8 +285,8 @@ following subsections:
 
 .. _inputdata__component_list:
 
-List of Component: *component_list*
------------------------------------
+List of Component: component_list
+---------------------------------
 
 The *component_list* has the following parameters:
 
@@ -365,8 +378,8 @@ The *component_list* has the following parameters:
 
 .. _inputdata__component_connections:
 
-Connections between Components: *component_connections*
--------------------------------------------------------
+Connections between Components: component_connections
+-----------------------------------------------------
 
 `origin`
   :Description: The node (component) to which the tail of a
@@ -416,8 +429,8 @@ Connections between Components: *component_connections*
 
 .. _inputdata__supply_setup:
 
-Configuration of Supply Nodes: *supply_setup*
----------------------------------------------
+Configuration of Supply Nodes: supply_setup
+-------------------------------------------
 
 `input_node`
   :Description: The `component_id` of the input node.
@@ -467,8 +480,8 @@ Configuration of Supply Nodes: *supply_setup*
 
 .. _inputdata__output_setup:
 
-Configuration of Output Nodes: *output_setup*
----------------------------------------------
+Configuration of Output Nodes: output_setup
+-------------------------------------------
 
 `output_node`
   :Description: These are the 'sink' nodes representing the load or
@@ -533,8 +546,8 @@ Configuration of Output Nodes: *output_setup*
 
 .. _inputdata__comp_type_dmg_algo:
 
-Component Type Damage Algorithms: *comp_type_dmg_algo*
-------------------------------------------------------
+Component Type Damage Algorithms: comp_type_dmg_algo
+----------------------------------------------------
 
 .. _dmg_algo_component_type:
 
@@ -693,7 +706,8 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
 
 `recovery_95percentile`
-  :Description: Some times it is difficult to get the concept of
+  :Description: [Optional paramter]
+                Some times it is difficult to get the concept of
                 standard deviation across to an audience of
                 infrastructure experts, and hence it is difficult
                 to get a reliable value for it. In such cases we can
@@ -721,8 +735,8 @@ Component Type Damage Algorithms: *comp_type_dmg_algo*
 
 .. _inputdata__damage_state_def:
 
-Definition of Damage States: *damage_state_def*
------------------------------------------------
+Definition of Damage States: damage_state_def
+---------------------------------------------
 
 This table documents the physical damage characteristics that are implied
 by the damage states used to model the fragility of the system components.

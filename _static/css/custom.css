@@ -44,14 +44,14 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 39px;
-    padding: 10px 45px 10px 0px;
+    padding: 10px 0px 10px 0px;
     margin: 20px 0px 20px 0px;
     background-color: none;
-    width: calc(100% + 90px);
+    width: 100%;
 }
 
 h2 {
-    padding: 10px 10px 10px 0px;
+    padding: 10px 5px 10px 0px;
     margin: 10px 0 5px 0px;
     font-size: 30px;
 }
@@ -65,8 +65,58 @@ h2:before {
 }
 
 h3 {
-  padding: 10px 10px 10px 0px;
-  margin: 10px 0 10px 0px;
-  font-size: 26px;
-  border-top: 1px solid #DDDDDD;
+    padding: 10px 10px 10px 0px;
+    margin: 10px 0 10px 0px;
+    font-size: 26px;
+    border-top: 1px solid #DDDDDD;
+}
+
+.rst-content table.docutils td,
+table td {
+    font-size: 95%;
+    border: none;
+    border-collapse: collapse;
+    background-color: transparent;
+    vertical-align: top;
+    margin: 0;
+    overflow: visible;
+    padding: 5px 5px;
+    border-image-width: 0;
+}
+
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td {
+    background-color: transparent;
+}
+
+.rst-content table.docutils {
+    border: none;
+}
+
+.rst-content table.field-list .field-name {
+    font-size: 95%;
+    padding: 5px 10px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.rst-content table.field-list .field-body {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.rst-content cite {
+    font-weight: 700;
+    font-style: normal;
+    font-size: 100%;
+    color: #0070C0; /*#CD0C19;#FF5052;#CC4851*/
+}
+
+a:link {
+    color: #044CFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: 1px solid;
 }

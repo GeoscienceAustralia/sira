@@ -88,6 +88,6 @@ Features
    :maxdepth: 1
    :caption: Back Matter
 
-   bibliography
-   reportglossary
-   copyrightnotice
+   copyrightnotice.rst
+   bibliography.rst
+   reportglossary.rst

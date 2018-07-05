@@ -53,7 +53,7 @@ Installation of SIFRA on AWS with Docker
 This requires building an AWS instance and then building the environments
 using Docker.
 
-**Create AWS Instance using Packer**:
+**Create AWS Instance using Packer:** |br|
 We're we come from, if we don't have a laptop handy, we like to use AWS for
 provisioning dev machines. A basic dev box can be setup using
 `Packer <https://www.packer.io/intro/>`_, by running::
@@ -62,11 +62,11 @@ provisioning dev machines. A basic dev box can be setup using
 
 in the current directory.
 
-**Create AWS Instance using bash script**:
-
+**Create AWS Instance using bash script:** |br|
 The top level directory of SIFRA has the script ``create-aws-instance.sh``
 The script requires the `aws command line interface <https://aws.amazon.com/cli/>`_
-to be installed on the machine. It also requires access to AWS account credentials.
+to be installed on the machine. It also requires access to AWS account
+credentials.
 
 The script is run as::
 
