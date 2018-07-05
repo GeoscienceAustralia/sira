@@ -73,11 +73,11 @@ h3 {
 
 .rst-content table.docutils td,
 table td {
+    font-size: 95%;
     border: none;
     border-collapse: collapse;
     background-color: transparent;
     vertical-align: top;
-    font-size: 90%;
     margin: 0;
     overflow: visible;
     padding: 5px 5px;
@@ -93,6 +93,7 @@ table td {
 }
 
 .rst-content table.field-list .field-name {
+    font-size: 95%;
     padding: 5px 10px;
     text-align: left;
     white-space: nowrap;
@@ -104,8 +105,18 @@ table td {
 }
 
 .rst-content cite {
-    font-weight: 600;
+    font-weight: 700;
     font-style: normal;
-    color: #AA0000; /*#CD0C19;#FF5052;#CC4851*/
+    font-size: 100%;
+    color: #0070C0; /*#CD0C19;#FF5052;#CC4851*/
 }
 
+a:link {
+    color: #044CFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: 1px solid;
+}
