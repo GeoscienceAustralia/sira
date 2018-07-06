@@ -107,10 +107,88 @@ commands. Inside the container you can find the current directory mapped at
 `/sifra`. You can modify files either within the container or the host and the
 changes will be available in both.
 
-
 For details of the commands see 
 [Using docker](https://geoscienceaustralia.github.io/sifra/ch03_installation.html)
 in the help documentation
+
+
+### Building the Run Environment Using Anaconda
+
+For simplicity of managing virtual environments and
+package requirements, [Anaconda](https://docs.anaconda.com/anaconda/)
+is a good option.
+It is a free Python distribution, and comes with the ``conda`` tool
+which is both a package manager and environment manager. Instructions
+for installing ``Anaconda`` are here:
+<https://docs.anaconda.com/anaconda/install/>
+
+**Prerequisites:** You will need to install ``Graphviz`` for the
+drawing the system diagram through networkx and pygraphviz.
+Please visit: <http://www.graphviz.org/>
+and download the appropriate version for your operating system.
+Please follow the posted download instructions carefully.
+After installation you may need to update the PATH variable
+with the location of the Graphviz binaries.
+
+For windows systems you will need to install
+Microsoft Visual C++ Compiler for Python 2.7:
+<http://aka.ms/vcpython27>
+
+On Ubuntu you can
+
+```
+apt-get update && apt-get install -y \
+    build-essential pkg-config \
+    graphviz libgraphviz-dev \
+    xml2 libxml2-dev
+```
+
+Some packages we need are not hosted in the main ``conda`` package
+repository. In such cases we will host them in our own user channel.
+We suggest adding the following channels to the default::
+
+    $ conda config --add channels https://conda.anaconda.org/anaconda
+    $ conda config --add channels https://conda.anaconda.org/marufr
+
+Run the following command to confirm the additional channels have
+been added:
+
+    $ conda config --get channels
+
+**For OS X and Linux-64 systems:** It should be possible to set up a
+full run environment solely through the \*.yml environment specification
+file. For OS X run the following commands:
+
+    $ conda env create -f environment_osx.yml
+    $ source activate sifra_env
+
+For Linux-64 systems, the commands are identical, you will just need
+to use the environment specification file for Linux.
+
+**For Windows systems**, a similar process needs to be followed, with
+some exceptions. First run:
+
+    $ conda env create -f environment_win64.yml
+    $ activate sifra_env
+
+This will install most requirements except for ``igraph`` and
+``pygraphviz``. Compiling these packages under windows can be very
+challenging. The simplest and most reliable options is to download
+the the appropriate wheels from Christoph Gohlke's unofficial page
+of Windows binaries:
+<http://www.lfd.uci.edu/~gohlke/pythonlibs/>
+
+For Windows 64 bit systems, you will need to download the ``wheels`` for
+[python-igraph](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph)
+and [pygraphviz](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz):
+
+- ``python_igraph-0.7.1.post6-cp27-none-win_amd64.whl``
+- ``pygraphviz-1.3.1-cp27-none-win_amd64.whl``
+
+Install these downloaded ``wheels`` with pip:
+
+    $ pip install <pkg_name>.whl
+
 
 ## Setting up a development Environment
 Recent development has been done mostly on an AWS instance in PyCharm. This
