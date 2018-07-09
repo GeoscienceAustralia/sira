@@ -38,14 +38,14 @@ to the keep the directory structure of the code in mind::
 
 
 
-Scenario Definition File TEST
-=============================
+Simulation Setup File TEST
+==========================
 
 
-SCENARIO CONFIG PARAMETERS:
+.. rubric:: SCENARIO CONFIG PARAMETERS:
 
 .. include::
-   ./_static/files/scenario_config_parameters.txt
+   ./_static/files/simulation_setup_params.txt
 
 .. .. csv-table::
    :header-rows: 0
@@ -54,10 +54,10 @@ SCENARIO CONFIG PARAMETERS:
    :file: ./_static/files/scenario_config_parameters.csv
 
 
-.. _scenario-config-file:
+.. _simulation-setup-file:
 
-Scenario Definition File
-========================
+Simulation Setup File
+=====================
 
 The code needs a setup file for configuring the model and simulation scenario.
 It can be in any of three formats: `ini`, `conf`, or `json`. The code first
