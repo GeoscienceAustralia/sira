@@ -60,7 +60,7 @@ h2:before {
     content: ' ';
     display: block;
     width: 80px;
-    padding-top: 15px;
+    padding-top: 20px;
     border-top: 10px solid #555555;
 }
 
