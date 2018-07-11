@@ -6,8 +6,8 @@ Simulation and Model Setup
 
 Setting a simulation requires populating two different sets of inputs:
 
-- Scenario configuration
-- Facility system configuration
+- Simulation scenario configuration
+- Infrastructure model configuration
 
 These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the
@@ -68,11 +68,11 @@ description, and representative values.
 Infrastructure Model Definition File
 ====================================
 
-The system definition files for a facility of type ``<facility_type_A>``
+The system definition files for a infrastructure of type ``<sys_type_A>``
 is located in the following directory (relative to the root dir of
 source code)::
 
-    ./models/<facility_type_A>/
+    ./models/<sys_type_A>/
 
 The system model is defined using an MS Excel spreadsheet file.
 It contains five worksheets. The names of the worksheets are fixed.
