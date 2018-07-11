@@ -1,0 +1,183 @@
+
+.. _dmg_algo_component_type:
+
+`component_type`
+  :Description: The type of component, based on the typology definitions
+                being used in the system model.
+
+                Example: 'Demineralisation Plant'
+
+  :Data Type:   Alphanumeric characters.
+                May use dashes '-' or underscores '_'.
+                Avoid using special characters.
+
+
+.. _dmg_algo_damage_state:
+
+`damage_state`
+  :Description: The list of damage states used in defining the
+                damage scale being modelled within the system.
+
+                Example: For a four-state sequential damage scale,
+                the following damage states are used:
+
+                1. DS1 Slight
+                2. DS2 Moderate
+                3. DS3 Extensive
+                4. DS4 Complete
+
+  :Data Type:   String. Fixed, pre-determined state names.
+
+
+`damage_function`
+  :Description: The probability distribution for the damage function.
+
+                Currently only log-normal curves are used, but additional
+                distributions can be added as required.
+
+                Example: 'lognormal'
+
+  :Data Type:   String.
+
+
+`mode`
+  :Description: Number indicating the mode of the function.
+                Currently can handle only unimodal or bimodal functions.
+
+                Default value is 1.
+
+  :Data Type:   Integer [1,2]
+
+
+`damage_median`
+  :Description: Median of the damage function.
+                A median will need to be defined for each damage state.
+                It should be typically be progressively higher for more
+                severe damage states:
+
+                :math:`{\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}`
+
+  :Data Type:   Float.
+
+
+`damage_logstd`
+  :Description: Standard deviation of the damage function.
+                It will need to be defined for each damage state.
+                The value of standard deviation should be such that
+                the curves do not overlap.
+
+  :Data Type:   Float.
+
+
+`damage_ratio`
+  :Description: The fractional loss of a component's value for damage
+                sustained at a given damage state. This parameter links
+                a damage state to expected direct loss of component value.
+
+                Example:
+                Damage ratio of 0.30 for damage state "DS2 Moderate"
+
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x\}}`.
+                A value of 0 indicates no loss of value, and
+                a value of 1.0 indicates complete loss.
+                In special cases the the value of loss ratio can be
+                greater than 1.0, which indicates complete loss of
+                component and additional cost of removal, disposal, or
+                securing or destroyed component.
+
+
+`functionality`
+  :Description: An unitless fractional value indicating the functional
+                capacity of a component for a given damage state.
+                This parameter links damage states to expected
+                post-impact residual functionality of the component.
+
+                Example:
+                A stack of a thermal power station is expected to remain
+                fully functional (functionality==1), under 'Slight'
+                damage state, i.e. under conditions of minor damage to
+                structure with deformation of holding down bolts and with
+                some bracing connections.
+
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}`.
+                A value of 0 indicates no loss of value, and
+                a value of 1.0 indicates complete loss.
+                In special cases the the value of loss ratio can be
+                greater than 1.0, which indicates complete loss of
+                component and additional cost of removal, disposal, or
+                securing or destroyed component.
+
+
+`minimum`
+  :Description: Minimum value for which the damage algorithm is
+                applicable.
+
+                Example:
+                The algorithms presented by Anagnos :cite:`Anagnos1999`
+                for 500kV circuit breakers are only applicable for
+                PGA values of 0.15g and above, for the various noted
+                failure modes.
+
+  :Data Type:   Float.
+
+
+`sigma_1`
+  :Description: The first standard deviation for a bimodal
+                damage function.
+
+  :Data Type:   Float, for a bimodal function. For
+                single mode functions, use 'NA'.
+
+
+`sigma_2`
+  :Description: The second standard deviation for a bimodal
+                damage function.
+
+  :Data Type:   Float, for a bimodal function. For
+                single mode functions, use 'NA'.
+
+
+`recovery_mean`
+  :Description: The mean of the recovery function. Component and
+                system restoration time are assumed to follow the
+                normal distribution.
+
+  :Data Type:   Float.
+
+
+`recovery_std`
+  :Description: The standard deviation of the recovery function.
+                Component and system restoration time are assumed
+                to follow the normal distribution.
+
+  :Data Type:   Float.
+
+
+`recovery_95percentile`
+  :Description: [Optional paramter]
+                Some times it is difficult to get the concept of
+                standard deviation across to an audience of
+                infrastructure experts, and hence it is difficult
+                to get a reliable value for it. In such cases we can
+                obtain a 95th percentile value for recovery time, and
+                translate that to standard deviation for a normal
+                distribution using the following equation:
+
+                .. math::
+
+                    \begin{align}
+                    &X_{0.95} = \mu + Z_{0.95} \sigma \\
+                    \Rightarrow &X_{0.95} = \mu + \Phi^{-1}(0.95) \sigma \\
+                    \Rightarrow &\sigma = \frac{X_{0.95} - \mu}{\Phi^{-1}(0.95)}
+                    \end{align}
+
+  :Data Type:   Float
+
+
+`fragility_source`
+  :Description: Which source the fragility algorithm was adopted from,
+                how it was adapted, or how it was developed.
+
+  :Data Type:   Free text
