@@ -345,9 +345,9 @@ def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
     axis.tick_params(
         axis='x',           # changes apply to the x-axis
         which='both',       # ticks affected: major, minor, or both
-        bottom='on',        # ticks along the bottom edge are on
-        top='off',          # ticks along the top edge are off
-        labelbottom='on',   # labels along the bottom edge are off
+        bottom=True,        # ticks along the bottom edge are on
+        top=False,          # ticks along the top edge are off
+        labelbottom=True,   # labels along the bottom edge are off
         color=spine_colr,
         direction='out',
         labelsize=7,
@@ -358,10 +358,10 @@ def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
     axis.tick_params(
         axis='y',
         which='major',
-        left='on',
-        right='off',
-        labelleft='on',
-        labelright='off',
+        left=True,
+        right=False,
+        labelleft=True,
+        labelright=False,
         color=spine_colr,
         direction='out',
         labelsize=7,
