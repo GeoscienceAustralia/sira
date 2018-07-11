@@ -52,7 +52,7 @@ h1 {
 
 h2 {
     padding: 10px 5px 10px 0px;
-    margin: 10px 0 5px 0px;
+    margin: 5px 0 5px 0px;
     font-size: 30px;
 }
 
@@ -60,7 +60,7 @@ h2:before {
     content: ' ';
     display: block;
     width: 80px;
-    padding-top: 15px;
+    padding-top: 20px;
     border-top: 10px solid #555555;
 }
 
@@ -139,4 +139,18 @@ a:hover {
 .wy-side-nav-search > a:hover, .wy-side-nav-search .wy-dropdown > a:hover {
     border: none;
     text-decoration: none;
+}
+
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
 }

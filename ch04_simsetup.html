@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4 Simulation Setup &mdash; SIFRA v0.2.1 docs</title>
+  <title>4 Simulation and Model Setup &mdash; SIFRA v0.2.1 docs</title>
   
 
   
@@ -119,10 +119,10 @@
 <li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4 Simulation Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#scenario-definition-file">4.1 Scenario Definition File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#facility-definition-file">4.2 Facility Definition File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#list-of-component-component-list">4.2.1 List of Component: component_list</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4 Simulation and Model Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-setup-file">4.1 Simulation Setup File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure-model-definition-file">4.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-components-component-list">4.2.1 List of Components: component_list</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: component_connections</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: supply_setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: output_setup</a></li>
@@ -183,7 +183,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>4 Simulation Setup</li>
+      <li>4 Simulation and Model Setup</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,8 +200,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="simulation-setup">
-<span id="simulation-inputs"></span><h1>4 Simulation Setup<a class="headerlink" href="#simulation-setup" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="simulation-and-model-setup">
+<span id="simulation-inputs"></span><h1>4 Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Permalink to this headline">¶</a></h1>
 <p>Setting a simulation requires populating two different sets of inputs:</p>
 <ul class="simple">
 <li>Scenario configuration</li>
@@ -234,8 +234,8 @@ to the keep the directory structure of the code in mind:</p>
 └── __main__.py                  &lt;-- Entry point for running the code
 </pre></div>
 </div>
-<div class="section" id="scenario-definition-file">
-<span id="scenario-config-file"></span><h2>4.1 Scenario Definition File<a class="headerlink" href="#scenario-definition-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simulation-setup-file">
+<span id="id1"></span><h2>4.1 Simulation Setup File<a class="headerlink" href="#simulation-setup-file" title="Permalink to this headline">¶</a></h2>
 <p>The code needs a setup file for configuring the model and simulation scenario.
 It can be in any of three formats: <cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The code first
 converts any setup file to json first before running.
@@ -246,17 +246,18 @@ The simulation ‘scenario’ definition file is located in the following direct
 </div>
 <p>The following table lists the parameters in the config file, their
 description, and representative values.</p>
+<p class="rubric">[Scenario]</p>
 <dl class="docutils">
-<dt><cite>INTENSITY_MEASURE_PARAM</cite></dt>
+<dt><cite>SCENARIO_NAME</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Engineering Demand Parameter</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Name for identifying simulation scenario</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘PGA’</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Coal-fired Generation Plant 600W’</td>
 </tr>
 </tbody>
 </table>
@@ -285,6 +286,52 @@ description, and representative values.</p>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘g’</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>FOCAL_HAZARD_SCENARIOS</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The value(s) or scenario(s) at which to assess facility response is assessed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of strings</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[0.50, 0.55]</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p class="rubric">[Hazard]</p>
+<dl class="docutils">
+<dt><cite>HAZARD_INPUT_METHOD</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">How the hazard is supplied. Must be one of two options:
+‘hazard_array’ or ‘scenario_file’</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘hazard_array’</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>HAZARD_TYPE</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Minimum value for internsity measurement (IM) parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">0.0</td>
 </tr>
 </tbody>
 </table>
@@ -345,21 +392,9 @@ description, and representative values.</p>
 </tbody>
 </table>
 </dd>
-<dt><cite>FOCAL_HAZARD_SCENARIOS</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The value(s) or scenario(s) at which to assess facility
-response is assessed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of strings</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[0.50, 0.55]</td>
-</tr>
-</tbody>
-</table>
-</dd>
+</dl>
+<p class="rubric">[Restoration]</p>
+<dl class="docutils">
 <dt><cite>TIME_UNIT</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -426,6 +461,23 @@ response is assessed</td>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of integers</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">[5, 10, 20]</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p class="rubric">[System]</p>
+<dl class="docutils">
+<dt><cite>INFRASTRUCTURE_LEVEL</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Define infrastructure as a <cite>facility</cite> or <cite>network</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><cite>facility</cite></td>
 </tr>
 </tbody>
 </table>
@@ -500,6 +552,9 @@ response is assessed</td>
 </tbody>
 </table>
 </dd>
+</dl>
+<p class="rubric">[Input]</p>
+<dl class="docutils">
 <dt><cite>INPUT_DIR_NAME</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -514,6 +569,9 @@ response is assessed</td>
 </tbody>
 </table>
 </dd>
+</dl>
+<p class="rubric">[Output]</p>
+<dl class="docutils">
 <dt><cite>OUTPUT_DIR_NAME</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -528,6 +586,9 @@ response is assessed</td>
 </tbody>
 </table>
 </dd>
+</dl>
+<p class="rubric">[Test]</p>
+<dl class="docutils">
 <dt><cite>FIT_PE_DATA</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -561,8 +622,7 @@ response is assessed</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to save simulated
-values in binary numpy format</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to save simulated values in binary numpy format</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Boolean</td>
 </tr>
@@ -571,13 +631,15 @@ values in binary numpy format</td>
 </tbody>
 </table>
 </dd>
+</dl>
+<p class="rubric">[Switches]</p>
+<dl class="docutils">
 <dt><cite>MULTIPROCESS</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to use multi-core processing.
-0 <span class="math">\(\rightarrow\)</span> False, 1 <span class="math">\(\rightarrow\)</span> True</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to use multi-core processing. 0 <span class="math">\(\rightarrow\)</span> False, 1 <span class="math">\(\rightarrow\)</span> True</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
 </tr>
@@ -591,9 +653,7 @@ values in binary numpy format</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to run a full simulation,
-or run test code.
-0 <span class="math">\(\rightarrow\)</span> run tests, 1 <span class="math">\(\rightarrow\)</span> normal run.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Switch to indicate whether to run a full simulation, or run test code. 0 <span class="math">\(\rightarrow\)</span> run tests, 1 <span class="math">\(\rightarrow\)</span> normal run.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
 </tr>
@@ -603,45 +663,9 @@ or run test code.
 </table>
 </dd>
 </dl>
-<p>SCENARIO CONFIG PARAMETERS:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><cite>HAZARD</cite></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-odd"><td>Description:</td>
-<td>Engineering Demand Parameter</td>
-</tr>
-<tr class="row-even"><td>Example:</td>
-<td>‘PGA’</td>
-</tr>
-<tr class="row-odd"><td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><cite>TEST_UNIT</cite></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td>Data Type:</td>
-<td>String</td>
-</tr>
-<tr class="row-even"><td>Description:</td>
-<td>Demand Parameter Unit <br /> <span class="math">\({\{x \in \mathbb{R} \mid 0 \le x \le 1\}}\)</span></td>
-</tr>
-<tr class="row-odd"><td>Example:</td>
-<td>‘g’</td>
-</tr>
-</tbody>
-</table>
 </div>
-<div class="section" id="facility-definition-file">
-<span id="facility-config-file"></span><h2>4.2 Facility Definition File<a class="headerlink" href="#facility-definition-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="infrastructure-model-definition-file">
+<span id="model-definition-file"></span><h2>4.2 Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Permalink to this headline">¶</a></h2>
 <p>The system definition files for a facility of type <code class="docutils literal"><span class="pre">&lt;facility_type_A&gt;</span></code>
 is located in the following directory (relative to the root dir of
 source code):</p>
@@ -652,8 +676,8 @@ source code):</p>
 It contains five worksheets. The names of the worksheets are fixed.
 The function and format of these worksheets are described in the
 following subsections:</p>
-<div class="section" id="list-of-component-component-list">
-<span id="inputdata-component-list"></span><h3>4.2.1 List of Component: component_list<a class="headerlink" href="#list-of-component-component-list" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="list-of-components-component-list">
+<span id="inputdata-component-list"></span><h3>4.2.1 List of Components: component_list<a class="headerlink" href="#list-of-components-component-list" title="Permalink to this headline">¶</a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
 <dl class="docutils">
 <dt><cite>component_id</cite></dt>
@@ -682,8 +706,7 @@ of the name separated by underscores</td>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The <a class="reference internal" href="reportglossary.html#term-typology"><span class="xref std std-term">typology</span></a> of a system component.
 Represents a broad category of equipment.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
-It is recommended to use alphanumeric characters,
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct
 parts of the name separated by spaces.</td>
 </tr>
@@ -971,7 +994,7 @@ and must be of <cite>node_type</cite> sink.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the facility
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the infrastructure
 system model. The completed ‘product’ of a system exits
 from this node.</td>
 </tr>
@@ -1215,7 +1238,7 @@ securing or destroyed component.</p>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Minimum value for which the damage algorithm is
 applicable.</p>
 <p>Example:
-The algorithms presented by Anagnos <a class="reference internal" href="bibliography.html#anagnos1999" id="id1">[1]</a>
+The algorithms presented by Anagnos <a class="reference internal" href="bibliography.html#anagnos1999" id="id2">[1]</a>
 for 500kV circuit breakers are only applicable for
 PGA values of 0.15g and above, for the various noted
 failure modes.</p>
@@ -1346,9 +1369,8 @@ by the damage states used to model the fragility of the system components.</p>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The physical damage descriptors corresponding
 to the damage states.</p>
 <p>Example:
-230 kV Current Transformers would be said to be in
-<cite>Failure</cite> state if there is
-“porcelain cracking, or overturning.”</p>
+230 kV Current Transformers would be said to be in <cite>Failure</cite>
+state if there is “porcelain cracking, or overturning.”</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Free text.</p>
