@@ -1,7 +1,12 @@
-[Full documentation on GitHub Pages](http://geoscienceaustralia.github.io/sifra/)
+# [SIFRA](http://geoscienceaustralia.github.io/sifra/)
 
+## Contents
 
-# What is it?
+:toc: macro
+:toc-title:
+:toclevels: 99
+
+## Overview
 
 SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 
@@ -41,7 +46,7 @@ Some key features of this tool:
   times for facility operations.
 
 
-# Setup Instructions
+## Setup Instructions
 
 It is good practice to set up a virtual environment for working with
 developing code. This gives us the tools to manage the package
@@ -53,12 +58,12 @@ The virtual environments were initally described and implemented using
 microservices implemented in docker containers. If you have docker installed on
 your system it is probably easiest to use the containers as described below.
 
-## Building the Run Environment Using Docker
+### Building the Run Environment Using Docker
 
 The AWS and Docker configuration is now the preferred way to deploy and develop
  the application.
 
-### Building an AMI for Dev Machines
+#### Building an AMI for Dev Machines
 
 To be able to have a easily replicable and deployable 
 environment to run and test the code, we use AWS for 
@@ -74,7 +79,7 @@ packer build "installation\build.json"
 
 To get the aws credentials follow this [guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
-### Docker
+#### Docker
 The packer command that creates the AWS instance will run a 
 shell script that will install Docker and clone the git repository
 from Github. The details of the script are in `build-sifra-box.sh`
@@ -190,7 +195,7 @@ Install these downloaded ``wheels`` with pip:
     $ pip install <pkg_name>.whl
 
 
-## Setting up a development Environment
+### Setting up a development Environment
 Recent development has been done mostly on an AWS instance in PyCharm. This
 requires tunnelling X11 through an SSH connection, which mostly works reasonably
 well. 
@@ -210,7 +215,7 @@ The following direcotories must be marked as 'Sources Root' in PyCharm.
 - sifra
 - sifra-api
 
-# Running the Code
+## Running the Code
 
 Clone the repository onto your system. Detailed instructions can
 be found [here](https://help.github.com/articles/cloning-a-repository/).
@@ -231,7 +236,7 @@ Sample configuration files are located in sifra\simulation_setup
 Depending on the scale of the model, and simulation parameters chosen,
 it may take between a few minutes and a few days to complete a run.
 
-## Run Analysis on Previously Run Simulation Data
+### Run Analysis on Previously Run Simulation Data
 
 To run the post-simulation analysis on the generated output data, we need to
 supply the setup file used to run the original simulation and the log file that
@@ -241,7 +246,7 @@ stores the directory locations for the the stored output data. For example:
         -s simulation_setup/scenario_ss_x.ini \
         -d logs/sifralog_20180619_155612_dirs.json
 
-## Testing
+### Testing
 
 To run tests use unittest. Move into sifra folder:
 
@@ -252,7 +257,7 @@ If you are using docker as described above, you can do this within the sifra
 container.
 
 
-# Todo
+## Todo
 
 - Restructure of Python code. While the simulation has been integrated with
   the json serialisation/deserialisation logic, the redundant classes should
