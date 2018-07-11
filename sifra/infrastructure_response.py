@@ -74,9 +74,9 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     ax.yaxis.grid(True, which="major", linestyle='-',
                   linewidth=0.4, color='#B6B6B6')
 
-    ax.tick_params(axis='x', bottom='on', top='off',
+    ax.tick_params(axis='x', bottom=True, top=False,
                    width=0.8, labelsize=8, pad=5, color='#555555')
-    ax.tick_params(axis='y', left='off', right='off',
+    ax.tick_params(axis='y', left=False, right=False,
                    width=0.8, labelsize=8, pad=5, color='#555555')
 
     ax.set_xticklabels(hazards.hazard_scenario_list)
