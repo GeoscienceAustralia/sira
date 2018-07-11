@@ -1,87 +1,156 @@
-name: sifra_env
+name: sifra_devenv
 channels:
-    - anaconda
-    - marufr
+- marufr
+- conda-forge
+- anaconda
+- defaults
 dependencies:
-    - anaconda-client=1.1.2=py27_0
-    - appnope=0.1.0=py27_0
-    - clyent=1.0.0=py27_0
-    - colorama=0.3.3=py27_0
-    - cycler=0.9.0=py27_0
-    - decorator=4.0.4=py27_0
-    - freetype=2.5.5=0
-    - ipython=4.0.0=py27_1
-    - ipython_genutils=0.1.0=py27_0
-    - jbig=2.1=0
-    - jpeg=8d=1
-    - libpng=1.6.17=0
-    - libtiff=4.0.6=1
-    - libxml2
-    - matplotlib=1.5.1=np110py27_0
-    - mkl=11.3.1=0
-    - networkx=1.10=py27_0
-    - numexpr=2.5=np110py27_0
-    - numpy=1.10.4=py27_0
-    - openssl=1.0.2d=0
-    - pandas=0.17.1=np110py27_0
-    - path.py=8.1.2=py27_0
-    - pexpect=3.3=py27_0
-    - pickleshare=0.5=py27_0
-    - pillow=3.0.0=py27_1
-    - pip=8.0.2=py27_0
-    - ptyprocess=0.5=py27_0
-    - pydot=1.0.28=py27_0
-    - pygraphviz=1.3.1=py27_0
-    - pyqt=4.11.4=py27_1
-    - python=2.7.11=0
-    - python-dateutil=2.4.2=py27_0
-    - python.app=1.2=py27_4
-    - pytz=2015.7=py27_0
-    - pyyaml=3.11=py27_1
-    - qt=4.8.7=1
-    - readline=6.2=2
-    - requests=2.8.1=py27_0
-    - scikit-learn=0.17=np110py27_1
-    - scipy=0.17.0=np110py27_0
-    - seaborn=0.7.0=py27_0
-    - setuptools=20.1.1=py27_0
-    - simplegeneric=0.8.1=py27_0
-    - sip=4.16.9=py27_0
-    - six=1.10.0=py27_0
-    - sqlite=3.9.2=0
-    - tk=8.5.18=0
-    - traitlets=4.0.0=py27_0
-    - wheel=0.29.0=py27_0
-    - xlrd=0.9.4=py27_0
-    - xz=5.0.5=0
-    - yaml=0.1.6=0
-    - zlib=1.2.8=0
+- anaconda-client=1.6.14=py27_0
+- appnope=0.1.0=py27hb466136_0
+- asn1crypto=0.24.0=py27_0
+- backports=1.0=py27hb4f9756_1
+- backports.functools_lru_cache=1.5=py27_1
+- backports.shutil_get_terminal_size=1.0.0=py27hc9115de_2
+- backports_abc=0.5=py27h6972548_0
+- blas=1.0=mkl
+- ca-certificates=2018.03.07=0
+- certifi=2018.4.16=py27_0
+- cffi=1.11.5=py27h342bebf_0
+- chardet=3.0.4=py27h2842e91_1
+- clyent=1.2.2=py27hc0ae608_0
+- colorama=0.3.9=py27hbbe92b6_0
+- coloredlogs=10.0=py27_0
+- configparser=3.5.0=py27hc7edf1b_0
+- cryptography=2.2.2=py27h1de35cc_0
+- cycler=0.10.0=py27hfc73c78_0
+- dbus=1.13.2=h760590f_1
+- decorator=4.3.0=py27_0
+- enum34=1.1.6=py27hf475452_1
+- expat=2.2.5=hb8e80ba_0
+- freetype=2.8=h12048fb_1
+- functools32=3.2.3.2=py27h8ceab06_1
+- futures=3.2.0=py27h1b80678_0
+- gettext=0.19.8.1=h15daf44_3
+- glib=2.56.1=h35bc53a_0
+- humanfriendly=4.12.1=py27_0
+- icu=58.2=h4b95b61_1
+- idna=2.7=py27_0
+- intel-openmp=2018.0.3=0
+- ipaddress=1.0.22=py27_0
+- ipython=5.7.0=py27_0
+- ipython_genutils=0.2.0=py27h8b9a179_0
+- jbig=2.1=h4d881f8_0
+- jpeg=9b=he5867d9_2
+- jsonschema=2.6.0=py27hd9b497e_0
+- jupyter_core=4.4.0=py27h5ea6ba4_0
+- kiwisolver=1.0.1=py27h9856860_0
+- libcxx=4.0.1=h579ed51_0
+- libcxxabi=4.0.1=hebd6815_0
+- libedit=3.1.20170329=hb402a30_2
+- libffi=3.2.1=h475c297_4
+- libgfortran=3.0.1=h93005f0_2
+- libiconv=1.15=hdd342a3_7
+- libpng=1.6.34=he12f830_0
+- libtiff=4.0.9=hcb84e12_1
+- libxml2=2.9.8=hab757c2_1
+- matplotlib=2.2.2=py27ha7267d0_0
+- mkl=2018.0.3=1
+- mkl_fft=1.0.1=py27h917ab60_0
+- mkl_random=1.0.1=py27h78cc56f_0
+- nbformat=4.4.0=py27hddc86d0_0
+- ncurses=6.1=h0a44026_0
+- networkx=2.1=py27_0
+- numexpr=2.6.5=py27h057f876_0
+- numpy=1.14.5=py27h9bb19eb_3
+- numpy-base=1.14.5=py27ha9ae307_3
+- olefile=0.45.1=py27_0
+- openssl=1.0.2o=h26aff7b_0
+- pandas=0.23.1=py27h1702cab_0
+- path.py=11.0.1=py27_0
+- pathlib2=2.3.2=py27_0
+- patsy=0.5.0=py27_0
+- pcre=8.42=h378b8a2_0
+- pexpect=4.6.0=py27_0
+- pickleshare=0.7.4=py27h37e3d41_0
+- pillow=5.1.0=py27hfcce615_0
+- pip=10.0.1=py27_0
+- prompt_toolkit=1.0.15=py27h4a7b9c2_0
+- ptyprocess=0.6.0=py27_0
+- pycparser=2.18=py27h0d28d88_1
+- pydot=1.2.4=py27_0
+- pygments=2.2.0=py27h1a556bb_0
+- pyopenssl=18.0.0=py27_0
+- pyparsing=2.2.0=py27h5bb6aaf_0
+- pyqt=5.9.2=py27h11d3b92_0
+- pysocks=1.6.8=py27_0
+- python=2.7.15=h138c1fe_0
+- python-dateutil=2.7.3=py27_0
+- python.app=2=py27hf2d5e94_7
+- pytz=2018.5=py27_0
+- pyyaml=3.12=py27ha7932d0_1
+- qt=5.9.6=h74ce4d9_0
+- readline=7.0=hc1231fa_4
+- requests=2.19.1=py27_0
+- scandir=1.7=py27h1de35cc_0
+- scikit-learn=0.19.1=py27h9788993_0
+- scipy=1.1.0=py27hcaad992_0
+- seaborn=0.8.1=py27h6bd0ddc_0
+- setuptools=39.2.0=py27_0
+- simplegeneric=0.8.1=py27_2
+- singledispatch=3.4.0.3=py27he22c18d_0
+- sip=4.19.8=py27h0a44026_0
+- six=1.11.0=py27h7252ba3_1
+- sqlite=3.24.0=ha441bb4_0
+- statsmodels=0.9.0=py27h917ab60_0
+- subprocess32=3.5.2=py27h1de35cc_0
+- tk=8.6.7=h35a86e2_3
+- tornado=5.0.2=py27_0
+- traitlets=4.3.2=py27hcf08151_0
+- urllib3=1.23=py27_0
+- wcwidth=0.1.7=py27h817c265_0
+- wheel=0.31.1=py27_0
+- xlrd=1.1.0=py27hbd41ed1_1
+- xz=5.2.4=h1de35cc_4
+- yaml=0.1.7=hc338f04_2
+- zlib=1.2.11=hf3cbc9b_2
+- pygraphviz=1.3.1=py27_0
 - pip:
-    - actdiag==0.5.1
-    - alabaster==0.7.7
-    - babel==2.2.0
-    - blockdiag==1.5.3
-    - brewer2mpl==1.4.1
-    - docutils==0.12
-    - funcparserlib==0.3.6
-    - ipython-genutils==0.1.0
-    - jinja2==2.8
-    - lmfit==0.9.2
-    - markupsafe==0.23
-    - nwdiag==1.0.0
-    - parmap==1.2.3
-    - pybtex==0.19
-    - pybtex-docutils==0.2.1
-    - pygments==2.1
-    - python-igraph==0.7.1.post6
-    - seqdiag==0.9.0
-    - snowballstemmer==1.2.1
-    - sphinx==1.3.6
-    - sphinx-rtd-theme==0.1.9
-    - sphinxcontrib-actdiag==0.6.0
-    - sphinxcontrib-bibtex==0.3.3
-    - sphinxcontrib-blockdiag==1.5.5
-    - sphinxcontrib-nwdiag==0.7.0
-    - sphinxcontrib-seqdiag==0.6.0
-    - webcolors==1.5
-
+  - actdiag==0.5.1
+  - alabaster==0.7.7
+  - babel==2.2.0
+  - backports-abc==0.5
+  - backports.functools-lru-cache==1.5
+  - backports.shutil-get-terminal-size==1.0.0
+  - blockdiag==1.5.3
+  - botocore==1.8.18
+  - brewer2mpl==1.4.1
+  - docutils==0.12
+  - funcparserlib==0.3.6
+  - ipython-genutils==0.2.0
+  - jinja2==2.8
+  - jmespath==0.9.3
+  - jupyter-core==4.4.0
+  - latexcodec==1.0.5
+  - lmfit==0.9.2
+  - markupsafe==0.23
+  - mkl-fft==1.0.0
+  - mkl-random==1.0.1
+  - nwdiag==1.0.0
+  - oset==0.1.3
+  - parmap==1.2.3
+  - prompt-toolkit==1.0.15
+  - pybtex==0.19
+  - pybtex-docutils==0.2.1
+  - python-igraph==0.7.1.post6
+  - rsa==3.4.2
+  - s3transfer==0.1.12
+  - seqdiag==0.9.0
+  - snowballstemmer==1.2.1
+  - sphinx==1.3.6
+  - sphinx-rtd-theme==0.1.9
+  - sphinxcontrib-actdiag==0.6.0
+  - sphinxcontrib-bibtex==0.3.3
+  - sphinxcontrib-blockdiag==1.5.5
+  - sphinxcontrib-nwdiag==0.7.0
+  - sphinxcontrib-seqdiag==0.6.0
+  - webcolors==1.5
