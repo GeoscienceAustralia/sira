@@ -2,7 +2,7 @@
 :toc-title:
 :toclevels: 99
 
-# link:http://geoscienceaustralia.github.io/sifra/[SIFRA]
+# SIFRA
 
 toc::[]
 
@@ -10,6 +10,7 @@ toc::[]
 ## Overview
 
 SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
+The detailed documentation is at this http://geoscienceaustralia.github.io/sifra/[link].
 
 It comprises a method and software tools that provide a framework
 for simulating the fragility of infrastructure facilities to natural
@@ -54,17 +55,16 @@ developing code. This gives us the tools to manage the package
 dependencies and requirements in a transparent manner, and impact of
 dependency changes on software behaviour.
 
-The virtual environments were initally described and implemented using
-https://www.continuum.io/[Ananconda]. The new system is being designed as
-microservices implemented in docker containers. If you have docker installed on
-your system it is probably easiest to use the containers as described below.
+The system is currently being designed as microservices implemented in
+docker containers. If you have docker installed on your system it is
+probably easiest to use the containers as described below.
 
-### Building the Run Environment Using Docker
+### Building the run environment using Docker
 
 The AWS and Docker configuration is now the preferred way to deploy and develop
  the application.
 
-#### Building an AMI for Dev Machines
+*Building an AMI for dev machines*
 
 To be able to have a easily replicable and deployable 
 environment to run and test the code, we use AWS for 
@@ -80,7 +80,8 @@ packer build "installation\build.json"
 
 To get the aws credentials follow this link:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html[guide].
 
-#### Docker
+*Running Docker*
+
 The packer command that creates the AWS instance will run a 
 shell script that will install Docker and clone the git repository
 from Github. The details of the script are in `build-sifra-box.sh`
@@ -114,11 +115,11 @@ commands. Inside the container you can find the current directory mapped at
 changes will be available in both.
 
 For details of the commands see 
-https://geoscienceaustralia.github.io/sifra/ch03_installation.html[Using docker]
+https://geoscienceaustralia.github.io/sifra/ch03_installation.html[using docker]
 in the help documentation
 
 
-### Building the Run Environment Using Anaconda
+### Building the run environment using Anaconda
 
 For simplicity of managing virtual environments and
 package requirements, https://docs.anaconda.com/anaconda/[Anaconda]
@@ -209,7 +210,7 @@ to attempt this with SIFRA.
 PyCharm supports docker as detailed in the following links:
 
 - https://www.jetbrains.com/help/pycharm/docker.html[Pycharm Docker support]
-- (https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/[Docker-Compose: Getting Flask up and running]
+- https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/[Docker-Compose: Getting Flask up and running]
 
 The following direcotories must be marked as 'Sources Root' in PyCharm. 
 
