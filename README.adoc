@@ -1,10 +1,11 @@
-# [SIFRA](http://geoscienceaustralia.github.io/sifra/)
-
-## Contents
-
 :toc: macro
 :toc-title:
 :toclevels: 99
+
+# [SIFRA](<http://geoscienceaustralia.github.io/sifra/>)
+
+toc::[]
+
 
 ## Overview
 
