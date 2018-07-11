@@ -237,8 +237,8 @@ To run the post-simulation analysis on the generated output data, we need to
 supply the setup file used to run the original simulation and the log file that
 stores the directory locations for the the stored output data. For example:
 
-    $ python sifra/scenario_loss_analysis.py
-        -s simulation_setup/scenario_ss_x.ini
+    $ python sifra/scenario_loss_analysis.py \
+        -s simulation_setup/scenario_ss_x.ini \
         -d logs/sifralog_20180619_155612_dirs.json
 
 ## Testing

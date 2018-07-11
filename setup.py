@@ -1,26 +1,28 @@
 import setuptools
-import sifra
+from sifra.__about__ import (
+    __packagename__,
+    __description__,
+    __url__,
+    __version__,
+    __author__,
+    __email__,
+    __license__,
+    __copyright__
+)
 
-PACKAGE_NAME = 'sifra'
-DESCRIPTION = 'SIFRA: System for Infrastructure Facility Resilience Analysis'
-URL = 'https://github.com/GeoscienceAustralia/sifra'
-LICENSE = 'Apache v2.0'
-
-MAINTAINER = 'Maruf Rahman'
-CONTRIBUTORS = ['Maruf Rahman', 'Sudipta Basak', 'Sheece Gardezi']
-MAINTAINER_EMAIL = 'maruf.rahman@ga.gov.au'
 
 if __name__ == '__main__':
     setuptools.setup(
-    name=PACKAGE_NAME,
-    version=sifra.__version__,
-    description=DESCRIPTION,
-    url=URL,
-    license=LICENSE,
-    author=MAINTAINER,
-    test_suite='.tests',
-    tests_require=['nose'],
-    install_requires=['graphviz'],
-    packages=setuptools.find_packages(),
-    package_dir={PACKAGE_NAME: PACKAGE_NAME}
+        name=__packagename__,
+        version=__version__,
+        description=__description__,
+        url=__url__,
+        author=__author__,
+        author_email = __email__,
+        license=__license__,
+        test_suite='.tests',
+        tests_require=['nose'],
+        install_requires=['graphviz'],
+        packages=setuptools.find_packages(),
+        package_dir={__packagename__: __packagename__}
     )
