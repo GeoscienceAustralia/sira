@@ -200,8 +200,8 @@
 <span id="simulation-inputs"></span><h1>4 Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Permalink to this headline">¶</a></h1>
 <p>Setting a simulation requires populating two different sets of inputs:</p>
 <ul class="simple">
-<li>Scenario configuration</li>
-<li>Facility system configuration</li>
+<li>Simulation scenario configuration</li>
+<li>Infrastructure model configuration</li>
 </ul>
 <p>These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the
@@ -291,7 +291,8 @@ description, and representative values.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The value(s) or scenario(s) at which to assess facility response is assessed</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The value(s) or scenario(s) at which to undertake
+detailed assessment of system response</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of strings</td>
 </tr>
@@ -483,7 +484,7 @@ description, and representative values.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The allowed facility system types</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The allowed infrastructure system types</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">List of strings</td>
 </tr>
@@ -497,7 +498,7 @@ description, and representative values.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The facility system type to be modelled</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The infrastructure system type to be modelled</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
@@ -662,10 +663,10 @@ description, and representative values.</p>
 </div>
 <div class="section" id="infrastructure-model-definition-file">
 <span id="model-definition-file"></span><h2>4.2 Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Permalink to this headline">¶</a></h2>
-<p>The system definition files for a facility of type <code class="docutils literal"><span class="pre">&lt;facility_type_A&gt;</span></code>
+<p>The system definition files for a infrastructure of type <code class="docutils literal"><span class="pre">&lt;sys_type_A&gt;</span></code>
 is located in the following directory (relative to the root dir of
 source code):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">models</span><span class="o">/&lt;</span><span class="n">facility_type_A</span><span class="o">&gt;/</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">models</span><span class="o">/&lt;</span><span class="n">sys_type_A</span><span class="o">&gt;/</span>
 </pre></div>
 </div>
 <p>The system model is defined using an MS Excel spreadsheet file.
