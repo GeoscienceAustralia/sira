@@ -1,73 +1,55 @@
-name: sifra_env
+name: sifra_devenv
+channels:
+    - marufr
+    - conda-forge
+    - anaconda
+    - defaults
 dependencies:
-- anaconda-client=1.1.2=py27_0
-- alabaster=0.7.7
-- babel=2.2.0
-- clyent=1.0.0=py27_0
-- colorama=0.3.3=py27_0
-- cycler=0.9.0=py27_0
-- decorator=4.0.4=py27_0
-- docutils=0.12
-- freetype=2.5.5
-- ipython=4.0.0=py27_1
-- ipython_genutils=0.1.0=py27_0
-- jinja2=2.8
-- libpng=1.6.17=0
-- matplotlib=1.5.0=np110py27_0
-- mkl=11.3.1=0
-- networkx=1.10=py27_0
-- numexpr=2.5=np110py27_0
-- numpy=1.10.4=py27_0
-- pandas=0.17.1=np110py27_0
-- path.py=8.1.2=py27_0
-- pickleshare=0.5=py27_0
-- pillow=3.0.0=py27_1
-- pip=8.0.2=py27_0
-- pygraphviz=1.3.1
-- pyqt=4.11.4
-- python=2.7.11=0
-- python-dateutil=2.4.2=py27_0
-- python-igraph=0.7.1.post6
-- pytz=2015.7=py27_0
-- pyyaml=3.11=py27_1
-- qt=4.8.7
-- requests=2.8.1=py27_0
-- scikit-learn=0.17=np110py27_1
-- scipy=0.16.0
-- seaborn=0.6.0=np110py27_0
-- setuptools=19.6.2=py27_0
-- simplegeneric=0.8.1=py27_0
-- sip=4.16.9=py27_0
-- six=1.10.0=py27_0
-- sqlite=3.9.2
-- tk=8.5.18
-- traitlets=4.0.0=py27_0
-- wheel=0.29.0=py27_0
-- xlrd=0.9.4=py27_0
-- yaml=0.1.6
-- zlib=1.2.8
-- pip:
-  - actdiag==0.5.1
-  - blockdiag==1.5.3
-  - brewer2mpl==1.4.1
-  - funcparserlib==0.3.6
-  - lmfit==0.9.2
-  - markupsafe==0.23
-  - nwdiag==1.0.0
-  - parmap==1.2.3
-  - pexpect==4.0.1
-  - pydot==1.0.2
-  - pybtex==0.19
-  - pybtex-docutils==0.2.1
-  - pygments==2.1
-  - pyparsing==1.5.7
-  - seqdiag==0.9.0
-  - snowballstemmer==1.2.1
-  - sphinx==1.3.6
-  - sphinx-rtd-theme==0.1.9
-  - sphinxcontrib-bibtex==0.3.3
-  - sphinxcontrib-actdiag==0.6.0
-  - sphinxcontrib-blockdiag==1.5.5
-  - sphinxcontrib-nwdiag==0.7.0
-  - sphinxcontrib-seqdiag==0.6.0
-  - webcolors==1.5
+    - anaconda-client
+    - brewer2mpl
+    - colorama
+    - coloredlogs
+    - configparser
+    - freetype
+    - ipython
+    - matplotlib
+    - netcdf4
+    - networkx
+    - numpy
+    - pandas
+    - python-igraph==0.7.1
+    - pygraphviz
+    - scipy
+    - scikit-learn
+    - seaborn
+    - six
+    - sqlalchemy
+    - xlrd
+    - zlib
+    - pip:
+        - actdiag
+        - blockdiag
+        - brewer2mpl
+        - funcparserlib
+        - lmfit
+        - markupsafe
+        - nwdiag
+        - parmap
+        - pexpect
+        - pydot
+        - pybtex
+        - pybtex-docutils
+        - pygments
+        - pyparsing
+        - seqdiag
+        - sphinx
+        - sphinx-rtd-theme
+        - sphinxcontrib-actdiag
+        - sphinxcontrib-bibtex
+        - sphinxcontrib-blockdiag
+        - sphinxcontrib-exceltable
+        - sphinxcontrib-nwdiag
+        - sphinxcontrib-seqdiag
+        - sphinxcontrib-websupport
+        - webcolors
+
