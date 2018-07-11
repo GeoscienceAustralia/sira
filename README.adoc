@@ -2,7 +2,7 @@
 :toc-title:
 :toclevels: 99
 
-# [SIFRA](<http://geoscienceaustralia.github.io/sifra/>)
+# link:http://geoscienceaustralia.github.io/sifra/[SIFRA]
 
 toc::[]
 
@@ -20,7 +20,7 @@ methodology and classes, there is a strong emphasis on making the
 hazard attribution process and infrastructure models flexible to allow
 for expansion to other hazards and new infrastructure sectors.
 
-SIFRA was developed in [Geoscience Australia (GA)](<http://www.ga.gov.au/)
+SIFRA was developed in http://www.ga.gov.au/[Geoscience Australia (GA)]
 in support of the agency's vision to contribute to enhancing the resilience
 of communities in Australia and its region.
 
@@ -55,7 +55,7 @@ dependencies and requirements in a transparent manner, and impact of
 dependency changes on software behaviour.
 
 The virtual environments were initally described and implemented using
-[Ananconda](https://www.continuum.io/). The new system is being designed as
+https://www.continuum.io/[Ananconda]. The new system is being designed as
 microservices implemented in docker containers. If you have docker installed on
 your system it is probably easiest to use the containers as described below.
 
@@ -69,7 +69,7 @@ The AWS and Docker configuration is now the preferred way to deploy and develop
 To be able to have a easily replicable and deployable 
 environment to run and test the code, we use AWS for 
 provisioning dev machines. A basic dev instance can be setup 
-using [Packer](https://www.packer.io/intro/), by running the 
+using https://www.packer.io/intro/[Packer], by running the
 following instructions in the current directory:
 
 ```
@@ -78,7 +78,7 @@ export AWS_SECRET_KEY = <AWS SECRET KEY>
 packer build "installation\build.json"
 ```
 
-To get the aws credentials follow this [guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
+To get the aws credentials follow this link:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html[guide].
 
 #### Docker
 The packer command that creates the AWS instance will run a 
@@ -114,14 +114,14 @@ commands. Inside the container you can find the current directory mapped at
 changes will be available in both.
 
 For details of the commands see 
-[Using docker](https://geoscienceaustralia.github.io/sifra/ch03_installation.html)
+https://geoscienceaustralia.github.io/sifra/ch03_installation.html[Using docker]
 in the help documentation
 
 
 ### Building the Run Environment Using Anaconda
 
 For simplicity of managing virtual environments and
-package requirements, [Anaconda](https://docs.anaconda.com/anaconda/)
+package requirements, https://docs.anaconda.com/anaconda/[Anaconda]
 is a good option.
 It is a free Python distribution, and comes with the ``conda`` tool
 which is both a package manager and environment manager. Instructions
@@ -185,8 +185,8 @@ of Windows binaries:
 <http://www.lfd.uci.edu/~gohlke/pythonlibs/>
 
 For Windows 64 bit systems, you will need to download the ``wheels`` for
-[python-igraph](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph)
-and [pygraphviz](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz):
+link:http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph[python-igraph]
+and link:http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz[pygraphviz]:
 
 - ``python_igraph-0.7.1.post6-cp27-none-win_amd64.whl``
 - ``pygraphviz-1.3.1-cp27-none-win_amd64.whl``
@@ -208,8 +208,8 @@ to attempt this with SIFRA.
 
 PyCharm supports docker as detailed in the following links:
 
-- [Pycharm Docker support](https://www.jetbrains.com/help/pycharm/docker.html)
-- [Docker-Compose: Getting Flask up and running](https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/)
+- https://www.jetbrains.com/help/pycharm/docker.html[Pycharm Docker support]
+- (https://blog.jetbrains.com/pycharm/2017/03/docker-compose-getting-flask-up-and-running/[Docker-Compose: Getting Flask up and running]
 
 The following direcotories must be marked as 'Sources Root' in PyCharm. 
 
@@ -219,7 +219,7 @@ The following direcotories must be marked as 'Sources Root' in PyCharm.
 ## Running the Code
 
 Clone the repository onto your system. Detailed instructions can
-be found [here](https://help.github.com/articles/cloning-a-repository/).
+be found https://help.github.com/articles/cloning-a-repository/[here]
 
     $ git clone https://github.com/GeoscienceAustralia/sifra.git sifra
 
@@ -279,10 +279,10 @@ container.
   prototype with a small time budget, I did not:
   - spend much time being idiomatically consistent,
   - leveraging existing elements of Angular2 (like
-    [reactive forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html),
+    link:https://angular.io/docs/ts/latest/guide/reactive-forms.html[reactive forms]),
   - ... writing tests.
 
-- Consider whether a framework like [Redux](http://redux.js.org/) would be useful.
+- Consider whether a framework like http://redux.js.org/[Redux] would be useful.
 
 - Perhaps get rid of ng\_select. I started with this before realising how easy
   simple HTML selects would be to work with and before reading about reactive
@@ -298,4 +298,4 @@ container.
 
 ## Required packages
 
-[Graphviz](http://graphviz.org/download/)
+http://graphviz.org/download/[Graphviz]
