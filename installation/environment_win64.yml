@@ -5,20 +5,20 @@ channels:
     - anaconda
     - defaults
 dependencies:
-    - anaconda-client
     - brewer2mpl
     - colorama
     - coloredlogs
     - configparser
-    - freetype
+    - graphviz
     - ipython
     - matplotlib
     - netcdf4
     - networkx
     - numpy
     - pandas
-    - python-igraph==0.7.1
+    - pycairo
     - pygraphviz
+    - python-igraph==0.7.1.post6
     - scipy
     - scikit-learn
     - seaborn
@@ -29,7 +29,6 @@ dependencies:
     - pip:
         - actdiag
         - blockdiag
-        - brewer2mpl
         - funcparserlib
         - lmfit
         - markupsafe
@@ -52,4 +51,4 @@ dependencies:
         - sphinxcontrib-seqdiag
         - sphinxcontrib-websupport
         - webcolors
-
+recovery_95percentile

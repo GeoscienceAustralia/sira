@@ -25,20 +25,26 @@ def calculate_response(hazards, scenario, infrastructure):
     hazards_response = []
     # Use the parallel option in the scenario to determine how to run
 
-    if scenario.run_parallel_proc:
-        rootLogger.info("Start parallel run")
-        hazards_response.extend(parmap.map(calculate_response_for_hazard,
-                                           hazards.get_listOfhazards(),
-                                           scenario,
-                                           infrastructure,
-                                           parallel=scenario.run_parallel_proc))
-        rootLogger.info("End parallel run")
-    else:
-        rootLogger.info("Start serial run")
-        for hazard in hazards.listOfhazards:
-            hazards_response.append(
-                calculate_response_for_hazard(hazard, scenario, infrastructure))
-        rootLogger.info("End serial run")
+    # if scenario.run_parallel_proc:
+    #     rootLogger.info("Start parallel run")
+    #     hazards_response.extend(parmap.map(calculate_response_for_hazard,
+    #                                        hazards.get_listOfhazards(),
+    #                                        scenario,
+    #                                        infrastructure,
+    #                                        parallel=scenario.run_parallel_proc))
+    #     rootLogger.info("End parallel run")
+    # else:
+    #     rootLogger.info("Start serial run")
+    #     for hazard in hazards.listOfhazards:
+    #         hazards_response.append(
+    #             calculate_response_for_hazard(hazard, scenario, infrastructure))
+    #     rootLogger.info("End serial run")
+    rootLogger.info("Start serial run")
+    for hazard in hazards.listOfhazards:
+        hazards_response.append(
+            calculate_response_for_hazard(hazard, scenario, infrastructure))
+    rootLogger.info("End serial run")
+
 
     # combine the responses into one list
     post_processing_list = [{},  # hazard level vs component damage state index

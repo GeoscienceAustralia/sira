@@ -89,7 +89,7 @@ class Component(Base):
                 self.damage_states[int(k)] = DamageState(**params)
 
     def get_location(self):
-        return self.longitude,self.latitude
+        return self.longitude, self.latitude
 
     def pe_ds(self, hazard_intensity):
         """

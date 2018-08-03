@@ -173,6 +173,12 @@ def convert_conf_object_to_json(setup):
     except KeyError:
         data['System']['SYS_CONF_FILE_NAME'] = None
 
+    try:
+        data['System']['COMPONENT_LOCATION_CONF'] \
+            = setup['COMPONENT_LOCATION_CONF']
+    except KeyError:
+        data['System']['COMPONENT_LOCATION_CONF'] = None
+
     data['Input'] = collections.OrderedDict()
 
     try:

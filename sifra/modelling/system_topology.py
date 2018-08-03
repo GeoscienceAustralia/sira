@@ -25,7 +25,6 @@ class SystemTopology(object):
         self.component_attr = {}  # Dict for system comp attributes
         self.out_dir = ""
 
-
         for comp_id in infrastructure.components.keys():
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
@@ -95,6 +94,9 @@ class SystemTopology(object):
 
         self.gviz = nx.nx_agraph.to_agraph(nxG)
 
+        default_node_color = "royalblue3"
+        default_edge_color = "royalblue2"
+
         self.gviz.graph_attr.update(
             resolution=200,
             directed=True,
@@ -121,9 +123,9 @@ class SystemTopology(object):
             width=1.8,
             height=1.8,
             xlp="0, 0",
-            color="royalblue3",  # gray14
+            color=default_node_color,  # gray14
             fillcolor="white",
-            fontcolor="royalblue3",  # gray14
+            fontcolor=default_node_color,  # gray14
             penwidth=1.5,
             fontname="Helvetica-Bold",
             fontsize=18,
@@ -133,7 +135,7 @@ class SystemTopology(object):
             arrowhead="normal",
             arrowsize="1.0",
             style="bold",
-            color="royalblue2",  # gray12
+            color=default_edge_color,  # gray12
             penwidth=1.2,
         )
 
@@ -144,8 +146,7 @@ class SystemTopology(object):
             label_mod = self.segment_long_labels(node, delims=['_', ' '])
             self.gviz.get_node(node).attr['label'] = label_mod
 
-            if str(self.component_attr[node]['node_type']).lower() \
-                    == 'supply':
+            if str(self.component_attr[node]['node_type']).lower() == 'supply':
                 self.gviz.get_node(node).attr['label'] = \
                     self.segment_long_labels(node, maxlen=12,
                                              delims=['_', ' '])
@@ -162,8 +163,7 @@ class SystemTopology(object):
                     width=2.2,
                 )
 
-            if str(self.component_attr[node]['node_type']).lower() \
-                    == 'sink':
+            if str(self.component_attr[node]['node_type']).lower() == 'sink':
                 self.gviz.get_node(node).attr.update(
                     shape="doublecircle",
                     rank="sink",
@@ -182,6 +182,16 @@ class SystemTopology(object):
                     color="orchid",
                     fillcolor="white",
                     fontcolor="orchid"
+                )
+
+            if str(self.component_attr[node]['node_type']).lower() \
+                    == 'junction':
+                self.gviz.get_node(node).attr.update(
+                    shape="point",
+                    width=0.5,
+                    height=0.5,
+                    penwidth=3.5,
+                    color=default_node_color,
                 )
 
         node_clusters = list(set([self.component_attr[id]['node_cluster']
@@ -206,13 +216,27 @@ class SystemTopology(object):
                     rank=rank,
                 )
 
+        pos_defined = False
+        for node in self.component_attr.keys():
+            pos_x = self.component_attr[node]['longitude']
+            pos_y = self.component_attr[node]['latitude']
+            if pos_x and pos_y:
+                pos_defined = True
+                node_pos = str(pos_x)+","+str(pos_y)
+                self.gviz.get_node(node).attr.update(pos=node_pos)
+
+        if pos_defined:
+            draw_prog = 'dot'
+        else:
+            draw_prog = 'neato'
+
         if viewcontext == "as-built":
             self.gviz.write(os.path.join(output_path, fname + '.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
-                format='png', prog='dot')
+                format='png', prog=draw_prog, args='-Gdpi=300')
 
         self.gviz.draw(os.path.join(output_path, fname + '.svg'),
-            format='svg', prog='dot', args='-Gsize=11,8\! -Gdpi=300')
+            format='svg', prog=draw_prog)
 
         # nx.readwrite.json_graph.node_link_data(self.gviz,
         #                   os.path.join(output_path, fname + '.json'))

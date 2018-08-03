@@ -37,6 +37,7 @@ def read_model_from_json(config):
     """
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
+    component_location_conf = config.COMPONENT_LOCATION_CONF
 
     with open(config.SYS_CONF_FILE, 'r') as f:
         # ensure that damage states are ordered
@@ -97,10 +98,9 @@ def read_model_from_json(config):
             = ConnectionValues(**edge_values)
 
     infrastructure_system_constructor = dict()
-    infrastructure_system_constructor['name'] \
-        = system_class + " : " + system_subclass
-    infrastructure_system_constructor['components'] \
-        = system_components
+    infrastructure_system_constructor['name'] = system_class + " : " + \
+                                                system_subclass
+    infrastructure_system_constructor['components'] = system_components
 
     # create the supply and output node dictionaries
     supply_nodes = {}
@@ -155,6 +155,7 @@ def read_model_from_xlsx(config):
     """
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
+    component_location_conf = config.COMPONENT_LOCATION_CONF
 
     json_obj = json.loads(read_excel_to_json(config.SYS_CONF_FILE),
                           object_pairs_hook=OrderedDict)

@@ -78,6 +78,8 @@ class Configuration:
         self.SYSTEM_SUBCLASS = config['System']['SYSTEM_SUBCLASS']
         self.COMMODITY_FLOW_TYPES = config['System']['COMMODITY_FLOW_TYPES']
         self.SYS_CONF_FILE_NAME = config['System']['SYS_CONF_FILE_NAME']
+        self.COMPONENT_LOCATION_CONF \
+            = config['System']['COMPONENT_LOCATION_CONF']
 
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.INPUT_DIR_NAME \
