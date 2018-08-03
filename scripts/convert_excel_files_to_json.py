@@ -60,35 +60,29 @@ def update_json_structure(main_json_obj):
 
         new_json_structure["component_list"][component] = OrderedDict()
 
-        new_json_structure["component_list"][component]\
-            ["component_class"] \
+        new_json_structure["component_list"][component]["component_class"] \
             = component_list[component]["component_class"]
 
-        new_json_structure["component_list"][component]\
-            ["component_type"] \
+        new_json_structure["component_list"][component]["component_type"] \
             = component_list[component]["component_type"]
 
-        new_json_structure["component_list"][component]\
-            ["cost_fraction"] \
+        new_json_structure["component_list"][component]["cost_fraction"] \
             = component_list[component]["cost_fraction"]
 
-        new_json_structure["component_list"][component]\
-            ["node_cluster"] \
+        new_json_structure["component_list"][component]["node_cluster"] \
             = component_list[component]["node_cluster"]
 
-        new_json_structure["component_list"][component]\
-            ["node_type"] \
+        new_json_structure["component_list"][component]["node_type"] \
             = component_list[component]["node_type"]
 
-        new_json_structure["component_list"][component]\
-            ["operating_capacity"] \
+        new_json_structure["component_list"][component]["operating_capacity"] \
             = component_list[component]["op_capacity"]
 
-        new_json_structure["component_list"][component]\
-            ["longitude"] = 0
+        new_json_structure["component_list"][component]["longitude"] \
+            = component_list[component]["pos_x"]
 
-        new_json_structure["component_list"][component]\
-            ["latitude"] = 0
+        new_json_structure["component_list"][component]["latitude"] \
+            = component_list[component]["pos_y"]
 
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"] = OrderedDict()
@@ -369,12 +363,14 @@ def read_excel_to_json(excel_file_path):
     damage_state_df = damage_state_df.to_json(orient='index')
     damage_state_df = standardize_json_string(damage_state_df)
 
-    sys_model_json = '{ "component_list": ' + component_list + ',' \
-                    '"node_conn_df": ' + node_conn_df + ',' \
-                    '"sysinp_setup": ' + sysinp_setup + ',' \
-                    '"sysout_setup": ' + sysout_setup + ',' \
-                    '"fragility_data": ' + fragility_data + ',' \
-                    '"damage_state_df": ' + damage_state_df + '}'
+    sys_model_json = '{ ' + \
+                     '"component_list": ' + component_list + ',' \
+                     '"node_conn_df": ' + node_conn_df + ',' \
+                     '"sysinp_setup": ' + sysinp_setup + ',' \
+                     '"sysout_setup": ' + sysout_setup + ',' \
+                     '"fragility_data": ' + fragility_data + ',' \
+                     '"damage_state_df": ' + damage_state_df + \
+                     '}'
 
     return sys_model_json
 

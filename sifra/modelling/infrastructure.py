@@ -337,11 +337,14 @@ class Substation(Infrastructure):
             'Circuit Breaker': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Current Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Voltage Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Potential Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Autotransformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Power Transformer': [0.05, 0.40, 0.70, 0.99, 1.00],
             'Control Building': [0.06, 0.30, 0.75, 0.99, 1.00],
             'Surge Protection': [0.05, 0.40, 0.70, 0.99, 1.00],
             'System Control': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Measurement Instrumentation': [0.05, 0.40, 0.70, 0.99, 1.00],
+            'Power Factor Correction': [0.05, 0.40, 0.70, 0.99, 1.00],
         }
 
 
@@ -350,9 +353,10 @@ class PowerStation(Infrastructure):
         super(PowerStation, self).__init__(**kwargs)
         # Initiate the power station values, which have been used in all
         # current testing
-        self.uncosted_classes = ['JUNCTION POINT',
-                                 'SYSTEM INPUT',
-                                 'SYSTEM OUTPUT']
+        self.uncosted_classes = ['SYSTEM INPUT',
+                                 'SYSTEM OUTPUT',
+                                 'JUNCTION POINT',
+                                 'MODEL ARTEFACT']
         self.ds_lims_compclasses = {
             'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -373,21 +377,31 @@ class PotableWaterTreatmentPlant(Infrastructure):
         # in all current testing
         self.uncosted_classes = ['SYSTEM INPUT',
                                  'SYSTEM OUTPUT',
-                                 'JUNCTION POINT']
+                                 'JUNCTION POINT',
+                                 'MODEL ARTEFACT']
         self.ds_lims_compclasses = {
             'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Sediment Flocculation': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Chlorination Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Pump Station': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Rectangular Sedimentation Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Elevated Pipes': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Air Compression Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Backup Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Basins': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Chemical Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Circular Clarification Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Horizontal Pump': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Vertical Pump': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Buildings': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chlorination Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Supply': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Electric Power Commercial': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Electric Power Backup': [0.0, 0.05, 0.40, 0.70, 1.00],
-        }
+            'Electrical Control Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Pump Station': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Horizontal Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Vertical Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Elevated Pipes': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Internal Pipework': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chemical Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Concrete Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Steel Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Rectangular Sedimentation Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Circular Clarification Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Sediment Flocculation': [0.0, 0.05, 0.40, 0.70, 1.00],
+            }

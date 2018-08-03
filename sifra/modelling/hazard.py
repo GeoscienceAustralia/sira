@@ -17,10 +17,11 @@ class Hazard(object):
 
         for comp in self.scenario_hazard_data:   
 
-            if round(float(comp["longitude"]), self.round_off) \
-                    == round(float(longitude), self.round_off):
-                if round(float(comp["latitude"]), self.round_off) \
-                        == round(float(latitude), self.round_off):
+            if (round(float(comp["longitude"]), self.round_off)
+                == round(float(longitude), self.round_off))\
+                    and \
+                    (round(float(comp["latitude"]), self.round_off)
+                    == round(float(latitude), self.round_off)):
                     return comp["hazard_intensity"]
 
         raise Exception("Invalid Values for Longitude or Latitude")
