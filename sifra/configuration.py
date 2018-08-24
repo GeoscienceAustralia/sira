@@ -29,7 +29,6 @@ class Configuration:
         # reading in simulation scenario parameters
         self.SCENARIO_NAME \
             = config['Scenario']['SCENARIO_NAME']
-        # print(config['Scenario']['SCENARIO_NAME'])
         self.INTENSITY_MEASURE_PARAM \
             = config['Scenario']['INTENSITY_MEASURE_PARAM']
         self.INTENSITY_MEASURE_UNIT \

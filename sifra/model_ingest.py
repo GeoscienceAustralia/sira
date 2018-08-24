@@ -155,21 +155,27 @@ def read_model_from_xlsx(config):
     """
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
-    component_location_conf = config.COMPONENT_LOCATION_CONF
 
     json_obj = json.loads(read_excel_to_json(config.SYS_CONF_FILE),
                           object_pairs_hook=OrderedDict)
     model = update_json_structure(json_obj)
 
     # read the lists from json
+    system_meta = model['system_meta']
     component_list = model['component_list']
     node_conn_df = model['node_conn_df']
     sysinp_setup = model['sysinp_setup']
     sysout_setup = model['sysout_setup']
 
+    # **************************************************************************
+    mdl_meta = {}
+    for index in system_meta:
+        mdl_meta_params = {}
+        mdl_meta_params['value'] = system_meta[index]['value']
+        mdl_meta_params['notes'] = system_meta[index]['notes']
+        mdl_meta[index] = mdl_meta_params
 
     system_components = {}
-
     for component_id in component_list:
         component_values = {}
 
@@ -218,6 +224,7 @@ def read_model_from_xlsx(config):
             = ConnectionValues(**edge_values)
 
     infrastructure_system_constructor = dict()
+    infrastructure_system_constructor['system_meta'] = mdl_meta
     infrastructure_system_constructor['name'] = system_class + " : " + \
                                                 system_subclass
     infrastructure_system_constructor['components'] = system_components

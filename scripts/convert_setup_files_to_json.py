@@ -173,12 +173,6 @@ def convert_conf_object_to_json(setup):
     except KeyError:
         data['System']['SYS_CONF_FILE_NAME'] = None
 
-    try:
-        data['System']['COMPONENT_LOCATION_CONF'] \
-            = setup['COMPONENT_LOCATION_CONF']
-    except KeyError:
-        data['System']['COMPONENT_LOCATION_CONF'] = None
-
     data['Input'] = collections.OrderedDict()
 
     try:
@@ -229,7 +223,6 @@ def convert_conf_object_to_json(setup):
 
 
 def convert_to_json(conf_file_path):
-    print(conf_file_path)
     parent_folder_name = os.path.dirname(conf_file_path)
     file_name = os.path.splitext(os.path.basename(conf_file_path))[0]
     json_filename = os.path.join(parent_folder_name, file_name + '.json')

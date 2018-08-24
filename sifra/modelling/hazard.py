@@ -4,23 +4,23 @@ import csv
 from collections import OrderedDict
 
 class Hazard(object):
-    """
-    handel a singloe
-    """
 
-    def __init__(self,hazard_scenario_name, scenario_hazard_data):
+    def __init__(self, hazard_scenario_name, scenario_hazard_data,
+                 hazard_input_method):
         self.hazard_scenario_name = hazard_scenario_name
         self.scenario_hazard_data = scenario_hazard_data
+        self.hazard_input_method = hazard_input_method
         self.round_off = 2
 
     def get_hazard_intensity_at_location(self, longitude, latitude):
 
-        for comp in self.scenario_hazard_data:   
-
-            if (round(float(comp["longitude"]), self.round_off)
-                == round(float(longitude), self.round_off))\
-                    and \
-                    (round(float(comp["latitude"]), self.round_off)
+        for comp in self.scenario_hazard_data:
+            if self.hazard_input_method == 'hazard_array':
+                return comp["hazard_intensity"]
+            else:
+                if (round(float(comp["longitude"]), self.round_off)
+                    == round(float(longitude), self.round_off)) and \
+                   (round(float(comp["latitude"]), self.round_off)
                     == round(float(latitude), self.round_off)):
                     return comp["hazard_intensity"]
 
@@ -93,7 +93,8 @@ class HazardsContainer(object):
             self.listOfhazards.append(
                 Hazard(
                     hazard_scenario_name,
-                    self.scenario_hazard_data[hazard_scenario_name]
+                    self.scenario_hazard_data[hazard_scenario_name],
+                    configuration.HAZARD_INPUT_METHOD
                     )
                 )
 

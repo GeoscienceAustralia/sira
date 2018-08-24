@@ -1602,6 +1602,7 @@ def main():
                           'SYSTEM_INPUT',
                           'SYSTEM_OUTPUT',
                           'JUNCTION_NODE',
+                          'JUNCTION',
                           'Generation Source',
                           'Grounding']
 
