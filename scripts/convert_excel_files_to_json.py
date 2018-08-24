@@ -42,6 +42,7 @@ def standardize_json_string(json_string):
 
 def update_json_structure(main_json_obj):
 
+    system_meta = main_json_obj["system_meta"]
     sysout_setup = main_json_obj["sysout_setup"]
     sysinp_setup = main_json_obj["sysinp_setup"]
     node_conn_df = main_json_obj["node_conn_df"]
@@ -51,6 +52,7 @@ def update_json_structure(main_json_obj):
     fragility_data = main_json_obj["fragility_data"]
 
     new_json_structure = OrderedDict()
+    new_json_structure["system_meta"] = system_meta
     new_json_structure["sysout_setup"] = sysout_setup
     new_json_structure["sysinp_setup"] = sysinp_setup
     new_json_structure["node_conn_df"] = node_conn_df
@@ -320,6 +322,13 @@ def update_json_structure(main_json_obj):
 
 def read_excel_to_json(excel_file_path):
 
+    system_meta = pd.read_excel(
+        excel_file_path, sheet_name='system_meta',
+        index_col=0, header=0,
+        skiprows=0, skipinitialspace=True)
+    system_meta = system_meta.to_json(orient='index')
+    system_meta = standardize_json_string(system_meta)
+
     component_list = pd.read_excel(
         excel_file_path, sheet_name='component_list',
         index_col=0, header=0,
@@ -363,14 +372,15 @@ def read_excel_to_json(excel_file_path):
     damage_state_df = damage_state_df.to_json(orient='index')
     damage_state_df = standardize_json_string(damage_state_df)
 
-    sys_model_json = '{ ' + \
+    sys_model_json = '{ ' \
+                     '"system_meta": ' + system_meta + ',' \
                      '"component_list": ' + component_list + ',' \
                      '"node_conn_df": ' + node_conn_df + ',' \
                      '"sysinp_setup": ' + sysinp_setup + ',' \
                      '"sysout_setup": ' + sysout_setup + ',' \
                      '"fragility_data": ' + fragility_data + ',' \
                      '"damage_state_df": ' + damage_state_df + \
-                     '}'
+                     ' }'
 
     return sys_model_json
 
