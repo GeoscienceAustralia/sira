@@ -2,7 +2,7 @@ __packagename__ = "sifra"
 __description__ = "System for Infrastructure Facility Resilience Analysis"
 __url__ = "https://github.com/GeoscienceAustralia/sifra"
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 __author__ = "Geoscience Australia"
 __email__ = "maruf.rahman@ga.gov.au"
