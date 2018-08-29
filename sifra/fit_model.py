@@ -9,18 +9,22 @@ from scipy.optimize import curve_fit
 import lmfit
 import pandas as pd
 pd.options.display.float_format = '{:,.4f}'.format
+import json
 
-import sys
 import os
 import warnings
 
 import sifraplot as spl
 
 import brewer2mpl
-from colorama import Fore, Style, init
-
+from colorama import Fore, Back, init, Style
 init()
 
+import argparse
+from sifra.configuration import Configuration
+from sifra.scenario import Scenario
+from sifra.modelling.hazard import HazardsContainer
+from sifra.model_ingest import ingest_model
 
 # stream = AnsiToWin32(sys.stderr).stream
 
@@ -95,7 +99,8 @@ def res_lognorm_cdf(params, x, data, eps=None):
 
 # ============================================================================
 
-def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
+def fit_prob_exceed_model(system_class, hazard_input_vals, pb_exceed, SYS_DS,
+                          out_path):
     """
     Fit a Lognormal CDF model to simulated probability exceedance data
 
@@ -118,7 +123,9 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
 
     # ----- Initial fit -----
     # sys_dmg_ci = [{} for _ in xrange(len(SYS_DS))]
-    sys_dmg_fit = [[] for _ in xrange(len(SYS_DS))]
+    sys_dmg_fit = [[] for _ in range(len(SYS_DS))]
+    hazard_input_vals = [float(x) for x in hazard_input_vals]
+
     for dx in range(1, len(SYS_DS)):
         x_sample = hazard_input_vals
         y_sample = pb_exceed[dx]
@@ -238,6 +245,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
     # sys_dmg_model['Location'] = sys_dmg_model['Location'].map('{0:.1f}'.format)
     print("\nFINAL System Fragilities: \n")
     print(sys_dmg_model)
+    print()
 
     # for dx in range(1, len(SYS_DS)):
     #     print("\n\nFragility model statistics for damage state: %s"
@@ -256,17 +264,19 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
     fontP.set_size('small')
 
     fig = plt.figure(figsize=(9, 5), facecolor='white')
-    ax = fig.add_subplot(111, axisbg='white')
+    ax = fig.add_subplot(111, facecolor='white')
 
     spl.add_legend_subtitle("Data")
+    colours = spl.ColourPalettes()
+    COLR_DS = colours.FiveLevels
 
     for i in range(1, len(SYS_DS)):
         ax.plot(hazard_input_vals,
                 pb_exceed[i],
                 label=SYS_DS[i], clip_on=False,
-                color=spl.COLR_DS[i], linestyle='', alpha=0.4,
+                color=COLR_DS[i], linestyle='', alpha=0.4,
                 marker=markers[i - 1], markersize=4,
-                markeredgecolor=spl.COLR_DS[i])
+                markeredgecolor=COLR_DS[i])
 
     # ----- Plot the fitted models -----
     # xformodel = np.linspace(0, max(hazard_input_vals),
@@ -285,22 +295,24 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path):
         ax.plot(xformodel,
                 dmg_mdl_arr[dx],
                 label=SYS_DS[dx], clip_on=False,
-                color=spl.COLR_DS[dx], alpha=0.65,
+                color=COLR_DS[dx], alpha=0.65,
                 linestyle='-', linewidth=1.6)
 
     # xbuffer = min(int(len(x_sample)/10), 5) * (x_sample[2]-x_sample[1])
     # ax.set_xlim([min(x_sample)-xbuffer, max(x_sample)+xbuffer])
     # ax.margins(0.03, None)
+    y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)
+    y_tick_val = ['{:.2f}'.format(i) for i in y_tick_pos]
     outfig = os.path.join(out_path, 'fig_MODEL_sys_pb_exceed.png')
     spl.format_fig(ax,
-                   figtitle='System Fragility: ' + fc.system_class,
+                   figtitle='System Fragility: ' + system_class,
                    x_lab='Peak Ground Acceleration (g)',
-                   y_lab='P($D_s$ > $d_s$ | INTENSITY_MEASURE)',
+                   y_lab='P($D_s$ > $d_s$)',
                    x_scale=None,
                    y_scale=None,
                    x_tick_val=None,
-                   y_tick_pos=np.linspace(0.0, 1.0, num=6, endpoint=True),
-                   y_tick_val=np.linspace(0.0, 1.0, num=6, endpoint=True),
+                   y_tick_pos=y_tick_pos,
+                   y_tick_val=y_tick_val,
                    x_grid=True,
                    y_grid=True,
                    add_legend=True)
@@ -604,8 +616,8 @@ def fit_restoration_data(RESTORATION_TIME_RANGE, sys_fn, SYS_DS, out_path):
 # sys_fn[DS].dropna().plot(kind='kde', xlim=(0,100), style='r--')
 # plt.show(block=False)
 
-# def fit_restoration_data_multimode(RESTORATION_TIME_RANGE,
-#                                    sys_fn, SYS_DS, out_path):
+def fit_restoration_data_multimode(RESTORATION_TIME_RANGE,
+                                   sys_fn, SYS_DS, out_path):
 
     """
     *********************************************************************
@@ -762,31 +774,65 @@ def approximate_generic_sys_restoration(sc, fc, sys_frag,
 
 # ============================================================================
 
-if __name__ == "__main__":
-
+def main():
     # ------------------------------------------------------------------------
-    # READ in SETUP data
-    # The first argument is the full path to the config file
-    SETUPFILE = sys.argv[1]
-    discard = {}
-    config = {}
+    # Read in SETUP data
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--setup", type=str,
+                        help="Setup file for simulation scenario, and \n"
+                             "locations of inputs, outputs, and system model.")
+    parser.add_argument("-v", "--verbose",  type=str,
+                        help="Choose option for logging level from: \n"
+                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+    parser.add_argument("-d", "--dirfile", type=str,
+                        help="JSON file with location of input/output files "
+                             "from past simulation that is to be analysed\n.")
+    args = parser.parse_args()
 
-    # Read in config file and define Scenario & Facility objects
-    exec (open(SETUPFILE).read(), discard, config)
-    FacilityObj = eval(config["SYSTEM_CLASS"])
-    sc = Scenario(SETUPFILE)
-    fc = FacilityObj(SETUPFILE)
+    if args.setup is None:
+        raise ValueError("Must provide a correct setup argument: "
+                         "`-s` or `--setup`,\n"
+                         "Setup file for simulation scenario, and \n"
+                         "locations of inputs, outputs, and system model.\n")
+
+    if not os.path.exists(args.dirfile):
+        raise ValueError("Could not locate file with directory locations"
+                         "with results from pre-run simulations.\n")
 
     # Define input files, output location, scenario inputs
-    INPUT_PATH = os.path.join(os.getcwd(), sc.input_dir_name)
-    # SYS_CONFIG_FILE = os.path.join(INPUT_PATH, fc.sys_config_file_name)
-    RAW_OUTPUT_DIR = sc.raw_output_dir
-    RESTORATION_TIME_RANGE = sc.restoration_time_range
-    SYS_DS = fc.sys_dmg_states
+    with open(args.dirfile, 'r') as dat:
+        dir_dict = json.load(dat)
+
+    # Configure simulation model.
+    # Read data and control parameters and construct objects.
+    config = Configuration(args.setup,
+                           run_mode='analysis',
+                           output_path=dir_dict["OUTPUT_PATH"])
+    scenario = Scenario(config)
+    hazards = HazardsContainer(config)
+    infrastructure = ingest_model(config)
+
+    if not config.SYS_CONF_FILE_NAME == dir_dict["SYS_CONF_FILE_NAME"]:
+        raise NameError("Names for supplied system model names did not match."
+                        "Aborting.\n")
+
+    # --------------------------------------------------------------------------
+
+    OUTPUT_PATH = dir_dict["OUTPUT_PATH"]
+    RAW_OUTPUT_DIR = dir_dict["RAW_OUTPUT_DIR"]
+    hazard_scenarios = hazards.hazard_scenario_list
+
+    # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # THIS IS A HACK. NEED A BETTER SOLUTION!
+    # sys_limit_states = infrastructure.sys_dmg_states
+    one_comp = infrastructure.components.values()[0]
+    sys_limit_states = [one_comp.damage_states[ds].damage_state_name
+                        for ds in one_comp.damage_states]
 
     # Test switches
-    FIT_PE_DATA = sc.fit_pe_data
-    FIT_RESTORATION_DATA = sc.fit_restoration_data
+    FIT_PE_DATA = scenario.fit_pe_data
+    # FIT_RESTORATION_DATA = scenario.fit_restoration_data
+    # RESTORATION_TIME_RANGE = scenario.restoration_time_range
 
     # ------------------------------------------------------------------------
     # READ in raw output files from prior analysis of system fragility
@@ -799,10 +845,6 @@ if __name__ == "__main__":
         np.load(os.path.join(
             RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
 
-    output_array_given_recovery = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'output_array_given_recovery.npy'))
-
     exp_damage_ratio = \
         np.load(os.path.join(
             RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
@@ -811,33 +853,51 @@ if __name__ == "__main__":
         np.load(os.path.join(
             RAW_OUTPUT_DIR, 'sys_frag.npy'))
 
-    required_time = \
-        np.load(os.path.join(RAW_OUTPUT_DIR, 'required_time.npy'))
+    # output_array_given_recovery = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'output_array_given_recovery.npy'))
 
-    if fc.system_class in ["PowerStation",
-							"PotableWaterTreatmentPlant", "PWTP",
-							"WasteWaterTreatmentPlant", "WWTP"]:
-        pe_sys = \
-            np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
-    elif fc.system_class == 'Substation':
-        pe_sys = \
-            np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
+    # required_time = \
+    #     np.load(os.path.join(RAW_OUTPUT_DIR, 'required_time.npy'))
 
-    # ------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
+
+    if infrastructure.system_class.lower() == 'powerstation':
+        pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
+    elif infrastructure.system_class.lower() == 'substation':
+        pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
+    elif infrastructure.system_class.lower() in [
+        "potablewatertreatmentplant", "pwtp",
+        "wastewatertreatmentplant", "wwtp",
+        "watertreatmentplant", "wtp"]:
+        pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
+
+    # --------------------------------------------------------------------------
     # Calculate & Plot Fitted Models
 
-    sys_fn = approximate_generic_sys_restoration(sc, fc, sys_frag,
-                                                 output_array_given_recovery)
-
     if FIT_PE_DATA:
-        sys_dmg_model = fit_prob_exceed_model(
-            sc.hazard_intensity_vals, pe_sys, SYS_DS, sc.output_path)
+        fit_prob_exceed_model(infrastructure.system_class,
+                              hazard_scenarios,
+                              pe_sys,
+                              sys_limit_states,
+                              OUTPUT_PATH)
 
-    if FIT_RESTORATION_DATA:
-        sys_rst_mdl_mode1 = fit_restoration_data(
-            RESTORATION_TIME_RANGE, sys_fn, SYS_DS, sc.output_path)
-        # sys_rst_mdl_mode2 = fit_restoration_data_multimode(
-        #     RESTORATION_TIME_RANGE, sys_fn, SYS_DS, scn.output_path)
-        print("\n" + "-" * 79)
+    # sys_fn = approximate_generic_sys_restoration(sc, fc, sys_frag,
+    #                                              output_array_given_recovery)
+    #
+    # if FIT_RESTORATION_DATA:
+    #     sys_rst_mdl_mode1 = fit_restoration_data(
+    #         RESTORATION_TIME_RANGE, sys_fn, sys_limit_states, sc.output_path)
+    #     # sys_rst_mdl_mode2 = fit_restoration_data_multimode(
+    #     #     RESTORATION_TIME_RANGE, sys_fn, sys_limit_states, scn.output_path)
+    #     print("\n" + "-" * 79)
 
 # ============================================================================
+
+if __name__ == "__main__":
+    if __name__ == "__main__":
+        print()
+        print(Fore.CYAN + Back.BLACK + Style.BRIGHT +
+              ">> Initiating attempt to fit model to simulation data ... " +
+              Style.RESET_ALL + "\n")
+        main()
