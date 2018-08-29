@@ -2,10 +2,10 @@
     "Hazard": {
         "HAZARD_INPUT_METHOD": "hazard_array", 
         "HAZARD_TYPE": "Earthquake", 
-        "INTENSITY_MEASURE_MAX": 1.0, 
+        "INTENSITY_MEASURE_MAX": 1.2, 
         "INTENSITY_MEASURE_MIN": 0.0, 
-        "INTENSITY_MEASURE_STEP": 0.2, 
-        "NUM_SAMPLES": 10
+        "INTENSITY_MEASURE_STEP": 0.1, 
+        "NUM_SAMPLES": 10000
     }, 
     "Input": {
         "INPUT_DIR_NAME": "/Users/marufr/code/EIRAPSI-SYS-MODELS"
@@ -39,6 +39,7 @@
     }, 
     "System": {
         "COMMODITY_FLOW_TYPES": 2, 
+        "COMPONENT_LOCATION_CONF": "defined", 
         "INFRASTRUCTURE_LEVEL": "facility", 
         "SYSTEM_CLASS": "PotableWaterTreatmentPlant", 
         "SYSTEM_CLASSES": [
@@ -49,12 +50,12 @@
             "WasteWaterTreatmentPlant", 
             "WWTP"
         ], 
-        "SYSTEM_SUBCLASS": "Medium Voltage Substation", 
-        "SYS_CONF_FILE_NAME": "sysmodel_pwtp_mundaring_v1.xlsx"
+        "SYSTEM_SUBCLASS": "Water Treatment Facility", 
+        "SYS_CONF_FILE_NAME": "sysmodel_pwtp_mundaring_v07.xlsx"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 
-        "FIT_RESTORATION_DATA": true, 
+        "FIT_RESTORATION_DATA": false, 
         "SAVE_VARS_NPY": true
     }
 }
