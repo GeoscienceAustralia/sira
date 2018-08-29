@@ -714,8 +714,10 @@ class SystemTopology(object):
                     xlabel=node,
                     )
 
-            if str(self.component_attr[node]['component_class']).lower()\
-                    == 'large tank':
+            if str(self.component_attr[node]['component_class']).lower() in \
+                    ['large tank',
+                     'sedimentation basin',
+                     'sedimentation basin - large']:
                 self.gviz.get_node(node).attr['label'] =\
                     self.segment_long_labels(node, maxlen=15, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
@@ -726,8 +728,10 @@ class SystemTopology(object):
                     xlabel="",
                     )
 
-            if str(self.component_attr[node]['component_class']).lower()\
-                    == 'small tank':
+            if str(self.component_attr[node]['component_class']).lower() in\
+                    ['small tank',
+                     'sedimentation basin - small',
+                     'chlorination tank']:
                 self.gviz.get_node(node).attr['label'] =\
                     self.segment_long_labels(node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
