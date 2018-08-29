@@ -284,7 +284,7 @@ def forceAspect(ax,aspect=1):
 
 # ----------------------------------------------------------------------------
 
-def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
+def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
                x_scale=None, y_scale=None,
                x_tick_pos=None, y_tick_pos=None,
                x_tick_val=None, y_tick_val=None,
@@ -296,12 +296,6 @@ def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
     """
     Customises plots to a clean consistent appearance
     """
-
-    # figfile=None; save_file=False
-    # if figfile is None:
-    #     figfile = 'fig_' +\
-    #               datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S') +\
-    #               '.png'
 
     grid_colr = '#B6B6B6'   # '#E6E6E6'
     spine_colr = 'black'    # '#555555'
@@ -409,7 +403,11 @@ def format_fig(axis, x_lab=None, y_lab=None, figtitle=None,
     if aspectratio > 0:
         forceAspect(axis, aspect=aspectratio)
 
-
+    # if figfile is None:
+    #     figfile = 'fig_' +\
+    #               datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S') +\
+    #               '.png'
+    #
     # if save_file is True:
     #     plt.savefig(figfile, format='png', bbox_inches='tight', dpi=250)
     # plt.close(fig)
