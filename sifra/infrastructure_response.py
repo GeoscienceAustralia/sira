@@ -1,7 +1,5 @@
 from __future__ import print_function
 import os
-import time
-from datetime import timedelta
 import pickle
 import zipfile
 
@@ -10,6 +8,9 @@ import pandas as pd
 import parmap
 
 import matplotlib
+
+from sifra.modelling.infrastructure import pp
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -35,6 +36,18 @@ from sifra.modelling import infrastructure
 # BEGIN POST-PROCESSING ...
 # ****************************************************************************
 
+def calc_tick_vals(val_list, xstep=0.1):
+    num_ticks = int(round(len(val_list)/xstep)) + 1
+    if num_ticks>12 and num_ticks<=20:
+        xstep = 0.2
+        num_ticks = int(round(len(val_list)/xstep)) + 1
+    elif num_ticks>20:
+        num_ticks = 11
+    tick_labels = val_list[::(num_ticks-1)]
+    if type(tick_labels[0])==float:
+        tick_labels = ['{:.3f}'.format(val) for val in tick_labels]
+    return tick_labels
+
 
 def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     """Draws and saves a boxplot of mean economic loss"""
@@ -57,38 +70,51 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
 
     fig = plt.figure(figsize=(9, 5), facecolor='white')
     sns.set(style='ticks', palette='Set2')
-    # whitesmoke='#F5F5F5', coral='#FF7F50'
     ax = sns.boxplot(x=x1, y='Econ Loss Ratio',
                      data=econ_loss_df,
                      linewidth=0.8, color='whitesmoke',
                      showmeans=True,
+                     showfliers=True,
                      meanprops=dict(marker='o',
                                     markeredgecolor='coral',
                                     markerfacecolor='coral')
                      )
 
-    sns.despine(bottom=False, top=True, left=True, right=True, offset=10)
+    sns.despine(bottom=False, top=True, left=True, right=True,
+                offset=None, trim=True)
     ax.spines['bottom'].set_linewidth(0.8)
     ax.spines['bottom'].set_color('#555555')
+    ax.spines['bottom'].set_position(('axes', 0.0))
 
     ax.yaxis.grid(True, which="major", linestyle='-',
                   linewidth=0.4, color='#B6B6B6')
 
     ax.tick_params(axis='x', bottom=True, top=False,
-                   width=0.8, labelsize=8, pad=5, color='#555555')
+                   width=0.8, labelsize=8, color='#555555')
     ax.tick_params(axis='y', left=False, right=False,
-                   width=0.8, labelsize=8, pad=5, color='#555555')
+                   width=0.8, labelsize=8, color='#555555')
 
-    ax.set_xticklabels(hazards.hazard_scenario_list)
-    intensity_label \
-        = hazards.intensity_measure_param+' ('+\
-          hazards.intensity_measure_unit+')'
+    hazard_scenario_list = hazards.hazard_scenario_list
+    xtick_labels = calc_tick_vals(hazard_scenario_list)
+
+    xtick_pos = []
+    for val in xtick_labels:
+        xtick_pos.append(hazard_scenario_list.index(val))
+    intensity_label = hazards.intensity_measure_param+' ('+\
+                      hazards.intensity_measure_unit+')'
+
+    ax.set_xticks(xtick_pos)
+    ax.set_xticklabels(xtick_labels, rotation='vertical')
     ax.set_xlabel(intensity_label, labelpad=9, size=10)
+
+    ax.set_yticks(np.linspace(0.0, 1.0, 11, endpoint=True))
     ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
-    ax.set_title('Loss Ratio', loc='center', y=1.04)
-    ax.title.set_fontsize(12)
+
+    ax.set_title('Loss Ratio', loc='center', y=1.04,
+                 fontsize=12, weight='bold')
 
     figfile = os.path.join(scenario.output_path, 'fig_lossratio_boxplot.png')
+    plt.margins(0.05)
     plt.savefig(figfile, format='png', bbox_inches='tight', dpi=300)
     plt.close(fig)
 
@@ -105,9 +131,12 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         for response_key in sorted(id_comp_vs_haz.keys()):
             pickle.dump({response_key: id_comp_vs_haz[response_key]}, handle)
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
-    zipmode = zipfile.ZIP_DEFLATED
-    with zipfile.ZipFile(idshaz_zip, 'w', zipmode) as zip:
-        zip.write(idshaz)
+    zf = zipfile.ZipFile(idshaz_zip, mode='w', allowZip64=True)
+    zf.write(idshaz, compress_type=zipfile.ZIP_DEFLATED)
+    zf.close()
+    # zipmode = zipfile.ZIP_DEFLATED
+    # with zipfile.ZipFile(idshaz_zip, 'w', zipmode) as zip:
+    #     zip.write(idshaz)
     os.remove(idshaz)
 
     # ------------------------------------------------------------------------
@@ -173,11 +202,29 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     pe_sys_econloss = np.zeros(
         (len(infrastructure.get_system_damage_states()),
          hazards.num_hazard_pts)
-    )
+        )
     for j in range(hazards.num_hazard_pts):
         for i in range(len(infrastructure.get_system_damage_states())):
             pe_sys_econloss[i, j] = \
                 np.sum(sys_frag[:, j] >= i) / float(scenario.num_samples)
+
+    compcls_dmg_level_percentages = response_list[6]
+    comp_class_list = infrastructure.get_component_classes()
+    pe_sys_classdmg = np.zeros(
+        (len(infrastructure.get_system_damage_states()),
+         hazards.num_hazard_pts)
+        )
+
+    ###########################################################################
+    # print("****************************")
+    # print('compcls_dmg_level_percentages')
+    # pp.pprint(compcls_dmg_level_percentages)
+
+    # for j in range(hazards.num_hazard_pts):
+    #     for i in range(len(infrastructure.get_system_damage_states())):
+    #         pe_sys_classdmg[i, j] = \
+    #
+    ###########################################################################
 
     np.save(
         os.path.join(scenario.raw_output_dir, 'sys_frag.npy'),
@@ -305,7 +352,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
             pb = pe2pb(component_pe_ds)
 
             dr = np.array([component.damage_states[int(ds)].damage_ratio
-                           for ds in infrastructure.sys_dmg_states])
+                           for ds in range(len(infrastructure.sys_dmg_states))])
             cf = component.cost_fraction
             loss_list = dr * cf
             exp_damage_ratio[j, l] = np.sum(pb * loss_list)
