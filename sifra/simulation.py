@@ -47,20 +47,26 @@ def calculate_response(hazards, scenario, infrastructure):
 
 
     # combine the responses into one list
-    post_processing_list = [{},  # hazard level vs component damage state index
-                            {},  # hazard level vs infrastructure output
-                            {},  # hazard level vs component response
-                            {},  # hazard level vs component type response
-                            [],  # array of infrastructure output per sample
-                            []]  # array infrastructure econ loss per sample
+    post_processing_list = [
+        {},  # hazard level vs component damage state index
+        {},  # hazard level vs infrastructure output
+        {},  # hazard level vs component response
+        {},  # hazard level vs component type response
+        [],  # array of infrastructure output per sample
+        [],  # array infrastructure econ loss per sample
+        {},  # hazard level vs component class dmg level pct
+        {}]  # hazard level vs component class expected damage index
 
     # iterate through the hazards
     for hazard_response in hazards_response:
         # iterate through the hazard response dictionary
         for key, value_list in hazard_response.items():
-            for list_number in range(6):
+            for list_number in range(len(post_processing_list)):
                 # the first four are dicts
                 if list_number <= 3:
+                    post_processing_list[list_number][key] \
+                        = value_list[list_number]
+                elif list_number in [6,7]:
                     post_processing_list[list_number][key] \
                         = value_list[list_number]
                 else:
@@ -115,7 +121,10 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
             expected_damage_state_of_components_for_n_simulations)
 
     # Construct the dictionary containing the statistics of the response
-    component_response_dict, comptype_response_dict = \
+    component_response_dict, \
+    comptype_response_dict, \
+    compclass_dmg_level_percentages, \
+    compclass_dmg_index_expected = \
         infrastructure.calc_response(
             component_sample_loss,
             comp_sample_func,
@@ -140,7 +149,10 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
         component_response_dict,
         comptype_response_dict,
         infrastructure_sample_output,
-        infrastructure_sample_economic_loss]}
+        infrastructure_sample_economic_loss,
+        compclass_dmg_level_percentages,
+        compclass_dmg_index_expected]
+        }
     return response_for_a_hazard
 
 
