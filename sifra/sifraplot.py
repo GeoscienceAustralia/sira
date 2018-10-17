@@ -9,7 +9,7 @@ import matplotlib as mpl
 import brewer2mpl
 import re
 
-mpl.rcParams['legend.numpoints'] = 2
+mpl.rcParams['legend.numpoints'] = 1
 mpl.rcParams['xtick.direction'] = 'out'
 mpl.rcParams['ytick.direction'] = 'out'
 mpl.rcParams['font.family'] = 'Open Sans', 'sans-serif'
@@ -345,7 +345,7 @@ def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
         color=spine_colr,
         direction='out',
         labelsize=7,
-        pad=5,
+        pad=0,
         width=0.5,
         length=4)
 
@@ -359,7 +359,7 @@ def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
         color=spine_colr,
         direction='out',
         labelsize=7,
-        pad=5,
+        pad=0,
         width=0.5,
         length=4)
 
