@@ -373,7 +373,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS,
                     pb_exceed,
                     out_path,
                     config,
-                    PLOT_DATA=True,
+                    PLOT_DATA=False,
                     PLOT_MODEL=True,
                     PLOT_EVENTS=True)
 
@@ -1181,6 +1181,8 @@ def main():
         pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
     elif infrastructure.system_class.lower() == 'substation':
         pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
+    # elif infrastructure.system_class.lower() == 'substation':
+    #     pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
     elif infrastructure.system_class.lower() in [
         "potablewatertreatmentplant", "pwtp",
         "wastewatertreatmentplant", "wwtp",
