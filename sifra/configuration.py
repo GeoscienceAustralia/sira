@@ -39,6 +39,8 @@ class Configuration:
         #   - Used in post processing stage
         self.FOCAL_HAZARD_SCENARIOS \
             = config['Scenario']['FOCAL_HAZARD_SCENARIOS']
+        self.FOCAL_HAZARD_SCENARIO_NAMES \
+            = config['Scenario']['FOCAL_HAZARD_SCENARIO_NAMES']
 
         self.NUM_SAMPLES = config['Hazard']['NUM_SAMPLES']
         self.HAZARD_TYPE = config['Hazard']['HAZARD_TYPE']
