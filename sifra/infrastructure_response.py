@@ -126,10 +126,11 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # So we zip it for archival and delete the original
     # ------------------------------------------------------------------------
     idshaz = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.pickle')
-    id_comp_vs_haz = response_list[0]
+    haz_vs_ds_index_of_comp = response_list[0]
     with open(idshaz, 'w') as handle:
-        for response_key in sorted(id_comp_vs_haz.keys()):
-            pickle.dump({response_key: id_comp_vs_haz[response_key]}, handle)
+        for response_key in sorted(haz_vs_ds_index_of_comp.keys()):
+            pickle.dump({response_key: haz_vs_ds_index_of_comp[response_key]},
+                        handle)
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zf = zipfile.ZipFile(idshaz_zip, mode='w', allowZip64=True)
     zf.write(idshaz, compress_type=zipfile.ZIP_DEFLATED)
@@ -296,13 +297,17 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
             for i in range(scenario.num_samples):
                 for compclass in cp_classes_costed:
                     # **************************************************
-                    # TODO: CHECK COMPONENETS ARE SAVED IN CORRECT ORDER
+                    # TODO: CHECK COMPONENTS ARE SAVED IN CORRECT ORDER
                     # **************************************************
                     for comptype in cp_class_map[compclass]:
                         comp_ndx = infrastructure.components.keys().\
                             index(comptype.component_id)
-                        comp_class_failures[compclass][i, j] += \
-                            response_list[0][scenario_name][i, comp_ndx]
+                        # -----------------------------------------------------
+                        if response_list[0][scenario_name][i, comp_ndx] >= 2:
+                            comp_class_failures[compclass][i, j] += 1
+                        # comp_class_failures[compclass][i, j] += \
+                        #     response_list[0][scenario_name][i, comp_ndx]
+                        # -----------------------------------------------------
                     comp_class_failures[compclass][i, j] /= \
                         len(cp_class_map[compclass])
 
@@ -350,9 +355,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
             component_pe_ds = component_pe_ds[1:]
             pb = pe2pb(component_pe_ds)
-
             dr = np.array([component.damage_states[int(ds)].damage_ratio
-                           for ds in range(len(infrastructure.sys_dmg_states))])
+                           for ds in range(len(component.damage_states))])
             cf = component.cost_fraction
             loss_list = dr * cf
             exp_damage_ratio[j, l] = np.sum(pb * loss_list)
