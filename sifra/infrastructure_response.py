@@ -9,8 +9,6 @@ import parmap
 
 import matplotlib
 
-from sifra.modelling.infrastructure import pp
-
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
