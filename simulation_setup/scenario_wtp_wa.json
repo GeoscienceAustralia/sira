@@ -1,0 +1,66 @@
+{
+    "Hazard": {
+        "HAZARD_INPUT_METHOD": "hazard_array", 
+        "HAZARD_TYPE": "Earthquake", 
+        "INTENSITY_MEASURE_MAX": 1.0, 
+        "INTENSITY_MEASURE_MIN": 0.0, 
+        "INTENSITY_MEASURE_STEP": 0.01, 
+        "NUM_SAMPLES": 100
+    }, 
+    "Input": {
+        "INPUT_DIR_NAME": "/Users/marufr/code/EIRAPSI-SYS-MODELS"
+    }, 
+    "Output": {
+        "OUTPUT_DIR_NAME": "output/"
+    }, 
+    "Restoration": {
+        "RESTORATION_STREAMS": [
+            5, 
+            10, 
+            15
+        ], 
+        "RESTORE_PCT_CHECKPOINTS": 21, 
+        "RESTORE_TIME_MAX": 300.0, 
+        "RESTORE_TIME_STEP": 1, 
+        "TIME_UNIT": "days"
+    }, 
+    "Scenario": {
+        "FOCAL_HAZARD_SCENARIOS": [
+            "0.11", 
+            "0.18"
+        ], 
+        "FOCAL_HAZARD_SCENARIO_NAMES": [
+            "MUN_M45_D10", 
+            "MUN_M5_D8,63"
+        ], 
+        "INTENSITY_MEASURE_PARAM": "PGA", 
+        "INTENSITY_MEASURE_UNIT": "g", 
+        "SCENARIO_NAME": "Mundaring_Water_Treatment_Plant", 
+        "_comment": "scenario_file_ini"
+    }, 
+    "Switches": {
+        "MULTIPROCESS": 1, 
+        "RUN_CONTEXT": 1
+    }, 
+    "System": {
+        "COMMODITY_FLOW_TYPES": 2, 
+        "COMPONENT_LOCATION_CONF": "defined", 
+        "INFRASTRUCTURE_LEVEL": "facility", 
+        "SYSTEM_CLASS": "PotableWaterTreatmentPlant", 
+        "SYSTEM_CLASSES": [
+            "PowerStation", 
+            "Substation", 
+            "PotableWaterTreatmentPlant", 
+            "PWTP", 
+            "WasteWaterTreatmentPlant", 
+            "WWTP"
+        ], 
+        "SYSTEM_SUBCLASS": "Water Treatment Facility", 
+        "SYS_CONF_FILE_NAME": "sysmodel_pwtp_wa_anon.xlsx"
+    }, 
+    "Test": {
+        "FIT_PE_DATA": true, 
+        "FIT_RESTORATION_DATA": false, 
+        "SAVE_VARS_NPY": true
+    }
+}
