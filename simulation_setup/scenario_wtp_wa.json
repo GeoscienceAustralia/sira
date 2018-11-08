@@ -35,7 +35,7 @@
         ], 
         "INTENSITY_MEASURE_PARAM": "PGA", 
         "INTENSITY_MEASURE_UNIT": "g", 
-        "SCENARIO_NAME": "Mundaring_Water_Treatment_Plant", 
+        "SCENARIO_NAME": "AU_Water_Treatment_Plant", 
         "_comment": "scenario_file_ini"
     }, 
     "Switches": {

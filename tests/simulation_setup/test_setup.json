@@ -28,6 +28,9 @@
     "Scenario": {
         "INTENSITY_MEASURE_PARAM": "PGA",
         "INTENSITY_MEASURE_UNIT": "g",
+        "FOCAL_HAZARD_SCENARIO_NAMES": [
+            "Sc A"
+        ],
         "FOCAL_HAZARD_SCENARIOS": [
             "0.500"
         ],
@@ -48,7 +51,8 @@
             "WaterTreatmentPlant"
         ],
         "SYSTEM_SUBCLASS": "Coal Fired",
-        "SYS_CONF_FILE_NAME": "pscoal_600MW.json"
+        "SYS_CONF_FILE_NAME": "pscoal_600MW.json",
+        "COMPONENT_LOCATION_CONF": "undefined"
     },
     "Test": {
         "FIT_PE_DATA": true,
