@@ -802,6 +802,9 @@ class SystemTopology(object):
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
                            format='png', prog=self.drawing_prog,
                            args='-n -Gdpi=300')
+            self.gviz.draw(os.path.join(output_path, fname + '.jpg'),
+                           format='jpg', prog=self.drawing_prog,
+                           args='-n -Gdpi=300')
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
