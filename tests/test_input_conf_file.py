@@ -31,7 +31,6 @@ class TestInputConfFile(unittest. TestCase):
             self.assertEqual(exists(conf_file_path), True)
 
     def test_datatype_of_SCENARIO_NAME(self):
-
         for conf in self.confs:
             self.assertTrue(isinstance(conf.SCENARIO_NAME, unicode or str))
 
@@ -66,6 +65,10 @@ class TestInputConfFile(unittest. TestCase):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.FOCAL_HAZARD_SCENARIOS, list))
 
+    def test_datatype_of_FOCAL_HAZARD_SCENARIO_NAMES(self):
+        for conf in self.confs:
+            self.assertTrue(isinstance(conf.FOCAL_HAZARD_SCENARIO_NAMES, list))
+
     def test_datatype_of_TIME_UNIT(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.TIME_UNIT, unicode or str))
@@ -86,6 +89,11 @@ class TestInputConfFile(unittest. TestCase):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.RESTORATION_STREAMS, list))
 
+    def test_datatype_of_INFRASTRUCTURE_LEVEL(self):
+        for conf in self.confs:
+            self.assertTrue(isinstance(conf.INFRASTRUCTURE_LEVEL,
+                                       unicode or str))
+
     def test_datatype_of_SYSTEM_CLASSES(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.SYSTEM_CLASSES, list))
@@ -101,6 +109,11 @@ class TestInputConfFile(unittest. TestCase):
     def test_datatype_of_COMMODITY_FLOW_TYPES(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.COMMODITY_FLOW_TYPES, int))
+
+    def test_datatype_of_COMPONENT_LOCATION_CONF(self):
+        for conf in self.confs:
+            self.assertTrue(isinstance(conf.COMPONENT_LOCATION_CONF,
+                                       unicode or str))
 
     def test_datatype_of_SYS_CONF_FILE_NAME(self):
         for conf in self.confs:

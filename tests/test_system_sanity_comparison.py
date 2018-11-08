@@ -19,7 +19,8 @@ class TestSystemSanity(unittest.TestCase):
     def test_economic_loss_comparison_for_system_sanity(self):
 
         root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir, "simulation_setup",
+        conf_file_path = os.path.join(root_dir,
+                                      "simulation_setup",
                                       "test_scenario_pscoal_600MW.json")
 
         config = Configuration(conf_file_path)
@@ -82,6 +83,9 @@ class TestSystemSanity(unittest.TestCase):
 
     def test_compare_economic_loss_for_existing_models(self):
 
+        print("\n\n>> Initiating comparison with existing "
+              "models...\n")
+
         conf_file_paths = []
         root_dir = os.path.dirname(os.path.abspath(__file__))
         for root, dir_names, file_names in os.walk(root_dir):
@@ -96,6 +100,9 @@ class TestSystemSanity(unittest.TestCase):
 
         for conf_file_path in conf_file_paths:
             if os.path.isfile(conf_file_path):
+                print("\nMatching results for : " +
+                      os.path.basename(conf_file_path))
+
                 config = Configuration(conf_file_path)
                 scenario = Scenario(config)
                 hazards = HazardsContainer(config)
@@ -104,22 +111,21 @@ class TestSystemSanity(unittest.TestCase):
                                                    scenario,
                                                    infrastructure)
                 economic_loss_of_model = response_list[5]
-                pickel_flename = os.path.join(
+                pickle_flename = os.path.join(
                     root_dir,
                     'historical_data',
                     "economic_loss_for_"+config.SCENARIO_NAME + '.p')
 
                 history_economic_loss_for_model \
-                    = pickle.load(open(pickel_flename, 'rb'))
+                    = pickle.load(open(pickle_flename, 'rb'))
 
-                print("\nMatching results for : " +
-                      os.path.basename(conf_file_path))
                 self.assertTrue(
                     np.array_equal(economic_loss_of_model,
                                    history_economic_loss_for_model),
                     conf_file_path
                 )
                 print("OK")
+
 
 if __name__ == '__main__':
     unittest.main()

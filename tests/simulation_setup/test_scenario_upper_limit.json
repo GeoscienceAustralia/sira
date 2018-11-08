@@ -26,7 +26,10 @@
     }, 
     "Scenario": {
         "INTENSITY_MEASURE_PARAM": "PGA", 
-        "INTENSITY_MEASURE_UNIT": "g", 
+        "INTENSITY_MEASURE_UNIT": "g",
+        "FOCAL_HAZARD_SCENARIO_NAMES": [
+            "Sc A"
+        ],
         "FOCAL_HAZARD_SCENARIOS": [
             "0.500"
         ], 
@@ -44,10 +47,14 @@
         "SYSTEM_CLASSES": [
             "PowerStation", 
             "Substation", 
-            "WaterTreatmentPlant"
+            "PotableWaterTreatmentPlant",
+            "PWTP",
+            "WasteWaterTreatmentPlant",
+            "WWTP"
         ], 
         "SYSTEM_SUBCLASS": "Coal Fired", 
-        "SYS_CONF_FILE_NAME": "upper_limit.json"
+        "SYS_CONF_FILE_NAME": "upper_limit.json",
+        "COMPONENT_LOCATION_CONF": "undefined"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

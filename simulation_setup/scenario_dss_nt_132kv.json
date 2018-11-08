@@ -25,6 +25,9 @@
         "TIME_UNIT": "days"
     }, 
     "Scenario": {
+        "FOCAL_HAZARD_SCENARIO_NAMES": [
+            "Sc A"
+        ],
         "FOCAL_HAZARD_SCENARIOS": [
             "0.300"
         ], 
