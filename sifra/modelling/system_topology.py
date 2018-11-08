@@ -53,11 +53,14 @@ class SystemTopology(object):
             self.connector_type = "polyline"
             self.clustering = False
 
-        if infrastructure.system_meta['component_location_conf']['value']\
-                == 'defined':
-            self.drawing_prog = 'neato'
-        else:
-            self.drawing_prog = 'dot'
+        # Default drawing program
+        self.drawing_prog = 'dot'
+
+        # Overwrite default if node locations are defined
+        if hasattr(infrastructure, 'system_meta'):
+            if infrastructure.system_meta['component_location_conf']['value']\
+                    == 'defined':
+                self.drawing_prog = 'neato'
 
 
     def draw_sys_topology(self, viewcontext):
