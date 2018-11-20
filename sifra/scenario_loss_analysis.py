@@ -314,7 +314,11 @@ def prep_repair_list(infrastructure_obj,
                         LEN_CHK = sp_len[cix]
                         repair_list[onode][CK] = sorted(RL)
 
-        temp_repair_list = set(*repair_list[onode].values())
+        c_list = []
+        for k in repair_list[onode].values():
+            c_list.extend(k)
+        temp_repair_list = list(set(c_list))
+
         repair_list_combined[onode] = sorted(
             [x for x in temp_repair_list if x not in uncosted_comps]
         )
@@ -993,8 +997,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     ctype_loss_std_by_type = ctype_resp_sorted['loss_per_type_std'].values * 100
 
     bar_width = 0.35
-    bar_space_index = 1.9
-    # bar_clr_1 = spl.ColourPalettes().BrewerSet1[1]  # '#377EB8'
+    bar_space_index = 2.0
     bar_clr_1 = '#3288BD'
     grid_clr = 'dimgrey'
     header_size = 9
@@ -1003,8 +1006,8 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         [spl.split_long_label(x,delims=[' ', '_'], max_chars_per_line=18)
          for x in ctype_resp_sorted.index.tolist()]
 
-    barpos = np.arange(0, len(comptypes_sorted)*bar_width*bar_space_index,
-                       bar_width*bar_space_index)
+    barpos = np.linspace(0, len(comptypes_sorted)*bar_width*bar_space_index,
+                         len(comptypes_sorted))
 
     fig = plt.figure(figsize=(5.0, len(barpos)*0.6), facecolor='white')
     num_grids = 7 + len(comptypes_sorted)
