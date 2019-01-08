@@ -83,4 +83,4 @@ logs/*
 *.ipynb
 
 # vim
-*.swp
+*.swpinfrastructure/Dockerfile

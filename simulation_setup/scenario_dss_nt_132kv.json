@@ -2,10 +2,10 @@
     "Hazard": {
         "HAZARD_INPUT_METHOD": "hazard_array", 
         "HAZARD_TYPE": "Earthquake", 
-        "INTENSITY_MEASURE_MAX": 1.0, 
+        "INTENSITY_MEASURE_MAX": 0.5, 
         "INTENSITY_MEASURE_MIN": 0.0, 
-        "INTENSITY_MEASURE_STEP": 0.2, 
-        "NUM_SAMPLES": 100
+        "INTENSITY_MEASURE_STEP": 0.1, 
+        "NUM_SAMPLES": 10
     }, 
     "Input": {
         "INPUT_DIR_NAME": "/Users/marufr/code/EIRAPSI-SYS-MODELS"
@@ -25,11 +25,11 @@
         "TIME_UNIT": "days"
     }, 
     "Scenario": {
+        "FOCAL_HAZARD_SCENARIOS": [
+            "0.400"
+        ], 
         "FOCAL_HAZARD_SCENARIO_NAMES": [
             "Sc A"
-        ],
-        "FOCAL_HAZARD_SCENARIOS": [
-            "0.300"
         ], 
         "INTENSITY_MEASURE_PARAM": "PGA", 
         "INTENSITY_MEASURE_UNIT": "g", 
@@ -42,7 +42,7 @@
     }, 
     "System": {
         "COMMODITY_FLOW_TYPES": 1, 
-        "COMPONENT_LOCATION_CONF": "undefined",
+        "COMPONENT_LOCATION_CONF": "defined", 
         "INFRASTRUCTURE_LEVEL": "facility", 
         "SYSTEM_CLASS": "Substation", 
         "SYSTEM_CLASSES": [
@@ -53,8 +53,8 @@
             "WasteWaterTreatmentPlant", 
             "WWTP"
         ], 
-        "SYSTEM_SUBCLASS": "Medium Voltage Substation", 
-        "SYS_CONF_FILE_NAME": "nt_ss_132kv_v01.xlsx"
+        "SYSTEM_SUBCLASS": "Subtransmission Substation", 
+        "SYS_CONF_FILE_NAME": "ss_malaga_132kv_v05.xlsx"
     }, 
     "Test": {
         "FIT_PE_DATA": true, 

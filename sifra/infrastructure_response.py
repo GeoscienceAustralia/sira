@@ -434,7 +434,9 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
         )
 
     # ------------------------------------------------------------------------
+
         rootLogger.info("LOSS CALCULATIONS COMPLETE.\n")
+        rootLogger.info("Outputs saved in: " + scenario.output_path)
 
     # ... END POST-PROCESSING
     # ****************************************************************************

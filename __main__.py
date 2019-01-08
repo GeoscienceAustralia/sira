@@ -100,15 +100,17 @@ def main():
         # ---------------------------------------------------------------------
         # Visualizations
         # Construct visualization for system topology
-
+        rootLogger.info("Building system topology diagram...")
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
+        rootLogger.info("Done.\n")
         # ---------------------------------------------------------------------
 
     else:
         print("Input file not found: " + str(args.setup))
 
-    rootLogger.info('End')
+    rootLogger.info("Simulation complete.")
+    rootLogger.info("Outputs saved in: " + scenario.output_path + "\n")
 
 
 if __name__ == "__main__":

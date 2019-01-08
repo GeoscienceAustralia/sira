@@ -231,6 +231,7 @@ class SystemTopology(object):
         #             designated for components
         node_clusters = list(set([self.component_attr[k]['node_cluster']
                                   for k in self.component_attr.keys()]))
+        node_clusters = [n for n in node_clusters if n not in [None, 'NA']]
         if self.clustering:
             for cluster in node_clusters:
                 grp = [k for k in self.component_attr.keys()
@@ -378,6 +379,7 @@ class SystemTopology(object):
         #             designated for components
         node_clusters = list(set([self.component_attr[k]['node_cluster']
                                   for k in self.component_attr.keys()]))
+        node_clusters = [n for n in node_clusters if n not in [None, 'NA']]
         if self.clustering:
             for cluster in node_clusters:
                 grp = [k for k in self.component_attr.keys()
@@ -461,11 +463,14 @@ class SystemTopology(object):
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'junction':
                 self.gviz.get_node(node).attr.update(
-                    shape="point",
+                    shape="circle",
+                    style="rounded,filled",
                     width=0.2,
                     height=0.2,
-                    color="#777777",
-                    fillcolor="#777777",
+                    label="",
+                    xlabel="",
+                    color="#999999",
+                    fillcolor="#BBBBBB",
                     )
 
             if str(self.component_attr[node]['node_type']).lower() \
@@ -474,12 +479,6 @@ class SystemTopology(object):
                     fixedsize="true",
                     label="",
                     xlabel=node,
-                    # shape="circle",
-                    # style="rounded,filled",
-                    # width=0.2,
-                    # height=0.2,
-                    # penwidth=1.5,
-                    # color=default_node_color,
                     )
 
             if str(self.component_attr[node]['component_class']).lower()\
@@ -613,6 +612,7 @@ class SystemTopology(object):
         #             designated for components
         node_clusters = list(set([self.component_attr[k]['node_cluster']
                                   for k in self.component_attr.keys()]))
+        node_clusters = [n for n in node_clusters if n not in [None, 'NA']]
         if self.clustering:
             for cluster in node_clusters:
                 grp = [k for k in self.component_attr.keys()
