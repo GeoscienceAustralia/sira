@@ -1,0 +1,48 @@
+{
+    "SCENARIO_INTENSITY_MEASURE_PARAM": "PGA",
+    "SCENARIO_INTENSITY_MEASURE_UNIT": "g",
+    "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": ["MUN_M45_D10", "MUN_M5_D8,63"],
+    "SCENARIO_FOCAL_HAZARD_SCENARIOS": [ "0.11", "0.18"],
+
+    "HAZARD_INPUT_METHOD": "hazard_array",
+    "_comment": "scenario_file",
+    "HAZARD_TYPE": "Earthquake",
+    "HAZARD_NUM_SAMPLES": 50,
+    "HAZARD_INTENSITY_MEASURE_MAX": 1.0,
+    "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
+    "HAZARD_INTENSITY_MEASURE_STEP": 0.02,
+
+    "RESTORATION_STREAMS": [5, 10, 15],
+    "RESTORATION_PCT_CHECKPOINTS": 21,
+    "RESTORATION_TIME_MAX": 300.0,
+    "RESTORATION_TIME_STEP": 1,
+    "RESTORATION_TIME_UNIT": "day",
+
+    "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
+    "SYSTEM_COMMODITY_FLOW_TYPES": 2,
+    "SYSTEM_PS_GEN_TECH": "Gas Fired",
+    "SYSTEM_CLASS": "PotableWaterTreatmentPlant",
+    "SYSTEM_CLASSES": [
+                 "PowerStation",
+                 "Substation",
+                 "PotableWaterTreatmentPlant",
+                 "PWTP",
+                 "WasteWaterTreatmentPlant",
+                 "WWTP"],
+    "SYSTEM_SUBCLASS": "Water Treatment Facility",
+    "SYSTEM_COMPONENT_LOCATION_CONF": "undefined",
+
+    "TEST_FIT_PE_DATA": true,
+    "TEST_FIT_RESTORATION_DATA": false,
+    "TEST_SAVE_VARS_NPY": true,
+
+    "SWITCH_MULTIPROCESS": 1,
+    "SWITCH_RUN_CONTEXT": 1,
+
+    "SCENARIO_NAME": "sysmodel_pwtp_wa_anon",
+    "RUN_MODE":"impact",
+
+
+    "SYSTEM_CONF_FILE_NAME": "models/test_structures/sysconfig_simple_linear_dep.json",
+    "OUTPUT_DIR_NAME": "output/sysmodel_pwtp_wa_anon"
+}

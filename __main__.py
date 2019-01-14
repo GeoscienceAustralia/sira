@@ -10,8 +10,9 @@ usage           : python sifra [OPTIONS]
 
 python_version  : 2.7
 """
+import os
 import argparse
-from sifra.logger import logging, rootLogger
+from sifra.logger import rootLogger
 from sifra.configuration import Configuration
 from sifra.scenario import Scenario
 from sifra.modelling.hazard import HazardsContainer
@@ -23,47 +24,33 @@ from sifra.infrastructure_response import (
     plot_mean_econ_loss,
     pe_by_component_class
     )
-
+from sifra import fit_model
+import numpy as np
 
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--setup", type=str,
-                        help="Setup file for simulation scenario, and \n"
-                             "locations of inputs, outputs, and system model.")
+    parser.add_argument("-c", "--config", type=str)
+    parser.add_argument("-m", "--model", type=str)
+    parser.add_argument("-o", "--output", type=str)
+
     parser.add_argument("-v", "--verbose",  type=str,
                         help="Choose option for logging level from: \n"
                              "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     args = parser.parse_args()
 
-    level = logging.DEBUG
+    rootLogger.set_log_level(args.verbose)
 
-    if args.verbose is not None:
-        if args.verbose.upper() == "DEBUG":
-            level = logging.DEBUG
+    if args.config is not None and args.model is not None and args.output is not None:
 
-        elif args.verbose.upper() == "INFO":
-            level = logging.INFO
-
-        elif args.verbose.upper() == "WARNING":
-            level = logging.WARNING
-
-        elif args.verbose.upper() == "ERROR":
-            level = logging.ERROR
-
-        elif args.verbose.upper() == "CRITICAL":
-            level = logging.CRITICAL
-
-    rootLogger.set_log_level(level)
-
-    if args.setup is not None:
+        rootLogger.set_log_file_path(os.path.join(args.output, "log.txt"))
         rootLogger.info('Simulation initiated...')
 
         # ---------------------------------------------------------------------
         # Configure simulation model.
         # Read data and control parameters and construct objects.
 
-        config = Configuration(args.setup)
+        config = Configuration(args.config, args.model, args.output)
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
@@ -94,8 +81,7 @@ def main():
         plot_mean_econ_loss(scenario, economic_loss_array, hazards)
 
         if config.HAZARD_INPUT_METHOD == "hazard_array":
-            pe_by_component_class(response_list, infrastructure,
-                                  scenario, hazards)
+            pe_by_component_class(response_list, infrastructure,scenario, hazards)
 
         # ---------------------------------------------------------------------
         # Visualizations
@@ -103,6 +89,24 @@ def main():
 
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
+
+        rootLogger.info('Simulation completed...')
+        # ---------------------------------------------------------------------
+
+        # ---------------------------------------------------------------------
+        # FIT MODEL ANALYSIS
+        # ---------------------------------------------------------------------
+        rootLogger.info('Start: FIT MODEL ANALYSIS')
+        rootLogger.info('End: FIT MODEL ANALYSIS')
+
+        # ---------------------------------------------------------------------
+
+        # ---------------------------------------------------------------------
+        # SCENARIO LOSS ANALYSIS
+        # ---------------------------------------------------------------------
+        rootLogger.info('Start: SCENARIO LOSS ANALYSIS')
+        rootLogger.info('End: SCENARIO LOSS ANALYSIS')
+
         # ---------------------------------------------------------------------
 
     else:

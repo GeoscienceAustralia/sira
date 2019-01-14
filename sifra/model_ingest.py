@@ -1,4 +1,3 @@
-import os
 import json
 from sifra.logger import rootLogger
 from collections import OrderedDict
@@ -6,6 +5,8 @@ from sifra.modelling.infrastructure import InfrastructureFactory
 from sifra.modelling.component import (Component, ConnectionValues)
 from scripts.convert_excel_files_to_json import (
     update_json_structure, read_excel_to_json)
+from utilities import get_file_extension
+
 
 def ingest_model(config):
     """
@@ -14,7 +15,7 @@ def ingest_model(config):
     :return:  -List of algorithms for each component in particular damage state
               -Object of class infrastructure
     """
-    extension = os.path.splitext(config.SYS_CONF_FILE)[1][1:].strip().lower()
+    extension = get_file_extension(config.INPUT_MODEL_PATH)
 
     if extension == 'json':
         return read_model_from_json(config)
@@ -39,7 +40,7 @@ def read_model_from_json(config):
     system_subclass = config.SYSTEM_SUBCLASS
     component_location_conf = config.COMPONENT_LOCATION_CONF
 
-    with open(config.SYS_CONF_FILE, 'r') as f:
+    with open(config.INPUT_MODEL_PATH, 'r') as f:
         # ensure that damage states are ordered
         model = json.load(f, object_pairs_hook=OrderedDict)
 
@@ -156,8 +157,7 @@ def read_model_from_xlsx(config):
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
 
-    json_obj = json.loads(read_excel_to_json(config.SYS_CONF_FILE),
-                          object_pairs_hook=OrderedDict)
+    json_obj = json.loads(read_excel_to_json(config.INPUT_MODEL_PATH), object_pairs_hook=OrderedDict)
     model = update_json_structure(json_obj)
 
     # read the lists from json

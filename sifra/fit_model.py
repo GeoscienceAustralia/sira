@@ -15,7 +15,7 @@ import json
 import os
 import warnings
 
-import sifraplot as spl
+import sifra.sifraplot as spl
 
 import brewer2mpl
 from colorama import Fore, Back, init, Style
@@ -284,8 +284,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS,
 
         if dx >= 1:
 
-            sys_dmg_fitted_params[dx] = lmfit.minimize(
-                res_lognorm_cdf, params_pe[dx], args=(x_sample, y_sample))
+            sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe[dx], args=(x_sample, y_sample))
 
             sys_dmg_model.loc[SYS_DS[dx]] \
                 = (sys_dmg_fitted_params[dx].params['median'].value,
