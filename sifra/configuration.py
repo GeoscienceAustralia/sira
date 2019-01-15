@@ -125,7 +125,9 @@ class Configuration:
 
         # self.file_with_dirs = os.path.splitext(rootLogger.logfile)[0]+"_dirs.json"
 
-        self.file_with_dirs = "output/file_paths.json"
+        self.file_with_dirs = os.path.join(self.OUTPUT_PATH,"file_paths.json")
+
+
         with open(self.file_with_dirs, 'w') as dirfile:
             json.dump(self.dir_dict, dirfile)
 
