@@ -70,7 +70,7 @@ class Configuration:
         self.MULTIPROCESS = config['SWITCH_MULTIPROCESS']
         self.RUN_CONTEXT = config['SWITCH_RUN_CONTEXT']
 
-        self.SCENARIO_NAME = config['SCENARIO_NAME']
+        # self.SCENARIO_NAME = config['SCENARIO_NAME']
 
         # self.SYS_CONF_FILE_NAME = get_file_name(model_path)
         # self.INPUT_DIR_NAME = get_dir_path(model_path)
