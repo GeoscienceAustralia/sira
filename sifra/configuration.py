@@ -28,17 +28,17 @@ class Configuration:
             config = json.load(f)
 
         # reading in simulation scenario parameters
-        self.INTENSITY_MEASURE_PARAM = config['SCENARIO_INTENSITY_MEASURE_PARAM']
-        self.INTENSITY_MEASURE_UNIT = config['SCENARIO_INTENSITY_MEASURE_UNIT']
+        self.INTENSITY_MEASURE_PARAM = str(config['SCENARIO_INTENSITY_MEASURE_PARAM'])
+        self.INTENSITY_MEASURE_UNIT = str(config['SCENARIO_INTENSITY_MEASURE_UNIT'])
         # Set of scenario(s) to investigate in detail
         #   - List of strings
         #   - Used in post processing stage
         self.FOCAL_HAZARD_SCENARIO_NAMES = config['SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES']
         self.FOCAL_HAZARD_SCENARIOS = config['SCENARIO_FOCAL_HAZARD_SCENARIOS']
 
-        self.HAZARD_INPUT_METHOD = config['HAZARD_INPUT_METHOD']
-        self.HAZARD_TYPE = config['HAZARD_TYPE']
-        self.NUM_SAMPLES = config['HAZARD_NUM_SAMPLES']
+        self.HAZARD_INPUT_METHOD = str(config['HAZARD_INPUT_METHOD'])
+        self.HAZARD_TYPE = str(config['HAZARD_TYPE'])
+        self.NUM_SAMPLES = int(config['HAZARD_NUM_SAMPLES'])
         if config['HAZARD_INPUT_METHOD'] is "scenario_file":
             self.INTENSITY_MEASURE_MIN = None
             self.INTENSITY_MEASURE_MAX = None
@@ -46,29 +46,29 @@ class Configuration:
             self.SCENARIO_FILE = config['SCENARIO_FILE']
         else:
             self.SCENARIO_FILE = None
-            self.INTENSITY_MEASURE_MIN = config['HAZARD_INTENSITY_MEASURE_MIN']
-            self.INTENSITY_MEASURE_MAX = config['HAZARD_INTENSITY_MEASURE_MAX']
-            self.INTENSITY_MEASURE_STEP = config['HAZARD_INTENSITY_MEASURE_STEP']
+            self.INTENSITY_MEASURE_MIN = float(config['HAZARD_INTENSITY_MEASURE_MIN'])
+            self.INTENSITY_MEASURE_MAX = float(config['HAZARD_INTENSITY_MEASURE_MAX'])
+            self.INTENSITY_MEASURE_STEP = float(config['HAZARD_INTENSITY_MEASURE_STEP'])
 
-        self.TIME_UNIT = config['RESTORATION_TIME_UNIT']
-        self.RESTORE_PCT_CHECKPOINTS = config['RESTORATION_PCT_CHECKPOINTS']
-        self.RESTORE_TIME_STEP = config['RESTORATION_TIME_STEP']
-        self.RESTORE_TIME_MAX = config['RESTORATION_TIME_MAX']
+        self.TIME_UNIT = str(config['RESTORATION_TIME_UNIT'])
+        self.RESTORE_PCT_CHECKPOINTS = int(config['RESTORATION_PCT_CHECKPOINTS'])
+        self.RESTORE_TIME_STEP = int(config['RESTORATION_TIME_STEP'])
+        self.RESTORE_TIME_MAX = int(config['RESTORATION_TIME_MAX'])
         self.RESTORATION_STREAMS = config['RESTORATION_STREAMS']
 
-        self.INFRASTRUCTURE_LEVEL = config['SYSTEM_INFRASTRUCTURE_LEVEL']
+        self.INFRASTRUCTURE_LEVEL = str(config['SYSTEM_INFRASTRUCTURE_LEVEL'])
         self.SYSTEM_CLASSES = config['SYSTEM_CLASSES']
         self.SYSTEM_CLASS = config['SYSTEM_CLASS']
         self.SYSTEM_SUBCLASS = config['SYSTEM_SUBCLASS']
-        self.COMMODITY_FLOW_TYPES = config['SYSTEM_COMMODITY_FLOW_TYPES']
+        self.COMMODITY_FLOW_TYPES = int(config['SYSTEM_COMMODITY_FLOW_TYPES'])
         self.COMPONENT_LOCATION_CONF = config['SYSTEM_COMPONENT_LOCATION_CONF']
 
-        self.FIT_PE_DATA = config['TEST_FIT_PE_DATA']
-        self.FIT_RESTORATION_DATA = config['TEST_FIT_RESTORATION_DATA']
-        self.SAVE_VARS_NPY = config['TEST_SAVE_VARS_NPY']
+        self.FIT_PE_DATA = bool(config['TEST_FIT_PE_DATA'])
+        self.FIT_RESTORATION_DATA = bool(config['TEST_FIT_RESTORATION_DATA'])
+        self.SAVE_VARS_NPY = bool(config['TEST_SAVE_VARS_NPY'])
 
-        self.MULTIPROCESS = config['SWITCH_MULTIPROCESS']
-        self.RUN_CONTEXT = config['SWITCH_RUN_CONTEXT']
+        self.MULTIPROCESS = int(config['SWITCH_MULTIPROCESS'])
+        self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])
 
         # self.SCENARIO_NAME = config['SCENARIO_NAME']
 
