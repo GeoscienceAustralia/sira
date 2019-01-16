@@ -49,6 +49,7 @@ def main():
         # ---------------------------------------------------------------------
         # Configure simulation model.
         # Read data and control parameters and construct objects.
+        # ---------------------------------------------------------------------
 
         config = Configuration(args.config, args.model, args.output)
         scenario = Scenario(config)
@@ -58,7 +59,7 @@ def main():
         # ---------------------------------------------------------------------
         # Run simulation.
         # Get the results of running a simulation
-        #
+        # ---------------------------------------------------------------------
         # response_list = [
         #     {},  # hazard level vs component damage state index
         #     {},  # hazard level vs infrastructure output
@@ -86,7 +87,7 @@ def main():
         # ---------------------------------------------------------------------
         # Visualizations
         # Construct visualization for system topology
-
+        # ---------------------------------------------------------------------
         sys_topology_view = SystemTopology(infrastructure, scenario)
         sys_topology_view.draw_sys_topology(viewcontext="as-built")
 
@@ -97,6 +98,27 @@ def main():
         # FIT MODEL ANALYSIS
         # ---------------------------------------------------------------------
         rootLogger.info('Start: FIT MODEL ANALYSIS')
+
+        # hazard_scenarios = hazards.hazard_scenario_list
+        # sys_limit_states = infrastructure.get_system_damage_states()
+        # FIT_PE_DATA = scenario.fit_pe_data
+        #
+        #
+        # come_models=["potablewatertreatmentplant", "pwtp", "wastewatertreatmentplant", "wwtp", "watertreatmentplant", "wtp"]
+        # if infrastructure.system_class.lower() == 'powerstation':
+        #     pe_sys = np.load(os.path.join(config.RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
+        # elif infrastructure.system_class.lower() == 'substation':
+        #     pe_sys = np.load(os.path.join(config.RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
+        #
+        # elif infrastructure.system_class.lower() in come_models:
+        #     pe_sys = np.load(os.path.join(config.RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
+        #
+        # # --------------------------------------------------------------------------
+        # # Calculate & Plot Fitted Models
+        #
+        # if FIT_PE_DATA:
+        #     fit_model.fit_prob_exceed_model(hazard_scenarios, pe_sys, sys_limit_states, config.OUTPUT_PATH, config)
+
         rootLogger.info('End: FIT MODEL ANALYSIS')
 
         # ---------------------------------------------------------------------
