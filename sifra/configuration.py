@@ -71,11 +71,9 @@ class Configuration:
         self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])
 
         # self.SCENARIO_NAME = config['SCENARIO_NAME']
-
         # self.SYS_CONF_FILE_NAME = get_file_name(model_path)
         # self.INPUT_DIR_NAME = get_dir_path(model_path)
         # self.SYS_CONF_FILE = model_path
-
         # reading in setup information
 
         # self.ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -100,7 +98,10 @@ class Configuration:
         #     self.OUTPUT_PATH = output_path
         #     self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
 
-        self.record_dirs()
+        self.SYS_CONF_FILE_NAME = get_file_name(self.INPUT_MODEL_PATH)
+
+
+        # self.record_dirs()
 
     # def __str__(self):
     #     line = "\n----------------------------------------\n"
@@ -111,26 +112,26 @@ class Configuration:
     #     note = line + str(self.SCENARIO_NAME) + line + attr + line
     #     return note
 
-    def record_dirs(self):
-        rootLogger.info("System model   : " + get_file_name(self.INPUT_MODEL_PATH))
-        rootLogger.info("Input dir      : " + get_dir_path(self.INPUT_MODEL_PATH))
-        rootLogger.info("Output dir     : " + self.OUTPUT_PATH)
-        rootLogger.info("Raw output dir : " + self.RAW_OUTPUT_DIR + "\n")
-
-        self.dir_dict = {}
-        self.dir_dict["SYS_CONF_FILE_NAME"] = get_file_name(self.INPUT_MODEL_PATH)
-        self.dir_dict["INPUT_PATH"] = get_dir_path(self.INPUT_MODEL_PATH)
-        self.dir_dict["OUTPUT_PATH"] = self.OUTPUT_PATH
-        self.dir_dict["RAW_OUTPUT_DIR"] = self.RAW_OUTPUT_DIR
-
-        # self.file_with_dirs = os.path.splitext(rootLogger.logfile)[0]+"_dirs.json"
-
-        self.file_with_dirs = os.path.join(self.OUTPUT_PATH,"file_paths.json")
-
-
-        with open(self.file_with_dirs, 'w') as dirfile:
-            json.dump(self.dir_dict, dirfile)
-
+    # def record_dirs(self):
+    #     rootLogger.info("System model   : " + get_file_name(self.INPUT_MODEL_PATH))
+    #     rootLogger.info("Input dir      : " + get_dir_path(self.INPUT_MODEL_PATH))
+    #     rootLogger.info("Output dir     : " + self.OUTPUT_PATH)
+    #     rootLogger.info("Raw output dir : " + self.RAW_OUTPUT_DIR + "\n")
+    #
+    #     self.dir_dict = {}
+    #     self.dir_dict["SYS_CONF_FILE_NAME"] = get_file_name(self.INPUT_MODEL_PATH)
+    #     self.dir_dict["INPUT_PATH"] = get_dir_path(self.INPUT_MODEL_PATH)
+    #     self.dir_dict["OUTPUT_PATH"] = self.OUTPUT_PATH
+    #     self.dir_dict["RAW_OUTPUT_DIR"] = self.RAW_OUTPUT_DIR
+    #
+    #     # self.file_with_dirs = os.path.splitext(rootLogger.logfile)[0]+"_dirs.json"
+    #
+    #     self.file_with_dirs = os.path.join(self.OUTPUT_PATH,"file_paths.json")
+    #
+    #
+    #     with open(self.file_with_dirs, 'w') as dirfile:
+    #         json.dump(self.dir_dict, dirfile)
+    #
 
 # if __name__ == '__main__':
 #     configuration = Configuration("tests/simulation_setup/test_setup.json")
