@@ -900,7 +900,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
     pos = np.arange(0, len(cpt))
 
     fig = plt.figure(figsize=(4.5, len(pos)*0.6), facecolor='white')
-    axes = fig.add_subplot(111, facecolor='white')
+    axes = fig.add_subplot(111)
 
     # ------------------------------------------------------------------------
     # Economic loss:
@@ -1014,19 +1014,21 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     gs = gridspec.GridSpec(num_grids, 1)
     ax1 = plt.subplot(gs[:-3])
     ax2 = plt.subplot(gs[-2:])
-    ax1.set_facecolor('w')
-    ax2.set_facecolor('w')
+    # ax1.set_facecolor('w')
+    # ax2.set_facecolor('w')
 
     # ==========================================================================
     # Percentage of lost value for each `component type`
     # ==========================================================================
+    if bar_width <1:
+        bar_width=1
 
-    ax1.barh(
-        barpos, 100, bar_width,
-        align='center',
-        color='gainsboro', alpha=0.7, edgecolor=None,
-        label='',
-        )
+    # ax1.barh(
+    #     barpos, 100, bar_width,
+    #     align='center',
+    #     color='gainsboro', alpha=0.7, edgecolor=None,
+    #     label='',
+    #     )
     ax1.barh(
         barpos, ctype_loss_mean_by_type, bar_width,
         align='center',
@@ -1186,8 +1188,8 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     fig = plt.figure(figsize=(5.0, len(barpos)*0.6), facecolor='white')
     num_grids = 8 + len(comptypes_sorted)
     gs = gridspec.GridSpec(num_grids, 1)
-    ax1 = plt.subplot(gs[:-4], facecolor='white')
-    ax2 = plt.subplot(gs[-3:], facecolor='white')
+    ax1 = plt.subplot(gs[:-4])
+    ax2 = plt.subplot(gs[-3:])
 
     colours = spl.ColourPalettes()
     if len(comptypes_sorted) <= 11:
@@ -1201,12 +1203,12 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     # Percentage of lost value for each `component type`
     # ==========================================================================
 
-    ax1.barh(
-        barpos, 100, bar_width,
-        align='center',
-        color=bg_box_clr, alpha=0.85, edgecolor=None,
-        label='',
-        )
+    # ax1.barh(
+    #     barpos, 100, bar_width,
+    #     align='center',
+    #     color=bg_box_clr, alpha=0.85, edgecolor=None,
+    #     label='',
+    #     )
     ax1.barh(
         barpos, ctype_loss_mean_by_type, bar_width,
         align='center',
