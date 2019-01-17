@@ -86,15 +86,15 @@ def main():
         # Run simulation.
         # Get the results of running a simulation
         # ---------------------------------------------------------------------
-        # response_list = [
-        #     {},  # hazard level vs component damage state index
-        #     {},  # hazard level vs infrastructure output
-        #     {},  # hazard level vs component response
-        #     {},  # hazard level vs component type response
-        #     [],  # array of infrastructure output per sample
-        #     [],  # array infrastructure econ loss per sample
-        #     {},  # hazard level vs component class dmg level pct
-        #     {}]  # hazard level vs component class expected damage index
+        response_list = [
+            {},  # hazard level vs component damage state index
+            {},  # hazard level vs infrastructure output
+            {},  # hazard level vs component response
+            {},  # hazard level vs component type response
+            [],  # array of infrastructure output per sample
+            [],  # array infrastructure econ loss per sample
+            {},  # hazard level vs component class dmg level pct
+            {}]  # hazard level vs component class expected damage index
 
         response_list = calculate_response(hazards, scenario, infrastructure)
 
