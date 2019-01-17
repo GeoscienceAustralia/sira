@@ -5,7 +5,6 @@ import zipfile
 
 import numpy as np
 import pandas as pd
-import parmap
 
 import matplotlib
 
@@ -13,21 +12,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sifra.logger import rootLogger
-from sifra.modelling.hazard import HazardsContainer
-from sifra.modelling import infrastructure
-
-# def run_para_scen(hazard_level, infrastructure, scenario):
-#     """
-#     The parmap.map function requires a module level function as a parameter.
-#     So this function satisfies that requirement by calling the infrastructure's
-#     exponse_to method within this one.
-#     :param hazard_level: The hazard level that the infrastructure will be exposed to
-#     :param infrastructure: The infrastructure model that is being simulated
-#     :param scenario: The Parameters for the simulation
-#     :return: List of results of the simulation
-#     """
-#
-#     return infrastructure.expose_to(hazard_level, scenario)
 
 
 # ****************************************************************************
