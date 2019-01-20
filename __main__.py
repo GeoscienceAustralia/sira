@@ -96,12 +96,29 @@ def main():
             {},  # hazard level vs component class dmg level pct
             {}]  # hazard level vs component class expected damage index
 
-        response_list = calculate_response(hazards, scenario, infrastructure)
+        # response_list = calculate_response(hazards, scenario, infrastructure)
+        #
+        # # ---------------------------------------------------------------------
+        # # Post simulation processing.
+        # # After the simulation has run the results are aggregated, saved
+        # # and the system fragility is calculated.
+        #
+        # write_system_response(response_list, infrastructure, scenario, hazards)
+        # economic_loss_array = response_list[5]
+        # plot_mean_econ_loss(scenario, economic_loss_array, hazards)
+        #
+        # if config.HAZARD_INPUT_METHOD == "hazard_array":
+        #     pe_by_component_class(response_list, infrastructure,scenario, hazards)
+        #
+        # # ---------------------------------------------------------------------
+        # # Visualizations
+        # # Construct visualization for system topology
+        # # ---------------------------------------------------------------------
+        # sys_topology_view = SystemTopology(infrastructure, scenario)
+        # sys_topology_view.draw_sys_topology(viewcontext="as-built")
+        #
+        # rootLogger.info('Simulation completed...')
 
-        # ---------------------------------------------------------------------
-        # Post simulation processing.
-        # After the simulation has run the results are aggregated, saved
-        # and the system fragility is calculated.
 
         write_system_response(response_list, infrastructure, scenario, hazards)
         economic_loss_array = response_list[5]
@@ -109,16 +126,6 @@ def main():
         rootLogger.info("End serial run")
         if config.HAZARD_INPUT_METHOD == "hazard_array":
             pe_by_component_class(response_list, infrastructure,scenario, hazards)
-
-        # ---------------------------------------------------------------------
-        # Visualizations
-        # Construct visualization for system topology
-        # ---------------------------------------------------------------------
-        sys_topology_view = SystemTopology(infrastructure, scenario)
-        sys_topology_view.draw_sys_topology(viewcontext="as-built")
-
-        rootLogger.info('Simulation completed...')
-
 
         # ---------------------------------------------------------------------
         # FIT MODEL ANALYSIS

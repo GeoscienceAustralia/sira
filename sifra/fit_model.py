@@ -22,6 +22,9 @@ import brewer2mpl
 from colorama import Fore, Back, init, Style
 init()
 
+MIN=-2147483648
+MAX=2147483648
+
 import argparse
 from sifra.configuration import Configuration
 from sifra.scenario import Scenario
@@ -139,9 +142,9 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS,
 
         # Fit the dist:
         params_pe.append(lmfit.Parameters())
-        params_pe[dx].add('median', value=p0m)  # , min=0, max=10)
-        params_pe[dx].add('logstd', value=p0s)
-        params_pe[dx].add('loc', value=0.0, vary=False)
+        params_pe[dx].add('median', value=p0m,min=0, max=10)  # , min=0, max=10)
+        params_pe[dx].add('logstd', value=p0s,min=MIN,max=MAX)
+        params_pe[dx].add('loc', value=0.0, vary=False,min=MIN,max=MAX)
 
 
         if dx >= 1:
@@ -232,8 +235,13 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
             shape = sys_dmg_model.loc[SYS_DS[dx], 'LogStdDev']
             loc = sys_dmg_model.loc[SYS_DS[dx], 'Location']
             scale = sys_dmg_model.loc[SYS_DS[dx], 'Median']
-            dmg_mdl_arr[dx] = stats.lognorm.cdf(xformodel, shape, loc=loc, scale=scale)
-            ax.plot(xformodel, dmg_mdl_arr[dx], label=SYS_DS[dx], clip_on=False, color=COLR_DS[dx], alpha=0.65, linestyle='solid', linewidth=1.6)
+            dmg_mdl_arr[dx] = stats.lognorm.cdf(
+                xformodel, shape, loc=loc, scale=scale)
+            ax.plot(xformodel,
+                    dmg_mdl_arr[dx],
+                    label=SYS_DS[dx], clip_on=False,
+                    color=COLR_DS[dx], alpha=0.65,
+                    linestyle='-', linewidth=1.6)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # [Plot 3 of 3] The Scenario Events
@@ -250,9 +258,44 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
             except:
                 event_label = event_num + " : " + event_intensity_str
 
-            ax.plot(float(haz), 0,label=event_label,color=event_color, marker='', markersize=2, linestyle=('solid'))
-            ax.plot(float(haz), 1.04, label='', clip_on=False, color=event_color, marker='o', fillstyle='none', markersize=12, linestyle='solid', markeredgewidth=1.0)
-            ax.annotate(event_num,  xy=(float(haz), 0), xycoords='data', xytext=(float(haz), 1.038), textcoords='data', ha='center', va='center', rotation=0, size=8, fontweight='bold', color=event_color, annotation_clip=False, bbox=dict(boxstyle='round, pad=0.2', fc='yellow', alpha=0.0), path_effects=[PathEffects.withStroke(linewidth=2, foreground="w")],arrowprops=dict(arrowstyle='-|>, head_length=0.5, head_width=0.3', shrinkA=3.0, shrinkB=0.0, connectionstyle='arc3,rad=0.0', color=event_color, alpha=0.8, linewidth=1.0, linestyle=('solid'),path_effects=[PathEffects.withStroke(linewidth=2.5, foreground="w")]))
+            ax.plot(float(haz), 0,
+                    label=event_label,
+                    color=event_color,
+                    marker='',
+                    markersize=2,
+                    linestyle='-')
+            ax.plot(float(haz), 1.04,
+                    label='',
+                    clip_on=False,
+                    color=event_color,
+                    marker='o',
+                    fillstyle='none',
+                    markersize=12,
+                    linestyle='-',
+                    markeredgewidth=1.0)
+            ax.annotate(
+                event_num, #event_intensity_str,
+                xy=(float(haz), 0), xycoords='data',
+                xytext=(float(haz), 1.038), textcoords='data',
+                ha='center', va='center', rotation=0,
+                size=8, fontweight='bold', color=event_color,
+                annotation_clip=False,
+                bbox=dict(boxstyle='round, pad=0.2', fc='yellow', alpha=0.0),
+                path_effects=\
+                    [PathEffects.withStroke(linewidth=2, foreground="w")],
+                arrowprops=dict(
+                    arrowstyle='-|>, head_length=0.5, head_width=0.3',
+                    shrinkA=3.0,
+                    shrinkB=0.0,
+                    connectionstyle='arc3,rad=0.0',
+                    color=event_color,
+                    alpha=0.8,
+                    linewidth=1.0,
+                    linestyle="-",
+                    path_effects=\
+                        [PathEffects.withStroke(linewidth=2.5, foreground="w")]
+                    )
+                )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -303,10 +346,11 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
 
         y_model_hi = stats.lognorm.cdf(x_sample, sd_hi, loc=loc_hi, scale=mu_hi)
 
-        params_pe.add('median', value=mu_hi)
+        params_pe.add('median', value=mu_hi, min=0, max=10)
         params_pe.add('logstd', value=sd_hi)
         params_pe.add('loc', value=0.0, vary=False)
-        sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
+        sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe,
+                                         args=(x_sample, y_sample))
 
         ####################################################################
         if dx >= 2:
