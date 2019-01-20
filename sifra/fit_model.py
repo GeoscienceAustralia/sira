@@ -139,9 +139,9 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS,
 
         # Fit the dist:
         params_pe.append(lmfit.Parameters())
-        params_pe[dx].add('median', value=p0m,min=0, max=10)  # , min=0, max=10)
-        params_pe[dx].add('logstd', value=p0s,min=0, max=10)
-        params_pe[dx].add('loc', value=0.0, vary=False,min=0, max=10)
+        params_pe[dx].add('median', value=p0m)  # , min=0, max=10)
+        params_pe[dx].add('logstd', value=p0s)
+        params_pe[dx].add('loc', value=0.0, vary=False)
 
 
         if dx >= 1:
@@ -303,9 +303,9 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
 
         y_model_hi = stats.lognorm.cdf(x_sample, sd_hi, loc=loc_hi, scale=mu_hi)
 
-        params_pe.add('median', value=mu_hi, min=0, max=10)
-        params_pe.add('logstd', value=sd_hi, min=0, max=10)
-        params_pe.add('loc', value=0.0, vary=False, min=0, max=10)
+        params_pe.add('median', value=mu_hi)
+        params_pe.add('logstd', value=sd_hi)
+        params_pe.add('loc', value=0.0, vary=False)
         sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
         ####################################################################
