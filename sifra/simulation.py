@@ -43,7 +43,7 @@ def calculate_response(hazards, scenario, infrastructure):
     for hazard in hazards.listOfhazards:
         hazards_response.append(
             calculate_response_for_hazard(hazard, scenario, infrastructure))
-    rootLogger.info("End serial run")
+
 
 
     # combine the responses into one list

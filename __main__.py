@@ -106,7 +106,7 @@ def main():
         write_system_response(response_list, infrastructure, scenario, hazards)
         economic_loss_array = response_list[5]
         plot_mean_econ_loss(scenario, economic_loss_array, hazards)
-
+        rootLogger.info("End serial run")
         if config.HAZARD_INPUT_METHOD == "hazard_array":
             pe_by_component_class(response_list, infrastructure,scenario, hazards)
 
