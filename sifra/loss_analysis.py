@@ -16,6 +16,7 @@ init()
 import sifra.sifraplot as spl
 
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import matplotlib.patheffects as PathEffects
 from matplotlib.font_manager import FontProperties
 from matplotlib import gridspec

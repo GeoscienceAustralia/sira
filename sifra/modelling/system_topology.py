@@ -6,6 +6,7 @@ import re
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 
 # from networkx.readwrite.json_graph import node_link_data
 

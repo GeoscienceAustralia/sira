@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import matplotlib.patheffects as PathEffects
 import seaborn as sns
 
