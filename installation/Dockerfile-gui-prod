@@ -1,0 +1,16 @@
+FROM node
+COPY ./sifra-gui /tmp/sifra-gui
+WORKDIR /tmp/sifra-gui
+RUN apt-get update && \
+    npm install --unsafe-perm -g @angular/cli && \
+    npm install && \
+    ng build --prod && \
+    npm rm -g @angular/cli && \
+    mkdir /srv/sifra && mv dist/* /srv/sifra && \
+    cd && \
+    rm -rf /tmp/sifra-gui && \
+    apt-get install busybox
+RUN mkdir /tmp/sifra
+WORKDIR /tmp/sifra
+EXPOSE 4200
+CMD ["busybox", "httpd", "-h", "/srv/sifra", "-f", "-p", "4200"]

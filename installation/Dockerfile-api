@@ -1,0 +1,9 @@
+FROM sifra
+RUN pip install flask
+RUN pip install flask-cors
+RUN pip install flask-wtf
+RUN pip install sqlalchemy
+EXPOSE 5000
+WORKDIR /sifra/sifra-api
+CMD ./start-flask.sh
+
