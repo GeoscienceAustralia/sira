@@ -365,8 +365,9 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
                 # Test if higher curve is co-incident with, or precedes lower curve
                 if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
                     print(" *** Mean of higher curve too low: resampling")
-                    params_pe.add('median', value=mu_hi, min=mu_lo)
-                    sys_dmg_fitted_params[dx] = lmfit.minimize( res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
+                    print('median', mu_hi, mu_lo)
+                    params_pe.add('median', value=mu_hi)#, min=mu_lo)
+                    sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
                     (mu_hi, sd_hi, loc_hi) = (sys_dmg_fitted_params[dx].params['median'].value, sys_dmg_fitted_params[dx].params['logstd'].value, sys_dmg_fitted_params[dx].params['loc'].value)
 
@@ -377,7 +378,7 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
                 # Test for top crossover: resample if crossover detected
                 if (sd_hi < sd_lo) and (sd_hi <= delta_top):
                     print(" *** Attempting to correct upper crossover")
-                    params_pe.add('logstd', value=sd_hi, min=delta_top)
+                    params_pe.add('logstd', value=sd_hi)#, min=delta_top)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
                 # Test for bottom crossover: resample if crossover detected
