@@ -19,11 +19,11 @@ np.seterr(divide='print', invalid='raise')
 import pandas as pd
 
 import copy
-from colorama import Fore, Back, init, Style
+from colorama import init
 init()
 
-import seaborn as sns
-sns.set(style='whitegrid', palette='coolwarm')
+# import seaborn as sns
+# sns.set(style='whitegrid', palette='coolwarm')
 
 import os
 import argparse
@@ -141,7 +141,6 @@ def main():
             fit_model.fit_prob_exceed_model(hazard_scenarios, pe_sys, sys_limit_states, config.OUTPUT_PATH, config)
 
         rootLogger.info('End: FIT MODEL ANALYSIS')
-
 
         # ---------------------------------------------------------------------
         # SCENARIO LOSS ANALYSIS
@@ -293,10 +292,7 @@ def main():
         time_to_full_restoration_for_lines_csv = os.path.join(config.OUTPUT_PATH, 'line_restoration_prognosis.csv')
         time_to_full_restoration_for_lines_df.to_csv(time_to_full_restoration_for_lines_csv, sep=',')
 
-
-
         rootLogger.info('End: SCENARIO LOSS ANALYSIS')
-
         # ---------------------------------------------------------------------
 
     else:
