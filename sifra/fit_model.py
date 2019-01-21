@@ -30,31 +30,6 @@ from sifra.logger import rootLogger
 set2 = brewer2mpl.get_map('Set2', 'qualitative', 5).mpl_colors
 markers = ['o', '^', 's', 'D', 'x', '+']
 
-def rectify_arry(number):
-
-    newarry = []
-    for num in number:
-        newarry.append(rectify_limits(num))
-
-    return newarry
-
-def rectify_limits(number):
-
-    if type(number) is list:
-        return rectify_arry(number)
-    if type(number) is np.ndarray:
-        return rectify_arry(number)
-
-    if number < 0:
-        return 0
-
-    if number < 1:
-        return 1
-
-    if number > 10000:
-        return 10000
-
-    return number
 # ============================================================================
 #
 # PROBABILITY of EXCEEDANCE MODEL FITTING
@@ -122,11 +97,11 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config
 
     for dx in range(0, len(SYS_DS)):
 
-        x_sample = rectify_limits(hazard_input_vals)
-        y_sample = rectify_limits(pb_exceed[dx])
+        x_sample = hazard_input_vals
+        y_sample = pb_exceed[dx]
 
-        p0m = rectify_limits(np.mean(y_sample))
-        p0s = rectify_limits(np.std(y_sample))
+        p0m = np.mean(y_sample)
+        p0s = np.std(y_sample)
 
         # Fit the dist:
         params_pe.append(lmfit.Parameters())
