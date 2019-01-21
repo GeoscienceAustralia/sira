@@ -315,7 +315,7 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
                 # Test if higher curve is co-incident with, or precedes lower curve
                 if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
                     rootLogger.info(" *** Mean of higher curve too low: resampling")
-                    rootLogger.info('median', mu_hi, mu_lo)
+                    rootLogger.info('median '+str(mu_hi)+" "+str(mu_lo))
                     params_pe.add('median', value=mu_hi)#, min=mu_lo)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
