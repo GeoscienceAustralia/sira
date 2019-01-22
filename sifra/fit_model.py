@@ -115,11 +115,11 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config
             sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe[dx], args=(x_sample, y_sample))
             sys_dmg_model.loc[SYS_DS[dx]] = (sys_dmg_fitted_params[dx].params['median'].value, sys_dmg_fitted_params[dx].params['logstd'].value, sys_dmg_fitted_params[dx].params['loc'].value, sys_dmg_fitted_params[dx].chisqr)
 
-    rootLogger.info("\n" + "-" * 79)
+    border = "-" * 79
+    rootLogger.info(border)
     rootLogger.info(Fore.YELLOW + "Fitting system FRAGILITY data: Lognormal CDF" + Fore.RESET)
-    rootLogger.info("-" * 79)
-    # sys_dmg_model = sys_dmg_model.round(decimals)
-    rootLogger.info("INITIAL System Fragilities:\n\n" + str(sys_dmg_model)+ '\n')
+    rootLogger.info(border)
+    rootLogger.info("\n\nINITIAL System Fragilities:\n\n" + str(sys_dmg_model)+ '\n')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for crossover and correct as needed
@@ -135,8 +135,7 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config
     for dx in range(1, len(SYS_DS)):
         sys_dmg_model.loc[SYS_DS[dx]] = sys_dmg_fitted_params[dx].params['median'].value, sys_dmg_fitted_params[dx].params['logstd'].value, sys_dmg_fitted_params[dx].params['loc'].value, sys_dmg_fitted_params[dx].chisqr
 
-    rootLogger.info("\nFINAL System Fragilities: \n")
-    rootLogger.info(sys_dmg_model)
+    rootLogger.info("\n\nFINAL System Fragilities:\n\n" + str(sys_dmg_model) + '\n')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Write fitted model params to file
