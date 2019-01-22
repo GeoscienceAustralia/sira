@@ -18,8 +18,8 @@ import brewer2mpl
 from colorama import Fore, init
 init()
 
-MIN = -2147483648
-MAX = 2147483648
+MIN = -10
+MAX = 10
 
 from sifra.logger import rootLogger
 
@@ -176,7 +176,7 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
         outfig = os.path.join(out_path, 'fig_sys_pe_DATA.png')
         spl.add_legend_subtitle("$\\bf{DATA}$")
         for i in range(1, len(SYS_DS)):
-            ax.plot(hazard_input_vals, pb_exceed[i], label=SYS_DS[i], clip_on=False, color=COLR_DS[i], linestyle='solid', alpha=0.4, marker=markers[i - 1], markersize=3)
+            ax.plot(hazard_input_vals, pb_exceed[i], label=SYS_DS[i], clip_on=False, color=COLR_DS[i], linestyle='', alpha=0.4, marker=markers[i - 1], markersize=3)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # [Plot 2 of 3] The Fitted Model
