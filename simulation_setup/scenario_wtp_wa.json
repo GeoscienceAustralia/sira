@@ -26,8 +26,8 @@
     }, 
     "Scenario": {
         "FOCAL_HAZARD_SCENARIOS": [
-            "0.11", 
-            "0.18"
+            "0.1", 
+            "0.4"
         ], 
         "FOCAL_HAZARD_SCENARIO_NAMES": [
             "MUN_M45_D10", 
