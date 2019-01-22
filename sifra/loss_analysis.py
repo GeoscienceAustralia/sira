@@ -23,6 +23,20 @@ from matplotlib import gridspec
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')
 
+import requests
+from tempfile import NamedTemporaryFile
+import matplotlib.font_manager as fm
+from matplotlib import rc
+
+github_url = "https://github.com/google/fonts/blob/master/ofl/ptsans/PT_Sans-Web-Regular.ttf"
+font_url = github_url + '?raw=true'
+response = requests.get(font_url, verify=True)
+customfont = NamedTemporaryFile(delete=False, suffix='.ttf')
+customfont.write(response.content)
+customfont.close()
+fontprop = fm.FontProperties(fname=customfont.name)
+rc("font", **{"family": "serif", "serif": [str(fontprop.get_name())]})
+
 import argparse
 from sifra.configuration import Configuration
 from sifra.scenario import Scenario
@@ -553,7 +567,7 @@ def vis_restoration_process(scenario,
         + hazard_type + " " + scenario_tag,
         xy=(0, len(comps)+3.1), xycoords=('axes fraction', 'data'),
         ha='left', va='top', annotation_clip=False,
-        fontname='Open Sans', color='slategrey', size=18, weight='bold'
+        color='slategrey', size=18, weight='bold'
         )
 
     # plt.suptitle(
@@ -569,7 +583,7 @@ def vis_restoration_process(scenario,
         " Repair Streams\n",
         xy=(0, len(comps)+1.8), xycoords=('axes fraction', 'data'),
         ha='left', va='top', annotation_clip=False,
-        fontname='Open Sans', color='k', size=16, weight='normal')
+        color='k', size=16, weight='normal')
 
     # ax1.set_title("Component Restoration Timeline for "+str(num_rst_steams)+
     #               " Repair Streams\n",
@@ -630,7 +644,7 @@ def vis_restoration_process(scenario,
                     color=supply_rst_clr, alpha=0.8)
         ax2.annotate(onode, xy=(time_to_full_restoration_for_lines[onode], 105),
                      ha='center', va='bottom', rotation=90, 
-                     fontname='Open Sans', size=ticklabelsize, color='k',
+                     size=ticklabelsize, color='k',
                      annotation_clip=False)    
 
         if not nodes_to_repair_for_line:
@@ -819,7 +833,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
     ax1.set_ylim(pos.max()+bar_width, pos.min()-bar_width)
     ax1.tick_params(top='off', bottom='off', left='off', right='on')
     ax1.set_title('Economic Loss \nPercent of System Value',
-                  fontname='Open Sans', fontsize=12,
+                  fontsize=12,
                   fontweight='bold', ha='right', x=1.00, y=0.99)
 
     # add the numbers to the side of each bar
@@ -842,7 +856,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
     ax2.set_ylim(pos.max()+bar_width, pos.min()-bar_width)
     ax2.tick_params(top='off', bottom='off', left='on', right='off')
     ax2.set_title('Economic Loss \nPercent of Component Type Value',
-                  fontname='Open Sans', fontsize=12,
+                  fontsize=12,
                   fontweight='bold', ha='left', x=0,  y=0.99)
 
     for p, c, cv in zip(pos, cpt, ctype_loss_by_type):
@@ -869,7 +883,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
                  xy=(1.0 + subplot_spacing/2.0, -1.25),
                  xycoords=('axes fraction', 'data'),
                  ha='center', va='center', size=12,
-                 fontname='Open Sans', color='darkgrey', weight='bold',
+                 color='darkgrey', weight='bold',
                  annotation_clip=False)
 
     fig.savefig(os.path.join(output_path, fig_name),
@@ -940,13 +954,13 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
         "ECONOMIC LOSS % by COMPONENT TYPE",
         xy=(0.0, -1.65), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans', size=10, color='k', weight='bold',
+        size=10, color='k', weight='bold',
         annotation_clip=False)
     axes.annotate(
         "Hazard: " + hazard_type + " " + scenario_tag,
         xy=(0.0, -1.2), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans', size=10, color='slategrey', weight='bold',
+        size=10, color='slategrey', weight='bold',
         annotation_clip=False)
 
     lgnd = axes.legend(loc="upper left", ncol=1, bbox_to_anchor=(-0.1, -0.04),
@@ -1245,14 +1259,14 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
         "HAZARD: " + hazard_type + " " + scenario_tag,
         xy=(0.0, -1.8), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans', size=9, color='slategrey', weight='bold',
+        size=9, color='slategrey', weight='bold',
         annotation_clip=False)
 
     ax1.annotate(
         "LOSS METRIC: % loss for each Component Type",
         xy=(0.0, -1.25), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans', size=9, color='k', weight='bold',
+        size=9, color='k', weight='bold',
         annotation_clip=False)
 
     ax1.axhline(y=barpos.max()+bar_width*2.0,
@@ -1342,7 +1356,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
         "LOSS METRIC: % system loss attributed to Component Types",
         xy=(0.0, stacked_bar_width*1.5), xycoords=('axes fraction', 'data'),
         ha='left', va='bottom',
-        fontname='Open Sans', size=9, color='k', weight='bold',
+        size=9, color='k', weight='bold',
         annotation_clip=False)
 
     arrow_ypos = -stacked_bar_width*1.2
@@ -1428,11 +1442,11 @@ def draw_component_failure_barchart(uncosted_comptypes,
     ax.annotate('FAILURE RATE: % FAILED COMPONENTS by TYPE',
                 xy=(0.0, -1.45), xycoords=('axes fraction', 'data'),
                 ha='left', va='top', annotation_clip=False,
-                fontname='Open Sans', size=10, weight='bold', color='k')
+                size=10, weight='bold', color='k')
     ax.annotate('Hazard: ' + hazard_type + " " + scenario_tag,
                 xy=(0.0, -1.0), xycoords=('axes fraction', 'data'),
                 ha='left', va='top', annotation_clip=False,
-                fontname='Open Sans', size=10, weight='bold',
+                size=10, weight='bold',
                 color='slategrey')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
