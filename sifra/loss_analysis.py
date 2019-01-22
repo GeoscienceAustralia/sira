@@ -17,24 +17,25 @@ import sifra.sifraplot as spl
 
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
+plt.rcParams['mathtext.fontset'] = 'dejavuserif'
+
 import matplotlib.patheffects as PathEffects
-from matplotlib.font_manager import FontProperties
 from matplotlib import gridspec
+
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')
 
+from matplotlib.font_manager import FontProperties
+from matplotlib import rc
 import requests
 from tempfile import NamedTemporaryFile
-import matplotlib.font_manager as fm
-from matplotlib import rc
-
 github_url = "https://github.com/google/fonts/blob/master/ofl/ptsans/PT_Sans-Web-Regular.ttf"
 font_url = github_url + '?raw=true'
 response = requests.get(font_url, verify=True)
 customfont = NamedTemporaryFile(delete=False, suffix='.ttf')
 customfont.write(response.content)
 customfont.close()
-fontprop = fm.FontProperties(fname=customfont.name)
+fontprop = FontProperties(fname=customfont.name)
 rc("font", **{"sans-serif": [str(fontprop.get_name())]})
 
 import argparse
@@ -1066,7 +1067,6 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         "HAZARD: " + hazard_type + " " + scenario_tag,
         xy=(0.0, -1.2), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans',
         size=header_size, color='slategrey', weight='bold',
         annotation_clip=False)
 
@@ -1074,7 +1074,6 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         "LOSS METRIC: % loss for each Component Type",
         xy=(0.0, -0.8), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans',
         size=header_size, color='k', weight='bold',
         annotation_clip=False)
 
@@ -1155,7 +1154,6 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         "LOSS METRIC: relative contributions to system loss",
         xy=(0.0, 0.7), xycoords=('axes fraction', 'data'),
         ha='left', va='top',
-        fontname='Open Sans',
         size=header_size, color='k', weight='bold',
         annotation_clip=False)
 
