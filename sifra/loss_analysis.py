@@ -35,7 +35,7 @@ customfont = NamedTemporaryFile(delete=False, suffix='.ttf')
 customfont.write(response.content)
 customfont.close()
 fontprop = fm.FontProperties(fname=customfont.name)
-rc("font", **{"family": "serif", "serif": [str(fontprop.get_name())]})
+rc("font", **{"sans-serif": [str(fontprop.get_name())]})
 
 import argparse
 from sifra.configuration import Configuration
