@@ -296,7 +296,16 @@ def main():
         # ---------------------------------------------------------------------
 
     else:
-        print("Input file not found: " + str(args.setup))
+        
+        if args.config is None:
+            rootLogger.info("Config file not found: " + str(args.setup))
+
+        if args.model is None:
+            rootLogger.info("Model file not found: " + str(args.setup))
+
+        if args.output is None:
+            rootLogger.info("Output folder not found: " + str(args.setup))
+
 
     rootLogger.info('End')
 
