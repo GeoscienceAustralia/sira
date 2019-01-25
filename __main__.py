@@ -296,15 +296,15 @@ def main():
         # ---------------------------------------------------------------------
 
     else:
-        
+
         if args.config is None:
-            rootLogger.info("Config file not found: " + str(args.setup))
+            rootLogger.info("Config file not found: " + str(args.config))
 
         if args.model is None:
-            rootLogger.info("Model file not found: " + str(args.setup))
+            rootLogger.info("Model file not found: " + str(args.model))
 
         if args.output is None:
-            rootLogger.info("Output folder not found: " + str(args.setup))
+            rootLogger.info("Output folder not found: " + str(args.output))
 
 
     rootLogger.info('End')
