@@ -1,4 +1,8 @@
 {
+
+    "SCENARIO_NAME" :"WA earthquake",
+    "MODEL_NAME" : "Water Treatment Plant 120MLD",
+
     "HAZARD_INPUT_METHOD": "hazard_array",
     "HAZARD_TYPE": "earthquake",
     "HAZARD_NUM_SAMPLES": 5000,
@@ -15,8 +19,8 @@
     "RESTORATION_TIME_UNIT": "days",
 
 
-    "SCENARIO_INTENSITY_MEASURE_PARAM": "PGA",
-    "SCENARIO_INTENSITY_MEASURE_UNIT": "g",
+    "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
+    "HAZARD_INTENSITY_MEASURE_UNIT": "g",
     "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
             "MUN_M45_D10",
             "MUN_M5_D8,63"
@@ -25,8 +29,7 @@
             "0.1",
             "0.4"
     ],
-    "SWITCH_MULTIPROCESS": 1,
-    "SWITCH_RUN_CONTEXT": 1,
+
     "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
     "SYSTEM_COMMODITY_FLOW_TYPES": 2,
     "SYSTEM_PS_GEN_TECH": "Gas Fired",
@@ -41,7 +44,14 @@
         ],
     "SYSTEM_SUBCLASS": "Water Treatment Facility",
     "SYSTEM_COMPONENT_LOCATION_CONF": "undefined",
-    "TEST_FIT_PE_DATA": true,
-    "TEST_FIT_RESTORATION_DATA": false,
-    "TEST_SAVE_VARS_NPY": true
+
+    "SWITCH_MULTIPROCESS": 1,
+    "SWITCH_RUN_CONTEXT": 1,
+
+    "SWITCH_RUN_SIMULATION": true,
+    "SWITCH_RUN_FIT_MODEL_ANALYSIS": true,
+    "SWITCH_RUN_SCENARIO_LOSS_ANALYSIS": true,
+
+    "SWITCH_FIT_RESTORATION_DATA": false,
+    "SWITCH_SAVE_VARS_NPY": true
 }

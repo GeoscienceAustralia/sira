@@ -251,7 +251,7 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
 
     figtitle = 'System Fragility: ' + config.SYSTEM_CLASS
 
-    x_lab = config.INTENSITY_MEASURE_PARAM + ' (' + config.INTENSITY_MEASURE_UNIT + ')'
+    x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
     y_lab = 'P($D_s$ > $d_s$)'
 
     y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)

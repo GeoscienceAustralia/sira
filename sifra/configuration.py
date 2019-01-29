@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import os
 import json
 from sifra.logger import rootLogger
@@ -23,13 +25,16 @@ class Configuration:
         #     configuration_file_path = converter.convert_to_json(configuration_file_path)
 
 
-
         with open(config_path, 'r') as f:
             config = json.load(f)
+        print(config )
+        self.SCENARIO_NAME = str(config['SCENARIO_NAME'])
+        self.MODEL_NAME = str(config['MODEL_NAME'])
+        self.SIMULATION_MODEL_NAME = str(self.MODEL_NAME) + str('–') + str(self.SCENARIO_NAME)
 
         # reading in simulation scenario parameters
-        self.INTENSITY_MEASURE_PARAM = str(config['SCENARIO_INTENSITY_MEASURE_PARAM'])
-        self.INTENSITY_MEASURE_UNIT = str(config['SCENARIO_INTENSITY_MEASURE_UNIT'])
+        self.HAZARD_INTENSITY_MEASURE_PARAM = str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
+        self.HAZARD_INTENSITY_MEASURE_UNIT = str(config['HAZARD_INTENSITY_MEASURE_UNIT'])
         # Set of scenario(s) to investigate in detail
         #   - List of strings
         #   - Used in post processing stage
@@ -39,7 +44,7 @@ class Configuration:
         self.HAZARD_INPUT_METHOD = str(config['HAZARD_INPUT_METHOD'])
         self.HAZARD_TYPE = str(config['HAZARD_TYPE'])
         self.NUM_SAMPLES = int(config['HAZARD_NUM_SAMPLES'])
-        if config['HAZARD_INPUT_METHOD'] is "scenario_file":
+        if config['HAZARD_INPUT_METHOD'] is 'scenario_file':
             self.INTENSITY_MEASURE_MIN = None
             self.INTENSITY_MEASURE_MAX = None
             self.INTENSITY_MEASURE_STEP = None
@@ -63,9 +68,12 @@ class Configuration:
         self.COMMODITY_FLOW_TYPES = int(config['SYSTEM_COMMODITY_FLOW_TYPES'])
         self.COMPONENT_LOCATION_CONF = config['SYSTEM_COMPONENT_LOCATION_CONF']
 
-        self.FIT_PE_DATA = bool(config['TEST_FIT_PE_DATA'])
-        self.FIT_RESTORATION_DATA = bool(config['TEST_FIT_RESTORATION_DATA'])
-        self.SAVE_VARS_NPY = bool(config['TEST_SAVE_VARS_NPY'])
+        self.SWITCH_RUN_SIMULATION = bool(config['SWITCH_RUN_SIMULATION'])
+        self.SWITCH_RUN_FIT_MODEL_ANALYSIS = bool(config['SWITCH_RUN_FIT_MODEL_ANALYSIS'])
+        self.SWITCH_RUN_SCENARIO_LOSS_ANALYSIS = bool(config['SWITCH_RUN_SCENARIO_LOSS_ANALYSIS'])
+
+        self.SWITCH_FIT_RESTORATION_DATA = bool(config['SWITCH_FIT_RESTORATION_DATA'])
+        self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
         self.MULTIPROCESS = int(config['SWITCH_MULTIPROCESS'])
         self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])

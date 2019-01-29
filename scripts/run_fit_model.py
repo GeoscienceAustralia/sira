@@ -85,7 +85,7 @@ def main():
 
     # Test switches
     FIT_PE_DATA = scenario.fit_pe_data
-    # FIT_RESTORATION_DATA = scenario.fit_restoration_data
+    # SWITCH_FIT_RESTORATION_DATA = scenario.SWITCH_FIT_RESTORATION_DATA
     # RESTORATION_TIME_RANGE = scenario.restoration_time_range
 
     # ------------------------------------------------------------------------
@@ -141,7 +141,7 @@ def main():
     # sys_fn = approximate_generic_sys_restoration(sc, fc, sys_frag,
     #                                              output_array_given_recovery)
     #
-    # if FIT_RESTORATION_DATA:
+    # if SWITCH_FIT_RESTORATION_DATA:
     #     sys_rst_mdl_mode1 = fit_restoration_data(
     #         RESTORATION_TIME_RANGE, sys_fn, sys_limit_states, sc.output_path)
     #     # sys_rst_mdl_mode2 = fit_restoration_data_multimode(

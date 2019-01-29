@@ -203,15 +203,8 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     #
     ###########################################################################
 
-    np.save(
-        os.path.join(scenario.raw_output_dir, 'sys_frag.npy'),
-        sys_frag
-        )
-
-    np.save(
-        os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'),
-        pe_sys_econloss
-        )
+    np.save(os.path.join(scenario.raw_output_dir, 'sys_frag.npy'), sys_frag)
+    np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'), pe_sys_econloss)
 # ------------------------------------------------------------------------------
 
 
@@ -306,8 +299,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                 pe_sys_cpfailrate[d, p] = np.median(ds_ss_ix)
 
         # --- Save prob exceedance data as npy ---
-        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'),
-                pe_sys_cpfailrate)
+        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'), pe_sys_cpfailrate)
 
     # ------------------------------------------------------------------------
     # Validate damage ratio of the system

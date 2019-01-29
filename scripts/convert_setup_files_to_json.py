@@ -196,14 +196,14 @@ def convert_conf_object_to_json(setup):
         data['Test']['FIT_PE_DATA'] = None
 
     try:
-        data['Test']['FIT_RESTORATION_DATA'] = setup['FIT_RESTORATION_DATA']
+        data['Test']['SWITCH_FIT_RESTORATION_DATA'] = setup['SWITCH_FIT_RESTORATION_DATA']
     except KeyError:
-        data['Test']['FIT_RESTORATION_DATA'] = None
+        data['Test']['SWITCH_FIT_RESTORATION_DATA'] = None
 
     try:
-        data['Test']['SAVE_VARS_NPY'] = setup['SAVE_VARS_NPY']
+        data['Test']['SWITCH_SAVE_VARS_NPY'] = setup['SWITCH_SAVE_VARS_NPY']
     except KeyError:
-        data['Test']['SAVE_VARS_NPY'] = None
+        data['Test']['SWITCH_SAVE_VARS_NPY'] = None
 
     data['Switches'] = collections.OrderedDict()
 
