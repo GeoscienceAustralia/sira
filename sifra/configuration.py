@@ -24,13 +24,12 @@ class Configuration:
         # if file_ext != '.json':
         #     configuration_file_path = converter.convert_to_json(configuration_file_path)
 
-
         with open(config_path, 'r') as f:
             config = json.load(f)
-        print(config )
+
         self.SCENARIO_NAME = str(config['SCENARIO_NAME'])
         self.MODEL_NAME = str(config['MODEL_NAME'])
-        self.SIMULATION_MODEL_NAME = str(self.MODEL_NAME) + str('–') + str(self.SCENARIO_NAME)
+        self.CONFIGURATION_ID = str(config['CONFIGURATION_ID']) # str(self.MODEL_NAME) + str(' – ') + str(self.SCENARIO_NAME)
 
         # reading in simulation scenario parameters
         self.HAZARD_INTENSITY_MEASURE_PARAM = str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
@@ -68,29 +67,13 @@ class Configuration:
         self.COMMODITY_FLOW_TYPES = int(config['SYSTEM_COMMODITY_FLOW_TYPES'])
         self.COMPONENT_LOCATION_CONF = config['SYSTEM_COMPONENT_LOCATION_CONF']
 
-        self.SWITCH_RUN_SIMULATION = bool(config['SWITCH_RUN_SIMULATION'])
-        self.SWITCH_RUN_FIT_MODEL_ANALYSIS = bool(config['SWITCH_RUN_FIT_MODEL_ANALYSIS'])
-        self.SWITCH_RUN_SCENARIO_LOSS_ANALYSIS = bool(config['SWITCH_RUN_SCENARIO_LOSS_ANALYSIS'])
-
-        self.SWITCH_FIT_RESTORATION_DATA = bool(config['SWITCH_FIT_RESTORATION_DATA'])
-        self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
-
         self.MULTIPROCESS = int(config['SWITCH_MULTIPROCESS'])
         self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])
 
-        # self.SCENARIO_NAME = config['SCENARIO_NAME']
-        # self.SYS_CONF_FILE_NAME = get_file_name(model_path)
-        # self.INPUT_DIR_NAME = get_dir_path(model_path)
-        # self.SYS_CONF_FILE = model_path
-        # reading in setup information
+        self.SWITCH_FIT_RESTORATION_DATA = bool(eval(config['SWITCH_FIT_RESTORATION_DATA']))
+        self.SWITCH_SAVE_VARS_NPY = bool(eval(config['SWITCH_SAVE_VARS_NPY']))
 
-        # self.ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        # self.INPUT_PATH = os.path.join(self.ROOT_DIR, self.INPUT_DIR_NAME)
         self.INPUT_MODEL_PATH = model_path
-        # self.timestamp = rootLogger.timestamp
-
-        # if run_mode == 'impact':
-        # output_dir_timestamped = self.OUTPUT_DIR_NAME + "_" + self.timestamp
         self.OUTPUT_PATH = output_path
 
         # create output dir: root/SCENARIO_NAME+self.timestamp
@@ -102,45 +85,4 @@ class Configuration:
         if not os.path.exists(self.RAW_OUTPUT_DIR):
             os.makedirs(self.RAW_OUTPUT_DIR)
 
-        # elif run_mode == 'analysis':
-        #     self.OUTPUT_PATH = output_path
-        #     self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
-
         self.SYS_CONF_FILE_NAME = get_file_name(self.INPUT_MODEL_PATH)
-
-
-        # self.record_dirs()
-
-    # def __str__(self):
-    #     line = "\n----------------------------------------\n"
-    #     excluded = ['SCENARIO_NAME', 'SYSTEM_CLASSES']
-    #     attr = '\n'.join(('{} = {}'.format(item, self.__dict__[item])
-    #                       for item in self.__dict__
-    #                       if item not in excluded))
-    #     note = line + str(self.SCENARIO_NAME) + line + attr + line
-    #     return note
-
-    # def record_dirs(self):
-    #     rootLogger.info("System model   : " + get_file_name(self.INPUT_MODEL_PATH))
-    #     rootLogger.info("Input dir      : " + get_dir_path(self.INPUT_MODEL_PATH))
-    #     rootLogger.info("Output dir     : " + self.OUTPUT_PATH)
-    #     rootLogger.info("Raw output dir : " + self.RAW_OUTPUT_DIR + "\n")
-    #
-    #     self.dir_dict = {}
-    #     self.dir_dict["SYS_CONF_FILE_NAME"] = get_file_name(self.INPUT_MODEL_PATH)
-    #     self.dir_dict["INPUT_PATH"] = get_dir_path(self.INPUT_MODEL_PATH)
-    #     self.dir_dict["OUTPUT_PATH"] = self.OUTPUT_PATH
-    #     self.dir_dict["RAW_OUTPUT_DIR"] = self.RAW_OUTPUT_DIR
-    #
-    #     # self.file_with_dirs = os.path.splitext(rootLogger.logfile)[0]+"_dirs.json"
-    #
-    #     self.file_with_dirs = os.path.join(self.OUTPUT_PATH,"file_paths.json")
-    #
-    #
-    #     with open(self.file_with_dirs, 'w') as dirfile:
-    #         json.dump(self.dir_dict, dirfile)
-    #
-
-# if __name__ == '__main__':
-#     configuration = Configuration("tests/simulation_setup/test_setup.json")
-#     print(configuration)

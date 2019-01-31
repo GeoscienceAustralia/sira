@@ -1,5 +1,5 @@
 {
-	"CONFIGRATION_NAME" :"WA Earthquake - Water Treatment Plant 120MLD",
+	"CONFIGRATION_ID" :"WA Earthquake - Water Treatment Plant 120MLD",
     "SCENARIO_NAME" :"WA Earthquake",
     "MODEL_NAME" : "Water Treatment Plant 120MLD",
 
@@ -23,7 +23,7 @@
     "HAZARD_INTENSITY_MEASURE_UNIT": "g",
     "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
             "MUN_M45_D10",
-            "MUN_M5_D8,63"
+            "MUN_M5_D8,
     ],
     "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
             "0.1",
