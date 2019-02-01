@@ -1045,7 +1045,7 @@
                 }
             }, 
             "latitude": 895, 
-            "longitude": 460, 
+            "longitude": 780, 
             "node_cluster": "ZONE 4B", 
             "node_type": "dependency", 
             "operating_capacity": 1
@@ -7269,13 +7269,41 @@
             "weight": 1
         }, 
         "100": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_Output_Connector", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_N3", 
+            "weight": 1
+        }, 
+        "101": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_Output_Connector", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_N4", 
+            "weight": 1
+        }, 
+        "102": {
+            "Unnamed: 4": null, 
+            "destination": "Surge_Vessels", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_Output_Connector", 
+            "weight": 1
+        }, 
+        "103": {
+            "Unnamed: 4": null, 
+            "destination": "Surge_Vessels", 
+            "link_capacity": 1, 
+            "origin": "Power_Supply_Area_1", 
+            "weight": 1
+        }, 
+        "104": {
             "Unnamed: 4": ">> how and where does it link to output pipes", 
             "destination": "Pipe_Main_Outlet", 
             "link_capacity": 1, 
             "origin": "Surge_Vessels", 
             "weight": 1
         }, 
-        "101": {
+        "105": {
             "Unnamed: 4": null, 
             "destination": "Output_Freshwater", 
             "link_capacity": 1, 
@@ -7354,21 +7382,21 @@
         }, 
         "20": {
             "Unnamed: 4": null, 
-            "destination": "Bldg_Cl", 
+            "destination": "Contact_Tank_Cl", 
             "link_capacity": 1, 
             "origin": "Power_Supply_Area_2", 
             "weight": 1
         }, 
         "21": {
             "Unnamed: 4": null, 
-            "destination": "Contact_Tank_Cl", 
+            "destination": "Chem_Dosing_Panel_FSA", 
             "link_capacity": 1, 
             "origin": "Power_Supply_Area_2", 
             "weight": 1
         }, 
         "22": {
             "Unnamed: 4": null, 
-            "destination": "Bldg_Chem_N2", 
+            "destination": "Chem_Dosing_Panel_NaOH", 
             "link_capacity": 1, 
             "origin": "Power_Supply_Area_2", 
             "weight": 1
@@ -7773,38 +7801,38 @@
             "weight": 1
         }, 
         "75": {
-            "Unnamed: 4": ">> why does CO2 dosing happen: to adjust the pH down, connects to the exit pipe out of the Contact Tank", 
-            "destination": "Tank_Clearwater_N1", 
+            "Unnamed: 4": null, 
+            "destination": "Pumphouse_Inlet_Joint", 
             "link_capacity": 1, 
-            "origin": "Tank_CO2_Storage", 
+            "origin": "Chem_Tank_NaOH_No1", 
             "weight": 1
         }, 
         "76": {
             "Unnamed: 4": null, 
-            "destination": "Tank_Clearwater_N2", 
+            "destination": "Pumphouse_Inlet_Joint", 
             "link_capacity": 1, 
-            "origin": "Tank_CO2_Storage", 
+            "origin": "Chem_Tank_NaOH_No2", 
             "weight": 1
         }, 
         "77": {
             "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_Control_Panels", 
+            "destination": "Pumphouse_Inlet_Joint", 
             "link_capacity": 1, 
-            "origin": "Power_Supply_Area_1", 
+            "origin": "Chem_Tank_FSA_No1", 
             "weight": 1
         }, 
         "78": {
             "Unnamed: 4": null, 
-            "destination": "Pipe_Clearwater1_Pumphouse", 
+            "destination": "Pumphouse_Inlet_Joint", 
             "link_capacity": 1, 
-            "origin": "Tank_Clearwater_N1", 
+            "origin": "Chem_Tank_FSA_No2", 
             "weight": 1
         }, 
         "79": {
-            "Unnamed: 4": null, 
-            "destination": "Pipe_Clearwater2_Pumphouse", 
+            "Unnamed: 4": ">> why does CO2 dosing happen: to adjust the pH down, connects to the exit pipe out of the Contact Tank", 
+            "destination": "Tank_Clearwater_N1", 
             "link_capacity": 1, 
-            "origin": "Tank_Clearwater_N2", 
+            "origin": "Tank_CO2_Storage", 
             "weight": 1
         }, 
         "8": {
@@ -7816,72 +7844,72 @@
         }, 
         "80": {
             "Unnamed: 4": null, 
+            "destination": "Tank_Clearwater_N2", 
+            "link_capacity": 1, 
+            "origin": "Tank_CO2_Storage", 
+            "weight": 1
+        }, 
+        "81": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_Control_Panels", 
+            "link_capacity": 1, 
+            "origin": "Power_Supply_Area_1", 
+            "weight": 1
+        }, 
+        "82": {
+            "Unnamed: 4": null, 
+            "destination": "Pipe_Clearwater1_Pumphouse", 
+            "link_capacity": 1, 
+            "origin": "Tank_Clearwater_N1", 
+            "weight": 1
+        }, 
+        "83": {
+            "Unnamed: 4": null, 
+            "destination": "Pipe_Clearwater2_Pumphouse", 
+            "link_capacity": 1, 
+            "origin": "Tank_Clearwater_N2", 
+            "weight": 1
+        }, 
+        "84": {
+            "Unnamed: 4": null, 
             "destination": "Pumphouse_Inlet_Joint", 
             "link_capacity": 1, 
             "origin": "Pipe_Clearwater1_Pumphouse", 
             "weight": 1
         }, 
-        "81": {
+        "85": {
             "Unnamed: 4": null, 
             "destination": "Pumphouse_Inlet_Joint", 
             "link_capacity": 1, 
             "origin": "Pipe_Clearwater2_Pumphouse", 
             "weight": 1
         }, 
-        "82": {
-            "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_N1", 
-            "link_capacity": 1, 
-            "origin": "Pumphouse_Inlet_Joint", 
-            "weight": 1
-        }, 
-        "83": {
-            "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_N2", 
-            "link_capacity": 1, 
-            "origin": "Pumphouse_Inlet_Joint", 
-            "weight": 1
-        }, 
-        "84": {
-            "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_N3", 
-            "link_capacity": 1, 
-            "origin": "Pumphouse_Inlet_Joint", 
-            "weight": 1
-        }, 
-        "85": {
-            "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_N4", 
-            "link_capacity": 1, 
-            "origin": "Pumphouse_Inlet_Joint", 
-            "weight": 1
-        }, 
         "86": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N1", 
             "link_capacity": 1, 
-            "origin": "Bldg_Clearwater_PumpStn", 
+            "origin": "Pumphouse_Inlet_Joint", 
             "weight": 1
         }, 
         "87": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N2", 
             "link_capacity": 1, 
-            "origin": "Bldg_Clearwater_PumpStn", 
+            "origin": "Pumphouse_Inlet_Joint", 
             "weight": 1
         }, 
         "88": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N3", 
             "link_capacity": 1, 
-            "origin": "Bldg_Clearwater_PumpStn", 
+            "origin": "Pumphouse_Inlet_Joint", 
             "weight": 1
         }, 
         "89": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N4", 
             "link_capacity": 1, 
-            "origin": "Bldg_Clearwater_PumpStn", 
+            "origin": "Pumphouse_Inlet_Joint", 
             "weight": 1
         }, 
         "9": {
@@ -7895,70 +7923,70 @@
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N1", 
             "link_capacity": 1, 
-            "origin": "Clearwater_Pump_Control_Panels", 
+            "origin": "Bldg_Clearwater_PumpStn", 
             "weight": 1
         }, 
         "91": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N2", 
             "link_capacity": 1, 
-            "origin": "Clearwater_Pump_Control_Panels", 
+            "origin": "Bldg_Clearwater_PumpStn", 
             "weight": 1
         }, 
         "92": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N3", 
             "link_capacity": 1, 
-            "origin": "Clearwater_Pump_Control_Panels", 
+            "origin": "Bldg_Clearwater_PumpStn", 
             "weight": 1
         }, 
         "93": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_N4", 
             "link_capacity": 1, 
-            "origin": "Clearwater_Pump_Control_Panels", 
+            "origin": "Bldg_Clearwater_PumpStn", 
             "weight": 1
         }, 
         "94": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_N1", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_Control_Panels", 
+            "weight": 1
+        }, 
+        "95": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_N2", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_Control_Panels", 
+            "weight": 1
+        }, 
+        "96": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_N3", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_Control_Panels", 
+            "weight": 1
+        }, 
+        "97": {
+            "Unnamed: 4": null, 
+            "destination": "Clearwater_Pump_N4", 
+            "link_capacity": 1, 
+            "origin": "Clearwater_Pump_Control_Panels", 
+            "weight": 1
+        }, 
+        "98": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_Output_Connector", 
             "link_capacity": 1, 
             "origin": "Clearwater_Pump_N1", 
             "weight": 1
         }, 
-        "95": {
+        "99": {
             "Unnamed: 4": null, 
             "destination": "Clearwater_Pump_Output_Connector", 
             "link_capacity": 1, 
             "origin": "Clearwater_Pump_N2", 
-            "weight": 1
-        }, 
-        "96": {
-            "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_Output_Connector", 
-            "link_capacity": 1, 
-            "origin": "Clearwater_Pump_N3", 
-            "weight": 1
-        }, 
-        "97": {
-            "Unnamed: 4": null, 
-            "destination": "Clearwater_Pump_Output_Connector", 
-            "link_capacity": 1, 
-            "origin": "Clearwater_Pump_N4", 
-            "weight": 1
-        }, 
-        "98": {
-            "Unnamed: 4": null, 
-            "destination": "Surge_Vessels", 
-            "link_capacity": 1, 
-            "origin": "Clearwater_Pump_Output_Connector", 
-            "weight": 1
-        }, 
-        "99": {
-            "Unnamed: 4": null, 
-            "destination": "Surge_Vessels", 
-            "link_capacity": 1, 
-            "origin": "Power_Supply_Area_1", 
             "weight": 1
         }
     }, 
