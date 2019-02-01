@@ -1,6 +1,6 @@
 {
-	"CONFIGRATION_ID" :"WA Earthquake - Water Treatment Plant 120MLD",
-    "SCENARIO_NAME" :"WA Earthquake",
+	"CONFIGURATION_ID" :"WA Earthquake - Water Treatment Plant 120MLD",
+    "SCENARIO_NAME" :"CONFIGRATION_IDWA Earthquake",
     "MODEL_NAME" : "Water Treatment Plant 120MLD",
 
     "HAZARD_INPUT_METHOD": "hazard_array",
