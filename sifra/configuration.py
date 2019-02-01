@@ -70,8 +70,8 @@ class Configuration:
         self.MULTIPROCESS = int(config['SWITCH_MULTIPROCESS'])
         self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])
 
-        self.SWITCH_FIT_RESTORATION_DATA = bool(eval(config['SWITCH_FIT_RESTORATION_DATA']))
-        self.SWITCH_SAVE_VARS_NPY = bool(eval(config['SWITCH_SAVE_VARS_NPY']))
+        self.SWITCH_FIT_RESTORATION_DATA = bool(config['SWITCH_FIT_RESTORATION_DATA'])
+        self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
         self.INPUT_MODEL_PATH = model_path
         self.OUTPUT_PATH = output_path
