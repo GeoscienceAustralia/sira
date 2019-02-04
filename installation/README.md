@@ -1,5 +1,5 @@
 # Delete all containers
-docker rm $(docker ps -a -q)
+docker rm $(docker stop $(docker ps -aq))
 
 # Delete all images
 docker rmi $(docker images -qf "dangling=true")
