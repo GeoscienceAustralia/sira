@@ -14,28 +14,10 @@ ENV locale-gen en_US.UTF-8
 ENV dpkg-reconfigure locales
 
 # install system dependancies 
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-RUN apt-get install -y build-essential
-RUN apt-get install -y pkg-config
-RUN apt-get install -y graphviz \
-                       libgraphviz-dev \
-                       xml2 \
-                       libxml2-dev \
-                       git \
-                       curl \
-                       zip \
-                       unzip \
-                       jq \
-                       gcc \
-                       wget \
-                       libfreetype6-dev \
-                       libpng-dev \
-                       libcairo2-dev \
-                       libjpeg8-dev \
-                       libpango1.0-dev \
-                       libgif-dev \
-                       g++ \
-                       libgl1-mesa-glx
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends apt-utils
+ADD packagelist_linux.txt .
+RUN apt-get install -y  $(awk '{print $1}' packagelist_linux.txt)
 
 # install anaconda2 
 RUN wget https://repo.continuum.io/archive/Anaconda2-2018.12-Linux-x86_64.sh 
@@ -46,6 +28,7 @@ RUN /root/anaconda2/bin/conda create -n pythonSifra python=2.7.11  -y
 ENV PATH="/root/anaconda2/envs/pythonSifra/bin:$PATH"
 
 # install packages not available in /root/anaconda2/bin/conda
+ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 ARG CACHE_DATE
