@@ -2,10 +2,10 @@ from __future__ import print_function
 
 import numpy as np
 np.seterr(divide='print', invalid='raise')
-
-import scipy.stats as stats
 import pandas as pd
-import json
+
+# import scipy.stats as stats
+# import json
 
 import os
 import copy
@@ -38,11 +38,11 @@ customfont.close()
 fontprop = FontProperties(fname=customfont.name)
 rc("font", **{"sans-serif": [str(fontprop.get_name())]})
 
-import argparse
-from sifra.configuration import Configuration
-from sifra.scenario import Scenario
-from sifra.modelling.hazard import HazardsContainer
-from sifra.model_ingest import ingest_model
+# import argparse
+# from sifra.configuration import Configuration
+# from sifra.scenario import Scenario
+# from sifra.modelling.hazard import HazardsContainer
+# from sifra.model_ingest import ingest_model
 from sifra.logger import rootLogger
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:
