@@ -4,16 +4,9 @@ import numpy as np
 np.seterr(divide='print', invalid='raise')
 import pandas as pd
 
-# import scipy.stats as stats
-# import json
-
 import os
 import copy
 import itertools
-from colorama import Fore, Back, init, Style
-init()
-
-import sifra.sifraplot as spl
 
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
@@ -21,6 +14,7 @@ plt.rcParams['mathtext.fontset'] = 'dejavuserif'
 
 import matplotlib.patheffects as PathEffects
 from matplotlib import gridspec
+import sifra.sifraplot as spl
 
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')
@@ -29,7 +23,8 @@ from matplotlib.font_manager import FontProperties
 from matplotlib import rc
 import requests
 from tempfile import NamedTemporaryFile
-github_url = "https://github.com/google/fonts/blob/master/ofl/ptsans/PT_Sans-Web-Regular.ttf"
+github_url = "https://github.com/google/fonts/blob/master/" \
+             "ofl/ptsans/PT_Sans-Web-Regular.ttf"
 font_url = github_url + '?raw=true'
 response = requests.get(font_url, verify=True)
 customfont = NamedTemporaryFile(delete=False, suffix='.ttf')
@@ -38,12 +33,13 @@ customfont.close()
 fontprop = FontProperties(fname=customfont.name)
 rc("font", **{"sans-serif": [str(fontprop.get_name())]})
 
-# import argparse
+from sifra.logger import rootLogger
+
 # from sifra.configuration import Configuration
 # from sifra.scenario import Scenario
 # from sifra.modelling.hazard import HazardsContainer
 # from sifra.model_ingest import ingest_model
-from sifra.logger import rootLogger
+
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:
 
@@ -1567,7 +1563,12 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     return component_fullrst_time, ctype_scenario_outcomes
 
 
-def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_comptype_response_file, input_component_response_file):
+def run_scenario_loss_analysis(scenario,
+                               hazards,
+                               infrastructure,
+                               config,
+                               input_comptype_response_file,
+                               input_component_response_file):
 
     rootLogger.info('Start: SCENARIO LOSS ANALYSIS')
 
@@ -1581,23 +1582,30 @@ def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Read in SIMULATED HAZARD RESPONSE for <COMPONENT TYPES>
 
-    comptype_resp_df = pd.read_csv(input_comptype_response_file, index_col=['component_type', 'response'],skipinitialspace=True)
+    comptype_resp_df = pd.read_csv(input_comptype_response_file,
+                                   index_col=['component_type', 'response'],
+                                   skipinitialspace=True)
     comptype_resp_df.columns = hazards.hazard_scenario_name
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Nodes not considered in the loss calculations
     # NEED TO MOVE THESE TO A MORE LOGICAL PLACE
 
-    uncosted_comptypes = ['CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT', 'JUNCTION_NODE', 'JUNCTION',
+    uncosted_comptypes = ['CONN_NODE', 'JUNCTION_NODE', 'JUNCTION',
+                          'SYSTEM_INPUT', 'SYSTEM_OUTPUT',
                           'Generation Source', 'Grounding']
 
     cp_types_in_system = infrastructure.get_component_types()
-    cp_types_costed = [x for x in cp_types_in_system if x not in uncosted_comptypes]
+    cp_types_costed = [x for x in cp_types_in_system
+                       if x not in uncosted_comptypes]
 
-    comptype_resp_df = comptype_resp_df.drop(uncosted_comptypes, level='component_type', axis=0)
+    comptype_resp_df = comptype_resp_df.drop(uncosted_comptypes,
+                                             level='component_type',
+                                             axis=0)
 
     # Get list of only those components that are included in cost calculations:
-    cpmap = {c: sorted(list(infrastructure.get_components_for_type(c))) for c in cp_types_in_system}
+    cpmap = {c: sorted(list(infrastructure.get_components_for_type(c)))
+             for c in cp_types_in_system}
     comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
 
     nodes_all = infrastructure.components.keys()
@@ -1612,15 +1620,23 @@ def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_
 
     comptype_value_dict = {}
     for ct in sorted(cp_types_costed):
-        comp_val = [infrastructure.components[comp_id].cost_fraction for comp_id in cpmap[ct]]
+        comp_val = [infrastructure.components[comp_id].cost_fraction
+                    for comp_id in cpmap[ct]]
         comptype_value_dict[ct] = sum(comp_val)
 
-    comptype_value_list = [comptype_value_dict[ct] for ct in sorted(comptype_value_dict.keys())]
-    component_response = pd.read_csv(input_component_response_file, index_col=['component_id', 'response'], skiprows=0,
+    comptype_value_list = [comptype_value_dict[ct]
+                           for ct in sorted(comptype_value_dict.keys())]
+
+    component_response = pd.read_csv(input_component_response_file,
+                                     index_col=['component_id', 'response'],
+                                     skiprows=0,
                                      skipinitialspace=True)
-    component_meanloss = component_response.query('response == "loss_mean"').reset_index('response').drop('response',
-                                                                                                          axis=1)
-    comptype_resp_df = comptype_resp_df.drop(uncosted_comptypes, level='component_type', axis=0)
+
+    component_meanloss = component_response.query('response == "loss_mean"').\
+        reset_index('response').drop('response', axis=1)
+
+    comptype_resp_df = comptype_resp_df.drop(
+        uncosted_comptypes, level='component_type', axis=0)
 
     weight_criteria = 'MIN_COST'
 
@@ -1642,10 +1658,13 @@ def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         sc_haz_str = "{:.3f}".format(float(sc_haz_str))
         if config.HAZARD_INPUT_METHOD == "hazard_array":
-            scenario_header = hazards.hazard_scenario_name[hazards.hazard_scenario_list.index(sc_haz_str)]
+            scenario_header = hazards.hazard_scenario_name[
+                hazards.hazard_scenario_list.index(sc_haz_str)]
         elif config.HAZARD_INPUT_METHOD == "scenario_file":
             scenario_header = sc_haz_str
-        scenario_tag = str(sc_haz_str) + " " + hazards.intensity_measure_unit + " " + hazards.intensity_measure_param
+        scenario_tag = str(sc_haz_str) + " " + \
+                       hazards.intensity_measure_unit + " " + \
+                       hazards.intensity_measure_param
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Extract scenario-specific values from the 'hazard response' dataframe
@@ -1655,41 +1674,74 @@ def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_
         ctype_resp_scenario = comptype_resp_df[scenario_header].unstack(level=-1)
         ctype_resp_scenario = ctype_resp_scenario.sort_index()
 
-        ctype_resp_scenario['loss_per_type'] = ctype_resp_scenario['loss_mean'] / comptype_value_list
+        ctype_resp_scenario['loss_per_type'] \
+            = ctype_resp_scenario['loss_mean'] / comptype_value_list
 
-        ctype_resp_scenario['loss_per_type_std'] = ctype_resp_scenario['loss_std'] * [
-            len(list(infrastructure.get_components_for_type(ct))) for ct in ctype_resp_scenario.index.values.tolist()]
+        ctype_resp_scenario['loss_per_type_std'] \
+            = ctype_resp_scenario['loss_std'] * \
+              [len(list(infrastructure.get_components_for_type(ct)))
+               for ct in ctype_resp_scenario.index.values.tolist()]
 
-        ctype_resp_sorted = ctype_resp_scenario.sort_values(by='loss_tot', ascending=False)
+        ctype_resp_sorted = ctype_resp_scenario.sort_values(by='loss_tot',
+                                                            ascending=False)
 
         fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s1.png'
-        draw_component_loss_barchart_s1(ctype_resp_sorted, scenario_tag, hazards.hazard_type, config.OUTPUT_PATH, fig_name)
+        draw_component_loss_barchart_s1(
+            ctype_resp_sorted,
+            scenario_tag,
+            hazards.hazard_type,
+            config.OUTPUT_PATH,
+            fig_name)
 
         fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s2.png'
-        draw_component_loss_barchart_s2(ctype_resp_sorted, scenario_tag, hazards.hazard_type, config.OUTPUT_PATH, fig_name)
+        draw_component_loss_barchart_s2(
+            ctype_resp_sorted,
+            scenario_tag,
+            hazards.hazard_type,
+            config.OUTPUT_PATH,
+            fig_name)
 
         fig_name = 'fig_SC_' + sc_haz_str + '_loss_sys_vs_comptype_s3.png'
-        draw_component_loss_barchart_s3(ctype_resp_sorted, scenario_tag, hazards.hazard_type, config.OUTPUT_PATH, fig_name)
+        draw_component_loss_barchart_s3(
+            ctype_resp_sorted,
+            scenario_tag,
+            hazards.hazard_type,
+            config.OUTPUT_PATH,
+            fig_name)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # FAILURE RATE -- PERCENTAGE of component types
 
         fig_name = 'fig_SC_' + sc_haz_str + '_comptype_failures.png'
-        draw_component_failure_barchart(uncosted_comptypes, ctype_failure_mean, scenario_header, scenario_tag, hazards.hazard_type, config.OUTPUT_PATH, fig_name)
+        draw_component_failure_barchart(
+            uncosted_comptypes,
+            ctype_failure_mean,
+            scenario_header,
+            scenario_tag,
+            hazards.hazard_type,
+            config.OUTPUT_PATH,
+            fig_name)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # RESTORATION PROGNOSIS for specified scenarios
 
-        component_fullrst_time, ctype_scenario_outcomes = calc_comptype_damage_scenario_given_hazard(infrastructure,
-                                                                                                     scenario, hazards,
-                                                                                                     ctype_resp_sorted,
-                                                                                                     component_response,
-                                                                                                     cp_types_costed,
-                                                                                                     scenario_header)
+        component_fullrst_time, ctype_scenario_outcomes = \
+            calc_comptype_damage_scenario_given_hazard(
+                infrastructure,
+                scenario,
+                hazards,
+                ctype_resp_sorted,
+                component_response,
+                cp_types_costed,
+                scenario_header)
 
         # All the nodes that need to be fixed for each output node:
-        repair_list_combined = prep_repair_list(infrastructure, component_meanloss, component_fullrst_time,
-                                                comps_uncosted, weight_criteria, scenario_header)
+        repair_list_combined = prep_repair_list(infrastructure,
+                                                component_meanloss,
+                                                component_fullrst_time,
+                                                comps_uncosted,
+                                                weight_criteria,
+                                                scenario_header)
 
         repair_path = copy.deepcopy(repair_list_combined)
         output_node_list = infrastructure.output_nodes.keys()
@@ -1697,11 +1749,19 @@ def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_
         for num_rst_steams in RESTORATION_STREAMS:
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             # SYSTEM RESTORATION for given scenario & restoration setup
-            rst_setup_filename = 'restoration_setup_' + sc_haz_str + '_' + hazards.intensity_measure_unit + '_' + hazards.intensity_measure_param + '.csv'
+            rst_setup_filename = 'restoration_setup_' + sc_haz_str + '_' + \
+                                 hazards.intensity_measure_unit + '_' + \
+                                 hazards.intensity_measure_param + '.csv'
 
-            rst_setup_df = calc_restoration_setup(component_meanloss, output_node_list, comps_uncosted,
-                                                  repair_list_combined, num_rst_steams, RESTORATION_OFFSET,
-                                                  component_fullrst_time, scenario.output_path, scenario_header,
+            rst_setup_df = calc_restoration_setup(component_meanloss,
+                                                  output_node_list,
+                                                  comps_uncosted,
+                                                  repair_list_combined,
+                                                  num_rst_steams,
+                                                  RESTORATION_OFFSET,
+                                                  component_fullrst_time,
+                                                  scenario.output_path,
+                                                  scenario_header,
                                                   rst_setup_filename)
 
             # Check if nothing to repair, i.e. if repair list is empty:
@@ -1712,24 +1772,41 @@ def run_scenario_loss_analysis(scenario, hazards, infrastructure, config, input_
                 rootLogger.info("Skipping repair visualisation for this scenario.")
                 break
 
-            fig_rst_gantt_name = 'fig_SC_' + sc_haz_str + '_str' + str(num_rst_steams) + '_restoration.png'
+            fig_rst_gantt_name = 'fig_SC_' + sc_haz_str + '_str' + \
+                                 str(num_rst_steams) + '_restoration.png'
             restoration_timeline_array, time_to_full_restoration_for_lines = \
-                vis_restoration_process(scenario, infrastructure, rst_setup_df, num_rst_steams, repair_path,
-                                        fig_rst_gantt_name, scenario_tag, hazards.hazard_type)
+                vis_restoration_process(
+                    scenario,
+                    infrastructure,
+                    rst_setup_df,
+                    num_rst_steams,
+                    repair_path,
+                    fig_rst_gantt_name,
+                    scenario_tag,
+                    hazards.hazard_type)
 
-            time_to_full_restoration_for_lines_df[(sc_haz_str, num_rst_steams)] = \
-                [time_to_full_restoration_for_lines[x] for x in output_node_list]
+            time_to_full_restoration_for_lines_df[(sc_haz_str, num_rst_steams)] \
+                = [time_to_full_restoration_for_lines[x]
+                   for x in output_node_list]
 
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             # COMPONENT CRITICALITY for given scenario & restoration setup
-            fig_name = 'fig_SC_' + sc_haz_str + '_str' + str(num_rst_steams) + '_component_criticality.png'
-            component_criticality(infrastructure, scenario, ctype_scenario_outcomes, hazards.hazard_type, scenario_tag,
-                                  fig_name)
+            fig_name = 'fig_SC_' + sc_haz_str + '_str' + \
+                       str(num_rst_steams) + '_component_criticality.png'
+            component_criticality(
+                infrastructure,
+                scenario,
+                ctype_scenario_outcomes,
+                hazards.hazard_type,
+                scenario_tag,
+                fig_name)
 
     # --------------------------------------------------------------------------
     # *** END : FOCAL_HAZARD_SCENARIOS FOR LOOP ***
-    time_to_full_restoration_for_lines_csv = os.path.join(config.OUTPUT_PATH, 'line_restoration_prognosis.csv')
-    time_to_full_restoration_for_lines_df.to_csv(time_to_full_restoration_for_lines_csv, sep=',')
+    time_to_full_restoration_for_lines_csv = \
+        os.path.join(config.OUTPUT_PATH, 'line_restoration_prognosis.csv')
+    time_to_full_restoration_for_lines_df.to_csv(
+        time_to_full_restoration_for_lines_csv, sep=',')
 
     rootLogger.info('End: SCENARIO LOSS ANALYSIS')
-    # ---------------------------------------------------------------------
+    # --------------------------------------------------------------------------
