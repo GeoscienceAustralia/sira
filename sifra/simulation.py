@@ -104,11 +104,12 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
     code_start_time = time.time()
 
     # calculate the damage state probabilities
-    rootLogger.info("Calculate System Response")
+    rootLogger.debug("Initiating damage state calculations for {} ...".format(
+        hazard.hazard_scenario_name
+        ))
     expected_damage_state_of_components_for_n_simulations = \
         calculate_expected_damage_state_of_components_for_n_simulations(
             infrastructure, scenario, hazard)
-    rootLogger.info("System Response: ")
 
     # calculate the component loss, functionality, output,
     #  economic loss and recovery output over time
@@ -131,6 +132,7 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
             expected_damage_state_of_components_for_n_simulations)
 
     # determine average output for the output components
+    rootLogger.debug("Calculating system output ...")
     infrastructure_output = {}
     for output_index, (output_comp_id, output_comp) in enumerate(
             infrastructure.output_nodes.items()):
@@ -139,8 +141,8 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
 
     # log the elapsed time for this hazard level
     elapsed = timedelta(seconds=(time.time() - code_start_time))
-    rootLogger.info("Hazard {} run time: {}".format(hazard.hazard_scenario_name,
-                                                    str(elapsed)))
+    rootLogger.info("Hazard {} run time: {}".format(
+        hazard.hazard_scenario_name, str(elapsed)))
 
     # We combine the result data into a dictionary for ease of use
     response_for_a_hazard = {hazard.hazard_scenario_name: [
@@ -190,27 +192,26 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
     rootLogger.debug("Hazard Intensity {}".format(hazard.hazard_scenario_name))
 
     # iterate through the components
+    rootLogger.info("Calculating component damage state probability.")
     for index, component_key in enumerate(
             sorted(infrastructure.components.keys())):
         component = infrastructure.components[component_key]
         # use the components expose_to method to retrieve the probabilities
         # of this hazard level exceeding each of the components damage levels
 
-        rootLogger.info(
-            "Start calculating probability of component in a damage state.")
 
         # create numpy array of length equal to the number of
         # damage states for the component
         component_pe_ds = np.zeros(len(component.damage_states))
 
         # iterate through each damage state for the component
+        rootLogger.debug("Calculating Component Response...")
         for damage_state_index in component.damage_states.keys():
             # find the hazard intensity component is exposed too
             longitude, latitude = component.get_location()
             hazard_intensity = hazard.get_hazard_intensity_at_location(
                 longitude, latitude)
 
-            #
             component_pe_ds[damage_state_index] = \
                 component.damage_states[damage_state_index].response_function(
                     hazard_intensity)
@@ -219,8 +220,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         # always be zero which will be always be greater than random variable
         component_pe_ds = component_pe_ds[1:]
 
-        rootLogger.info("Calculate System Response")
-        rootLogger.info("Component {} : pe_ds {}". \
+        rootLogger.info("Component : {} : pe_ds {}". \
                         format(component.component_id, component_pe_ds))
 
         # This little piece of numpy magic calculates the damage level by
