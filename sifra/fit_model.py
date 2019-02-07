@@ -71,7 +71,12 @@ def res_lognorm_cdf(params, x, data, eps=None):
     return (model - data) / eps
 
 
-def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config):
+def fit_prob_exceed_model(
+        hazard_input_vals,
+        pb_exceed,
+        SYS_DS,
+        out_path,
+        config):
     """
     Fit a Lognormal CDF model to simulated probability exceedance data
 
@@ -83,10 +88,13 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config
     """
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # DataFrame for storing the calculated System Damage Algorithms for exceedence probabilities.
+    # DataFrame for storing the calculated System Damage Algorithms
+    # for exceedence probabilities.
 
     indx = pd.Index(SYS_DS[1:], name='Damage States')
-    sys_dmg_model = pd.DataFrame(index=indx, columns=['Median', 'LogStdDev', 'Location', 'Chi-Sqr'])
+    sys_dmg_model = pd.DataFrame(
+        index=indx,
+        columns=['Median', 'LogStdDev', 'Location', 'Chi-Sqr'])
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # INITIAL FIT
@@ -105,21 +113,34 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config
 
         # Fit the dist:
         params_pe.append(lmfit.Parameters())
-        params_pe[dx].add('median', value=p0m, min=MIN, max=MAX)  # , min=0, max=10)
+        params_pe[dx].add('median', value=p0m, min=MIN, max=MAX)
         params_pe[dx].add('logstd', value=p0s, min=MIN, max=MAX)
         params_pe[dx].add('loc', value=0.0, vary=False, min=MIN, max=MAX)
 
-
         if dx >= 1:
 
-            sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe[dx], args=(x_sample, y_sample))
-            sys_dmg_model.loc[SYS_DS[dx]] = (sys_dmg_fitted_params[dx].params['median'].value, sys_dmg_fitted_params[dx].params['logstd'].value, sys_dmg_fitted_params[dx].params['loc'].value, sys_dmg_fitted_params[dx].chisqr)
+            sys_dmg_fitted_params[dx] = lmfit.minimize(
+                res_lognorm_cdf, params_pe[dx], args=(x_sample, y_sample))
+            sys_dmg_model.loc[SYS_DS[dx]] = (
+                sys_dmg_fitted_params[dx].params['median'].value,
+                sys_dmg_fitted_params[dx].params['logstd'].value,
+                sys_dmg_fitted_params[dx].params['loc'].value,
+                sys_dmg_fitted_params[dx].chisqr)
 
     border = "-" * 79
-    rootLogger.info(border)
-    rootLogger.info(Fore.YELLOW + "Fitting system FRAGILITY data: Lognormal CDF" + Fore.RESET)
-    rootLogger.info(border)
-    rootLogger.info("\n\nINITIAL System Fragilities:\n\n" + str(sys_dmg_model)+ '\n')
+    rootLogger.info(
+        '\n'+border+'\n'+
+        Fore.YELLOW+"Fitting system FRAGILITY data: Lognormal CDF"+Fore.RESET+
+        '\n' + border + '\n' +
+        "\nINITIAL System Fragilities:\n\n" +
+        str(sys_dmg_model) + '\n'
+        )
+    # rootLogger.info(
+    #     Fore.YELLOW +
+    #     "Fitting system FRAGILITY data: Lognormal CDF" + Fore.RESET)
+    # rootLogger.info(border)
+    # rootLogger.info("\nINITIAL System Fragilities:\n\n" +
+    #                 str(sys_dmg_model)+ '\n')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for crossover and correct as needed
@@ -127,33 +148,77 @@ def fit_prob_exceed_model(hazard_input_vals, pb_exceed, SYS_DS, out_path, config
     CROSSOVER_THRESHOLD = 0.001
     CROSSOVER_CORRECTION = True
     if CROSSOVER_CORRECTION:
-        sys_dmg_fitted_params = correct_crossover(SYS_DS, pb_exceed, hazard_input_vals, sys_dmg_fitted_params, CROSSOVER_THRESHOLD)
+        sys_dmg_fitted_params = correct_crossover(
+            SYS_DS, pb_exceed,
+            hazard_input_vals,
+            sys_dmg_fitted_params,
+            CROSSOVER_THRESHOLD)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Finalise damage function parameters
 
     for dx in range(1, len(SYS_DS)):
-        sys_dmg_model.loc[SYS_DS[dx]] = sys_dmg_fitted_params[dx].params['median'].value, sys_dmg_fitted_params[dx].params['logstd'].value, sys_dmg_fitted_params[dx].params['loc'].value, sys_dmg_fitted_params[dx].chisqr
+        sys_dmg_model.loc[SYS_DS[dx]] = \
+            sys_dmg_fitted_params[dx].params['median'].value, \
+            sys_dmg_fitted_params[dx].params['logstd'].value, \
+            sys_dmg_fitted_params[dx].params['loc'].value, \
+            sys_dmg_fitted_params[dx].chisqr
 
-    rootLogger.info("\n\nFINAL System Fragilities:\n\n" + str(sys_dmg_model) + '\n')
+    rootLogger.info("\n\nFINAL System Fragilities:\n\n" +
+                    str(sys_dmg_model) + '\n')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Write fitted model params to file
-    sys_dmg_model.to_csv(os.path.join(out_path, 'system_model_fragility.csv'), sep=',')
+    sys_dmg_model.to_csv(
+        os.path.join(out_path, 'system_model_fragility.csv'), sep=',')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Plot the simulation data
 
-    plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_path, config, PLOT_DATA=True, PLOT_MODEL=False, PLOT_EVENTS=False)
-    plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_path, config, PLOT_DATA=True, PLOT_MODEL=True, PLOT_EVENTS=False)
-    plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_path, config, PLOT_DATA=False, PLOT_MODEL=True, PLOT_EVENTS=True)
+    plot_data_model(SYS_DS,
+                    hazard_input_vals,
+                    sys_dmg_model,
+                    pb_exceed,
+                    out_path,
+                    config,
+                    PLOT_DATA=True,
+                    PLOT_MODEL=False,
+                    PLOT_EVENTS=False)
+
+    plot_data_model(SYS_DS,
+                    hazard_input_vals,
+                    sys_dmg_model,
+                    pb_exceed,
+                    out_path,
+                    config,
+                    PLOT_DATA=True,
+                    PLOT_MODEL=True,
+                    PLOT_EVENTS=False)
+
+    plot_data_model(SYS_DS,
+                    hazard_input_vals,
+                    sys_dmg_model,
+                    pb_exceed,
+                    out_path,
+                    config,
+                    PLOT_DATA=False,
+                    PLOT_MODEL=True,
+                    PLOT_EVENTS=True)
 
     # RETURN a DataFrame with the fitted model parameters
     return sys_dmg_model
 
 # ==============================================================================
 
-def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_path, config, PLOT_DATA=True, PLOT_MODEL=True, PLOT_EVENTS=False):
+def plot_data_model(SYS_DS,
+                    hazard_input_vals,
+                    sys_dmg_model,
+                    pb_exceed,
+                    out_path,
+                    config,
+                    PLOT_DATA=True,
+                    PLOT_MODEL=True,
+                    PLOT_EVENTS=False):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if sum([PLOT_DATA, PLOT_MODEL, PLOT_EVENTS])==0:
@@ -175,7 +240,10 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
         outfig = os.path.join(out_path, 'fig_sys_pe_DATA.png')
         spl.add_legend_subtitle("$\\bf{DATA}$")
         for i in range(1, len(SYS_DS)):
-            ax.plot(hazard_input_vals, pb_exceed[i], label=SYS_DS[i], clip_on=False, color=COLR_DS[i], linestyle='', alpha=0.4, marker=markers[i - 1], markersize=3)
+            ax.plot(hazard_input_vals, pb_exceed[i],
+                    label=SYS_DS[i], clip_on=False, color=COLR_DS[i],
+                    linestyle='', alpha=0.4,
+                    marker=markers[i - 1], markersize=3)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # [Plot 2 of 3] The Fitted Model
@@ -193,7 +261,9 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
             scale = sys_dmg_model.loc[SYS_DS[dx], 'Median']
             dmg_mdl_arr[dx] = stats.lognorm.cdf(
                 xformodel, shape, loc=loc, scale=scale)
-            ax.plot(xformodel, dmg_mdl_arr[dx], label=SYS_DS[dx], clip_on=False, color=COLR_DS[dx], alpha=0.65, linestyle='-', linewidth=1.6)
+            ax.plot(xformodel, dmg_mdl_arr[dx],
+                    label=SYS_DS[dx], clip_on=False, color=COLR_DS[dx],
+                    alpha=0.65, linestyle='-', linewidth=1.6)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # [Plot 3 of 3] The Scenario Events
@@ -206,7 +276,9 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
             event_intensity_str = "{:.3f}".format(float(haz))
             event_color = colours.BrewerSpectral[i]
             try:
-                event_label = event_num + ". " + config.FOCAL_HAZARD_SCENARIO_NAMES[i]+" : " + event_intensity_str
+                event_label = event_num + ". " + \
+                              config.FOCAL_HAZARD_SCENARIO_NAMES[i]+" : " + \
+                              event_intensity_str
             except:
                 event_label = event_num + " : " + event_intensity_str
 
@@ -243,7 +315,9 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
                     alpha=0.8,
                     linewidth=1.0,
                     linestyle="-",
-                    path_effects=[PathEffects.withStroke(linewidth=2.5, foreground="w")]
+                    path_effects=[
+                        PathEffects.withStroke(linewidth=2.5, foreground="w")
+                        ]
                     )
                 )
 
@@ -251,7 +325,8 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
 
     figtitle = 'System Fragility: ' + config.SYSTEM_CLASS
 
-    x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
+    x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + \
+            ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
     y_lab = 'P($D_s$ > $d_s$)'
 
     y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)
@@ -276,14 +351,21 @@ def plot_data_model(SYS_DS, hazard_input_vals, sys_dmg_model, pb_exceed, out_pat
     ax.set_position([box.x0, box.y0, box.width * 0.85, box.height])
 
     # Put a legend to the right of the current axis
-    ax.legend(title='', loc='upper left', ncol=1, bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 7})
+    ax.legend(title='', loc='upper left', ncol=1,
+              bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 7})
 
     plt.savefig(outfig, format='png', dpi=300)
     plt.close(fig)
 
 # ==============================================================================
 
-def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSOVER_THRESHOLD=0.001):
+def correct_crossover(
+        SYS_DS,
+        pb_exceed,
+        x_sample,
+        sys_dmg_fitted_params,
+        CROSSOVER_THRESHOLD=0.001):
+
     rootLogger.info(Fore.GREEN + "Checking for crossover ..." + Fore.RESET)
     params_pe = lmfit.Parameters()
     for dx in range(1, len(SYS_DS)):
@@ -299,26 +381,36 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
         params_pe.add('median', value=mu_hi, min=MIN, max=MAX)
         params_pe.add('logstd', value=sd_hi)
         params_pe.add('loc', value=0.0, vary=False)
-        sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
+        sys_dmg_fitted_params[dx] = lmfit.minimize(
+            res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
         ####################################################################
         if dx >= 2:
             mu_lo = sys_dmg_fitted_params[dx-1].params['median'].value
             sd_lo = sys_dmg_fitted_params[dx-1].params['logstd'].value
             loc_lo = sys_dmg_fitted_params[dx-1].params['loc'].value
-            y_model_lo = stats.lognorm.cdf(x_sample, sd_lo, loc=loc_lo, scale=mu_lo)
+            y_model_lo = stats.lognorm.cdf(
+                x_sample, sd_lo, loc=loc_lo, scale=mu_lo)
 
             if abs(min(y_model_lo - y_model_hi)) > CROSSOVER_THRESHOLD:
-                rootLogger.info(Fore.MAGENTA + "There is overlap for curve pair : " + SYS_DS[dx - 1] + '-' + SYS_DS[dx] + Fore.RESET)
+                rootLogger.info(
+                    Fore.MAGENTA +
+                    "There is overlap for curve pair : " +
+                    SYS_DS[dx - 1] + '-' + SYS_DS[dx] +
+                    Fore.RESET)
 
                 # Test if higher curve is co-incident with, or precedes lower curve
                 if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
                     rootLogger.info(" *** Mean of higher curve too low: resampling")
                     rootLogger.info('median '+str(mu_hi)+" "+str(mu_lo))
                     params_pe.add('median', value=mu_hi)#, min=mu_lo)
-                    sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
+                    sys_dmg_fitted_params[dx] = lmfit.minimize(
+                        res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
-                    (mu_hi, sd_hi, loc_hi) = (sys_dmg_fitted_params[dx].params['median'].value, sys_dmg_fitted_params[dx].params['logstd'].value, sys_dmg_fitted_params[dx].params['loc'].value)
+                    (mu_hi, sd_hi, loc_hi) = (
+                        sys_dmg_fitted_params[dx].params['median'].value,
+                        sys_dmg_fitted_params[dx].params['logstd'].value,
+                        sys_dmg_fitted_params[dx].params['loc'].value)
 
                 # Thresholds for testing top or bottom crossover
                 delta_top = (3.0 * sd_lo - (mu_hi - mu_lo)) / 3
@@ -328,16 +420,22 @@ def correct_crossover(SYS_DS, pb_exceed, x_sample, sys_dmg_fitted_params, CROSSO
                 if (sd_hi < sd_lo) and (sd_hi <= delta_top):
                     rootLogger.info(" *** Attempting to correct upper crossover")
                     params_pe.add('logstd', value=sd_hi)#, min=delta_top)
-                    sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
+                    sys_dmg_fitted_params[dx] = lmfit.minimize(
+                        res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
                 # Test for bottom crossover: resample if crossover detected
                 elif sd_hi >= delta_btm:
                     rootLogger.info(" *** Attempting to correct lower crossover")
                     params_pe.add('logstd', value=sd_hi, max=delta_btm)
-                    sys_dmg_fitted_params[dx] = lmfit.minimize(res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
+                    sys_dmg_fitted_params[dx] = lmfit.minimize(
+                        res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
             else:
-                rootLogger.info(Fore.GREEN + "There is NO overlap for given THRESHOLD of " + str(CROSSOVER_THRESHOLD) + ", for curve pair: " + SYS_DS[dx - 1] + '-' + SYS_DS[dx] + Fore.RESET)
+                rootLogger.info(
+                    Fore.GREEN +
+                    "There is NO overlap for given THRESHOLD of " +
+                    str(CROSSOVER_THRESHOLD) + ", for curve pair: " +
+                    SYS_DS[dx - 1] + '-' + SYS_DS[dx] + Fore.RESET)
 
     return sys_dmg_fitted_params
 
