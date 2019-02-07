@@ -1645,8 +1645,10 @@ def run_scenario_loss_analysis(scenario,
     for h in FOCAL_HAZARD_SCENARIOS:
         col_tp.extend(zip([h] * len(RESTORATION_STREAMS), RESTORATION_STREAMS))
 
-    mcols = pd.MultiIndex.from_tuples(col_tp, names=['Hazard', 'Restoration Streams'])
-    time_to_full_restoration_for_lines_df = pd.DataFrame(index=infrastructure.output_nodes.keys(), columns=mcols)
+    mcols = pd.MultiIndex.from_tuples(
+        col_tp, names=['Hazard', 'Restoration Streams'])
+    time_to_full_restoration_for_lines_df = pd.DataFrame(
+        index=infrastructure.output_nodes.keys(), columns=mcols)
     time_to_full_restoration_for_lines_df.index.name = 'Output Lines'
 
     # --------------------------------------------------------------------------
@@ -1767,9 +1769,10 @@ def run_scenario_loss_analysis(scenario,
             # Check if nothing to repair, i.e. if repair list is empty:
             comps_to_repair = rst_setup_df.index.values.tolist()
             if not comps_to_repair:
-                rootLogger.info("*** Scenario: " + scenario_tag)
-                rootLogger.info("Nothing to repair. Time to repair is zero.")
-                rootLogger.info("Skipping repair visualisation for this scenario.")
+                rootLogger.warning("*** For scenario: " + scenario_tag)
+                rootLogger.warning("Nothing to repair. Time to repair is zero.")
+                rootLogger.warning(
+                    "Skipping repair visualisation for this scenario.")
                 break
 
             fig_rst_gantt_name = 'fig_SC_' + sc_haz_str + '_str' + \
@@ -1808,5 +1811,5 @@ def run_scenario_loss_analysis(scenario,
     time_to_full_restoration_for_lines_df.to_csv(
         time_to_full_restoration_for_lines_csv, sep=',')
 
-    rootLogger.info('End: SCENARIO LOSS ANALYSIS')
+    rootLogger.info('End: SCENARIO LOSS ANALYSIS\n')
     # --------------------------------------------------------------------------
