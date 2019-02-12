@@ -33,7 +33,8 @@ customfont.close()
 fontprop = FontProperties(fname=customfont.name)
 rc("font", **{"sans-serif": [str(fontprop.get_name())]})
 
-from sifra.logger import rootLogger
+import logging
+rootLogger = logging.getLogger(__name__)
 
 # from sifra.configuration import Configuration
 # from sifra.scenario import Scenario
@@ -1811,5 +1812,5 @@ def run_scenario_loss_analysis(scenario,
     time_to_full_restoration_for_lines_df.to_csv(
         time_to_full_restoration_for_lines_csv, sep=',')
 
-    rootLogger.info('End: SCENARIO LOSS ANALYSIS\n')
+    rootLogger.info('End: SCENARIO LOSS ANALYSIS')
     # --------------------------------------------------------------------------

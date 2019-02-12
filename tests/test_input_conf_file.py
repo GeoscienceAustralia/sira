@@ -1,10 +1,10 @@
 import unittest
 import os
-from sifra.logger import rootLogger
 from os.path import exists
 from sifra.configuration import Configuration
 import logging
-rootLogger.set_log_level(logging.INFO)
+rootLogger = logging.getLogger(__name__)
+rootLogger.setLevel(logging.INFO)
 
 
 class TestInputConfFile(unittest. TestCase):

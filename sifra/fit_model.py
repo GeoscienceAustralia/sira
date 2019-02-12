@@ -21,7 +21,9 @@ init()
 MIN = -10
 MAX = 10
 
-from sifra.logger import rootLogger
+import logging
+rootLogger = logging.getLogger(__name__)
+
 
 # ----------------------------------------------------------------------------
 # For plots: using the  brewer2 color maps by Cynthia Brewer

@@ -10,8 +10,9 @@ from sifra.scenario import Scenario
 from sifra.modelling.hazard import HazardsContainer
 from sifra.model_ingest import ingest_model
 from sifra.simulation import calculate_response
-from sifra.logger import rootLogger, logging
-rootLogger.set_log_level(logging.CRITICAL)
+import logging
+rootLogger = logging.getLogger(__name__)
+rootLogger.setLevel(logging.CRITICAL)
 
 
 class TestSystemSanity(unittest.TestCase):

@@ -12,7 +12,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import seaborn as sns
-from sifra.logger import rootLogger
+
+import logging
+rootLogger = logging.getLogger(__name__)
 
 
 # ****************************************************************************

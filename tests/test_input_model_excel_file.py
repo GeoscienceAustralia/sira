@@ -1,9 +1,9 @@
 import os
 import unittest as ut
 import pandas as pd
-from sifra.logger import rootLogger, logging
-rootLogger.set_log_level(logging.CRITICAL)
-
+import logging
+rootLogger = logging.getLogger(__name__)
+rootLogger.setLevel(logging.CRITICAL)
 
 class TestReadingExcelFile(ut.TestCase):
 

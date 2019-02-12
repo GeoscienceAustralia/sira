@@ -2,9 +2,9 @@ import os
 import unittest
 import json
 from collections import OrderedDict
-from sifra.logger import rootLogger, logging
-rootLogger.set_log_level(logging.CRITICAL)
-
+import logging
+rootLogger = logging.getLogger(__name__)
+rootLogger.setLevel(logging.CRITICAL)
 
 class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
 
