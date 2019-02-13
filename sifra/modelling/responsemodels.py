@@ -247,7 +247,7 @@ class PiecewiseFunction(Base):
     def __init__(self, *arg, **kwargs):
 
         self.piecewise_functions = []
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self, k, v)
 
         for function_constructor in self.piecewise_function_constructor:

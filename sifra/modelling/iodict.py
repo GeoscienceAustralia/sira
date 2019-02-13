@@ -13,12 +13,12 @@ class IODict(OrderedDict, Base):
     def __init__(self, *args, **kwargs):
         """Build the key index after initialisation"""
         super(IODict, self).__init__(*args, **kwargs)
-        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
+        self.key_index = {i: k for i, k in enumerate(self.keys())}
 
     def __setitem__(self, key, value):
         """Build the key index after adding a new item."""
         super(IODict, self).__setitem__(key, value)
-        self.key_index = {i: k for i, k in enumerate(self.iterkeys())}
+        self.key_index = {i: k for i, k in enumerate(self.keys())}
 
     def index(self, index):
         """

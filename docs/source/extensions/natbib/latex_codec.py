@@ -18,9 +18,9 @@ D. Eppstein, October 2003.
 """
 
 from __future__ import generators
+from builtins import str, chr
 import codecs
 import re
-from sets import Set
 
 def register():
     """Enable encodings of the form 'latex+x' where x describes another encoding.
@@ -61,14 +61,14 @@ def _registry(encoding):
         def decode(self,input,errors='strict'):
             """Convert latex source string to unicode."""
             if encoding:
-                input = unicode(input,encoding,errors)
+                input = str(input,encoding,errors)
 
             # Note: we may get buffer objects here.
-            # It is not permussable to call join on buffer objects
+            # It is not permissible to call join on buffer objects
             # but we can make them joinable by calling unicode.
             # This should always be safe since we are supposed
             # to be producing unicode output anyway.
-            x = map(unicode,_unlatex(input))
+            x = map(str,_unlatex(input))
             return u''.join(x), len(input)
     
     class StreamWriter(Codec,codecs.StreamWriter):
@@ -155,13 +155,13 @@ class _unlatex:
         for delta,c in self.candidates(0):
             if c in _l2u:
                 self.pos += delta
-                return unichr(_l2u[c])
+                return chr(_l2u[c])
             elif len(c) == 2 and c[1] == 'i' and (c[0],'\\i') in _l2u:
                 self.pos += delta       # correct failure to undot i
-                return unichr(_l2u[(c[0],'\\i')])
+                return chr(_l2u[(c[0],'\\i')])
             elif len(c) == 1 and c[0].startswith('\\char') and c[0][5:].isdigit():
                 self.pos += delta
-                return unichr(int(c[0][5:]))
+                return chr(int(c[0][5:]))
     
         # nothing matches, just pass through token as-is
         self.pos += 1
@@ -474,12 +474,12 @@ for _i in range(0x0020,0x007f):
         latex_equivalents[_i] = chr(_i)
 
 # Characters that should be ignored and not output in tokenization
-_ignore = Set([chr(i) for i in range(32)+[127]]) - Set('\t\n\r')
+_ignore = set([chr(i) for i in range(32)+[127]]) - set('\t\n\r')
 
 # Regexp of chars not in blacklist, for quick start of tokenize
 _stoppers = re.compile('[\x00-\x1f!$\\-?\\{~\\\\`\']')
 
-_blacklist = Set(' \n\r')
+_blacklist = set(' \n\r')
 _blacklist.add(None)    # shortcut candidate generation at end of data
 
 # Construction of inverse translation table

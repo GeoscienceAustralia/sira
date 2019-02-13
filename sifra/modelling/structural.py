@@ -139,12 +139,12 @@ class StructuralMeta(type):
 
         # create a json description of the class
         json_desc = {}
-        for k, v in dct['__params__'].iteritems():
+        for k, v in dct['__params__'].items():
             # TODO: put validators in here
             json_desc[k] = {'class': v.cls}
 
 
-        for k, v in extract_params_of_type(Info).iteritems():
+        for k, v in extract_params_of_type(Info).items():
             json_desc[k] = {
                 'class': 'Info',
                 'value': str(v)}
@@ -161,10 +161,10 @@ class StructuralMeta(type):
         cls_module = inspect.getmodule(cls).__name__
         cls.__json_desc__['class'] = '.'.join([cls_module, name])
 
-        for param in cls.__params__.itervalues():
+        for param in cls.__params__.values():
             param.cls_module = cls_module
 
-        for k, v in cls.__json_desc__.iteritems():
+        for k, v in cls.__json_desc__.items():
             if k == 'class':
                 continue
             try:
@@ -202,11 +202,11 @@ class Base(object):
 
         if self._predecessor is None:
             # then we provide default values for each element
-            for k, v in self.__params__.iteritems():
+            for k, v in self.__params__.items():
                 if k not in kwargs:
                     try:
                         kwargs[k] = v.default
                     except NoDefaultException:
                         raise ValueError('Must provide value for {}'.format(k))
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self, k, v)
