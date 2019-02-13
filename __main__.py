@@ -64,12 +64,12 @@ def main():
     parser.add_argument("-l", "--loss_analysis",
                         action='store_true', default=False)
 
-    parser.add_argument("-v", "--verbose", type=str,
-                        help="Choose option for logging level from: \n"
-                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.",
-                        dest="loglevel",
-                        default="INFO",
-                        )
+    parser.add_argument(
+        "-v", "--verbose", dest="loglevel", type=str,
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        default="INFO",
+        help="Choose option for logging level from: \n"+
+             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
 
     args = parser.parse_args()
 

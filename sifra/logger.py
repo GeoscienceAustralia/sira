@@ -9,10 +9,10 @@ def configure_logger(log_path, loglevel='DEBUG'):
         'formatters': {
             'console_formatter': {
                 'format': '%(levelname)-8s '+
-                          '[%(filename)s:%(lineno)s] %(message)s'},
+                          '[%(name)s:%(lineno)s] %(message)s'},
             'file_formatter': {
                 'format': '%(asctime)s,%(msecs)s - %(levelname)-8s '+
-                          '[%(filename)s:%(lineno)s] %(message)s'}
+                          '[%(name)s:%(lineno)s] %(message)s'}
         },
         'handlers': {
             'console': {
