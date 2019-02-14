@@ -18,7 +18,7 @@ D. Eppstein, October 2003.
 """
 
 from __future__ import generators
-from builtins import str, chr
+from future.builtins import str, chr
 import codecs
 import re
 

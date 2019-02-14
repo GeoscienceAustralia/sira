@@ -1,3 +1,7 @@
+from __future__ import division
+from builtins import range
+from past.utils import old_div
+from builtins import object
 import sys
 import numpy as np
 np.set_printoptions(threshold=sys.maxsize)
@@ -17,7 +21,8 @@ class InfrastructureFactory(object):
             return Substation(**config)
         elif config['system_class'].lower() == 'powerstation':
             return PowerStation(**config)
-        elif config['system_class'].lower() == 'PotableWaterTreatmentPlant'.lower():
+        elif config['system_class'].lower() == \
+                'PotableWaterTreatmentPlant'.lower():
             return PotableWaterTreatmentPlant(**config)
 
 
@@ -27,8 +32,14 @@ class Infrastructure(Base):
     range of hazards. It encapsulates a number of components that
     are used to estimate the response to various hazard levels.
     """
-    supply_nodes = Element('dict','The components that supply the infrastructure system', dict)
-    output_nodes = Element('dict','The components that output from the infrastructure system', dict)
+    supply_nodes = Element(
+        'dict',
+        'The components that supply the infrastructure system',
+        dict)
+    output_nodes = Element(
+        'dict',
+        'The components that output from the infrastructure system',
+        dict)
 
     # supply_total = None
     _component_graph = None
@@ -59,13 +70,17 @@ class Infrastructure(Base):
         :return: 5 lists of calculations
         """
         # Component loss caused by the damage
-        if_level_loss = np.zeros((scenario.num_samples, len(self.components)), dtype=np.float64)
+        if_level_loss = np.zeros(
+            (scenario.num_samples, len(self.components)), dtype=np.float64)
         # Infrastructure loss: sum of component loss
-        if_level_economic_loss = np.zeros(scenario.num_samples, dtype=np.float64)
+        if_level_economic_loss = np.zeros(
+            scenario.num_samples, dtype=np.float64)
         # Component functionality
-        if_level_functionality = np.zeros((scenario.num_samples, len(self.components)), dtype=np.float64)
+        if_level_functionality = np.zeros(
+            (scenario.num_samples, len(self.components)), dtype=np.float64)
         # output for the level of damage
-        if_level_output = np.zeros((scenario.num_samples, len(self.output_nodes)), dtype=np.float64)
+        if_level_output = np.zeros(
+            (scenario.num_samples, len(self.output_nodes)), dtype=np.float64)
 
         # ********************
         # NOT YET IMPLEMENTED:
@@ -85,10 +100,12 @@ class Infrastructure(Base):
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
             count = 0
-            for component_index, comp_key in enumerate(sorted(self.components.keys())):
+            for component_index, comp_key in \
+                    enumerate(sorted(self.components.keys())):
                 component = self.components[comp_key]
                 # get the damage state for the component
-                damage_state = component.get_damage_state(component_ds[component_index])
+                damage_state \
+                    = component.get_damage_state(component_ds[component_index])
                 # use the damage state attributes to calculate the loss and
                 # functionality for the component sample
                 loss = damage_state.damage_ratio * component.cost_fraction
@@ -102,9 +119,11 @@ class Infrastructure(Base):
             # of all component losses
             if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
             # estimate the output for this sample's component functionality
-            if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
+            if_level_output[sample_index, :] = \
+                self.compute_output_given_ds(comp_sample_func)
 
-        return if_level_loss, if_level_functionality, if_level_output, if_level_economic_loss
+        return if_level_loss, if_level_functionality, \
+               if_level_output, if_level_economic_loss
 
     def get_nominal_output(self):
         """
@@ -114,7 +133,7 @@ class Infrastructure(Base):
         """
         if not self.if_nominal_output:
             self.if_nominal_output = 0
-            for output_comp_id, output_comp in self.output_nodes.items():
+            for output_comp_id, output_comp in list(self.output_nodes.items()):
                 self.if_nominal_output += output_comp['output_node_capacity']
 
         return self.if_nominal_output
@@ -194,7 +213,7 @@ class Infrastructure(Base):
             indicators
         :return: A dict of component response statistics
         """
-        component_list_sorted = np.sort(self.components.keys())
+        component_list_sorted = np.sort(list(self.components.keys()))
         num_samples = np.shape(component_loss)[0]
         comp_resp_dict = dict()
         comptype_resp_dict = dict()
@@ -245,7 +264,7 @@ class Infrastructure(Base):
                 = np.std(component_loss[:, ct_pos_index])
 
             comptype_resp_dict[(ct_id, 'loss_tot')] \
-                = np.sum(component_loss[:, ct_pos_index]) / num_samples
+                = old_div(np.sum(component_loss[:, ct_pos_index]), num_samples)
 
             comptype_resp_dict[(ct_id, 'func_mean')] \
                 = np.mean(comp_sample_func[:, ct_pos_index])
@@ -313,7 +332,7 @@ class Infrastructure(Base):
 
         component_types = set()
 
-        for component in self.components.values():
+        for component in list(self.components.values()):
             if component.component_type not in uncosted_comptypes:
                 component_types.add(component.component_type)
 
@@ -325,7 +344,7 @@ class Infrastructure(Base):
         :param component_type: A string representing a component type
         :return: List of components with the matching component type.
         """
-        for component in self.components.values():
+        for component in list(self.components.values()):
             if component.component_type == component_type:
                 yield component.component_id
 
@@ -344,7 +363,7 @@ class Infrastructure(Base):
 
         component_classes = set()
 
-        for component in self.components.values():
+        for component in list(self.components.values()):
             if component.component_class not in uncosted_compclasses:
                 component_classes.add(component.component_class)
 
@@ -356,7 +375,7 @@ class Infrastructure(Base):
         :param component_class: A string representing a component class
         :return: List of components with the matching component class.
         """
-        for component in self.components.values():
+        for component in list(self.components.values()):
             if component.component_class == component_class:
                 yield component.component_id
 
@@ -366,8 +385,9 @@ class Infrastructure(Base):
         :return: List of strings detailing the system damage levels.
         """
         # TODO: THIS IS A HACK. NEED A BETTER SOLUTION!
-        one_comp_obj = self.components.values()[0]
-        self.sys_dmg_states = [one_comp_obj.damage_states[ds].damage_state_name for ds in one_comp_obj.damage_states]
+        one_comp_obj = list(self.components.values())[0]
+        self.sys_dmg_states = [one_comp_obj.damage_states[ds].damage_state_name
+                               for ds in one_comp_obj.damage_states]
         return self.sys_dmg_states
 
     def get_dmg_scale_bounds(self, scenario):
@@ -387,7 +407,7 @@ class Infrastructure(Base):
         it seems unnecessary
         :return: A generator for the list.
         """
-        for component in self.components.values():
+        for component in list(self.components.values()):
             yield component.component_class
 
 

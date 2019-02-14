@@ -1,4 +1,6 @@
 from __future__ import print_function
+from builtins import str
+from builtins import object
 import os
 import networkx as nx
 import re
@@ -30,7 +32,7 @@ class SystemTopology(object):
         self.component_attr = {}  # Dict for system comp attributes
         self.out_dir = ""
 
-        for comp_id in infrastructure.components.keys():
+        for comp_id in list(infrastructure.components.keys()):
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
 
@@ -178,7 +180,7 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Customise nodes based on node type or defined clusters
 
-        for node in self.component_attr.keys():
+        for node in list(self.component_attr.keys()):
             label_mod = self.segment_long_labels(node, delims=['_', ' '])
             self.gviz.get_node(node).attr['label'] = label_mod
 
@@ -232,10 +234,10 @@ class SystemTopology(object):
         # Clustering: whether to create subgraphs based on `node_cluster`
         #             designated for components
         node_clusters = list(set([self.component_attr[k]['node_cluster']
-                                  for k in self.component_attr.keys()]))
+                                  for k in list(self.component_attr.keys())]))
         if self.clustering:
             for cluster in node_clusters:
-                grp = [k for k in self.component_attr.keys()
+                grp = [k for k in list(self.component_attr.keys())
                        if self.component_attr[k]['node_cluster'] == cluster]
                 cluster = '_'.join(cluster.split())
                 if cluster.lower() not in ['none', '']:
@@ -253,7 +255,7 @@ class SystemTopology(object):
                     rank=rank,
                     )
 
-        for node in self.component_attr.keys():
+        for node in list(self.component_attr.keys()):
             pos_x = self.component_attr[node]['longitude']
             pos_y = self.component_attr[node]['latitude']
             if pos_x and pos_y:
@@ -379,10 +381,10 @@ class SystemTopology(object):
         # Clustering: whether to create subgraphs based on `node_cluster`
         #             designated for components
         node_clusters = list(set([self.component_attr[k]['node_cluster']
-                                  for k in self.component_attr.keys()]))
+                                  for k in list(self.component_attr.keys())]))
         if self.clustering:
             for cluster in node_clusters:
-                grp = [k for k in self.component_attr.keys()
+                grp = [k for k in list(self.component_attr.keys())
                        if self.component_attr[k]['node_cluster'] == cluster]
                 cluster = '_'.join(cluster.split())
                 if cluster.lower() not in ['none', '']:
@@ -400,7 +402,7 @@ class SystemTopology(object):
                     rank=rank,
                     )
 
-        for node in self.component_attr.keys():
+        for node in list(self.component_attr.keys()):
             pos_x = self.component_attr[node]['longitude']
             pos_y = self.component_attr[node]['latitude']
             if pos_x and pos_y:
@@ -410,7 +412,7 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Customise nodes based on node type or defined clusters
 
-        for node in self.component_attr.keys():
+        for node in list(self.component_attr.keys()):
             # label_mod = self.segment_long_labels(node, delims=['_', ' '])
             # self.gviz.get_node(node).attr['label'] = label_mod
 
@@ -614,10 +616,10 @@ class SystemTopology(object):
         # Clustering: whether to create subgraphs based on `node_cluster`
         #             designated for components
         node_clusters = list(set([self.component_attr[k]['node_cluster']
-                                  for k in self.component_attr.keys()]))
+                                  for k in list(self.component_attr.keys())]))
         if self.clustering:
             for cluster in node_clusters:
-                grp = [k for k in self.component_attr.keys()
+                grp = [k for k in list(self.component_attr.keys())
                        if self.component_attr[k]['node_cluster'] == cluster]
                 cluster = '_'.join(cluster.split())
                 if cluster.lower() not in ['none', '']:
@@ -635,7 +637,7 @@ class SystemTopology(object):
                     rank=rank,
                     )
 
-        for node in self.component_attr.keys():
+        for node in list(self.component_attr.keys()):
             pos_x = self.component_attr[node]['longitude']
             pos_y = self.component_attr[node]['latitude']
             if pos_x and pos_y:
@@ -645,7 +647,7 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Customise nodes based on node type or defined clusters
 
-        for node in self.component_attr.keys():
+        for node in list(self.component_attr.keys()):
             # label_mod = self.segment_long_labels(node, delims=['_', ' '])
             # self.gviz.get_node(node).attr['label'] = label_mod
 

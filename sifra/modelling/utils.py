@@ -3,7 +3,16 @@ from functools import reduce
 import importlib
 from copy import deepcopy
 from collections import namedtuple, Iterable
-from itertools import izip, imap
+
+try:
+    from itertools import izip as zip
+except ImportError: # will be 3.x series
+    pass
+
+try:
+    from itertools import imap as map
+except ImportError: # will be 3.x series
+    pass
 
 
 def get_all_subclasses(cls):
@@ -78,7 +87,7 @@ def _make_diff(name, elements):
     def __new__(cls, *args, **kwargs):
         if len(kwargs):
             args += tuple((kwargs.get(e, None) for e in elements[len(args):]))
-        if all(imap(lambda x: x is None, args)):
+        if all(map(lambda x: x is None, args)):
             return None
         return super(cls, cls).__new__(cls, *args)
 
@@ -112,7 +121,7 @@ def find_changes(old, new):
 
     if type(new) == list:
         all_changes = {}
-        for a, b, index in izip(old, new, range(len(new))):
+        for a, b, index in zip(old, new, range(len(new))):
             changes = find_changes(a, b)
             if changes:
                 all_changes[index] = changes

@@ -12,16 +12,16 @@ class Hazard(object):
         self.hazard_input_method = hazard_input_method
         self.round_off = 2
 
-    def get_hazard_intensity_at_location(self, longitude, latitude):
+    def get_hazard_intensity_at_location(self, x_location, y_location):
 
         for comp in self.scenario_hazard_data:
             if self.hazard_input_method == 'hazard_array':
                 return comp["hazard_intensity"]
             else:
                 if (round(float(comp["longitude"]), self.round_off)
-                    == round(float(longitude), self.round_off)) and \
+                    == round(float(x_location), self.round_off)) and \
                    (round(float(comp["latitude"]), self.round_off)
-                    == round(float(latitude), self.round_off)):
+                    == round(float(y_location), self.round_off)):
                     return comp["hazard_intensity"]
 
         raise Exception("Invalid Values for Longitude or Latitude")
