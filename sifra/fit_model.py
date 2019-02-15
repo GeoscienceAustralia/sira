@@ -144,12 +144,6 @@ def fit_prob_exceed_model(
         "\nINITIAL System Fragilities:\n\n" +
         str(sys_dmg_model) + '\n'
         )
-    # rootLogger.info(
-    #     Fore.YELLOW +
-    #     "Fitting system FRAGILITY data: Lognormal CDF" + Fore.RESET)
-    # rootLogger.info(border)
-    # rootLogger.info("\nINITIAL System Fragilities:\n\n" +
-    #                 str(sys_dmg_model)+ '\n')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for crossover and correct as needed
@@ -434,21 +428,19 @@ def correct_crossover(
                         sys_dmg_fitted_params[dx].params['loc'].value)
 
                 # Thresholds for testing top or bottom crossover
-                # delta_top = (3.0 * sd_lo - (mu_hi - mu_lo)) / 3.0
-                # delta_btm = (3.0 * sd_lo + (mu_hi - mu_lo)) / 3.0
                 delta_top = sd_lo - (mu_hi - mu_lo)/3.0
                 delta_btm = sd_lo + (mu_hi - mu_lo)/3.0
 
                 # Test for top crossover: resample if crossover detected
                 if (sd_hi < sd_lo) and (sd_hi <= delta_top):
-                    rootLogger.info(" *** Attempting to correct upper crossover")
+                    rootLogger.info("*** Attempting to correct upper crossover")
                     params_pe.add('logstd', value=sd_hi)#, min=delta_top)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(
                         res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
                 # Test for bottom crossover: resample if crossover detected
                 elif sd_hi >= delta_btm:
-                    rootLogger.info(" *** Attempting to correct lower crossover")
+                    rootLogger.info("*** Attempting to correct lower crossover")
                     params_pe.add('logstd', value=sd_hi, max=delta_btm)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(
                         res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
