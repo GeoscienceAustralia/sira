@@ -10,16 +10,15 @@ class Scenario:
     def __init__(self, configuration):
 
         self.infrastructure_level = configuration.INFRASTRUCTURE_LEVEL
-        self.input_dir_name = configuration.INPUT_DIR_NAME
+        # self.input_dir_name = configuration.INPUT_DIR_NAME
         self.raw_output_dir = configuration.RAW_OUTPUT_DIR
         self.output_path = configuration.OUTPUT_PATH
 
         # need to convert excel doc into json and update the ingest class
         self.algorithm_factory = None
 
-        self.fit_pe_data = configuration.FIT_PE_DATA
-        self.fit_restoration_data = configuration.FIT_RESTORATION_DATA
-        self.save_vars_npy = configuration.SAVE_VARS_NPY
+        self.fit_restoration_data = configuration.SWITCH_FIT_RESTORATION_DATA
+        self.save_vars_npy = configuration.SWITCH_SAVE_VARS_NPY
         self.run_context = configuration.RUN_CONTEXT
         self.run_parallel_proc = configuration.MULTIPROCESS
 

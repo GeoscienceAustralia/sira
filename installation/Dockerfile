@@ -1,43 +1,35 @@
-FROM ubuntu
-RUN apt-get update
-RUN apt-get install -y build-essential
-RUN apt-get install -y pkg-config
-RUN apt-get install -y graphviz libgraphviz-dev
-RUN apt-get install -y xml2 libxml2-dev
-RUN apt-get install -y python-pip python-dev
-RUN apt-get install -y python-tk
-RUN pip install --upgrade pip
-RUN pip install numpy
-RUN pip install pandas
-RUN pip install netcdf4
-RUN pip install networkx
-RUN pip install seaborn
-RUN pip install scipy
-RUN pip install matplotlib
-RUN pip install lmfit
-RUN pip install brewer2mpl
-RUN pip install colorama
-RUN pip install parmap
-RUN pip install python-igraph==0.7.1.post6
-RUN pip install pygraphviz
-RUN pip install xlrd
-RUN pip install jgraph
-RUN pip install sqlalchemy
-RUN pip install Sphinx
-RUN pip install sphinx-rtd-theme
-RUN pip install guzzle-sphinx-theme
-RUN pip install sphinxcontrib-actdiag
-RUN pip install sphinxcontrib-bibtex
-RUN pip install sphinxcontrib-blockdiag
-RUN pip install sphinxcontrib-exceltable
-RUN pip install sphinxcontrib-nwdiag
-RUN pip install sphinxcontrib-seqdiag
-RUN pip install sphinxcontrib-websupport
-RUN pip install Pygments
-RUN pip install pybtex
-RUN pip install scikit-learn
-RUN pip install six
-VOLUME "/sifra"
-WORKDIR "/sifra/sifra"
-ENV PYTHONPATH /sifra:$PYTHONPATH
+FROM ubuntu:16.04
 
+# setup system variables
+ENV TZ Australia/Sydeny
+ENV DEBIAN_FRONTEND noninteractive
+ENV AWS_DEFAULT_REGION ap-southeast-2
+ENV AWS_DEFAULT_OUTPUT json
+ENV ROOT_DIR /home/ubuntu/
+
+ENV LANGUAGE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+ENV locale-gen en_US.UTF-8
+ENV dpkg-reconfigure locales
+
+# install system dependancies 
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends apt-utils
+ADD packagelist_linux.txt .
+RUN apt-get install -y  $(awk '{print $1}' packagelist_linux.txt)
+
+# install anaconda2 
+RUN wget https://repo.continuum.io/archive/Anaconda2-2018.12-Linux-x86_64.sh 
+RUN bash Anaconda2*.sh -b -p /root/anaconda2 
+RUN rm Anaconda2*.sh 
+RUN /root/anaconda2/bin/conda create -n pythonSifra python=2.7.11  -y
+
+ENV PATH="/root/anaconda2/envs/pythonSifra/bin:$PATH"
+
+# install packages not available in /root/anaconda2/bin/conda
+ADD requirements.txt .
+RUN pip install -r requirements.txt
+
+ARG CACHE_DATE
+RUN git clone --single-branch --branch  ft-update-cli https://github.com/GeoscienceAustralia/sifra.git

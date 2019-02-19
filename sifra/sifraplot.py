@@ -5,6 +5,7 @@ palettes, and functions for customising and improving plot aesthetics
 '''
 
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import matplotlib as mpl
 import brewer2mpl
 import re

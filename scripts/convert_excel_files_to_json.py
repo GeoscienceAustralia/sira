@@ -384,20 +384,23 @@ def read_excel_to_json(excel_file_path):
 
     return sys_model_json
 
+import xlrd
 
 def main():
 
-    # get list off all the excel files
-    model_file_paths = []
-    for root, dir_names, file_names in os.walk(os.path.dirname(os.getcwd())):
-        for file_name in file_names:
-            if file_name.endswith('.xlsx'):
-                if 'models' in root:
-                    excel_file_path = os.path.join(root, file_name)
-                    model_file_paths.append(excel_file_path)
+    # # get list off all the excel files
+    # model_file_paths = []
+    # for root, dir_names, file_names in os.walk(os.path.dirname(os.getcwd())):
+    #     for file_name in file_names:
+    #         if file_name.endswith('.xlsx'):
+    #             if 'models' in root:
+    #                 excel_file_path = os.path.join(root, file_name)
+    #                 model_file_paths.append(excel_file_path)
+    #
+    # for excel_file_path in model_file_paths:
 
-    for excel_file_path in model_file_paths:
-
+    excel_file_path="testing/pwtp_wa_anon_model.xlsx"
+    try:
         parent_folder_name = os.path.dirname(excel_file_path)
         file_name = os.path.splitext(os.path.basename(excel_file_path))[0]
 
@@ -409,6 +412,9 @@ def main():
 
         json_file_path = os.path.join(parent_folder_name, file_name + '.json')
         write_json_to_file(parsed, json_file_path)
+    except xlrd.biffh.XLRDError as err:
+        print("Invalid format:", excel_file_path)
+        print(err)
 
 
 if __name__ == "__main__":

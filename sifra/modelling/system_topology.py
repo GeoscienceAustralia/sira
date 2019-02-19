@@ -6,6 +6,7 @@ import re
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 
 # from networkx.readwrite.json_graph import node_link_data
 
@@ -71,6 +72,7 @@ class SystemTopology(object):
             "potablewatertreatmentplant", "pwtp",
             "wastewatertreatmentplant", "wwtp",
             "watertreatmentplant", "wtp"]:
+
             self.draw_wtp_topology(viewcontext)
         else:
             self.draw_generic_sys_topology(viewcontext)
@@ -800,7 +802,6 @@ class SystemTopology(object):
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw the graph
-
         if viewcontext == "as-built":
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
                            format='png', prog=self.drawing_prog,
@@ -812,10 +813,10 @@ class SystemTopology(object):
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
                            args='-Gdpi=300 -Gsize=8.27,11.69\!')
-
         self.gviz.draw(os.path.join(output_path, fname + '.svg'),
                        format='svg',
                        prog=self.drawing_prog)
+
 
     # ==========================================================================
 

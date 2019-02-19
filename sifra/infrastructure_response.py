@@ -5,29 +5,14 @@ import zipfile
 
 import numpy as np
 import pandas as pd
-import parmap
 
 import matplotlib
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import seaborn as sns
 from sifra.logger import rootLogger
-from sifra.modelling.hazard import HazardsContainer
-from sifra.modelling import infrastructure
-
-# def run_para_scen(hazard_level, infrastructure, scenario):
-#     """
-#     The parmap.map function requires a module level function as a parameter.
-#     So this function satisfies that requirement by calling the infrastructure's
-#     exponse_to method within this one.
-#     :param hazard_level: The hazard level that the infrastructure will be exposed to
-#     :param infrastructure: The infrastructure model that is being simulated
-#     :param scenario: The Parameters for the simulation
-#     :return: List of results of the simulation
-#     """
-#
-#     return infrastructure.expose_to(hazard_level, scenario)
 
 
 # ****************************************************************************
@@ -108,8 +93,7 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     ax.set_yticks(np.linspace(0.0, 1.0, 11, endpoint=True))
     ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
 
-    ax.set_title('Loss Ratio', loc='center', y=1.04,
-                 fontsize=12, weight='bold')
+    ax.set_title('Loss Ratio', loc='center', y=1.04,fontsize=12, weight='bold')
 
     figfile = os.path.join(scenario.output_path, 'fig_lossratio_boxplot.png')
     plt.margins(0.05)
@@ -127,8 +111,8 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     haz_vs_ds_index_of_comp = response_list[0]
     with open(idshaz, 'w') as handle:
         for response_key in sorted(haz_vs_ds_index_of_comp.keys()):
-            pickle.dump({response_key: haz_vs_ds_index_of_comp[response_key]},
-                        handle)
+            pickle.dump({response_key: haz_vs_ds_index_of_comp[response_key]},handle)
+
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zf = zipfile.ZipFile(idshaz_zip, mode='w', allowZip64=True)
     zf.write(idshaz, compress_type=zipfile.ZIP_DEFLATED)
@@ -163,25 +147,19 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # Hazard response for component instances, i.e. components as-installed
     # ------------------------------------------------------------------------
     component_resp_dict = response_list[2]
-    crd_pkl = os.path.join(scenario.raw_output_dir,
-                           'component_resp_dict.pickle')
+    crd_pkl = os.path.join(scenario.raw_output_dir,'component_resp_dict.pickle')
     with open(crd_pkl, 'w') as handle:
         for response_key in sorted(component_resp_dict.keys()):
-            pickle.dump({response_key: component_resp_dict[response_key]},
-                        handle)
+            pickle.dump({response_key: component_resp_dict[response_key]},handle)
 
     # ------------------------------------------------------------------------
     # Hazard response for component types
     # ------------------------------------------------------------------------
     comptype_resp_dict = response_list[3]
-    outfile_comptype_resp = os.path.join(
-        scenario.output_path, 'comptype_response.csv')
+    outfile_comptype_resp = os.path.join(scenario.output_path, 'comptype_response.csv')
     comptype_resp_df = pd.DataFrame(comptype_resp_dict)
     comptype_resp_df.index.names = ['component_type', 'response']
-    comptype_resp_df.to_csv(
-        outfile_comptype_resp, sep=',',
-        index_label=['component_type', 'response']
-    )
+    comptype_resp_df.to_csv(outfile_comptype_resp, sep=',',index_label=['component_type', 'response'])
 
     # ------------------------------------------------------------------------
     # Calculating system fragility:
@@ -225,15 +203,8 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     #
     ###########################################################################
 
-    np.save(
-        os.path.join(scenario.raw_output_dir, 'sys_frag.npy'),
-        sys_frag
-        )
-
-    np.save(
-        os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'),
-        pe_sys_econloss
-        )
+    np.save(os.path.join(scenario.raw_output_dir, 'sys_frag.npy'), sys_frag)
+    np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'), pe_sys_econloss)
 # ------------------------------------------------------------------------------
 
 
@@ -328,8 +299,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                 pe_sys_cpfailrate[d, p] = np.median(ds_ss_ix)
 
         # --- Save prob exceedance data as npy ---
-        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'),
-                pe_sys_cpfailrate)
+        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'), pe_sys_cpfailrate)
 
     # ------------------------------------------------------------------------
     # Validate damage ratio of the system

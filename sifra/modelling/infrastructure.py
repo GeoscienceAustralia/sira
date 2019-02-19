@@ -1,5 +1,8 @@
+import sys
 import numpy as np
-np.set_printoptions(threshold='nan')
+np.set_printoptions(threshold=sys.maxsize)
+# np.set_printoptions(threshold="nan")
+
 
 
 from sifra.modelling.structural import Element
@@ -10,14 +13,11 @@ from sifra.modelling.iodict import IODict
 class InfrastructureFactory(object):
     @staticmethod
     def create_model(config):
-        if config['system_class'].lower() \
-                == 'substation':
+        if config['system_class'].lower() == 'substation':
             return Substation(**config)
-        elif config['system_class'].lower() \
-                == 'powerstation':
+        elif config['system_class'].lower() == 'powerstation':
             return PowerStation(**config)
-        elif config['system_class'].lower() \
-                == 'PotableWaterTreatmentPlant'.lower():
+        elif config['system_class'].lower() == 'PotableWaterTreatmentPlant'.lower():
             return PotableWaterTreatmentPlant(**config)
 
 
@@ -27,12 +27,8 @@ class Infrastructure(Base):
     range of hazards. It encapsulates a number of components that
     are used to estimate the response to various hazard levels.
     """
-    supply_nodes = Element('dict',
-                           'The components that supply '
-                           'the infrastructure system', dict)
-    output_nodes = Element('dict',
-                           'The components that output from '
-                           'the infrastructure system', dict)
+    supply_nodes = Element('dict','The components that supply the infrastructure system', dict)
+    output_nodes = Element('dict','The components that output from the infrastructure system', dict)
 
     # supply_total = None
     _component_graph = None
@@ -63,19 +59,13 @@ class Infrastructure(Base):
         :return: 5 lists of calculations
         """
         # Component loss caused by the damage
-        if_level_loss = np.zeros((scenario.num_samples, len(self.components)),
-                                 dtype=np.float64)
+        if_level_loss = np.zeros((scenario.num_samples, len(self.components)), dtype=np.float64)
         # Infrastructure loss: sum of component loss
-        if_level_economic_loss = np.zeros(scenario.num_samples,
-                                          dtype=np.float64)
+        if_level_economic_loss = np.zeros(scenario.num_samples, dtype=np.float64)
         # Component functionality
-        if_level_functionality = \
-            np.zeros((scenario.num_samples, len(self.components)),
-                     dtype=np.float64)
+        if_level_functionality = np.zeros((scenario.num_samples, len(self.components)), dtype=np.float64)
         # output for the level of damage
-        if_level_output = \
-            np.zeros((scenario.num_samples, len(self.output_nodes)),
-                     dtype=np.float64)
+        if_level_output = np.zeros((scenario.num_samples, len(self.output_nodes)), dtype=np.float64)
 
         # ********************
         # NOT YET IMPLEMENTED:
@@ -95,12 +85,10 @@ class Infrastructure(Base):
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
             count = 0
-            for component_index, comp_key in \
-                    enumerate(sorted(self.components.keys())):
+            for component_index, comp_key in enumerate(sorted(self.components.keys())):
                 component = self.components[comp_key]
                 # get the damage state for the component
-                damage_state = \
-                    component.get_damage_state(component_ds[component_index])
+                damage_state = component.get_damage_state(component_ds[component_index])
                 # use the damage state attributes to calculate the loss and
                 # functionality for the component sample
                 loss = damage_state.damage_ratio * component.cost_fraction
@@ -114,13 +102,9 @@ class Infrastructure(Base):
             # of all component losses
             if_level_economic_loss[sample_index] = np.sum(comp_sample_loss)
             # estimate the output for this sample's component functionality
-            if_level_output[sample_index, :] \
-                = self.compute_output_given_ds(comp_sample_func)
+            if_level_output[sample_index, :] = self.compute_output_given_ds(comp_sample_func)
 
-        return if_level_loss, \
-               if_level_functionality, \
-               if_level_output, \
-               if_level_economic_loss
+        return if_level_loss, if_level_functionality, if_level_output, if_level_economic_loss
 
     def get_nominal_output(self):
         """
@@ -381,11 +365,9 @@ class Infrastructure(Base):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        # THIS IS A HACK. NEED A BETTER SOLUTION!
+        # TODO: THIS IS A HACK. NEED A BETTER SOLUTION!
         one_comp_obj = self.components.values()[0]
-        self.sys_dmg_states = [one_comp_obj.damage_states[ds].damage_state_name
-                               for ds in one_comp_obj.damage_states]
+        self.sys_dmg_states = [one_comp_obj.damage_states[ds].damage_state_name for ds in one_comp_obj.damage_states]
         return self.sys_dmg_states
 
     def get_dmg_scale_bounds(self, scenario):

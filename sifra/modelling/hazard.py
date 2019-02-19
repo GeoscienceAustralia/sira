@@ -53,8 +53,8 @@ class HazardsContainer(object):
         # string variables
         self.listOfhazards = []
         self.hazard_type = configuration.HAZARD_TYPE
-        self.intensity_measure_param = configuration.INTENSITY_MEASURE_PARAM
-        self.intensity_measure_unit = configuration.INTENSITY_MEASURE_UNIT
+        self.intensity_measure_param = configuration.HAZARD_INTENSITY_MEASURE_PARAM
+        self.intensity_measure_unit = configuration.HAZARD_INTENSITY_MEASURE_UNIT
         self.focal_hazard_scenarios = configuration.FOCAL_HAZARD_SCENARIOS
 
         # get hazard data from scenario file

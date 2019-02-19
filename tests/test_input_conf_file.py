@@ -133,11 +133,11 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_FIT_RESTORATION_DATA(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.FIT_RESTORATION_DATA, bool))
+            self.assertTrue(isinstance(conf.SWITCH_FIT_RESTORATION_DATA, bool))
 
-    def test_datatype_of_SAVE_VARS_NPY(self):
+    def test_datatype_of_SWITCH_SAVE_VARS_NPY(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SAVE_VARS_NPY, bool))
+            self.assertTrue(isinstance(conf.SWITCH_SAVE_VARS_NPY, bool))
 
     def test_datatype_of_MULTIPROCESS(self):
         for conf in self.confs:
