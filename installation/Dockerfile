@@ -7,17 +7,20 @@ ENV AWS_DEFAULT_REGION ap-southeast-2
 ENV AWS_DEFAULT_OUTPUT json
 ENV ROOT_DIR /home/ubuntu/
 
-ENV LANGUAGE en_US.UTF-8
+# Set the locale
+RUN apt-get clean && apt-get -y update && apt-get install -y locales
+RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.en
 ENV LC_ALL en_US.UTF-8
-ENV locale-gen en_US.UTF-8
 ENV dpkg-reconfigure locales
 
-# install system dependancies 
-RUN apt-get update
+# install system dependancies
 RUN apt-get install -y --no-install-recommends apt-utils
 ADD packagelist_linux.txt .
 RUN apt-get install -y  $(awk '{print $1}' packagelist_linux.txt)
+RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+RUN apt-get install -y ttf-mscorefonts-installer
 
 # install anaconda2 
 #RUN wget https://repo.continuum.io/archive/Anaconda2-2018.12-Linux-x86_64.sh
@@ -33,4 +36,4 @@ ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 ARG CACHE_DATE
-RUN git clone --single-branch --branch  py3-sifra-migration https://github.com/GeoscienceAustralia/sifra.git
+RUN git clone --single-branch --branch ft-python-2to3 https://github.com/GeoscienceAustralia/sifra.git

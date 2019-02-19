@@ -8,7 +8,7 @@ usage           : python sifra [OPTIONS]
                   -l [LEVEL]        Choose logging level DEBUG, INFO,
                                     WARNING, ERROR, CRITICAL
 
-python_version  : 2.7
+python_version  : 3.7
 """
 
 from __future__ import print_function
