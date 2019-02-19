@@ -1,7 +1,18 @@
+from future.utils import string_types
+from functools import reduce
 import importlib
 from copy import deepcopy
 from collections import namedtuple, Iterable
-from itertools import izip, imap
+
+try:
+    from itertools import izip as zip
+except ImportError: # will be 3.x series
+    pass
+
+try:
+    from itertools import imap as map
+except ImportError: # will be 3.x series
+    pass
 
 
 def get_all_subclasses(cls):
@@ -33,8 +44,8 @@ def jsonify(obj):
         # two arg version
         return obj.__jsonify__()
     if isinstance(obj, dict):
-        return {jsonify(k): jsonify(v) for k, v in obj.iteritems()}
-    if isinstance(obj, Iterable) and not isinstance(obj, basestring):
+        return {jsonify(k): jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, Iterable) and not isinstance(obj, string_types):
         return [jsonify(v) for v in obj]
 
     return obj
@@ -59,7 +70,7 @@ def pythonify(obj):
             else:
                 res = class_getter(cls)(**pythonify(obj))
         else:
-            res = {str(k): pythonify(v) for k, v in obj.iteritems()}
+            res = {str(k): pythonify(v) for k, v in obj.items()}
         if attrs is not None:
             res._attributes = attrs
         return res
@@ -76,7 +87,7 @@ def _make_diff(name, elements):
     def __new__(cls, *args, **kwargs):
         if len(kwargs):
             args += tuple((kwargs.get(e, None) for e in elements[len(args):]))
-        if all(imap(lambda x: x is None, args)):
+        if all(map(lambda x: x is None, args)):
             return None
         return super(cls, cls).__new__(cls, *args)
 
@@ -110,7 +121,7 @@ def find_changes(old, new):
 
     if type(new) == list:
         all_changes = {}
-        for a, b, index in izip(old, new, range(len(new))):
+        for a, b, index in zip(old, new, range(len(new))):
             changes = find_changes(a, b)
             if changes:
                 all_changes[index] = changes
@@ -127,8 +138,8 @@ def find_changes(old, new):
     if type(new) != dict:
         return Diff(new or None)
 
-    new_keys = set(new.iterkeys())
-    old_keys = set(old.iterkeys())
+    new_keys = set(new.keys())
+    old_keys = set(old.keys())
     dropped_keys = old_keys - new_keys
 
     added = {k: new[k] for k in new_keys - old_keys}
@@ -160,7 +171,7 @@ def reconstitute(old, changes):
             result.update(changes.added)
 
         if changes.changed is not None:
-            for k, v in changes.changed.iteritems():
+            for k, v in changes.changed.items():
                 result[k] = reconstitute(old[k], v)
 
     else:
@@ -175,7 +186,7 @@ def reconstitute(old, changes):
             result += changes.added
 
         if changes.changed is not None:
-            for k, v in changes.changed.iteritems():
+            for k, v in changes.changed.items():
                 result[int(k)] = reconstitute(old[int(k)], v)
 
     return result

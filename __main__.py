@@ -15,6 +15,7 @@ from __future__ import print_function
 import sys
 import numpy as np
 np.seterr(divide='print', invalid='raise')
+import time
 
 import pandas as pd
 
@@ -22,12 +23,12 @@ import copy
 from colorama import init
 init()
 
-# import seaborn as sns
-# sns.set(style='whitegrid', palette='coolwarm')
-
 import os
 import argparse
-from sifra.logger import rootLogger
+
+from sifra.logger import configure_logger
+import logging
+import logging.config
 
 from sifra.configuration import Configuration
 from sifra.scenario import Scenario
@@ -63,9 +64,12 @@ def main():
     parser.add_argument("-l", "--loss_analysis",
                         action='store_true', default=False)
 
-    parser.add_argument("-v", "--verbose", type=str,
-                        help="Choose option for logging level from: \n"
-                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+    parser.add_argument(
+        "-v", "--verbose", dest="loglevel", type=str,
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        default="INFO",
+        help="Choose option for logging level from: \n"+
+             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
 
     args = parser.parse_args()
 
@@ -110,9 +114,15 @@ def main():
             "Unable to create output folder " + str(args.output) + " ...")
         sys.exit(2)
 
-    rootLogger.set_log_level(args.verbose)
-    rootLogger.set_log_file_path(os.path.join(args.output, "log.txt"))
-    rootLogger.info('Simulation initiated...\n')
+    # ---------------------------------------------------------------------
+    # Set up logging
+    # ---------------------------------------------------------------------
+
+    timestamp = time.strftime('%Y.%m.%d %H:%M:%S')
+    log_path = os.path.join(args.output, "log.txt")
+    configure_logger(log_path, args.loglevel)
+    rootLogger = logging.getLogger(__name__)
+    rootLogger.info('Simulation initiated at: {}\n'.format(timestamp))
 
     # ---------------------------------------------------------------------
     # Configure simulation model.
@@ -225,7 +235,9 @@ def main():
             if args.cp is None:
                 rootLogger.error("Input files not found: " + str(args.cp))
 
-    rootLogger.info('Run Complete.\n')
+    rootLogger.info('RUN COMPLETE.\n')
+    # print("\n\nLoglevel was: {}.\n".format(str(args.loglevel)))
+    # print(args.loglevel)
 
 
 if __name__ == "__main__":

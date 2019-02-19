@@ -1,9 +1,11 @@
 import time
 from datetime import timedelta
 import numpy as np
-from sifra.logger import rootLogger
 import parmap
 import zipfile
+
+import logging
+rootLogger = logging.getLogger(__name__)
 
 
 def calculate_response(hazards, scenario, infrastructure):
@@ -104,7 +106,7 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
     code_start_time = time.time()
 
     # calculate the damage state probabilities
-    rootLogger.debug("Initiating damage state calculations for {} ...".format(
+    rootLogger.info("Initiating damage state calculations for {} ...".format(
         hazard.hazard_scenario_name
         ))
     expected_damage_state_of_components_for_n_simulations = \
@@ -132,7 +134,8 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
             expected_damage_state_of_components_for_n_simulations)
 
     # determine average output for the output components
-    rootLogger.debug("Calculating system output ...")
+    rootLogger.debug("Calculating system output for hazard {}".format(
+        hazard.hazard_scenario_name))
     infrastructure_output = {}
     for output_index, (output_comp_id, output_comp) in enumerate(
             infrastructure.output_nodes.items()):
@@ -141,7 +144,7 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
 
     # log the elapsed time for this hazard level
     elapsed = timedelta(seconds=(time.time() - code_start_time))
-    rootLogger.info("Hazard {} run time: {}".format(
+    rootLogger.info("Run time for hazard scenario {} : {}\n".format(
         hazard.hazard_scenario_name, str(elapsed)))
 
     # We combine the result data into a dictionary for ease of use
@@ -189,7 +192,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
     # create numpy array of uniformly distributed random numbers between (0,1)
     rnd = random_number.uniform(
         size=(scenario.num_samples, number_of_components))
-    rootLogger.debug("Hazard Intensity {}".format(hazard.hazard_scenario_name))
+    rootLogger.info("Hazard Intensity {}".format(hazard.hazard_scenario_name))
 
     # iterate through the components
     rootLogger.info("Calculating component damage state probability.")
@@ -205,7 +208,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         component_pe_ds = np.zeros(len(component.damage_states))
 
         # iterate through each damage state for the component
-        rootLogger.debug("Calculating Component Response...")
+        rootLogger.info("Calculating Component Response...")
         for damage_state_index in component.damage_states.keys():
             # find the hazard intensity component is exposed too
             longitude, latitude = component.get_location()
@@ -220,7 +223,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         # always be zero which will be always be greater than random variable
         component_pe_ds = component_pe_ds[1:]
 
-        rootLogger.info("Component : {} : pe_ds {}". \
+        rootLogger.info("PE_DS for Component : {}  {}". \
                         format(component.component_id, component_pe_ds))
 
         # This little piece of numpy magic calculates the damage level by

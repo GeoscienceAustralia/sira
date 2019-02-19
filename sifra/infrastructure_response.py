@@ -1,4 +1,8 @@
 from __future__ import print_function
+from __future__ import division
+from builtins import str
+from builtins import range
+
 import os
 import pickle
 import zipfile
@@ -12,7 +16,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import seaborn as sns
-from sifra.logger import rootLogger
+
+import logging
+rootLogger = logging.getLogger(__name__)
 
 
 # ****************************************************************************
@@ -39,7 +45,7 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
 
     x1 = np.ndarray.flatten(np.array(hazvals_ext))
 
-    smpl = range(1, scenario.num_samples + 1, 1)
+    smpl = list(range(1, scenario.num_samples + 1, 1))
     x2 = np.array(smpl * hazards.num_hazard_pts)
 
     arrays = [x1, x2]
@@ -109,9 +115,12 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # ------------------------------------------------------------------------
     idshaz = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.pickle')
     haz_vs_ds_index_of_comp = response_list[0]
-    with open(idshaz, 'w') as handle:
+    with open(idshaz, 'wb') as handle:
         for response_key in sorted(haz_vs_ds_index_of_comp.keys()):
-            pickle.dump({response_key: haz_vs_ds_index_of_comp[response_key]},handle)
+            pickle.dump(
+                {response_key: haz_vs_ds_index_of_comp[response_key]},
+                handle
+                )
 
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zf = zipfile.ZipFile(idshaz_zip, mode='w', allowZip64=True)
@@ -128,10 +137,12 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     sys_output_dict = response_list[1]
     sod_pkl = os.path.join(scenario.raw_output_dir,
                            'sys_output_dict.pickle')
-    with open(sod_pkl, 'w') as handle:
+    with open(sod_pkl, 'wb') as handle:
         for response_key in sorted(sys_output_dict.keys()):
-            pickle.dump({response_key: sys_output_dict[response_key]},
-                        handle)
+            pickle.dump(
+                {response_key: sys_output_dict[response_key]},
+                handle
+                )
 
     sys_output_df = pd.DataFrame(sys_output_dict)
     sys_output_df = sys_output_df.transpose()
@@ -148,18 +159,24 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # ------------------------------------------------------------------------
     component_resp_dict = response_list[2]
     crd_pkl = os.path.join(scenario.raw_output_dir,'component_resp_dict.pickle')
-    with open(crd_pkl, 'w') as handle:
+    with open(crd_pkl, 'wb') as handle:
         for response_key in sorted(component_resp_dict.keys()):
-            pickle.dump({response_key: component_resp_dict[response_key]},handle)
+            pickle.dump(
+                {response_key: component_resp_dict[response_key]},
+                handle
+                )
 
     # ------------------------------------------------------------------------
     # Hazard response for component types
     # ------------------------------------------------------------------------
     comptype_resp_dict = response_list[3]
-    outfile_comptype_resp = os.path.join(scenario.output_path, 'comptype_response.csv')
+    outfile_comptype_resp = os.path.join(
+        scenario.output_path, 'comptype_response.csv')
     comptype_resp_df = pd.DataFrame(comptype_resp_dict)
     comptype_resp_df.index.names = ['component_type', 'response']
-    comptype_resp_df.to_csv(outfile_comptype_resp, sep=',',index_label=['component_type', 'response'])
+    comptype_resp_df.to_csv(
+        outfile_comptype_resp, sep=',',
+        index_label=['component_type', 'response'])
 
     # ------------------------------------------------------------------------
     # Calculating system fragility:
@@ -204,7 +221,8 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     ###########################################################################
 
     np.save(os.path.join(scenario.raw_output_dir, 'sys_frag.npy'), sys_frag)
-    np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'), pe_sys_econloss)
+    np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_econloss.npy'),
+            pe_sys_econloss)
 # ------------------------------------------------------------------------------
 
 
@@ -227,7 +245,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                                           get_component_class_list()))
 
     cp_class_map = {k: [] for k in cp_classes_in_system}
-    for comp_id, component in infrastructure.components.items():
+    for comp_id, component in list(infrastructure.components.items()):
         cp_class_map[component.component_class].append(component)
 
     if infrastructure.system_class == 'Substation':
@@ -269,7 +287,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                     # TODO: CHECK COMPONENTS ARE SAVED IN CORRECT ORDER
                     # **************************************************
                     for comptype in cp_class_map[compclass]:
-                        comp_ndx = infrastructure.components.keys().\
+                        comp_ndx = list(infrastructure.components.keys()).\
                             index(comptype.component_id)
                         # -----------------------------------------------------
                         if response_list[0][scenario_name][i, comp_ndx] >= 2:
@@ -299,7 +317,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                 pe_sys_cpfailrate[d, p] = np.median(ds_ss_ix)
 
         # --- Save prob exceedance data as npy ---
-        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'), pe_sys_cpfailrate)
+        np.save(os.path.join(scenario.raw_output_dir, 'pe_sys_cpfailrate.npy'),
+                pe_sys_cpfailrate)
 
     # ------------------------------------------------------------------------
     # Validate damage ratio of the system
@@ -314,9 +333,9 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
             component_pe_ds = np.zeros(len(component.damage_states))
             for damage_state_index in component.damage_states.keys():
-                long, lat = component.get_location()
+                x_loc, y_loc = component.get_location()
                 hazard_intensity \
-                    = hazard.get_hazard_intensity_at_location(long, lat)
+                    = hazard.get_hazard_intensity_at_location(x_loc, y_loc)
                 component_pe_ds[damage_state_index] \
                     = component.damage_states[damage_state_index].\
                       response_function(hazard_intensity)
@@ -389,27 +408,28 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
     if scenario.save_vars_npy:
         np.save(
-            os.path.join(scenario.raw_output_dir, 'economic_loss_array.npy'),
+            os.path.join(scenario.raw_output_dir,
+                         'economic_loss_array.npy'),
             economic_loss_array
         )
 
         np.save(
-            os.path.join(scenario.raw_output_dir, 'calculated_output_array.npy'),
+            os.path.join(scenario.raw_output_dir,
+                         'calculated_output_array.npy'),
             calculated_output_array
         )
 
         np.save(
-            os.path.join(scenario.raw_output_dir, 'exp_damage_ratio.npy'),
+            os.path.join(scenario.raw_output_dir,
+                         'exp_damage_ratio.npy'),
             exp_damage_ratio
         )
 
-    # ------------------------------------------------------------------------
-
-        rootLogger.info("LOSS CALCULATIONS COMPLETE.\n")
+    # --------------------------------------------------------------------------
         rootLogger.info("Outputs saved in: " + scenario.output_path)
 
     # ... END POST-PROCESSING
-    # ****************************************************************************
+    # **************************************************************************
 
 def pe2pb(pe):
     """

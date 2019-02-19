@@ -1,3 +1,6 @@
+from builtins import str
+from builtins import object
+from future.utils import with_metaclass
 import inspect
 from sifra.modelling.utils import class_getter
 
@@ -122,7 +125,7 @@ class StructuralMeta(type):
         def extract_params_of_type(clazz):
             # extract the parameters
             params = {}
-            for k in dct.keys():
+            for k in list(dct.keys()):
                 if isinstance(dct[k], clazz):
                     params[k] = dct.pop(k)
 
@@ -139,12 +142,12 @@ class StructuralMeta(type):
 
         # create a json description of the class
         json_desc = {}
-        for k, v in dct['__params__'].iteritems():
+        for k, v in list(dct['__params__'].items()):
             # TODO: put validators in here
             json_desc[k] = {'class': v.cls}
 
 
-        for k, v in extract_params_of_type(Info).iteritems():
+        for k, v in list(extract_params_of_type(Info).items()):
             json_desc[k] = {
                 'class': 'Info',
                 'value': str(v)}
@@ -161,10 +164,10 @@ class StructuralMeta(type):
         cls_module = inspect.getmodule(cls).__name__
         cls.__json_desc__['class'] = '.'.join([cls_module, name])
 
-        for param in cls.__params__.itervalues():
+        for param in list(cls.__params__.values()):
             param.cls_module = cls_module
 
-        for k, v in cls.__json_desc__.iteritems():
+        for k, v in list(cls.__json_desc__.items()):
             if k == 'class':
                 continue
             try:
@@ -188,25 +191,25 @@ class StructuralMeta(type):
         super(StructuralMeta, cls).__init__(name, bases, dct)
 
 
-class Base(object):
+class Base(with_metaclass(StructuralMeta, object)):
     """
     Base class for all 'model' classes. **This should never be used by clients**
     and serves as a base class for dynamically generated classes returned by
     :py:func:``, which are designed for use by clients.
     """
 
-    __metaclass__ = StructuralMeta
+    # __metaclass__ = StructuralMeta
 
     def __init__(self, **kwargs):
         self._predecessor = kwargs.pop('predecessor', None)
 
         if self._predecessor is None:
             # then we provide default values for each element
-            for k, v in self.__params__.iteritems():
+            for k, v in list(self.__params__.items()):
                 if k not in kwargs:
                     try:
                         kwargs[k] = v.default
                     except NoDefaultException:
                         raise ValueError('Must provide value for {}'.format(k))
-        for k, v in kwargs.iteritems():
+        for k, v in list(kwargs.items()):
             setattr(self, k, v)

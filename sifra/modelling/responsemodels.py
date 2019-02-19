@@ -1,6 +1,6 @@
 import scipy.stats as stats
 import numpy as np
-from structural import Info, Base, Element
+from sifra.modelling.structural import Info, Base, Element
 from sifra.modelling.structural import Element as _Element
 
 
@@ -164,13 +164,19 @@ class ConstantFunction(Base):
     """
     A function for defining a constant amplitude for a given range
     """
-    amplitude = _Element('float', 'Constant amplitude of function',
-                    _Element.NO_DEFAULT, [lambda x: float(x) >= 0.])
+    amplitude = _Element(
+        'float',
+        'Constant amplitude of function',
+        _Element.NO_DEFAULT, [lambda x: float(x) >= 0.])
 
-    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
+    lower_limit = _Element(
+        'float',
+        'lower limit of function if part of piecewise function',
+        None, [lambda x: float(x) > 0.])
+    upper_limit = _Element(
+        'float',
+        'upper limit of function  if part of piecewise function',
+        None, [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_intensity):
         return self.amplitude
@@ -186,10 +192,14 @@ class Level0Response(Base):
     beta = 0.0
     median = 1.0
 
-    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
+    lower_limit = _Element(
+        'float',
+        'lower limit of function if part of piecewise function',
+        None, [lambda x: float(x) > 0.])
+    upper_limit = _Element(
+        'float',
+        'upper limit of function  if part of piecewise function',
+        None, [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_level):
         return 0.0
@@ -202,10 +212,14 @@ class Level0Recovery(Base):
     recovery_mean = 0.00001
     recovery_std = 0.00001
 
-    lower_limit = _Element('float', 'lower limit of function if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
-    upper_limit = _Element('float', 'upper limit of function  if part of piecewise function',
-                           None, [lambda x: float(x) > 0.])
+    lower_limit = _Element(
+        'float',
+        'lower limit of function if part of piecewise function',
+        None, [lambda x: float(x) > 0.])
+    upper_limit = _Element(
+        'float',
+        'upper limit of function  if part of piecewise function',
+        None, [lambda x: float(x) > 0.])
 
     def __call__(self, hazard_level):
         return 0.0
@@ -234,9 +248,10 @@ class XYPairs(Base):
 
 class PiecewiseFunction(Base):
     """
-    first function will only have one value if anything less than that always use that function
-    last function will also have one value if anything greater than use that function
-    in-between function will always have two range values they will only be defined for those values
+    first function will only have one value if anything less than that always
+    use that function last function will also have one value if anything
+    greater than use that function in-between function will always have two
+    range values they will only be defined for those values
 
     input: hazard value
     output: probability
@@ -247,7 +262,7 @@ class PiecewiseFunction(Base):
     def __init__(self, *arg, **kwargs):
 
         self.piecewise_functions = []
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self, k, v)
 
         for function_constructor in self.piecewise_function_constructor:
@@ -271,5 +286,6 @@ class PiecewiseFunction(Base):
                     return self.piecewise_functions[-1](hazard_intensity)
             # any other function between the limits
             else:
-                if piecewise_function.lower_limit <= hazard_intensity < piecewise_function.upper_limit:
+                if piecewise_function.lower_limit <= hazard_intensity < \
+                        piecewise_function.upper_limit:
                     return self.piecewise_functions[i](hazard_intensity)

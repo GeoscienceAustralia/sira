@@ -1,4 +1,9 @@
 from __future__ import print_function
+from __future__ import division
+
+from builtins import str
+from builtins import zip
+from builtins import range
 
 import numpy as np
 np.seterr(divide='print', invalid='raise')
@@ -33,7 +38,8 @@ customfont.close()
 fontprop = FontProperties(fname=customfont.name)
 rc("font", **{"sans-serif": [str(fontprop.get_name())]})
 
-from sifra.logger import rootLogger
+import logging
+rootLogger = logging.getLogger(__name__)
 
 # from sifra.configuration import Configuration
 # from sifra.scenario import Scenario
@@ -247,17 +253,18 @@ def prep_repair_list(infrastructure_obj,
     input_dict = infrastructure_obj.supply_nodes
     output_dict = infrastructure_obj.output_nodes
     commodity_types = list(
-        set([input_dict[i]['commodity_type'] for i in input_dict.keys()])
+        set([input_dict[i]['commodity_type'] for i in list(input_dict.keys())])
         )
     nodes_by_commoditytype = {}
     for comm_type in commodity_types:
         nodes_by_commoditytype[comm_type] = \
-            [x for x in input_dict.keys()
+            [x for x in list(input_dict.keys())
              if input_dict[x]['commodity_type']== comm_type]
 
     out_node_list = output_dict.keys()
     dependency_node_list = \
-        [node_id for node_id, infodict in infrastructure_obj.components.items()
+        [node_id for node_id, infodict
+         in list(infrastructure_obj.components.items())
          if infrastructure_obj.components[node_id].node_type=='dependency']
 
     w = 'weight'
@@ -273,12 +280,12 @@ def prep_repair_list(infrastructure_obj,
             wt = component_meanloss.loc[origin, scenario_header]
         G.es[eid][w] = wt
 
-    repair_list = {outnode:{sn:0 for sn in nodes_by_commoditytype.keys()}
+    repair_list = {outnode:{sn:0 for sn in list(nodes_by_commoditytype.keys())}
                    for outnode in out_node_list}
     repair_list_combined = {}
     
     for onode in out_node_list:
-        for CK, sup_nodes_by_commtype in nodes_by_commoditytype.items():
+        for CK, sup_nodes_by_commtype in list(nodes_by_commoditytype.items()):
             arr_row = []
             for i,inode in enumerate(sup_nodes_by_commtype):
                 arr_row.append(input_dict[inode]['capacity_fraction'])
@@ -289,8 +296,8 @@ def prep_repair_list(infrastructure_obj,
                 vx = []
                 vlist = []
                 for L in range(0, len(arr_row)+1):
-                    for subset in \
-                            itertools.combinations(range(0, len(arr_row)), L):
+                    for subset in itertools.combinations(
+                            list(range(0, len(arr_row))), L):
                         vx.append(subset)
                     for subset in itertools.combinations(arr_row, L):
                         vlist.append(subset)
@@ -327,7 +334,7 @@ def prep_repair_list(infrastructure_obj,
                         repair_list[onode][CK] = sorted(RL)
 
         c_list = []
-        for k in repair_list[onode].values():
+        for k in list(repair_list[onode].values()):
             c_list.extend(k)
         temp_repair_list = list(set(c_list))
 
@@ -413,7 +420,7 @@ def calc_restoration_setup(component_meanloss,
              'Fin': 0
              })
         df = df.sort_values(by=['RestorationTimes'], ascending=[0])
-        rst_setup_df = rst_setup_df.append(df)
+        rst_setup_df = rst_setup_df.append(df, sort=True)
 
     comps_to_drop = set(rst_setup_df.index.values.tolist()).\
                         intersection(comps_uncosted)
@@ -426,7 +433,7 @@ def calc_restoration_setup(component_meanloss,
         index=rst_setup_df.index
     )
 
-    for k in repair_path.keys():
+    for k in list(repair_path.keys()):
         oldlist = repair_path[k]
         repair_path[k] = [v for v in oldlist if v not in comps_uncosted]
 
@@ -512,7 +519,7 @@ def vis_restoration_process(scenario,
     lineht = 11
 
     output_dict = infrastructure.output_nodes
-    out_node_list = infrastructure.output_nodes.keys()
+    out_node_list = list(infrastructure.output_nodes.keys())
 
     comps = rst_setup_df.index.values.tolist()
 
@@ -523,7 +530,7 @@ def vis_restoration_process(scenario,
             scenario_tag))
         return
 
-    y = range(1, len(comps)+1)
+    y = list(range(1, len(comps)+1))
     xstep = 10
     xbase = 5.0
     xmax = \
@@ -538,7 +545,7 @@ def vis_restoration_process(scenario,
         xmax = 2
         xstep = 1
 
-    xtiks = range(0, xmax+1, xstep)
+    xtiks = list(range(0, xmax+1, xstep))
     if xmax > xtiks[-1]:
         xtiks.append(xmax)
 
@@ -612,14 +619,14 @@ def vis_restoration_process(scenario,
     sns.despine(ax=ax2, left=True)
 
     ax2.set_ylim([0,100])
-    ax2.set_yticks(range(0,101,20))
-    ax2.set_yticklabels(range(0,101,20), size=ticklabelsize)
+    ax2.set_yticks(list(range(0, 101, 20)))
+    ax2.set_yticklabels(list(range(0, 101, 20)), size=ticklabelsize)
     ax2.yaxis.grid(True, which="major", color=gainsboro)
 
     ax2.set_xlim([0, max(xtiks)])
     ax2.set_xticks(xtiks)
     ax2.set_xticklabels(xtiks, size=ticklabelsize, rotation=0)
-    ax2.tick_params(axis='x', which="major", bottom='on', length=4)
+    ax2.tick_params(axis='x', which="major", bottom=True, length=4)
 
     ax2.set_xlabel('Restoration Time ('+scenario.time_unit+')', size=14)
     ax2.set_ylabel('System Capacity (%)', size=14)
@@ -655,7 +662,7 @@ def vis_restoration_process(scenario,
                      list(np.ones(max(xtiks)+1 - int(repair_time_for_line)))
                      )
 
-    xrst = np.array(range(0, max(xtiks)+1, 1))
+    xrst = np.array(list(range(0, max(xtiks)+1, 1)))
     yrst = np.sum(restoration_timeline_array, axis=0)
     ax2.step(xrst, yrst, where='post', color=supply_rst_clr, clip_on=False)
     fill_between_steps(ax2, xrst, yrst, 0, step_where='post',
@@ -708,7 +715,7 @@ def component_criticality(infrastructure,
     pctloss_ntype = ctype_scenario_outcomes['loss_per_type']*15
 
     nt_names = ctype_scenario_outcomes.index.tolist()
-    nt_ids = range(1, len(nt_names)+1)
+    nt_ids = list(range(1, len(nt_names)+1))
 
     clrmap = [plt.cm.autumn(1.2 * x/float(len(ctype_scenario_outcomes.index)))
               for x in range(len(ctype_scenario_outcomes.index))]
@@ -828,7 +835,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
              color=clrmap1, edgecolor='bisque', alpha=a)
     ax1.set_xlim(0, max(ctype_loss_by_type))
     ax1.set_ylim(pos.max()+bar_width, pos.min()-bar_width)
-    ax1.tick_params(top='off', bottom='off', left='off', right='on')
+    ax1.tick_params(top=False, bottom=False, left=False, right=True)
     ax1.set_title('Economic Loss \nPercent of System Value',
                   fontsize=12,
                   fontweight='bold', ha='right', x=1.00, y=0.99)
@@ -851,7 +858,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
              color=clrmap2, edgecolor='bisque', alpha=a)
     ax2.set_xlim(0, max(ctype_loss_by_type))
     ax2.set_ylim(pos.max()+bar_width, pos.min()-bar_width)
-    ax2.tick_params(top='off', bottom='off', left='on', right='off')
+    ax2.tick_params(top=False, bottom=False, left=True, right=False)
     ax2.set_title('Economic Loss \nPercent of Component Type Value',
                   fontsize=12,
                   fontweight='bold', ha='left', x=0,  y=0.99)
@@ -985,7 +992,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
     axes.set_yticklabels(cpt, size=8, color='k')
     axes.yaxis.grid(False)
 
-    axes.tick_params(top='off', bottom='off', left='off', right='off')
+    axes.tick_params(top=False, bottom=False, left=False, right=False)
 
     # ------------------------------------------------------------------------
     fig.savefig(
@@ -1092,11 +1099,11 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     ax1.set_yticks(barpos)
     ax1.set_yticklabels(comptypes_sorted, size=7, color='k')
 
-    ax1.tick_params(top='off', bottom='off', left='off', right ='off')
+    ax1.tick_params(top=False, bottom=False, left=False, right =False)
     ax1.yaxis.set_tick_params(
         which='major',
-        labelleft='on',
-        labelright='off',
+        labelleft=True,
+        labelright=False,
         labelsize=8,
         pad=18)
 
@@ -1119,7 +1126,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
                        for x in ctype_loss_tot_mean]
 
     leftpos = 0.0
-    for ind, loss, pos in zip(range(len(comptypes_sorted)),
+    for ind, loss, pos in zip(list(range(len(comptypes_sorted))),
                               scaled_tot_loss,
                               barpos):
         ax2.barh(0.0, loss, stacked_bar_width,
@@ -1144,7 +1151,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     ax2.set_yticklabels([])
     ax2.set_ylim([-stacked_bar_width*0.5, stacked_bar_width*1.1])
 
-    ax2.tick_params(top='off', bottom='off', left='off', right='off')
+    ax2.tick_params(top=False, bottom=False, left=False, right=False)
 
     ax2.annotate(
         "LOSS METRIC: relative contributions to system loss",
@@ -1282,11 +1289,11 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     ax1.set_yticks(barpos)
     ax1.set_yticklabels([''])
 
-    ax1.tick_params(top='off', bottom='off', left='off', right ='off')
+    ax1.tick_params(top=False, bottom=False, left=False, right =False)
     ax1.yaxis.set_tick_params(
         which='major',
-        labelleft='on',
-        labelright='off',
+        labelleft=True,
+        labelright=False,
         labelsize=8,
         pad=20)
 
@@ -1302,7 +1309,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
 
     leftpos = 0.0
     rank = 1
-    for ind, loss, sysloss, pos in zip(range(len(comptypes_sorted)),
+    for ind, loss, sysloss, pos in zip(list(range(len(comptypes_sorted))),
                                        scaled_tot_loss,
                                        ctype_loss_tot_mean,
                                        barpos):
@@ -1344,7 +1351,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     ax2.set_yticklabels([])
     ax2.set_ylim([-stacked_bar_width*0.7, stacked_bar_width*1.8])
 
-    ax2.tick_params(top='off', bottom='off', left='off', right='off')
+    ax2.tick_params(top=False, bottom=False, left=False, right=False)
 
     ax2.annotate(
         "LOSS METRIC: % system loss attributed to Component Types",
@@ -1421,7 +1428,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
     ax.set_yticklabels(cpt, size=8, color='k')
     ax.yaxis.grid(False)
 
-    ax.tick_params(top='off', bottom='off', left='off', right='off')
+    ax.tick_params(top=False, bottom=False, left=False, right=False)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ax.barh(pos, cpt_failure_vals, bar_width,
@@ -1462,7 +1469,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
                                                cp_types_costed,
                                                scenario_header):
 
-    nodes_all = infrastructure.components.keys()
+    nodes_all = list(infrastructure.components.keys())
     nodes_costed = [x for x in nodes_all
                     if infrastructure.components[x].component_type in
                     cp_types_costed]
@@ -1608,7 +1615,7 @@ def run_scenario_loss_analysis(scenario,
              for c in cp_types_in_system}
     comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
 
-    nodes_all = infrastructure.components.keys()
+    nodes_all = list(infrastructure.components.keys())
     nodes_all.sort()
     comps_uncosted = list(set(nodes_all).difference(comps_costed))
 
@@ -1643,12 +1650,14 @@ def run_scenario_loss_analysis(scenario,
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     col_tp = []
     for h in FOCAL_HAZARD_SCENARIOS:
-        col_tp.extend(zip([h] * len(RESTORATION_STREAMS), RESTORATION_STREAMS))
+        col_tp.extend(
+            list(zip([h] * len(RESTORATION_STREAMS), RESTORATION_STREAMS))
+            )
 
     mcols = pd.MultiIndex.from_tuples(
         col_tp, names=['Hazard', 'Restoration Streams'])
     time_to_full_restoration_for_lines_df = pd.DataFrame(
-        index=infrastructure.output_nodes.keys(), columns=mcols)
+        index=list(infrastructure.output_nodes.keys()), columns=mcols)
     time_to_full_restoration_for_lines_df.index.name = 'Output Lines'
 
     # --------------------------------------------------------------------------
@@ -1746,7 +1755,7 @@ def run_scenario_loss_analysis(scenario,
                                                 scenario_header)
 
         repair_path = copy.deepcopy(repair_list_combined)
-        output_node_list = infrastructure.output_nodes.keys()
+        output_node_list = list(infrastructure.output_nodes.keys())
 
         for num_rst_steams in RESTORATION_STREAMS:
             # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1811,5 +1820,5 @@ def run_scenario_loss_analysis(scenario,
     time_to_full_restoration_for_lines_df.to_csv(
         time_to_full_restoration_for_lines_csv, sep=',')
 
-    rootLogger.info('End: SCENARIO LOSS ANALYSIS\n')
+    rootLogger.info('End: SCENARIO LOSS ANALYSIS')
     # --------------------------------------------------------------------------

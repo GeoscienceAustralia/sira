@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from sifra.logger import rootLogger
 import scripts.convert_setup_files_to_json as converter
 from utilities import get_file_name, get_dir_path, get_file_extension
 
@@ -29,7 +28,8 @@ class Configuration:
 
         self.SCENARIO_NAME = str(config['SCENARIO_NAME'])
         self.MODEL_NAME = str(config['MODEL_NAME'])
-        self.CONFIGURATION_ID = str(config['CONFIGURATION_ID']) # str(self.MODEL_NAME) + str(' – ') + str(self.SCENARIO_NAME)
+        self.CONFIGURATION_ID = str(config['CONFIGURATION_ID'])
+        # str(self.MODEL_NAME) + str(' – ') + str(self.SCENARIO_NAME)
 
         # reading in simulation scenario parameters
         self.HAZARD_INTENSITY_MEASURE_PARAM = str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
