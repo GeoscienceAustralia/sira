@@ -4,7 +4,7 @@ from sifra.modelling.infrastructure import InfrastructureFactory
 from sifra.modelling.component import (Component, ConnectionValues)
 from scripts.convert_excel_files_to_json import (
     update_json_structure, read_excel_to_json)
-from utilities import get_file_extension
+from sifra.utilities import get_file_extension
 import logging
 rootLogger = logging.getLogger(__name__)
 

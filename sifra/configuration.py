@@ -3,7 +3,7 @@
 import os
 import json
 import scripts.convert_setup_files_to_json as converter
-from utilities import get_file_name, get_dir_path, get_file_extension
+from sifra.utilities import get_file_name, get_dir_path, get_file_extension
 
 
 class Configuration:

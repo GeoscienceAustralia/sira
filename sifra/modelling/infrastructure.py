@@ -1,6 +1,5 @@
 from __future__ import division
 from builtins import range
-from past.utils import old_div
 from builtins import object
 import sys
 import numpy as np
@@ -264,7 +263,7 @@ class Infrastructure(Base):
                 = np.std(component_loss[:, ct_pos_index])
 
             comptype_resp_dict[(ct_id, 'loss_tot')] \
-                = old_div(np.sum(component_loss[:, ct_pos_index]), num_samples)
+                = np.sum(component_loss[:, ct_pos_index])/float(num_samples)
 
             comptype_resp_dict[(ct_id, 'func_mean')] \
                 = np.mean(comp_sample_func[:, ct_pos_index])

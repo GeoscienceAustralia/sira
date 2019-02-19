@@ -20,16 +20,17 @@ ADD packagelist_linux.txt .
 RUN apt-get install -y  $(awk '{print $1}' packagelist_linux.txt)
 
 # install anaconda2 
-RUN wget https://repo.continuum.io/archive/Anaconda2-2018.12-Linux-x86_64.sh 
-RUN bash Anaconda2*.sh -b -p /root/anaconda2 
-RUN rm Anaconda2*.sh 
-RUN /root/anaconda2/bin/conda create -n pythonSifra python=2.7.11  -y
+#RUN wget https://repo.continuum.io/archive/Anaconda2-2018.12-Linux-x86_64.sh
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2018.12-Linux-x86_64.sh
+RUN bash Anaconda3*.sh -b -p /root/anaconda3
+RUN rm Anaconda3*.sh
+RUN /root/anaconda3/bin/conda create -n sifra_py3 python=3.7.2  -y
 
-ENV PATH="/root/anaconda2/envs/pythonSifra/bin:$PATH"
+ENV PATH="/root/anaconda3/envs/sifra_py3/bin:$PATH"
 
 # install packages not available in /root/anaconda2/bin/conda
 ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 ARG CACHE_DATE
-RUN git clone --single-branch --branch  ft-update-cli https://github.com/GeoscienceAustralia/sifra.git
+RUN git clone --single-branch --branch  py3-sifra-migration https://github.com/GeoscienceAustralia/sifra.git
