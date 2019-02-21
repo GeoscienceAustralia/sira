@@ -13,8 +13,13 @@ import re
 mpl.rcParams['legend.numpoints'] = 1
 mpl.rcParams['xtick.direction'] = 'out'
 mpl.rcParams['ytick.direction'] = 'out'
-mpl.rcParams['font.family'] = 'Open Sans', 'sans-serif'
+mpl.rcParams['grid.linewidth'] = 0.5
+# mpl.rcParams['font.family'] = 'serif'
+# mpl.rcParams['font.serif'] = \
+#     ['Droid Serif'] + mpl.rcParams['font.serif']
 # mpl.rcParams['text.usetex'] = True
+# mpl.rcParams.update()
+# mpl.font_manager._rebuild()
 
 class ColourPalettes(object):
 
@@ -264,8 +269,9 @@ def add_legend_subtitle(str):
     Useful for plots with multiple groups of legends.
     :param str: sub-title for legend
     """
+    label = "\n" + ' '.join(['$\\bf{'+i+'}$' for i in str.split(' ')])
     plt.plot([0], marker='None', linestyle='None',
-             label=str)
+             label=label)
 
 # ----------------------------------------------------------------------------
 
@@ -403,14 +409,5 @@ def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
 
     if aspectratio > 0:
         forceAspect(axis, aspect=aspectratio)
-
-    # if figfile is None:
-    #     figfile = 'fig_' +\
-    #               datetime.strftime(datetime.now(), '%Y%m%d_%H%M%S') +\
-    #               '.png'
-    #
-    # if save_file is True:
-    #     plt.savefig(figfile, format='png', bbox_inches='tight', dpi=250)
-    # plt.close(fig)
 
 # ----------------------------------------------------------------------------

@@ -3,10 +3,12 @@ from __future__ import division
 from builtins import str
 from builtins import range
 
+import matplotlib as mpl
+mpl.use('agg')
+
 import matplotlib.pyplot as plt
-plt.switch_backend('agg')
 import matplotlib.patheffects as PathEffects
-import seaborn as sns
+import sifra.sifraplot as spl
 
 import numpy as np
 from scipy import stats
@@ -15,18 +17,17 @@ import pandas as pd
 pd.options.display.float_format = '{:,.4f}'.format
 
 import os
-import sifra.sifraplot as spl
 
 import brewer2mpl
 from colorama import Fore, init
 init()
+
 
 MIN = -10
 MAX = 10
 
 import logging
 rootLogger = logging.getLogger(__name__)
-
 
 # ----------------------------------------------------------------------------
 # For plots: using the  brewer2 color maps by Cynthia Brewer
@@ -228,8 +229,10 @@ def plot_data_model(SYS_DS,
     if sum([PLOT_DATA, PLOT_MODEL, PLOT_EVENTS])==0:
         raise AttributeError
 
-    sns.set(style="darkgrid")
-
+    plt.style.use('seaborn-darkgrid')
+    mpl.rc('grid', linewidth=0.8)
+    mpl.rc('font', family='sans-serif')
+    # mpl.rc('font', serif='Helvetica')
     fig = plt.figure(figsize=(9, 5))
     ax = fig.add_subplot(111)
 
@@ -242,19 +245,20 @@ def plot_data_model(SYS_DS,
 
     if PLOT_DATA:
         outfig = os.path.join(out_path, 'fig_sys_pe_DATA.png')
-        spl.add_legend_subtitle("$\\bf{DATA}$")
+        spl.add_legend_subtitle("DATA")
         for i in range(1, len(SYS_DS)):
             ax.plot(hazard_input_vals, pb_exceed[i],
                     label=SYS_DS[i], clip_on=False, color=COLR_DS[i],
-                    linestyle='', alpha=0.4,
-                    marker=markers[i - 1], markersize=3, zorder=10)
+                    linestyle='', alpha=0.6, marker=markers[i - 1],
+                    markersize=3, markeredgewidth=1, markeredgecolor=None,
+                    zorder=10)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # [Plot 2 of 3] The Fitted Model
 
     if PLOT_MODEL:
         outfig = os.path.join(out_path, 'fig_sys_pe_MODEL.png')
-        spl.add_legend_subtitle("\n$\\bf{FITTED\ MODEL}$")
+        spl.add_legend_subtitle("FITTED MODEL")
         xmax = max(hazard_input_vals)
         xformodel = np.linspace(0, xmax, 101, endpoint=True)
         dmg_mdl_arr = np.zeros((len(SYS_DS), len(xformodel)))
@@ -275,7 +279,7 @@ def plot_data_model(SYS_DS,
 
     if PLOT_EVENTS:
         outfig = os.path.join(out_path, 'fig_sys_pe_MODEL_with_scenarios.png')
-        spl.add_legend_subtitle("\n$\\bf{EVENTS}$")
+        spl.add_legend_subtitle("EVENTS")
         for i, haz in enumerate(config.FOCAL_HAZARD_SCENARIOS):
             event_num = str(i+1)
             event_intensity_str = "{:.3f}".format(float(haz))
@@ -330,6 +334,7 @@ def plot_data_model(SYS_DS,
                 )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ax.set_axisbelow('line')
 
     figtitle = 'System Fragility: ' + config.SYSTEM_CLASS
 

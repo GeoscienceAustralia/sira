@@ -13,9 +13,7 @@ import copy
 import itertools
 
 import matplotlib.pyplot as plt
-
 plt.switch_backend('agg')
-plt.rcParams['mathtext.fontset'] = 'dejavuserif'
 
 import matplotlib.patheffects as PathEffects
 from matplotlib import gridspec
@@ -23,24 +21,6 @@ import sifra.sifraplot as spl
 
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')
-
-from matplotlib.font_manager import FontProperties
-import requests
-from tempfile import NamedTemporaryFile
-
-github_url = "https://github.com/google/fonts/blob/master/" \
-             "ofl/ptsans/PT_Sans-Web-Regular.ttf"
-font_url = github_url + '?raw=true'
-
-response = requests.get(font_url, verify=True)
-customfont = NamedTemporaryFile(delete=False, suffix='.ttf')
-customfont.write(response.content)
-customfont.close()
-fontprop = FontProperties(fname=customfont.name)
-
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = \
-    [str(fontprop.get_name())] + plt.rcParams['font.sans-serif']
 
 import logging
 rootLogger = logging.getLogger(__name__)
@@ -786,8 +766,7 @@ def component_criticality(infrastructure,
             "{0:>2.0f}   {1:<s}".format(cid, name),
             xy=(1.05, 0.90 - 0.035 * cid),
             xycoords=('axes fraction', 'axes fraction'),
-            ha='left', va='top', rotation=0,
-            size=9)
+            ha='left', va='top', rotation=0, size=9)
 
     ax.text(1.05, 0.995,
             "Infrastructure: " + infrastructure.system_class + "\n" +
