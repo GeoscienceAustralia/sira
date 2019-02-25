@@ -99,7 +99,7 @@ copy the project folder from container to host:
 To set up a scenario or impact simulation project, SIFRA expects the following
 directory structure:
 
-::
+```
     scenario_dir/
     └── model_foo
         ├── input
@@ -108,6 +108,7 @@ directory structure:
         │   └── ...
         └── output
             └── ...
+```
 
 The required structure is as follows:
 
