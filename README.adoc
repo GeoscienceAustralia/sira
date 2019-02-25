@@ -9,43 +9,27 @@ toc::[]
 
 ## Overview
 
-SIFRA is a **System for Infrastructure Facility Resilience Analysis**.
 The detailed documentation is at this http://geoscienceaustralia.github.io/sifra/[link].
 
-It comprises a method and software tools that provide a framework
-for simulating the fragility of infrastructure facilities to natural
-hazards, based on assessment of the fragilities and configuration of
-components that comprise the facility. Currently the system is designed
-to work with earthquake hazards only. However, in the development of the
-methodology and classes, there is a strong emphasis on making the
-hazard attribution process and infrastructure models flexible to allow
-for expansion to other hazards and new infrastructure sectors.
+SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
+It represents a methodology and supporting code for systematising vulnerability
+analysis of lifeline infrastructure to natural hazards (i.e. response of
+infrastructure assets to environmental excitation). SIFRA is open source.
 
-SIFRA was developed in http://www.ga.gov.au/[Geoscience Australia (GA)]
-in support of the agency's vision to contribute to enhancing the resilience
-of communities in Australia and its region.
+The impact assessment is based on the fragilities and configuration of
+components that comprise the infrastructure system under study. The analytical
+process is supplemented by an assessment of the system functionality through
+the post-damage network flow analysis, and approximations for recovery
+timeframes.
 
-Some key features of this tool:
+The current focus has been on studying responses of infrastructure facilities
+(e.g. power generation plants, high voltage substations). Considerable work
+has been done in the code backend to extend the same methodology to modelling
+network vulnerability as well (e.g. electricity transmission networks).
 
-- Open Source: Written in Python, and there is no dependency on proprietary
-  tools. It should run on OS X, Windows, and Linux platforms.
-
-- Flexible Infrastructure Model: The data model is based on graph theory.
-  All infrastructure systems are represented as networks.
-  This allows an user to develop arbitrarily complex custom facility models -
-  for a Facility or a network – for impact simulation.
-
-- Extensible Component Library: User can define new instances of
-  `component_type` (the building blocks of a facility) and link it to
-  existing or custom fragility algorithms.
-
-- Component Criticality: Scenario Analysis tools allow users to identify
-  the cost of restoration for chosen scenarios, expected restoration times,
-  and which component upgrades can most benefit the system.
-
-- Restoration Prognosis: Users can experiment with different levels of
-  hazards and post-disaster resource allocation to gauge restoration
-  times for facility operations.
+SIFRA models are based on graph theory. All infrastructure systems are
+represented as networks. This allows an user to develop arbitrarily complex
+custom facility models – for a Facility or a network – for impact simulation.
 
 
 ## Setup Instructions
@@ -61,10 +45,115 @@ probably easiest to use the containers as described below.
 
 ### Building the run environment using Docker
 
-Docker configuration is now the preferred way to deploy and develop the application.
+Docker configuration is now the preferred way to deploy the application.
+The process of buulding the docker images and container are outlined below:
+
+Delete all containers:
+
+    $ docker rm $(docker stop $(docker ps -aq))
+
+Delete all images:
+
+    $ docker rmi $(docker images --filter "dangling=true" -q)
+
+Build the image:
+
+    $ docker build -t sifraimg . --build-arg CACHE_DATE="$(date)"
+
+**Run Option #1: run a simulation and destroy the container when done**
+
+The following command simulataneously does the bind mounts a volume in docker,
+creates a container in interactive mode, runs a simulation, then destroys
+the container after simulation ends.
+
+    $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
+        sifraimg:latest \
+        python sifra -d <scenario_dir> -sfl --aws
+
+**Run Option #2: Build a container for reuse / experimentation**
+
+Create the container
+
+    $ docker create --name=sifra_x -it sifraimg:latest
+
+Then:
+
+    $ docker start sifra_x
+    $ docker attach sifra_x
+
+Or:
+
+    $ docker start -a -i sifra_x
+
+Run the sifra code for the scenario in the specified directory:
+
+    $ python sifra -d /path/to/scenario_dir -sfl
+
+From outside of docker, on a terminal, use the following command to
+copy the project folder from container to host:
+
+    $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
+
+### Running the code
+
+To set up a scenario or impact simulation project, SIFRA expects the following
+directory structure:
+
+::
+    scenario_dir/
+    └── model_foo
+        ├── input
+        │   ├── config.json
+        │   ├── model.json
+        │   └── ...
+        └── output
+            └── ...
+
+The required structure is as follows:
+
+    - 'scenario directory' - it can be named anything
+    - within the scenario directory, there must exist a uniquely named
+      'model directory' for each scenario or run event.
+    - within the 'model directory', the 'input' dir must have two files, in
+      specified format:
+
+        - a model file: it must have the term 'model' at the beginning or
+          end of the file name
+        - a config file: it must have the term 'config' at the beginning or
+          end of the file name
+
+    - the outputs are saved in the 'output' dir. If it does not exist, the code
+      will create it at the beginning of the simulation.
+
+The code can be run in a number of modes. The relevant options are:
+
+  -d INPUT_DIRECTORY, --input_directory INPUT_DIRECTORY
+  -s, --simulation
+  -f, --fit
+  -l, --loss_analysis
+
+Following code snippets assume that it is being run from the root directory
+of the SIFRA code, and the model of interest is in the location
+`sifra/scenario_dir/ci_model_foo`.
+
+The following code runs the simulation and the post processing simultanrously:
+
+    $ python sifra -d scenario_dir/ci_model_foo -sfl
+
+To run only the monte carlo simulation without post-processing:
+
+    $ python sifra -d scenario_dir/ci_model_foo -s
+
+To run for both the model fitting and the loss analysis code:
+
+    $ python sifra -d scenario_dir/ci_model_foo -fl
+
+Note that the fitting and loss analysis steps require the initial simulation
+to have been run first so that it has the initial output data to perform the
+analysis on.
 
 
-### Testing
+## Testing
 
 To run tests use unittest. Move into sifra folder:
 
