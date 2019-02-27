@@ -4,8 +4,9 @@ import shutil
 import subprocess
 
 
-path_to_multiple_models = "testing/Multiple - WA Earthquake - Water Treatment Plant 120MLD"
-path_to_python = "/anaconda3/envs/pythonSifraEnv/bin/python"
+path_to_multiple_models = "~/code/sifra/testing/Multiple - WA Earthquake - " \
+                          "Water Treatment Plant 120MLD"
+path_to_python = "~/anaconda/envs/sifra_py3"
 
 if os.path.isdir(path_to_multiple_models):
 
@@ -48,6 +49,6 @@ if os.path.isdir(path_to_multiple_models):
     for model_dir in os.listdir(path_to_multiple_models):
         model_dir_path = os.path.join(path_to_multiple_models,model_dir)
         if os.path.isdir(model_dir_path):
-            subprocess.call([path_to_python,"sifra", "-d",model_dir_path,"-s"])
+            subprocess.call([path_to_python, "sifra", "-d",model_dir_path,"-s"])
 
         
