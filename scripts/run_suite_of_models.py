@@ -4,8 +4,8 @@ import shutil
 import subprocess
 
 
-path_to_multiple_models = "~/code/sifra/testing/Multiple - WA Earthquake - " \
-                          "Water Treatment Plant 120MLD"
+path_to_multiple_models = "~/code/sifra/simulation_setup/" \
+                          "Multiple_Model_Test__WTP"
 path_to_python = "~/anaconda/envs/sifra_py3"
 
 if os.path.isdir(path_to_multiple_models):

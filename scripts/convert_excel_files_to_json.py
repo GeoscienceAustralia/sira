@@ -399,7 +399,7 @@ def main():
     #
     # for excel_file_path in model_file_paths:
 
-    excel_file_path="testing/pwtp_wa_anon_model.xlsx"
+    excel_file_path="simulation_setup/pwtp_wa_anon_model.xlsx"
     try:
         parent_folder_name = os.path.dirname(excel_file_path)
         file_name = os.path.splitext(os.path.basename(excel_file_path))[0]
