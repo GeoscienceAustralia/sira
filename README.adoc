@@ -156,6 +156,8 @@ analysis on.
 
 ## Testing
 
+** The tests are currently not working and being updated. **
+
 To run tests use unittest. Move into sifra folder:
 
     $ cd sifra
