@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 # # -*- coding: utf-8 -*-
 """
-title           : __main__.py
-description     : entry point for core sifra component
-usage           : python sifra [OPTIONS]
-                  -s                Display this usage message
-                  -l [LEVEL]        Choose logging level DEBUG, INFO,
-                                    WARNING, ERROR, CRITICAL
+title        : __main__.py
+description  : entry point for core sifra component
+usage        : python sifra [OPTIONS]
+               -h                    Display this usage message
+               -d [input_directory]  Specify the directory with the required
+                                     config and model files
+               -s                    Run simulation
+               -f                    Conduct model fitting. Must be done
+                                     after a complete run with `-s` flag
+               -l                    Conduct loss analysis. Must be done
+                                     after a complete run with `-s` flag
+               -v [LEVEL]            Choose `verbose` mode, or choose logging
+                                     level DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 python_version  : 3.7
 """
@@ -16,10 +23,9 @@ import sys
 import numpy as np
 np.seterr(divide='print', invalid='raise')
 import time
-
+import re
 import pandas as pd
 
-import copy
 from colorama import init
 init()
 
@@ -53,8 +59,10 @@ def main():
     parser = argparse.ArgumentParser(
         prog='sifra', description="run sifra", add_help=True)
 
+    # [Either] Supply config file and model file directly:
     parser.add_argument("-c", "--config_file", type=str)
     parser.add_argument("-m", "--model_file", type=str)
+    # [Or] Supply only the directory where the input files reside
     parser.add_argument("-d", "--input_directory", type=str)
 
     parser.add_argument("-s", "--simulation",
@@ -84,14 +92,26 @@ def main():
                      " is required ...")
         sys.exit(2)
 
-    if args.input_directory:
-        args.config_file = os.path.join(
-            args.input_directory, "input", "config.json")
-        args.model_file = os.path.join(
-            args.input_directory, "input", "model.json")
-        args.output = os.path.join(
-            args.input_directory, "output")
+    proj_root_dir = args.input_directory
+    if os.path.exists(proj_root_dir):
+        proj_input_dir = os.path.join(proj_root_dir, "input")
 
+        for fname in os.listdir(proj_input_dir):
+            confmatch = re.search(r"^[config].*[.json]$", fname)
+            if confmatch is not None:
+                config_file_name = confmatch.string
+            modelmatch = re.search(r"^[model].*[.json]$", fname)
+            if modelmatch is not None:
+                model_file_name = modelmatch.string
+    else:
+        parser.error(
+            "Given input directory does not exist: " +
+            str(proj_root_dir))
+        sys.exit(2)
+
+    args.config_file = os.path.join(proj_input_dir, config_file_name)
+    args.model_file = os.path.join(proj_input_dir, model_file_name)
+    args.output = os.path.join(args.input_directory, "output")
 
     if not os.path.isfile(args.config_file):
         parser.error(
@@ -237,7 +257,6 @@ def main():
 
     rootLogger.info('RUN COMPLETE.\n')
     # print("\n\nLoglevel was: {}.\n".format(str(args.loglevel)))
-    # print(args.loglevel)
 
 
 if __name__ == "__main__":
