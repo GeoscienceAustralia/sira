@@ -10,8 +10,10 @@ class ComponentGraph(object):
     def __init__(self, components, comp_sample_func=None):
         """
         Construct a graph from the igraph package using the component dict.
-        :param components: Dict of components that represent the infrastructure model
-        :param comp_sample_func: Array of the functionality of each component (1.0 -> 0.0).
+        :param components:  Dict of components that represent the
+                            infrastructure model
+        :param comp_sample_func: Array of the functionality of each
+                                 component (1.0 -> 0.0).
         """
         # create the directed graph
         self.digraph = igraph.Graph(directed=True)
@@ -21,65 +23,82 @@ class ComponentGraph(object):
             comp_sample_func = [1.0] * len(components)
 
         # TODO make this part of components?
-        # create a map that will convert 'stack_1' -> 17 for editing the functionality (comp_sample_func)
-        id_index_map = {comp_id: comp_index for comp_index, comp_id in list(enumerate(sorted(components.keys())))}
+        # create a map that will convert 'stack_1' -> 17 for editing
+        # the functionality (comp_sample_func)
+        self.id_index_map = {
+            comp_id: comp_index for comp_index, comp_id
+            in list(enumerate(sorted(components.keys())))}
 
         # iterate through the components to create the graph
         # (using a list of sorted keys as we're trying to match the old code)
         for comp_id in components.keys():
             component = components[comp_id]
-            comp_index = id_index_map[comp_id]
+            comp_index = self.id_index_map[comp_id]
             # check that the component is not already in the graph
-            if len(self.digraph.vs) == 0 or comp_id not in self.digraph.vs['name']:
+            if len(self.digraph.vs) == 0 \
+                    or comp_id not in self.digraph.vs['name']:
                 # add new component
                 self.digraph.add_vertex(name=comp_id)
 
             # iterate through this components connected components
-            for dest_comp_id, destination_component in component.destination_components.items():
-                dest_index = id_index_map[dest_comp_id]
+            for dest_comp_id, destination_component in \
+                    component.destination_components.items():
+                dest_index = self.id_index_map[dest_comp_id]
                 # check if the parent component is a dependent node type
                 if component.node_type == 'dependency':
                     # combine the dependent nodes functionality
-                    # TODO investigate the correctness of the logic of the following
-                    self.update_dependency(comp_sample_func, comp_index, dest_index)
+                    # TODO investigate the correctness of the logic:
+                    self.update_dependency(
+                        comp_sample_func, comp_index, dest_index)
 
                 # Is the child node in the graph
-                if len(self.digraph.vs) == 0 or dest_comp_id not in self.digraph.vs['name']:
+                if len(self.digraph.vs) == 0 \
+                        or dest_comp_id not in self.digraph.vs['name']:
                     # add new child component
                     self.digraph.add_vertex(name=dest_comp_id)
 
                 # connect the parent and child vertices with an edge.
-                # The functionality of the parent vertice is the value of the edge capacity
+                # The functionality of the parent vertex is the value
+                # of the edge capacity.
                 self.digraph.add_edge(comp_id, dest_comp_id,
                                       capacity=comp_sample_func[comp_index])
 
+        for v in self.digraph.vs:
+            v["component_object"] = components[v["name"]]
+        self.estimate_betweenness()
+
     def update_capacity(self, components, comp_sample_func):
-        """Update the graph to change the edge's capacity value to
-        reflect the new functionality of the parent vertice."""
-        # create a map that will convert 'stack_1' -> 17 for editing the functionality (comp_sample_func)
-        id_index_map = {v: k for k, v in list(enumerate(sorted(components.keys())))}
+        """
+        Update the graph to change the edge's capacity value to
+        reflect the new functionality of the parent vertice.
+        """
 
         # iterate through the infrastructure components
         # (using a list of sorted keys as we're trying to match the old code)
         for comp_id in components.keys():
             component = components[comp_id]
-            comp_index = id_index_map[comp_id]
+            comp_index = self.id_index_map[comp_id]
             # iterate through the destination components
             for dest_comp_id in component.destination_components.keys():
-                dest_index = id_index_map[dest_comp_id]
+                dest_index = self.id_index_map[dest_comp_id]
 
                 if component.node_type == 'dependency':
                     # combine the dependent vertices functionality with the parents
                     # TODO investigate the correctness of the logic of the following
-                    self.update_dependency(comp_sample_func, comp_index, dest_index)
+                    self.update_dependency(
+                        comp_sample_func, comp_index, dest_index)
 
-                # Determine the edge id from the id's of the parent and child node
+                # Determine the edge id from the id's of the
+                # parent and child node
                 edge_id = self.digraph.get_eid(comp_id, dest_comp_id)
-                # update the edge dict with the functionality of the parent vertice
-                self.digraph.es[edge_id]['capacity'] = comp_sample_func[comp_index]
+                # update the edge dict with the functionality of the
+                # parent vertex
+                self.digraph.es[edge_id]['capacity'] = \
+                    comp_sample_func[comp_index]
 
     def update_dependency(self,comp_sample_func, parent, dependent):
-        min_capacity = min(comp_sample_func[parent], comp_sample_func[dependent])
+        min_capacity = min(comp_sample_func[parent],
+                           comp_sample_func[dependent])
         comp_sample_func[dependent] = min_capacity
 
     def dump_graph(self, external=None):
@@ -88,7 +107,8 @@ class ComponentGraph(object):
 
         Logs at info level the edges of the graph, with the
         capacity value for each edge. Optionally will dump the passed
-        graph, which must implement the igraph methods."""
+        graph, which must implement the igraph methods.
+        """
 
         # Use the parameter graph if provided
         comp_graph = external if external else self.digraph
@@ -101,10 +121,20 @@ class ComponentGraph(object):
 
     def maxflow(self, supply_comp_id, output_comp_id):
         """Computes the maximum flow between two nodes."""
-        # determine the vertice id's for the two components
+
+        # determine the vertex id's for the two components
         sup_v = self.digraph.vs.find(supply_comp_id)
         out_v = self.digraph.vs.find(output_comp_id)
+
         # calculate the maximum flow value between the two id's
         return self.digraph.maxflow_value(sup_v.index,
                                           out_v.index,
                                           self.digraph.es['capacity'])
+
+    def estimate_betweenness(self):
+        centrality_estimate = self.digraph.betweenness()
+        for v in self.digraph.vs:
+            v["betweenness"] = centrality_estimate[v.index]
+        # for v in self.digraph.vs:
+        #     print("{:40} : {}".format(v["name"],
+        #                               v["betweenness"]))
