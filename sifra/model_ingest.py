@@ -16,7 +16,7 @@ def ingest_model(config):
     :return:  -List of algorithms for each component in particular damage state
               -Object of class infrastructure
     """
-    extension = get_file_extension(config.INPUT_MODEL_PATH)
+    extension = get_file_extension(config.INPUT_MODEL_PATH).lower()
 
     if extension == 'json':
         return read_model_from_json(config)
@@ -58,25 +58,8 @@ def read_model_from_json(config):
         component_values = {}
         component_values['component_id'] = component_id
 
-        component_values['component_class'] \
-            = component_list[component_id]['component_class']
-        component_values['component_type'] \
-            = component_list[component_id]['component_type']
-        component_values['cost_fraction'] \
-            = component_list[component_id]['cost_fraction']
-        component_values['node_cluster'] \
-            = component_list[component_id]['node_cluster']
-        component_values['node_type'] \
-            = component_list[component_id]['node_type']
-        component_values['operating_capacity'] \
-            = component_list[component_id]['operating_capacity']
-        component_values['longitude'] \
-            = component_list[component_id]['longitude']
-        component_values['latitude'] \
-            = component_list[component_id]['latitude']
-
-        component_values['damages_states_constructor'] \
-            = component_list[component_id]['damages_states_constructor']
+        for param in component_list[component_id].keys():
+            component_values[param] = component_list[component_id][param]
 
         # list of damage states with a function assignment!
         system_components[component_id] = Component(**component_values)
@@ -158,7 +141,8 @@ def read_model_from_xlsx(config):
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
 
-    json_obj = json.loads(read_excel_to_json(config.INPUT_MODEL_PATH), object_pairs_hook=OrderedDict)
+    json_obj = json.loads(read_excel_to_json(config.INPUT_MODEL_PATH),
+                          object_pairs_hook=OrderedDict)
     model = update_json_structure(json_obj)
 
     # read the lists from json
@@ -180,27 +164,10 @@ def read_model_from_xlsx(config):
     for component_id in component_list:
         component_values = {}
 
-        component_values['component_id']\
-            = component_id
-        component_values['component_class'] \
-            = component_list[component_id]['component_class']
-        component_values['component_type'] \
-            = component_list[component_id]['component_type']
-        component_values['cost_fraction'] \
-            = component_list[component_id]['cost_fraction']
-        component_values['node_cluster'] \
-            = component_list[component_id]['node_cluster']
-        component_values['node_type'] \
-            = component_list[component_id]['node_type']
-        component_values['operating_capacity'] \
-            = component_list[component_id]['operating_capacity']
-        component_values['longitude'] \
-            = component_list[component_id]['longitude']
-        component_values['latitude'] \
-            = component_list[component_id]['latitude']
+        component_values['component_id'] = component_id
 
-        component_values['damages_states_constructor'] \
-            = component_list[component_id]['damages_states_constructor']
+        for param in component_list[component_id].keys():
+            component_values[param] = component_list[component_id][param]
 
         # list of damage states with a function assignment!
         system_components[component_id] = Component(**component_values)
@@ -226,8 +193,8 @@ def read_model_from_xlsx(config):
 
     infrastructure_system_constructor = dict()
     infrastructure_system_constructor['system_meta'] = mdl_meta
-    infrastructure_system_constructor['name'] = system_class + " : " + \
-                                                system_subclass
+    infrastructure_system_constructor['name'] = \
+        system_class + " : " + system_subclass
     infrastructure_system_constructor['components'] = system_components
 
     # create the supply and output node dictionaries
