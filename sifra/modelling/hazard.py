@@ -24,7 +24,7 @@ class Hazard(object):
                     == round(float(y_location), self.round_off)):
                     return comp["hazard_intensity"]
 
-        raise Exception("Invalid Values for Longitude or Latitude")
+        raise Exception("Invalid values for component location.")
 
     def get_seed(self):
         seed = 0
@@ -53,8 +53,10 @@ class HazardsContainer(object):
         # string variables
         self.listOfhazards = []
         self.hazard_type = configuration.HAZARD_TYPE
-        self.intensity_measure_param = configuration.HAZARD_INTENSITY_MEASURE_PARAM
-        self.intensity_measure_unit = configuration.HAZARD_INTENSITY_MEASURE_UNIT
+        self.intensity_measure_param = \
+            configuration.HAZARD_INTENSITY_MEASURE_PARAM
+        self.intensity_measure_unit = \
+            configuration.HAZARD_INTENSITY_MEASURE_UNIT
         self.focal_hazard_scenarios = configuration.FOCAL_HAZARD_SCENARIOS
 
         # get hazard data from scenario file
