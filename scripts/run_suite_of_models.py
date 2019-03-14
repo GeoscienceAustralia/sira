@@ -20,18 +20,18 @@ if not os.path.isdir(project_root_dir):
 #     - one single config file in json
 #     - one or more model files in json
 
-config_file_path = ''        # This must be an absolute path
-config_file_name = ''
+config_file_path = None        # This must be an absolute path
+config_file_name = None
 model_file_path_list = []
 
 for fname in os.listdir(project_root_dir):
 
-    confmatch = re.search(r"^[config].*[.json]$", fname)
+    confmatch = re.search(r"(?i)^config.*\.json$", fname)
     if confmatch is not None:
         config_file_name = confmatch.string
         config_file_path = os.path.join(project_root_dir, config_file_name)
 
-    modelmatch = re.search(r"^[model].*[.json]$", fname)
+    modelmatch = re.search(r"(?i)^model.*\.json$", fname)
     if modelmatch is not None:
         model_file_path_list.append(
             os.path.join(project_root_dir, modelmatch.string))
