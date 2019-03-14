@@ -24,9 +24,8 @@ import numpy as np
 np.seterr(divide='print', invalid='raise')
 import time
 import re
-import pandas as pd
 
-from colorama import init
+from colorama import init, Fore, Back, Style
 init()
 
 import os
@@ -93,20 +92,35 @@ def main():
         sys.exit(2)
 
     proj_root_dir = args.input_directory
-    if os.path.exists(proj_root_dir):
-        proj_input_dir = os.path.join(proj_root_dir, "input")
 
-        for fname in os.listdir(proj_input_dir):
-            confmatch = re.search(r"^[config].*[.json]$", fname)
-            if confmatch is not None:
-                config_file_name = confmatch.string
-            modelmatch = re.search(r"^[model].*[.json]$", fname)
-            if modelmatch is not None:
-                model_file_name = modelmatch.string
-    else:
+    if not os.path.isdir(proj_root_dir):
+        print("Invalid path supplied:\n {}".format(proj_root_dir))
+        sys.exit(1)
+
+    proj_input_dir = os.path.join(proj_root_dir, "input")
+    config_file_name = None
+    model_file_name = None
+
+    for fname in os.listdir(proj_input_dir):
+        confmatch = re.search(r"(?i)^config.*\.json$", fname)
+        if confmatch is not None:
+            config_file_name = confmatch.string
+        modelmatch = re.search(r"(?i)^model.*\.json$", fname)
+        if modelmatch is not None:
+            model_file_name = modelmatch.string
+
+    if config_file_name is None:
         parser.error(
-            "Given input directory does not exist: " +
-            str(proj_root_dir))
+            "Config file not found. "
+            "A valid config file name must begin with the term `config`, "
+            "and must be a JSON file.\n")
+        sys.exit(2)
+
+    if model_file_name is None:
+        parser.error(
+            "Model file not found. "
+            "A valid model file name must begin the term `model`, "
+            "and must be a JSON file.\n")
         sys.exit(2)
 
     args.config_file = os.path.join(proj_input_dir, config_file_name)
@@ -125,7 +139,6 @@ def main():
 
     args.output = os.path.join(
         os.path.dirname(os.path.dirname(args.config_file)), "output")
-    print(args.output )
     try:
         if not os.path.exists(args.output):
             os.makedirs(args.output)
@@ -142,7 +155,9 @@ def main():
     log_path = os.path.join(args.output, "log.txt")
     configure_logger(log_path, args.loglevel)
     rootLogger = logging.getLogger(__name__)
-    rootLogger.info('Simulation initiated at: {}\n'.format(timestamp))
+    rootLogger.info(Fore.GREEN +
+                    'Simulation initiated at: {}\n'.format(timestamp) +
+                    Fore.RESET)
 
     # ---------------------------------------------------------------------
     # Configure simulation model.
@@ -256,8 +271,10 @@ def main():
                 rootLogger.error("Input files not found: " + str(args.cp))
 
     rootLogger.info('RUN COMPLETE.\n')
-    # print("\n\nLoglevel was: {}.\n".format(str(args.loglevel)))
-
+    rootLogger.info("Config file used : " + args.config_file)
+    rootLogger.info("Model file used  : " + args.model_file)
+    rootLogger.info("Outputs saved in : " +
+                    Fore.YELLOW + args.output + Fore.RESET + '\n')
 
 if __name__ == "__main__":
     main()
