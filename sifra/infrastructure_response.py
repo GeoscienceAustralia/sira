@@ -425,9 +425,6 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
             exp_damage_ratio
         )
 
-    # --------------------------------------------------------------------------
-        rootLogger.info("Outputs saved in: " + scenario.output_path)
-
     # ... END POST-PROCESSING
     # **************************************************************************
 
