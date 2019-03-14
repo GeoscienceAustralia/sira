@@ -211,9 +211,9 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
         rootLogger.info("Calculating Component Response...")
         for damage_state_index in component.damage_states.keys():
             # find the hazard intensity component is exposed too
-            longitude, latitude = component.get_location()
+            pos_x, pos_y = component.get_location()
             hazard_intensity = hazard.get_hazard_intensity_at_location(
-                longitude, latitude)
+                pos_x, pos_y)
 
             component_pe_ds[damage_state_index] = \
                 component.damage_states[damage_state_index].response_function(
