@@ -686,33 +686,34 @@ def component_criticality(infrastructure,
     axes_lw = 0.75
 
     sns.set(style="darkgrid",
-            rc={"axes.edgecolor"    : '0.15',
-                "axes.linewidth"    : axes_lw,
+            rc={
+                "axes.edgecolor": '0.15',
+                "axes.linewidth": axes_lw,
                 "axes.spines.bottom": True,
-                "axes.spines.left"  : True,
-                "axes.spines.right" : False,
-                "axes.spines.top"   : False,
-                # ---
-                "grid.color"        : 'white',
-                "grid.linestyle"    : '-',
-                "grid.linewidth"    : 2.0,
-                # ---
-                "ytick.left"        : True,
-                "ytick.labelsize"   : 13,
-                "ytick.major.size"  : 7,
-                "ytick.major.width" : axes_lw,
-                "ytick.major.pad"   : 4,
-                "ytick.minor.left"  : False,
-                # ---
-                "xtick.bottom"      : True,
-                "xtick.labelsize"   : 13,
-                "xtick.major.size"  : 7,
-                "xtick.major.width" : axes_lw,
-                "xtick.major.pad"   : 4,
+                "axes.spines.left": True,
+                "axes.spines.right": False,
+                "axes.spines.top": False,
+                # ----------------------------
+                "grid.color": 'white',
+                "grid.linestyle": '-',
+                "grid.linewidth": 2.0,
+                # ----------------------------
+                "ytick.left": True,
+                "ytick.labelsize": 13,
+                "ytick.major.size": 7,
+                "ytick.major.width": axes_lw,
+                "ytick.major.pad": 4,
+                "ytick.minor.left": False,
+                # ----------------------------
+                "xtick.bottom": True,
+                "xtick.labelsize": 13,
+                "xtick.major.size": 7,
+                "xtick.major.width": axes_lw,
+                "xtick.major.pad": 4,
                 "xtick.minor.bottom": False,
                 }
             )
-    #
+
     # ax.tick_params(
     #     axis='x',        # changes apply to the x-axis
     #     which='major',      # ticks affected: major, minor, or both
@@ -1533,8 +1534,8 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
         haz_ix = hazards.hazard_scenario_name.index(scenario_header)
         sc_haz_val = \
             hazards.listOfhazards[haz_ix].get_hazard_intensity_at_location(
-                infrastructure.components[c].longitude,
-                infrastructure.components[c].latitude)
+                infrastructure.components[c].pos_x,
+                infrastructure.components[c].pos_y)
 
         comptype_used[ct] += 1
         comps_avl_for_int_replacement = \
