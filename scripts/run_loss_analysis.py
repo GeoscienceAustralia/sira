@@ -9,7 +9,6 @@ import json
 
 import os
 import copy
-import itertools
 from colorama import Fore, Back, init, Style
 init()
 
@@ -418,8 +417,6 @@ def main():
 
     print("--- --- --- --- --- --- --- --- ---")
     print(Fore.YELLOW + "Scenario loss analysis complete." + Fore.RESET + "\n")
-    print("Outputs saved in: \n" +
-          Fore.GREEN + OUTPUT_PATH + Fore.RESET + '\n')
     ############################################################################
 
 
