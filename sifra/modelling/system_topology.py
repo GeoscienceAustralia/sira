@@ -256,8 +256,8 @@ class SystemTopology(object):
                     )
 
         for node in list(self.component_attr.keys()):
-            pos_x = self.component_attr[node]['longitude']
-            pos_y = self.component_attr[node]['latitude']
+            pos_x = self.component_attr[node]['pos_x']
+            pos_y = self.component_attr[node]['pos_y']
             if pos_x and pos_y:
                 node_pos = str(pos_x)+","+str(pos_y)+"!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
@@ -403,8 +403,8 @@ class SystemTopology(object):
                     )
 
         for node in list(self.component_attr.keys()):
-            pos_x = self.component_attr[node]['longitude']
-            pos_y = self.component_attr[node]['latitude']
+            pos_x = self.component_attr[node]['pos_x']
+            pos_y = self.component_attr[node]['pos_y']
             if pos_x and pos_y:
                 node_pos = str(pos_x)+","+str(pos_y)+"!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
@@ -635,8 +635,8 @@ class SystemTopology(object):
                     )
 
         for node in list(self.component_attr.keys()):
-            pos_x = self.component_attr[node]['longitude']
-            pos_y = self.component_attr[node]['latitude']
+            pos_x = self.component_attr[node]['pos_x']
+            pos_y = self.component_attr[node]['pos_y']
             if pos_x and pos_y:
                 node_pos = str(pos_x)+","+str(pos_y)+"!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
