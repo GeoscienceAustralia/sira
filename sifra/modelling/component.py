@@ -58,8 +58,10 @@ class Component(Base):
     node_type = Element('str', 'Class of node.')
     operating_capacity = Element('float',
                                  'Component nominal operating capacity')
-    longitude = Element('float', 'Component longitude location value')
-    latitude = Element('float', 'Component latitude location value')
+    pos_x = Element('float',
+                    'Component locational value on the x-axis / longitude')
+    pos_y = Element('float',
+                    'Component locational value on the y-axis / latitude')
 
     damages_states_constructor = {}
     # Element('json', 'Information about damage states.')
@@ -89,7 +91,7 @@ class Component(Base):
                 self.damage_states[int(k)] = DamageState(**params)
 
     def get_location(self):
-        return self.longitude, self.latitude
+        return self.pos_x, self.pos_y
 
     def pe_ds(self, hazard_intensity):
         """
@@ -140,10 +142,10 @@ class Component(Base):
                     str(self.node_type) + '\n' +\
                "operating_capacity     : " + \
                     str(self.operating_capacity) + '\n' +\
-               "longitude              : " + \
-                    str(self.longitude) + '\n' + \
-               "latitude               : " + \
-                    str(self.latitude) + '\n' + \
+               "pos_x                  : " + \
+                    str(self.pos_x) + '\n' + \
+               "pos_y                  : " + \
+                    str(self.pos_y) + '\n' + \
                "damage_states          : " + \
                     str([self.damage_states[damage_state].damage_state_name
                          for damage_state in self.damage_states]) + '\n' + \
