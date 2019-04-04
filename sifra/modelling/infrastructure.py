@@ -23,6 +23,9 @@ class InfrastructureFactory(object):
         elif config['system_class'].lower() == \
                 'PotableWaterTreatmentPlant'.lower():
             return PotableWaterTreatmentPlant(**config)
+        elif config['system_class'].lower() == \
+                'PotableWaterPumpStation'.lower():
+            return PotableWaterPumpStation(**config)
 
 
 class Infrastructure(Base):
@@ -560,3 +563,54 @@ class PotableWaterTreatmentPlant(Infrastructure):
             'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Sediment Flocculation': [0.0, 0.05, 0.40, 0.70, 1.00],
             }
+
+    def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings detailing the system damage levels.
+        """
+        self.sys_dmg_states = ["DS1 Slight", "DS2 Moderate",
+                               "DS3 Extensive", "DS4 Complete"]
+        return self.sys_dmg_states
+
+
+class PotableWaterPumpStation(Infrastructure):
+    def __init__(self, **kwargs):
+        super(PotableWaterPumpStation, self).__init__(**kwargs)
+        # Initiate the water treatment plant values, which have been used
+        # in all current testing
+        self.uncosted_classes = ['SYSTEM INPUT',
+                                 'SYSTEM OUTPUT',
+                                 'JUNCTION POINT', 'JUNCTION',
+                                 'MODEL ARTEFACT']
+        self.ds_lims_compclasses = {
+            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Air Compression Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Backup Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Basins': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Buildings': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chlorination Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Supply': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Commercial': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Backup': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electrical Control Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Horizontal Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Vertical Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Elevated Pipes': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Internal Pipework': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chemical Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Concrete Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Steel Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
+            }
+
+    def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings detailing the system damage levels.
+        """
+        self.sys_dmg_states = ["DS1 Slight", "DS2 Moderate",
+                               "DS3 Extensive", "DS4 Complete"]
+        return self.sys_dmg_states
