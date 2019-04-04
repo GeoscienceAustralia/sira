@@ -172,9 +172,6 @@ def read_model_from_xlsx(config):
         # list of damage states with a function assignment!
         system_components[component_id] = Component(**component_values)
 
-    # TODO refractor code below, combine the two high level variables in input json
-    # and make corresponding changes in code below
-
     # now we add children!
     for index in node_conn_df:
         component_id = node_conn_df[index]['origin']
