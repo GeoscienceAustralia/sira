@@ -239,8 +239,8 @@ class SystemTopology(object):
             for cluster in node_clusters:
                 grp = [k for k in list(self.component_attr.keys())
                        if self.component_attr[k]['node_cluster'] == cluster]
-                cluster = '_'.join(cluster.split())
-                if cluster.lower() not in ['none', '']:
+                if cluster:
+                    cluster = '_'.join(cluster.split())
                     cluster_name = 'cluster_'+cluster
                     rank = 'same'
                 else:
@@ -338,18 +338,18 @@ class SystemTopology(object):
             label='< '+self.graph_label+'<BR/><BR/> >',
             bgcolor="white",
             rankdir=self.orientation,
-            # ranksep="1.0 equally",
             splines=self.connector_type,
             center="true",
             forcelabels=True,
             fontname="Helvetica-Bold",
             fontcolor="#444444",
-            fontsize=26,
+            fontsize=30,
             # smoothing="graph_dist",
             smoothing="none",
             pad=0.5,
             pack=False,
             sep="+20",
+            # ranksep="1.0 equally",
             # overlap=False,
             # overlap="voronoi",
             # overlap_scaling=1.0,
@@ -386,8 +386,8 @@ class SystemTopology(object):
             for cluster in node_clusters:
                 grp = [k for k in list(self.component_attr.keys())
                        if self.component_attr[k]['node_cluster'] == cluster]
-                cluster = '_'.join(cluster.split())
-                if cluster.lower() not in ['none', '']:
+                if cluster:
+                    cluster = '_'.join(cluster.split())
                     cluster_name = 'cluster_'+cluster
                     rank = 'same'
                 else:
@@ -438,8 +438,8 @@ class SystemTopology(object):
                     self.segment_long_labels(node, maxlen=7, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="doublecircle",
-                    width=0.9,
-                    height=0.9,
+                    width=1.1,
+                    height=1.1,
                     rank="sink",
                     penwidth=1.5,
                     color="orangered",  # royalblue3
@@ -450,11 +450,11 @@ class SystemTopology(object):
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'dependency':
                 self.gviz.get_node(node).attr['label'] =\
-                    self.segment_long_labels(node, maxlen=7, delims=['_', ' '])
+                    self.segment_long_labels(node, maxlen=9, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="circle",
-                    width=0.9,
-                    height=0.9,
+                    width=1.1,
+                    height=1.1,
                     rank="dependency",
                     penwidth=2.5,
                     color="orchid",
@@ -477,10 +477,12 @@ class SystemTopology(object):
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'transshipment':
+                tmplabel = self.segment_long_labels(
+                    node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     fixedsize="true",
                     label="",
-                    xlabel=node,
+                    xlabel=tmplabel,
                     )
 
             if str(self.component_attr[node]['component_class']).lower()\
@@ -492,7 +494,7 @@ class SystemTopology(object):
                 self.gviz.get_node(node).attr.update(
                     shape="rect",
                     penwidth=1.0,
-                    width=1.0,
+                    width=3.0,
                     height=0.2,
                     label="",
                     xlabel=node,
@@ -650,7 +652,7 @@ class SystemTopology(object):
 
             if str(self.component_attr[node]['node_type']).lower() == 'supply':
                 self.gviz.get_node(node).attr['label'] =\
-                    self.segment_long_labels(node, maxlen=10, delims=['_', ' '])
+                    self.segment_long_labels(node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="ellipse",
                     rank="supply",
@@ -665,7 +667,7 @@ class SystemTopology(object):
 
             if str(self.component_attr[node]['node_type']).lower() == 'sink':
                 self.gviz.get_node(node).attr['label'] =\
-                    self.segment_long_labels(node, maxlen=7, delims=['_', ' '])
+                    self.segment_long_labels(node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="ellipse",
                     rank="sink",
@@ -681,11 +683,11 @@ class SystemTopology(object):
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'dependency':
                 self.gviz.get_node(node).attr['label'] =\
-                    self.segment_long_labels(node, maxlen=7, delims=['_', ' '])
+                    self.segment_long_labels(node, maxlen=14, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="circle",
-                    width=1.0,
-                    height=1.0,
+                    width=1.1,
+                    height=1.1,
                     rank="dependency",
                     penwidth=2.5,
                     color="orchid",
@@ -696,26 +698,28 @@ class SystemTopology(object):
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'junction':
                 tmplabel =\
-                    self.segment_long_labels(node, maxlen=8, delims=['_', ' '])
+                    self.segment_long_labels(node, maxlen=10, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="point",
-                    width=0.3,
-                    height=0.3,
-                    color="#888888",
-                    fillcolor="#888888",
-                    fontcolor="#888888",
+                    width=0.25,
+                    height=0.25,
+                    color="#777777",
+                    fillcolor="#777777",
+                    fontcolor="#777777",
                     label="",
                     xlabel=tmplabel,
                     )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'transshipment':
+                tmplabel = self.segment_long_labels(node, maxlen=14,
+                                                    delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     width=0.3,
                     height=0.3,
                     fixedsize="true",
                     label="",
-                    xlabel=node,
+                    xlabel=tmplabel,
                     )
 
             if str(self.component_attr[node]['component_class']).lower() in \
@@ -748,6 +752,8 @@ class SystemTopology(object):
 
             if str(self.component_attr[node]['component_class']).lower()\
                     == 'chemical tank':
+                tmplabel =\
+                    self.segment_long_labels(node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     # shape="cylinder",
                     shape="circle",
@@ -756,7 +762,7 @@ class SystemTopology(object):
                     height=0.7,
                     fixedsize="true",
                     label="",
-                    xlabel=node,
+                    xlabel=tmplabel,
                     )
 
             if str(self.component_attr[node]['component_class']).lower() in\
@@ -764,7 +770,8 @@ class SystemTopology(object):
                 tmplabel =\
                     self.segment_long_labels(node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
-                    shape="house",
+                    style="rounded",
+                    shape="box",
                     penwidth=2.0,
                     width=1.6,
                     height=0.9,
@@ -819,19 +826,47 @@ class SystemTopology(object):
 
     # ==========================================================================
 
-    def msplit(self, string, delims):
-        s = string
-        for d in delims:
-            rep = d + '\n'
-            s = rep.join(x for x in s.split(d))
-        return s
+    def split_but_preserve_delims(self, string, delims):
+        delimsplus = [x + "+" for x in map(re.escape, delims)]
+        regexPattern = '|'.join(delimsplus)
+        split_chars = [x for x in re.split(regexPattern, string) if x]
+        delims_matched = re.findall(regexPattern, string)
+        new_str = [split_chars[i] + delims_matched[i] for i in
+                   range(len(delims_matched))]
+        if len(delims_matched) < len(split_chars):
+            new_str.append(split_chars[-1])
+        return new_str
 
-    def segment_long_labels(self, string, maxlen=7, delims=' '):
+    def join_list_elems_given_len(self, str_list, num_str=20):
+        i = 0
+        newlist = []
+        str_list.reverse()
+        while str_list:
+            elem = str_list.pop()
+            # elemnxt = ""
+            while str_list and len(elem + str_list[-1]) <= num_str:
+                elemnxt = str_list.pop()
+                if len(elem + elemnxt) <= num_str:
+                    elem = elem + elemnxt
+                    # elemnxt_used = True
+                else:
+                    # elemnxt_used = False
+                    exit
+                i += 1
+            newlist.append(elem)
+            i += 1
+        return newlist
+
+    def segment_long_labels(self, string, maxlen=12, delims=[' ']):
         if (not delims) and (len(string) > maxlen):
-            return "\n".join(
-                re.findall("(?s).{," + str(maxlen) + "}", string))[:-1]
+            str_list = re.findall("(?s).{1," + str(maxlen) + "}", string)
         elif len(string) > maxlen:
-            return self.msplit(string, delims)
+            str_list = self.split_but_preserve_delims(string, delims)
+            str_list = self.join_list_elems_given_len(str_list, num_str=maxlen)
         else:
             return string
+        # print(str_list)
+        # print("\n".join(str_list))
+        return "\n".join(str_list)
+
 
