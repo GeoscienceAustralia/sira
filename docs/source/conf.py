@@ -16,7 +16,6 @@ import sys
 import os
 import shlex
 import sifra
-import extensions.figtable
 
 # directory relative to this conf file
 CURDIR = os.path.abspath(os.path.dirname(__file__))
@@ -28,6 +27,7 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 
 # custom extensions directory to python path
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
+import figtable
 
 # -- General configuration ------------------------------------------------
 
