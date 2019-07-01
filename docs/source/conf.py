@@ -27,7 +27,9 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 
 # custom extensions directory to python path
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
-
+print("####")
+print(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
+print("####")
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
