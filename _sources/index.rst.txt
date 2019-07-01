@@ -42,15 +42,15 @@ Features
 ========
 
 *Open Source:*
-    Written in Python, and there is no dependency on
-    proprietary tools. It should run on OS X, Windows, and
-    Linux platforms.
+Written in Python, and there is no dependency on
+proprietary tools. It should run on OS X, Windows, and
+Linux platforms.
 
 *Flexible Infrastructure Model:*
-    The data model is based on graph theory. All infrastructure systems
-    are represented as networks. This allows an user to develop
-    arbitrarily complex custom facility models -- for a :term:`Facility`
-    or a network -- for impact simulation.
+The data model is based on graph theory. All infrastructure systems
+are represented as networks. This allows an user to develop
+arbitrarily complex custom facility models -- for a :term:`Facility`
+or a network -- for impact simulation.
 
 *Extensible Component Library:*
     User can define new instances of `component_type`
