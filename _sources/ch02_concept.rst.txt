@@ -103,19 +103,21 @@ in the simulation code).
     to a network or a facility. The context of the simulation will
     disambiguate its meaning.
 
--   **Component**
+-   **Component:**
     It is the high-level element within the network (or graph) that
     represents the **System Model**. A collection of interconnected
     components with specific attributes and roles comprise the System
     in the context of the simulation model.
 
--   **If the asset under study is a NETWORK**
+-   **If the asset under study is a NETWORK:**
+
         -  the System Model is a Level 1 element, i.e.
            an **Infrastructure Network**, and |br|
         -  the Components are Level 2 elements, i.e.
            **Infrastructure Facilities**
 
--   **If the asset under study is a FACILITY**
+-   **If the asset under study is a FACILITY:**
+
         -  the System Model is a Level 2 element, i.e.
            an **Infrastructure Facility**, and  |br|
         -  the Components are Level 3 elements, i.e.
