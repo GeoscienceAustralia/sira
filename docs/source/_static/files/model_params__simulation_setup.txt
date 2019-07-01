@@ -1,4 +1,4 @@
-.. rubric:: [Scenario]
+.. rubric:: [SCENARIO]
 
 `SCENARIO_NAME`
     :Description:   Name for identifying simulation scenario
@@ -56,7 +56,7 @@
     :Example:       500
 
 
-.. rubric:: [Restoration]
+.. rubric:: [RESTORATION]
 
 `TIME_UNIT`
     :Description:   Unit of time for restoration time calculations
