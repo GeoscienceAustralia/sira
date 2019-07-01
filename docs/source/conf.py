@@ -26,8 +26,7 @@ CURDIR = os.path.abspath(os.path.dirname(__file__))
 #sys.path.insert(0, os.path.abspath('.'))
 
 # custom extensions directory to python path
-sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'extensions'))
-import figtable
+sys.path.append(os.path.join(CURDIR, 'extensions'))
 
 # -- General configuration ------------------------------------------------
 
