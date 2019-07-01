@@ -265,33 +265,35 @@ in a database.</p>
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).</p>
 <p><strong>The System Model:</strong> This defines a logical set of assets that is an
-abstraction of a real equivalent asset. The usage of the term system in this</p>
-<blockquote>
-<div><p>context is closer to its application in System Engineering, rather than
+abstraction of a real equivalent asset. The usage of the term system in this
+context is closer to its application in System Engineering, rather than
 from an IT or software engineering perspective. The System Model defines
 the <em>boundary</em> of the collection of elements under investigation. It is
 the collection of nodes and connecting edges that collectively provides
 a service or generates a type of product. This term can be used to refer
 to a network or a facility. The context of the simulation will
 disambiguate its meaning.</p>
-</div></blockquote>
 <p><strong>Component:</strong> It is the high-level element within the network (or graph) that
 represents the <strong>System Model</strong>. A collection of interconnected
 components with specific attributes and roles comprise the System
 in the context of the simulation model.</p>
 <p>Please note that based on extent the type of asset, then the view of the
 system and its components would vary.</p>
-<p><strong>If the system under study is a NETWORK:</strong></p>
+<p><strong>If the system under study is a NETWORK</strong>, then <br />
+-  the System Model is a Level 1 element, i.e.</p>
+<blockquote>
+<div><p>an <strong>Infrastructure Network</strong>, and <br /></p>
+</div></blockquote>
 <ul class="simple">
-<li><p>the System Model is a Level 1 element, i.e.
-an <strong>Infrastructure Network</strong>, and <br /></p></li>
 <li><p>the Components are Level 2 elements, i.e.
 <strong>Infrastructure Facilities</strong></p></li>
 </ul>
-<p><strong>If the system under study is a FACILITY:</strong></p>
+<p><strong>If the system under study is a FACILITY</strong>, then <br />
+-  the System Model is a Level 2 element, i.e.</p>
+<blockquote>
+<div><p>an <strong>Infrastructure Facility</strong>, and  <br /></p>
+</div></blockquote>
 <ul class="simple">
-<li><p>the System Model is a Level 2 element, i.e.
-an <strong>Infrastructure Facility</strong>, and  <br /></p></li>
 <li><p>the Components are Level 3 elements, i.e.
 an <strong>Infrastructure Microcomponents</strong></p></li>
 </ul>
