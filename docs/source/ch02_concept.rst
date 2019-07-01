@@ -110,7 +110,7 @@ in the context of the simulation model.
 Please note that based on extent the type of asset, then the view of the
 system and its components would vary.
 
-** If the system under study is a NETWORK:**
+**If the system under study is a NETWORK:**
 
 -  the System Model is a Level 1 element, i.e.
    an **Infrastructure Network**, and |br|
