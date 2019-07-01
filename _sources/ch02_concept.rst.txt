@@ -111,12 +111,12 @@ Please note that based on extent the type of asset, then the view of the
 system and its components would vary.
 
 **If the system under study is a NETWORK**, then the System Model is a
-Level 1 element, i.e. an **Infrastructure Network**, and the Components are
-Level 2 elements, i.e. **Infrastructure Facilities**
+Level 1 element, i.e. an *Infrastructure Network*, and the Components are
+Level 2 elements, i.e. *Infrastructure Facilities*.
 
 **If the system under study is a FACILITY**, then the System Model is a
-Level 2 element, i.e. an **Infrastructure Facility**, and the Components are
-Level 3 elements, i.e. **Infrastructure Microcomponents**
+Level 2 element, i.e. an *Infrastructure Facility*, and the Components are
+Level 3 elements, i.e. *Infrastructure Microcomponents*.
 
 .. _model-node-classification:
 
