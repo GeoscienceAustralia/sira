@@ -69,7 +69,7 @@
   :Example:     'Boiler System'
 
 
-`op_capacity`
+`operating_capacity`
   :Description: Operational capacity of the component.
                 One (1.0) indicates full functionality, and
                 zero (0.0) indicates complete loss of functionality.
