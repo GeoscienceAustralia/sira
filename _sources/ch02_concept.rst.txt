@@ -66,21 +66,19 @@ The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:
 
 
-**Level 1 : Infrastructure Network**
-   This is the top level of interconnected infrastructure systems where
-   infrastructure facilities are connected to form a network or networks.
+**Level 1 : Infrastructure Network --**  This is the top level of
+interconnected infrastructure systems where infrastructure facilities are
+connected to form a network or networks.
 
-**Level 2 : Infrastructure Facility**
-   The concept of facilities used in this framework map closely to the
-   typology of macro-components as defined in the Synerg-G program
-   :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition
-   systems as defined in :cite:`Rinaldi-etal-2001`.
+**Level 2 : Infrastructure Facility --** The concept of facilities used in this
+framework map closely to the typology of macro-components as defined in the
+Synerg-G program :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
+definition systems as defined in :cite:`Rinaldi-etal-2001`.
 
-**Level 3 : Infrastructure Microcomponent**
-   This concept of components map closely to the typology of
-   micro-components as defined in the Synerg-G program
-   :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
-   definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.
+**Level 3 : Infrastructure Microcomponent --** This concept of components map
+closely to the typology of micro-components as defined in the Synerg-G program
+:cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition of
+subsystems as defined in :cite:`Rinaldi-etal-2001`.
 
 This applies to discussions on a *complete* that is responsible for
 delivering some service. This also applies to classification of assets,
@@ -94,34 +92,34 @@ In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).
 
-**The System Model**
-   This defines a logical set of assets that is an abstraction
-   of a real equivalent asset. The usage of the term system in this
-   context is closer to its application in System Engineering, rather than
-   from an IT or software engineering perspective. The System Model defines
-   the *boundary* of the collection of elements under investigation. It is
-   the collection of nodes and connecting edges that collectively provides
-   a service or generates a type of product. This term can be used to refer
-   to a network or a facility. The context of the simulation will
-   disambiguate its meaning.
+-   **The System Model:**
+    This defines a logical set of assets that is an abstraction
+    of a real equivalent asset. The usage of the term system in this
+    context is closer to its application in System Engineering, rather than
+    from an IT or software engineering perspective. The System Model defines
+    the *boundary* of the collection of elements under investigation. It is
+    the collection of nodes and connecting edges that collectively provides
+    a service or generates a type of product. This term can be used to refer
+    to a network or a facility. The context of the simulation will
+    disambiguate its meaning.
 
-**Component**
-   It is the high-level element within the network (or graph) that
-   represents the **System Model**. A collection of interconnected
-   components with specific attributes and roles comprise the System
-   in the context of the simulation model.
+-   **Component**
+    It is the high-level element within the network (or graph) that
+    represents the **System Model**. A collection of interconnected
+    components with specific attributes and roles comprise the System
+    in the context of the simulation model.
 
-**If the asset under study is a NETWORK**
-   -  the System Model is a Level 1 element, i.e.
-      an **Infrastructure Network**, and |br|
-   -  the Components are Level 2 elements, i.e.
-      **Infrastructure Facilities**
+-   **If the asset under study is a NETWORK**
+    -  the System Model is a Level 1 element, i.e.
+       an **Infrastructure Network**, and |br|
+    -  the Components are Level 2 elements, i.e.
+       **Infrastructure Facilities**
 
-**If the asset under study is a FACILITY**
-   -  the System Model is a Level 2 element, i.e.
-      an **Infrastructure Facility**, and  |br|
-   -  the Components are Level 3 elements, i.e.
-      an **Infrastructure Microcomponents**
+-   **If the asset under study is a FACILITY**
+    -  the System Model is a Level 2 element, i.e.
+       an **Infrastructure Facility**, and  |br|
+    -  the Components are Level 3 elements, i.e.
+       an **Infrastructure Microcomponents**
 
 .. _model-node-classification:
 
