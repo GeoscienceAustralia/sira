@@ -41,33 +41,28 @@ of communities in Australia and its region.
 Features
 ========
 
-**Open Source:**
-
+*Open Source:*
     Written in Python, and there is no dependency on
     proprietary tools. It should run on OS X, Windows, and
     Linux platforms.
 
-**Flexible Infrastructure Model:**
-
+*Flexible Infrastructure Model:*
     The data model is based on graph theory. All infrastructure systems
     are represented as networks. This allows an user to develop
     arbitrarily complex custom facility models -- for a :term:`Facility`
     or a network -- for impact simulation.
 
-**Extensible Component Library:**
-
+*Extensible Component Library:*
     User can define new instances of `component_type`
     (the building blocks of a facility) and link it to existing or
     custom fragility algorithms.
 
-**Component Criticality Analysis:**
-
+*Component Criticality Analysis:*
     Scenario Analysis tools allow users to identify the cost of
     restoration for chosen scenarios, expected restoration times,
     and which component upgrades can most benefit the system.
 
-**Restoration Prognosis:**
-
+*Restoration Prognosis:*
     User can experiment with different levels of hazards and
     post-disaster resource allocation to gauge restoration
     times for facility operations.
