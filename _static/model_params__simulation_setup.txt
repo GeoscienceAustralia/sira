@@ -1,5 +1,6 @@
 .. rubric:: [SCENARIO]
 
+---------------     -------------------------------------------
 `SCENARIO_NAME`
 ---------------     -------------------------------------------
 Description         Name for identifying simulation scenario
@@ -9,9 +10,10 @@ Example             'Coal-fired Generation Plant 600W'
 
 
 `SCENARIO_NAME`
-:Description:   Name for identifying simulation scenario
-:Data Type:     String
-:Example:       'Coal-fired Generation Plant 600W'
+
+**Description:**   Name for identifying simulation scenario |br|
+**Data Type:**     String |br|
+**Example:**       'Coal-fired Generation Plant 600W' |br|
 
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
