@@ -1,12 +1,12 @@
 .. rubric:: [SCENARIO]
 
-================    =================================================
-`SCENARIO_NAME`     NA
-================    =================================================
-Description         Name for identifying simulation scenario
-Data Type           String
-Example             'Coal-fired Generation Plant 600W'
-================    =================================================
+===============  =================================================
+`SCENARIO_NAME`
+===============  =================================================
+Description       Name for identifying simulation scenario
+Data Type         String
+Example           'Coal-fired Generation Plant 600W'
+===============  =================================================
 
 
 `SCENARIO_NAME` |br|
