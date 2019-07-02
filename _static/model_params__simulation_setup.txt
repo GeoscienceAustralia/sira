@@ -1,7 +1,7 @@
 .. rubric:: [SCENARIO]
 
 ================    =================================================
-`SCENARIO_NAME`       
+`SCENARIO_NAME`     NA
 ================    =================================================
 Description         Name for identifying simulation scenario
 Data Type           String
