@@ -1,9 +1,18 @@
 .. rubric:: [SCENARIO]
 
+==============================================================
 `SCENARIO_NAME`
-    :Description:   Name for identifying simulation scenario
-    :Data Type:     String
-    :Example:       'Coal-fired Generation Plant 600W'
+===============     ==========================================
+Description         Name for identifying simulation scenario
+Data Type           String
+Example             'Coal-fired Generation Plant 600W'
+===============     ==========================================
+
+
+`SCENARIO_NAME`
+:Description:   Name for identifying simulation scenario
+:Data Type:     String
+:Example:       'Coal-fired Generation Plant 600W'
 
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
@@ -22,7 +31,7 @@
     :Example:       [0.50, 0.55]
 
 
-.. rubric:: [Hazard]
+.. rubric:: [HAZARD]
 
 `HAZARD_INPUT_METHOD`
     :Description:   How the hazard is supplied. Must be one of two options:
