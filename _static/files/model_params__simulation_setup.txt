@@ -23,7 +23,7 @@
 ..  csv-table::
     :widths: 30, 200
 
-    `SCENARIO_NAME`
+    `TEST__SCENARIO_NAME`
     Description, Name for identifying simulation scenario
     Data Type, String
     Example, 'Coal-fired Generation Plant 600W'
