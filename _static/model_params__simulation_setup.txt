@@ -18,8 +18,7 @@ Example          'Coal-fired Generation Plant 600W'
 | Example     | 'Coal-fired Generation Plant 600W'         |
 +-------------+--------------------------------------------+
 
-.. csv-table::
-   :header: `INTENSITY_MEASURE_PARAM`,
+.. csv-table:: `INTENSITY_MEASURE_PARAM`
    :widths: 20, 50
    :stub-columns: 1
 
