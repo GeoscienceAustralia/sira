@@ -8,15 +8,24 @@ Data Type        String
 Example          'Coal-fired Generation Plant 600W'
 =============  =================================================
 
-+-------------+------------------------------------------+
-| **SCENARIO_NAME**                                      |
-+-------------+------------------------------------------+
-| Description | Name for identifying simulation scenario |
-+-------------+------------------------------------------+
-| Data Type   | String                                   |
-+-------------+------------------------------------------+
-| Example     | 'Coal-fired Generation Plant 600W'       |
-+-------------+------------------------------------------+
++-------------+--------------------------------------------+
+| **SCENARIO_NAME**                                        |
++-------------+--------------------------------------------+
+| Description | Name for identifying simulation scenario   |
++-------------+--------------------------------------------+
+| Data Type   | String                                     |
++-------------+--------------------------------------------+
+| Example     | 'Coal-fired Generation Plant 600W'         |
++-------------+--------------------------------------------+
+
+..  csv-table::
+    :header: `INTENSITY_MEASURE_PARAM`
+    :widths: 20, 50
+    :stub-columns: 1
+
+    Description:,"Engineering Demand Parameter"
+    Data Type:,String
+    Example:,PGA
 
 
 `SCENARIO_NAME`

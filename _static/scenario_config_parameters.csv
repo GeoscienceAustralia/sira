@@ -3,11 +3,6 @@
 "Data Type:",String
 "Example:",'PGA'
 
-`INTENSITY_MEASURE_PARAM`
-"Description:","Engineering Demand Parameter"
-"Data Type:",String
-"Example:",'PGA'
-
 `INTENSITY_MEASURE_UNIT`
 "Description:","Demand Parameter Unit"
 "Data Type:",String
