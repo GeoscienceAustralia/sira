@@ -25,8 +25,9 @@ Example          'Coal-fired Generation Plant 600W'
    Data Type,String
    Example,PGA
 
+`INTENSITY_MEASURE_PARAM`
 
-.. csv-table:: INTENSITY_MEASURE_PARAM
+.. csv-table::
 
    Description,"Engineering Demand Parameter"
    Data Type,String
