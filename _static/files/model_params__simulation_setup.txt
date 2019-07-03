@@ -12,9 +12,9 @@
 +-------------+--------------------------------------------+
 
 .. csv-table::
-   :widths: 30, 200
+   :widths: 10, 200
 
-   `INTENSITY_MEASURE_PARAM`
+   `TEST_INTENSITY_MEASURE_PARAM`
    Description,"Engineering Demand Parameter"
    Data Type,String
    Example,PGA
@@ -23,7 +23,7 @@
 ..  csv-table::
     :widths: 30, 200
 
-    `TEST__SCENARIO_NAME`
+    `SCENARIO_NAME`
     Description, Name for identifying simulation scenario
     Data Type, String
     Example, 'Coal-fired Generation Plant 600W'
