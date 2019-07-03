@@ -1,12 +1,5 @@
 .. rubric:: [SCENARIO]
 
-=============  =================================================
-SCENARIO_NAME
-=============  =================================================
-Description      Name for identifying simulation scenario
-Data Type        String
-Example          'Coal-fired Generation Plant 600W'
-=============  =================================================
 
 +-------------+--------------------------------------------+
 | **SCENARIO_NAME**                                        |
@@ -18,17 +11,10 @@ Example          'Coal-fired Generation Plant 600W'
 | Example     | 'Coal-fired Generation Plant 600W'         |
 +-------------+--------------------------------------------+
 
-.. csv-table:: `INTENSITY_MEASURE_PARAM`
-   :widths: 30, 150
-
-   Description,"Engineering Demand Parameter"
-   Data Type,String
-   Example,PGA
-
-`INTENSITY_MEASURE_PARAM`
-
 .. csv-table::
+   :widths: 30, 200
 
+   `INTENSITY_MEASURE_PARAM`,
    Description,"Engineering Demand Parameter"
    Data Type,String
    Example,PGA
