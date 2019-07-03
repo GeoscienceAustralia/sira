@@ -26,6 +26,13 @@ Example          'Coal-fired Generation Plant 600W'
    Example,PGA
 
 
+.. csv-table:: INTENSITY_MEASURE_PARAM
+
+   Description,"Engineering Demand Parameter"
+   Data Type,String
+   Example,PGA
+
+
 `SCENARIO_NAME`
     :Description:   Name for identifying simulation scenario
     :Data Type:     String
