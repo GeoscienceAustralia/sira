@@ -29,9 +29,9 @@ Example          'Coal-fired Generation Plant 600W'
 
 
 `SCENARIO_NAME`
-:Description:   Name for identifying simulation scenario
-:Data Type:     String
-:Example:       'Coal-fired Generation Plant 600W'
+    :Description:   Name for identifying simulation scenario
+    :Data Type:     String
+    :Example:       'Coal-fired Generation Plant 600W'
 
 `INTENSITY_MEASURE_PARAM`
     :Description:   Engineering Demand Parameter
