@@ -19,7 +19,7 @@ Example          'Coal-fired Generation Plant 600W'
 +-------------+--------------------------------------------+
 
 .. csv-table:: `INTENSITY_MEASURE_PARAM`
-   :widths: 30, 70
+   :widths: 30, 150
 
    Description,"Engineering Demand Parameter"
    Data Type,String
