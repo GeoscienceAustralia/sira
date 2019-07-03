@@ -18,14 +18,14 @@ Example          'Coal-fired Generation Plant 600W'
 | Example     | 'Coal-fired Generation Plant 600W'         |
 +-------------+--------------------------------------------+
 
-..  csv-table::
-    :header: `INTENSITY_MEASURE_PARAM`
-    :widths: 20, 50
-    :stub-columns: 1
+.. csv-table::
+   :header: `INTENSITY_MEASURE_PARAM`
+   :widths: 20, 50
+   :stub-columns: 1
 
-    Description:,"Engineering Demand Parameter"
-    Data Type:,String
-    Example:,PGA
+   Description:,"Engineering Demand Parameter"
+   Data Type:,String
+   Example:,PGA
 
 
 `SCENARIO_NAME`
