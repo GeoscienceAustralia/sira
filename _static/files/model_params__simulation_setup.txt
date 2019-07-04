@@ -11,8 +11,18 @@
 | Example     | 'Coal-fired Generation Plant 600W'         |
 +-------------+--------------------------------------------+
 
+
+==============================   ==================================
+`TEST_INTENSITY_MEASURE_PARAM`
+==============================   ==================================
+Description                      "Engineering Demand Parameter"
+Data Type                        String
+Example                          PGA
+==============================   ==================================
+
+
 .. csv-table::
-   :widths: 10, 200
+   :widths: 30, 200
 
    `TEST_INTENSITY_MEASURE_PARAM`
    Description,"Engineering Demand Parameter"
