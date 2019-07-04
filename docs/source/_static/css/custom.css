@@ -104,6 +104,12 @@ table td {
     padding-left: 5px;
 }
 
+table.docutils div.line-block {
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .rst-content cite {
     font-family: Consolas, "Andale Mono", "Lucida Console", monospace;
     font-weight: 700;
