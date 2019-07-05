@@ -163,6 +163,7 @@ a:hover {
     background: #e7f2fa;
     color: #2980B9;
     border-left: solid 4px #6ab0de;
+    border-top: none;
     padding: 6px;
     position: relative;
 }
