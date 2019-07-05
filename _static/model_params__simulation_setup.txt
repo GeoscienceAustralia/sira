@@ -6,10 +6,10 @@
     :Example:       'g'
 
 `FOCAL_HAZARD_SCENARIOS`
-    :Description:   The value(s) or scenario(s) at which to undertake
-                    detailed assessment of system response
-    :Data Type:     List of strings
-    :Example:       [0.50, 0.55]
+    :Description: The value(s) or scenario(s) at which to undertake
+        detailed assessment of system response
+    :Data Type: List of strings
+    :Example: [0.50, 0.55]
 
 
 .. rubric:: [HAZARD]
