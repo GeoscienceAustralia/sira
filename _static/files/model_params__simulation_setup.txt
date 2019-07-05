@@ -1,16 +1,5 @@
 .. rubric:: [SCENARIO]
 
-| `SCENARIO_NAME`
-| *Description:*   Name for identifying simulation scenario
-| *Data Type:*     String
-| *Example:*       'Coal-fired Generation Plant 600W'
-
-
-| `INTENSITY_MEASURE_PARAM`
-| *Description:*   Engineering Demand Parameter
-| *Data Type:*     String
-| *Example:*       'PGA'
-
 `INTENSITY_MEASURE_UNIT`
     :Description:   Demand Parameter Unit
     :Data Type:     String
