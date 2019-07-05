@@ -169,12 +169,12 @@ a:hover {
 }
 
 .rst-content dl:not(.docutils) dl dt {
-    margin-bottom: 4px;
+    margin: 4px 0;
     border: none;
     border-left: solid 4px #ccc;
     background: none;
     color: #555;
-    padding: 2px 8px;
+    padding: 1px 8px;
     font-weight: bold;
 }
 
