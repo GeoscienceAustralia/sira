@@ -77,7 +77,7 @@ source code)::
 The system model is defined using an MS Excel spreadsheet file.
 It contains five worksheets. The names of the worksheets are fixed.
 The function and format of these worksheets are described in the
-following subsections: 
+following subsections:
 
 
 .. _inputdata__component_list:
