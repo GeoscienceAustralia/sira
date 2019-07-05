@@ -85,7 +85,7 @@ following subsections:
 List of Components: component_list
 ----------------------------------
 
-The *component_list* has the following parameters:
+The *component_list* has the following parameters: 
 
 .. include::
    ./_static/files/model_params__component_list.txt
