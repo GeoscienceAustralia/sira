@@ -157,7 +157,7 @@ a:hover {
 /* Customise Definition List */
 .rst-content dl:not(.docutils) dt {
     display: table;
-    margin: 10px 0 6px 0;
+    margin: 12px 0 10px 0;
     font-size: 95%;
     line-height: normal;
     background: #e7f2fa;
