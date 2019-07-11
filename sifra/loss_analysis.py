@@ -146,11 +146,18 @@ def comp_recovery_given_hazard_and_time(component,
     --------------------------------------------------------------------------
     """
 
+    rootLogger.info(
+        "Calculating recovery level at time [{}] for hazard [{}] "
+        "for component: {}".format(
+            time_after_impact, hazval, component.component_id))
+
     ct = component.component_type
-    damage_functions = [component.damage_states[i].response_function
-                        for i, ds in enumerate(comptype_dmg_states)]
-    recovery_functions = [component.damage_states[i].recovery_function
-                          for i, ds in enumerate(comptype_dmg_states)]
+    damage_functions = \
+        [component.damage_states[i].response_function
+         for i, ds in enumerate(comptype_dmg_states)]
+    recovery_functions = \
+        [component.damage_states[i].recovery_function
+         for i, ds in enumerate(comptype_dmg_states)]
 
     comp_fn = component_response.loc[(component.component_id, 'func_mean'),
                                      scenario_header]
@@ -199,9 +206,8 @@ def comp_recovery_given_hazard_and_time(component,
         else:
             recov[dmg_index] = recovery_functions[dmg_index](time_after_impact)
             reqtime[dmg_index] = \
-                recovery_functions[dmg_index](threshold_recovery,
-                                              inverse=True) - \
-                recovery_functions[dmg_index](comp_fn, inverse=True)
+                recovery_functions[dmg_index](threshold_recovery, inverse=True)\
+                - recovery_functions[dmg_index](comp_fn, inverse=True)
 
             # xxxxxxxxxxxxxxxxxxxxx
             # reqtime_X[dmg_index] = \
@@ -209,9 +215,18 @@ def comp_recovery_given_hazard_and_time(component,
             #     recovery_functions[dmg_index](inverse_dmg_ratio, inverse=True)
             # xxxxxxxxxxxxxxxxxxxxx
 
+    print("pb      : {}".format(pb))
+    print("sum(pb) : {}".format(sum(pb)))
+    print("recov   : {}".format(recov))
+    print("comp_fn : {}".format(comp_fn))
+    print("reqtime : {}".format(reqtime))
+    print("---")
     comp_status_agg = sum(pb * recov)
     restoration_time_agg = sum(pb * reqtime)
     # restoration_time_agg_X = sum(pb*reqtime_X)
+    print("comp_status_agg      : {}".format(comp_status_agg))
+    print("restoration_time_agg : {}".format(restoration_time_agg))
+    print("\n")
 
     return comp_status_agg, restoration_time_agg
 
@@ -536,12 +551,14 @@ def vis_restoration_process(scenario,
 
     hw_ratio_ax2 = 1.0 / 3.3
     fig_w_cm = 9.0
-    fig_h_cm = (fig_w_cm * hw_ratio_ax2) * (1 + len(y) / 7.5 + 0.5)
+    fig_h_cm = (fig_w_cm * hw_ratio_ax2) * (1.5 + len(y) / 7.5)
     num_grids = 10 + len(y)
 
     fig = plt.figure(facecolor='white', figsize=(fig_w_cm, fig_h_cm))
     gs = gridspec.GridSpec(num_grids, 1)
-    ax1 = plt.subplot(gs[:-11])
+
+    gx = len(y) + 2
+    ax1 = plt.subplot(gs[:gx])
     ax2 = plt.subplot(gs[-8:])
     ticklabelsize = 12
 
@@ -558,11 +575,6 @@ def vis_restoration_process(scenario,
         ha='left', va='top', annotation_clip=False,
         color='slategrey', size=18, weight='bold'
         )
-
-    # plt.suptitle(
-    #     "Restoration Prognosis for Scenario: " + scenario_tag,
-    #     size=17, weight='semibold'
-    #     )
 
     # ----------------------------------------------------------------------
     # Component restoration plot
@@ -713,18 +725,6 @@ def component_criticality(infrastructure,
                 "xtick.minor.bottom": False,
                 }
             )
-
-    # ax.tick_params(
-    #     axis='x',        # changes apply to the x-axis
-    #     which='major',      # ticks affected: major, minor, or both
-    #     bottom=True,        # ticks along the bottom edge are on
-    #     top=False,          # ticks along the top edge are off
-    #     labelbottom=True,   # labels along the bottom edge are off
-    #     direction='out',
-    #     labelsize=13,
-    #     width=axes_lw,
-    #     length=7,
-    #     pad=2)
 
     fig = plt.figure(figsize=(7, 7))
     ax = fig.add_subplot(111)
@@ -1144,6 +1144,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         COLR_SET = colours.Tartarize269
 
     scaled_tot_loss = [x * 100 / sum(ctype_loss_tot_mean)
+                       if sum(ctype_loss_tot_mean)>0 else 0
                        for x in ctype_loss_tot_mean]
 
     leftpos = 0.0
@@ -1326,6 +1327,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     stacked_bar_width = 1.0
 
     scaled_tot_loss = [x * 100 / sum(ctype_loss_tot_mean)
+                       if sum(ctype_loss_tot_mean)>0 else 0
                        for x in ctype_loss_tot_mean]
 
     leftpos = 0.0
@@ -1427,7 +1429,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
                      facecolor='white')
     ax = fig.add_subplot(111)
     bar_width = 0.4
-    bar_clr = "#D62F20"  # CA1C1D"    # dodgerblue
+    bar_clr = "#D62F20"  # CA1C1D"  # dodgerblue
     grid_clr = "#BBBBBB"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1519,9 +1521,9 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     for x in cp_types_costed:
         comptype_for_internal_replacement[x] = \
             int(np.floor(
-                (1.0 - ctype_resp_sorted.loc[x, 'num_failures']
-                 ) * comptype_num[x]
-                ))
+                (1.0 - ctype_resp_sorted.loc[x, 'num_failures'])
+                * comptype_num[x])
+                )
 
     # ------------------------------------------------------------------------
     # Using the HAZUS method:
@@ -1541,8 +1543,6 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
         comps_avl_for_int_replacement = \
             comptype_for_internal_replacement[ct] - comptype_used[ct]
         comp_type_ds = infrastructure.get_system_damage_states()
-        # [xx.damage_state_name for xx in
-        #  list(infrastructure.components[c].damage_states.values())]
 
         for t in scenario.restoration_time_range:
             comp_rst[t][c], restoration_time_agg[c] = \
@@ -1561,7 +1561,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     comp_rst_df = pd.DataFrame(comp_rst,
                                index=nodes_costed,
                                columns=scenario.restoration_time_range)
-
+    # print(comp_rst_df)
     comp_rst_time_given_haz = \
         [np.round(comp_rst_df.columns[comp_rst_df.loc[c]
                                       >= RESTORATION_THRESHOLD][0], 0)
@@ -1629,6 +1629,7 @@ def run_scenario_loss_analysis(scenario,
     comptype_resp_df = comptype_resp_df.drop(uncosted_comptypes,
                                              level='component_type',
                                              axis=0)
+    comptype_resp_df = comptype_resp_df.sort_index()
 
     # Get list of only those components that are included in cost calculations:
     cpmap = {c: sorted(list(infrastructure.get_components_for_type(c)))
@@ -1818,7 +1819,7 @@ def run_scenario_loss_analysis(scenario,
                     scenario_tag,
                     hazards.hazard_type)
 
-            time_to_full_restoration_for_lines_df[(sc_haz_str, num_rst_steams)] \
+            time_to_full_restoration_for_lines_df[(sc_haz_str, num_rst_steams)]\
                 = [time_to_full_restoration_for_lines[x]
                    for x in output_node_list]
 
@@ -1836,6 +1837,7 @@ def run_scenario_loss_analysis(scenario,
 
     # --------------------------------------------------------------------------
     # *** END : FOCAL_HAZARD_SCENARIOS FOR LOOP ***
+
     time_to_full_restoration_for_lines_csv = \
         os.path.join(config.OUTPUT_PATH, 'line_restoration_prognosis.csv')
     time_to_full_restoration_for_lines_df.to_csv(
