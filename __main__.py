@@ -64,6 +64,7 @@ def main():
     # [Or] Supply only the directory where the input files reside
     parser.add_argument("-d", "--input_directory", type=str)
 
+    # Tell the code what tasks to do
     parser.add_argument("-s", "--simulation",
                         action='store_true', default=False)
     parser.add_argument("-f", "--fit",
@@ -155,6 +156,7 @@ def main():
     log_path = os.path.join(args.output, "log.txt")
     configure_logger(log_path, args.loglevel)
     rootLogger = logging.getLogger(__name__)
+    print("\n")
     rootLogger.info(Fore.GREEN +
                     'Simulation initiated at: {}\n'.format(timestamp) +
                     Fore.RESET)
@@ -174,14 +176,14 @@ def main():
     # Get the results of running a simulation
     # ---------------------------------------------------------------------
     # response_list = [
-    #     {},  # hazard level vs component damage state index
-    #     {},  # hazard level vs infrastructure output
-    #     {},  # hazard level vs component response
-    #     {},  # hazard level vs component type response
-    #     [],  # array of infrastructure output per sample
-    #     [],  # array infrastructure econ loss per sample
-    #     {},  # hazard level vs component class dmg level pct
-    #     {}]  # hazard level vs component class expected damage index
+    #     {},  # [0] hazard level vs component damage state index
+    #     {},  # [1] hazard level vs infrastructure output
+    #     {},  # [2] hazard level vs component response
+    #     {},  # [3] hazard level vs component type response
+    #     [],  # [4] array of infrastructure output per sample
+    #     [],  # [5] array of infrastructure econ loss per sample
+    #     {},  # [6] hazard level vs component class dmg level pct
+    #     {}]  # [7] hazard level vs component class expected damage index
     if args.simulation:
 
         response_list = calculate_response(hazards, scenario, infrastructure)
@@ -218,7 +220,8 @@ def main():
             "wastewatertreatmentplant", "wwtp",
             "watertreatmentplant", "wtp",
             "powerstation",
-            "substation"
+            "substation",
+            "potablewaterpumpstation"
             ]
 
         if infrastructure.system_class.lower() == 'powerstation':
