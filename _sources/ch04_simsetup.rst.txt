@@ -19,9 +19,6 @@ to the keep the directory structure of the code in mind::
    │   └── source
    ├── hazard                      <-- Hazard scenario files for networks
    ├── installation                <-- Installation scripts for dev envs
-   ├── logs
-   ├── models                      <-- Infrastructure models reside here
-   ├── output                      <-- Default location for simulation results
    ├── scripts
    ├── sifra                       <-- The core code reside here
    │   └── modelling
@@ -33,7 +30,6 @@ to the keep the directory structure of the code in mind::
    │
    ├── LICENSE                      <-- License file
    ├── README.md                    <-- Summary documentation
-   ├── setup.py                     <-- Package setup file
    └── __main__.py                  <-- Entry point for running the code
 
 
