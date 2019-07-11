@@ -1,15 +1,19 @@
 .. rubric:: [SCENARIO]
 
+`SCENARIO_NAME`
+    :Description:   Name for identifying simulation scenario
+    :Data Type:     String
+    :Example:       'Coal-fired Generation Plant 600W'
+
+`INTENSITY_MEASURE_PARAM`
+    :Description:   Engineering Demand Parameter
+    :Data Type:     String
+    :Example:       'PGA'
+
 `INTENSITY_MEASURE_UNIT`
     :Description:   Demand Parameter Unit
     :Data Type:     String
     :Example:       'g'
-
-`FOCAL_HAZARD_SCENARIOS`
-    :Description: The value(s) or scenario(s) at which to undertake
-        detailed assessment of system response
-    :Data Type: List of strings
-    :Example: [0.50, 0.55]
 
 
 .. rubric:: [HAZARD]
@@ -44,6 +48,12 @@
     :Description:   Iterations for Monte Carlo process
     :Data Type:     Integer
     :Example:       500
+
+`FOCAL_HAZARD_SCENARIOS`
+    :Description:   The value(s) or scenario(s) at which to undertake
+                    detailed assessment of system response
+    :Data Type:     List of strings
+    :Example:       [0.50, 0.55]
 
 
 .. rubric:: [RESTORATION]

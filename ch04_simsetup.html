@@ -238,6 +238,30 @@ The simulation ‘scenario’ definition file is located in the following direct
 description, and representative values.</p>
 <p class="rubric">[SCENARIO]</p>
 <dl class="simple">
+<dt><cite>SCENARIO_NAME</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Name for identifying simulation scenario</p>
+</dd>
+<dt class="field-even">Data Type</dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>‘Coal-fired Generation Plant 600W’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>INTENSITY_MEASURE_PARAM</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Engineering Demand Parameter</p>
+</dd>
+<dt class="field-even">Data Type</dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>‘PGA’</p>
+</dd>
+</dl>
+</dd>
 <dt><cite>INTENSITY_MEASURE_UNIT</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description</dt>
 <dd class="field-odd"><p>Demand Parameter Unit</p>
@@ -247,19 +271,6 @@ description, and representative values.</p>
 </dd>
 <dt class="field-odd">Example</dt>
 <dd class="field-odd"><p>‘g’</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>FOCAL_HAZARD_SCENARIOS</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description</dt>
-<dd class="field-odd"><p>The value(s) or scenario(s) at which to undertake
-detailed assessment of system response</p>
-</dd>
-<dt class="field-even">Data Type</dt>
-<dd class="field-even"><p>List of strings</p>
-</dd>
-<dt class="field-odd">Example</dt>
-<dd class="field-odd"><p>[0.50, 0.55]</p>
 </dd>
 </dl>
 </dd>
@@ -336,6 +347,19 @@ detailed assessment of system response</p>
 </dd>
 <dt class="field-odd">Example</dt>
 <dd class="field-odd"><p>500</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>FOCAL_HAZARD_SCENARIOS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>The value(s) or scenario(s) at which to undertake
+detailed assessment of system response</p>
+</dd>
+<dt class="field-even">Data Type</dt>
+<dd class="field-even"><p>List of strings</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>[0.50, 0.55]</p>
 </dd>
 </dl>
 </dd>
