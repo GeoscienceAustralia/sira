@@ -392,14 +392,13 @@ class Infrastructure(Base):
                                for ds in one_comp_obj.damage_states]
         return self.sys_dmg_states
 
-    def get_dmg_scale_bounds(self, scenario):
+    def get_dmg_scale_bounds(self):
         """
         An array of damage scale boundaries
         :param scenario: The values for the simulation scenarios
         :return:  Array of real numbers representing damage state boundaries
         """
         # todo introduce system subclass to infrastructure
-        # return [0.05, 0.2, 0.5, 0.8, 1.0]
         return [0.01, 0.05, 0.40, 0.70, 1.00]
 
     def get_component_class_list(self):
@@ -484,18 +483,13 @@ class Substation(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        # self.sys_dmg_states = ['DS0 None',
-        #                        'DS1 Minor',
-        #                        'DS2 Moderate',
-        #                        'DS3 Extensive',
-        #                        'DS4 Complete']
         self.sys_dmg_states = ['DS0 None',
                                'DS1 Minor',
                                'DS2 Extensive',
                                'DS3 Complete']
         return self.sys_dmg_states
 
-    def get_dmg_scale_bounds(self, scenario):
+    def get_dmg_scale_bounds(self):
         """
         An array of damage scale boundaries
         :param scenario: The values for the simulation scenarios
@@ -527,6 +521,17 @@ class PowerStation(Infrastructure):
             'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
         }
+
+    def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings detailing the system damage levels.
+        """
+        self.sys_dmg_states = ["DS0 None",
+                               "DS1 Slight", "DS2 Moderate",
+                               "DS3 Extensive", "DS4 Complete"]
+        return self.sys_dmg_states
+
 
 class PotableWaterTreatmentPlant(Infrastructure):
     def __init__(self, **kwargs):
@@ -569,9 +574,15 @@ class PotableWaterTreatmentPlant(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS1 Slight", "DS2 Moderate",
-                               "DS3 Extensive", "DS4 Complete"]
+        self.sys_dmg_states = ["DS0 None",
+                               "DS1 Slight",
+                               "DS2 Moderate",
+                               "DS3 Extensive",
+                               "DS4 Complete"]
         return self.sys_dmg_states
+
+    def get_dmg_scale_bounds(self):
+        return [0.01, 0.05, 0.40, 0.70, 1.00]
 
 
 class PotableWaterPumpStation(Infrastructure):
@@ -611,6 +622,9 @@ class PotableWaterPumpStation(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS1 Slight", "DS2 Moderate",
-                               "DS3 Extensive", "DS4 Complete"]
+        self.sys_dmg_states = ["DS0 None",
+                               "DS1 Slight",
+                               "DS2 Moderate",
+                               "DS3 Extensive",
+                               "DS4 Complete"]
         return self.sys_dmg_states
