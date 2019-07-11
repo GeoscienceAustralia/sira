@@ -126,9 +126,6 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     zf = zipfile.ZipFile(idshaz_zip, mode='w', allowZip64=True)
     zf.write(idshaz, compress_type=zipfile.ZIP_DEFLATED)
     zf.close()
-    # zipmode = zipfile.ZIP_DEFLATED
-    # with zipfile.ZipFile(idshaz_zip, 'w', zipmode) as zip:
-    #     zip.write(idshaz)
     os.remove(idshaz)
 
     # ------------------------------------------------------------------------
@@ -185,12 +182,12 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # infrastructure econ loss for sample
     economic_loss_array = response_list[5]
     sys_frag = np.zeros_like(economic_loss_array, dtype=int)
-    if_system_damage_states = infrastructure.get_dmg_scale_bounds(scenario)
+    sys_damage_state_bounds = infrastructure.get_dmg_scale_bounds()
     for j, hazard_level in enumerate(hazards.hazard_scenario_list):
         for i in range(scenario.num_samples):
             # system output and economic loss
             sys_frag[i, j] = \
-                np.sum(economic_loss_array[i, j] > if_system_damage_states)
+                np.sum(economic_loss_array[i, j] > sys_damage_state_bounds)
 
     # Calculating Probability of Exceedence:
     pe_sys_econloss = np.zeros(
@@ -277,15 +274,10 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
         #                 np.sum(comp_class_failures[compclass][i, j] > \
         #                        infrastructure.ds_lims_compclasses[compclass])
 
-        # for j, hazard_intensity in enumerate(hazards.hazard_range):
-
         for j, (scenario_name, hazard_data) in \
                 enumerate(hazards.scenario_hazard_data.items()):
             for i in range(scenario.num_samples):
                 for compclass in cp_classes_costed:
-                    # **************************************************
-                    # TODO: CHECK COMPONENTS ARE SAVED IN CORRECT ORDER
-                    # **************************************************
                     for comptype in cp_class_map[compclass]:
                         comp_ndx = list(infrastructure.components.keys()).\
                             index(comptype.component_id)
