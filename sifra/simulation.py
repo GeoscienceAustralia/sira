@@ -46,19 +46,17 @@ def calculate_response(hazards, scenario, infrastructure):
         hazards_response.append(
             calculate_response_for_hazard(hazard, scenario, infrastructure))
 
-
-
     # combine the responses into one list
     post_processing_list = [
-        {},  # hazard level vs component damage state index
-        {},  # hazard level vs infrastructure output
-        {},  # hazard level vs component response
-        {},  # hazard level vs component type response
-        [],  # array of infrastructure output per sample
-        [],  # array infrastructure econ loss per sample
-        {},  # hazard level vs component class dmg level pct
-        {}]  # hazard level vs component class expected damage index
-
+        {},  # [0] hazard level vs component damage state index
+        {},  # [1] hazard level vs infrastructure output
+        {},  # [2] hazard level vs component response
+        {},  # [3] hazard level vs component type response
+        [],  # [4] array of infrastructure output per sample
+        [],  # [5] array of infrastructure econ loss per sample
+        {},  # [6] hazard level vs component class dmg level pct
+        {}   # [7] hazard level vs component class expected damage index
+    ]
     # iterate through the hazards
     for hazard_response in hazards_response:
         # iterate through the hazard response dictionary
@@ -82,8 +80,8 @@ def calculate_response(hazards, scenario, infrastructure):
             = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
-    post_processing_list[4] = np.sum(post_processing_list[4],
-                                     axis=2).transpose()
+    post_processing_list[4] = \
+        np.sum(post_processing_list[4], axis=2).transpose()
     post_processing_list[5] = post_processing_list[5].transpose()
 
     # elapsed = timedelta(seconds=(time.time() - code_start_time))
@@ -106,11 +104,12 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
     code_start_time = time.time()
 
     # calculate the damage state probabilities
-    rootLogger.info("Initiating damage state calculations for {} ...".format(
-        hazard.hazard_scenario_name
-        ))
+    rootLogger.info(
+        "Initiating damage state calculations for {} ...".
+            format(hazard.hazard_scenario_name)
+        )
     expected_damage_state_of_components_for_n_simulations = \
-        calculate_expected_damage_state_of_components_for_n_simulations(
+        calc_component_damage_state_for_n_simulations(
             infrastructure, scenario, hazard)
 
     # calculate the component loss, functionality, output,
@@ -161,7 +160,7 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
     return response_for_a_hazard
 
 
-def calculate_expected_damage_state_of_components_for_n_simulations(
+def calc_component_damage_state_for_n_simulations(
         infrastructure, scenario, hazard):
     """
     Calculate the probability that being exposed to a hazard level
@@ -175,7 +174,7 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
              were exceeded.
     """
     if scenario.run_context:
-        # TODO check whether to use seed for actual runs or not
+        # use seed for actual runs or not
         random_number = np.random.RandomState(seed=hazard.get_seed())
     else:
         # seeding was not used
@@ -215,9 +214,9 @@ def calculate_expected_damage_state_of_components_for_n_simulations(
             hazard_intensity = hazard.get_hazard_intensity_at_location(
                 pos_x, pos_y)
 
-            component_pe_ds[damage_state_index] = \
-                component.damage_states[damage_state_index].response_function(
-                    hazard_intensity)
+            component_pe_ds[damage_state_index] \
+                = component.damage_states[damage_state_index].\
+                response_function(hazard_intensity)
 
         # Drop the default state (DS0 None) because its response will
         # always be zero which will be always be greater than random variable
