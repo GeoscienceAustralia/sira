@@ -22,12 +22,12 @@ import brewer2mpl
 from colorama import Fore, init
 init()
 
-
-MIN = -10
-MAX = 10
-
 import logging
 rootLogger = logging.getLogger(__name__)
+
+MIN = 0
+MAX = 10
+
 
 # ----------------------------------------------------------------------------
 # For plots: using the  brewer2 color maps by Cynthia Brewer
@@ -68,10 +68,8 @@ def lognormal_cdf(x, median, logstd, loc=0):
 
 
 def res_lognorm_cdf(params, x, data, eps=None):
-    shape = params['logstd'].value
-    scale = params['median'].value
-    loc = params['loc'].value
-    model = stats.lognorm.cdf(x, shape, loc=loc, scale=scale)
+    v = params.valuesdict()
+    model = stats.lognorm.cdf(x, v['logstd'], loc=v['loc'], scale=v['median'])
     if eps is None:
         return (model - data)
     return (model - data) / eps
@@ -87,8 +85,9 @@ def fit_prob_exceed_model(
     Fit a Lognormal CDF model to simulated probability exceedance data
 
     :param hazard_input_vals: input values for hazard intensity (numpy array)
-    :param pb_exceed: probability of exceedance (2D numpy array)
-    :param SYS_DS: discrete damage states (list)
+    :param pb_exceed:   probability of exceedance (2D numpy array)
+                        its shape is (num_damage_states x num_hazards_points)
+    :param SYS_DS: discrete damage states (list of strings)
     :param out_path: directory path for writing output (string)
     :returns:  fitted exceedance model parameters (PANDAS dataframe)
     """
@@ -96,7 +95,6 @@ def fit_prob_exceed_model(
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # DataFrame for storing the calculated System Damage Algorithms
     # for exceedence probabilities.
-
     indx = pd.Index(SYS_DS[1:], name='Damage States')
     sys_dmg_model = pd.DataFrame(
         index=indx,
@@ -107,9 +105,8 @@ def fit_prob_exceed_model(
 
     sys_dmg_fitted_params = [[] for _ in range(len(SYS_DS))]
     hazard_input_vals = [float(x) for x in hazard_input_vals]
-    params_pe = []
 
-    for dx in range(0, len(SYS_DS)):
+    for dx in range(1, len(SYS_DS)):
 
         x_sample = hazard_input_vals
         y_sample = pb_exceed[dx]
@@ -117,25 +114,30 @@ def fit_prob_exceed_model(
         p0m = np.mean(y_sample)
         p0s = np.std(y_sample)
 
+        if dx >= 2 and p0m < sys_dmg_fitted_params[dx-1].params['median'].value:
+            p0m = sys_dmg_fitted_params[dx-1].params['median'].value+0.02
+
         # Fit the dist:
-        params_pe.append(lmfit.Parameters())
-        params_pe[dx].add('median', value=p0m, min=0, max=MAX)
-        params_pe[dx].add('logstd', value=p0s, min=0, max=MAX)
-        params_pe[dx].add('loc', value=0.0, vary=False, min=MIN, max=MAX)
 
-        if dx >= 1:
+        params_est = lmfit.Parameters()
+        params_est.add('median', value=p0m, min=MIN, max=MAX)
+        params_est.add('logstd', value=p0s, min=MIN, max=MAX)
+        params_est.add('loc', value=0.0, vary=False)
 
-            sys_dmg_fitted_params[dx] = lmfit.minimize(
-                res_lognorm_cdf, params_pe[dx],
-                args=(x_sample, y_sample),
-                method='leastsq',
-                nan_policy='omit',
-                )
-            sys_dmg_model.loc[SYS_DS[dx]] = (
-                sys_dmg_fitted_params[dx].params['median'].value,
-                sys_dmg_fitted_params[dx].params['logstd'].value,
-                sys_dmg_fitted_params[dx].params['loc'].value,
-                sys_dmg_fitted_params[dx].chisqr)
+        sys_dmg_fitted_params[dx] = lmfit.minimize(
+            res_lognorm_cdf,
+            params_est,
+            args=(x_sample, y_sample),
+            method='leastsq',
+            nan_policy='omit',
+            maxfev=1000
+            )
+        sys_dmg_model.loc[SYS_DS[dx]] = (
+            sys_dmg_fitted_params[dx].params['median'].value,
+            sys_dmg_fitted_params[dx].params['logstd'].value,
+            sys_dmg_fitted_params[dx].params['loc'].value,
+            sys_dmg_fitted_params[dx].chisqr
+            )
 
     border = "-" * 79
     rootLogger.info(
@@ -149,7 +151,7 @@ def fit_prob_exceed_model(
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for crossover and correct as needed
 
-    CROSSOVER_THRESHOLD = 0.001
+    CROSSOVER_THRESHOLD = 0.005
     CROSSOVER_CORRECTION = True
     if CROSSOVER_CORRECTION:
         sys_dmg_fitted_params = correct_crossover(
@@ -232,7 +234,6 @@ def plot_data_model(SYS_DS,
     plt.style.use('seaborn-darkgrid')
     mpl.rc('grid', linewidth=0.8)
     mpl.rc('font', family='sans-serif')
-    # mpl.rc('font', serif='Helvetica')
     fig = plt.figure(figsize=(9, 5))
     ax = fig.add_subplot(111)
 
@@ -316,7 +317,8 @@ def plot_data_model(SYS_DS,
                 size=8, fontweight='bold', color=event_color,
                 annotation_clip=False,
                 bbox=dict(boxstyle='round, pad=0.2', fc='yellow', alpha=0.0),
-                path_effects=[PathEffects.withStroke(linewidth=2, foreground="w")],
+                path_effects=[
+                    PathEffects.withStroke(linewidth=2, foreground="w")],
                 arrowprops=dict(
                     arrowstyle='-|>, head_length=0.5, head_width=0.3',
                     shrinkA=3.0,
@@ -377,7 +379,7 @@ def correct_crossover(
         pb_exceed,
         x_data,
         sys_dmg_fitted_params,
-        CROSSOVER_THRESHOLD=0.001):
+        CROSSOVER_THRESHOLD=0.005):
 
     rootLogger.info(Fore.GREEN +
                     "Checking for crossover [ THRESHOLD = {} ]".
@@ -419,11 +421,13 @@ def correct_crossover(
                     SYS_DS[dx - 1] + '-' + SYS_DS[dx] +
                     Fore.RESET)
 
-                # Test if higher curve is co-incident with, or precedes lower curve
+                # Test if higher curve is co-incident with, or
+                # precedes lower curve
                 if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
-                    rootLogger.info(" *** Mean of higher curve too low: resampling")
+                    rootLogger.info(" *** Mean of higher curve too low: "
+                                    "resampling")
                     rootLogger.info('median '+str(mu_hi)+" "+str(mu_lo))
-                    params_pe.add('median', value=mu_hi)#, min=mu_lo)
+                    params_pe.add('median', value=mu_hi, min=mu_lo)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(
                         res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
@@ -433,13 +437,13 @@ def correct_crossover(
                         sys_dmg_fitted_params[dx].params['loc'].value)
 
                 # Thresholds for testing top or bottom crossover
-                delta_top = sd_lo - (mu_hi - mu_lo)/3.0
-                delta_btm = sd_lo + (mu_hi - mu_lo)/3.0
+                delta_top = sd_lo - (mu_hi - mu_lo)/1.0
+                delta_btm = sd_lo + (mu_hi - mu_lo)/1.0
 
                 # Test for top crossover: resample if crossover detected
                 if (sd_hi < sd_lo) and (sd_hi <= delta_top):
                     rootLogger.info("*** Attempting to correct upper crossover")
-                    params_pe.add('logstd', value=sd_hi)#, min=delta_top)
+                    params_pe.add('logstd', value=sd_hi, min=delta_top)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(
                         res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
@@ -458,11 +462,11 @@ def correct_crossover(
 
     return sys_dmg_fitted_params
 
-# ============================================================================
+# ==============================================================================
 #
 # NORMAL CURVE FITTING
 #
-# ----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Parameters in scipy NORMAL distribution:
 #
 # The location (loc) keyword specifies the mean.
@@ -472,7 +476,7 @@ def correct_crossover(
 # Note on the covariance matrix returned by scipy.optimize.curve_fit:
 # The square root of the diagonal values are the 1-sigma uncertainties of
 # the fit parameters
-# ----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 def norm_cdf(x, mu, sd):
     return stats.norm.cdf(x, loc=mu, scale=sd)
