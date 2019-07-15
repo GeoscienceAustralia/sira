@@ -2,8 +2,8 @@
 # # -*- coding: utf-8 -*-
 """
 title        : __main__.py
-description  : entry point for core sifra component
-usage        : python sifra [OPTIONS]
+description  : entry point for core sira component
+usage        : python sira [OPTIONS]
                -h                    Display this usage message
                -d [input_directory]  Specify the directory with the required
                                      config and model files
@@ -31,24 +31,24 @@ init()
 import os
 import argparse
 
-from sifra.logger import configure_logger
+from sira.logger import configure_logger
 import logging
 import logging.config
 
-from sifra.configuration import Configuration
-from sifra.scenario import Scenario
-from sifra.modelling.hazard import HazardsContainer
-from sifra.model_ingest import ingest_model
-from sifra.simulation import calculate_response
-from sifra.modelling.system_topology import SystemTopology
-from sifra.infrastructure_response import (
+from sira.configuration import Configuration
+from sira.scenario import Scenario
+from sira.modelling.hazard import HazardsContainer
+from sira.model_ingest import ingest_model
+from sira.simulation import calculate_response
+from sira.modelling.system_topology import SystemTopology
+from sira.infrastructure_response import (
     write_system_response,
     plot_mean_econ_loss,
     pe_by_component_class
     )
-from sifra.fit_model import fit_prob_exceed_model
+from sira.fit_model import fit_prob_exceed_model
 
-from sifra.loss_analysis import run_scenario_loss_analysis
+from sira.loss_analysis import run_scenario_loss_analysis
 
 import numpy as np
 
@@ -56,7 +56,7 @@ def main():
 
     # define arg parser
     parser = argparse.ArgumentParser(
-        prog='sifra', description="run sifra", add_help=True)
+        prog='sira', description="run sira", add_help=True)
 
     # [Either] Supply config file and model file directly:
     parser.add_argument("-c", "--config_file", type=str)
