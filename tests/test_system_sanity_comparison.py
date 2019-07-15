@@ -5,11 +5,11 @@ import os
 import pickle
 import numpy as np
 import json
-from sifra.configuration import Configuration
-from sifra.scenario import Scenario
-from sifra.modelling.hazard import HazardsContainer
-from sifra.model_ingest import ingest_model
-from sifra.simulation import calculate_response
+from sira.configuration import Configuration
+from sira.scenario import Scenario
+from sira.modelling.hazard import HazardsContainer
+from sira.model_ingest import ingest_model
+from sira.simulation import calculate_response
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)

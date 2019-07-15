@@ -1,7 +1,7 @@
 import unittest
 import os
 from os.path import exists
-from sifra.configuration import Configuration
+from sira.configuration import Configuration
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)

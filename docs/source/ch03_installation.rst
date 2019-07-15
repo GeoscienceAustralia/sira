@@ -72,7 +72,7 @@ The script is run as::
 
     $ create-aws-instance.sh
 
-Both of these commands will use the build_sifra_box.sh to install Linux updates
+Both of these commands will use the build_sira_box.sh to install Linux updates
 and the docker components that will be required.
 
 It then clones the SIFRA github repository, from the master branch. Docker is
@@ -82,9 +82,9 @@ Using Docker
 ++++++++++++
 
 If you have Docker installed, you can build a container for working with
-sifra by running the command::
+sira by running the command::
 
-    $ docker build -t sifra .
+    $ docker build -t sira .
 
 The primary advantage of working with docker is that you do not have to worry
 about setting up the python environment, which is done when building the
@@ -92,11 +92,11 @@ container and isolated from your own environment.
 
 To run an interactive container you can use::
 
-    $ docker run -it -v "$(pwd):/sifra" --name sifra s
+    $ docker run -it -v "$(pwd):/sira" --name sira s
 
 This will give you a terminal inside the container in which you can execute
 commands. Inside the container you can find the current directory mapped at
-`/sifra`. You can modify files either within the container or the host and the
+`/sira`. You can modify files either within the container or the host and the
 changes will be available in both.
 
 Alternatively, you might want a container running in the background which you
@@ -104,22 +104,22 @@ can execute commands at using
 `docker exec <https://docs.docker.com/engine/reference/commandline/exec/>`_. In
 this case you would start the container with::
 
-    $ docker run -id -v "$(pwd):/sifra" --name sifra sifra
+    $ docker run -id -v "$(pwd):/sira" --name sira sira
 
 One could then, for example, run the unit tests for the modelling package with::
 
-    $ cd sifra/tests
+    $ cd sira/tests
     $ python -m unittest discover .
 
 In any case, once you are done you should destroy the container with::
 
-    $ docker kill sifra
-    $ docker rm sifra
+    $ docker kill sira
+    $ docker rm sira
 
 
 or, if your too lazy to type two lines, use this command::
 
-    $ docker rm -f sifra
+    $ docker rm -f sira
 
 Several other containers are provided to help with development. These are
 defined in the other `Dockerfiles` in the present directory, and are:
@@ -141,11 +141,11 @@ defined in the other `Dockerfiles` in the present directory, and are:
   `busybox <https://www.busybox.net/>`_. The app is still exposed on port 4200,
   so to host it at port 80 one would start it with::
 
-    $ docker build -t sifra-gui -f Dockerfile-gui-prod .
+    $ docker build -t sira-gui -f Dockerfile-gui-prod .
 
 and start it with (for example)::
 
-    $ docker run -d -p 80:4200 --restart always sifra-gui-prod
+    $ docker run -d -p 80:4200 --restart always sira-gui-prod
 
 Docker Compose
 ++++++++++++++
@@ -158,7 +158,7 @@ By far the easiest way to run the system for development is with
 Assuming that you start the system this way in the current folder, you can:
 
 - attach to the sifa image to run models and tests with: |br|
-  ``$ docker attach sifra_sifra_1``
+  ``$ docker attach sira_sira_1``
 
 
 - access the GUI for defining fragility functions at: |br|
@@ -179,7 +179,7 @@ Setting Up a Development Environment with Anaconda
 ==================================================
 
 We recommend using ``conda`` for managing virtual environments and
-packages required for running ``sifra``.
+packages required for running ``sira``.
 
 For the sake of simplicity, we recommend using ``Anaconda``. It is a
 free Python distribution, and comes with the ``conda`` tool which is
@@ -204,7 +204,7 @@ environment solely through the \*.yml environment specification file. For OS X
 run the following commands::
 
     $ conda env create -f environment_osx.yml
-    $ source activate sifra_env
+    $ source activate sira_env
 
 For Linux-64 systems, the commands are identical, you will just need to use 
 the environment specification file for Linux.
@@ -213,7 +213,7 @@ the environment specification file for Linux.
 exceptions. First run::
 
     $ conda env create -f environment_win64.yml
-    $ activate sifra_env
+    $ activate sira_env
 
 This will install most requirements except for ``igraph`` and ``pygraphviz``. 
 Compiling these packages under windows can be very challenging. The simplest 
@@ -233,7 +233,7 @@ Install the downloaded `wheels` (\*.whl files) with pip::
     pip install <pkg_name>.whl
 
 
-.. _running-sifra:
+.. _running-sira:
 
 
 Running the Core SIFRA Code
@@ -244,21 +244,21 @@ It can be in any of three formats: `ini`, `conf`, or `json`. The code first
 converts any setup file to json first before running. For the purposes of
 discussion, it is assumed that the name of the configuration file is
 ``config_x.ini``, and it is located in the directory
-``/Users/user_x/sifra/simulation_setup/``.
+``/Users/user_x/sira/simulation_setup/``.
 
 The software can be run from the command line using these simple steps:
 
 1.  Open a command terminal
 
-2.  Change to the directory that has the ``sifra`` code. If the code is
-    in the directorty ``/Users/user_x/sifra``, then run::
+2.  Change to the directory that has the ``sira`` code. If the code is
+    in the directorty ``/Users/user_x/sira``, then run::
 
-        $ cd ~/sifra/
+        $ cd ~/sira/
 
 3.  Run the primary fragility characterisation module from the command
     line::
 
-        $ python sifra -s simulation_setup/config_x.ini
+        $ python sira -s simulation_setup/config_x.ini
 
 The post-processing tools are run as simple python scripts. It should be
 noted, that the post-processing tools depend on the outputs produced by a
@@ -271,9 +271,9 @@ To run the post-simulation analysis on the generated output data, we need to
 supply the setup file used to run the original simulation and the log file that
 stores the directory locations for the the stored output data. For example::
 
-        $ python sifra/scenario_loss_analysis.py
+        $ python sira/scenario_loss_analysis.py
             -s simulation_setup/scenario_ss_x.ini
-            -d logs/sifralog_20180619_155612_dirs.json
+            -d logs/siralog_20180619_155612_dirs.json
 
 
 Running Code Tests
@@ -281,10 +281,10 @@ Running Code Tests
 
 
 To run tests use ``unittest``. The tests need to be run from the root of
-the `sifra` code directory::
+the `sira` code directory::
 
-    $ cd sifra   # and not cd sifra/sifra
+    $ cd sira   # and not cd sira/sira
     $ python -m unittest discover tests
 
-If you are using docker as described above, you can do this within the sifra
+If you are using docker as described above, you can do this within the sira
 container.
