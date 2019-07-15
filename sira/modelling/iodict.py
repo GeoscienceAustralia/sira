@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from sifra.modelling.structural import Base
+from sira.modelling.structural import Base
 
 
 class IODict(OrderedDict, Base):

@@ -2,7 +2,7 @@ from builtins import str
 from builtins import object
 from future.utils import with_metaclass
 import inspect
-from sifra.modelling.utils import class_getter
+from sira.modelling.utils import class_getter
 
 
 class NoDefaultException(Exception):

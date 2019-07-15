@@ -1,4 +1,4 @@
-from sifra.__about__ import (
+from sira.__about__ import (
     __packagename__,
     __description__,
     __url__,

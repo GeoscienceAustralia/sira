@@ -8,10 +8,10 @@ np.set_printoptions(threshold=sys.maxsize)
 
 
 
-from sifra.modelling.structural import Element
-from sifra.modelling.component_graph import ComponentGraph
-from sifra.modelling.structural import Base
-from sifra.modelling.iodict import IODict
+from sira.modelling.structural import Element
+from sira.modelling.component_graph import ComponentGraph
+from sira.modelling.structural import Base
+from sira.modelling.iodict import IODict
 
 class InfrastructureFactory(object):
     @staticmethod

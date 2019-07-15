@@ -1,8 +1,8 @@
 # these are required for defining the data model
-from sifra.modelling.structural import (Element,Base)
-from sifra.modelling.iodict import IODict
+from sira.modelling.structural import (Element,Base)
+from sira.modelling.iodict import IODict
 import numpy as np
-from sifra.modelling.responsemodels import Algorithm
+from sira.modelling.responsemodels import Algorithm
 
 
 class DamageState(Base):

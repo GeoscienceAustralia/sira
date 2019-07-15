@@ -1,6 +1,6 @@
-__packagename__ = "sifra"
+__packagename__ = "sira"
 __description__ = "System for Infrastructure Facility Resilience Analysis"
-__url__ = "https://github.com/GeoscienceAustralia/sifra"
+__url__ = "https://github.com/GeoscienceAustralia/sira"
 
 __version__ = "0.3.0.PRE"
 

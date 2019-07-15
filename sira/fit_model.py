@@ -8,7 +8,7 @@ mpl.use('agg')
 
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as PathEffects
-import sifra.sifraplot as spl
+import sira.siraplot as spl
 
 import numpy as np
 from scipy import stats

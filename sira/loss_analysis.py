@@ -17,7 +17,7 @@ plt.switch_backend('agg')
 
 import matplotlib.patheffects as PathEffects
 from matplotlib import gridspec
-import sifra.sifraplot as spl
+import sira.siraplot as spl
 
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')

@@ -1,7 +1,7 @@
 import scipy.stats as stats
 import numpy as np
-from sifra.modelling.structural import Info, Base, Element
-from sifra.modelling.structural import Element as _Element
+from sira.modelling.structural import Info, Base, Element
+from sira.modelling.structural import Element as _Element
 
 
 class Algorithm:

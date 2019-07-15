@@ -26,7 +26,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-sifra/.idea/
+sira/.idea/
 .idea/
 
 # PyInstaller
@@ -67,7 +67,7 @@ db/*
 !db/.gitkeep
 
 # node stuff
-sifra-gui/node_modules
+sira-gui/node_modules
 
 # PyBuilder
 target/

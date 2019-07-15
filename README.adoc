@@ -9,7 +9,7 @@ toc::[]
 
 ## Overview
 
-The detailed documentation is at this http://geoscienceaustralia.github.io/sifra/[link].
+The detailed documentation is at this http://geoscienceaustralia.github.io/sira/[link].
 
 SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
 It represents a methodology and supporting code for systematising vulnerability
@@ -58,7 +58,7 @@ Delete all images:
 
 Build the image:
 
-    $ docker build -t sifraimg . --build-arg CACHE_DATE="$(date)"
+    $ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
 
 **Run Option #1: run a simulation and destroy the container when done**
 
@@ -67,27 +67,27 @@ creates a container in interactive mode, runs a simulation, then destroys
 the container after simulation ends.
 
     $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
-        sifraimg:latest \
-        python sifra -d <scenario_dir> -sfl --aws
+        siraimg:latest \
+        python sira -d <scenario_dir> -sfl --aws
 
 **Run Option #2: Build a container for reuse / experimentation**
 
 Create the container
 
-    $ docker create --name=sifra_x -it sifraimg:latest
+    $ docker create --name=sira_x -it siraimg:latest
 
 Then:
 
-    $ docker start sifra_x
-    $ docker attach sifra_x
+    $ docker start sira_x
+    $ docker attach sira_x
 
 Or:
 
-    $ docker start -a -i sifra_x
+    $ docker start -a -i sira_x
 
-Run the sifra code for the scenario in the specified directory:
+Run the sira code for the scenario in the specified directory:
 
-    $ python sifra -d /path/to/scenario_dir -sfl
+    $ python sira -d /path/to/scenario_dir -sfl
 
 From outside of docker, on a terminal, use the following command to
 copy the project folder from container to host:
@@ -135,19 +135,19 @@ The code can be run in a number of modes. The relevant options are:
 
 Following code snippets assume that it is being run from the root directory
 of the SIFRA code, and the model of interest is in the location
-`sifra/scenario_dir/ci_model_foo`.
+`sira/scenario_dir/ci_model_foo`.
 
 The following code runs the simulation and the post processing simultanrously:
 
-    $ python sifra -d scenario_dir/ci_model_foo -sfl
+    $ python sira -d scenario_dir/ci_model_foo -sfl
 
 To run only the monte carlo simulation without post-processing:
 
-    $ python sifra -d scenario_dir/ci_model_foo -s
+    $ python sira -d scenario_dir/ci_model_foo -s
 
 To run for both the model fitting and the loss analysis code:
 
-    $ python sifra -d scenario_dir/ci_model_foo -fl
+    $ python sira -d scenario_dir/ci_model_foo -fl
 
 Note that the fitting and loss analysis steps require the initial simulation
 to have been run first so that it has the initial output data to perform the
@@ -158,12 +158,12 @@ analysis on.
 
 ** The tests are currently not working and being updated. **
 
-To run tests use unittest. Move into sifra folder:
+To run tests use unittest. Move into sira folder:
 
-    $ cd sifra
+    $ cd sira
     $ python -m unittest discover tests
 
-If you are using docker as described above, you can do this within the sifra
+If you are using docker as described above, you can do this within the sira
 container.
 
 
