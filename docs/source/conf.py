@@ -14,7 +14,6 @@
 
 import sys
 import os
-import shlex
 import sira
 
 # directory relative to this conf file
