@@ -1,0 +1,45 @@
+
+`input_node`
+  :Description: The `component_id` of the input node.
+
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and its `node_type` must be `supply`.
+
+  :Example:     'coal_supply'
+
+
+`input_capacity`
+  :Description: The operational capacity of the node. It can be a real value
+                value if known, or default to 100%.
+
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}`
+
+  :Example:     100.0 (default value)
+
+
+`capacity_fraction`
+  :Description: What decimal fractional value of the input commodity
+                enters the system through this input node.
+
+  :Data Type:   Float.
+                :math:`{\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}`
+
+  :Example:     1.0
+
+
+`commodity_type`
+  :Description: The type of commodity entering into the system through
+                the specified input node.
+
+  :Data Type:   String.
+
+  :Example:     For a coal-fired power station there might be two
+                commodities, namely coal and water. So, there will need
+                to be at least two input nodes, one with a `commodity_type`
+                of 'coal' and the other with `commodity_type` of 'water'.
+
+                For an electric substation the `commodity_type` is
+                electricity.
+                For a water treatment plant, it is waster water.

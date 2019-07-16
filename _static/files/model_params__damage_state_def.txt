@@ -1,0 +1,22 @@
+
+`component_type`
+  The entries here are the same as noted under
+  :ref:`component_type <dmg_algo_component_type>` in the
+  'Component Type Damage Algorithms' table.
+
+
+`damage_state`
+  The entries here are the same as noted under
+  :ref:`damage_state <dmg_algo_damage_state>` in the
+  'Component Type Damage Algorithms' table.
+
+
+`damage_state_definitions`
+  :Description: The physical damage descriptors corresponding
+                to the damage states.
+
+                Example:
+                230 kV Current Transformers would be said to be in `Failure`
+                state if there is "porcelain cracking, or overturning."
+
+  :Data Type:   Free text.

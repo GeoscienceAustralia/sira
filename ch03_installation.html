@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3 Installation and Usage &mdash; sira v0.1.0.PRE docs</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4 Simulation and Model Setup" href="ch04_simsetup.html" />
+    <link rel="prev" title="2 Model Concepts" href="ch02_concept.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> sira
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-an-actual-infrastructure-system">2.1.1 Terminology Context: An Actual Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aws-and-docker">3.2 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-of-sira-on-aws-with-docker">3.2.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-docker">3.2.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-compose">3.2.3 Docker Compose</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-core-sira-code">3.4 Running the Core SIRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-code-tests">3.5 Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation and Model Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#simulation-setup-file">4.1 Simulation Setup File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#infrastructure-model-definition-file">4.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-components-component-list">4.2.1 List of Components: component_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">4.2.2 Connections between Components: component_connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: damage_state_def</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Back Matter</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sira</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3 Installation and Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-and-usage">
+<h1>3 Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<span id="system-requirements"></span><h2>3.1 Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><strong>SIRA</strong> is built in Python 2.7. Python hardware requirements are fairly
+minimal. Most modern systems based on x86 architecture should be able to run
+this software.</p>
+<p>SIRA has been tested on the following operating systems:</p>
+<ul class="simple">
+<li>OS X 10.11</li>
+<li>Ubuntu 14.04 (64 bit)</li>
+<li>Windows 10</li>
+</ul>
+<p>The code should work on most other versions of these operating systems,
+though the environment setup process will likely have some differences.
+Windows systems that are not based on the NT-platform are not supported. This
+restriction is due to the fact that from version 2.6 onwards Python has not
+supported non-NT Windows platforms.</p>
+<p>You will need to install <code class="docutils literal notranslate"><span class="pre">Graphviz</span></code>, which is used by
+<code class="docutils literal notranslate"><span class="pre">networkx</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code> packages to draw the system diagram.
+Please visit: <a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a> and download the appropriate
+version for your operating system. Follow the posted download instructions
+carefully. After installation you may need to update the PATH variable
+with the location of the Graphviz binaries.</p>
+<p>For windows systems you will need to install Microsoft Visual C++ Compiler
+for Python 2.7: <a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>.</p>
+</div>
+<div class="section" id="aws-and-docker">
+<span id="setup-dev-environ"></span><h2>3.2 AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Permalink to this headline">¶</a></h2>
+<p>The development of the Web interface to provide the ability to create
+component types and models led to the usage of Docker and AWS. Docker
+creates containers that provide independence of platforms when developing
+applications and services. So Docker removes the requirement for Conda
+to organise the Python libraries. The downside of using docker in our
+environment (GA Sysmonston) is that network security makes running Docker
+difficult. So development environments are easier to create and use on AWS.
+Use of AWS for Web applications is the current direction for GA.</p>
+<div class="section" id="installation-of-sira-on-aws-with-docker">
+<h3>3.2.1 Installation of SIRA on AWS with Docker<a class="headerlink" href="#installation-of-sira-on-aws-with-docker" title="Permalink to this headline">¶</a></h3>
+<p>This requires building an AWS instance and then building the environments
+using Docker.</p>
+<p><strong>Create AWS Instance using Packer:</strong> <br />
+We’re we come from, if we don’t have a laptop handy, we like to use AWS for
+provisioning dev machines. A basic dev box can be setup using
+<a class="reference external" href="https://www.packer.io/intro/">Packer</a>, by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packer build build.json
+</pre></div>
+</div>
+<p>in the current directory.</p>
+<p><strong>Create AWS Instance using bash script:</strong> <br />
+The top level directory of SIRA has the script <code class="docutils literal notranslate"><span class="pre">create-aws-instance.sh</span></code>
+The script requires the <a class="reference external" href="https://aws.amazon.com/cli/">aws command line interface</a>
+to be installed on the machine. It also requires access to AWS account
+credentials.</p>
+<p>The script is run as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ create-aws-instance.sh
+</pre></div>
+</div>
+<p>Both of these commands will use the build_sira_box.sh to install Linux updates
+and the docker components that will be required.</p>
+<p>It then clones the SIRA github repository, from the master branch. Docker is
+then used to build the SIRA environment.</p>
+</div>
+<div class="section" id="using-docker">
+<h3>3.2.2 Using Docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h3>
+<p>If you have Docker installed, you can build a container for working with
+sira by running the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker build -t sira .
+</pre></div>
+</div>
+<p>The primary advantage of working with docker is that you do not have to worry
+about setting up the python environment, which is done when building the
+container and isolated from your own environment.</p>
+<p>To run an interactive container you can use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -it -v &quot;$(pwd):/sira&quot; --name sira s
+</pre></div>
+</div>
+<p>This will give you a terminal inside the container in which you can execute
+commands. Inside the container you can find the current directory mapped at
+<cite>/sira</cite>. You can modify files either within the container or the host and the
+changes will be available in both.</p>
+<p>Alternatively, you might want a container running in the background which you
+can execute commands at using
+<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">docker exec</a>. In
+this case you would start the container with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -id -v &quot;$(pwd):/sira&quot; --name sira sira
+</pre></div>
+</div>
+<p>One could then, for example, run the unit tests for the modelling package with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd sira/tests
+$ python -m unittest discover .
+</pre></div>
+</div>
+<p>In any case, once you are done you should destroy the container with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker kill sira
+$ docker rm sira
+</pre></div>
+</div>
+<p>or, if your too lazy to type two lines, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker rm -f sira
+</pre></div>
+</div>
+<p>Several other containers are provided to help with development. These are
+defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">Dockerfile-api</span></code>: <br />
+Provides a web API which is used for parameterising
+model components (at this stage just response functions) and serialising them.
+This is presently (at Feb 2018) a prototype and provides only a small subset
+of what we hope for.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-dev</span></code>: <br />
+Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
+defining model components built on top of the API mentioned above. The application
+is hosted using Angular’s development server and can be accessed on <em>localhost:4200</em>.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-prod</span></code>: <br />
+For deploying the web application in production. This
+does a production build of the Angular project and hosts it using
+<a class="reference external" href="https://www.busybox.net/">busybox</a>. The app is still exposed on port 4200,
+so to host it at port 80 one would start it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker build -t sira-gui -f Dockerfile-gui-prod .
+</pre></div>
+</div>
+</li>
+</ul>
+<p>and start it with (for example):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -d -p 80:4200 --restart always sira-gui-prod
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker-compose">
+<h3>3.2.3 Docker Compose<a class="headerlink" href="#docker-compose" title="Permalink to this headline">¶</a></h3>
+<p>By far the easiest way to run the system for development is with
+<a class="reference external" href="https://docs.docker.com/compose/">docker-compose</a>, which can be done with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose up
+</pre></div>
+</div>
+<p>Assuming that you start the system this way in the current folder, you can:</p>
+<ul class="simple">
+<li>attach to the sifa image to run models and tests with: <br />
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">sira_sira_1</span></code></li>
+<li>access the GUI for defining fragility functions at: <br />
+<code class="docutils literal notranslate"><span class="pre">http://localhost:4200</span></code>, and</li>
+<li>access the web API at: <br />
+<code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code>.</li>
+</ul>
+<p>This method will allow both the API and GUI to stay in sync with your code.</p>
+<p>You can tear the system down (destroying the containers) with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose down
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="setting-up-a-development-environment-with-anaconda">
+<h2>3.3 Setting Up a Development Environment with Anaconda<a class="headerlink" href="#setting-up-a-development-environment-with-anaconda" title="Permalink to this headline">¶</a></h2>
+<p>We recommend using <code class="docutils literal notranslate"><span class="pre">conda</span></code> for managing virtual environments and
+packages required for running <code class="docutils literal notranslate"><span class="pre">sira</span></code>.</p>
+<p>For the sake of simplicity, we recommend using <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code>. It is a
+free Python distribution, and comes with the <code class="docutils literal notranslate"><span class="pre">conda</span></code> tool which is
+both a package manager and environment manager. Instructions for
+installing <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> are
+<a class="reference external" href="http://docs.continuum.io/anaconda/install">here</a>.</p>
+<p>Some packages we need are not hosted in the main <code class="docutils literal notranslate"><span class="pre">conda</span></code> package
+repository. In such cases we will host them in our own user channel.
+We suggest adding the following channels to the default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --add channels https://conda.anaconda.org/anaconda
+$ conda config --add channels https://conda.anaconda.org/marufr
+</pre></div>
+</div>
+<p>Run the following command to confirm the additional channels have
+been added:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --get channels
+</pre></div>
+</div>
+<p><strong>For OS X and Linux-64 systems</strong>: It should be possible to set up a full run
+environment solely through the *.yml environment specification file. For OS X
+run the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda env create -f environment_osx.yml
+$ source activate sira_env
+</pre></div>
+</div>
+<p>For Linux-64 systems, the commands are identical, you will just need to use
+the environment specification file for Linux.</p>
+<p><strong>For Windows systems</strong>, a similar process needs to be followed, with some
+exceptions. First run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda env create -f environment_win64.yml
+$ activate sira_env
+</pre></div>
+</div>
+<p>This will install most requirements except for <code class="docutils literal notranslate"><span class="pre">igraph</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code>.
+Compiling these packages under windows can be very challenging. The simplest
+and most reliable option is to download the the appropriate binary
+distribution in the form of <cite>wheels</cite> from
+<a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">Christoph Gohlke’s unofficial page of Windows binaries</a>.</p>
+<p>Download the appropriate <cite>wheels</cite> (*.whl files) of the following packages
+for your Windows platform (32 or 64 bit):</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph">python-igraph</a></li>
+<li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz">pygraphviz</a>.</li>
+</ul>
+<p>Install the downloaded <cite>wheels</cite> (*.whl files) with pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">pkg_name</span><span class="o">&gt;.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-the-core-sira-code">
+<span id="running-sira"></span><h2>3.4 Running the Core SIRA Code<a class="headerlink" href="#running-the-core-sira-code" title="Permalink to this headline">¶</a></h2>
+<p>The code needs a setup file for configuring the model and simulation scenario.
+It can be in any of three formats: <cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The code first
+converts any setup file to json first before running. For the purposes of
+discussion, it is assumed that the name of the configuration file is
+<code class="docutils literal notranslate"><span class="pre">config_x.ini</span></code>, and it is located in the directory
+<code class="docutils literal notranslate"><span class="pre">/Users/user_x/sira/simulation_setup/</span></code>.</p>
+<p>The software can be run from the command line using these simple steps:</p>
+<ol class="arabic">
+<li><p class="first">Open a command terminal</p>
+</li>
+<li><p class="first">Change to the directory that has the <code class="docutils literal notranslate"><span class="pre">sira</span></code> code. If the code is
+in the directorty <code class="docutils literal notranslate"><span class="pre">/Users/user_x/sira</span></code>, then run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ~/sira/
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the primary fragility characterisation module from the command
+line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -s simulation_setup/config_x.ini
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The post-processing tools are run as simple python scripts. It should be
+noted, that the post-processing tools depend on the outputs produced by a
+full simulation run that characterises the system fragility. Therefore,
+the full run of the SIRA needs to be conducted on the system model of
+interest prior to running the tools for the loss scenario and
+restoration analysis tools.</p>
+<p>To run the post-simulation analysis on the generated output data, we need to
+supply the setup file used to run the original simulation and the log file that
+stores the directory locations for the the stored output data. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira/scenario_loss_analysis.py
+    -s simulation_setup/scenario_ss_x.ini
+    -d logs/siralog_20180619_155612_dirs.json
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-code-tests">
+<h2>3.5 Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
+<p>To run tests use <code class="docutils literal notranslate"><span class="pre">unittest</span></code>. The tests need to be run from the root of
+the <cite>sira</cite> code directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd sira   # and not cd sira/sira
+$ python -m unittest discover tests
+</pre></div>
+</div>
+<p>If you are using docker as described above, you can do this within the sira
+container.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Geoscience Australia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

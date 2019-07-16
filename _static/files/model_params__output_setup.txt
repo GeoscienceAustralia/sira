@@ -1,0 +1,61 @@
+
+`output_node`
+  :Description: These are the 'sink' nodes representing the load or
+                the aggregate consumer of the product(s) of the system.
+
+                These are not real components, but a modelling construct.
+                These nodes are not considered in the fragility
+                calculations.
+
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and must be of `node_type` sink.
+
+  :Example:     'output_1'
+
+
+`production_node`
+  :Description: These are the real terminal nodes within the infrastructure
+                system model. The completed 'product' of a system exits
+                from this node.
+
+  :Data Type:   String. Must be one of the entries in the
+                `component_id` columns in the `component_list` table,
+                and must be of `node_type` transshipment.
+
+  :Example:     'gen_1'
+
+
+`output_node_capacity`
+  :Description: Production capacity that the specific production node
+                is responsible for.
+
+                The unit depends on the type of product the system
+                produces (e.g. MW for generator plant).
+
+  :Data Type:   Float
+
+  :Example:     300
+
+
+`capacity_fraction`
+  :Description: The fraction of total production capacity of the
+                output nodes. The sum of capacities of all nodes must
+                equal 1.0.
+
+  :Data Type:   Float :math:`{\{x \in \mathbb{R} \mid 0 < x \leq 1\}}`
+
+  :Example:     0.5
+
+
+`priority`
+  :Description: This parameter is used to assign relative sequential
+                priority for output/production nodes in for the
+                purposes of post-disaster recovery
+
+  :Data Type:   Integer.
+                :math:`{\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}`,
+                where `n` is the total number of output nodes
+
+  :Example:     _
+
