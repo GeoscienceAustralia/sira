@@ -51,8 +51,8 @@ to develop arbitrarily complex custom facility models -- for a :term:`Facility`
 or a network -- for impact simulation.
 
 **Extensible Component Library:** User can define new instances of
-`component_type` (the building blocks of a facility) and link it to existing or
-custom fragility algorithms.
+`component_type` (the building blocks of a facility or network) and link it
+to existing or custom fragility algorithms.
 
 **Component Criticality Analysis:** Scenario Analysis tools allow users to
 identify the cost of restoration for chosen scenarios, expected restoration
@@ -60,7 +60,7 @@ times, and which component upgrades can most benefit the system.
 
 **Restoration Prognosis:** User can experiment with different levels of
 hazards and post-disaster resource allocation to gauge restoration
-times for facility operations.
+times for system operations.
 
 
 .. _user-docs:

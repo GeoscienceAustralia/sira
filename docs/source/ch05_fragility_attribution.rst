@@ -4,7 +4,7 @@
 Component Fragility Attribution
 *******************************
 
-As earthquake induced ground shaking at a facility increases in intensity,
+As earthquake induced ground shaking at a location increases in intensity,
 the individual components respond and sustain progressively more damage.
 Fragility functions are used to define this susceptibility of components
 to damage by quantifying the likelihood that a level of damage will be
@@ -12,7 +12,7 @@ exceeded for a given level of shaking. This approach entails the definition
 of one or more earthquake damage states for each component and the selection
 of a ground shaking measure that is highly correlated to the component damage.
 
-Each component within a facility is strictly unique. However, for a given
+Each component within a system is strictly unique. However, for a given
 component it can be classed into a category of asset referred to as a
 ``component type``, in which all components have similar vulnerability.
 The assignment of component type fragility algorithms for each damage state
@@ -46,13 +46,13 @@ hierarchy of approaches which is in order of increasing uncertainty:
    sector component models.  Its key references included works by
    Vanzi :cite:`Vanzi1996`, Anagnos :cite:`Anagnos1999` and
    the HAZUS Technical Manual :cite:`FEMA2003`.
-   HAZUS includes fragility functions for a wider range of facility
-   components than those presented in the Syner-G Project.
+   HAZUS includes fragility functions for a wider range of facilities and
+   subcomponents than those presented in the Syner-G Project.
 
 Each damage state has a description of the typical severity of physical
 component damage which has implications for the use of the component.
 Hence, each damage state also has an operational level for the damaged
 component, a cost to repair (as a proportion of the replacement cost) and
 a resource requirement in terms of number of technicians and time. This
-is used to assess the utility of the facility immediately after an extreme
+is used to assess the utility of the system immediately after an extreme
 event and to assess the restoration prognosis.
