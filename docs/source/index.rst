@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-#######################################################################
-SIFRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis
-#######################################################################
+######################################################################
+SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis
+######################################################################
 
 https://github.com/GeoscienceAustralia/sira |br|
 Release: |release|
