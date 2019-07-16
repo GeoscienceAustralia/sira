@@ -9,7 +9,7 @@ Martin Wehner: for initial planning and design of the predecessor to this code.
 
 Ammar Ahmed: for identifying requirements for improving capabilities in the original software.
 
-Maruf Rahman: for revision of the 'facility model', input data preservation, and small bug fixes.
+Maruf Rahman: for revision of the 'facility model', input data preservation, and bug fixes.
 
 Hyeuk Ryu: for identifying bugs, testing, and improvement suggestions.
 

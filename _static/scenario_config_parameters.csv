@@ -29,7 +29,7 @@
 "Example:",500
 
 `FOCAL_HAZARD_SCENARIOS`
-"Description:","The value(s) or scenario(s) at which to assess facility response is assessed"
+"Description:","The value(s) or scenario(s) at which to assess system response."
 "Data Type:",List of strings
 "Example:","[0.50, 0.55]"
 
@@ -59,12 +59,12 @@
 "Example:","[5, 10, 20]"
 
 `SYSTEM_CLASSES`
-"Description:","The allowed facility system types"
+"Description:","The allowed infrastructure system types"
 "Data Type:",List of strings
 "Example:","['PowerStation', 'Substation']"
 
 `SYSTEM_CLASS`
-"Description:","The facility system type to be modelled"
+"Description:","The type of infrastructure system to be modelled"
 "Data Type:",String
 "Example:",'PowerStation'
 

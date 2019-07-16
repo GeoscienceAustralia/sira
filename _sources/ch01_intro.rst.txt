@@ -10,7 +10,7 @@ In the context of natural hazard vulnerability, the components have differing
 susceptibilities, require different resource levels and time to repair, and 
 have a range of criticalities to the overall service delivery. The 
 vulnerability of the facility, then, is a product of the components,
- their properties and interactions.
+their properties and interactions.
 
 SIRA stands for *Systemic Infrastructure Resilience Analysis*.
 It comprises a method and software tools that provide a framework for 
@@ -18,13 +18,13 @@ simulating the fragility of infrastructure facilities to natural hazards,
 based on assessment of the fragilities and configuration of components that 
 comprises the facility. Currently the system is designed to work with 
 earthquake hazards only. ``SIRA`` enables the vulnerabilities of each element
-to be integrated into an assessment of the implications of severe hazard 
-exposure to facility damage, service disruption and cost. 
+to be within a facility or a network to be integrated into a holistic
+assessment of the direct system losses, service disruption and cost.
 
 SIRA is used to model the vulnerability of high-value infrastructure
 facilities to natural hazards. Earthquake ground motion is the present focus 
 and many uncertainties are captured through a Monte Carlo sampling process. 
-The tool not only enables current facility vulnerability to be quantified, 
+The tool not only enables infrastructure assets' vulnerability to be quantified,
 but also enables the most vulnerable components to be identified in terms of 
 repair cost, time to recovery, and service disruption implications. The 
 outcomes also support benefit versus cost studies of retrofit options. 
@@ -35,10 +35,10 @@ to the most cost-effective utilisation of limited retrofit resources.
 .. _intro-design-notes:
 
 :term:`Vulnerability <vulnerability>` of a facility is modelled by assigning 
-fragilities to the individual components that make up a facility. The program 
-accounts for variability in component fragilities by sampling probability 
-distributions for the each fragility curve median and beta values. Once
-values have been selected for each curve it checks that
+fragilities to the individual components that make up a facility or a network.
+The program accounts for variability in component fragilities by sampling
+probability distributions for the each fragility curve median and beta values.
+Once values have been selected for each curve it checks that
 :term:`fragility curves` do not overlap and if they do, re-samples the
 median and beta probability distributions until non-overlapping fragility
 curves are produced.
