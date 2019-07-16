@@ -67,7 +67,9 @@ master_doc = 'index'
 project = sira.__packagename__
 copyright = sira.__copyright__
 author = sira.__author__
+print("###########################")
 print(project)
+print("###########################")
 # Version info for the project.
 # acts as replacement for |version| and |release|,
 # also used in various other places throughout the built documents.
