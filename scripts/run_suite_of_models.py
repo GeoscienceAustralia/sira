@@ -88,6 +88,6 @@ for model_dir in os.listdir(project_root_dir):
     model_dir_path = os.path.join(project_root_dir, model_dir)
     if os.path.isdir(model_dir_path):
         subprocess.call(
-            ['python', "sifra", "-d", model_dir_path, "-sfl"])
+            ['python', "sira", "-d", model_dir_path, "-sfl"])
 
 # ------------------------------------------------------------------------------

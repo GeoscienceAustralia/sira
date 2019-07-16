@@ -5,11 +5,11 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = ../../sifra-doc-build
+BUILDDIR      = ../../sira-doc-build
 PDFBUILDDIR	  = /tmp
 PDF			  = ../manual.pdf
 
-GH_PAGES_SOURCES = ./source ../sifra Makefile
+GH_PAGES_SOURCES = ./source ../sira Makefile
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)

@@ -7,7 +7,7 @@
 SIFRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis
 #######################################################################
 
-https://github.com/GeoscienceAustralia/sifra |br|
+https://github.com/GeoscienceAustralia/sira |br|
 Release: |release|
 
 SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.

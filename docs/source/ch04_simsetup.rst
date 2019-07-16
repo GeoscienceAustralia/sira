@@ -20,7 +20,7 @@ to the keep the directory structure of the code in mind::
    ├── hazard                      <-- Hazard scenario files for networks
    ├── installation                <-- Installation scripts for dev envs
    ├── scripts
-   ├── sifra                       <-- The core code reside here
+   ├── sira                       <-- The core code reside here
    │   └── modelling
    ├── simulation_setup            <-- Scenario configuration files
    ├── tests                       <-- Test scripts + data for sanity checks

@@ -13,7 +13,7 @@
 #             line = line.strip()
 #
 #             if len(line)>2:
-#                 if 'sifra' not in line and line[0] != '#':
+#                 if 'sira' not in line and line[0] != '#':
 #                     if 'import' in line:
 #                         if 'import' in line[0:6]:
 #                             line=line.replace('import','').strip()
