@@ -14,7 +14,7 @@
 
 import sys
 import os
-import .sira
+import sira
 
 # directory relative to this conf file
 CURDIR = os.path.abspath(os.path.dirname(__file__))
