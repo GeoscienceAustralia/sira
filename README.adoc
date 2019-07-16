@@ -11,7 +11,7 @@ toc::[]
 
 The detailed documentation is at this http://geoscienceaustralia.github.io/sira/[link].
 
-SIRA stands for **Systemic for Infrastructure Resilience Analysis**.
+SIRA stands for **Systemic Infrastructure Resilience Analysis**.
 It represents a methodology and supporting code for systematising vulnerability
 analysis of lifeline infrastructure to natural hazards (i.e. response of
 infrastructure assets to environmental excitation). SIRA is open source.
