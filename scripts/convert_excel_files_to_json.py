@@ -384,7 +384,7 @@ def check_if_excel_file(file_path, parser):
 def main():
 
     parser = argparse.ArgumentParser(
-        description="Convert a SIFRA model file in Excel format to JSON.",
+        description="Convert a SIRA model file in Excel format to JSON.",
         add_help=True)
     parser.add_argument("model_file",
                         type=str,
