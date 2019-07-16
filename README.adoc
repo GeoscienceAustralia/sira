@@ -2,7 +2,7 @@
 :toc-title:
 :toclevels: 99
 
-# SIFRA
+# SIRA
 
 toc::[]
 
@@ -11,10 +11,10 @@ toc::[]
 
 The detailed documentation is at this http://geoscienceaustralia.github.io/sira/[link].
 
-SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
+SIRA stands for **System for Infrastructure Facility Resilience Analysis**.
 It represents a methodology and supporting code for systematising vulnerability
 analysis of lifeline infrastructure to natural hazards (i.e. response of
-infrastructure assets to environmental excitation). SIFRA is open source.
+infrastructure assets to environmental excitation). SIRA is open source.
 
 The impact assessment is based on the fragilities and configuration of
 components that comprise the infrastructure system under study. The analytical
@@ -27,7 +27,7 @@ The current focus has been on studying responses of infrastructure facilities
 has been done in the code backend to extend the same methodology to modelling
 network vulnerability as well (e.g. electricity transmission networks).
 
-SIFRA models are based on graph theory. All infrastructure systems are
+SIRA models are based on graph theory. All infrastructure systems are
 represented as networks. This allows an user to develop arbitrarily complex
 custom facility models – for a Facility or a network – for impact simulation.
 
@@ -96,7 +96,7 @@ copy the project folder from container to host:
 
 ### Running the code
 
-To set up a scenario or impact simulation project, SIFRA expects the following
+To set up a scenario or impact simulation project, SIRA expects the following
 directory structure:
 
 ```
@@ -134,7 +134,7 @@ The code can be run in a number of modes. The relevant options are:
   -l, --loss_analysis
 
 Following code snippets assume that it is being run from the root directory
-of the SIFRA code, and the model of interest is in the location
+of the SIRA code, and the model of interest is in the location
 `sira/scenario_dir/ci_model_foo`.
 
 The following code runs the simulation and the post processing simultanrously:
