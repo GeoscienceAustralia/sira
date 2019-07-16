@@ -8,11 +8,11 @@ Installation and Usage
 Requirements
 ============
 
-**SIFRA** is built in Python 2.7. Python hardware requirements are fairly 
+**SIRA** is built in Python 2.7. Python hardware requirements are fairly
 minimal. Most modern systems based on x86 architecture should be able to run 
 this software.
 
-SIFRA has been tested on the following operating systems:
+SIRA has been tested on the following operating systems:
 
 - OS X 10.11
 - Ubuntu 14.04 (64 bit)
@@ -48,8 +48,8 @@ environment (GA Sysmonston) is that network security makes running Docker
 difficult. So development environments are easier to create and use on AWS.
 Use of AWS for Web applications is the current direction for GA.
 
-Installation of SIFRA on AWS with Docker
-++++++++++++++++++++++++++++++++++++++++
+Installation of SIRA on AWS with Docker
++++++++++++++++++++++++++++++++++++++++
 This requires building an AWS instance and then building the environments
 using Docker.
 
@@ -63,7 +63,7 @@ provisioning dev machines. A basic dev box can be setup using
 in the current directory.
 
 **Create AWS Instance using bash script:** |br|
-The top level directory of SIFRA has the script ``create-aws-instance.sh``
+The top level directory of SIRA has the script ``create-aws-instance.sh``
 The script requires the `aws command line interface <https://aws.amazon.com/cli/>`_
 to be installed on the machine. It also requires access to AWS account
 credentials.
@@ -75,8 +75,8 @@ The script is run as::
 Both of these commands will use the build_sira_box.sh to install Linux updates
 and the docker components that will be required.
 
-It then clones the SIFRA github repository, from the master branch. Docker is
-then used to build the SIFRA environment.
+It then clones the SIRA github repository, from the master branch. Docker is
+then used to build the SIRA environment.
 
 Using Docker
 ++++++++++++
@@ -236,8 +236,8 @@ Install the downloaded `wheels` (\*.whl files) with pip::
 .. _running-sira:
 
 
-Running the Core SIFRA Code
-===========================
+Running the Core SIRA Code
+==========================
 
 The code needs a setup file for configuring the model and simulation scenario.
 It can be in any of three formats: `ini`, `conf`, or `json`. The code first
@@ -263,7 +263,7 @@ The software can be run from the command line using these simple steps:
 The post-processing tools are run as simple python scripts. It should be
 noted, that the post-processing tools depend on the outputs produced by a
 full simulation run that characterises the system fragility. Therefore,
-the full run of the SIFRA needs to be conducted on the system model of
+the full run of the SIRA needs to be conducted on the system model of
 interest prior to running the tools for the loss scenario and
 restoration analysis tools.
 

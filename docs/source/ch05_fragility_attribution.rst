@@ -23,7 +23,7 @@ a “component type” and the effect of variability in component response to
 ground motion on damage severity.  The form of these functions can take a
 range of mathematical forms.  The most common form is log normal and defined
 by a median (|theta|) and log standard deviation (|beta|), which is the form
-that SIFRA uses.
+that SIRA uses.
 
 Component type fragility models need to be representative of the assets they
 characterise. Models can be developed or sourced using the following

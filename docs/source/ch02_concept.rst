@@ -4,13 +4,13 @@
 Model Concepts
 **************
 
-SIFRA provides a modelling framework and software tools for assessing
+SIRA provides a modelling framework and software tools for assessing
 impact of natural hazards on infrastructure systems. Infrastructure
 systems, within this framework, refer to facilities and networks that
 provide essential utility services for communities, regions and/or a country.
 This will include electricity generation and transmission, water and wastewater
 treatment and reticulation, and transport networks. It excludes standalone
-high-value buildings and manufacturing plants. The SIFRA project also
+high-value buildings and manufacturing plants. The SIRA project also
 deliberately eschews an exclusive focus on "critical" infrastructure,
 as that invites unnecessary debates on criteria of criticality and
 jurisdiction for that class of assets.
@@ -35,10 +35,10 @@ The International Council on Systems Engineering (INCOSE)
     by the elements alone."
 
 The specific meaning of a system and its boundaries depend on the context,
-and it is important to understand how this term is used within the SIFRA
+and it is important to understand how this term is used within the SIRA
 modelling methodology. This is clarified in subsequent subsections.
 
-The central idea in the SIFRA modelling construct is this:
+The central idea in the SIRA modelling construct is this:
 All lifeline infrastructure 'systems' within the modelling framework are
 conceptualised as a network of interconnected nodes.
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# SIFRA documentation build configuration file, created by
+# SIRA documentation build configuration file, created by
 # sphinx-quickstart on Thu Feb 25 09:28:33 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -181,7 +181,7 @@ html_theme_options = {
 # html_theme_options = {
 #
 #     # Set the name of the project to appear in the left sidebar.
-#     "project_nav_name": "SIFRA",
+#     "project_nav_name": "SIRA",
 #
 #     # Allow the project link to be overriden to a custom URL.
 #     "projectlink": "https://github.com/GeoscienceAustralia/sira",
@@ -293,7 +293,7 @@ html_show_copyright = True
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SIFRAdoc'
+htmlhelp_basename = 'SIRAdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -315,7 +315,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'SIFRA.tex', u'SIFRA Documentation',
+  (master_doc, 'SIRA.tex', u'SIRA Documentation',
    u'Maruf Rahman', 'manual'),
 ]
 
@@ -363,8 +363,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'SIFRA', u'SIFRA Documentation',
-   author, 'SIFRA', 'One line description of project.',
+  (master_doc, 'SIRA', u'SIRA Documentation',
+   author, 'SIRA', 'One line description of project.',
    'Miscellaneous'),
 ]
 

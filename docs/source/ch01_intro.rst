@@ -12,16 +12,16 @@ have a range of criticalities to the overall service delivery. The
 vulnerability of the facility, then, is a complex convolution of all these 
 components and factors.
 
-SIFRA stands for *System for Infrastructure Facility Resilience Analysis*. 
+SIRA stands for *Systemic Infrastructure Resilience Analysis*.
 It comprises a method and software tools that provide a framework for 
 simulating the fragility of infrastructure facilities to natural hazards, 
 based on assessment of the fragilities and configuration of components that 
 comprises the facility. Currently the system is designed to work with 
-earthquake hazards only. ``SIFRA`` enables the vulnerabilities of each element 
+earthquake hazards only. ``SIRA`` enables the vulnerabilities of each element
 to be integrated into an assessment of the implications of severe hazard 
 exposure to facility damage, service disruption and cost. 
 
-SIFRA is used to model the vulnerability of high-value infrastructure 
+SIRA is used to model the vulnerability of high-value infrastructure
 facilities to natural hazards. Earthquake ground motion is the present focus 
 and many uncertainties are captured through a Monte Carlo sampling process. 
 The tool not only enables current facility vulnerability to be quantified, 

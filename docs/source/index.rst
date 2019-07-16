@@ -1,4 +1,4 @@
-.. SIFRA documentation master file, created by
+.. SIRA documentation master file, created by
    sphinx-quickstart on Thu Feb 25 09:28:33 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -10,7 +10,7 @@ SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis
 https://github.com/GeoscienceAustralia/sira |br|
 Release: |release|
 
-SIFRA stands for **System for Infrastructure Facility Resilience Analysis**.
+SIRA stands for **Systemic Infrastructure Resilience Analysis**.
 It represents a methodology and supporting code for systematising
 :term:`vulnerability` analysis of lifeline infrastructure to natural hazards
 (i.e. response of infrastructure assets to environmental excitation).
@@ -33,7 +33,7 @@ that the platform is effectively hazard agnostic. The hazard attribution
 process and infrastructure models are flexible to allow for expansion
 to other hazards and new infrastructure sectors.
 
-SIFRA was developed in `Geoscience Australia (GA) <http://www.ga.gov.au/>`_
+SIRA was developed in `Geoscience Australia (GA) <http://www.ga.gov.au/>`_
 in support of the agency's vision to contribute to enhancing the resilience
 of communities in Australia and its region.
 
