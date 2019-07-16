@@ -11,10 +11,10 @@ def model_file_valid(model_file):
     return True
 
 
-SIFRA_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SIRA_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 path_to_test_model_file = os.path.join(
-    SIFRA_ROOT_DIR,
+    SIRA_ROOT_DIR,
     "models",
     "test_structures",
     "sysconfig_simple_linear.json")
