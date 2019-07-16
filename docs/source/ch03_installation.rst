@@ -2,7 +2,7 @@
 **********************
 Installation and Usage
 **********************
-
+ 
 .. _system-requirements:
 
 Requirements
@@ -12,7 +12,7 @@ Requirements
 minimal. Most modern systems based on x86 architecture should be able to run 
 this software.
 
-SIRA has been tested on the following operating systems: 
+SIRA has been tested on the following operating systems:
 
 - OS X 10.11
 - Ubuntu 14.04 (64 bit)

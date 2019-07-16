@@ -9,8 +9,8 @@ interconnected components that work in concert to deliver a service.
 In the context of natural hazard vulnerability, the components have differing 
 susceptibilities, require different resource levels and time to repair, and 
 have a range of criticalities to the overall service delivery. The 
-vulnerability of the facility, then, is a complex convolution of all these 
-components and factors.
+vulnerability of the facility, then, is a product of the components,
+ their properties and interactions.
 
 SIRA stands for *Systemic Infrastructure Resilience Analysis*.
 It comprises a method and software tools that provide a framework for 
