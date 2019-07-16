@@ -49,7 +49,7 @@ for model_file_path in model_file_path_list:
 
 # ------------------------------------------------------------------------------
 # Organise all models and config files in its separate directories as
-# required by SIFRA
+# required by SIRA
 
 for model_file_path in model_file_path_list:
 
