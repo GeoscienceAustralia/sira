@@ -24,11 +24,11 @@ assessment of the direct system losses, service disruption and cost.
 SIRA is used to model the vulnerability of high-value infrastructure
 facilities to natural hazards. Earthquake ground motion is the present focus 
 and many uncertainties are captured through a Monte Carlo sampling process. 
-The tool not only enables infrastructure assets' vulnerability to be quantified,
-but also enables the most vulnerable components to be identified in terms of 
+The tool facilitates quantification of infrastructure assets' vulnerability,
+and also enables the most vulnerable components to be identified in terms of
 repair cost, time to recovery, and service disruption implications. The 
-outcomes also support benefit versus cost studies of retrofit options. 
-Ultimately, it provides information that supports asset managers in regards 
+outcomes also support benefit-versus-cost studies of retrofit options.
+SIRA helps generate information that supports asset managers in regards
 to the most cost-effective utilisation of limited retrofit resources.
 
 
@@ -43,9 +43,11 @@ Once values have been selected for each curve it checks that
 median and beta probability distributions until non-overlapping fragility
 curves are produced.
 
-Damage scales for several assets, and method for estimating recovery times 
-have been taken from HAZUS :cite:`FEMA2003`.
-Repair cost (and hence damage index) and recovery times for each component are 
+Damage scales for most facility types, along with the recovery time estimation
+method, has been taken from HAZUS :cite:`FEMA2003`. Although, where deemed more
+appropriate, custom damage scales have been used, e.g. for electrical
+substations.
+Repair cost (and hence damage index) and recovery times for each component are
 customised for each asset type, based on consultation with assets operators.
 The threshold values of spectral acceleration for each of four damage states 
 are sampled by randomly sampling the fragility curves described above.
