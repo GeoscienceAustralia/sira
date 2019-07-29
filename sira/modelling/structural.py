@@ -1,5 +1,4 @@
-from builtins import str
-from builtins import object
+from future.builtins import str, object
 from future.utils import with_metaclass
 import inspect
 from sira.modelling.utils import class_getter
@@ -191,7 +190,7 @@ class StructuralMeta(type):
         super(StructuralMeta, cls).__init__(name, bases, dct)
 
 
-class Base(with_metaclass(StructuralMeta, object)):
+class Base(object, metaclass=StructuralMeta):
     """
     Base class for all 'model' classes. **This should never be used by clients**
     and serves as a base class for dynamically generated classes returned by

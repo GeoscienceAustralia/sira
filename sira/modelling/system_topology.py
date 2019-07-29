@@ -1,6 +1,5 @@
 from __future__ import print_function
-from builtins import str
-from builtins import object
+from future.builtins import str, object
 import os
 import networkx as nx
 import re
