@@ -35,9 +35,9 @@ hazard agnostic. The hazard specification process and infrastructure models
 are designed to allow for expansion to different hazards and arbitrary
 infrastructure sectors/assets.
 
-SIRA is being developed in |GA_NAME_LINK| in support of the agency's
-strategic priority to contribute to enhancing the hazard resilience of
-communities in Australia and its region.
+SIRA is being developed in `Geoscience Australia (GA)`_ in support of
+the agency's strategic priority to contribute to enhancing the hazard
+resilience of communities in Australia and its region.
 
 
 Features
