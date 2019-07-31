@@ -1,6 +1,6 @@
-.. _Geoscience Australia: http://www.ga.gov.au/
+.. _Geoscience Australia: https://www.ga.gov.au/
 
-.. _Geoscience Australia (GA): http://www.ga.gov.au/
+.. _Geoscience Australia (GA): https://www.ga.gov.au/
 
 .. |nbsp| unicode:: 0xA0
    :trim:
