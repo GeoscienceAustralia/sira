@@ -193,31 +193,34 @@
            <div itemprop="articleBody">
             
   <div class="section" id="installation-and-usage">
-<h1>3 Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Permalink to this headline">¶</a></h1>
+<span id="installation-usage"></span><h1>3 Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Permalink to this headline">¶</a></h1>
+<p><strong>SIRA</strong> is built on Python 3.x. Python hardware requirements are fairly
+minimal. Most modern systems based on x86 architecture should be able to
+run this software.</p>
 <div class="section" id="requirements">
-<span id="system-requirements"></span><h2>3.1 Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p><strong>SIRA</strong> is built in Python 2.7. Python hardware requirements are fairly
-minimal. Most modern systems based on x86 architecture should be able to run
-this software.</p>
+<h2>3.1 Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p>SIRA has been tested on the following operating systems:</p>
-<ul class="simple">
-<li>OS X 10.11</li>
+<blockquote>
+<div><ul class="simple">
+<li>OS X 10.11+</li>
 <li>Ubuntu 14.04 (64 bit)</li>
 <li>Windows 10</li>
 </ul>
+</div></blockquote>
 <p>The code should work on most other versions of these operating systems,
 though the environment setup process will likely have some differences.
-Windows systems that are not based on the NT-platform are not supported. This
-restriction is due to the fact that from version 2.6 onwards Python has not
-supported non-NT Windows platforms.</p>
+Windows systems that are not based on the NT-platform are not supported.
+This restriction is due to the fact that from version 2.6 onwards Python
+has not supported non-NT Windows platforms.</p>
 <p>You will need to install <code class="docutils literal notranslate"><span class="pre">Graphviz</span></code>, which is used by
 <code class="docutils literal notranslate"><span class="pre">networkx</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code> packages to draw the system diagram.
-Please visit: <a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a> and download the appropriate
+Please visit: <a class="reference external" href="https://www.graphviz.org/">https://www.graphviz.org/</a> and download the appropriate
 version for your operating system. Follow the posted download instructions
 carefully. After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.</p>
-<p>For windows systems you will need to install Microsoft Visual C++ Compiler
-for Python 2.7: <a class="reference external" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a>.</p>
+<p>For windows systems you will need to have a C++ Compiler. The recommended
+option for Python 3.5+ is the free full-featured community edition of
+<a class="reference external" href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">Visual Studio 2015</a>.</p>
 </div>
 <div class="section" id="aws-and-docker">
 <span id="setup-dev-environ"></span><h2>3.2 AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Permalink to this headline">¶</a></h2>
@@ -382,7 +385,7 @@ exceptions. First run:</p>
 $ activate sira_env
 </pre></div>
 </div>
-<p>This will install most requirements except for <code class="docutils literal notranslate"><span class="pre">igraph</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code>.
+<p>This will install <em>most</em> requirements except for <code class="docutils literal notranslate"><span class="pre">igraph</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code>.
 Compiling these packages under windows can be very challenging. The simplest
 and most reliable option is to download the the appropriate binary
 distribution in the form of <cite>wheels</cite> from

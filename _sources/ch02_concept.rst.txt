@@ -28,7 +28,7 @@ dictionary, is
     of items forming a unified whole."
 
 The International Council on Systems Engineering (INCOSE)
-`defines a system thus <http://www.incose.org/AboutSE/WhatIsSE>`_:
+`defines a system thus <https://www.incose.org/about-systems-engineering>`_:
 
     "A system is a construct or collection of different
     elements that together produce results not obtainable

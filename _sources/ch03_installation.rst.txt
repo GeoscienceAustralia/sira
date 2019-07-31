@@ -1,44 +1,46 @@
+.. _installation-usage:
 
 **********************
 Installation and Usage
 **********************
- 
-.. _system-requirements:
+
+**SIRA** is built on Python 3.x. Python hardware requirements are fairly
+minimal. Most modern systems based on x86 architecture should be able to
+run this software.
 
 Requirements
 ============
 
-**SIRA** is built in Python 2.7. Python hardware requirements are fairly
-minimal. Most modern systems based on x86 architecture should be able to run 
-this software.
-
 SIRA has been tested on the following operating systems:
 
-- OS X 10.11
-- Ubuntu 14.04 (64 bit)
-- Windows 10
+    - OS X 10.11+
+    - Ubuntu 14.04 (64 bit)
+    - Windows 10
 
-The code should work on most other versions of these operating systems, 
-though the environment setup process will likely have some differences. 
-Windows systems that are not based on the NT-platform are not supported. This 
-restriction is due to the fact that from version 2.6 onwards Python has not 
-supported non-NT Windows platforms. 
+The code should work on most other versions of these operating systems,
+though the environment setup process will likely have some differences.
+Windows systems that are not based on the NT-platform are not supported.
+This restriction is due to the fact that from version 2.6 onwards Python
+has not supported non-NT Windows platforms. 
 
 You will need to install ``Graphviz``, which is used by
 ``networkx`` and ``pygraphviz`` packages to draw the system diagram.
-Please visit: `<http://www.graphviz.org/>`_ and download the appropriate
+Please visit: `<https://www.graphviz.org/>`_ and download the appropriate
 version for your operating system. Follow the posted download instructions
 carefully. After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.
 
-For windows systems you will need to install Microsoft Visual C++ Compiler 
-for Python 2.7: `<http://aka.ms/vcpython27>`_.
+For windows systems you will need to have a C++ Compiler. The recommended
+option for Python 3.5+ is the free full-featured community edition of 
+`Visual Studio 2015
+<https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx>`_.
 
 
 .. _setup-dev-environ:
 
 AWS and Docker
 ==============
+
 The development of the Web interface to provide the ability to create
 component types and models led to the usage of Docker and AWS. Docker
 creates containers that provide independence of platforms when developing
@@ -50,6 +52,7 @@ Use of AWS for Web applications is the current direction for GA.
 
 Installation of SIRA on AWS with Docker
 +++++++++++++++++++++++++++++++++++++++
+
 This requires building an AWS instance and then building the environments
 using Docker.
 
@@ -215,8 +218,8 @@ exceptions. First run::
     $ conda env create -f environment_win64.yml
     $ activate sira_env
 
-This will install most requirements except for ``igraph`` and ``pygraphviz``. 
-Compiling these packages under windows can be very challenging. The simplest 
+This will install *most* requirements except for ``igraph`` and ``pygraphviz``.
+Compiling these packages under windows can be very challenging. The simplest
 and most reliable option is to download the the appropriate binary
 distribution in the form of `wheels` from
 `Christoph Gohlke's unofficial page of Windows binaries
