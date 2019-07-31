@@ -1,6 +1,8 @@
 .. _Geoscience Australia: http://www.ga.gov.au/
 
-.. |nbsp| unicode:: 0xA0 
+.. |GA_NAME_LINK| replace:: `Geoscience Australia (GA) <http://www.ga.gov.au/>`_
+
+.. |nbsp| unicode:: 0xA0
    :trim:
 
 .. |eg| replace:: e.g.,
