@@ -190,14 +190,12 @@ class StructuralMeta(type):
         super(StructuralMeta, cls).__init__(name, bases, dct)
 
 
-class Base(object, metaclass=StructuralMeta):
+class Base(metaclass=StructuralMeta):
     """
     Base class for all 'model' classes. **This should never be used by clients**
     and serves as a base class for dynamically generated classes returned by
     :py:func:``, which are designed for use by clients.
     """
-
-    # __metaclass__ = StructuralMeta
 
     def __init__(self, **kwargs):
         self._predecessor = kwargs.pop('predecessor', None)

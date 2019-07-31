@@ -471,7 +471,7 @@ def correct_crossover(
 #
 # The location (loc) keyword specifies the mean.
 # The scale (scale) keyword specifies the standard deviation.
-# http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
+# https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
 #
 # Note on the covariance matrix returned by scipy.optimize.curve_fit:
 # The square root of the diagonal values are the 1-sigma uncertainties of

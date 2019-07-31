@@ -279,7 +279,7 @@ def forceAspect(ax,aspect=1):
     """
     Forces the aspect ratio to be equal
     Copy of Yann's answer to the SO question:
-    http://stackoverflow.com/questions/7965743/\
+    https://stackoverflow.com/questions/7965743/\
         how-can-i-set-the-aspect-ratio-in-matplotlib
 
     :param ax:

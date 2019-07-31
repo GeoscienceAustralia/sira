@@ -31,7 +31,7 @@ $ docker start -a -i sira_x
 Run the sira code for the scenario in the specified directory:
 $ python sira -d /path/to/scenario_dir -sfl
 
-From outside of docker, on a terminal, use the following comman to
+From outside of docker, on a terminal, use the following command to
 copy the project folder from container to host:
 
 $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/

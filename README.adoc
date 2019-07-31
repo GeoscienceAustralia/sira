@@ -9,7 +9,7 @@ toc::[]
 
 ## Overview
 
-The detailed documentation is at this http://geoscienceaustralia.github.io/sira/[link].
+The detailed documentation is at this https://geoscienceaustralia.github.io/sira/[link].
 
 SIRA stands for **Systemic Infrastructure Resilience Analysis**.
 It represents a methodology and supporting code for systematising vulnerability
@@ -184,7 +184,7 @@ container.
   it. I went for the latter, which I think is the right choice, but did not
   have the time to make the API consistent throughout.
 
-- Consider whether a framework like http://redux.js.org/[Redux] would be useful.
+- Consider whether a framework like https://redux.js.org/[Redux] would be useful.
 
 - Perhaps get rid of ng\_select. I started with this before realising how easy
   simple HTML selects would be to work with and before reading about reactive
