@@ -1,7 +1,6 @@
-.. SIRA documentation master file, created by
-   sphinx-quickstart on Thu Feb 25 09:28:33 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. SIRA documentation master file.
+   You can adapt this file completely to your liking,
+   but it should at least contain the root `toctree` directive.
 
 ######################################################################
 SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis
@@ -12,42 +11,44 @@ Release: |release|
 
 SIRA stands for **Systemic Infrastructure Resilience Analysis**.
 It represents a methodology and supporting code for systematising
-:term:`vulnerability` analysis of lifeline infrastructure to natural hazards
-(i.e. response of infrastructure assets to environmental excitation).
+:term:`vulnerability` analysis of lifeline infrastructure assets to
+natural hazards (i.e. infrastructure system response to environmental
+excitation).
 
-The impact assessment is based on the :term:`fragilities <fragility>`
-and configuration of components that comprise the infrastructure system
-under study. The analytical process is supplemented by an assessment of
-the system functionality through the post-damage network flow analysis,
-and approximations for recovery timeframes.
+The impact assessment is incorporates the :term:`fragilities <fragility>`
+of individual system components and their topological configuration
+within the infrastructure system under study. This analysis is supplemented
+by an assessment of the post-hazard system functionality through
+network flow analysis, and consequent restoration times and costs.
 
-The current focus has been on studying responses of infrastructure facilities
-(e.g. power generation plants, high voltage substations). Considerable
-work has been done in the code backend to extend the same methodology
-to modelling network vulnerability as well
-(e.g. electricity transmission networks).
+The primary focus has been on studying responses of infrastructure facilities
+(e.g. power generation plants, high voltage substations). The data models,
+scenario specification options, and the codebase have been extended to allow
+the same methodology to be applied to modelling geospatially dispersed
+networks along with facilities (e.g. electricity transmission networks
+and substations).
 
-Currently the software has been tested to work with earthquake hazards only.
-However, the methodology and class structure have been developed such
-that the platform is effectively hazard agnostic. The hazard attribution
-process and infrastructure models are flexible to allow for expansion
-to other hazards and new infrastructure sectors.
+Limitations: At the time of writing this documentation, the software has
+been tested to work with earthquake hazards only. However, the methodology
+and class structure have been developed to make the modelling process
+hazard agnostic. The hazard specification process and infrastructure models
+are designed to allow for expansion to different hazards and arbitrary
+infrastructure sectors/assets.
 
-SIRA was developed in `Geoscience Australia (GA) <http://www.ga.gov.au/>`_
-in support of the agency's vision to contribute to enhancing the resilience
-of communities in Australia and its region.
+SIRA is being developed in |GA_NAME_LINK| in support of the agency's
+strategic priority to contribute to enhancing the hazard resilience of
+communities in Australia and its region.
 
 
 Features
 ========
 
-**Open Source:** Written in Python, and there is no dependency on
-proprietary tools. It should run on OS X, Windows, and
-Linux platforms.
+**Open Source:** Written in Python, avoids dependency on proprietary tools,
+platform agnostic.
 
 **Flexible Infrastructure Model:** The data model is based on graph theory.
 All infrastructure systems are represented as networks. This allows an user
-to develop arbitrarily complex custom facility models -- for a :term:`Facility`
+to develop arbitrarily complex custom facility models -- for a :term:`facility`
 or a network -- for impact simulation.
 
 **Extensible Component Library:** User can define new instances of
@@ -56,10 +57,11 @@ to existing or custom fragility algorithms.
 
 **Component Criticality Analysis:** Scenario Analysis tools allow users to
 identify the cost of restoration for chosen scenarios, expected restoration
-times, and which component upgrades can most benefit the system.
+times, and options for targeted component upgrades that yield greatest
+improvements to system resilience.
 
-**Restoration Prognosis:** User can experiment with different levels of
-hazards and post-disaster resource allocation to gauge restoration
+**Restoration Prognosis:** Users can experiment with different levels of
+hazard intensities and post-disaster resource allocation to gauge restoration
 times for system operations.
 
 
