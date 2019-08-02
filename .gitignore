@@ -57,7 +57,7 @@ coverage.xml
 *.log
 
 # Sphinx documentation
-docs/_build/
+docs/source/_build/
 
 # temporary database file
 db/*.sql
@@ -86,3 +86,6 @@ logs/*
 
 # vim
 *.swpinfrastructure/Dockerfile
+
+# vs code settings
+.vscode
