@@ -260,7 +260,6 @@ Install the downloaded `wheels` (\*.whl files) with pip::
 
 .. _running-sira:
 
-
 Running a Simulation with SIRA
 ==============================
 
