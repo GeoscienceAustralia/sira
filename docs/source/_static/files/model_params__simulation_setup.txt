@@ -117,7 +117,7 @@
     :Example:       'sys_config_ps.xlsx'
 
 
-.. rubric:: [SWITCHES]
+.. rubric:: SWITCHES
 
 `FIT_PE_DATA`
     :Description:   Flag for fitting Prob of Exceedance data
