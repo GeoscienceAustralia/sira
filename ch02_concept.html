@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2 Model Concepts &mdash; sira v0.1.0.PRE docs</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3 Installation and Usage" href="ch03_installation.html" />
+    <link rel="prev" title="1 Introduction" href="ch01_intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> sira
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-system-model">2.1 The ‘System’ Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#terminology-context-an-actual-infrastructure-system">2.1.1 Terminology Context: An Actual Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminology-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-restoration-model">2.3 System Restoration Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">3.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">3.2 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#installation-of-sira-on-aws-with-docker">3.2.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#using-docker">3.2.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#docker-compose">3.2.3 Docker Compose</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sira-code">3.4 Running the Core SIRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_simsetup.html">4 Simulation and Model Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#simulation-setup-file">4.1 Simulation Setup File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_simsetup.html#infrastructure-model-definition-file">4.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#list-of-components-component-list">4.2.1 List of Components: component_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#connections-between-components-component-connections">4.2.2 Connections between Components: component_connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_simsetup.html#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: damage_state_def</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Back Matter</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sira</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>2 Model Concepts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="model-concepts">
+<span id="id1"></span><h1>2 Model Concepts<a class="headerlink" href="#model-concepts" title="Permalink to this headline">¶</a></h1>
+<p>SIRA provides a modelling framework and software tools for assessing
+impact of natural hazards on infrastructure systems. Infrastructure
+systems, within this framework, refer to facilities and networks that
+provide essential utility services for communities, regions and/or a country.
+This will include electricity generation and transmission, water and wastewater
+treatment and reticulation, and transport networks. It excludes standalone
+high-value buildings and manufacturing plants. The SIRA project also
+deliberately eschews an exclusive focus on “critical” infrastructure,
+as that invites unnecessary debates on criteria of criticality and
+jurisdiction for that class of assets.</p>
+<div class="section" id="the-system-model">
+<span id="system-model-vocab"></span><h2>2.1 The ‘System’ Model<a class="headerlink" href="#the-system-model" title="Permalink to this headline">¶</a></h2>
+<p>A system, according to the
+<a class="reference external" href="https://www.merriam-webster.com/dictionary/system">Merriam-Webster</a>
+dictionary, is</p>
+<blockquote>
+<div>“a regularly interacting or interdependent group
+of items forming a unified whole.”</div></blockquote>
+<p>The International Council on Systems Engineering (INCOSE)
+<a class="reference external" href="https://www.incose.org/about-systems-engineering">defines a system thus</a>:</p>
+<blockquote>
+<div>“A system is a construct or collection of different
+elements that together produce results not obtainable
+by the elements alone.”</div></blockquote>
+<p>The specific meaning of a system and its boundaries depend on the context,
+and it is important to understand how this term is used within the SIRA
+modelling methodology. This is clarified in subsequent subsections.</p>
+<p>The central idea in the SIRA modelling construct is this:
+All lifeline infrastructure ‘systems’ within the modelling framework are
+conceptualised as a network of interconnected nodes.</p>
+<p>The ‘nodes’ or vertices and connecting edges have different meaning based
+on the level of abstraction, which is clarified in following subsections.</p>
+<p>This modelling approach affords a very high degree of flexibility and
+scalability, making it possible accommodate diverse sectors and assets
+of varying scales and complexities.</p>
+<p>Furthermore, it allows the user to:
+(a) model the effect of impaired or destroyed components on the
+operational capacity of the overall system;
+(b) use graph theory to assess the graduated capacity degradation, and
+restoration, through modelling flow through the network; and
+(c) detect prioritised ‘paths’, or sets of components, within network
+that need to be repaired or restored in order to restore the flow through
+the network which represents the productive capacity of the system.</p>
+<div class="section" id="terminology-context-an-actual-infrastructure-system">
+<h3>2.1.1 Terminology Context: An Actual Infrastructure System<a class="headerlink" href="#terminology-context-an-actual-infrastructure-system" title="Permalink to this headline">¶</a></h3>
+<p>The elements in an infrastructure (or lifeline) system are conceptualised
+as being structured in a three-level hierarchy:</p>
+<p><strong>Level 1 : Infrastructure Network –</strong>  This is the top level of
+interconnected infrastructure systems where infrastructure facilities are
+connected to form a network or networks.</p>
+<p><strong>Level 2 : Infrastructure Facility –</strong> The concept of facilities used in this
+framework map closely to the typology of macro-components as defined in the
+Synerg-G program <a class="reference internal" href="bibliography.html#synerg2010" id="id2">[6]</a><a class="reference internal" href="bibliography.html#pitilakis-etal-2014" id="id3">[7]</a>, and align with the
+definition systems as defined in <a class="reference internal" href="bibliography.html#rinaldi-etal-2001" id="id4">[8]</a>.</p>
+<p><strong>Level 3 : Infrastructure Microcomponent –</strong> This concept of components map
+closely to the typology of micro-components as defined in the Synerg-G program
+<a class="reference internal" href="bibliography.html#synerg2010" id="id5">[6]</a><a class="reference internal" href="bibliography.html#pitilakis-etal-2014" id="id6">[7]</a>, and align with the definition of
+subsystems as defined in <a class="reference internal" href="bibliography.html#rinaldi-etal-2001" id="id7">[8]</a>.</p>
+<p>This applies to discussions on a <em>complete</em> that is responsible for
+delivering some service. This also applies to classification of assets,
+and how information about those assets they are stored and referenced
+in a database.</p>
+</div>
+<div class="section" id="terminology-context-a-model-of-a-lifeline-infrastructure">
+<h3>2.1.2 Terminology Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#terminology-context-a-model-of-a-lifeline-infrastructure" title="Permalink to this headline">¶</a></h3>
+<p>In the context of a specific infrastructure model developed for hazard
+impact assessment, the following terms and ideas apply (and are implemented
+in the simulation code).</p>
+<p><strong>The System Model:</strong> This defines a logical set of assets that is an
+abstraction of a real equivalent asset. The usage of the term system in this
+context is closer to its application in System Engineering, rather than
+from an IT or software engineering perspective. The System Model defines
+the <em>boundary</em> of the collection of elements under investigation. It is
+the collection of nodes and connecting edges that collectively provides
+a service or generates a type of product. This term can be used to refer
+to a network or a facility. The context of the simulation will
+disambiguate its meaning.</p>
+<p><strong>Component:</strong> It is the high-level element within the network (or graph) that
+represents the <strong>System Model</strong>. A collection of interconnected
+components with specific attributes and roles comprise the System
+in the context of the simulation model.</p>
+<p>Please note that based on extent the type of asset, then the view of the
+system and its components would vary.</p>
+<p><strong>If the system under study is a NETWORK</strong>, then the System Model is a
+Level 1 element, i.e. an <em>Infrastructure Network</em>, and the Components are
+Level 2 elements, i.e. <em>Infrastructure Facilities</em>.</p>
+<p><strong>If the system under study is a FACILITY</strong>, then the System Model is a
+Level 2 element, i.e. an <em>Infrastructure Facility</em>, and the Components are
+Level 3 elements, i.e. <em>Infrastructure Microcomponents</em>.</p>
+</div>
+<div class="section" id="classification-of-nodes-within-a-model-of-an-infrastructure-system">
+<span id="model-node-classification"></span><h3>2.1.3 Classification of Nodes within a Model of an Infrastructure System<a class="headerlink" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system" title="Permalink to this headline">¶</a></h3>
+<p>For a specific impact assessment project, the Components within the
+System Model are represented as nodes. Based on their role within the
+system, these nodes (or components or vertices) are classified in
+four categories:</p>
+<ol class="arabic simple">
+<li><strong>Supply nodes</strong>: These nodes represent the entry points into the system
+for required inputs or commodities. As for example, coal and water can
+be the required ‘commodities’ into a thermal power station. In the case
+of the substation, required input is electricity from power stations or
+other substations.</li>
+<li><strong>Output nodes</strong>: These nodes represent the exit points for the output of
+the system. They are referred to as sink nodes. For example, in the
+case of the power station, the output nodes act as dummy loads -
+representing the energy consumers - connected to each of the step-up
+transformers. The sum of flow through the network measured at the
+output nodes represented the effective production (or operational)
+capacity of the facility.</li>
+<li><strong>Dependency nodes</strong>: These nodes represent the components that do not
+directly participate in the production process of the system, or in
+the handling of system inputs, but are critical for system operations
+in some other capacity, e.g. system management or monitoring. The
+control building of a substation is an example of this.</li>
+<li><strong>Transhipment nodes</strong>: These are nodes that transform, transport, or
+store system inputs to give effect to processes that produces the outputs
+required of the system. Majority of the nodes within a system fall into
+this category.</li>
+</ol>
+<p>The component configuration and redundancies are captured as edges connecting
+the nodes. Constraints on flow through specific paths, or sets of nodes, can
+be represented as capacities of edges connecting those nodes. Figure 2.1
+illustrates this concept for a thermal power station.</p>
+<div class="figure align-center" id="id8">
+<span id="pwrstn-schematic-diagram"></span><a class="reference internal image-reference" href="_images/pwrstn_schematic_diagram.png"><img alt="Power station schematic" src="_images/pwrstn_schematic_diagram.png" style="width: 98%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Schematic representation of a coal-fired power station</span></p>
+</div>
+<p>The ‘edges’, or inter-nodal connections, represent a link or a process for
+maintaining ‘flow’ of goods or services within the system, and thus their
+directionality is important. For the power station, the edges are
+unidirectional, since the inputs flow in one direction starting from the
+entry point into the system and are progressively transformed through the
+system to generate energy – the end product. However, a substation is an
+electrical network where electricity – the system ‘commodity’ – can flow in
+either direction through an edge (electrical conductor) as dictated by load
+demands and system constraints. Therefore, most of the edges in the
+substation are bidirectional, unless specifically constrained.</p>
+<p>Connection paths and ‘production capacities’ along those paths within a
+system are calculated as the maximum flow through those paths.
+The <a class="reference external" href="http://igraph.org/python/">igraph</a> Python package was used as the
+network modelling platform to calculate graph metrics for a post-hazard
+damaged system model.</p>
+</div>
+</div>
+<div class="section" id="system-loss-modelling">
+<h2>2.2 System Loss Modelling<a class="headerlink" href="#system-loss-modelling" title="Permalink to this headline">¶</a></h2>
+<p>For a given value of level of ground shaking, a set of random samples is
+generated, and the damage state of each component is calculated for each
+random sample based on the fragility function of the given component.
+Given the assessed damage state of all the system components, the system
+functionality is assessed and system output level calculated. This process
+is run through a Monte Carlo process for the set of random samples to
+assess the system response at the selected ground shaking intensity. To
+obtain a characterisation of the system and develop fragility algorithms
+for the system (e.g. the power station) the process is repeated for a
+range of PGA values. This Process is shown in Figure 2.2.</p>
+<div class="figure align-center" id="id9">
+<span id="fig-hazard-loss-link"></span><a class="reference internal image-reference" href="_images/hazard_loss_link.png"><img alt="Linking hazard to damage and loss" src="_images/hazard_loss_link.png" style="width: 98%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Schematic of process linking component damage assessment to
+loss projection</span></p>
+</div>
+<p>Four discrete sequential damage states are used for assessing system
+fragility, similar to those used in HAZUS (FEMA 2003): DS1 Slight,
+DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for a power
+station is based on ranges of economic loss as a percentage of total system
+value.</p>
+<p>The probability of a component exceeding damage state <span class="math notranslate nohighlight">\(ds\)</span> is calculated
+using the log-normal cumulative distribution function (CDF) as shown in
+equation below, for a PGA value of <span class="math notranslate nohighlight">\(x\)</span> g:</p>
+<div class="math notranslate nohighlight">
+\[P[D_s \mid PGA=x] = \Phi \left(\dfrac {ln(x) - \mu_{lnX}}{\sigma_{lnX}}\right)
+                  = \Phi \left(\dfrac {ln(x) - \mu_{\theta}}{\beta}\right)\]</div>
+<p>where, θ = median, and β = logarithmic standard deviation.</p>
+<p>For a component in damage state <span class="math notranslate nohighlight">\(ds_i\)</span>, the corresponding loss is
+calculated as:</p>
+<div class="math notranslate nohighlight">
+\[L_{C, ds_i} = R_{C, ds_i} \times CF_C\]</div>
+<p>where, <br />
+<span class="math notranslate nohighlight">\(R_{C, ds_i}\)</span> = <cite>d</cite> is the damage ratio for component <cite>C</cite>
+at damage state <span class="math notranslate nohighlight">\(ds_i\)</span>, and <br />
+<span class="math notranslate nohighlight">\(CF_C\)</span> = cost of component <cite>C</cite> as a proportional of total system cost.</p>
+</div>
+<div class="section" id="system-restoration-model">
+<h2>2.3 System Restoration Model<a class="headerlink" href="#system-restoration-model" title="Permalink to this headline">¶</a></h2>
+<p>The restoration algorithms are defined as normal functions. An approximation
+of mean restoration time for each component at each damage level is
+attributed. The structural damage level definitions associated with the
+damage states are central to establishing a common understanding to
+facilitate the development of the restoration parameters.</p>
+<p>The functionality <span class="math notranslate nohighlight">\(F_C\)</span> of component C at t time units after impact
+of an earthquake of PGA=x is calculated as a weighted combination of the
+probability of the components being in each of the S sequential damage
+states used in the model and the estimated recovery at time t for the
+components based of the restoration model:</p>
+<div class="math notranslate nohighlight">
+\[F_{C|x} = \sum_{i=0}^{S} P[{ds}_i \mid PGA=x] \times R_i[t]\]</div>
+<p>where, <span class="math notranslate nohighlight">\({i}\)</span> is the index of the damage state,
+<span class="math notranslate nohighlight">\({\{i \in \mathbb{Z} \mid 0 \leq i \leq S\}}\)</span>.
+The ‘None’ damage state is <span class="math notranslate nohighlight">\({i=0}\)</span>, and <span class="math notranslate nohighlight">\({i=S}\)</span> is the complete
+or highest modelled damage state. <span class="math notranslate nohighlight">\(R_i[t]\)</span> is the likely level of
+restoration of functionality at time <span class="math notranslate nohighlight">\(t\)</span> . Restoration level
+<span class="math notranslate nohighlight">\(R_i\)</span> can take on any value in the unit interval [0,1].</p>
+<p>The simulation of the restoration prognosis is conducted based on a set of
+inputs and assumptions. The required data inputs to this process are:</p>
+<ul class="simple">
+<li>The system configuration</li>
+<li>The modelled scenario - seismic intensity value</li>
+<li>Impact simulation results - system component losses</li>
+<li>Restoration priority list - the order at which output lines should
+be recovered</li>
+</ul>
+<p>The process assumes that restoration is undertaken in stages, subject to
+the level of resources that can be made available and the order of repairs.
+In regard to this, the concept of ‘<em>Restoration Streams</em>’ is used–the
+maximum number of components that can be worked on simultaneously. This is
+effectively a proxy representing the deployment of trained personnel and
+material for the repair tasks. Additional optional offsets can be factored
+in to capture specific contexts:</p>
+<ol class="loweralpha simple">
+<li><em>Restoration Offset</em> - this is a time allowance for assessment of
+damage to the system and for securing the site to assure it is safe
+for commencement of repairs;</li>
+<li><em>Testing and Commission Interval</em> - this is a time allowance for testing
+conformity with operational and safety parameters for the system, or a
+part thereof.</li>
+</ol>
+<p>Given a set of restoration parameters and the restoration plan, the
+consequent restoration time is calculated as follows:</p>
+<ol class="arabic simple">
+<li>Test if there is any available path between the set of required input
+nodes (i.e. supply nodes) and the output node assigned the highest
+priority to meet the demand at that node.</li>
+<li>If no functional path is found, then identify the least expensive path(s)
+that needs to be restored to meet demand at the output node. Within each
+path, identify the functional status of the nodes (components), and
+generate a repair list.</li>
+<li>Iterate through the ordered output list, repeating steps 1 and 2 above.
+Update the component repair list and produce a complete prioritised list
+of components to repair or replace.</li>
+<li>Simulate an ordered restoration process based on the above list and
+user-specified resource constraints. If the process is using x resource
+constraints, then whenever a component is restored (and the number of
+unrepaired components is ≥x), the next component is added to the active
+repair list, so that at any one time x repair tasks are in progress. This
+process is repeated until all the paths are restored, i.e. until system
+output capacity is restored to normal levels.</li>
+</ol>
+<p>In order to restore full capacity at an output node, it may be necessary to
+restore more than one path, i.e. connect an output node to multiple input
+nodes. This can be understood through some simple examples. If the facility
+in question is a thermal power station, the functioning of the generator
+depends on both the supply of fuel (as the source of energy to be
+transformed) and water (for cooling and for steam production to drive the
+turbines). In case of a substation, a certain output node may have a demand
+of 300MW, but it might be that there are four incoming lines each bringing
+in bringing in 100MW of electricity from power plants. In this case, the
+designated output node must be linked to at least three of the input/supply
+nodes to meet its demand.</p>
+<p>In addition to the core process of approximating restoration time, a
+routine for simulating component cannibalisation within a facility or
+system has also been incorporated. Here we use cannibalisation to refer
+to an exercise whereby an operator may move an undamaged component from
+a low priority or redundant line to replace a damaged component on a
+high priority line. This exercise may allow the operator to eliminate
+the potentially long procurement or transportation time for a replacement
+unit, and thereby expedite the restoration of the high priority lines.</p>
+<p>The outputs from the restoration model are:</p>
+<ol class="arabic simple">
+<li>a simple Gantt chart with each component needing repair,</li>
+<li>restoration plot for each output line over time and the associated
+percentage of total system capacity rehabilitated, and</li>
+<li>total restoration time for each output line for a given restoration
+scheme.</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Geoscience Australia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+/*
+-------------------------------
+Sphinx theme customisation
+-------------------------------
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Zilla+Slab:500');
+@import url('https://fonts.googleapis.com/css?family=Lora:400');
+
+
+body {
+    background-color: #edf0f2;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', 'Lato', 'Helvetica', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    line-height: 1.5;
+}
+
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    color: #333333;
+    font-weight: 500;
+    font-family: 'Zilla Slab', 'Roboto Slab', 'Lora', serif;
+    line-height: 115%;
+}
+
+h2, .rst-content .toctree-wrapper p.caption {
+    padding: 10px 10px 10px 0px;
+    margin: 10px 0 5px 0px;
+    padding-top: 15px;
+    font-size: 30px;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+    color: #97c3e0;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 1.618em;
+    margin: 12px 0 0 0;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 85%;
+    white-space: nowrap;
+}
+
+/*
+h1, h2, h3, h4, h5, h6 {
+    color: #333333;
+    padding: 0;
+    font-weight: 500;
+    font-family: 'Zilla Slab', 'Lora', serif;
+    line-height: 115%;
+}
+*/
+
+h1 {
+    font-size: 39px;
+    padding: 10px 0px 10px 0px;
+    margin: 20px 0px 20px 0px;
+    background-color: none;
+    width: 100%;
+}
+
+h2 {
+    padding: 10px 5px 10px 0px;
+    margin: 5px 0 5px 0px;
+    font-size: 30px;
+}
+
+h2:before {
+    content: ' ';
+    display: block;
+    width: 80px;
+    padding-top: 20px;
+    border-top: 10px solid #555555;
+}
+
+h3 {
+    padding: 10px 10px 10px 0px;
+    margin: 10px 0 10px 0px;
+    font-size: 26px;
+    border-top: 1px solid #DDDDDD;
+}
+
+.rst-content table.docutils td,
+table td {
+    font-size: 95%;
+    border: none;
+    border-collapse: collapse;
+    background-color: transparent;
+    vertical-align: top;
+    margin: 0;
+    overflow: visible;
+    padding: 5px 5px;
+    border-image-width: 0;
+}
+
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td {
+    background-color: transparent;
+}
+
+.rst-content table.docutils {
+    border: none;
+}
+
+.rst-content table.field-list .field-name {
+    font-size: 95%;
+    padding: 5px 10px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.rst-content table.field-list .field-body {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.rst-content table.docutils div.line-block {
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.rst-content cite {
+    font-family: Consolas, "Andale Mono", "Lucida Console", monospace;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 100%;
+    color: #E74C3C; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
+}
+
+a {
+    color: #044CFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: 1px solid;
+}
+
+.wy-menu-vertical a:hover {
+    background-color: #4e4a4a;
+    cursor: pointer;
+}
+
+.wy-menu a:hover {
+    text-decoration: none;
+    border: none;
+}
+
+.wy-side-nav-search > a:hover, .wy-side-nav-search .wy-dropdown > a:hover {
+    border: none;
+    text-decoration: none;
+}
+
+.wy-side-nav-search input[type=text] {
+    width: 100%;
+    border-radius: 5px;
+    padding: 8px 12px;
+    border-color: #2472a4;
+}
+
+/* Customise Definition List */
+.rst-content dl:not(.docutils) dt {
+    display: table;
+    margin: 12px 0 10px 0;
+    font-size: 95%;
+    line-height: normal;
+    background: #e7f2fa;
+    color: #2980B9;
+    border-left: solid 4px #6ab0de;
+    border-top: none;
+    padding: 6px;
+    position: relative;
+}
+
+.rst-content dl:not(.docutils) dl dt {
+    margin: 4px 0;
+    border: none;
+    /* border-left: solid 4px #ccc; */
+    background: none;
+    color: #555;
+    padding: 2px 4px;
+    font-weight: bold;
+}
+
+.rst-content dl p, .rst-content dl table, .rst-content dl ul, .rst-content dl ol {
+    margin-bottom: 6px !important;
+    font-size: 90%;
+}
+
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
+}
