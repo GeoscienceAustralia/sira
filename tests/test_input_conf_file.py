@@ -50,16 +50,13 @@ class TestInputConfFile(unittest. TestCase):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.NUM_SAMPLES, int))
 
-
     def test_datatype_of_INTENSITY_MEASURE_PARAM(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.INTENSITY_MEASURE_PARAM, unicode or str))
 
-
     def test_datatype_of_INTENSITY_MEASURE_UNIT(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.INTENSITY_MEASURE_UNIT, unicode or str))
-
 
     def test_datatype_of_FOCAL_HAZARD_SCENARIOS(self):
         for conf in self.confs:
@@ -142,4 +139,3 @@ class TestInputConfFile(unittest. TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
