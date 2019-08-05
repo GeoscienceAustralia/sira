@@ -1,4 +1,4 @@
-                                                                    .. _simulation-inputs:
+.. _simulation-inputs:
 
 **************************
 Simulation and Model Setup
@@ -11,27 +11,48 @@ Setting a simulation requires populating two different sets of inputs:
 
 These two sets of input data are contained in two separate files. These files,
 their parameters, data layout, and sample input data are presented in the
-remainder of this Section. In the course of the discussion it should be useful
-to the keep the directory structure of the code in mind::
+remainder of this Section. 
 
-   .
-   ├── docs                        <-- Sphinx documentation files
-   │   └── source
-   ├── hazard                      <-- Hazard scenario files for networks
-   ├── installation                <-- Installation scripts for dev envs
-   ├── scripts
-   ├── sira                       <-- The core code reside here
-   │   └── modelling
-   ├── simulation_setup            <-- Scenario configuration files
-   ├── tests                       <-- Test scripts + data for sanity checks
-   │   ├── historical_data
-   │   ├── models
-   │   └── simulation_setup
-   │
-   ├── LICENSE                      <-- License file
-   ├── README.md                    <-- Summary documentation
-   └── __main__.py                  <-- Entry point for running the code
+*Naming Requirement of Input File*:
+The model file name must begin or end with the term 'model'. 
+Similarly, the config file must have term 'config' at the beginning or
+end of its name. 
 
+*Location Requirement for Input Files*:
+The input files must reside within a directory named `input`. The parent
+directory is named after the infrastructure asset (by convention) and may
+be located in any storage location where the user has access. The code is
+notified of the location with a flag `-d` at execution time.
+
+The outputs generated from the simulation are stored in a directory called
+`output` within the same parent directory.
+
+Within the defined model directory, there must exist at least one directory
+with two files:
+
+- the config file
+- the model file
+
+The directory structure of the code is as follows::
+
+    .
+    ├── docs                        <-- Sphinx documentation files
+    │   └── source
+    ├── hazard                      <-- Hazard scenario files (for networks)
+    ├── installation                <-- Installation scripts for dev envs
+    ├── scripts
+    ├── sira                        <-- The core code reside here
+    │   └── modelling
+    ├── tests                       <-- Test scripts + data for sanity checks
+    │   ├── historical_data
+    │   ├── models
+    │   └── simulation_setup
+    │
+    ├── LICENSE                      <-- License file
+    ├── README.md                    <-- Summary documentation
+    ├── __main__.py                  <-- Entry point for running the code
+    ├── LICENSE
+    └── README.adoc                  <-- Basic documentation and installation notes
 
 .. _simulation-setup-file:
 
@@ -39,36 +60,19 @@ Simulation Setup File
 =====================
 
 The code needs a setup file for configuring the model and simulation scenario.
-It can be in any of three formats: `ini`, `conf`, or `json`. The code first
-converts any setup file to json first before running.
-The simulation 'scenario' definition file is located in the following directory
-(relative to the root dir of source code)::
+The code expects it in JSON format. 
 
-    ./simulation_setup/
-
-The following table lists the parameters in the config file, their
-description, and representative values.
+The following table lists the parameters in the config file,
+their description, and representative values.
 
 .. include::
    ./_static/files/model_params__simulation_setup.txt
-
-.. .. csv-table::
-   :header-rows: 0
-   :widths: 10,50
-   :stub-columns: 0
-   :file: ./_static/files/scenario_config_parameters.csv
 
 
 .. _model-definition-file:
 
 Infrastructure Model Definition File
 ====================================
-
-The system definition files for a infrastructure of type ``<sys_type_A>``
-is located in the following directory (relative to the root dir of
-source code)::
-
-    ./models/<sys_type_A>/
 
 The system model is defined using an MS Excel spreadsheet file.
 It contains five worksheets. The names of the worksheets are fixed.
