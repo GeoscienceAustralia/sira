@@ -255,7 +255,7 @@ for your Windows platform (32 or 64 bit):
 
 Install the downloaded `wheels` (\*.whl files) with pip::
 
-    pip install <pkg_name>.whl
+    $ pip install <pkg_name>.whl
 
 
 .. _running-sira:

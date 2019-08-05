@@ -214,6 +214,7 @@ a:hover {
     font-family: 'Zilla Slab', 'Roboto Slab', 'Lora', serif;
 }
 
+
 /* override table width restrictions */
 @media screen and (min-width: 767px) {
 
