@@ -200,6 +200,7 @@ a:hover {
     font-weight: bold;
     margin-bottom: 3px;
     margin-top: 0.5em;
+    margin-left: 14px;
 }
 
 .rst-content dl dd {
@@ -211,8 +212,7 @@ a:hover {
     margin-bottom: 6px;
     margin-top: 20px;
     font-weight: bolder;
-    font-family: 'Zilla Slab', 'Roboto Slab', 'Lora', serif;
-    font-size: 120%;
+    font-size: 115%;
 }
 
 
