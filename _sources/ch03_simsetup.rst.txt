@@ -1,4 +1,4 @@
-.. _simulation-inputs:
+.. _simulation-input-setup:
 
 **************************
 Simulation and Model Setup
@@ -32,13 +32,13 @@ The outputs generated from the simulation are stored in a directory called
 
 Let us assume a hypothetical project "PROJECT HAN", with the project 
 folder located in the root directory. We also assume that within the 
-project, we are modelling two systems named DANEEL and GISKARD. Then
+project, we are modelling two systems named GISKARD and DANEEL. Then
 the the input-output setup for the project will have the following
 structure::
 
     .
     └── <PROJECT_HAN>
-        ├── <SYSTEM-DANEEL>
+        ├── <SYSTEM_GISKARD>
         │   ├── input
         │   │   ├── config_system_T.json
         │   │   └── model_system_T.json
@@ -47,7 +47,7 @@ structure::
         │      ├── ...
         │      └── ...
         |
-        └── <SYSTEM-GISKARD>
+        └── <SYSTEM_DANEEL>
             ├── input
             │   ├── config_system_S.json
             │   └── model_system_S.json

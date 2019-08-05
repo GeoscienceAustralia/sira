@@ -119,7 +119,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-the-core-sira-code">4.4 Running the Core SIRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-code-tests">4.5 Running Code Tests</a></li>
 </ul>
 </li>
@@ -374,10 +374,10 @@ so to host it at port 80 one would start it with:</p>
 <h2>4.3 Setting Up a Development Environment with Anaconda<a class="headerlink" href="#setting-up-a-development-environment-with-anaconda" title="Permalink to this headline">¶</a></h2>
 <p>We recommend using <code class="docutils literal notranslate"><span class="pre">conda</span></code> for managing virtual environments and
 packages required for running <code class="docutils literal notranslate"><span class="pre">sira</span></code>.</p>
-<p>For the sake of simplicity, we recommend using <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code>. It is a
+<p>For the sake of simplicity, we recommend using <cite>Anaconda</cite>. It is a
 free Python distribution, and comes with the <code class="docutils literal notranslate"><span class="pre">conda</span></code> tool which is
 both a package manager and environment manager. Instructions for
-installing <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> are
+installing <cite>Anaconda</cite> are
 <a class="reference external" href="http://docs.continuum.io/anaconda/install">here</a>.</p>
 <p>Some packages we need are not hosted in the main <code class="docutils literal notranslate"><span class="pre">conda</span></code> package
 repository. In such cases we will host them in our own user channel.
@@ -422,13 +422,15 @@ for your Windows platform (32 or 64 bit):</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="running-the-core-sira-code">
-<span id="running-sira"></span><h2>4.4 Running the Core SIRA Code<a class="headerlink" href="#running-the-core-sira-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-a-simulation-with-sira">
+<span id="running-sira"></span><h2>4.4 Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Permalink to this headline">¶</a></h2>
 <p>The code needs a setup file for configuring the model and simulation scenario.
-It can be in any of three formats: <cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The code first
-converts any setup file to json first before running. For the purposes of
-discussion, it is assumed that the name of the project simulation directory
-is ‘PROJECT_HAN’, located in the root directory.</p>
+It needs to be in JSON format. It <em>can</em> support any of three formats:
+<cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. But details will not be discussed here. It also
+requires a model defintion file as discussed in <a class="reference internal" href="ch03_simsetup.html#simulation-input-setup"><span class="std std-ref">Simulation and Model Setup</span></a>.</p>
+<p>For the purposes of discussion, it is assumed that the name of the project
+simulation directory is ‘PROJECT_HAN’, located in the root directory.
+The system name assumed is ‘SYSTEM_GISKARD’.</p>
 <p>The software can be run from the command line using these simple steps:</p>
 <ol class="arabic">
 <li><p class="first">Open a command terminal</p>
@@ -441,7 +443,7 @@ in the directorty <code class="docutils literal notranslate"><span class="pre">/
 </li>
 <li><p class="first">Run the primary system fragility characterisation module from the
 command line using the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -d ./PROJECT_HAN/SYSTEM-DANEEL/ -s
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -d ./PROJECT_HAN/SYSTEM_GISKARD/ -s
 </pre></div>
 </div>
 </li>
@@ -455,9 +457,11 @@ the full run of the SIRA needs to be conducted on the system model of
 interest prior to running the tools for the loss scenario and
 restoration analysis tools.</p>
 <p>To run the post-simulation analysis on the generated output data, we need to
-supply the setup file used to run the original simulation and the log file that
-stores the directory locations for the the stored output data. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -d ./PROJECT_HAN/SYSTEM-DANEEL/ -sfl
+supply the flaf <cite>-f</cite> for model fitting, and the flag <cite>-l</cite> for loss analysis.
+The flags can be combined.</p>
+<p>To run the characterisation simulation, followed by model fitting, and
+loss and recovery analysis, the command is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -d ./PROJECT_HAN/SYSTEM_DANEEL/ -sfl
 </pre></div>
 </div>
 </div>
@@ -465,7 +469,7 @@ stores the directory locations for the the stored output data. For example:</p>
 <h2>4.5 Running Code Tests<a class="headerlink" href="#running-code-tests" title="Permalink to this headline">¶</a></h2>
 <p>To run tests use <code class="docutils literal notranslate"><span class="pre">unittest</span></code>. The tests need to be run from the root of
 the <cite>sira</cite> code directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd sira   # and not cd sira/sira
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd sira   # and not $ cd sira/sira
 $ python -m unittest discover tests
 </pre></div>
 </div>

@@ -119,7 +119,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-the-core-sira-code">4.4 Running the Core SIRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
 </ul>
 </li>
@@ -193,7 +193,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="simulation-and-model-setup">
-<span id="simulation-inputs"></span><h1>3 Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Permalink to this headline">¶</a></h1>
+<span id="simulation-input-setup"></span><h1>3 Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Permalink to this headline">¶</a></h1>
 <p>The simulation setup requires two different sets of inputs.
 These two sets of input data are contained in two separate files:</p>
 <ul class="simple">
@@ -218,12 +218,12 @@ the location with a flag <cite>-d</cite> at execution time.</p>
 <cite>output</cite> within the same parent directory.</p>
 <p>Let us assume a hypothetical project “PROJECT HAN”, with the project
 folder located in the root directory. We also assume that within the
-project, we are modelling two systems named DANEEL and GISKARD. Then
+project, we are modelling two systems named GISKARD and DANEEL. Then
 the the input-output setup for the project will have the following
 structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
 └── &lt;PROJECT_HAN&gt;
-    ├── &lt;SYSTEM-DANEEL&gt;
+    ├── &lt;SYSTEM_GISKARD&gt;
     │   ├── input
     │   │   ├── config_system_T.json
     │   │   └── model_system_T.json
@@ -232,7 +232,7 @@ structure:</p>
     │      ├── ...
     │      └── ...
     |
-    └── &lt;SYSTEM-GISKARD&gt;
+    └── &lt;SYSTEM_DANEEL&gt;
         ├── input
         │   ├── config_system_S.json
         │   └── model_system_S.json

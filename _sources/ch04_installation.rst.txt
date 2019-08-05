@@ -206,10 +206,10 @@ Setting Up a Development Environment with Anaconda
 We recommend using ``conda`` for managing virtual environments and
 packages required for running ``sira``.
 
-For the sake of simplicity, we recommend using ``Anaconda``. It is a
+For the sake of simplicity, we recommend using `Anaconda`. It is a
 free Python distribution, and comes with the ``conda`` tool which is
 both a package manager and environment manager. Instructions for
-installing ``Anaconda`` are
+installing `Anaconda` are
 `here <http://docs.continuum.io/anaconda/install>`_.
 
 Some packages we need are not hosted in the main ``conda`` package
@@ -261,14 +261,17 @@ Install the downloaded `wheels` (\*.whl files) with pip::
 .. _running-sira:
 
 
-Running the Core SIRA Code
-==========================
+Running a Simulation with SIRA
+==============================
 
 The code needs a setup file for configuring the model and simulation scenario.
-It can be in any of three formats: `ini`, `conf`, or `json`. The code first
-converts any setup file to json first before running. For the purposes of
-discussion, it is assumed that the name of the project simulation directory
-is 'PROJECT_HAN', located in the root directory.
+It needs to be in JSON format. It *can* support any of three formats:
+`ini`, `conf`, or `json`. But details will not be discussed here. It also
+requires a model defintion file as discussed in :ref:`simulation-input-setup`.
+
+For the purposes of discussion, it is assumed that the name of the project
+simulation directory is 'PROJECT_HAN', located in the root directory. 
+The system name assumed is 'SYSTEM_GISKARD'.
 
 The software can be run from the command line using these simple steps:
 
@@ -282,7 +285,7 @@ The software can be run from the command line using these simple steps:
 3.  Run the primary system fragility characterisation module from the
     command line using the following command::
 
-        $ python sira -d ./PROJECT_HAN/SYSTEM-DANEEL/ -s
+        $ python sira -d ./PROJECT_HAN/SYSTEM_GISKARD/ -s
 
 The code must be provided the full or relative path to the project
 directorty that holds the input dir with the required config and model files.
@@ -295,10 +298,13 @@ interest prior to running the tools for the loss scenario and
 restoration analysis tools.
 
 To run the post-simulation analysis on the generated output data, we need to
-supply the setup file used to run the original simulation and the log file that
-stores the directory locations for the the stored output data. For example::
+supply the flaf `-f` for model fitting, and the flag `-l` for loss analysis.
+The flags can be combined.
 
-        $ python sira -d ./PROJECT_HAN/SYSTEM-DANEEL/ -sfl
+To run the characterisation simulation, followed by model fitting, and
+loss and recovery analysis, the command is::
+
+        $ python sira -d ./PROJECT_HAN/SYSTEM_DANEEL/ -sfl
 
 
 Running Code Tests
@@ -307,7 +313,7 @@ Running Code Tests
 To run tests use ``unittest``. The tests need to be run from the root of
 the `sira` code directory::
 
-    $ cd sira   # and not cd sira/sira
+    $ cd sira   # and not $ cd sira/sira
     $ python -m unittest discover tests
 
 If you are using docker as described above, you can do this within the sira
