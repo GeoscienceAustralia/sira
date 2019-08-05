@@ -69,7 +69,7 @@ The expected file format is JSON. The code *can* support any of three formats:
 of their implementation will not be discussed here.
 
 The following table lists the parameters in the config file,
-their description, and representative values.
+with a brief description and representative values.
 
 .. include::
    ./_static/files/model_params__simulation_setup.txt
