@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4 Simulation and Model Setup &mdash; sira v0.1.0.PRE docs</title>
+  <title>3 Simulation and Model Setup &mdash; sira v0.1.0.PRE docs</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5 Component Fragility Attribution" href="ch05_fragility_attribution.html" />
-    <link rel="prev" title="3 Installation and Usage" href="ch03_installation.html" /> 
+    <link rel="next" title="4 Installation and Usage" href="ch04_installation.html" />
+    <link rel="prev" title="2 Model Concepts" href="ch02_concept.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -97,30 +97,30 @@
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch03_installation.html">3 Installation and Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#requirements">3.1 Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#aws-and-docker">3.2 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#installation-of-sira-on-aws-with-docker">3.2.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#using-docker">3.2.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_installation.html#docker-compose">3.2.3 Docker Compose</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3 Simulation and Model Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-setup-file">3.1 Simulation Setup File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure-model-definition-file">3.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-components-component-list">3.2.1 List of Components: component_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">3.2.2 Connections between Components: component_connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">3.2.3 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">3.2.4 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-type-damage-algorithms-comp-type-dmg-algo">3.2.5 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">3.2.6 Definition of Damage States: damage_state_def</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#setting-up-a-development-environment-with-anaconda">3.3 Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-the-core-sira-code">3.4 Running the Core SIRA Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_installation.html#running-code-tests">3.5 Running Code Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4 Simulation and Model Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#simulation-setup-file">4.1 Simulation Setup File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#infrastructure-model-definition-file">4.2 Infrastructure Model Definition File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#list-of-components-component-list">4.2.1 List of Components: component_list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">4.2.2 Connections between Components: component_connections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">4.2.3 Configuration of Supply Nodes: supply_setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">4.2.4 Configuration of Output Nodes: output_setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#component-type-damage-algorithms-comp-type-dmg-algo">4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">4.2.6 Definition of Damage States: damage_state_def</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_installation.html">4 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#requirements">4.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.2 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#installation-of-sira-on-aws-with-docker">4.2.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#using-docker">4.2.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-the-core-sira-code">4.4 Running the Core SIRA Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
@@ -175,7 +175,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>4 Simulation and Model Setup</li>
+      <li>3 Simulation and Model Setup</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,55 +193,58 @@
            <div itemprop="articleBody">
             
   <div class="section" id="simulation-and-model-setup">
-<span id="simulation-inputs"></span><h1>4 Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Permalink to this headline">¶</a></h1>
-<p>Setting a simulation requires populating two different sets of inputs:</p>
+<span id="simulation-inputs"></span><h1>3 Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Permalink to this headline">¶</a></h1>
+<p>The simulation setup requires two different sets of inputs.
+These two sets of input data are contained in two separate files:</p>
 <ul class="simple">
-<li>Simulation scenario configuration</li>
-<li>Infrastructure model configuration</li>
+<li>The config file: this file sets up the simulation scenario parameters</li>
+<li>The model file: this defines the components, their connections, along
+with the fragility, loss, and recovery parameters for the infrastructure
+model.</li>
 </ul>
-<p>These two sets of input data are contained in two separate files. These files,
-their parameters, data layout, and sample input data are presented in the
-remainder of this Section.</p>
+<p>These files, their parameters, data layout, and sample input data are
+presented in the remainder of this Section.</p>
 <p><em>Naming Requirement of Input File</em>:
 The model file name must begin or end with the term ‘model’.
-Similarly, the config file must have term ‘config’ at the beginning or
-end of its name.</p>
+Similarly, the config file must have the term ‘config’ at the beginning
+or end of its name.</p>
 <p><em>Location Requirement for Input Files</em>:
 The input files must reside within a directory named <cite>input</cite>. The parent
-directory is named after the infrastructure asset (by convention) and may
-be located in any storage location where the user has access. The code is
-notified of the location with a flag <cite>-d</cite> at execution time.</p>
+directory is named after the infrastructure asset by convention, but it can
+have any name allowed by the local file system. This dir can be located in
+any storage location where the user has access. The code is informed of
+the location with a flag <cite>-d</cite> at execution time.</p>
 <p>The outputs generated from the simulation are stored in a directory called
 <cite>output</cite> within the same parent directory.</p>
-<p>Within the defined model directory, there must exist at least one directory
-with two files:</p>
-<ul class="simple">
-<li>the config file</li>
-<li>the model file</li>
-</ul>
-<p>The directory structure of the code is as follows:</p>
+<p>Let us assume a hypothetical project “PROJECT HAN”, with the project
+folder located in the root directory. We also assume that within the
+project, we are modelling two systems named DANEEL and GISKARD. Then
+the the input-output setup for the project will have the following
+structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
-├── docs                        &lt;-- Sphinx documentation files
-│   └── source
-├── hazard                      &lt;-- Hazard scenario files (for networks)
-├── installation                &lt;-- Installation scripts for dev envs
-├── scripts
-├── sira                        &lt;-- The core code reside here
-│   └── modelling
-├── tests                       &lt;-- Test scripts + data for sanity checks
-│   ├── historical_data
-│   ├── models
-│   └── simulation_setup
-│
-├── LICENSE                      &lt;-- License file
-├── README.md                    &lt;-- Summary documentation
-├── __main__.py                  &lt;-- Entry point for running the code
-├── LICENSE
-└── README.adoc                  &lt;-- Basic documentation and installation notes
+└── &lt;PROJECT_HAN&gt;
+    ├── &lt;SYSTEM-DANEEL&gt;
+    │   ├── input
+    │   │   ├── config_system_T.json
+    │   │   └── model_system_T.json
+    │   └── output
+    │      ├── ...
+    │      ├── ...
+    │      └── ...
+    |
+    └── &lt;SYSTEM-GISKARD&gt;
+        ├── input
+        │   ├── config_system_S.json
+        │   └── model_system_S.json
+        │
+        └── output
+           ├── ...
+           ├── ...
+           └── ...
 </pre></div>
 </div>
 <div class="section" id="simulation-setup-file">
-<span id="id1"></span><h2>4.1 Simulation Setup File<a class="headerlink" href="#simulation-setup-file" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>3.1 Simulation Setup File<a class="headerlink" href="#simulation-setup-file" title="Permalink to this headline">¶</a></h2>
 <p>The code needs a setup file for configuring the model and simulation scenario.
 The code expects it in JSON format.</p>
 <p>The following table lists the parameters in the config file,
@@ -666,13 +669,13 @@ detailed assessment of system response</td>
 </dl>
 </div>
 <div class="section" id="infrastructure-model-definition-file">
-<span id="model-definition-file"></span><h2>4.2 Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Permalink to this headline">¶</a></h2>
+<span id="model-definition-file"></span><h2>3.2 Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Permalink to this headline">¶</a></h2>
 <p>The system model is defined using an MS Excel spreadsheet file.
 It contains five worksheets. The names of the worksheets are fixed.
 The function and format of these worksheets are described in the
 following subsections:</p>
 <div class="section" id="list-of-components-component-list">
-<span id="inputdata-component-list"></span><h3>4.2.1 List of Components: component_list<a class="headerlink" href="#list-of-components-component-list" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-component-list"></span><h3>3.2.1 List of Components: component_list<a class="headerlink" href="#list-of-components-component-list" title="Permalink to this headline">¶</a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
 <dl class="docutils">
 <dt><cite>component_id</cite></dt>
@@ -805,7 +808,7 @@ would have a value of 1.0.</td>
 </dl>
 </div>
 <div class="section" id="connections-between-components-component-connections">
-<span id="inputdata-component-connections"></span><h3>4.2.2 Connections between Components: component_connections<a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-component-connections"></span><h3>3.2.2 Connections between Components: component_connections<a class="headerlink" href="#connections-between-components-component-connections" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>origin</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -882,7 +885,7 @@ of edges.</td>
 </dl>
 </div>
 <div class="section" id="configuration-of-supply-nodes-supply-setup">
-<span id="inputdata-supply-setup"></span><h3>4.2.3 Configuration of Supply Nodes: supply_setup<a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-supply-setup"></span><h3>3.2.3 Configuration of Supply Nodes: supply_setup<a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>input_node</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -959,7 +962,7 @@ For a water treatment plant, it is waster water.</p>
 </dl>
 </div>
 <div class="section" id="configuration-of-output-nodes-output-setup">
-<span id="inputdata-output-setup"></span><h3>4.2.4 Configuration of Output Nodes: output_setup<a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-output-setup"></span><h3>3.2.4 Configuration of Output Nodes: output_setup<a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt><cite>output_node</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -1059,7 +1062,7 @@ where <cite>n</cite> is the total number of output nodes</td>
 </dl>
 </div>
 <div class="section" id="component-type-damage-algorithms-comp-type-dmg-algo">
-<span id="inputdata-comp-type-dmg-algo"></span><h3>4.2.5 Component Type Damage Algorithms: comp_type_dmg_algo<a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-comp-type-dmg-algo"></span><h3>3.2.5 Component Type Damage Algorithms: comp_type_dmg_algo<a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils" id="dmg-algo-component-type">
 <dt><cite>component_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -1344,7 +1347,7 @@ how it was adapted, or how it was developed.</td>
 </dl>
 </div>
 <div class="section" id="definition-of-damage-states-damage-state-def">
-<span id="inputdata-damage-state-def"></span><h3>4.2.6 Definition of Damage States: damage_state_def<a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
+<span id="inputdata-damage-state-def"></span><h3>3.2.6 Definition of Damage States: damage_state_def<a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Permalink to this headline">¶</a></h3>
 <p>This table documents the physical damage characteristics that are implied
 by the damage states used to model the fragility of the system components.</p>
 <dl class="docutils">

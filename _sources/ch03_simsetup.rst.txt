@@ -4,55 +4,59 @@
 Simulation and Model Setup
 **************************
 
-Setting a simulation requires populating two different sets of inputs:
+The simulation setup requires two different sets of inputs. 
+These two sets of input data are contained in two separate files:
 
-- Simulation scenario configuration
-- Infrastructure model configuration
+- The config file: this file sets up the simulation scenario parameters
+- The model file: this defines the components, their connections, along 
+  with the fragility, loss, and recovery parameters for the infrastructure
+  model.
 
-These two sets of input data are contained in two separate files. These files,
-their parameters, data layout, and sample input data are presented in the
-remainder of this Section. 
+These files, their parameters, data layout, and sample input data are
+presented in the remainder of this Section. 
 
 *Naming Requirement of Input File*:
 The model file name must begin or end with the term 'model'. 
-Similarly, the config file must have term 'config' at the beginning or
-end of its name. 
+Similarly, the config file must have the term 'config' at the beginning
+or end of its name. 
 
 *Location Requirement for Input Files*:
 The input files must reside within a directory named `input`. The parent
-directory is named after the infrastructure asset (by convention) and may
-be located in any storage location where the user has access. The code is
-notified of the location with a flag `-d` at execution time.
+directory is named after the infrastructure asset by convention, but it can
+have any name allowed by the local file system. This dir can be located in
+any storage location where the user has access. The code is informed of
+the location with a flag `-d` at execution time.
 
 The outputs generated from the simulation are stored in a directory called
 `output` within the same parent directory.
 
-Within the defined model directory, there must exist at least one directory
-with two files:
-
-- the config file
-- the model file
-
-The directory structure of the code is as follows::
+Let us assume a hypothetical project "PROJECT HAN", with the project 
+folder located in the root directory. We also assume that within the 
+project, we are modelling two systems named DANEEL and GISKARD. Then
+the the input-output setup for the project will have the following
+structure::
 
     .
-    ├── docs                        <-- Sphinx documentation files
-    │   └── source
-    ├── hazard                      <-- Hazard scenario files (for networks)
-    ├── installation                <-- Installation scripts for dev envs
-    ├── scripts
-    ├── sira                        <-- The core code reside here
-    │   └── modelling
-    ├── tests                       <-- Test scripts + data for sanity checks
-    │   ├── historical_data
-    │   ├── models
-    │   └── simulation_setup
-    │
-    ├── LICENSE                      <-- License file
-    ├── README.md                    <-- Summary documentation
-    ├── __main__.py                  <-- Entry point for running the code
-    ├── LICENSE
-    └── README.adoc                  <-- Basic documentation and installation notes
+    └── <PROJECT_HAN>
+        ├── <SYSTEM-DANEEL>
+        │   ├── input
+        │   │   ├── config_system_T.json
+        │   │   └── model_system_T.json
+        │   └── output
+        │      ├── ...
+        │      ├── ...
+        │      └── ...
+        |
+        └── <SYSTEM-GISKARD>
+            ├── input
+            │   ├── config_system_S.json
+            │   └── model_system_S.json
+            │
+            └── output
+               ├── ...
+               ├── ...
+               └── ...
+
 
 .. _simulation-setup-file:
 

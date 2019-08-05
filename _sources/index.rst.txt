@@ -74,8 +74,8 @@ times for system operations.
 
    ch01_intro
    ch02_concept
-   ch03_installation
-   ch04_simsetup
+   ch03_simsetup
+   ch04_installation
    ch05_fragility_attribution
 
 
