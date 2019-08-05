@@ -119,14 +119,6 @@ class TestInputConfFile(unittest. TestCase):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.SYS_CONF_FILE_NAME, unicode or str))
 
-    def test_datatype_of_INPUT_DIR_NAME(self):
-        for conf in self.confs:
-            self.assertTrue(isinstance(conf.INPUT_DIR_NAME, unicode or str))
-
-    def test_datatype_of_OUTPUT_DIR_NAME(self):
-        for conf in self.confs:
-            self.assertTrue(isinstance(conf.OUTPUT_DIR_NAME, unicode or str))
-
     def test_datatype_of_FIT_PE_DATA(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.FIT_PE_DATA, bool))

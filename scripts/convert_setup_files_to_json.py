@@ -173,49 +173,32 @@ def convert_conf_object_to_json(setup):
     except KeyError:
         data['System']['SYS_CONF_FILE_NAME'] = None
 
-    data['Input'] = collections.OrderedDict()
+    data['SWITCHES'] = collections.OrderedDict()
 
     try:
-        data['Input']['INPUT_DIR_NAME'] = setup['INPUT_DIR_NAME']
+        data['SWITCHES']['FIT_PE_DATA'] = setup['FIT_PE_DATA']
     except KeyError:
-        data['Input']['INPUT_DIR_NAME'] = None
-
-
-    data['Output'] = collections.OrderedDict()
+        data['SWITCHES']['FIT_PE_DATA'] = None
 
     try:
-        data['Output']['OUTPUT_DIR_NAME'] = setup['OUTPUT_DIR_NAME']
+        data['SWITCHES']['SWITCH_FIT_RESTORATION_DATA'] = setup['SWITCH_FIT_RESTORATION_DATA']
     except KeyError:
-        data['Output']['OUTPUT_DIR_NAME'] = None
-
-    data['Test'] = collections.OrderedDict()
+        data['SWITCHES']['SWITCH_FIT_RESTORATION_DATA'] = None
 
     try:
-        data['Test']['FIT_PE_DATA'] = setup['FIT_PE_DATA']
+        data['SWITCHES']['SWITCH_SAVE_VARS_NPY'] = setup['SWITCH_SAVE_VARS_NPY']
     except KeyError:
-        data['Test']['FIT_PE_DATA'] = None
+        data['SWITCHES']['SWITCH_SAVE_VARS_NPY'] = None
 
     try:
-        data['Test']['SWITCH_FIT_RESTORATION_DATA'] = setup['SWITCH_FIT_RESTORATION_DATA']
+        data['SWITCHES']['MULTIPROCESS'] = setup['MULTIPROCESS']
     except KeyError:
-        data['Test']['SWITCH_FIT_RESTORATION_DATA'] = None
+        data['SWITCHES']['MULTIPROCESS'] = None
 
     try:
-        data['Test']['SWITCH_SAVE_VARS_NPY'] = setup['SWITCH_SAVE_VARS_NPY']
+        data['SWITCHES']['RUN_CONTEXT'] = setup['RUN_CONTEXT']
     except KeyError:
-        data['Test']['SWITCH_SAVE_VARS_NPY'] = None
-
-    data['Switches'] = collections.OrderedDict()
-
-    try:
-        data['Switches']['MULTIPROCESS'] = setup['MULTIPROCESS']
-    except KeyError:
-        data['Switches']['MULTIPROCESS'] = None
-
-    try:
-        data['Switches']['RUN_CONTEXT'] = setup['RUN_CONTEXT']
-    except KeyError:
-        data['Switches']['RUN_CONTEXT'] = None
+        data['SWITCHES']['RUN_CONTEXT'] = None
 
     json_data = json.dumps(data, indent=4, sort_keys=True)
 

@@ -10,7 +10,6 @@ class Scenario:
     def __init__(self, configuration):
 
         self.infrastructure_level = configuration.INFRASTRUCTURE_LEVEL
-        # self.input_dir_name = configuration.INPUT_DIR_NAME
         self.raw_output_dir = configuration.RAW_OUTPUT_DIR
         self.output_path = configuration.OUTPUT_PATH
 
