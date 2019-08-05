@@ -83,16 +83,6 @@
 "Data Type:",String
 "Example:",'sys_config_ps.xlsx'
 
-`INPUT_DIR_NAME`
-"Description:","File path relative to code root"
-"Data Type:",String
-"Example:",'data/ps_coal/input'
-
-`OUTPUT_DIR_NAME`
-"Description:","File path relative to code root"
-"Data Type:",String
-"Example:",'data/ps_coal/output'
-
 `FIT_PE_DATA`
 "Description:","Flag for fitting Prob of Exceedance data"
 "Data Type:",Boolean

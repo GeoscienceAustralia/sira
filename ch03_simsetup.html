@@ -250,8 +250,8 @@ The expected file format is JSON. The code <em>can</em> support any of three for
 <cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The other formats are not encouraged and details
 of their implementation will not be discussed here.</p>
 <p>The following table lists the parameters in the config file,
-their description, and representative values.</p>
-<p class="rubric">[SCENARIO]</p>
+with a brief description and representative values.</p>
+<p class="rubric">SCENARIO_PARAMS</p>
 <dl class="docutils">
 <dt><cite>SCENARIO_NAME</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -296,7 +296,7 @@ their description, and representative values.</p>
 </table>
 </dd>
 </dl>
-<p class="rubric">[HAZARD]</p>
+<p class="rubric">HAZARD_PARAMS</p>
 <dl class="docutils">
 <dt><cite>HAZARD_INPUT_METHOD</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -399,7 +399,7 @@ detailed assessment of system response</td>
 </table>
 </dd>
 </dl>
-<p class="rubric">[RESTORATION]</p>
+<p class="rubric">RESTORATION_PARAMS</p>
 <dl class="docutils">
 <dt><cite>TIME_UNIT</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -472,7 +472,7 @@ detailed assessment of system response</td>
 </table>
 </dd>
 </dl>
-<p class="rubric">[System]</p>
+<p class="rubric">SYSTEM_METADATA</p>
 <dl class="docutils">
 <dt><cite>INFRASTRUCTURE_LEVEL</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -559,41 +559,7 @@ detailed assessment of system response</td>
 </table>
 </dd>
 </dl>
-<p class="rubric">[Input]</p>
-<dl class="docutils">
-<dt><cite>INPUT_DIR_NAME</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">File path relative to code root</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘data/ps_coal/input’</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-<p class="rubric">[Output]</p>
-<dl class="docutils">
-<dt><cite>OUTPUT_DIR_NAME</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">File path relative to code root</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘data/ps_coal/output’</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-<p class="rubric">[Test]</p>
+<p class="rubric">[SWITCHES]</p>
 <dl class="docutils">
 <dt><cite>FIT_PE_DATA</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -637,9 +603,6 @@ detailed assessment of system response</td>
 </tbody>
 </table>
 </dd>
-</dl>
-<p class="rubric">[Switches]</p>
-<dl class="docutils">
 <dt><cite>MULTIPROCESS</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
