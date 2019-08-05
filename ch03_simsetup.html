@@ -216,11 +216,11 @@ any storage location where the user has access. The code is informed of
 the location with a flag <cite>-d</cite> at execution time.</p>
 <p>The outputs generated from the simulation are stored in a directory called
 <cite>output</cite> within the same parent directory.</p>
-<p>Let us assume a hypothetical project “PROJECT HAN”, with the project
-folder located in the root directory. We also assume that within the
-project, we are modelling two systems named GISKARD and DANEEL. Then
-the the input-output setup for the project will have the following
-structure:</p>
+<p>For illustration purposed we assume a hypothetical project “PROJECT HAN”,
+with the project  folder located in the root directory. We also assume
+that within the project, we are modelling two systems named GISKARD and
+DANEEL. For this given setup, input-output dir structure for the project
+will be as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
 └── &lt;PROJECT_HAN&gt;
     ├── &lt;SYSTEM_GISKARD&gt;
@@ -246,7 +246,9 @@ structure:</p>
 <div class="section" id="simulation-setup-file">
 <span id="id1"></span><h2>3.1 Simulation Setup File<a class="headerlink" href="#simulation-setup-file" title="Permalink to this headline">¶</a></h2>
 <p>The code needs a setup file for configuring the model and simulation scenario.
-The code expects it in JSON format.</p>
+The expected file format is JSON. The code <em>can</em> support any of three formats:
+<cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The other formats are not encouraged and details
+of their implementation will not be discussed here.</p>
 <p>The following table lists the parameters in the config file,
 their description, and representative values.</p>
 <p class="rubric">[SCENARIO]</p>
