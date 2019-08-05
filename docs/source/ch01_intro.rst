@@ -54,6 +54,3 @@ are sampled by randomly sampling the fragility curves described above.
 
 Hazard modelling is done externally using other applications, and provided to
 this tool as an input.
-
-*Currently only peak ground acceleration can be accepted by the system, but
-this is to be expanded in the near future.*
