@@ -61,16 +61,17 @@ def main():
     # [Either] Supply config file and model file directly:
     parser.add_argument("-c", "--config_file", type=str)
     parser.add_argument("-m", "--model_file", type=str)
+
     # [Or] Supply only the directory where the input files reside
     parser.add_argument("-d", "--input_directory", type=str)
 
     # Tell the code what tasks to do
-    parser.add_argument("-s", "--simulation",
-                        action='store_true', default=False)
-    parser.add_argument("-f", "--fit",
-                        action='store_true', default=False)
-    parser.add_argument("-l", "--loss_analysis",
-                        action='store_true', default=False)
+    parser.add_argument(
+        "-s", "--simulation", action='store_true', default=False)
+    parser.add_argument(
+        "-f", "--fit", action='store_true', default=False)
+    parser.add_argument(
+        "-l", "--loss_analysis", action='store_true', default=False)
 
     parser.add_argument(
         "-v", "--verbose", dest="loglevel", type=str,
@@ -87,9 +88,13 @@ def main():
                      " are mutually exclusive ...")
         sys.exit(2)
 
+    # error handling
     if not any([args.simulation, args.fit, args.loss_analysis]):
-        parser.error("either --simulation or --fit or --loss_analysis"
-                     " is required ...")
+        parser.error(
+            "\nAt least one of these three flags is required:\n"
+            " --simulation (-s) or --fit (-f) or --loss_analysis (-s).\n"
+            " The options for fit or loss_analysis requires the -s flag, "
+            " or a previous completed run with the -s flag.")
         sys.exit(2)
 
     proj_root_dir = args.input_directory
