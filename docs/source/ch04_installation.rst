@@ -150,21 +150,22 @@ Several other containers are provided to help with development. These are
 defined in the other `Dockerfiles` in the present directory, and are:
 
 - ``Dockerfile-api``: |br|
-  Provides a web API which is used for parameterising
-  model components (at this stage just response functions) and serialising them.
-  This is presently (at Feb 2018) a prototype and provides only a small subset
-  of what we hope for.
+  Provides a web API which is used for parameterising model components
+  (at this stage just response functions) and serialising them.
+  This is presently (at Feb 2018) a prototype and provides only a
+  small subset of what we hope for.
 
 - ``Dockerfile-gui-dev``: |br|
   Provides an `Angular2 <https://angular.io/>`_ application for
-  defining model components built on top of the API mentioned above. The application
-  is hosted using Angular's development server and can be accessed on *localhost:4200*.
+  defining model components built on top of the API mentioned above.
+  The application is hosted using Angular's development server and can
+  be accessed on *localhost:4200*.
 
 - ``Dockerfile-gui-prod``: |br|
   For deploying the web application in production. This
   does a production build of the Angular project and hosts it using
-  `busybox <https://www.busybox.net/>`_. The app is still exposed on port 4200,
-  so to host it at port 80 one would start it with::
+  `busybox <https://www.busybox.net/>`_. The app is still exposed on
+  port 4200, so to host it at port 80 one would start it with::
 
     $ docker build -t sira-gui -f Dockerfile-gui-prod .
 
