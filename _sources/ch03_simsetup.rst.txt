@@ -40,8 +40,8 @@ will be as follows::
     └── <PROJECT_HAN>
         ├── <SYSTEM_GISKARD>
         │   ├── input
-        │   │   ├── config_system_T.json
-        │   │   └── model_system_T.json
+        │   │   ├── config_system_GR.json
+        │   │   └── model_system_GR.json
         │   └── output
         │      ├── ...
         │      ├── ...
@@ -49,8 +49,8 @@ will be as follows::
         |
         └── <SYSTEM_DANEEL>
             ├── input
-            │   ├── config_system_S.json
-            │   └── model_system_S.json
+            │   ├── config_system_DO.json
+            │   └── model_system_DO.json
             │
             └── output
                ├── ...
