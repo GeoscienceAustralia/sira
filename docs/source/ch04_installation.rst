@@ -264,10 +264,8 @@ Install the downloaded `wheels` (\*.whl files) with pip::
 Running a Simulation with SIRA
 ==============================
 
-The code needs a setup file for configuring the model and simulation scenario.
-It needs to be in JSON format. It *can* support any of three formats:
-`ini`, `conf`, or `json`. But details will not be discussed here. It also
-requires a model defintion file as discussed in :ref:`simulation-input-setup`.
+The code needs a simulation setup file and an infrastructure model file
+to run a simulation, as discussed in :ref:`simulation-input-setup`.
 
 For the purposes of discussion, it is assumed that the name of the project
 simulation directory is 'PROJECT_HAN', located in the root directory. 

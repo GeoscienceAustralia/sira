@@ -30,11 +30,11 @@ the location with a flag `-d` at execution time.
 The outputs generated from the simulation are stored in a directory called
 `output` within the same parent directory.
 
-Let us assume a hypothetical project "PROJECT HAN", with the project 
-folder located in the root directory. We also assume that within the 
-project, we are modelling two systems named GISKARD and DANEEL. Then
-the the input-output setup for the project will have the following
-structure::
+For illustration purposed we assume a hypothetical project "PROJECT HAN",
+with the project  folder located in the root directory. We also assume
+that within the project, we are modelling two systems named GISKARD and
+DANEEL. For this given setup, input-output dir structure for the project
+will be as follows::
 
     .
     └── <PROJECT_HAN>
@@ -64,7 +64,9 @@ Simulation Setup File
 =====================
 
 The code needs a setup file for configuring the model and simulation scenario.
-The code expects it in JSON format. 
+The expected file format is JSON. The code *can* support any of three formats:
+`ini`, `conf`, or `json`. The other formats are not encouraged and details
+of their implementation will not be discussed here.
 
 The following table lists the parameters in the config file,
 their description, and representative values.
