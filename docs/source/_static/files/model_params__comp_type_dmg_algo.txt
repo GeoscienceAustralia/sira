@@ -1,4 +1,11 @@
 
+
+`id`
+  :Description: A sequential integer value assigned to each algorithm.
+                It is used solely for internal programming logic.
+
+  :Data Type:   Integer
+
 .. _dmg_algo_component_type:
 
 `component_type`
@@ -15,8 +22,9 @@
 .. _dmg_algo_damage_state:
 
 `damage_state`
-  :Description: The list of damage states used in defining the
-                damage scale being modelled within the system.
+  :Description: The list of discrete damage states used in defining the
+                damage scale being modelled within the system. The 'None'
+                damage state is not explicitly listed.
 
                 Example: For a four-state sequential damage scale,
                 the following damage states are used:
@@ -29,30 +37,38 @@
   :Data Type:   String. Fixed, pre-determined state names.
 
 
-`damage_function`
-  :Description: The probability distribution for the damage function.
+`is_piecewise`
+  :Description: Flag that states whether the function is piecewise
+                defined, or defined by a single function.
 
-                Currently only log-normal curves are used, but additional
-                distributions can be added as required.
+  :Data Type:   String ['yes', 'no']
+
+
+`damage_function`
+  :Description: Name of the probability distribution representing the
+                damage function. This should be a Cumulative Distribution
+                Function (CDF).
+
+                Log-normal curves are predominant in this discipline.
+                However, any function can be supported by adding its
+                definition to the module `sira.modelling.responsemodels`.
 
                 Example: 'lognormal'
 
-  :Data Type:   String.
+  :Data Type:   String. MUST match name of a function defined in 
+                `sira.modelling.responsemodels`.
 
 
-`mode`
-  :Description: Number indicating the mode of the function.
-                Currently can handle only unimodal or bimodal functions.
+`median`
+  :Description: Median of the damage function. 
+                This corresponds to the 'scale' parameter of the
+                lognormal implementation in scipy. 
 
-                Default value is 1.
+                scale = median = :math:`exp({\mu})`, 
+                where |mu| is the mean of the log of the samples.
 
-  :Data Type:   Integer [1,2]
-
-
-`damage_median`
-  :Description: Median of the damage function.
                 A median will need to be defined for each damage state.
-                It should be typically be progressively higher for more
+                It should typically be progressively higher for more
                 severe damage states:
 
                 :math:`{\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}`
@@ -60,19 +76,33 @@
   :Data Type:   Float.
 
 
-`damage_logstd`
-  :Description: Standard deviation of the damage function.
+`beta`
+  :Description: The log-standard deviation, or put another way,
+                the standard deviation of the log of the variate.
+                This corresponds to the 'shape' parameter of the
+                lognormal implementation in scipy.
+
                 It will need to be defined for each damage state.
-                The value of standard deviation should be such that
-                the curves do not overlap.
+                The value of beta should be such that
+                the curves for the defined damaged states do not overlap.
+
+  :Data Type:   Float.
+
+
+`location`
+  :Description: The location parameter for lognormal function, as
+                implemented in scipy. In scipy it is used primarily for
+                the purpose of having a common method for defining all
+                functions. In practice, we always set it to zero.
 
   :Data Type:   Float.
 
 
 `damage_ratio`
-  :Description: The fractional loss of a component's value for damage
-                sustained at a given damage state. This parameter links
-                a damage state to expected direct loss of component value.
+  :Description: The fractional loss of a component's value resulting from
+                incurred damages resulting it being in a given damage state.
+                This parameter links a damage state to expected direct loss,
+                expressed as a fraction of total component value.
 
                 Example:
                 Damage ratio of 0.30 for damage state "DS2 Moderate"
@@ -84,24 +114,26 @@
                 In special cases the the value of loss ratio can be
                 greater than 1.0, which indicates complete loss of
                 component and additional cost of removal, disposal, or
-                securing or destroyed component.
+                securing of destroyed component.
 
 
 `functionality`
-  :Description: An unitless fractional value indicating the functional
+  :Description: An unitless normalised value indicating the functional
                 capacity of a component for a given damage state.
-                This parameter links damage states to expected
-                post-impact residual functionality of the component.
+                This parameter links a damage state to expected
+                post-impact residual functionality (or production capacity)
+                of the component.
 
                 Example:
-                A stack of a thermal power station is expected to remain
-                fully functional (functionality==1), under 'Slight'
-                damage state, i.e. under conditions of minor damage to
+                A stack of a thermal power station may be expected to
+                remain fully functional (functionality==1), under 'Slight'
+                damage state, e.g. under conditions of minor damage to
                 structure with deformation of holding down bolts and with
                 some bracing connections.
 
   :Data Type:   Float.
                 :math:`{\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}`.
+
                 A value of 0 indicates no loss of value, and
                 a value of 1.0 indicates complete loss.
                 In special cases the the value of loss ratio can be
@@ -123,44 +155,57 @@
   :Data Type:   Float.
 
 
-`sigma_1`
-  :Description: The first standard deviation for a bimodal
-                damage function.
+`upper_limit`
+  :Description: The maximum value of hazard intensity for which
+                the given algorithm may be applicable.
 
-  :Data Type:   Float, for a bimodal function. For
-                single mode functions, use 'NA'.
+  :Data Type:   Float.
+                If upper limit is not explicity defined for an
+                algorithm, use 'NA'.
 
 
-`sigma_2`
-  :Description: The second standard deviation for a bimodal
-                damage function.
+`lower_limit`
+  :Description: The minimum value of hazard intensity for which
+                the given algorithm may be applicable.
 
-  :Data Type:   Float, for a bimodal function. For
-                single mode functions, use 'NA'.
+  :Data Type:   Float.
+                If upper limit is not explicity defined for an
+                algorithm, use 'NA'.
+
+
+`recovery_function`
+  :Description: Name of the probability distribution representing the
+                damage function. 
+
+                Normal CDF, traingular function or a uniform distribution
+                function are commmon examples for recovery functions.
+                However, any function can be supported by adding its
+                definition to the module `sira.modelling.responsemodels`.
+
+                Example: 'Normal'
+
+  :Data Type:   String. MUST match name of a function defined in 
+                `sira.modelling.responsemodels`.
 
 
 `recovery_mean`
-  :Description: The mean of the recovery function. Component and
-                system restoration time are assumed to follow the
-                normal distribution.
+  :Description: The mean of the recovery function.
 
   :Data Type:   Float.
 
 
 `recovery_std`
   :Description: The standard deviation of the recovery function.
-                Component and system restoration time are assumed
-                to follow the normal distribution.
-
+                
   :Data Type:   Float.
 
 
 `recovery_95percentile`
   :Description: [Optional paramter]
-                Some times it is difficult to get the concept of
-                standard deviation across to an audience of
-                infrastructure experts, and hence it is difficult
-                to get a reliable value for it. In such cases we can
+                In the process of expert elicitation of recovery parameters,
+                it is often difficult to get the concept of standard
+                deviation across to an audience of experts unpracticed
+                in statistical concepts. In such cases it is easier to
                 obtain a 95th percentile value for recovery time, and
                 translate that to standard deviation for a normal
                 distribution using the following equation:
@@ -177,7 +222,8 @@
 
 
 `fragility_source`
-  :Description: Which source the fragility algorithm was adopted from,
-                how it was adapted, or how it was developed.
+  :Description: Source or reference from which the fragility algorithm
+                was taken or adapted, how it was adapted, or how it
+                was developed.
 
   :Data Type:   Free text

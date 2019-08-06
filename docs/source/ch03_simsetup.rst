@@ -31,7 +31,7 @@ The outputs generated from the simulation are stored in a directory called
 `output` within the same parent directory.
 
 For illustration purposed we assume a hypothetical project "PROJECT HAN",
-with the project  folder located in the root directory. We also assume
+with the project folder located in the root directory. We also assume
 that within the project, we are modelling two systems named GISKARD and
 DANEEL. For this given setup, input-output dir structure for the project
 will be as follows::
@@ -43,19 +43,19 @@ will be as follows::
         │   │   ├── config_system_GR.json
         │   │   └── model_system_GR.json
         │   └── output
-        │      ├── ...
-        │      ├── ...
-        │      └── ...
-        |
+        │       ├── ...
+        │       ├── ...
+        │       └── ...
+        │
         └── <SYSTEM_DANEEL>
             ├── input
             │   ├── config_system_DO.json
             │   └── model_system_DO.json
             │
             └── output
-               ├── ...
-               ├── ...
-               └── ...
+                ├── ...
+                ├── ...
+                └── ...
 
 
 .. _simulation-setup-file:
@@ -63,10 +63,10 @@ will be as follows::
 Simulation Setup File
 =====================
 
-The code needs a setup file for configuring the model and simulation scenario.
+The code needs a setup file for configuring the simulation scenario.
 The expected file format is JSON. The code *can* support any of three formats:
-`ini`, `conf`, or `json`. The other formats are not encouraged and details
-of their implementation will not be discussed here.
+`ini`, `conf`, or `json`, though formats other than JSON are discouraged and
+details of their implementation will not be discussed here.
 
 The following table lists the parameters in the config file,
 with a brief description and representative values.
@@ -80,10 +80,14 @@ with a brief description and representative values.
 Infrastructure Model Definition File
 ====================================
 
-The system model is defined using an MS Excel spreadsheet file.
-It contains five worksheets. The names of the worksheets are fixed.
-The function and format of these worksheets are described in the
-following subsections:
+The system model is presently built using an MS Excel spreadsheet file.
+It contains five worksheets, each representing modules that define different
+aspect of the infrastructure model. The names of the worksheets are fixed.
+The Excel file must be converted to JSON format before it can be ingested
+by SIRA. There scripts provided in the 'scripts' directory for this purpose.
+
+The format and function of the worksheets (i.e. model definition modules)
+are described in the following subsections:
 
 
 .. _inputdata__component_list:
