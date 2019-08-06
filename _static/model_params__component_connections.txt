@@ -1,32 +1,37 @@
 `origin`
-  :Description: The node (component) to which the tail of a
-                directional edge is connected.
+  :Description: The node (component) to which the tail of a directional
+                edge is connected.
 
-                For bidirectional connections, you will need to define
-                two edges, e.g. A |rightarrow| B, and B |rightarrow| A.
+                For bidirectional connections, two edges must be defined
+                within opposing directionality,
+                e.g. A |rightarrow| B, and B |rightarrow| A.
                 For undirected graphs the origin/destination designation
                 is immaterial.
 
-  :Data Type:   String. Must be one of the entries in the
-                `component_id` columns in the `component_list` table.
+  :Data Type:   String.
+                Must be one of the entries in the list of components
+                defined under `component_id` in the module `component_list`.
 
   :Example:     'stack_1'
 
 
 `destination`
-  :Description: The node (component) on which the head of a
-                directional edge terminates. For undirected graphs
-                the origin/destination designation is immaterial.
+  :Description: The node (component) on which the head of a directional
+                edge terminates.
+                For undirected graphs the origin/destination designation
+                is immaterial.
 
-  :Data Type:   String. Must be one of the entries in the
-                `component_id` columns in the `component_list` table.
+  :Data Type:   String.
+                Must be one of the entries in the list of components
+                defined under `component_id` in the module `component_list`.
 
   :Example:     'turbine_condenser_1'
 
 
 `link_capacity`
   :Description: Capacity of the edge.
-                It can be more than the required flow.
+                Its value can be more than the required flow of 1.0,
+                which would represent excess capacity on the line.
 
   :Data Type:   Float.
                 :math:`{\{x \in \mathbb{R}\ \mid \ 0 \leq x \leq 1\}}`
@@ -37,7 +42,8 @@
 `weight`
   :Description: This parameter can be used to prioritise an edge or
                 a series of edges (a path) over another edge or set
-                of edges.
+                of edges. This is intended to set preference for
+                a particular path where path redundancies exist.
 
   :Data Type:   Integer
 

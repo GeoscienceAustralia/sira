@@ -217,7 +217,7 @@ the location with a flag <cite>-d</cite> at execution time.</p>
 <p>The outputs generated from the simulation are stored in a directory called
 <cite>output</cite> within the same parent directory.</p>
 <p>For illustration purposed we assume a hypothetical project “PROJECT HAN”,
-with the project  folder located in the root directory. We also assume
+with the project folder located in the root directory. We also assume
 that within the project, we are modelling two systems named GISKARD and
 DANEEL. For this given setup, input-output dir structure for the project
 will be as follows:</p>
@@ -228,27 +228,27 @@ will be as follows:</p>
     │   │   ├── config_system_GR.json
     │   │   └── model_system_GR.json
     │   └── output
-    │      ├── ...
-    │      ├── ...
-    │      └── ...
-    |
+    │       ├── ...
+    │       ├── ...
+    │       └── ...
+    │
     └── &lt;SYSTEM_DANEEL&gt;
         ├── input
         │   ├── config_system_DO.json
         │   └── model_system_DO.json
         │
         └── output
-           ├── ...
-           ├── ...
-           └── ...
+            ├── ...
+            ├── ...
+            └── ...
 </pre></div>
 </div>
 <div class="section" id="simulation-setup-file">
 <span id="id1"></span><h2>3.1 Simulation Setup File<a class="headerlink" href="#simulation-setup-file" title="Permalink to this headline">¶</a></h2>
-<p>The code needs a setup file for configuring the model and simulation scenario.
+<p>The code needs a setup file for configuring the simulation scenario.
 The expected file format is JSON. The code <em>can</em> support any of three formats:
-<cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>. The other formats are not encouraged and details
-of their implementation will not be discussed here.</p>
+<cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>, though formats other than JSON are discouraged and
+details of their implementation will not be discussed here.</p>
 <p>The following table lists the parameters in the config file,
 with a brief description and representative values.</p>
 <p class="rubric">SCENARIO_PARAMS</p>
@@ -635,10 +635,13 @@ detailed assessment of system response</td>
 </div>
 <div class="section" id="infrastructure-model-definition-file">
 <span id="model-definition-file"></span><h2>3.2 Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Permalink to this headline">¶</a></h2>
-<p>The system model is defined using an MS Excel spreadsheet file.
-It contains five worksheets. The names of the worksheets are fixed.
-The function and format of these worksheets are described in the
-following subsections:</p>
+<p>The system model is presently built using an MS Excel spreadsheet file.
+It contains five worksheets, each representing modules that define different
+aspect of the infrastructure model. The names of the worksheets are fixed.
+The Excel file must be converted to JSON format before it can be ingested
+by SIRA. There scripts provided in the ‘scripts’ directory for this purpose.</p>
+<p>The format and function of the worksheets (i.e. model definition modules)
+are described in the following subsections:</p>
 <div class="section" id="list-of-components-component-list">
 <span id="inputdata-component-list"></span><h3>3.2.1 List of Components: component_list<a class="headerlink" href="#list-of-components-component-list" title="Permalink to this headline">¶</a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
@@ -648,15 +651,15 @@ following subsections:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Unique id for component in system. This is an instance
-of <cite>component_type</cite></td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Unique id for a component in the system. This is an instance
+of <cite>component_type</cite>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
 It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct parts
-of the name separated by underscores</td>
+of the name separated by underscores.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘stack_1’</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘transformer_tx1’</td>
 </tr>
 </tbody>
 </table>
@@ -667,13 +670,13 @@ of the name separated by underscores</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The <a class="reference internal" href="reportglossary.html#term-typology"><span class="xref std std-term">typology</span></a> of a system component.
-Represents a broad category of equipment.</td>
+Represents a general category of equipment.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. It is recommended to use alphanumeric characters,
 starting with a letter, and logically distinct
 parts of the name separated by spaces.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Stack’</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘Stepup Transformer’</td>
 </tr>
 </tbody>
 </table>
@@ -683,11 +686,12 @@ parts of the name separated by spaces.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The general category of equipment. A number of
-component types can be grouped under this, e.g.
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Represent a broad category of equipment performing
+a general task. A number of component types can be
+grouped under this, e.g.
 ‘Power Transformer 100MVA 230/69’ and
 ‘Power Transformer 50MVA 230/69’ are both under
-the same component_class of ‘Power Transformer’</td>
+the same component_class of ‘Power Transformer’.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
 It is recommended to use alphanumeric characters,
@@ -706,8 +710,9 @@ the function of emission management.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Value of the component instance a fraction of the
-total system cost, with the total cost being 1.0</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Normalised value of an instance of a component given as
+as a fraction of the total system cost, wih the total
+system cost being 1.0.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0 \le x \le 1\}}\)</span></td>
@@ -727,8 +732,8 @@ network representing the system. For details, see
 <a class="reference internal" href="ch02_concept.html#model-node-classification"><span class="std std-ref">Classification of Nodes</span></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
-Must be one of four values:
-supply, transshipment, dependency, sink</td>
+Must be one of these four values in the set:
+(‘supply’, ‘transshipment’, ‘dependency’, ‘sink’)</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘supply’</td>
 </tr>
@@ -742,7 +747,7 @@ supply, transshipment, dependency, sink</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This is an optional parameter to assist is drawing
 the system diagram. It indicates how the different
-component instances should be grouped together.</td>
+components should be grouped together.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String</td>
 </tr>
@@ -760,7 +765,7 @@ component instances should be grouped together.</td>
 One (1.0) indicates full functionality, and
 zero (0.0) indicates complete loss of functionality.
 Typically at the start of the simulation all components
-would have a value of 1.0.</td>
+will have a value of 1.0.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0 \leq x \leq 1\}}\)</span></td>
@@ -780,16 +785,18 @@ would have a value of 1.0.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The node (component) to which the tail of a
-directional edge is connected.</p>
-<p>For bidirectional connections, you will need to define
-two edges, e.g. A <span class="math notranslate nohighlight">\(\rightarrow\)</span> B, and B <span class="math notranslate nohighlight">\(\rightarrow\)</span> A.
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The node (component) to which the tail of a directional
+edge is connected.</p>
+<p>For bidirectional connections, two edges must be defined
+within opposing directionality,
+e.g. A <span class="math notranslate nohighlight">\(\rightarrow\)</span> B, and B <span class="math notranslate nohighlight">\(\rightarrow\)</span> A.
 For undirected graphs the origin/destination designation
 is immaterial.</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table.</p>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first last">‘stack_1’</p>
@@ -803,12 +810,14 @@ is immaterial.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The node (component) on which the head of a
-directional edge terminates. For undirected graphs
-the origin/destination designation is immaterial.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The node (component) on which the head of a directional
+edge terminates.
+For undirected graphs the origin/destination designation
+is immaterial.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘turbine_condenser_1’</td>
 </tr>
@@ -821,7 +830,8 @@ the origin/destination designation is immaterial.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Capacity of the edge.
-It can be more than the required flow.</td>
+Its value can be more than the required flow of 1.0,
+which would represent excess capacity on the line.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{R}\ \mid \ 0 \leq x \leq 1\}}\)</span></td>
@@ -838,7 +848,8 @@ It can be more than the required flow.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This parameter can be used to prioritise an edge or
 a series of edges (a path) over another edge or set
-of edges.</td>
+of edges. This is intended to set preference for
+a particular path where path redundancies exist.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
 </tr>
@@ -859,7 +870,8 @@ of edges.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The <cite>component_id</cite> of the input node.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+Must be one of the entries in the
 <cite>component_id</cite> columns in the <cite>component_list</cite> table,
 and its <cite>node_type</cite> must be <cite>supply</cite>.</td>
 </tr>
@@ -873,8 +885,9 @@ and its <cite>node_type</cite> must be <cite>supply</cite>.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The operational capacity of the node. It can be a real value
-value if known, or default to 100%.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The operational capacity of the node. It can be a real
+value if known, or be given as a fraction of total
+normalised value of 100%.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}\)</span></td>
@@ -889,8 +902,9 @@ value if known, or default to 100%.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">What decimal fractional value of the input commodity
-enters the system through this input node.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The normalised value of the total required input commodity
+entering the system the given input node. The total quantity
+of required material is normalised to 1.0.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}\)</span></td>
@@ -912,13 +926,14 @@ the specified input node.</p>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first">For a coal-fired power station there might be two
-commodities, namely coal and water. So, there will need
-to be at least two input nodes, one with a <cite>commodity_type</cite>
-of ‘coal’ and the other with <cite>commodity_type</cite> of ‘water’.</p>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"><p class="first">A thermal power station will have two primary input
+commodities: fuel (for example coal) and water. So, for
+a coal-fired power station, there will need to be two
+input nodes defined (at a minumum), with the two types
+of <cite>commodity_type</cite> being ‘coal’ and ‘water’.</p>
 <p class="last">For an electric substation the <cite>commodity_type</cite> is
-electricity.
-For a water treatment plant, it is waster water.</p>
+electricity. For a water treatment plant, it will be
+untreated water.</p>
 </td>
 </tr>
 </tbody>
@@ -941,8 +956,9 @@ These nodes are not considered in the fragility
 calculations.</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>,
 and must be of <cite>node_type</cite> sink.</p>
 </td>
 </tr>
@@ -958,11 +974,12 @@ and must be of <cite>node_type</cite> sink.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">These are the real terminal nodes within the infrastructure
-system model. The completed ‘product’ of a system exits
-from this node.</td>
+system model. The completed product or output of a system
+exits the system boundary through this node.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String. Must be one of the entries in the
-<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>,
 and must be of <cite>node_type</cite> transshipment.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">‘gen_1’</td>
@@ -975,10 +992,11 @@ and must be of <cite>node_type</cite> transshipment.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Production capacity that the specific production node
-is responsible for.</p>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The part of total production capacity of the system that
+a specific production node is responsible for.</p>
 <p>The unit depends on the type of product the system
-produces (e.g. MW for generator plant).</p>
+produces (e.g. MW for generator plant). The unit is defined
+as part of the system metadata.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">Float</p>
@@ -1012,14 +1030,14 @@ equal 1.0.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">This parameter is used to assign relative sequential
-priority for output/production nodes in for the
-purposes of post-disaster recovery</td>
+priority for output nodes for the purposes of post-disaster
+recovery prioritisation.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}\)</span>,
 where <cite>n</cite> is the total number of output nodes</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">_</td>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1028,6 +1046,21 @@ where <cite>n</cite> is the total number of output nodes</td>
 </div>
 <div class="section" id="component-type-damage-algorithms-comp-type-dmg-algo">
 <span id="inputdata-comp-type-dmg-algo"></span><h3>3.2.5 Component Type Damage Algorithms: comp_type_dmg_algo<a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><cite>id</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">A sequential integer value assigned to each algorithm.
+It is used solely for internal programming logic.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
 <dl class="docutils" id="dmg-algo-component-type">
 <dt><cite>component_type</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
@@ -1054,8 +1087,9 @@ Avoid using special characters.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The list of damage states used in defining the
-damage scale being modelled within the system.</p>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The list of discrete damage states used in defining the
+damage scale being modelled within the system. The ‘None’
+damage state is not explicitly listed.</p>
 <p>Example: For a four-state sequential damage scale,
 the following damage states are used:</p>
 <ol class="arabic simple">
@@ -1072,47 +1106,52 @@ the following damage states are used:</p>
 </tbody>
 </table>
 </dd>
+<dt><cite>is_piecewise</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Flag that states whether the function is piecewise
+defined, or defined by a single function.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">String [‘yes’, ‘no’]</td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt><cite>damage_function</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The probability distribution for the damage function.</p>
-<p>Currently only log-normal curves are used, but additional
-distributions can be added as required.</p>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Name of the probability distribution representing the
+damage function. This should be a Cumulative Distribution
+Function (CDF).</p>
+<p>Log-normal curves are predominant in this discipline.
+However, any function can be supported by adding its
+definition to the module <cite>sira.modelling.responsemodels</cite>.</p>
 <p>Example: ‘lognormal’</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">String.</p>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">String. MUST match name of a function defined in
+<cite>sira.modelling.responsemodels</cite>.</p>
 </td>
 </tr>
 </tbody>
 </table>
 </dd>
-<dt><cite>mode</cite></dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Number indicating the mode of the function.
-Currently can handle only unimodal or bimodal functions.</p>
-<p>Default value is 1.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Integer [1,2]</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd>
-<dt><cite>damage_median</cite></dt>
+<dt><cite>median</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Median of the damage function.
-A median will need to be defined for each damage state.
-It should be typically be progressively higher for more
+This corresponds to the ‘scale’ parameter of the
+lognormal implementation in scipy.</p>
+<p>scale = median = <span class="math notranslate nohighlight">\(exp({\mu})\)</span>,
+where μ is the mean of the log of the samples.</p>
+<p>A median will need to be defined for each damage state.
+It should typically be progressively higher for more
 severe damage states:</p>
 <p><span class="math notranslate nohighlight">\({\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}\)</span></p>
 </td>
@@ -1123,15 +1162,35 @@ severe damage states:</p>
 </tbody>
 </table>
 </dd>
-<dt><cite>damage_logstd</cite></dt>
+<dt><cite>beta</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Standard deviation of the damage function.
-It will need to be defined for each damage state.
-The value of standard deviation should be such that
-the curves do not overlap.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The log-standard deviation, or put another way,
+the standard deviation of the log of the variate.
+This corresponds to the ‘shape’ parameter of the
+lognormal implementation in scipy.</p>
+<p>It will need to be defined for each damage state.
+The value of beta should be such that
+the curves for the defined damaged states do not overlap.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Float.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>location</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The location parameter for lognormal function, as
+implemented in scipy. In scipy it is used primarily for
+the purpose of having a common method for defining all
+functions. In practice, we always set it to zero.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
@@ -1143,9 +1202,10 @@ the curves do not overlap.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The fractional loss of a component’s value for damage
-sustained at a given damage state. This parameter links
-a damage state to expected direct loss of component value.</p>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The fractional loss of a component’s value resulting from
+incurred damages resulting it being in a given damage state.
+This parameter links a damage state to expected direct loss,
+expressed as a fraction of total component value.</p>
 <p>Example:
 Damage ratio of 0.30 for damage state “DS2 Moderate”</p>
 </td>
@@ -1157,7 +1217,7 @@ a value of 1.0 indicates complete loss.
 In special cases the the value of loss ratio can be
 greater than 1.0, which indicates complete loss of
 component and additional cost of removal, disposal, or
-securing or destroyed component.</p>
+securing of destroyed component.</p>
 </td>
 </tr>
 </tbody>
@@ -1168,21 +1228,22 @@ securing or destroyed component.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">An unitless fractional value indicating the functional
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">An unitless normalised value indicating the functional
 capacity of a component for a given damage state.
-This parameter links damage states to expected
-post-impact residual functionality of the component.</p>
+This parameter links a damage state to expected
+post-impact residual functionality (or production capacity)
+of the component.</p>
 <p>Example:
-A stack of a thermal power station is expected to remain
-fully functional (functionality==1), under ‘Slight’
-damage state, i.e. under conditions of minor damage to
+A stack of a thermal power station may be expected to
+remain fully functional (functionality==1), under ‘Slight’
+damage state, e.g. under conditions of minor damage to
 structure with deformation of holding down bolts and with
 some bracing connections.</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Float.
-<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}\)</span>.
-A value of 0 indicates no loss of value, and
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first">Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}\)</span>.</p>
+<p class="last">A value of 0 indicates no loss of value, and
 a value of 1.0 indicates complete loss.
 In special cases the the value of loss ratio can be
 greater than 1.0, which indicates complete loss of
@@ -1213,30 +1274,53 @@ failure modes.</p>
 </tbody>
 </table>
 </dd>
-<dt><cite>sigma_1</cite></dt>
+<dt><cite>upper_limit</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The first standard deviation for a bimodal
-damage function.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The maximum value of hazard intensity for which
+the given algorithm may be applicable.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float, for a bimodal function. For
-single mode functions, use ‘NA’.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+If upper limit is not explicity defined for an
+algorithm, use ‘NA’.</td>
 </tr>
 </tbody>
 </table>
 </dd>
-<dt><cite>sigma_2</cite></dt>
+<dt><cite>lower_limit</cite></dt>
 <dd><table class="first last docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The second standard deviation for a bimodal
-damage function.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The minimum value of hazard intensity for which
+the given algorithm may be applicable.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float, for a bimodal function. For
-single mode functions, use ‘NA’.</td>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.
+If upper limit is not explicity defined for an
+algorithm, use ‘NA’.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><cite>recovery_function</cite></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Name of the probability distribution representing the
+damage function.</p>
+<p>Normal CDF, traingular function or a uniform distribution
+function are commmon examples for recovery functions.
+However, any function can be supported by adding its
+definition to the module <cite>sira.modelling.responsemodels</cite>.</p>
+<p>Example: ‘Normal’</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">String. MUST match name of a function defined in
+<cite>sira.modelling.responsemodels</cite>.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1246,9 +1330,7 @@ single mode functions, use ‘NA’.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The mean of the recovery function. Component and
-system restoration time are assumed to follow the
-normal distribution.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The mean of the recovery function.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
@@ -1260,9 +1342,7 @@ normal distribution.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The standard deviation of the recovery function.
-Component and system restoration time are assumed
-to follow the normal distribution.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">The standard deviation of the recovery function.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Float.</td>
 </tr>
@@ -1275,10 +1355,10 @@ to follow the normal distribution.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">[Optional paramter]
-Some times it is difficult to get the concept of
-standard deviation across to an audience of
-infrastructure experts, and hence it is difficult
-to get a reliable value for it. In such cases we can
+In the process of expert elicitation of recovery parameters,
+it is often difficult to get the concept of standard
+deviation across to an audience of experts unpracticed
+in statistical concepts. In such cases it is easier to
 obtain a 95th percentile value for recovery time, and
 translate that to standard deviation for a normal
 distribution using the following equation:</p>
@@ -1301,8 +1381,9 @@ distribution using the following equation:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Which source the fragility algorithm was adopted from,
-how it was adapted, or how it was developed.</td>
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Source or reference from which the fragility algorithm
+was taken or adapted, how it was adapted, or how it
+was developed.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Free text</td>
 </tr>
@@ -1332,8 +1413,11 @@ by the damage states used to model the fragility of the system components.</p>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">The physical damage descriptors corresponding
 to the damage states.</p>
 <p>Example:
-230 kV Current Transformers would be said to be in <cite>Failure</cite>
-state if there is “porcelain cracking, or overturning.”</p>
+A circuit breaker can be considered to be in an ‘Exensive’
+damage state for the following damage definition:
+“Cracking of interrupter casing.
+Interrupter head falling off in some instances.
+In other instances damage to conductor connections.”</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body"><p class="first last">Free text.</p>

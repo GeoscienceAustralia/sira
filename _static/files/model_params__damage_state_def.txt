@@ -16,7 +16,10 @@
                 to the damage states.
 
                 Example:
-                230 kV Current Transformers would be said to be in `Failure`
-                state if there is "porcelain cracking, or overturning."
+                A circuit breaker can be considered to be in an 'Exensive'
+                damage state for the following damage definition:
+                "Cracking of interrupter casing.
+                Interrupter head falling off in some instances.
+                In other instances damage to conductor connections."
 
   :Data Type:   Free text.
