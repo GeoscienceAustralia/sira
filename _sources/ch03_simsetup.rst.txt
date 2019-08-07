@@ -81,7 +81,7 @@ Infrastructure Model Definition File
 ====================================
 
 The system model is presently built using an MS Excel spreadsheet file.
-It contains six required worksheets, each representing modules that define
+It contains seven required worksheets, each representing modules that define
 different aspect of the infrastructure model. The names of the worksheets
 are fixed. The Excel file must be converted to JSON format before it can be
 ingested by SIRA. There are scripts provided in the 'scripts' directory for
