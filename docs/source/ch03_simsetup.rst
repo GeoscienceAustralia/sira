@@ -89,6 +89,13 @@ by SIRA. There scripts provided in the 'scripts' directory for this purpose.
 The format and function of the worksheets (i.e. model definition modules)
 are described in the following subsections:
 
+.. _inputdata__system_meta:
+
+Basic System Metadata: system_meta
+----------------------------------
+
+.. include::
+   ./_static/files/model_params__system_meta.txt
 
 .. _inputdata__component_list:
 
