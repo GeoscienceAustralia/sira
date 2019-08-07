@@ -84,3 +84,15 @@
                 :math:`{\{x \in \mathbb{R} \mid 0 \leq x \leq 1\}}`
 
   :Example:     1.0 (default value)
+
+
+`pos_x`
+  :Description: The x-position or longitude value of the component.
+
+  :Data Type:   Float.
+
+
+`pos_y`
+  :Description: The y-position or latitude value of the component.
+
+  :Data Type:   Float.
