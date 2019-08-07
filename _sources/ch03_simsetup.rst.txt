@@ -147,4 +147,3 @@ by the damage states used to model the fragility of the system components.
 
 .. include::
    ./_static/files/model_params__damage_state_def.txt
-
