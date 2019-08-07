@@ -193,8 +193,28 @@ a:hover {
 
 .rst-content dl p, .rst-content dl table, .rst-content dl ul, .rst-content dl ol {
     margin-bottom: 6px !important;
-    font-size: 90%;
+    font-size: 95%;
 }
+
+.rst-content dl dt {
+    font-weight: bold;
+    margin-bottom: 3px;
+    margin-top: 0.5em;
+    margin-left: 14px;
+}
+
+.rst-content dl dd {
+    margin: 0 0 12px 24px;
+    line-height: 15px;
+}
+
+.rst-content p.rubric {
+    margin-bottom: 6px;
+    margin-top: 20px;
+    font-weight: bolder;
+    font-size: 115%;
+}
+
 
 /* override table width restrictions */
 @media screen and (min-width: 767px) {

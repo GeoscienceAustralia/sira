@@ -1,4 +1,4 @@
-.. rubric:: [SCENARIO]
+.. rubric:: SCENARIO_PARAMS
 
 `SCENARIO_NAME`
     :Description:   Name for identifying simulation scenario
@@ -16,7 +16,7 @@
     :Example:       'g'
 
 
-.. rubric:: [HAZARD]
+.. rubric:: HAZARD_PARAMS
 
 `HAZARD_INPUT_METHOD`
     :Description:   How the hazard is supplied. Must be one of two options:
@@ -56,7 +56,7 @@
     :Example:       [0.50, 0.55]
 
 
-.. rubric:: [RESTORATION]
+.. rubric:: RESTORATION_PARAMS
 
 `TIME_UNIT`
     :Description:   Unit of time for restoration time calculations
@@ -84,7 +84,7 @@
     :Example:       [5, 10, 20]
 
 
-.. rubric:: [System]
+.. rubric:: SYSTEM_METADATA
 
 `INFRASTRUCTURE_LEVEL`
     :Description:   Define infrastructure as a `facility` or `network`
@@ -117,23 +117,7 @@
     :Example:       'sys_config_ps.xlsx'
 
 
-.. rubric:: [Input]
-
-`INPUT_DIR_NAME`
-    :Description:   File path relative to code root
-    :Data Type:     String
-    :Example:       'data/ps_coal/input'
-
-
-.. rubric:: [Output]
-
-`OUTPUT_DIR_NAME`
-    :Description:   File path relative to code root
-    :Data Type:     String
-    :Example:       'data/ps_coal/output'
-
-
-.. rubric:: [Test]
+.. rubric:: SWITCHES
 
 `FIT_PE_DATA`
     :Description:   Flag for fitting Prob of Exceedance data
@@ -149,9 +133,6 @@
     :Description:   Switch to indicate whether to save simulated values in binary numpy format
     :Data Type:     Boolean
     :Example:       True
-
-
-.. rubric:: [Switches]
 
 `MULTIPROCESS`
     :Description:   Switch to indicate whether to use multi-core processing. 0 |rightarrow| False, 1 |rightarrow| True
