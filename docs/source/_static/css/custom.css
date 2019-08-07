@@ -205,7 +205,7 @@ a:hover {
 
 .rst-content dl dd {
     margin: 0 0 12px 24px;
-    line-height: 15px;
+    line-height: 1.5em;
 }
 
 .rst-content p.rubric {

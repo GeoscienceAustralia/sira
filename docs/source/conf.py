@@ -303,7 +303,9 @@ latex_elements = {
 'pointsize': '10pt',
 
 # Additional stuff for the LaTeX preamble.
-#'preamble': '',
+'preamble': r'''
+\usepackage{unicode-math}
+''',
 
 # Latex figure (float) alignment
 'figure_align': 'htbp',
