@@ -38,17 +38,17 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
 
     def test_folder_structure(self):
 
-        self.assertTrue(os.path.isdir(
-            os.path.join(self.project_root_dir, "models")),
-            "core models folder not found!"+self.project_root_dir +"!")
+        # self.assertTrue(os.path.isdir(
+        #     os.path.join(self.project_root_dir, "models")),
+        #     "core models folder not found!"+self.project_root_dir +"!")
 
         self.assertTrue(os.path.isdir(
             os.path.join(self.project_root_dir, "tests", "models")),
             "test models folder not found!"+self.project_root_dir +"!")
 
-        self.assertTrue(os.path.isdir(
-            os.path.join(self.project_root_dir, "simulation_setup")),
-            "core simulation setup folder not found!"+self.project_root_dir +"!")
+        # self.assertTrue(os.path.isdir(
+        #     os.path.join(self.project_root_dir, "simulation_setup")),
+        #     "core simulation setup folder not found!"+self.project_root_dir +"!")
 
         self.assertTrue(os.path.isdir(
             os.path.join(self.project_root_dir, "tests",  "simulation_setup")),
