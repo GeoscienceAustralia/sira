@@ -1035,7 +1035,7 @@ recovery prioritisation.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Data Type:</th><td class="field-body">Integer.
 <span class="math notranslate nohighlight">\({\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}\)</span>,
-where <cite>n</cite> is the total number of output nodes</td>
+where <span class="math notranslate nohighlight">\({n}\)</span> is the total number of output nodes</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">NA</td>
 </tr>
@@ -1148,7 +1148,8 @@ definition to the module <cite>sira.modelling.responsemodels</cite>.</p>
 <tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Median of the damage function.
 This corresponds to the ‘scale’ parameter of the
 lognormal implementation in scipy.</p>
-<p>scale = median = <span class="math notranslate nohighlight">\(exp({\mu})\)</span>,
+<p>For scipy lognormal implementation,
+<span class="math notranslate nohighlight">\(\text{scale} = \text{median} = \mathrm{e}^{\mu}\)</span>,
 where μ is the mean of the log of the samples.</p>
 <p>A median will need to be defined for each damage state.
 It should typically be progressively higher for more

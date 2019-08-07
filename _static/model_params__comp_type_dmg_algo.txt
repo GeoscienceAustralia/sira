@@ -64,7 +64,8 @@
                 This corresponds to the 'scale' parameter of the
                 lognormal implementation in scipy. 
 
-                scale = median = :math:`exp({\mu})`, 
+                For scipy lognormal implementation, 
+                :math:`\text{scale} = \text{median} = \mathrm{e}^{\mu}`,
                 where |mu| is the mean of the log of the samples.
 
                 A median will need to be defined for each damage state.
