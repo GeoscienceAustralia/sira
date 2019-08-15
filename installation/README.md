@@ -1,37 +1,50 @@
-# Delete all containers:
-$ docker rm $(docker stop $(docker ps -aq))
+# Instructions for building a SIRA run environment in docker
 
-# Delete all images:
-$ docker rmi $(docker images --filter "dangling=true" -q)
+## Building the docker image
 
-# Building image:
-$ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
+Step 1: Delete all containers
 
-# Run Option #1
+    $ docker rm $(docker stop $(docker ps -aq))
+
+Step 2: Delete all images
+
+    $ docker rmi $(docker images --filter "dangling=true" -q)
+
+Step 3: Build the docker image
+
+    $ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
+
+## Running SIRA in docker
+
+### Run Option #1: Run a simulation and destroy the container when done
 
 The following command simulataneously does the following:
-bind mounts a volume in docker, creates a container in interactive mode,
+bind mounts a volume in docker, creates a container in interactive mode, 
 runs a simulation, then destroys the container after simulation ends.
 
-$ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
-    siraimg:latest \
-    python sira -d <scenario_dir> -sfl --aws
+    $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
+        siraimg:latest \
+        python sira -d <scenario_dir> -sfl --aws
 
-# Run Option #2
+### Run Option #2: Build a container for reuse / experimentation
 
-$ docker create --name=sira_x -it siraimg:latest
+First, build a docker container from the prebuilt image.
 
-Then:
-$ docker start sira_x
-$ docker attach sira_x
+    $ docker create --name=sira_x -it siraimg:latest
 
-Or:
-$ docker start -a -i sira_x
+Then start and attach the container:
 
-Run the sira code for the scenario in the specified directory:
-$ python sira -d /path/to/scenario_dir -sfl
+    $ docker start sira_x
+    $ docker attach sira_x
 
-From outside of docker, on a terminal, use the following command to
-copy the project folder from container to host:
+It is possible to combine the above steps in one:
 
-$ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
+    $ docker start -a -i sira_x
+
+Now, you can run the sira code for the scenario in the specified directory:
+
+    $ python sira -d /path/to/scenario_dir -sfl
+
+From outside of docker, on a terminal, use the following command to copy the project folder from container to host:
+
+    $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
