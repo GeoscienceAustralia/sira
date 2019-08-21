@@ -46,43 +46,43 @@ probably easiest to use the containers as described below.
 
 ### Building the run environment using Docker
 
-Docker configuration is now the preferred way to deploy the application.
-The process of buulding the docker images and container are outlined below:
+Docker configuration is the preferred way to deploy the application.
+The process of building the docker images and container are outlined below:
 
-Delete all containers:
+Step 1: Delete all containers
 
     $ docker rm $(docker stop $(docker ps -aq))
 
-Delete all images:
+Step 2: Delete all images
 
     $ docker rmi $(docker images --filter "dangling=true" -q)
 
-Build the image:
+Step 3: Build the docker image
 
     $ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
 
-**Run Option #1: run a simulation and destroy the container when done**
+#### Run Option #1: Run a simulation and destroy the container when done
 
-The following command simulataneously does the bind mounts a volume in docker,
-creates a container in interactive mode, runs a simulation, then destroys
-the container after simulation ends.
+The following command simulataneously does the following:
+bind mounts a volume in docker, creates a container in interactive mode, 
+runs a simulation, then destroys the container after simulation ends.
 
     $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
         siraimg:latest \
         python sira -d <scenario_dir> -sfl --aws
 
-**Run Option #2: Build a container for reuse / experimentation**
+#### Run Option #2: Build a container for reuse / experimentation
 
-Create the container
+First, build a docker container from the prebuilt image.
 
     $ docker create --name=sira_x -it siraimg:latest
 
-Then:
+Then start and attach the container:
 
     $ docker start sira_x
     $ docker attach sira_x
 
-Or:
+It is possible to combine the above steps in one:
 
     $ docker start -a -i sira_x
 
@@ -157,7 +157,7 @@ analysis on.
 
 ## Testing
 
-** The tests are currently not working and being updated. **
+**The tests are currently not working and being updated.**
 
 To run tests use unittest. Move into sira folder:
 
@@ -186,9 +186,9 @@ container.
 
 - Consider whether a framework like https://redux.js.org/[Redux] would be useful.
 
-- Perhaps get rid of ng\_select. I started with this before realising how easy
+- Perhaps get rid of `ng_select`. I started with this before realising how easy
   simple HTML selects would be to work with and before reading about reactive
-  forms (I'm not sure how/if one could use ng\_select with them). One benefit of
-  ng\_select may be handling large lists and one may want to do some testing
+  forms (I'm not sure how/if one could use `ng_select` with them). One benefit of
+  `ng_select` may be handling large lists and one may want to do some testing
   before removing it.
 
