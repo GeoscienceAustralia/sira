@@ -25,9 +25,10 @@
     :Example:       'hazard_array'
 
 `HAZARD_TYPE`
-    :Description:   Minimum value for internsity measurement (IM) parameter
-    :Data Type:     Float
-    :Example:       0.0
+    :Description:   The type of hazard for the impact simulation.
+    :Data Type:     String
+    :Example:       'earthquake'
+    :Valid values:  ['earthquake', 'tropical cyclone', 'flood']
 
 `INTENSITY_MEASURE_MIN`
     :Description:   Minimum value for internsity measurement (IM) parameter
