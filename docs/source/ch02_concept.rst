@@ -107,8 +107,8 @@ represents the **System Model**. A collection of interconnected
 components with specific attributes and roles comprise the System
 in the context of the simulation model.
 
-Please note that based on extent the type of asset, then the view of the
-system and its components would vary.
+The asset being studied will determine what is considered a system or what
+is considered a component within the context of the simulation.
 
 **If the system under study is a NETWORK**, then the System Model is a
 Level 1 element, i.e. an *Infrastructure Network*, and the Components are
