@@ -352,16 +352,17 @@ def plot_data_model(SYS_DS,
     x_tick_val = ['{:.2f}'.format(i) for i in x_tick_pos]
 
     ax.set_title(figtitle, loc='center', y=1.06, fontweight='bold', size=11)
-    ax.set_xlabel(x_lab, size=8, labelpad=10)
-    ax.set_ylabel(y_lab, size=8, labelpad=10)
+    ax.set_xlabel(x_lab, size=10, labelpad=10)
+    ax.set_ylabel(y_lab, size=10, labelpad=10)
 
     ax.set_xlim(0, max(x_tick_pos))
     ax.set_xticks(x_tick_pos)
-    ax.set_xticklabels(x_tick_val, size=7)
+    ax.set_xticklabels(x_tick_val, size=9)
     ax.set_ylim(0, max(y_tick_pos))
     ax.set_yticks(y_tick_pos)
-    ax.set_yticklabels(y_tick_val, size=7)
+    ax.set_yticklabels(y_tick_val, size=9)
     ax.margins(0, 0)
+    ax.tick_params(axis='both', pad=7)
 
     # Shrink current axis width by 15%
     box = ax.get_position()
@@ -369,7 +370,7 @@ def plot_data_model(SYS_DS,
 
     # Put a legend to the right of the current axis
     ax.legend(title='', loc='upper left', ncol=1,
-              bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 7})
+              bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 9})
 
     plt.savefig(outfig, format='png', dpi=300)
     plt.close(fig)
