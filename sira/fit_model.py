@@ -188,6 +188,7 @@ def fit_prob_exceed_model(
                     pb_exceed,
                     out_path,
                     config,
+                    file_name='fig_sys_pe_DATA.png',
                     PLOT_DATA=True,
                     PLOT_MODEL=False,
                     PLOT_EVENTS=False)
@@ -198,7 +199,8 @@ def fit_prob_exceed_model(
                     pb_exceed,
                     out_path,
                     config,
-                    PLOT_DATA=True,
+                    file_name='fig_sys_pe_MODEL.png',
+                    PLOT_DATA=False,
                     PLOT_MODEL=True,
                     PLOT_EVENTS=False)
 
@@ -208,6 +210,7 @@ def fit_prob_exceed_model(
                     pb_exceed,
                     out_path,
                     config,
+                    file_name='fig_sys_pe_MODEL_with_scenarios.png',
                     PLOT_DATA=False,
                     PLOT_MODEL=True,
                     PLOT_EVENTS=True)
@@ -223,6 +226,7 @@ def plot_data_model(SYS_DS,
                     pb_exceed,
                     out_path,
                     config,
+                    file_name='fig_sys_pe.png',
                     PLOT_DATA=True,
                     PLOT_MODEL=True,
                     PLOT_EVENTS=False):
@@ -245,7 +249,6 @@ def plot_data_model(SYS_DS,
     # [Plot 1 of 3] The Data Points
 
     if PLOT_DATA:
-        outfig = os.path.join(out_path, 'fig_sys_pe_DATA.png')
         spl.add_legend_subtitle("DATA")
         for i in range(1, len(SYS_DS)):
             ax.plot(hazard_input_vals, pb_exceed[i],
@@ -258,7 +261,6 @@ def plot_data_model(SYS_DS,
     # [Plot 2 of 3] The Fitted Model
 
     if PLOT_MODEL:
-        outfig = os.path.join(out_path, 'fig_sys_pe_MODEL.png')
         spl.add_legend_subtitle("FITTED MODEL")
         xmax = max(hazard_input_vals)
         xformodel = np.linspace(0, xmax, 101, endpoint=True)
@@ -279,7 +281,6 @@ def plot_data_model(SYS_DS,
     # [Plot 3 of 3] The Scenario Events
 
     if PLOT_EVENTS:
-        outfig = os.path.join(out_path, 'fig_sys_pe_MODEL_with_scenarios.png')
         spl.add_legend_subtitle("EVENTS")
         for i, haz in enumerate(config.FOCAL_HAZARD_SCENARIOS):
             event_num = str(i+1)
@@ -338,6 +339,7 @@ def plot_data_model(SYS_DS,
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ax.set_axisbelow('line')
 
+    outfig = os.path.join(out_path, file_name)
     figtitle = 'System Fragility: ' + config.SYSTEM_CLASS
 
     x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + \
