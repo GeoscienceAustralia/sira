@@ -1,4 +1,4 @@
-.. _model_params__component_list::
+.. rubric:: model_params__component_list
 
 `component_id`
   :Description: Unique id for a component in the system. This is an instance
