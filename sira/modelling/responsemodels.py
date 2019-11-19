@@ -118,12 +118,12 @@ class NormalCDF(Base):
     The normal CDF response model for components
     """
     # -----------------------------------------------
-    norm_mean = _Element(
+    mean = _Element(
         'float',
         'Mean of the normal or Gaussian CDF',
         _Element.NO_DEFAULT,
         [lambda x: float(x) >= 0.])
-    norm_stddev = _Element(
+    stddev = _Element(
         'float',
         'Standard deviation of the normal CDF',
         _Element.NO_DEFAULT,
@@ -151,12 +151,12 @@ class NormalCDF(Base):
         """
         if not inverse:
             return stats.norm.cdf(data_point,
-                                  loc=self.norm_mean,
-                                  scale=self.norm_stddev)
+                                  loc=self.mean,
+                                  scale=self.stddev)
         elif inverse:
             return stats.norm.ppf(data_point,
-                                  loc=self.norm_mean,
-                                  scale=self.norm_stddev)
+                                  loc=self.mean,
+                                  scale=self.stddev)
 
 
 

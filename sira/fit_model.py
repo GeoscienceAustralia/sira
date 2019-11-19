@@ -215,6 +215,44 @@ def fit_prob_exceed_model(
                     PLOT_MODEL=True,
                     PLOT_EVENTS=True)
 
+    # ------------------------------------------------------------
+    plot_data_model_vx(
+        SYS_DS,
+        hazard_input_vals,
+        sys_dmg_model,
+        pb_exceed,
+        out_path,
+        config,
+        file_name='fig_sys_pe_BW_MODEL.png',
+        PLOT_DATA=False,
+        PLOT_MODEL=True,
+        PLOT_EVENTS=False)
+
+    plot_data_model_vx(
+        SYS_DS,
+        hazard_input_vals,
+        sys_dmg_model,
+        pb_exceed,
+        out_path,
+        config,
+        file_name='fig_sys_pe_BW_MODEL_DATA.png',
+        PLOT_DATA=True,
+        PLOT_MODEL=True,
+        PLOT_EVENTS=False)
+
+    plot_data_model_vx(
+        SYS_DS,
+        hazard_input_vals,
+        sys_dmg_model,
+        pb_exceed,
+        out_path,
+        config,
+        file_name='fig_sys_pe_BW_MODEL_EVENTS.png',
+        PLOT_DATA=False,
+        PLOT_MODEL=True,
+        PLOT_EVENTS=True)
+
+    # ------------------------------------------------------------
     # RETURN a DataFrame with the fitted model parameters
     return sys_dmg_model
 
@@ -236,7 +274,7 @@ def plot_data_model(SYS_DS,
         raise AttributeError
 
     plt.style.use('seaborn-darkgrid')
-    mpl.rc('grid', linewidth=0.8)
+    mpl.rc('grid', linewidth=0.7)
     mpl.rc('font', family='sans-serif')
     fig = plt.figure(figsize=(9, 5))
     ax = fig.add_subplot(111)
@@ -340,7 +378,7 @@ def plot_data_model(SYS_DS,
     ax.set_axisbelow('line')
 
     outfig = os.path.join(out_path, file_name)
-    figtitle = 'System Fragility: ' + config.SYSTEM_CLASS
+    figtitle = 'System Fragility: ' + config.MODEL_NAME
 
     x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + \
             ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
@@ -374,6 +412,165 @@ def plot_data_model(SYS_DS,
 
     plt.savefig(outfig, format='png', dpi=300)
     plt.close(fig)
+
+# ==============================================================================
+
+def plot_data_model_vx(SYS_DS,
+                       hazard_input_vals,
+                       sys_dmg_model,
+                       pb_exceed,
+                       out_path,
+                       config,
+                       file_name='fig_sys_pe_bw.png',
+                       PLOT_DATA=False,
+                       PLOT_MODEL=True,
+                       PLOT_EVENTS=False):
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if sum([PLOT_DATA, PLOT_MODEL, PLOT_EVENTS])==0:
+        raise AttributeError
+
+    plt.style.use('seaborn-darkgrid')
+    plt.grid = True
+    mpl.rc('grid', linewidth=0.7)
+    mpl.rc('font', family='sans-serif')
+
+    colours = spl.ColourPalettes()
+    COLR_DS = colours.FiveLevels[-1*len(SYS_DS):]
+
+    fig = plt.figure(figsize=(9, 5))
+    ax = fig.add_subplot(111)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # [Plot 1 of 3] The Fitted Model
+
+    if PLOT_MODEL:
+        # spl.add_legend_subtitle("FRAGILITY MODEL")
+        xmax = max(hazard_input_vals)
+        xformodel = np.linspace(0, xmax, 101, endpoint=True)
+        dmg_mdl_arr = np.zeros((len(SYS_DS), len(xformodel)))
+
+        for dx in range(1, len(SYS_DS)):
+            shape = sys_dmg_model.loc[SYS_DS[dx], 'LogStdDev']
+            loc = sys_dmg_model.loc[SYS_DS[dx], 'Location']
+            scale = sys_dmg_model.loc[SYS_DS[dx], 'Median']
+            dmg_mdl_arr[dx] = stats.lognorm.cdf(
+                xformodel, shape, loc=loc, scale=scale)
+            ax.plot(xformodel, dmg_mdl_arr[dx],
+                    label=SYS_DS[dx], clip_on=False, color=COLR_DS[dx],
+                    alpha=0.65, linestyle='-', linewidth=1.6,
+                    zorder=9)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # [Plot 2 of 3] The Data Points
+
+    if PLOT_DATA:
+        spl.add_legend_subtitle("DATA")
+        for i in range(1, len(SYS_DS)):
+            ax.plot(hazard_input_vals, pb_exceed[i],
+                    label=SYS_DS[i], clip_on=False, color=COLR_DS[i],
+                    linestyle='', alpha=0.6, marker=markers[i - 1],
+                    markersize=3, markeredgewidth=1, markeredgecolor=None,
+                    zorder=10)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # [Plot 3 of 3] The Scenario Events
+
+    if PLOT_EVENTS:
+        spl.add_legend_subtitle("EVENTS")
+        for i, haz in enumerate(config.FOCAL_HAZARD_SCENARIOS):
+            event_num = str(i+1)
+            event_intensity_str = "{:.3f}".format(float(haz))
+            event_color = colours.BrewerSpectral[i]
+            try:
+                event_label = event_num + ". " + \
+                              config.FOCAL_HAZARD_SCENARIO_NAMES[i]+" : " + \
+                              event_intensity_str
+            except:
+                event_label = event_num + " : " + event_intensity_str
+
+            ax.plot(float(haz), 0,
+                    label=event_label,
+                    color=event_color,
+                    marker='',
+                    markersize=2,
+                    linestyle='-',
+                    zorder=11)
+            ax.plot(float(haz), 1.04,
+                    label='',
+                    clip_on=False,
+                    color=event_color,
+                    marker='o',
+                    fillstyle='none',
+                    markersize=12,
+                    linestyle='-',
+                    markeredgewidth=1.0,
+                    zorder=11)
+            ax.annotate(
+                event_num,  # event_intensity_str,
+                xy=(float(haz), 0), xycoords='data',
+                xytext=(float(haz), 1.038), textcoords='data',
+                ha='center', va='center', rotation=0,
+                size=8, fontweight='bold', color=event_color,
+                annotation_clip=False,
+                bbox=dict(boxstyle='round, pad=0.2', fc='yellow', alpha=0.0),
+                path_effects=[
+                    PathEffects.withStroke(linewidth=2, foreground="w")],
+                arrowprops=dict(
+                    arrowstyle='-|>, head_length=0.5, head_width=0.3',
+                    shrinkA=3.0,
+                    shrinkB=0.0,
+                    connectionstyle='arc3,rad=0.0',
+                    color=event_color,
+                    alpha=0.8,
+                    linewidth=1.0,
+                    linestyle="-",
+                    path_effects=[
+                        PathEffects.withStroke(linewidth=2.5, foreground="w")
+                        ]
+                    ),
+                zorder=11
+                )
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ax.set_axisbelow('line')
+
+    outfig = os.path.join(out_path, file_name)
+    figtitle = 'System Fragility: ' + config.MODEL_NAME
+
+    x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + \
+            ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
+    y_lab = 'P($D_s$ > $d_s$)'
+
+    y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)
+    y_tick_val = ['{:.1f}'.format(i) for i in y_tick_pos]
+    x_tick_pos = np.linspace(0.0, max(hazard_input_vals), num=6, endpoint=True)
+    x_tick_val = ['{:.2f}'.format(i) for i in x_tick_pos]
+
+    ax.set_title(figtitle, loc='center', y=1.02, fontweight='semibold', size=11)
+    ax.set_xlabel(x_lab, size=10, labelpad=10)
+    ax.set_ylabel(y_lab, size=10, labelpad=10)
+
+    ax.set_xlim(0, max(x_tick_pos))
+    ax.set_xticks(x_tick_pos)
+    ax.set_xticklabels(x_tick_val, size=9)
+    ax.set_ylim(0, max(y_tick_pos))
+    ax.set_yticks(y_tick_pos)
+    ax.set_yticklabels(y_tick_val, size=9)
+    ax.margins(0, 0)
+    ax.tick_params(axis='both', pad=7)
+
+    # Shrink current axis width by 15%
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+
+    # Put a legend to the right of the current axis
+    ax.legend(title='', loc='upper left', ncol=1,
+              bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 9})
+
+    plt.savefig(outfig, format='png', dpi=300)
+    plt.close(fig)
+
 
 # ==============================================================================
 

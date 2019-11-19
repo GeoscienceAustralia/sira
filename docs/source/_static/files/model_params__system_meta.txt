@@ -13,7 +13,7 @@ of results.
     :Values:        Valid values are 'facility' or 'network'
 
 
-`system_class`
+`SYSTEM_CLASS`
     :Description:   The name of the asset class. It must have a
                     corresponding class definition in the module
                     `sira.modelling.infrastructure`.
@@ -30,10 +30,10 @@ of results.
                     'PotableWaterPumpStation']
 
 
-`system_subclass`
+`SYSTEM_SUBCLASS`
     :Description:   The subclass of the parent infrastructure system
-                    as specified in `system_class`. For example, for the
-                    system_class 'Substation', the logical system_subclass
+                    as specified in `SYSTEM_CLASS`. For example, for the
+                    SYSTEM_CLASS 'Substation', the logical system_subclass
                     options can be 'transmission', 'distribution',
                     'collector', etc.
 

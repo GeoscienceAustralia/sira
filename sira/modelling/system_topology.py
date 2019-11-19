@@ -358,14 +358,14 @@ class SystemTopology(object):
             shape="circle",
             style="rounded,filled",
             fixedsize="true",
-            width=0.2,
-            height=0.2,
+            width=0.25,
+            height=0.25,
             color=default_node_color,  # gray14
             fillcolor="white",
             fontcolor=default_node_color,  # gray14
             penwidth=1.5,
             fontname="Helvetica-Bold",
-            fontsize=12,
+            fontsize=22,
             )
 
         self.gviz.edge_attr.update(
@@ -373,7 +373,7 @@ class SystemTopology(object):
             arrowsize="0.7",
             style="bold",
             color=default_edge_color,  # gray12
-            penwidth=1.0,
+            penwidth=1.8,
             )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -428,8 +428,8 @@ class SystemTopology(object):
                     fontcolor="limegreen",
                     peripheries=2,
                     penwidth=1.5,
-                    height=0.8,
-                    width=1.5,
+                    height=1.0,
+                    width=2.0,
                     )
 
             if str(self.component_attr[node]['node_type']).lower() == 'sink':
@@ -437,8 +437,8 @@ class SystemTopology(object):
                     self.segment_long_labels(node, maxlen=7, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="doublecircle",
-                    width=1.1,
-                    height=1.1,
+                    width=1.3,
+                    height=1.3,
                     rank="sink",
                     penwidth=1.5,
                     color="orangered",  # royalblue3
@@ -451,8 +451,9 @@ class SystemTopology(object):
                 self.gviz.get_node(node).attr['label'] =\
                     self.segment_long_labels(node, maxlen=9, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
-                    shape="circle",
-                    width=1.1,
+                    shape="rect",
+                    style="rounded",
+                    width=2.1,
                     height=1.1,
                     rank="dependency",
                     penwidth=2.5,
@@ -487,17 +488,17 @@ class SystemTopology(object):
             if str(self.component_attr[node]['component_class']).lower()\
                     == 'bus':
                 # POSITION MUST BE IN POINTS for this to work
-                # tpos = self.gviz.get_node(node).attr['pos']
-                # poslist = [int(x.strip("!")) for x in tpos.split(",")]
-                # posnew = str(poslist[0]) + "," + str(poslist[1] + 5) + "!"
+                tpos = self.gviz.get_node(node).attr['pos']
+                poslist = [int(x.strip("!")) for x in tpos.split(",")]
+                posnew = str(poslist[0]) + "," + str(poslist[1] + 25) + "!"
                 self.gviz.get_node(node).attr.update(
                     shape="rect",
-                    penwidth=1.0,
-                    width=3.0,
+                    penwidth=1.5,
+                    width=2.3,
                     height=0.2,
                     label="",
                     xlabel=node,
-                    # xlp=posnew,
+                    xlp=posnew,
                     )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

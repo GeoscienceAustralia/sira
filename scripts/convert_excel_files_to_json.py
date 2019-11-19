@@ -263,12 +263,12 @@ def update_json_structure(main_json_obj):
                     new_json_structure["component_list"][component]\
                         ["damages_states_constructor"][counter]\
                         ["recovery_function_constructor"]\
-                        ["norm_mean"]\
+                        ["mean"]\
                         = fragility_data[key]["recovery_mean"]
                     new_json_structure["component_list"][component]\
                         ["damages_states_constructor"][counter]\
                         ["recovery_function_constructor"]\
-                        ["norm_stddev"]\
+                        ["stddev"]\
                         = fragility_data[key]["recovery_std"]
                     new_json_structure["component_list"][component]\
                         ["damages_states_constructor"][counter]\

@@ -24,8 +24,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -44,8 +44,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -64,8 +64,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -84,8 +84,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -129,8 +129,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -149,8 +149,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -169,8 +169,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -189,8 +189,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -234,8 +234,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -254,8 +254,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -274,8 +274,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -294,8 +294,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -339,8 +339,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -359,8 +359,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -379,8 +379,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -399,8 +399,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -444,8 +444,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -464,8 +464,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -484,8 +484,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -504,8 +504,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -549,8 +549,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -569,8 +569,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -589,8 +589,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -609,8 +609,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -654,8 +654,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -674,8 +674,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -694,8 +694,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -714,8 +714,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -759,8 +759,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -779,8 +779,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -799,8 +799,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -819,8 +819,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -864,8 +864,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -884,8 +884,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -904,8 +904,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -924,8 +924,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -969,8 +969,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -989,8 +989,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1009,8 +1009,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1029,8 +1029,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1074,8 +1074,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1094,8 +1094,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1114,8 +1114,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1134,8 +1134,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1179,8 +1179,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1199,8 +1199,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1219,8 +1219,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1239,8 +1239,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 1.0, 
-                        "norm_stddev": 0.0607956832, 
+                        "mean": 1.0, 
+                        "stddev": 0.0607956832, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1284,8 +1284,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1304,8 +1304,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1324,8 +1324,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1344,8 +1344,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1389,8 +1389,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1409,8 +1409,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1429,8 +1429,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1449,8 +1449,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1494,8 +1494,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1514,8 +1514,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1534,8 +1534,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1554,8 +1554,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1599,8 +1599,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1619,8 +1619,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1639,8 +1639,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1659,8 +1659,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1704,8 +1704,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1724,8 +1724,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1744,8 +1744,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1764,8 +1764,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1809,8 +1809,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1829,8 +1829,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1849,8 +1849,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1869,8 +1869,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1914,8 +1914,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1934,8 +1934,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1954,8 +1954,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -1974,8 +1974,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2019,8 +2019,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2039,8 +2039,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2059,8 +2059,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2079,8 +2079,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2124,8 +2124,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2144,8 +2144,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2164,8 +2164,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2184,8 +2184,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2229,8 +2229,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2249,8 +2249,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2269,8 +2269,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2289,8 +2289,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2334,8 +2334,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2354,8 +2354,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2374,8 +2374,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2394,8 +2394,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2439,8 +2439,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2459,8 +2459,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2479,8 +2479,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2499,8 +2499,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2544,8 +2544,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2564,8 +2564,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2584,8 +2584,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2604,8 +2604,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2649,8 +2649,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2669,8 +2669,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2689,8 +2689,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2709,8 +2709,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2754,8 +2754,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2774,8 +2774,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2794,8 +2794,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2814,8 +2814,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2859,8 +2859,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2879,8 +2879,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2899,8 +2899,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2919,8 +2919,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2964,8 +2964,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -2984,8 +2984,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3004,8 +3004,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3024,8 +3024,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3069,8 +3069,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3089,8 +3089,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3109,8 +3109,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3129,8 +3129,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3174,8 +3174,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3194,8 +3194,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3214,8 +3214,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3234,8 +3234,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3279,8 +3279,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3299,8 +3299,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3319,8 +3319,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3339,8 +3339,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3384,8 +3384,8 @@
                     "functionality": 1.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 5.0, 
-                        "norm_stddev": 0.1823870496, 
+                        "mean": 5.0, 
+                        "stddev": 0.1823870496, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3404,8 +3404,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 10.0, 
-                        "norm_stddev": 1.2159136638, 
+                        "mean": 10.0, 
+                        "stddev": 1.2159136638, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3424,8 +3424,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 21.0, 
-                        "norm_stddev": 1.8238704957, 
+                        "mean": 21.0, 
+                        "stddev": 1.8238704957, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
@@ -3444,8 +3444,8 @@
                     "functionality": 0.0, 
                     "recovery_function_constructor": {
                         "function_name": "Normal", 
-                        "norm_mean": 42.8571428571, 
-                        "norm_stddev": 2.4318273276, 
+                        "mean": 42.8571428571, 
+                        "stddev": 2.4318273276, 
                         "recovery_state_definition": "Not Available."
                     }, 
                     "response_function_constructor": {
