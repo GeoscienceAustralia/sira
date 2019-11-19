@@ -8015,7 +8015,7 @@
             "notes": null, 
             "value": "defined"
         }, 
-        "infrastructure_level": {
+        "INFRASTRUCTURE_LEVEL": {
             "notes": null, 
             "value": "facility"
         }, 

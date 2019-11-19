@@ -7,7 +7,7 @@ Users are encouraged to provide detailed information that may
 be relevant to the model configuration and post-simulation validation
 of results.
 
-`infrastructure_level`
+`INFRASTRUCTURE_LEVEL`
     :Description:   The scope of the infrastructure system.
 
     :Values:        Valid values are 'facility' or 'network'
@@ -61,7 +61,7 @@ of results.
                     diagram.
 
     :Values:        Valid values must match: ['defined', 'undefined'].
-                    If infrastructure_level=='network', then the value must
+                    If INFRASTRUCTURE_LEVEL=='network', then the value must
                     be defined.
 
 
