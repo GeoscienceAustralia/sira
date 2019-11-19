@@ -65,7 +65,7 @@ of results.
                     be defined.
 
 
-`restoration_time_unit`
+`RESTORATION_TIME_UNIT`
     :Description:   The unit of time used for defining the component
                     restoration algorithms.
     

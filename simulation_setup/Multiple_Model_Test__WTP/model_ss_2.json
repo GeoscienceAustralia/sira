@@ -8019,7 +8019,7 @@
             "notes": null, 
             "value": "facility"
         }, 
-        "restoration_time_unit": {
+        "RESTORATION_TIME_UNIT": {
             "notes": null, 
             "value": "days"
         }, 

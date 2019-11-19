@@ -8019,15 +8019,15 @@
             "notes": null, 
             "value": "facility"
         }, 
-        "restoration_time_unit": {
+        "RESTORATION_TIME_UNIT": {
             "notes": null, 
             "value": "days"
         }, 
-        "system_class": {
+        "SYSTEM_CLASS": {
             "notes": null, 
             "value": "PotableWaterTreatmentPlant"
         }, 
-        "system_subclass": {
+        "SYSTEM_SUBCLASS": {
             "notes": "Capacity is 165 ML/d (43.5 MG/d) expandable to 240 ML/d (63.4 MG/d). With its current capacity it is considered to be a small treatment plant, according to HAZUS clasification.", 
             "value": "Small Water Treatment Plant"
         }
