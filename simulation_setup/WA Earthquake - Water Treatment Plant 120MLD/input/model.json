@@ -8011,7 +8011,7 @@
         }
     }, 
     "system_meta": {
-        "component_location_conf": {
+        "SYSTEM_COMPONENT_LOCATION_CONF": {
             "notes": null, 
             "value": "defined"
         }, 

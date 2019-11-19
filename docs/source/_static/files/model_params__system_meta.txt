@@ -42,7 +42,7 @@ of results.
                     planned future functionality expansion.
 
 
-`component_location_conf`
+`SYSTEM_COMPONENT_LOCATION_CONF`
     :Description:   Specifies whether the location information for system
                     components are specified in
                     :ref:`component list definition <model_params__component_list>`.

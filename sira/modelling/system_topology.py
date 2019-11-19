@@ -60,7 +60,7 @@ class SystemTopology(object):
 
         # Overwrite default if node locations are defined
         if hasattr(infrastructure, 'system_meta'):
-            if infrastructure.system_meta['component_location_conf']['value']\
+            if infrastructure.system_meta['SYSTEM_COMPONENT_LOCATION_CONF']['value']\
                     == 'defined':
                 self.drawing_prog = 'neato'
 
