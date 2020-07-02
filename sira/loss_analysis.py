@@ -35,7 +35,7 @@ RESTORATION_THRESHOLD = 0.98
 RESTORATION_OFFSET = 1
 
 
-# **************************************************************************
+# *****************************************************************************
 
 def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
     ''' 
@@ -118,8 +118,7 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
     return ax.fill_between(xx, yy1, y2=yy2, **kwargs)
 
 
-# ============================================================================
-
+# *****************************************************************************
 
 def comp_recovery_given_hazard_and_time(component,
                                         component_response,
@@ -147,9 +146,10 @@ def comp_recovery_given_hazard_and_time(component,
     """
 
     rootLogger.info(
-        "Calculating recovery level at time [{}] for hazard [{}] "
-        "for component: {}".format(
-            time_after_impact, hazval, component.component_id))
+        "Calculating Recovery Level "
+        "for component: {} at time [{}] for hazard [{}]".format(
+            component.component_id, time_after_impact, hazval)
+    )
 
     ct = component.component_type
     damage_functions = \
@@ -215,23 +215,27 @@ def comp_recovery_given_hazard_and_time(component,
             #     recovery_functions[dmg_index](inverse_dmg_ratio, inverse=True)
             # xxxxxxxxxxxxxxxxxxxxx
 
-    print("pb      : {}".format(pb))
-    print("sum(pb) : {}".format(sum(pb)))
-    print("recov   : {}".format(recov))
-    print("comp_fn : {}".format(comp_fn))
-    print("reqtime : {}".format(reqtime))
-    print("---")
+    # # TESTING
+    # print("pb      : {}".format(pb))
+    # print("sum(pb) : {}".format(sum(pb)))
+    # print("recov   : {}".format(recov))
+    # print("comp_fn : {}".format(comp_fn))
+    # print("reqtime : {}".format(reqtime))
+    # print("---")
+
     comp_status_agg = sum(pb * recov)
     restoration_time_agg = sum(pb * reqtime)
     # restoration_time_agg_X = sum(pb*reqtime_X)
-    print("comp_status_agg      : {}".format(comp_status_agg))
-    print("restoration_time_agg : {}".format(restoration_time_agg))
-    print("\n")
+
+    # # TESTING
+    # print("comp_status_agg      : {}".format(comp_status_agg))
+    # print("restoration_time_agg : {}".format(restoration_time_agg))
+    # print("\n")
 
     return comp_status_agg, restoration_time_agg
 
 
-# ============================================================================
+# *****************************************************************************
 
 def prep_repair_list(infrastructure_obj,
                      component_meanloss,
@@ -272,7 +276,7 @@ def prep_repair_list(infrastructure_obj,
         if weight_criteria == None:
             wt = 1.0
         elif weight_criteria == 'MIN_TIME':
-            wt = component_fullrst_time.ix[origin]['Full Restoration Time']
+            wt = component_fullrst_time.loc[origin, 'Full Restoration Time']
         elif weight_criteria == 'MIN_COST':
             wt = component_meanloss.loc[origin, scenario_header]
         G.es[eid][w] = wt
@@ -343,8 +347,7 @@ def prep_repair_list(infrastructure_obj,
     return repair_list_combined
 
 
-# ============================================================================
-
+# *****************************************************************************
 
 def calc_restoration_setup(component_meanloss,
                            out_node_list, comps_uncosted,
@@ -406,8 +409,8 @@ def calc_restoration_setup(component_meanloss,
         fixed_asset_list.extend(repair_list_combined[onode])
 
         restore_time_each_node[onode] = \
-            [comp_fullrst_time.ix[i]['Full Restoration Time']
-             for i in repair_list_combined[onode]]
+            [comp_fullrst_time.loc[c, 'Full Restoration Time']
+             for c in repair_list_combined[onode]]
         # restore_time_aggregate[onode] = \
         #     max(restore_time_each_node[onode]) + \
         #     sum(np.array(restore_time_each_node[onode]) * 0.01)
@@ -445,15 +448,15 @@ def calc_restoration_setup(component_meanloss,
     t_init = 0
     t0 = t_init + RESTORATION_OFFSET
     for inx in rst_setup_df.index[0:rst_stream]:
-        if inx != rst_setup_df.index[0]: t0 += rst_setup_df.ix[inx]['DeltaTC']
+        if inx != rst_setup_df.index[0]: t0 += rst_setup_df.loc[inx, 'DeltaTC']
         rst_setup_df.loc[inx, 'RstStart'] = t0
         rst_setup_df.loc[inx, 'RstEnd'] = \
-            rst_setup_df.ix[inx]['RstStart'] + \
-            rst_setup_df.ix[inx]['RestorationTimes']
+            rst_setup_df.loc[inx, 'RstStart'] + \
+            rst_setup_df.loc[inx, 'RestorationTimes']
 
     dfx = copy.deepcopy(rst_setup_df)
     for inx in rst_setup_df.index[rst_stream:]:
-        t0 = min(dfx['RstEnd'])  # rst_setup_df.ix[inx]['DeltaTC']
+        t0 = min(dfx['RstEnd'])
 
         finx = rst_setup_df[rst_setup_df['RstEnd'] == min(dfx['RstEnd'])]
 
@@ -464,8 +467,8 @@ def calc_restoration_setup(component_meanloss,
         dfx = rst_setup_df[rst_setup_df['Fin'] != 1]
         rst_setup_df.loc[inx, 'RstStart'] = t0
         rst_setup_df.loc[inx, 'RstEnd'] = \
-            rst_setup_df.ix[inx]['RstStart'] + \
-            rst_setup_df.ix[inx]['RestorationTimes']
+            rst_setup_df.loc[inx, 'RstStart'] + \
+            rst_setup_df.loc[inx, 'RestorationTimes']
 
     cp_losses = [component_meanloss.loc[c, scenario_header]
                  for c in rst_setup_df.index]
@@ -480,7 +483,7 @@ def calc_restoration_setup(component_meanloss,
     return rst_setup_df
 
 
-# ============================================================================
+# *****************************************************************************
 
 def vis_restoration_process(scenario,
                             infrastructure,
@@ -677,7 +680,7 @@ def vis_restoration_process(scenario,
     return restoration_timeline_array, time_to_full_restoration_for_lines
 
 
-# ============================================================================
+# *****************************************************************************
 
 def component_criticality(infrastructure,
                           scenario,
@@ -803,8 +806,7 @@ def component_criticality(infrastructure,
     plt.close(fig)
 
 
-# ============================================================================
-
+# *****************************************************************************
 
 def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
                                        ctype_loss_by_type,
@@ -915,8 +917,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
     plt.close(fig)
 
 
-# ============================================================================
-
+# *****************************************************************************
 
 def draw_component_loss_barchart_s1(ctype_resp_sorted,
                                     scenario_tag,
@@ -1023,7 +1024,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
     plt.close(fig)
 
 
-# ============================================================================
+# *****************************************************************************
 
 def draw_component_loss_barchart_s2(ctype_resp_sorted,
                                     scenario_tag,
@@ -1403,7 +1404,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     plt.close(fig)
 
 
-# ==============================================================================
+# *****************************************************************************
 
 def draw_component_failure_barchart(uncosted_comptypes,
                                     ctype_failure_mean,
@@ -1482,8 +1483,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
     plt.close(fig)
 
 
-# ==============================================================================
-
+# *****************************************************************************
 
 def calc_comptype_damage_scenario_given_hazard(infrastructure,
                                                scenario,
@@ -1561,7 +1561,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     comp_rst_df = pd.DataFrame(comp_rst,
                                index=nodes_costed,
                                columns=scenario.restoration_time_range)
-    # print(comp_rst_df)
+
     comp_rst_time_given_haz = \
         [np.round(comp_rst_df.columns[comp_rst_df.loc[c]
                                       >= RESTORATION_THRESHOLD][0], 0)
@@ -1663,8 +1663,8 @@ def run_scenario_loss_analysis(scenario,
     component_meanloss = component_response.query('response == "loss_mean"'). \
         reset_index('response').drop('response', axis=1)
 
-    comptype_resp_df = comptype_resp_df.drop(
-        uncosted_comptypes, level='component_type', axis=0)
+    # comptype_resp_df = comptype_resp_df.drop(
+    #     uncosted_comptypes, level='component_type', axis=0)
 
     weight_criteria = 'MIN_COST'
 
