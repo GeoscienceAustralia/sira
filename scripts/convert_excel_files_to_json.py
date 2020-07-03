@@ -7,13 +7,14 @@ import xlrd
 import argparse
 
 
-# replace " with ' if the occur within brackets
-# eg {"key":"["Key":"value"]"} => {"key":"['Key':'value']"}
 def standardize_json_string(json_string):
-
+    """
+    Replace " with ' if they occur within square brackets
+    eg {"key":"["Key":"value"]"} => {"key":"['Key':'value']"}
+    """
     inside_brackets_flag = False
-
     standard_json_string = ""
+
     for i in range(0, len(json_string)):
         if json_string[i] == '[':
             inside_brackets_flag = True
@@ -28,7 +29,7 @@ def standardize_json_string(json_string):
         else:
             standard_json_string += json_string[i]
 
-        # Note: json object cant have python lists as keys
+        # Note: json object cannot have python lists as keys
         # standard_json_string \
         #     = standard_json_string.replace("\"[","[").replace("]\"","]")
     return standard_json_string
@@ -63,8 +64,9 @@ def update_json_structure(main_json_obj):
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"] = OrderedDict()
 
-        # -----
+        # ------------------------------------------------------------------
         # Set parameter values for `None` Damage State:
+
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"] = OrderedDict()
 
@@ -83,8 +85,9 @@ def update_json_structure(main_json_obj):
             ["damage_ratio"]\
             = 0.0
 
-        # -----
+        # ------------------------------------------------------------------
         # Set fragility algorithm for `None` Damage State:
+
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
             ["response_function_constructor"]\
@@ -102,8 +105,9 @@ def update_json_structure(main_json_obj):
             ["damage_state_definition"]\
             = "Not Available."
 
-        # -----
+        # ------------------------------------------------------------------
         # Set recovery algorithm for `None` Damage State:
+
         new_json_structure["component_list"][component]\
             ["damages_states_constructor"]["0"]\
             ["recovery_function_constructor"]\
@@ -120,7 +124,7 @@ def update_json_structure(main_json_obj):
             ["recovery_function_constructor"]\
             ["recovery_state_definition"]\
             = "Not Available."
-        # -----
+        # ------------------------------------------------------------------
 
         counter = 0
 
