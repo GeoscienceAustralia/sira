@@ -38,7 +38,7 @@ packaging==19.1
 pandas==0.25
 parmap==1.5.2
 patsy==0.5.1
-Pillow==6.1.0
+Pillow>=6.2.2
 pyasn1==0.4.4
 pybtex==0.21
 pybtex-docutils==0.2.1
