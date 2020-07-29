@@ -12,7 +12,7 @@ import copy
 from colorama import Fore, Back, init, Style
 init()
 
-import sifra.sifraplot as spl
+import sira.siraplot as spl
 
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
@@ -23,10 +23,10 @@ import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')
 
 import argparse
-from sifra.configuration import Configuration
-from sifra.scenario import Scenario
-from sifra.modelling.hazard import HazardsContainer
-from sifra.model_ingest import ingest_model
+from sira.configuration import Configuration
+from sira.scenario import Scenario
+from sira.modelling.hazard import HazardsContainer
+from sira.model_ingest import ingest_model
 
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:
@@ -39,7 +39,7 @@ RESTORATION_OFFSET = 1
 
 # **************************************************************************
 
-from sifra.loss_analysis import (draw_component_loss_barchart_s1,
+from sira.loss_analysis import (draw_component_loss_barchart_s1,
                                  draw_component_loss_barchart_s2,
                                  draw_component_loss_barchart_s3,
                                  draw_component_failure_barchart,
