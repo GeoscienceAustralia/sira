@@ -60,16 +60,16 @@ markers = ['o', '^', 's', 'D', 'x', '+']
 # the fit parameters.
 # ----------------------------------------------------------------------------
 
-def lognormal_cdf(x, median, logstd, loc=0):
+def lognormal_cdf(x, median, beta, loc=0):
     scale = median
-    shape = logstd
+    shape = beta
     loc = loc
     return stats.lognorm.cdf(x, shape, loc=loc, scale=scale)
 
 
 def res_lognorm_cdf(params, x, data, eps=None):
     v = params.valuesdict()
-    model = stats.lognorm.cdf(x, v['logstd'], loc=v['loc'], scale=v['median'])
+    model = stats.lognorm.cdf(x, v['beta'], loc=v['loc'], scale=v['median'])
     if eps is None:
         return (model - data)
     return (model - data) / eps
@@ -118,10 +118,9 @@ def fit_prob_exceed_model(
             p0m = sys_dmg_fitted_params[dx-1].params['median'].value+0.02
 
         # Fit the dist:
-
         params_est = lmfit.Parameters()
         params_est.add('median', value=p0m, min=MIN, max=MAX)
-        params_est.add('logstd', value=p0s, min=MIN, max=MAX)
+        params_est.add('beta', value=p0s, min=MIN, max=MAX)
         params_est.add('loc', value=0.0, vary=False)
 
         sys_dmg_fitted_params[dx] = lmfit.minimize(
@@ -134,7 +133,7 @@ def fit_prob_exceed_model(
             )
         sys_dmg_model.loc[SYS_DS[dx]] = (
             sys_dmg_fitted_params[dx].params['median'].value,
-            sys_dmg_fitted_params[dx].params['logstd'].value,
+            sys_dmg_fitted_params[dx].params['beta'].value,
             sys_dmg_fitted_params[dx].params['loc'].value,
             sys_dmg_fitted_params[dx].chisqr
             )
@@ -167,7 +166,7 @@ def fit_prob_exceed_model(
     for dx in range(1, len(SYS_DS)):
         sys_dmg_model.loc[SYS_DS[dx]] = \
             sys_dmg_fitted_params[dx].params['median'].value, \
-            sys_dmg_fitted_params[dx].params['logstd'].value, \
+            sys_dmg_fitted_params[dx].params['beta'].value, \
             sys_dmg_fitted_params[dx].params['loc'].value, \
             sys_dmg_fitted_params[dx].chisqr
 
@@ -394,13 +393,13 @@ def correct_crossover(
         y_sample = pb_exceed[dx]
 
         mu_hi = sys_dmg_fitted_params[dx].params['median'].value
-        sd_hi = sys_dmg_fitted_params[dx].params['logstd'].value
+        sd_hi = sys_dmg_fitted_params[dx].params['beta'].value
         loc_hi = sys_dmg_fitted_params[dx].params['loc'].value
 
         y_model_hi = stats.lognorm.cdf(x_sample, sd_hi, loc=loc_hi, scale=mu_hi)
 
         params_pe.add('median', value=mu_hi, min=MIN, max=MAX)
-        params_pe.add('logstd', value=sd_hi, min=0, max=MAX)
+        params_pe.add('beta', value=sd_hi, min=0, max=MAX)
         params_pe.add('loc', value=0.0, vary=False)
         sys_dmg_fitted_params[dx] = lmfit.minimize(
             res_lognorm_cdf,
@@ -413,7 +412,7 @@ def correct_crossover(
         ####################################################################
         if dx >= 2:
             mu_lo = sys_dmg_fitted_params[dx-1].params['median'].value
-            sd_lo = sys_dmg_fitted_params[dx-1].params['logstd'].value
+            sd_lo = sys_dmg_fitted_params[dx-1].params['beta'].value
             loc_lo = sys_dmg_fitted_params[dx-1].params['loc'].value
             y_model_lo = stats.lognorm.cdf(
                 x_sample, sd_lo, loc=loc_lo, scale=mu_lo)
@@ -437,7 +436,7 @@ def correct_crossover(
 
                     (mu_hi, sd_hi, loc_hi) = (
                         sys_dmg_fitted_params[dx].params['median'].value,
-                        sys_dmg_fitted_params[dx].params['logstd'].value,
+                        sys_dmg_fitted_params[dx].params['beta'].value,
                         sys_dmg_fitted_params[dx].params['loc'].value)
 
                 # Thresholds for testing top or bottom crossover
@@ -447,14 +446,14 @@ def correct_crossover(
                 # Test for top crossover: resample if crossover detected
                 if (sd_hi < sd_lo) and (sd_hi <= delta_top):
                     rootLogger.info("*** Attempting to correct upper crossover")
-                    params_pe.add('logstd', value=sd_hi, min=delta_top)
+                    params_pe.add('beta', value=sd_hi, min=delta_top)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(
                         res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
                 # Test for bottom crossover: resample if crossover detected
                 elif sd_hi >= delta_btm:
                     rootLogger.info("*** Attempting to correct lower crossover")
-                    params_pe.add('logstd', value=sd_hi, max=delta_btm)
+                    params_pe.add('beta', value=sd_hi, max=delta_btm)
                     sys_dmg_fitted_params[dx] = lmfit.minimize(
                         res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
 
