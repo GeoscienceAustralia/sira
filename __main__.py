@@ -63,7 +63,7 @@ def main():
     parser.add_argument("-m", "--model_file", type=str)
 
     # [Or] Supply only the directory where the input files reside
-    parser.add_argument("-d", "--input_directory", type=str)
+    parser.add_argument("-d", "--input_directory", type=str) 
 
     # Tell the code what tasks to do
     parser.add_argument(
@@ -156,7 +156,6 @@ def main():
     # ---------------------------------------------------------------------
     # Set up logging
     # ---------------------------------------------------------------------
-
     timestamp = time.strftime('%Y.%m.%d %H:%M:%S')
     log_path = os.path.join(args.output, "log.txt")
     configure_logger(log_path, args.loglevel)
@@ -170,7 +169,6 @@ def main():
     # Configure simulation model.
     # Read data and control parameters and construct objects.
     # ---------------------------------------------------------------------
-
     config = Configuration(args.config_file, args.model_file, args.output)
     scenario = Scenario(config)
     hazards = HazardsContainer(config)
