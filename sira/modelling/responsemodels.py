@@ -52,7 +52,8 @@ class StepFunc(Base):
     A response model that does not have a cumulative distribution
     function, rather a series of steps for damage.
     """
-    xys = _Element('XYPairs', 'A list of X, Y pairs.', list,
+    xys = _Element(
+        'XYPairs', 'A list of X, Y pairs.', list,
         [lambda xy: [(float(x), float(y)) for x, y in xy]])
 
     lower_limit = _Element(
@@ -76,10 +77,27 @@ class StepFunc(Base):
                 return y
         raise ValueError('value is greater than all xs!')
 
+class RayleighCDF(Base):
+    """
+    The Rayliegh CDF response model for components.
+    """
+    loc = _Element(
+        'float',
+        'Location parameter for Rayleigh CDF.',
+        default=0, validators=[lambda x: float(x) >= 0.])
+
+    scale = _Element(
+        'float',
+        'Scale parameter for Rayleigh CDF.',
+        _Element.NO_DEFAULT, validators=[lambda x: float(x) > 0.])
+
+    def __call__(self, x):
+        return stats.rayleigh.cdf(x, loc=self.loc, scale=self.scale)
+
 
 class LogNormalCDF(Base):
     """
-    The log normal CDF response model for components.
+    The lognormal CDF response model for components.
     """
 
     median = _Element('float', 'Median of the log normal CDF.',
@@ -100,7 +118,7 @@ class LogNormalCDF(Base):
         None,
         [lambda x: float(x) > 0.])
 
-    def __call__(self, hazard_intensity):
+    def __call__(self, data_point):
         """
         In scipy lognormal CDF is implemented thus:
             scipy.stats.lognorm.cdf(x, s, loc=0, scale=1)
@@ -109,7 +127,7 @@ class LogNormalCDF(Base):
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        return stats.lognorm.cdf(hazard_intensity,
+        return stats.lognorm.cdf(data_point,
                                  self.beta, loc=0, scale=self.median)
 
 
