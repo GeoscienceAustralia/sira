@@ -26,7 +26,7 @@ class TestInputConfFile(unittest. TestCase):
             conf = Configuration(conf_file_path)
             self.confs.append(conf)
 
-    def test_dose_file_exist(self):
+    def test_does_file_exist(self):
         for conf_file_path in self.conf_file_paths:
             self.assertEqual(exists(conf_file_path), True)
 

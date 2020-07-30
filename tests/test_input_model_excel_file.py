@@ -19,7 +19,8 @@ class TestReadingExcelFile(ut.TestCase):
                     if ".xlsx" in file_name:
                         self.model_xlsx_files.append(os.path.join(root, file_name))
 
-        self.required_sheets = ['component_list',
+        self.required_sheets = ['system_meta',
+                                'component_list',
                                 'component_connections',
                                 'supply_setup',
                                 'output_setup',
@@ -28,20 +29,10 @@ class TestReadingExcelFile(ut.TestCase):
 
     def test_folder_structure(self):
 
-        # self.assertTrue(
-        #     os.path.isdir(os.path.join(self.project_root_dir, "models")),
-        #     "core models folder not found at " + self.project_root_dir + "!"
-        # )
-
         self.assertTrue(
             os.path.isdir(os.path.join(self.project_root_dir, "tests", "models")),
             "test models folder not found at " + self.project_root_dir + "!"
         )
-
-        # self.assertTrue(
-        #     os.path.isdir(os.path.join(self.project_root_dir, "simulation_setup")),
-        #     "core simulation setup folder not found at " + self.project_root_dir + "!"
-        # )
 
         self.assertTrue(
             os.path.isdir(os.path.join(self.project_root_dir, "tests",  "simulation_setup")),
