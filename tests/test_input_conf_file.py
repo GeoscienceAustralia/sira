@@ -1,7 +1,8 @@
 import unittest
 import os
-from os.path import exists
+import re
 from sira.configuration import Configuration
+
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
@@ -28,7 +29,7 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_does_file_exist(self):
         for conf_file_path in self.conf_file_paths:
-            self.assertEqual(exists(conf_file_path), True)
+            self.assertEqual(os.path.exists(conf_file_path), True)
 
     def test_datatype_of_SCENARIO_NAME(self):
         for conf in self.confs:
