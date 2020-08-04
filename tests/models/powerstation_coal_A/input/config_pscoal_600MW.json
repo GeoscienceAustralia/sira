@@ -1,0 +1,51 @@
+{
+	"CONFIGURATION_ID": "PS_EQ_config_1",
+    "SCENARIO_NAME": "pscoal_600MW",
+    "MODEL_NAME": "Coal Fired Power Station 600MW",
+
+    "HAZARD_INPUT_METHOD": "hazard_array",
+    "HAZARD_TYPE": "earthquake",
+    "HAZARD_NUM_SAMPLES": 20,
+    "HAZARD_INTENSITY_MEASURE_MAX": 10.0,
+    "HAZARD_INTENSITY_MEASURE_MIN": 1.0,
+    "HAZARD_INTENSITY_MEASURE_STEP": 1.0,
+    "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
+    "HAZARD_INTENSITY_MEASURE_UNIT": "g",
+
+    "RESTORATION_TIME_MAX": 300.0, 
+    "RESTORATION_TIME_STEP": 1, 
+    "RESTORATION_TIME_UNIT": "week",
+    "RESTORATION_PCT_CHECKPOINTS": 21, 
+    "RESTORATION_STREAMS": [
+        5, 
+        10, 
+        20
+    ],
+
+    "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
+        "Sc A"
+    ],
+    "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
+        "0.500"
+    ], 
+
+    "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
+    "SYSTEM_COMMODITY_FLOW_TYPES": 2,
+    "SYSTEM_CLASS": "PowerStation",
+    "SYSTEM_SUBCLASS": "Thermal Powerstation",
+    "SYSTEM_COMPONENT_LOCATION_CONF": "undefined",
+    "SYSTEM_CLASSES": [
+        "PowerStation",
+        "Substation",
+        "PotableWaterTreatmentPlant",
+        "PWTP",
+        "WasteWaterTreatmentPlant",
+        "WWTP",
+        "PotableWaterPumpStation"
+    ],
+    
+    "SWITCH_MULTIPROCESS": 1,
+    "SWITCH_RUN_CONTEXT": 0,
+    "SWITCH_SAVE_VARS_NPY": 1,
+    "SWITCH_FIT_RESTORATION_DATA": 0
+}
