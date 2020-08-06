@@ -1,20 +1,20 @@
 {
-	"CONFIGURATION_ID": "SS_EQ_generic_wtp",
-    "SCENARIO_NAME": "pwtp_400ML",
-    "MODEL_NAME": "Potable Water Treatment Plant V1",
+	"CONFIGURATION_ID": "PS_EQ_test_config_limit_lo",
+    "SCENARIO_NAME": "lower_limit",
+    "MODEL_NAME": "Simple Test Structure LL",
 
     "HAZARD_INPUT_METHOD": "hazard_array",
     "HAZARD_TYPE": "earthquake",
-    "HAZARD_NUM_SAMPLES": 50,
-    "HAZARD_INTENSITY_MEASURE_MAX": 2.0,
+    "HAZARD_NUM_SAMPLES": 10,
+    "HAZARD_INTENSITY_MEASURE_MAX": 5.0,
     "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
-    "HAZARD_INTENSITY_MEASURE_STEP": 0.1,
+    "HAZARD_INTENSITY_MEASURE_STEP": 1.0,
     "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
     "HAZARD_INTENSITY_MEASURE_UNIT": "g",
 
-    "RESTORATION_TIME_MAX": 5.0, 
+    "RESTORATION_TIME_MAX": 10.0, 
     "RESTORATION_TIME_STEP": 1, 
-    "RESTORATION_TIME_UNIT": "week",
+    "RESTORATION_TIME_UNIT": "weeks",
     "RESTORATION_PCT_CHECKPOINTS": 21, 
     "RESTORATION_STREAMS": [
         5, 
@@ -31,8 +31,8 @@
 
     "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
     "SYSTEM_COMMODITY_FLOW_TYPES": 2,
-    "SYSTEM_CLASS": "PotableWaterTreatmentPlant",
-    "SYSTEM_SUBCLASS": "Water Treatment Facility",
+    "SYSTEM_CLASS": "PowerStation",
+    "SYSTEM_SUBCLASS": "Thermal Powerstation",
     "SYSTEM_COMPONENT_LOCATION_CONF": "undefined",
     "SYSTEM_CLASSES": [
         "PowerStation",
