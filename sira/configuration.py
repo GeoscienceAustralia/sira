@@ -11,7 +11,7 @@ class Configuration:
     Reads all the simulation configuration constants to be read
     by other classes
     """
-    def __init__(self, config_path, model_path, output_path):
+    def __init__(self, config_path, model_path, output_path=None):
         """
         :param configuration_file_path: path to the config file
         :param run_mode: Default is 'impact' - this runs the full MC simulation
@@ -29,7 +29,6 @@ class Configuration:
         self.SCENARIO_NAME = str(config['SCENARIO_NAME'])
         self.MODEL_NAME = str(config['MODEL_NAME'])
         self.CONFIGURATION_ID = str(config['CONFIGURATION_ID'])
-        # str(self.MODEL_NAME) + str(' – ') + str(self.SCENARIO_NAME)
 
         # reading in simulation scenario parameters
         self.HAZARD_INTENSITY_MEASURE_PARAM = str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
@@ -74,7 +73,12 @@ class Configuration:
         self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
         self.INPUT_MODEL_PATH = model_path
-        self.OUTPUT_PATH = output_path
+        if output_path is not None:
+            self.OUTPUT_PATH = output_path
+        else:
+            input_dir = os.path.dirname(os.path.abspath(config_path))
+            parent_dir = os.path.dirname(input_dir)
+            self.OUTPUT_PATH = os.path.join(parent_dir, 'output')
 
         # create output dir: root/SCENARIO_NAME+self.timestamp
         if not os.path.exists(self.OUTPUT_PATH):
