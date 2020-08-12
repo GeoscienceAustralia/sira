@@ -1,232 +1,382 @@
 import os
-import unittest as ut
+import ntpath
+import re
+import warnings
+
+import unittest
+unittest.TestLoader.sortTestMethodsUsing = None
+
 import pandas as pd
+# pd.set_option('io.excel.xlsx.reader', 'openpyxl')
+# pd.set_option('io.excel.xlsx.writer', 'openpyxl')
+
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
 
-class TestReadingExcelFile(ut.TestCase):
+
+def get_model_xlsx_file(input_dir):
+    match_list = []
+    for fname in os.listdir(input_dir):
+        match_test = re.search(r"(?i)^model.*\.xlsx$", fname)
+        if match_test:
+            match_list.append(match_test.string)
+        else:
+            match_list.append(None)
+    
+    filtered_matches = [x for x in match_list if x!=None]
+    if filtered_matches:
+        model_file_name = filtered_matches[0]
+        model_file = os.path.join(input_dir, model_file_name)
+    else:
+        model_file = None
+
+    return model_file
+
+
+def read_excel_file(filepath, sheet_name=None):
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=PendingDeprecationWarning)
+        warnings.filterwarnings("ignore", category=DeprecationWarning)
+        warnings.filterwarnings("ignore", category=UserWarning)
+        df = pd.read_excel(
+            filepath,
+            sheet_name=sheet_name,
+            header=0,
+            skiprows=0,
+            index_col=None,
+            skipinitialspace=True,
+            engine='openpyxl',
+            read_only='True',
+            data_only='True'
+        )
+    return df
+
+
+class TestReadingExcelFile(unittest.TestCase):
 
     def setUp(self):
+ 
+        self.test_root_dir = os.path.dirname(os.path.abspath(__file__))
+        self.test_model_dir = os.path.join(self.test_root_dir, 'models')
 
-        self.project_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.xl_engine_args = dict(
+            engine='openpyxl', read_only='True', data_only='True')
+        self.required_sheets = [
+            'system_meta',
+            'component_list',
+            'component_connections',
+            'supply_setup',
+            'output_setup',
+            'comp_type_dmg_algo',
+            'damage_state_def']
 
         self.model_xlsx_files = []
+        self.model_df = {}
+        self.component_names_dict = {}
 
-        for root, dir_names, file_names in os.walk(self.project_root_dir):
-            for file_name in file_names:
-                if "models" in root:
-                    if ".xlsx" in file_name:
-                        self.model_xlsx_files.append(os.path.join(root, file_name))
+        for root, dir_names, file_names in os.walk(self.test_model_dir):
+            for dir_name in dir_names:
+                if "input" in dir_name:
+                    input_dir = os.path.join(root, 'input')
+                    model_file = get_model_xlsx_file(input_dir)
+                    if model_file:
+                        self.model_xlsx_files.append(model_file)
 
-        self.required_sheets = ['system_meta',
-                                'component_list',
-                                'component_connections',
-                                'supply_setup',
-                                'output_setup',
-                                'comp_type_dmg_algo',
-                                'damage_state_def']
+        for model_file in self.model_xlsx_files:
+            df = read_excel_file(model_file, sheet_name=None)
+            self.model_df[model_file] = df
+            component_list = df['component_list']
+            self.component_names_dict[model_file] = \
+                component_list['component_id'].values.tolist()
 
-    def test_folder_structure(self):
 
+    def test01_folder_structure(self):
         self.assertTrue(
-            os.path.isdir(os.path.join(self.project_root_dir, "tests", "models")),
-            "test models folder not found at " + self.project_root_dir + "!"
+            os.path.isdir(os.path.join(self.test_model_dir)),
+            "test models folder not found at " + self.test_root_dir + "!"
         )
 
-        self.assertTrue(
-            os.path.isdir(os.path.join(self.project_root_dir, "tests",  "simulation_setup")),
-            "test simulation setup folder not found at " + self.project_root_dir + "!"
-        )
-
-
-    def test_model_files_exists(self):
-
+    def test02_model_files_exists(self):
+        print(f"\n{'-'*70}\n>>> Initiating check MS Excel model files...")
+        print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_xlsx_files:
             self.assertTrue(
                 os.path.isfile(model_file),
-                "Model excel file not found on path  at" + model_file + " !"
+                "Model excel file not found on path  at: " + model_file
             )
 
-    def test_required_sheets_exist(self):
-
+    def test03_required_sheets_exist(self):
         for model_file in self.model_xlsx_files:
-            
             rootLogger.info(model_file)
-            df = pd.read_excel(model_file, None)
-            # check if the sheets is a subset of the required sheets
-            self.assertTrue(set(self.required_sheets) <= set(df.keys()), "Required sheet name not found!")
-
-    def test_reading_data_from_component_list(self):
-
-        for model_file in self.model_xlsx_files:
-            component_list = pd.read_excel(model_file,
-                                           sheet_name='component_list',
-                                           header=0,
-                                           skiprows=0,
-                                           index_col=None,
-                                           skipinitialspace=True)
-
-            self.assertTrue(isinstance(len(component_list.index.tolist()), int))
-
-    def test_reading_data_from_component_connections(self):
-
-        required_col_names = ['origin', 'destination', 'link_capacity', 'weight']
-
-        for model_file in self.model_xlsx_files:
-            component_connections = pd.read_excel(model_file,
-                                                  sheet_name='component_connections',
-                                                  header=0,
-                                                  skiprows=0,
-                                                  index_col=None,
-                                                  skipinitialspace=True)
-
-            self.assertTrue(set(required_col_names) <= set(component_connections.columns.values.tolist()),
-                            "Required column name not found!")
-
-            for index, connection_values in component_connections.iterrows():
-
-                self.assertTrue(isinstance(connection_values['origin'], unicode or str))
-                self.assertTrue(isinstance(float(connection_values['link_capacity']), float))
-                self.assertTrue(isinstance(float(connection_values['weight']), float))
-                self.assertTrue(isinstance((connection_values['destination']), unicode or str))
-
-    def test_reading_data_from_supply_setup(self):
-
-        # index coloum ingnored : 'input_node'
-        required_col_names = ['input_capacity', 'capacity_fraction', 'commodity_type']
-
-        for model_file in self.model_xlsx_files:
-            supply_setup = pd.read_excel(model_file,
-                                         sheet_name='supply_setup',
-                                         index_col=0,
-                                         header=0,
-                                         skiprows=0,
-                                         skipinitialspace=True)
-
-            self.assertTrue(set(required_col_names) <= set(supply_setup.columns.tolist()),
-                            "Required column name not found!" +
-                            "col expected: "+str(required_col_names) +
-                            "col supplied: "+str(supply_setup.columns.values.tolist()) + '\n' +
-                            "file name : " + model_file)
-
-            for index, supply_values in supply_setup.iterrows():
-                self.assertTrue(isinstance(float(supply_values['input_capacity']), float))
-                self.assertTrue(isinstance((float(supply_values['capacity_fraction'])), float))
-                self.assertTrue(isinstance((supply_values['commodity_type']), unicode or str))
-                self.assertTrue(isinstance((index[0]), unicode or str))
-
-    def test_reading_data_from_output_setup(self):
-        # index column ignored : 'output_node'
-        required_col_names = ['production_node',
-                              'output_node_capacity',
-                              'capacity_fraction',
-                              'priority']
-
-        for model_file in self.model_xlsx_files:
-            output_setup = pd.read_excel(model_file,
-                                         sheet_name='output_setup',
-                                         header=0,
-                                         skiprows=0,
-                                         skipinitialspace=True)
-
-            self.assertTrue(set(required_col_names) <= set(output_setup.columns.tolist()),
-                            "Required column name not found!" + '\n' +
-                            "col expected: " + str(required_col_names) + '\n' +
-                            "col supplied: " + str(output_setup.columns.values.tolist()) + '\n' +
-                            "file name : " + model_file)
-
-            self.assertTrue(output_setup['output_node_capacity'].sum() > 0)
-
-            for index, output_values in output_setup.iterrows():
-                self.assertTrue(isinstance((output_values['production_node']), unicode or str))
-                self.assertTrue(isinstance((float(output_values['output_node_capacity'])), float))
-                self.assertTrue(isinstance((float(output_values['capacity_fraction'])), float))
-                self.assertTrue(isinstance(int(output_values['priority']), int))
-
-
-    def test_reading_data_from_comp_type_dmg_algo(self):
-
-        # there can be arbitrary number of coloums to supply parameters for specific functions
-        required_col_names = ['is_piecewise',
-                              'damage_function',
-                              'damage_ratio',
-                              'functionality',
-                              'recovery_function',
-                              'recovery_mean',
-                              'recovery_std']
-
-        for model_file in self.model_xlsx_files:
-            comp_type_dmg_algo = pd.read_excel(model_file,
-                                               sheet_name='comp_type_dmg_algo',
-                                               index_col=[0, 1, 2],
-                                               header=0,
-                                               skiprows=0,
-                                               skipinitialspace=True)
-
-            self.assertTrue(set(required_col_names) <= set(comp_type_dmg_algo.columns.tolist()),
-                            "Required column name not found!" + '\n' +
-                            "col expected: " + str(required_col_names) + '\n' +
-                            "col supplied: " + str(comp_type_dmg_algo.columns.values.tolist()) + '\n' +
-                            "file name : " + model_file)
-
-            # current implemented function
-            possible_values_of_damage_function = ["StepFunc",
-                                                  "LogNormalCDF",
-                                                  "Lognormal",
-                                                  "NormalCDF",
-                                                  "ConstantFunction",
-                                                  "Level0Response",
-                                                  "Level0Recovery",
-                                                  "PiecewiseFunction",
-                                                  "RecoveryFunction"]
-
-            for index, damage_state in comp_type_dmg_algo.iterrows():
-                # id
-                # self.assertTrue(isinstance((index[0]), int))
-                # component_type
-                self.assertTrue(isinstance((index[1]), unicode or str))
-                # damage_state
-                self.assertTrue(isinstance((index[2]), unicode or str))
-
-                self.assertTrue(
-                    str(damage_state['damage_function']) in
-                        set(possible_values_of_damage_function),
-                    "Required damage_function name not found!" + '\n' +
-                    "damage_function expected names: " +
-                    str(possible_values_of_damage_function) + '\n' +
-                    "damage_function name supplied: " +
-                    str(damage_state['damage_function']) + '\n' +
-                    "file name : " + model_file
+            test_model_relpath = os.path.relpath(
+                model_file, start=os.path.abspath(__file__))
+            print("\nTest loading model file (xlsx): \n{}".\
+                format(test_model_relpath))
+            df = pd.read_excel(
+                model_file, sheet_name=None, 
+                **self.xl_engine_args
+            )
+            # check if the required worksheets exist in the loaded file
+            self.assertTrue(
+                set(self.required_sheets) <= set(df.keys()),
+                "Required worksheet(s) not found in file:\n  {}\n  {}".format(
+                    model_file, list(df.keys()))
                 )
 
-                self.assertTrue(isinstance(damage_state['is_piecewise'],  unicode or str))
-                self.assertTrue(isinstance(damage_state['damage_function'], unicode or str))
-                self.assertTrue(isinstance(float(damage_state['damage_ratio']), float))
-                self.assertTrue(isinstance(float(damage_state['functionality']), float))
-                self.assertTrue(isinstance(float(damage_state['recovery_mean']), float))
-                self.assertTrue(isinstance(float(damage_state['recovery_std']), float))
-                # self.assertTrue(isinstance(float(damage_state['recovery_95percentile']), float))
+    def test04_data_component_list_connections(self):
+        print(f"\n{'-'*70}\nChecking component definitions and connections...")
+        required_col_names_clist = [
+            'component_id',
+            'component_type',
+            'component_class',
+            'cost_fraction',
+            'node_type',
+            'node_cluster',
+            'operating_capacity',
+            'pos_x',
+            'pos_y'
+        ]
+        required_col_names_conn = [
+            'origin',
+            'destination',
+            'link_capacity',
+            'weight'
+        ]
 
-                # TODO damage_state['fragility_source'] not used in code
-                # self.assertTrue(isinstance(str(damage_state['fragility_source']), unicode or str), type(damage_state['fragility_source']))
+        for model_file in self.model_xlsx_files:
+            model = self.model_df[model_file]
+
+            # Test component listing (with attributes)
+            component_list = model['component_list']
+            component_list = component_list.dropna(how='all')
+            component_names = \
+                component_list['component_id'].values.tolist()
+
+            self.assertTrue(
+                isinstance(len(component_list.index.tolist()), int)
+            )
+            self.assertTrue(
+                set(required_col_names_clist) <= \
+                set(component_list.columns.values.tolist()),
+                "Required column name(s) not found!"
+            )
+
+            # Test component connections
+            component_connections = model['component_connections']
+            component_connections = component_connections.dropna(how='all')
+
+            self.assertTrue(
+                set(required_col_names_conn) <= \
+                set(component_connections.columns.values.tolist()),
+                "Required column name(s) not found!")
+            origin_nodes = set(component_connections['origin'].values)
+            destin_nodes = set(component_connections['destination'].values)
+            all_nodes = set(component_names)
+
+            # Test consistency between component definitions and connections
+            print("\nCheck origin nodes are subset of "+
+                  "primary component list in system...")
+            self.assertTrue(origin_nodes.issubset(all_nodes), model_file)
+            print("OK")
+
+            print("\nCheck destination nodes are subset of "+
+                  "primary component list in system...")
+            self.assertTrue(destin_nodes.issubset(all_nodes), model_file)
+            print("OK")
+
+            for connection_values in component_connections.itertuples():
+                self.assertTrue(
+                    isinstance(float(connection_values.link_capacity), float)
+                )
+                self.assertTrue(
+                    isinstance(float(connection_values.weight), float)
+                )
+
+    def test05_reading_data_from_comp_type_dmg_algo(self):
+        required_col_names = [
+            'is_piecewise',
+            'damage_function',
+            'damage_ratio',
+            'functionality',
+            'recovery_function',
+            'recovery_mean',
+            'recovery_std'
+        ]
+        for model_file in self.model_xlsx_files:
+            model = self.model_df[model_file]
+            dfa = model['comp_type_dmg_algo']
+            comp_type_dmg_algo = \
+                dfa.set_index(dfa.columns[0:3].to_list())
+            # comp_type_dmg_algo = pd.read_excel(
+            #     model_file,
+            #     sheet_name='comp_type_dmg_algo',
+            #     index_col=[0, 1, 2],
+            #     header=0,
+            #     skiprows=0,
+            #     skipinitialspace=True,
+            #     engine='openpyxl',
+            #     read_only='True',
+            #     data_only='True'
+            # )
+            self.assertTrue(
+                set(required_col_names) <= set(comp_type_dmg_algo.columns.tolist()),
+                "Required column name not found!" + '\n' +
+                "col expected: " + str(required_col_names) + '\n' +
+                "col supplied: " + str(comp_type_dmg_algo.columns.values.tolist()) + '\n' +
+                "file name : " + model_file
+            )
+            # current implemented function
+            valid_function_name_list = [
+                "stepfunc", "step_func",
+                "lognormal", "lognormalcdf", "lognormal_cdf",
+                "rayleigh", "rayleighcdf", "rayleigh"
+                "normal", "normalcdf", "normal_cdf",
+                "constantfunction", "constant_function",
+                "level0response",
+                "level0recovery",
+                "piecewisefunction", "piecewise_function",
+                "recoveryfunction", "recovery_function"
+            ]
+
+            for algo_row in comp_type_dmg_algo.itertuples():
+                # component_type
+                self.assertTrue(isinstance(algo_row.Index[1], str))
+                # damage_state
+                self.assertTrue(isinstance(algo_row.Index[2], str))
+
+                fn_err_msg = \
+                    "Required damage_function name not found!\n"\
+                    f"  values expected: {valid_function_name_list}\n"\
+                    f"  values supplied: {algo_row.damage_function}\n"\
+                    f"  FILE NAME: {model_file}"
+
+                self.assertTrue(
+                    str(algo_row.damage_function).lower() in\
+                        valid_function_name_list, fn_err_msg
+                )
+
+                chk_list = ["yes", "no", "true", "false"]
+                self.assertTrue(
+                    str(algo_row.is_piecewise).lower() in chk_list)
+                self.assertTrue(
+                    isinstance(float(algo_row.damage_ratio), float))
+                self.assertTrue(
+                    isinstance(float(algo_row.functionality), float))
+                self.assertTrue(
+                    isinstance(float(algo_row.recovery_mean), float))
+                self.assertTrue(
+                    isinstance(float(algo_row.recovery_std), float))
+
+            # TODO damage_state['fragility_source'] not used in code
+            # self.assertTrue(isinstance(str(damage_state['fragility_source']), bytes or str), type(damage_state['fragility_source']))
+
+    def test_reading_data_from_supply_setup(self):
+        required_col_names = [
+            'input_capacity',
+            'capacity_fraction',
+            'commodity_type'
+        ]
+        for model_file in self.model_xlsx_files:
+            model = self.model_df[model_file]
+            supply_setup = model['supply_setup']
+
+            # set `input_node` as index
+            supply_setup = supply_setup.set_index(supply_setup.columns[0])
+            supply_setup = supply_setup.dropna(axis=0, how='all')
+            supply_setup = supply_setup.dropna(axis=1, how='all')
+
+            self.assertTrue(
+                set(required_col_names) <= set(supply_setup.columns.tolist()),
+                "Required column name not found!\n" +
+                "col expected: "+str(required_col_names)+'\n'+
+                "col supplied: "+str(supply_setup.columns.values.tolist())+'\n'+
+                "file name : " + model_file
+            )
+
+            for sv in supply_setup.itertuples():
+                self.assertTrue(
+                    isinstance(sv.Index, str), sv.Index)
+                self.assertTrue(
+                    isinstance(float(sv.input_capacity), float))
+                self.assertTrue(
+                    isinstance(float(sv.capacity_fraction), float))
+                self.assertTrue(
+                    type(sv.commodity_type)==str)
+
+    def test_reading_data_from_output_setup(self):
+        required_col_names = [
+            'output_node',
+            'production_node',
+            'output_node_capacity',
+            'capacity_fraction',
+            'priority'
+        ]
+        for model_file in self.model_xlsx_files:
+            model = self.model_df[model_file]
+            output_setup = model['output_setup']
+
+            output_setup = output_setup.dropna(axis=0, how='all')
+            output_setup = output_setup.dropna(axis=1, how='all')
+
+            errmsg = "Required column name not found!\n"\
+                f"headers expected: {required_col_names}\n"\
+                f"headers supplied: {list(output_setup.columns.values)}\n"\
+                f"file name: {model_file}"
+            self.assertTrue(
+                set(required_col_names) <= set(output_setup.columns.tolist()),
+                errmsg
+            )
+
+            for row_tuple in output_setup.itertuples():
+                self.assertTrue(
+                    float(row_tuple.output_node_capacity), 
+                    'Expected float, got {}.'.\
+                        format(type(row_tuple.output_node_capacity))
+                )
+                self.assertTrue(
+                    float(row_tuple.capacity_fraction), 
+                    'Expected float, got {}.'.\
+                        format(type(row_tuple.capacity_fraction))
+                )
+                self.assertTrue(
+                    int(row_tuple.priority), 
+                    'Expected int, got {}.'.\
+                        format(type(row_tuple.priority))
+                )
+
+            self.assertTrue(output_setup['output_node_capacity'].sum() > 0)
+            production_nodes = output_setup['production_node'].values.tolist()
+            self.assertTrue(set(production_nodes).issubset(
+                                set(self.component_names_dict[model_file]))
+            )
+
 
     def test_reading_data_from_damage_state_def(self):
         for model_file in self.model_xlsx_files:
-            damage_state_def = pd.read_excel(model_file,
-                                             sheet_name='damage_state_def',
-                                             index_col=[0, 1],
-                                             header=0,
-                                             skiprows=0,
-                                             skipinitialspace=True)
+            model = self.model_df[model_file]
+            damage_state_def = model['damage_state_def']
+            # damage_state_def = \
+            #     damage_state_def.set_index(damage_state_def.columns[0,1].to_list())
+            # damage_state_def = damage_state_def.dropna(axis=0, how='all')
+            damage_state_def = damage_state_def.dropna(axis=1, how='all')
 
-            for index, damage_def in damage_state_def.iterrows():
-                self.assertTrue(isinstance(index[0], unicode or str), type(index[0]))
-                self.assertTrue(isinstance(index[1], unicode or str), str(index[1]))
+            for row_tuple in damage_state_def.itertuples():
+                self.assertTrue(
+                    isinstance(row_tuple.component_type, str),
+                    "Error in index `{}` file:\n {}".format(
+                        row_tuple.component_type, model_file)
+                )
+                self.assertTrue(
+                    isinstance(row_tuple.damage_state, str),
+                    "Error in index `{}` file:\n {}".format(
+                        row_tuple.damage_state, model_file)
+                )
 
-                # TODO excel files not in standard form -- need to standardise
-                # self.assertTrue(isinstance(damage_def['damage_state_definition'], unicode or str or numpy.float64), type(damage_def['damage_state_definition'])+model_file)
-                # self.assertTrue(isinstance(str(damage_def['fragility_source']), unicode or str), model_file)
+        # TODO
+        # self.assertTrue(isinstance(damage_def['damage_state_definition'], bytes or str or numpy.float64), type(damage_def['damage_state_definition'])+model_file)
+        # self.assertTrue(isinstance(str(damage_def['fragility_source']), bytes or str), model_file)
+
 
 if __name__ == "__main__":
-    ut.main()
+    unittest.main()

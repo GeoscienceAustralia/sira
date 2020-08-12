@@ -1,11 +1,12 @@
 import unittest
 import os
 import re
-from sira.configuration import Configuration
-
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
+
+from sira.configuration import Configuration
+from sira.utilities import get_config_file_path, get_model_file_path
 
 
 class TestInputConfFile(unittest. TestCase):
@@ -13,19 +14,28 @@ class TestInputConfFile(unittest. TestCase):
     def setUp(self):
 
         self.conf_file_paths = []
-
-        root = os.path.join(os.getcwd(), 'simulation_setup')
-        for root, dir_names, file_names in os.walk(root):
-            for file_name in file_names:
-                if file_name.endswith('.json'):
-                    if 'simulation_setup' in root:
-                        conf_file_path = os.path.join(root, file_name)
-                        self.conf_file_paths.append(conf_file_path)
-
+        self.model_file_paths = []
+        # ------------------------------------------------------------
+        self.sim_dir_name = 'models'
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+        models_dir = os.path.join(root_dir, self.sim_dir_name)
+        for root, dir_names, file_names in os.walk(models_dir):
+            for dir_name in dir_names:
+                if "tests" in root:
+                    if "input" in dir_name:
+                        input_dir = os.path.join(root, 'input')
+                        conf_file = get_config_file_path(input_dir)
+                        model_file = get_model_file_path(input_dir)
+                        self.conf_file_paths.append(conf_file)
+                        self.model_file_paths.append(model_file)
+        
+        # ------------------------------------------------------------
         self.confs = []
-        for conf_file_path in self.conf_file_paths:
-            conf = Configuration(conf_file_path)
+        for conf_file_path, model_file_path in \
+            zip(self.conf_file_paths, self.model_file_paths):
+            conf = Configuration(conf_file_path, model_file_path)
             self.confs.append(conf)
+
 
     def test_does_file_exist(self):
         for conf_file_path in self.conf_file_paths:
@@ -33,7 +43,7 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_SCENARIO_NAME(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SCENARIO_NAME, unicode or str))
+            self.assertTrue(isinstance(conf.SCENARIO_NAME, str or bytes))
 
     def test_datatype_of_INTENSITY_MEASURE_MIN(self):
         for conf in self.confs:
@@ -53,11 +63,11 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_INTENSITY_MEASURE_PARAM(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_PARAM, unicode or str))
+            self.assertTrue(isinstance(conf.HAZARD_INTENSITY_MEASURE_PARAM, str or bytes))
 
     def test_datatype_of_INTENSITY_MEASURE_UNIT(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_UNIT, unicode or str))
+            self.assertTrue(isinstance(conf.HAZARD_INTENSITY_MEASURE_UNIT, str or bytes))
 
     def test_datatype_of_FOCAL_HAZARD_SCENARIOS(self):
         for conf in self.confs:
@@ -69,7 +79,7 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_TIME_UNIT(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.TIME_UNIT, unicode or str))
+            self.assertTrue(isinstance(conf.TIME_UNIT, str or bytes))
 
     def test_datatype_of_RESTORE_PCT_CHKPOINTS(self):
         for conf in self.confs:
@@ -81,7 +91,7 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_RESTORE_TIME_MAX(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.RESTORE_TIME_MAX, float))
+            self.assertTrue(isinstance(conf.RESTORE_TIME_MAX, int))
 
     def test_datatype_of_RESTORATION_STREAMS(self):
         for conf in self.confs:
@@ -90,7 +100,7 @@ class TestInputConfFile(unittest. TestCase):
     def test_datatype_of_INFRASTRUCTURE_LEVEL(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.INFRASTRUCTURE_LEVEL,
-                                       unicode or str))
+                                       str or bytes))
 
     def test_datatype_of_SYSTEM_CLASSES(self):
         for conf in self.confs:
@@ -98,11 +108,11 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_SYSTEM_CLASS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYSTEM_CLASS, unicode or str))
+            self.assertTrue(isinstance(conf.SYSTEM_CLASS, str or bytes))
 
     def test_datatype_of_SYSTEM_SUBCLASS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYSTEM_SUBCLASS, unicode or str))
+            self.assertTrue(isinstance(conf.SYSTEM_SUBCLASS, str or bytes))
 
     def test_datatype_of_COMMODITY_FLOW_TYPES(self):
         for conf in self.confs:
@@ -111,15 +121,15 @@ class TestInputConfFile(unittest. TestCase):
     def test_datatype_of_COMPONENT_LOCATION_CONF(self):
         for conf in self.confs:
             self.assertTrue(isinstance(conf.COMPONENT_LOCATION_CONF,
-                                       unicode or str))
+                                       str or bytes))
 
     def test_datatype_of_SYS_CONF_FILE_NAME(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYS_CONF_FILE_NAME, unicode or str))
+            self.assertTrue(isinstance(conf.SYS_CONF_FILE_NAME, str or bytes))
 
-    def test_datatype_of_FIT_PE_DATA(self):
-        for conf in self.confs:
-            self.assertTrue(isinstance(conf.FIT_PE_DATA, bool))
+    # def test_datatype_of_FIT_PE_DATA(self):
+    #     for conf in self.confs:
+    #         self.assertTrue(isinstance(conf.SWITCH_FIT_PE_DATA, bool))
 
     def test_datatype_of_FIT_RESTORATION_DATA(self):
         for conf in self.confs:

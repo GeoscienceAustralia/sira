@@ -1,15 +1,17 @@
-from __future__ import print_function
-
 import unittest
 import os
+import ntpath
 import pickle
 import numpy as np
 import json
+
 from sira.configuration import Configuration
 from sira.scenario import Scenario
 from sira.modelling.hazard import HazardsContainer
 from sira.model_ingest import ingest_model
 from sira.simulation import calculate_response
+from sira.utilities import get_config_file_path, get_model_file_path
+
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
@@ -18,13 +20,13 @@ rootLogger.setLevel(logging.CRITICAL)
 class TestSystemSanity(unittest.TestCase):
 
     def test_economic_loss_comparison_for_system_sanity(self):
-
         root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir,
-                                      "simulation_setup",
-                                      "test_scenario_pscoal_600MW.json")
+        input_dir = os.path.join(
+            root_dir, "models", "powerstation_coal_A", "input")
+        conf_file_path = get_config_file_path(input_dir)
+        model_file_path = get_model_file_path(input_dir)
 
-        config = Configuration(conf_file_path)
+        config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
         hazards = HazardsContainer(config)
         infrastructure = ingest_model(config)
@@ -36,8 +38,8 @@ class TestSystemSanity(unittest.TestCase):
             = os.path.join(root_dir, "historical_data",
                            "economic_loss_for_system_sanity_testing.p")
 
-        historical_economic_loss_array \
-            = pickle.load(open(input_pickle_filename, 'rb'))
+        with open(input_pickle_filename, 'rb') as p:
+            historical_economic_loss_array = pickle.load(p, encoding='bytes')
 
         self.assertTrue(
             np.array_equal(economic_loss_array,
@@ -46,83 +48,90 @@ class TestSystemSanity(unittest.TestCase):
             str(len(historical_economic_loss_array))
         )
 
-    def test_run_scenario_lower_limit(self):
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir,
-                                      "simulation_setup",
-                                      "test_scenario_lower_limit.json")
+    # # -------------------------------------------------------------------------
+    # def test_run_scenario_lower_limit(self):
+    #     root_dir = os.path.dirname(os.path.abspath(__file__))
+    #     input_dir = os.path.join(
+    #         root_dir, "models", "test_structure__limit_lower", "input")
+    #     conf_file_path = get_config_file_path(input_dir)
+    #     model_file_path = get_model_file_path(input_dir)
 
-        config = Configuration(conf_file_path)
-        scenario = Scenario(config)
-        hazards = HazardsContainer(config)
-        infrastructure = ingest_model(config)
-        response_list = calculate_response(hazards, scenario, infrastructure)
+    #     config = Configuration(conf_file_path, model_file_path)
+    #     scenario = Scenario(config)
+    #     hazards = HazardsContainer(config)
+    #     infrastructure = ingest_model(config)
+    #     response_list = calculate_response(hazards, scenario, infrastructure)
 
-        output_node_capacity = 0
-        with open(config.SYS_CONF_FILE, 'r') as f:
-            json_infra_model = json.load(f)
-            output_node_capacity \
-                = json_infra_model\
-                  ["sysout_setup"]["output_node"]["output_node_capacity"]
+    #     output_node_capacity = 0
+    #     with open(config.SYS_CONF_FILE, 'r') as f:
+    #         json_infra_model = json.load(f)
+    #         output_node_capacity \
+    #             = json_infra_model\
+    #               ["sysout_setup"]["output_node"]["output_node_capacity"]
 
-        self.assertTrue(
-            int(response_list[4][0][0]) == int(output_node_capacity)
-        )
+    #     self.assertTrue(
+    #         int(response_list[4][0][0]) == int(output_node_capacity)
+    #     )
 
-    def test_run_scenario_upper_limit(self):
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        conf_file_path = os.path.join(root_dir,
-                                      "simulation_setup",
-                                      "test_scenario_upper_limit.json")
-        config = Configuration(conf_file_path)
-        scenario = Scenario(config)
-        hazards = HazardsContainer(config)
-        infrastructure = ingest_model(config)
-        response_list = calculate_response(hazards, scenario, infrastructure)
+    # # -------------------------------------------------------------------------
+    # def test_run_scenario_upper_limit(self):
+    #     root_dir = os.path.dirname(os.path.abspath(__file__))
+    #     input_dir = os.path.join(
+    #         root_dir, "models", "test_structure__limit_upper", "input")
+    #     conf_file_path = get_config_file_path(input_dir)
+    #     model_file_path = get_model_file_path(input_dir)
 
-        self.assertTrue(int(response_list[4][0][0]) == int(0))
+    #     config = Configuration(conf_file_path, model_file_path)
+    #     scenario = Scenario(config)
+    #     hazards = HazardsContainer(config)
+    #     infrastructure = ingest_model(config)
+    #     response_list = calculate_response(hazards, scenario, infrastructure)
 
+    #     self.assertTrue(int(response_list[4][0][0]) == int(0))
+
+    # -------------------------------------------------------------------------
     def test_compare_economic_loss_for_existing_models(self):
 
-        print("\n\n>> Initiating comparison with existing "
-              "models...\n")
+        print("\n{}\n>>> Initiating sanity check aganist pre-run models...".\
+            format('-'*70))
 
-        conf_file_paths = []
         root_dir = os.path.dirname(os.path.abspath(__file__))
-        for root, dir_names, file_names in os.walk(root_dir):
-            for file_name in file_names:
+        models_dir = os.path.join(root_dir, 'models')
+        conf_file_paths = []
+        model_file_paths = []
+
+        for root, dir_names, file_names in os.walk(models_dir):
+            for dir_name in dir_names:
                 if "tests" in root:
-                    if "simulation_setup" in root:
-                        # adjusted to keep track of old values in old branches
-                        if 'test_scenario_pscoal_600MW' not in file_name and \
-                                'test_setup' not in file_name:
-                            conf_file_paths.append(os.path.join(root,
-                                                                file_name))
-
-        for conf_file_path in conf_file_paths:
+                    if "input" in dir_name:
+                        input_dir = os.path.join(root, 'input')
+                        conf_file = get_config_file_path(input_dir)
+                        model_file = get_model_file_path(input_dir)
+                        conf_file_paths.append(conf_file)
+                        model_file_paths.append(model_file)
+    
+        for conf_file_path, model_file_path in zip(conf_file_paths, model_file_paths):
             if os.path.isfile(conf_file_path):
-                print("\nMatching results for : " +
-                      os.path.basename(conf_file_path))
+                print("\nMatching results for: " +
+                      ntpath.basename(conf_file_path))
 
-                config = Configuration(conf_file_path)
+                config = Configuration(conf_file_path, model_file_path)
                 scenario = Scenario(config)
                 hazards = HazardsContainer(config)
                 infrastructure = ingest_model(config)
-                response_list = calculate_response(hazards,
-                                                   scenario,
-                                                   infrastructure)
-                economic_loss_of_model = response_list[5]
-                pickle_flename = os.path.join(
+
+                response_list = calculate_response(
+                    hazards, scenario, infrastructure)
+                econ_loss_calculated = response_list[5]
+                
+                stored_data_file = os.path.join(
                     root_dir,
                     'historical_data',
-                    "economic_loss_for_"+config.SCENARIO_NAME + '.p')
-
-                history_economic_loss_for_model \
-                    = pickle.load(open(pickle_flename, 'rb'))
+                    "economic_loss_for_"+config.SCENARIO_NAME+'.npy')
+                econ_loss_historic = np.load(stored_data_file)
 
                 self.assertTrue(
-                    np.array_equal(economic_loss_of_model,
-                                   history_economic_loss_for_model),
+                    np.array_equal(econ_loss_calculated, econ_loss_historic),
                     conf_file_path
                 )
                 print("OK")
