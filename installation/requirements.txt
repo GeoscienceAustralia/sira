@@ -22,6 +22,7 @@ netcdf4==1.5.3
 networkx==2.4
 notebook==6.0.3
 numpy==1.18.5
+openpyxl>=3.0.4
 pandas==1.0.5
 parmap==1.5.2
 Pillow>=7.1.2
