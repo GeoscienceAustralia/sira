@@ -39,7 +39,6 @@ def read_model_from_json(config):
     """
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
-    component_location_conf = config.COMPONENT_LOCATION_CONF
 
     with open(config.INPUT_MODEL_PATH, 'r') as f:
         # ensure that damage states are ordered
@@ -50,7 +49,6 @@ def read_model_from_json(config):
     node_conn_df = model['node_conn_df']
     sysinp_setup = model['sysinp_setup']
     sysout_setup = model['sysout_setup']
-
 
     system_components = {}
 
