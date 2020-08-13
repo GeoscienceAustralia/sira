@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
 import json
+from pathlib import Path
 import scripts.convert_setup_files_to_json as converter
-from sira.utilities import get_file_name
 
 
 class Configuration:
@@ -13,15 +12,15 @@ class Configuration:
     """
     def __init__(self, config_path, model_path, output_path=None):
         """
-        :param configuration_file_path: path to the config file
+        :param config_path: path to the config file
         :param run_mode: Default is 'impact' - this runs the full MC simulation
                          If option is 'analysis' then new output folders are
                          not created
         """
         # cater for 3 different types of config files .conf, .json , .ini
-        # file_ext = os.path.splitext(os.path.basename(configuration_file_path))[1]
+        # file_ext = Path(config_path).suffix
         # if file_ext != '.json':
-        #     configuration_file_path = converter.convert_to_json(configuration_file_path)
+        #     config_path = converter.convert_to_json(config_path)
 
         with open(config_path, 'r') as f:
             config = json.load(f)
@@ -72,21 +71,21 @@ class Configuration:
         self.SWITCH_FIT_RESTORATION_DATA = bool(config['SWITCH_FIT_RESTORATION_DATA'])
         self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
-        self.INPUT_MODEL_PATH = model_path
+        self.INPUT_MODEL_PATH = Path(model_path)
         if output_path is not None:
-            self.OUTPUT_PATH = output_path
+            self.OUTPUT_PATH = Path(output_path)
         else:
-            input_dir = os.path.dirname(os.path.abspath(config_path))
-            parent_dir = os.path.dirname(input_dir)
-            self.OUTPUT_PATH = os.path.join(parent_dir, 'output')
+            input_dir = Path(config_path).resolve().parent
+            parent_dir = input_dir.parent
+            self.OUTPUT_PATH = Path(parent_dir, 'output')
 
         # create output dir: root/SCENARIO_NAME+self.timestamp
-        if not os.path.exists(self.OUTPUT_PATH):
-            os.makedirs(self.OUTPUT_PATH)
+        if not self.OUTPUT_PATH.exists():
+            self.OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
 
-        self.RAW_OUTPUT_DIR = os.path.join(self.OUTPUT_PATH, 'RAW_OUTPUT')
+        self.RAW_OUTPUT_DIR = Path(self.OUTPUT_PATH, 'RAW_OUTPUT')
         # create output dir: root/SCENARIO_NAME+self.timestamp/RAW_OUTPUT
-        if not os.path.exists(self.RAW_OUTPUT_DIR):
-            os.makedirs(self.RAW_OUTPUT_DIR)
+        if not self.RAW_OUTPUT_DIR.exists():
+            self.RAW_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-        self.SYS_CONF_FILE_NAME = get_file_name(self.INPUT_MODEL_PATH)
+        self.SYS_CONF_FILE_NAME = self.INPUT_MODEL_PATH.stem
