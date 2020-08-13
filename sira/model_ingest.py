@@ -4,7 +4,7 @@ from sira.modelling.infrastructure import InfrastructureFactory
 from sira.modelling.component import (Component, ConnectionValues)
 from scripts.convert_excel_files_to_json import (
     update_json_structure, read_excel_to_json)
-from sira.utilities import get_file_extension
+from pathlib import Path
 import logging
 rootLogger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ def ingest_model(config):
     :return:  -List of algorithms for each component in particular damage state
               -Object of class infrastructure
     """
-    extension = get_file_extension(config.INPUT_MODEL_PATH).lower()
+    extension = Path(config.INPUT_MODEL_PATH).suffix[1:].lower()
 
     if extension == 'json':
         return read_model_from_json(config)
