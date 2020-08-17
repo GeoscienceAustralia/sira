@@ -93,7 +93,7 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Set up output file names & location
 
-        if not self.out_dir.strip():
+        if not str(self.out_dir).strip():
             output_path = os.getcwd()
         else:
             output_path = self.out_dir
