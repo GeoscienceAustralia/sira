@@ -1,5 +1,6 @@
-#SIRA
+# SIRA
 output/
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -78,7 +79,7 @@ logs/*
 
 # Created by .ignore support plugin (hsz.mobi)
 
-# OS X hidden files
+# MacOS hidden files
 .DS_Store
 
 # ipython
