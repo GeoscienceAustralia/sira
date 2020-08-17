@@ -48,46 +48,48 @@ class TestSystemSanity(unittest.TestCase):
             str(len(historical_economic_loss_array))
         )
 
-    # # -------------------------------------------------------------------------
-    # def test_run_scenario_lower_limit(self):
-    #     root_dir = os.path.dirname(os.path.abspath(__file__))
-    #     input_dir = os.path.join(
-    #         root_dir, "models", "test_structure__limit_lower", "input")
-    #     conf_file_path = get_config_file_path(input_dir)
-    #     model_file_path = get_model_file_path(input_dir)
+    # -------------------------------------------------------------------------
+    @unittest.skip("Test needs updating")
+    def test_run_scenario_lower_limit(self):
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+        input_dir = os.path.join(
+            root_dir, "models", "test_structure__limit_lower", "input")
+        conf_file_path = get_config_file_path(input_dir)
+        model_file_path = get_model_file_path(input_dir)
 
-    #     config = Configuration(conf_file_path, model_file_path)
-    #     scenario = Scenario(config)
-    #     hazards = HazardsContainer(config)
-    #     infrastructure = ingest_model(config)
-    #     response_list = calculate_response(hazards, scenario, infrastructure)
+        config = Configuration(conf_file_path, model_file_path)
+        scenario = Scenario(config)
+        hazards = HazardsContainer(config)
+        infrastructure = ingest_model(config)
+        response_list = calculate_response(hazards, scenario, infrastructure)
 
-    #     output_node_capacity = 0
-    #     with open(config.SYS_CONF_FILE, 'r') as f:
-    #         json_infra_model = json.load(f)
-    #         output_node_capacity \
-    #             = json_infra_model\
-    #               ["sysout_setup"]["output_node"]["output_node_capacity"]
+        output_node_capacity = 0
+        with open(config.SYS_CONF_FILE, 'r') as f:
+            json_infra_model = json.load(f)
+            output_node_capacity \
+                = json_infra_model\
+                  ["sysout_setup"]["output_node"]["output_node_capacity"]
 
-    #     self.assertTrue(
-    #         int(response_list[4][0][0]) == int(output_node_capacity)
-    #     )
+        self.assertTrue(
+            int(response_list[4][0][0]) == int(output_node_capacity)
+        )
 
-    # # -------------------------------------------------------------------------
-    # def test_run_scenario_upper_limit(self):
-    #     root_dir = os.path.dirname(os.path.abspath(__file__))
-    #     input_dir = os.path.join(
-    #         root_dir, "models", "test_structure__limit_upper", "input")
-    #     conf_file_path = get_config_file_path(input_dir)
-    #     model_file_path = get_model_file_path(input_dir)
+    # -------------------------------------------------------------------------
+    @unittest.skip("Test needs updating")
+    def test_run_scenario_upper_limit(self):
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+        input_dir = os.path.join(
+            root_dir, "models", "test_structure__limit_upper", "input")
+        conf_file_path = get_config_file_path(input_dir)
+        model_file_path = get_model_file_path(input_dir)
 
-    #     config = Configuration(conf_file_path, model_file_path)
-    #     scenario = Scenario(config)
-    #     hazards = HazardsContainer(config)
-    #     infrastructure = ingest_model(config)
-    #     response_list = calculate_response(hazards, scenario, infrastructure)
+        config = Configuration(conf_file_path, model_file_path)
+        scenario = Scenario(config)
+        hazards = HazardsContainer(config)
+        infrastructure = ingest_model(config)
+        response_list = calculate_response(hazards, scenario, infrastructure)
 
-    #     self.assertTrue(int(response_list[4][0][0]) == int(0))
+        self.assertTrue(int(response_list[4][0][0]) == int(0))
 
     # -------------------------------------------------------------------------
     def test_compare_economic_loss_for_existing_models(self):

@@ -1,15 +1,9 @@
+import unittest
 import os
 import ntpath
 import re
 import warnings
-
-import unittest
-unittest.TestLoader.sortTestMethodsUsing = None
-
 import pandas as pd
-# pd.set_option('io.excel.xlsx.reader', 'openpyxl')
-# pd.set_option('io.excel.xlsx.writer', 'openpyxl')
-
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
@@ -75,7 +69,7 @@ class TestReadingExcelFile(unittest.TestCase):
         self.model_df = {}
         self.component_names_dict = {}
 
-        for root, dir_names, file_names in os.walk(self.test_model_dir):
+        for root, dir_names, _ in os.walk(self.test_model_dir):
             for dir_name in dir_names:
                 if "input" in dir_name:
                     input_dir = os.path.join(root, 'input')
@@ -98,7 +92,7 @@ class TestReadingExcelFile(unittest.TestCase):
         )
 
     def test02_model_files_exists(self):
-        print(f"\n{'-'*70}\n>>> Initiating check MS Excel model files...")
+        print(f"\n{'-'*70}\nInitiating check on model files in MS Excel format...")
         print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_xlsx_files:
             self.assertTrue(

@@ -1,11 +1,14 @@
-import os
 import unittest
+import os
 import json
 from collections import OrderedDict
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
+
+# pylint: disable=import-error
 from sira.utilities import get_config_file_path, get_model_file_path
+# pylint: enable=import-error
 
 class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
 
@@ -32,7 +35,7 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
         self.test_model_dir = os.path.join(root_dir, 'models')
         self.model_json_files = []
 
-        for root, dir_names, file_names in os.walk(self.test_model_dir):
+        for root, dir_names, _ in os.walk(self.test_model_dir):
             for dir_name in dir_names:
                 if "tests" in root:
                     if "input" in dir_name:

@@ -5,9 +5,10 @@ import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
 
+# pylint: disable=import-error
 from sira.configuration import Configuration
 from sira.utilities import get_config_file_path, get_model_file_path
-
+# pylint: enable=import-error
 
 class TestInputConfFile(unittest. TestCase):
 
@@ -19,7 +20,8 @@ class TestInputConfFile(unittest. TestCase):
         self.sim_dir_name = 'models'
         root_dir = os.path.dirname(os.path.abspath(__file__))
         models_dir = os.path.join(root_dir, self.sim_dir_name)
-        for root, dir_names, file_names in os.walk(models_dir):
+
+        for root, dir_names, _ in os.walk(models_dir):
             for dir_name in dir_names:
                 if "tests" in root:
                     if "input" in dir_name:
