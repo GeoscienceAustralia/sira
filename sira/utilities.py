@@ -15,7 +15,7 @@ def relpath(path_to, start):
             head, tail = p, path_to.relative_to(p)
     except ValueError:  # Stop when the paths diverge.
         pass
-    return Path('../' * (len(path_from.parents) - len(head.parents))).joinpath(tail)
+    return Path('./' * (len(path_from.parents) - len(head.parents))).joinpath(tail)
 
 
 def get_config_file_path(input_dir):
