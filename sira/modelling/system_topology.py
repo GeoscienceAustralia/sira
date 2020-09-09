@@ -1,5 +1,3 @@
-from __future__ import print_function
-from future.builtins import str, object
 import os
 import networkx as nx
 import re
@@ -12,7 +10,6 @@ plt.switch_backend('agg')
 # from networkx.readwrite.json_graph import node_link_data
 
 # -----------------------------------------------------------------------------
-
 
 class SystemTopology(object):
 
@@ -70,9 +67,9 @@ class SystemTopology(object):
         if self.infrastructure.system_class.lower() in ['substation']:
             self.draw_substation_topology(viewcontext)
         elif self.infrastructure.system_class.lower() in [
-            "potablewatertreatmentplant", "pwtp",
-            "wastewatertreatmentplant", "wwtp",
-            "watertreatmentplant", "wtp"]:
+                "potablewatertreatmentplant", "pwtp",
+                "wastewatertreatmentplant", "wwtp",
+                "watertreatmentplant", "wtp"]:
 
             self.draw_wtp_topology(viewcontext)
         else:
@@ -124,9 +121,9 @@ class SystemTopology(object):
         for tpl in elist:
             named_elist.append((G.vs[tpl[0]]['name'],
                                 G.vs[tpl[1]]['name']))
-        nxG = nx.DiGraph(named_elist)
+        G_nx = nx.DiGraph(named_elist)
 
-        self.gviz = nx.nx_agraph.to_agraph(nxG)
+        self.gviz = nx.nx_agraph.to_agraph(G_nx)
 
         default_node_color = "royalblue3"
         default_edge_color = "royalblue2"
@@ -295,7 +292,7 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Set up output file names & location
 
-        if not self.out_dir.strip():
+        if not str(self.out_dir).strip():
             output_path = os.getcwd()
         else:
             output_path = self.out_dir
@@ -321,9 +318,9 @@ class SystemTopology(object):
         for tpl in elist:
             named_elist.append((G.vs[tpl[0]]['name'],
                                 G.vs[tpl[1]]['name']))
-        nxG = nx.DiGraph(named_elist)
+        G_nx = nx.DiGraph(named_elist)
 
-        self.gviz = nx.nx_agraph.to_agraph(nxG)
+        self.gviz = nx.nx_agraph.to_agraph(G_nx)
 
         default_node_color = "royalblue3"
         default_edge_color = "royalblue2"
@@ -533,7 +530,7 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Set up output file names & location
 
-        if not self.out_dir.strip():
+        if not str(self.out_dir).strip():
             output_path = os.getcwd()
         else:
             output_path = self.out_dir
@@ -559,9 +556,9 @@ class SystemTopology(object):
         for tpl in elist:
             named_elist.append((G.vs[tpl[0]]['name'],
                                 G.vs[tpl[1]]['name']))
-        nxG = nx.DiGraph(named_elist)
+        G_nx = nx.DiGraph(named_elist)
 
-        self.gviz = nx.nx_agraph.to_agraph(nxG)
+        self.gviz = nx.nx_agraph.to_agraph(G_nx)
 
         default_node_color = "royalblue3"
         default_edge_color = "royalblue2"
@@ -686,8 +683,8 @@ class SystemTopology(object):
                     self.segment_long_labels(node, maxlen=14, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="circle",
-                    width=1.1,
-                    height=1.1,
+                    width=1.5,
+                    height=1.5,
                     rank="dependency",
                     penwidth=2.5,
                     color="orchid",
@@ -851,13 +848,13 @@ class SystemTopology(object):
                     # elemnxt_used = True
                 else:
                     # elemnxt_used = False
-                    exit
+                    exit()
                 i += 1
             newlist.append(elem)
             i += 1
         return newlist
 
-    def segment_long_labels(self, string, maxlen=12, delims=[' ']):
+    def segment_long_labels(self, string, maxlen=12, delims=[chr(0x20)]):
         if (not delims) and (len(string) > maxlen):
             str_list = re.findall("(?s).{1," + str(maxlen) + "}", string)
         elif len(string) > maxlen:
@@ -868,5 +865,3 @@ class SystemTopology(object):
         # print(str_list)
         # print("\n".join(str_list))
         return "\n".join(str_list)
-
-
