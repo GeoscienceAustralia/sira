@@ -1,10 +1,13 @@
+"""simulation.py
+This module applies a Monte Carlo process to calculate system output
+levels and losses for given hazard levels and given number of iterations.
+"""
+
 import time
 from datetime import timedelta
-import numpy as np
-import parmap
-import zipfile
-
 import logging
+import numpy as np
+# import parmap
 rootLogger = logging.getLogger(__name__)
 
 
@@ -61,12 +64,13 @@ def calculate_response(hazards, scenario, infrastructure):
     for hazard_response in hazards_response:
         # iterate through the hazard response dictionary
         for key, value_list in hazard_response.items():
-            for list_number in range(len(post_processing_list)):
+            # for list_number in range(len(post_processing_list)):
+            for list_number, _ in enumerate(post_processing_list):
                 # the first four are dicts
                 if list_number <= 3:
                     post_processing_list[list_number][key] \
                         = value_list[list_number]
-                elif list_number in [6,7]:
+                elif list_number in [6, 7]:
                     post_processing_list[list_number][key] \
                         = value_list[list_number]
                 else:
@@ -80,9 +84,12 @@ def calculate_response(hazards, scenario, infrastructure):
             = np.array(post_processing_list[list_number])
 
     # Convert the calculated output array into the correct format
+    system_output_arr_per_sample = post_processing_list[4]
     post_processing_list[4] = \
-        np.sum(post_processing_list[4], axis=2).transpose()
-    post_processing_list[5] = post_processing_list[5].transpose()
+        np.sum(system_output_arr_per_sample, axis=2).transpose()
+
+    system_econ_loss_arr_per_sample = np.array(post_processing_list[5])
+    post_processing_list[5] = system_econ_loss_arr_per_sample.transpose()
 
     # elapsed = timedelta(seconds=(time.time() - code_start_time))
     # logging.info("[ Run time: %s ]\n" % str(elapsed))
@@ -105,9 +112,8 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
 
     # calculate the damage state probabilities
     rootLogger.info(
-        "Initiating damage state calculations for {} ...".
-            format(hazard.hazard_scenario_name)
-        )
+        "Initiating damage state calculations for: %s",
+        hazard.hazard_scenario_name)
     expected_damage_state_of_components_for_n_simulations = \
         calc_component_damage_state_for_n_simulations(
             infrastructure, scenario, hazard)
@@ -133,30 +139,35 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
             expected_damage_state_of_components_for_n_simulations)
 
     # determine average output for the output components
-    rootLogger.debug("Calculating system output for hazard {}".format(
-        hazard.hazard_scenario_name))
+    rootLogger.debug(
+        "Calculating system output for hazard %s",
+        hazard.hazard_scenario_name)
     infrastructure_output = {}
-    for output_index, (output_comp_id, output_comp) in enumerate(
-            infrastructure.output_nodes.items()):
+    for output_index, output_comp_id in \
+        enumerate(infrastructure.output_nodes.keys()):
         infrastructure_output[output_comp_id] = np.mean(
             infrastructure_sample_output[:, output_index])
 
     # log the elapsed time for this hazard level
     elapsed = timedelta(seconds=(time.time() - code_start_time))
-    rootLogger.info("Run time for hazard scenario {} : {}\n".format(
-        hazard.hazard_scenario_name, str(elapsed)))
+    rootLogger.info(
+        "Run time for hazard scenario %s : %s",
+        hazard.hazard_scenario_name, str(elapsed)
+    )
 
     # We combine the result data into a dictionary for ease of use
-    response_for_a_hazard = {hazard.hazard_scenario_name: [
-        expected_damage_state_of_components_for_n_simulations,
-        infrastructure_output,
-        component_response_dict,
-        comptype_response_dict,
-        infrastructure_sample_output,
-        infrastructure_sample_economic_loss,
-        compclass_dmg_level_percentages,
-        compclass_dmg_index_expected]
-        }
+    response_for_a_hazard = {
+        hazard.hazard_scenario_name: [
+            expected_damage_state_of_components_for_n_simulations,
+            infrastructure_output,
+            component_response_dict,
+            comptype_response_dict,
+            infrastructure_sample_output,
+            infrastructure_sample_economic_loss,
+            compclass_dmg_level_percentages,
+            compclass_dmg_index_expected
+        ]
+    }
     return response_for_a_hazard
 
 
@@ -191,7 +202,7 @@ def calc_component_damage_state_for_n_simulations(
     # create numpy array of uniformly distributed random numbers between (0,1)
     rnd = random_number.uniform(
         size=(scenario.num_samples, number_of_components))
-    rootLogger.info("Hazard Intensity {}".format(hazard.hazard_scenario_name))
+    rootLogger.info("Hazard Intensity %s", hazard.hazard_scenario_name)
 
     # iterate through the components
     rootLogger.info("Calculating component damage state probability.")
@@ -200,7 +211,6 @@ def calc_component_damage_state_for_n_simulations(
         component = infrastructure.components[component_key]
         # use the components expose_to method to retrieve the probabilities
         # of this hazard level exceeding each of the components damage levels
-
 
         # create numpy array of length equal to the number of
         # damage states for the component
@@ -222,8 +232,9 @@ def calc_component_damage_state_for_n_simulations(
         # always be zero which will be always be greater than random variable
         component_pe_ds = component_pe_ds[1:]
 
-        rootLogger.info("PE_DS for Component : {}  {}". \
-                        format(component.component_id, component_pe_ds))
+        rootLogger.info(
+            "PE_DS for Component: %s  %r",
+            component.component_id, component_pe_ds)
 
         # This little piece of numpy magic calculates the damage level by
         # summing how many damage states were exceeded.
