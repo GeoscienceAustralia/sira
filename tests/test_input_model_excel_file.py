@@ -1,31 +1,11 @@
 import unittest
-import os
-import ntpath
-import re
+from pathlib import Path
+from sira.utilities import relpath
 import warnings
 import pandas as pd
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
-
-
-def get_model_xlsx_file(input_dir):
-    match_list = []
-    for fname in os.listdir(input_dir):
-        match_test = re.search(r"(?i)^model.*\.xlsx$", fname)
-        if match_test:
-            match_list.append(match_test.string)
-        else:
-            match_list.append(None)
-    
-    filtered_matches = [x for x in match_list if x!=None]
-    if filtered_matches:
-        model_file_name = filtered_matches[0]
-        model_file = os.path.join(input_dir, model_file_name)
-    else:
-        model_file = None
-
-    return model_file
 
 
 def read_excel_file(filepath, sheet_name=None):
@@ -51,9 +31,10 @@ class TestReadingExcelFile(unittest.TestCase):
 
     def setUp(self):
  
-        self.test_root_dir = os.path.dirname(os.path.abspath(__file__))
-        self.test_model_dir = os.path.join(self.test_root_dir, 'models')
-
+        self.sim_dir_name = 'models'
+        self.test_root_dir = Path(__file__).resolve().parent
+        self.test_model_dir = Path(self.test_root_dir, self.sim_dir_name)
+    
         self.xl_engine_args = dict(
             engine='openpyxl', read_only='True', data_only='True')
         self.required_sheets = [
@@ -68,14 +49,8 @@ class TestReadingExcelFile(unittest.TestCase):
         self.model_xlsx_files = []
         self.model_df = {}
         self.component_names_dict = {}
-
-        for root, dir_names, _ in os.walk(self.test_model_dir):
-            for dir_name in dir_names:
-                if "input" in dir_name:
-                    input_dir = os.path.join(root, 'input')
-                    model_file = get_model_xlsx_file(input_dir)
-                    if model_file:
-                        self.model_xlsx_files.append(model_file)
+        self.model_xlsx_files = [
+            x for x in self.test_model_dir.rglob(f'input/*model*.xlsx')]
 
         for model_file in self.model_xlsx_files:
             df = read_excel_file(model_file, sheet_name=None)
@@ -87,8 +62,9 @@ class TestReadingExcelFile(unittest.TestCase):
 
     def test01_folder_structure(self):
         self.assertTrue(
-            os.path.isdir(os.path.join(self.test_model_dir)),
-            "test models folder not found at " + self.test_root_dir + "!"
+            self.test_model_dir.exists(),
+            "test models folder not found at " +\
+                str(self.test_root_dir) + "!"
         )
 
     def test02_model_files_exists(self):
@@ -96,15 +72,16 @@ class TestReadingExcelFile(unittest.TestCase):
         print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_xlsx_files:
             self.assertTrue(
-                os.path.isfile(model_file),
-                "Model excel file not found on path  at: " + model_file
+                model_file.is_file(),
+                "Model excel file not found on path  at: " + str(model_file)
             )
 
     def test03_required_sheets_exist(self):
         for model_file in self.model_xlsx_files:
             rootLogger.info(model_file)
-            test_model_relpath = os.path.relpath(
-                model_file, start=os.path.abspath(__file__))
+            test_model_relpath = relpath(
+                model_file, start=Path(__file__)
+            )
             print("\nTest loading model file (xlsx): \n{}".\
                 format(test_model_relpath))
             df = pd.read_excel(
@@ -218,7 +195,7 @@ class TestReadingExcelFile(unittest.TestCase):
                 "Required column name not found!" + '\n' +
                 "col expected: " + str(required_col_names) + '\n' +
                 "col supplied: " + str(comp_type_dmg_algo.columns.values.tolist()) + '\n' +
-                "file name : " + model_file
+                "file name : " + str(model_file)
             )
             # current implemented function
             valid_function_name_list = [
@@ -285,7 +262,7 @@ class TestReadingExcelFile(unittest.TestCase):
                 "Required column name not found!\n" +
                 "col expected: "+str(required_col_names)+'\n'+
                 "col supplied: "+str(supply_setup.columns.values.tolist())+'\n'+
-                "file name : " + model_file
+                "file name : "+str(model_file)
             )
 
             for sv in supply_setup.itertuples():

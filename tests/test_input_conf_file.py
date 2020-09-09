@@ -1,36 +1,23 @@
 import unittest
-import os
-import re
+from pathlib import Path
+from sira.configuration import Configuration
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
 
-# pylint: disable=import-error
-from sira.configuration import Configuration
-from sira.utilities import get_config_file_path, get_model_file_path
-# pylint: enable=import-error
 
 class TestInputConfFile(unittest. TestCase):
 
     def setUp(self):
 
-        self.conf_file_paths = []
-        self.model_file_paths = []
-        # ------------------------------------------------------------
         self.sim_dir_name = 'models'
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        models_dir = os.path.join(root_dir, self.sim_dir_name)
-
-        for root, dir_names, _ in os.walk(models_dir):
-            for dir_name in dir_names:
-                if "tests" in root:
-                    if "input" in dir_name:
-                        input_dir = os.path.join(root, 'input')
-                        conf_file = get_config_file_path(input_dir)
-                        model_file = get_model_file_path(input_dir)
-                        self.conf_file_paths.append(conf_file)
-                        self.model_file_paths.append(model_file)
-        
+        root_dir = Path(__file__).resolve().parent
+        models_dir = Path(root_dir, self.sim_dir_name)
+        # ------------------------------------------------------------
+        self.conf_file_paths = [
+            x for x in models_dir.rglob(f'input/*config*.json')]
+        self.model_file_paths = [
+            x for x in models_dir.rglob(f'input/*model*.json')]        
         # ------------------------------------------------------------
         self.confs = []
         for conf_file_path, model_file_path in \
@@ -41,7 +28,7 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_does_file_exist(self):
         for conf_file_path in self.conf_file_paths:
-            self.assertEqual(os.path.exists(conf_file_path), True)
+            self.assertEqual(conf_file_path.exists(), True)
 
     def test_datatype_of_SCENARIO_NAME(self):
         for conf in self.confs:

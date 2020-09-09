@@ -1,14 +1,12 @@
 import unittest
-import os
+from pathlib import Path
+from sira.utilities import relpath
 import json
 from collections import OrderedDict
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
 
-# pylint: disable=import-error
-from sira.utilities import get_config_file_path, get_model_file_path
-# pylint: enable=import-error
 
 class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
 
@@ -31,42 +29,36 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
             "pos_y",
             "damages_states_constructor"]
 
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        self.test_model_dir = os.path.join(root_dir, 'models')
-        self.model_json_files = []
-
-        for root, dir_names, _ in os.walk(self.test_model_dir):
-            for dir_name in dir_names:
-                if "tests" in root:
-                    if "input" in dir_name:
-                        input_dir = os.path.join(root, 'input')
-                        model_file = get_model_file_path(input_dir)
-                        self.model_json_files.append(model_file)
+        self.sim_dir_name = 'models'
+        self.test_root_dir = Path(__file__).resolve().parent
+        self.test_model_dir = Path(self.test_root_dir, self.sim_dir_name)
+        self.model_json_files = [
+            x for x in self.test_model_dir.rglob(f'input/*model*.json')]
 
 
     def test_folder_structure(self):
-        mdl_dir_list = [d for d in os.listdir(self.test_model_dir) 
-                if (not d.startswith('.') and os.path.isdir(d))]
-        self.assertTrue(os.path.isdir(self.test_model_dir), 
-            "Directory for test models not found:\n"+self.test_model_dir)
+        mdl_dir_list = [d for d in Path(self.test_model_dir).glob('*') 
+                        if not str(d.name).startswith('.')]
+        self.assertTrue(Path(self.test_model_dir).is_dir(), 
+            "Directory for test models not found:\n"+str(self.test_model_dir))
         for d in mdl_dir_list:
-            fullp = os.path.abspath(os.path.join(d, 'input'))
+            fullp = Path(d, 'input')
             self.assertTrue(
-                os.path.exists(fullp),
-                "No `input` directory found in simulation model dir:\n"+fullp
+                fullp.exists(),
+                "No `input` directory found in simulation model dir:\n"+str(fullp)
             )
 
     def test_model_files_existence(self):
         print(f"\n{'-'*70}\n>>> Initiating check on JSON model files...")
         print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_json_files:
-            test_model_relpath = os.path.relpath(
-                model_file, start=os.path.abspath(__file__))
+            test_model_relpath = relpath(
+                model_file, start=Path(__file__))
             print("\nRunning check on model file (json): \n{}".\
-                format(test_model_relpath))
+                format(str(test_model_relpath)))
             self.assertTrue(
-                os.path.isfile(model_file),
-                "Model json file not found on path at" + model_file + " !")
+                Path(model_file).exists(),
+                "Model json file not found on path at" + str(model_file) + " !")
 
     def test_json_structure(self):
         for model_file in self.model_json_files:
@@ -88,7 +80,8 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
                 model_json_object = json.load(f, object_pairs_hook=OrderedDict)
             self.assertTrue(
                 set(self.required_headers) <= set(model_json_object .keys()),
-                "Required header name not found in \n" + model_file)
+                "Required header name not found in \n" + str(model_file)
+            )
 
     def test_reading_data_from_component_list(self):
         for model_file in self.model_json_files:
@@ -101,7 +94,7 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
                 self.assertTrue(
                     set(self.required_component_headers) <= set(component_list[component].keys()),
                     "Required header names in component_list not found: \n" +
-                    model_file + '\n' + str(set(component_list[component].keys()))
+                    str(model_file) + '\n' + str(set(component_list[component].keys()))
                     )
 
     # TODO extend test case over rest of the structure.
