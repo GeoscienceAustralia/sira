@@ -1,7 +1,7 @@
 {
-	"CONFIGURATION_ID": "PS_EQ_test_config_limit_lo",
-    "SCENARIO_NAME": "lower_limit",
-    "MODEL_NAME": "Simple Test Structure LL",
+	"CONFIGURATION_ID": "PS_EQ_test_config_limit_up",
+    "SCENARIO_NAME": "upper_limit",
+    "MODEL_NAME": "Simple Test Structure UL",
 
     "HAZARD_INPUT_METHOD": "hazard_array",
     "HAZARD_TYPE": "earthquake",

@@ -32,7 +32,7 @@
             "value": "g",
             "notes": null
         }
-    },
+    },    
     "component_list": {
         "input_node": {
             "component_class": "Material Delivery and Storage",
@@ -70,7 +70,7 @@
                         "damage_state_definition": "Not Available.",
                         "fragility_source": "Not Available.",
                         "function_name": "ConstantFunction",
-                        "amplitude": 0
+                        "amplitude": 1
                     }
 
                 }
@@ -117,7 +117,7 @@
                         "damage_state_definition": "Not Available.",
                         "fragility_source": "Not Available.",
                         "function_name": "ConstantFunction",
-                        "amplitude": 0
+                        "amplitude": 1
                     }
                 }
             },
@@ -163,7 +163,7 @@
                         "damage_state_definition": "Not Available.",
                         "fragility_source": "Not Available.",
                         "function_name": "ConstantFunction",
-                        "amplitude": 0
+                        "amplitude": 1
                     }
                 }
             },
