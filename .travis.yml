@@ -1,0 +1,30 @@
+language: python
+dist: xenial
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+# before_install:
+#   - python --version
+#   - pip install -U pip
+#   - pip install -U pytest
+#   - pip install codecov
+install:
+  - apt-get install -y --no-install-recommends apt-utils
+  - apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
+  - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+  - apt-get install -y ttf-mscorefonts-installer
+  - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
+  - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
+  - export PATH="$HOME/anaconda3/bin:$PATH"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda create -n sira_env python=$TRAVIS_PYTHON_VERSION  -y
+  - python --version
+  - pip install -U pip
+  - pip install -U pytest
+  - pip install codecov
+  - pip install -r ./installation/requirements.txt
+script: pytest
+after_success:
+  - codecov
