@@ -1,18 +1,8 @@
-from future.utils import string_types
 from functools import reduce
 import importlib
 from copy import deepcopy
-from collections import namedtuple, Iterable
-
-try:
-    from itertools import izip as zip
-except ImportError: # will be 3.x series
-    pass
-
-try:
-    from itertools import imap as map
-except ImportError: # will be 3.x series
-    pass
+from collections import namedtuple
+from collections.abc import Iterable
 
 
 def get_all_subclasses(cls):
@@ -45,7 +35,7 @@ def jsonify(obj):
         return obj.__jsonify__()
     if isinstance(obj, dict):
         return {jsonify(k): jsonify(v) for k, v in obj.items()}
-    if isinstance(obj, Iterable) and not isinstance(obj, string_types):
+    if isinstance(obj, Iterable) and not isinstance(obj, str):
         return [jsonify(v) for v in obj]
 
     return obj
