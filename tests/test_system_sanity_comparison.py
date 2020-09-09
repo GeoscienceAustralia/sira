@@ -1,30 +1,37 @@
 import unittest
-import os
-import ntpath
+from pathlib import Path
 import pickle
-import numpy as np
 import json
+import logging
+import numpy as np
 
 from sira.configuration import Configuration
 from sira.scenario import Scenario
 from sira.modelling.hazard import HazardsContainer
 from sira.model_ingest import ingest_model
 from sira.simulation import calculate_response
-from sira.utilities import get_config_file_path, get_model_file_path
 
-import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
 
 
 class TestSystemSanity(unittest.TestCase):
+    """
+    Sets up and runs tests to compare against results from pre-run and checked
+    simulations to check that code is producing the expected results.
+    """
 
+    def setUp(self):
+        self.root_dir = Path(__file__).resolve().parent
+        self.models_dir = Path(self.root_dir, 'models')
+        self.comparison_data_dir = Path(self.root_dir, 'historical_data')
+
+    # -------------------------------------------------------------------------
     def test_economic_loss_comparison_for_system_sanity(self):
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        input_dir = os.path.join(
-            root_dir, "models", "powerstation_coal_A", "input")
-        conf_file_path = get_config_file_path(input_dir)
-        model_file_path = get_model_file_path(input_dir)
+        input_dir = Path(
+            self.models_dir, "powerstation_coal_A", "input")
+        conf_file_path = [d for d in input_dir.glob('*config*.json')].pop()
+        model_file_path = [d for d in input_dir.glob('*model*.json')].pop()
 
         config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
@@ -35,11 +42,12 @@ class TestSystemSanity(unittest.TestCase):
         economic_loss_array = response_list[5]
 
         input_pickle_filename \
-            = os.path.join(root_dir, "historical_data",
-                           "economic_loss_for_system_sanity_testing.p")
+            = Path(self.comparison_data_dir,
+                   "economic_loss_for_system_sanity_testing.p")
 
-        with open(input_pickle_filename, 'rb') as p:
-            historical_economic_loss_array = pickle.load(p, encoding='bytes')
+        with open(input_pickle_filename, 'rb') as pklfile:
+            historical_economic_loss_array = \
+                pickle.load(pklfile, encoding='bytes')
 
         self.assertTrue(
             np.array_equal(economic_loss_array,
@@ -49,13 +57,12 @@ class TestSystemSanity(unittest.TestCase):
         )
 
     # -------------------------------------------------------------------------
-    @unittest.skip("Test needs updating")
     def test_run_scenario_lower_limit(self):
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        input_dir = os.path.join(
-            root_dir, "models", "test_structure__limit_lower", "input")
-        conf_file_path = get_config_file_path(input_dir)
-        model_file_path = get_model_file_path(input_dir)
+        input_dir = Path(
+            self.models_dir, "test_structure__limit_lower", "input"
+        )
+        conf_file_path = [d for d in input_dir.glob('*config*.json')].pop()
+        model_file_path = [d for d in input_dir.glob('*model*.json')].pop()
 
         config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
@@ -64,8 +71,8 @@ class TestSystemSanity(unittest.TestCase):
         response_list = calculate_response(hazards, scenario, infrastructure)
 
         output_node_capacity = 0
-        with open(config.SYS_CONF_FILE, 'r') as f:
-            json_infra_model = json.load(f)
+        with open(model_file_path, 'r') as mdl:
+            json_infra_model = json.load(mdl)
             output_node_capacity \
                 = json_infra_model\
                   ["sysout_setup"]["output_node"]["output_node_capacity"]
@@ -75,13 +82,12 @@ class TestSystemSanity(unittest.TestCase):
         )
 
     # -------------------------------------------------------------------------
-    @unittest.skip("Test needs updating")
     def test_run_scenario_upper_limit(self):
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        input_dir = os.path.join(
-            root_dir, "models", "test_structure__limit_upper", "input")
-        conf_file_path = get_config_file_path(input_dir)
-        model_file_path = get_model_file_path(input_dir)
+        input_dir = Path(
+            self.models_dir, "test_structure__limit_upper", "input"
+        )
+        conf_file_path = [d for d in input_dir.glob('*config*.json')].pop()
+        model_file_path = [d for d in input_dir.glob('*model*.json')].pop()
 
         config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
@@ -97,25 +103,16 @@ class TestSystemSanity(unittest.TestCase):
         print("\n{}\n>>> Initiating sanity check aganist pre-run models...".\
             format('-'*70))
 
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        models_dir = os.path.join(root_dir, 'models')
-        conf_file_paths = []
-        model_file_paths = []
+        conf_file_paths = [
+            d for d in self.models_dir.rglob('input/*config*.json')]
+        model_file_paths = [
+            d for d in self.models_dir.rglob('input/*model*.json')]
 
-        for root, dir_names, file_names in os.walk(models_dir):
-            for dir_name in dir_names:
-                if "tests" in root:
-                    if "input" in dir_name:
-                        input_dir = os.path.join(root, 'input')
-                        conf_file = get_config_file_path(input_dir)
-                        model_file = get_model_file_path(input_dir)
-                        conf_file_paths.append(conf_file)
-                        model_file_paths.append(model_file)
-    
-        for conf_file_path, model_file_path in zip(conf_file_paths, model_file_paths):
-            if os.path.isfile(conf_file_path):
-                print("\nMatching results for: " +
-                      ntpath.basename(conf_file_path))
+        for conf_file_path, model_file_path in \
+            zip(conf_file_paths, model_file_paths):
+
+            if conf_file_path.is_file():
+                print("\nMatching results for: "+Path(conf_file_path).name)
 
                 config = Configuration(conf_file_path, model_file_path)
                 scenario = Scenario(config)
@@ -125,10 +122,9 @@ class TestSystemSanity(unittest.TestCase):
                 response_list = calculate_response(
                     hazards, scenario, infrastructure)
                 econ_loss_calculated = response_list[5]
-                
-                stored_data_file = os.path.join(
-                    root_dir,
-                    'historical_data',
+
+                stored_data_file = Path(
+                    self.comparison_data_dir,
                     "economic_loss_for_"+config.SCENARIO_NAME+'.npy')
                 econ_loss_historic = np.load(stored_data_file)
 
