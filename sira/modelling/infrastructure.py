@@ -1,4 +1,8 @@
-from __future__ import division
+from sira.modelling.structural import Element
+from sira.modelling.component_graph import ComponentGraph
+from sira.modelling.structural import Base
+from sira.modelling.iodict import IODict
+
 from builtins import range
 from builtins import object
 import sys
@@ -6,12 +10,6 @@ import numpy as np
 np.set_printoptions(threshold=sys.maxsize)
 # np.set_printoptions(threshold="nan")
 
-
-
-from sira.modelling.structural import Element
-from sira.modelling.component_graph import ComponentGraph
-from sira.modelling.structural import Base
-from sira.modelling.iodict import IODict
 
 class InfrastructureFactory(object):
     @staticmethod
@@ -26,6 +24,9 @@ class InfrastructureFactory(object):
         elif config['system_class'].lower() == \
                 'PotableWaterPumpStation'.lower():
             return PotableWaterPumpStation(**config)
+        elif config['system_class'].lower() == \
+                'ModelTestStructure'.lower():
+            return ModelTestStructure(**config)
 
 
 class Infrastructure(Base):
@@ -101,7 +102,6 @@ class Infrastructure(Base):
 
             component_ds = component_damage_state_ind[sample_index, :]
             # iterate through the components
-            count = 0
             for component_index, comp_key in \
                     enumerate(sorted(self.components.keys())):
                 component = self.components[comp_key]
@@ -135,9 +135,9 @@ class Infrastructure(Base):
         """
         if not self.if_nominal_output:
             self.if_nominal_output = 0
-            for output_comp_id, output_comp in list(self.output_nodes.items()):
+            for output_comp in list(self.output_nodes.values()):
                 self.if_nominal_output += output_comp['output_node_capacity']
-
+        
         return self.if_nominal_output
 
     def compute_output_given_ds(self, comp_level_func):
@@ -163,8 +163,8 @@ class Infrastructure(Base):
                 enumerate(self.output_nodes.items()):
             # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
-            for supply_index, (supply_comp_id, supply_comp) in \
-                    enumerate(self.supply_nodes.items()):
+            for (supply_comp_id, supply_comp) in \
+                    self.supply_nodes.items():
                 if_flow_fraction = self._component_graph.maxflow(
                     supply_comp_id, output_comp_id
                     )
@@ -221,7 +221,7 @@ class Infrastructure(Base):
         comptype_resp_dict = dict()
 
         # ---------------------------------------------------------------
-        sys_ds_levels = self.get_system_damage_states()
+        # sys_ds_levels = self.get_system_damage_states()
         comp_ds_levels = []
 
         component_damage_state_array = np.array(component_damage_state_ind)
@@ -254,7 +254,7 @@ class Infrastructure(Base):
 
         # ---------------------------------------------------------------
         # Collate aggregate response of component grouped by their TYPE:
-        for ct_index, ct_id in enumerate(self.get_component_types()):
+        for ct_id in self.get_component_types():
             comps_of_a_type = sorted(list(self.get_components_for_type(ct_id)))
             ct_pos_index = [list(component_list_sorted).index(x)
                             for x in comps_of_a_type]
@@ -616,6 +616,39 @@ class PotableWaterPumpStation(Infrastructure):
             'Steel Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
             }
+
+    def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings detailing the system damage levels.
+        """
+        self.sys_dmg_states = ["DS0 None",
+                               "DS1 Slight",
+                               "DS2 Moderate",
+                               "DS3 Extensive",
+                               "DS4 Complete"]
+        return self.sys_dmg_states
+
+
+class ModelTestStructure(Infrastructure):
+    def __init__(self, **kwargs):
+        super(ModelTestStructure, self).__init__(**kwargs)
+        self.uncosted_classes = ['SYSTEM INPUT',
+                                 'SYSTEM OUTPUT',
+                                 'JUNCTION', 'JUNCTION POINT',
+                                 'MODEL ARTEFACT']
+        self.ds_lims_compclasses = {
+            'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Emission Management': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Fuel Delivery and Storage': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Fuel Movement': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Stepup Transformer': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
+        }
 
     def get_system_damage_states(self):
         """
