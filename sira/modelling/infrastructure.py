@@ -188,6 +188,7 @@ class Infrastructure(Base):
 
         return system_outflows_sample
 
+    # pylint: disable=fixme
     # TODO: FIX `calc_recov_time_given_comp_ds`
     # def calc_recov_time_given_comp_ds(self, component, damage_state, scenario):
     #     '''
@@ -280,17 +281,17 @@ class Infrastructure(Base):
                           >= (len(acomponent.damage_states) - 1))
         # ---------------------------------------------------------------
 
-        comp_dmg_state_array_exp = np.around(
-            component_damage_state_array.mean(0))
-        comp_dmg_state_array_std = component_damage_state_array.std(0)
+        # comp_dmg_state_array_exp = \
+        #     np.around(component_damage_state_array.mean(0))
+        # comp_dmg_state_array_std = component_damage_state_array.std(0)
 
-        rows, cols = np.shape(component_damage_state_array)
+        rows, _ = np.shape(component_damage_state_array)
 
         comp_cls_dmg_index_binned = dict()
         comp_cls_dmg_index_expected = dict()
-        comp_cls_dmg_level_percentages =dict()
+        comp_cls_dmg_level_percentages = dict()
 
-        for cls_index, cls_id in enumerate(self.get_component_classes()):
+        for cls_id in self.get_component_classes():
             comps_of_a_cls = \
                 sorted(list(self.get_components_for_class(cls_id)))
             comp_cls_pos_index = \
