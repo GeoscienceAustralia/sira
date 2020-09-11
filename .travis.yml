@@ -10,7 +10,7 @@ branches:
 install:
   - sudo apt-get install -y --no-install-recommends apt-utils
   - sudo apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
-  - sudo echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+  # - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
   - sudo apt-get install -y ttf-mscorefonts-installer
   - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
   - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
