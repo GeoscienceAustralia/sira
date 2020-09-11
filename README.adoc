@@ -63,7 +63,7 @@ Step 3: Build the docker image
 
     $ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
 
-#### Required Directory Structure
+### Required Directory Structure
 
 To set up a scenario or impact simulation project, SIRA expects the following
 directory structure:
@@ -75,7 +75,6 @@ directory structure:
         ├── input
         │   ├── config_assetx.json
         │   └── model_assetx.json
-        │
         └── output
             ├── ...
             └── ...
@@ -127,17 +126,17 @@ Note that the fitting and loss analysis steps require the initial simulation
 to have been run first so that it has the initial output data to perform the
 analysis on.
 
-### Run Option #1: Run a simulation and destroy the container when done
+### Option #1: Run a simulation and destroy the container when done
 
 The following command simulataneously does the following:
 bind mounts a volume in docker, creates a container in interactive mode, 
 runs a simulation, then destroys the container after simulation ends.
 
     $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
-        siraimg:latest \
-        python sira -d <scenario_dir> -sfl --aws
+      siraimg:latest \
+      python sira -d <scenario_dir> -sfl --aws
 
-### Run Option #2: Build a container for reuse / experimentation
+### Option #2: Build a container for reuse / experimentation
 
 First, build a docker container from the prebuilt image.
 
@@ -156,11 +155,42 @@ Run the sira code for the scenario in the specified directory:
 
     $ python sira -d /path/to/scenario_dir -sfl
 
+The process for accessing the required data for simulation from within 
+docker are discussed in the following sections.
+
+#### Copy data into the container
+
 From outside of docker, on a terminal, use the following command to
 copy the project folder from container to host:
 
     $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
 
+This keeps all data and code contained within the single container. 
+But it has the disadvantage that the data is not persistent -- if we 
+delete the container, we also lose the data and outputs.
+
+#### Bind a local directories to a path in Docker container
+
+When setting up to run a docker container, it might be useful to bind a 
+local directory on the host (source) to a directory on the container 
+(destination or target). This allows us to access data on the specified 
+location on the local drive, and write outputs there, from within the 
+container. The generic command to achieve this is:
+
+    $ docker run -it \
+      --name=docker_container_name \
+      --mount source=/path/in/local/host/,\
+      destination=/path/in/container,type=bind docker_image_name:latest
+
+A specific example might look like the following:
+    $ docker run -it \
+      --name=sira_x \
+      --mount source=/Users/x/code/models/,\
+      destination=/models,type=bind sira_img:latest
+
+This process maintains the separation of code and data. And data 
+persistence is maintained -- we can build and delete a container 
+without affecting the data.
 
 ## Testing
 
