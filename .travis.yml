@@ -1,9 +1,9 @@
 language: python
 dist: xenial
 python:
-  # - "3.6"
+  - "3.6"
   - "3.7"
-  # - "3.8"
+  - "3.8"
 branches:
   only:
   - master
@@ -18,7 +18,8 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
-  - conda create -n sira_env python=$TRAVIS_PYTHON_VERSION  -y
+  - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION  -y
+  - conda activate sira_env
   - python --version
   - pip install -U pip
   - pip install -U pytest
