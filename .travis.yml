@@ -1,17 +1,17 @@
 language: python
 dist: xenial
 python:
-  - "3.6"
+  # - "3.6"
   - "3.7"
-  - "3.8"
+  # - "3.8"
 branches:
   only:
   - master
 install:
-  - apt-get install -y --no-install-recommends apt-utils
-  - apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
+  - sudo apt-get install -y --no-install-recommends apt-utils
+  - sudo apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
   - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
-  - apt-get install -y ttf-mscorefonts-installer
+  - sudo apt-get install -y ttf-mscorefonts-installer
   - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
   - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
   - export PATH="$HOME/anaconda3/bin:$PATH"
