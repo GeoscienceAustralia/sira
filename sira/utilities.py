@@ -1,3 +1,7 @@
+"""
+sira/utilities.py
+This module provides a collection of helper functions
+"""
 from pathlib import Path
 import os
 import re
@@ -19,6 +23,7 @@ def relpath(path_to, start):
 
 
 def get_config_file_path(input_dir):
+    """Returns path to the scneario config file, given the input dir path"""
     config_file_name = None
     for fname in os.listdir(input_dir):
         confmatch = re.search(r"(?i)^config.*\.json$", fname)
@@ -29,6 +34,7 @@ def get_config_file_path(input_dir):
 
 
 def get_model_file_path(input_dir):
+    """Returns path to the model file, given the input dir path"""
     model_file_name = None
     for fname in os.listdir(input_dir):
         modelmatch = re.search(r"(?i)^model.*\.json$", fname)
