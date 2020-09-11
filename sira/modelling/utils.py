@@ -61,6 +61,7 @@ def pythonify(obj):
                 res = class_getter(cls)(**pythonify(obj))
         else:
             res = {str(k): pythonify(v) for k, v in obj.items()}
+        # pylint: disable=protected-access
         if attrs is not None:
             res._attributes = attrs
         return res
