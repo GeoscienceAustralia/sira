@@ -24,7 +24,6 @@ install:
   - pip install -U pytest
   - pip install codecov
   - pip install -r ./installation/requirements.txt
-  - cd sira
 script: 
   - pytest
 after_success:
