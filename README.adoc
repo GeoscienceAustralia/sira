@@ -1,6 +1,8 @@
 :toc: macro
 :toc-title:
-:toclevels: 99
+:toclevels: 4
+
+[![Build Status](https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master)](https://travis-ci.org/GeoscienceAustralia/sira)
 
 # SIRA
 
@@ -44,7 +46,7 @@ The system is currently being designed as microservices implemented in
 docker containers. If you have docker installed on your system it is
 probably easiest to use the containers as described below.
 
-### Building the run environment using Docker
+### Building the Run Environment Using Docker
 
 Docker configuration is the preferred way to deploy the application.
 The process of building the docker images and container are outlined below:
@@ -61,7 +63,71 @@ Step 3: Build the docker image
 
     $ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
 
-#### Run Option #1: Run a simulation and destroy the container when done
+### Required Directory Structure
+
+To set up a scenario or impact simulation project, SIRA expects the following
+directory structure:
+
+```
+    scenario_dir/
+    └── model_x
+        │
+        ├── input
+        │   ├── config_assetx.json
+        │   └── model_assetx.json
+        │
+        └── output
+            ├── ...
+            └── ...
+```
+
+Explanation of the required structure is as follows:
+
+    - 'scenario directory' - it can be named anything
+    - within the scenario directory, there must exist a uniquely named
+      'model directory' for each scenario or run event.
+    - within the 'model directory', the 'input' dir must have two files, in
+      specified format:
+
+        - a model file: it must have the term 'model' at the beginning or
+          end of the file name
+        - a config file: it must have the term 'config' at the beginning or
+          end of the file name
+
+    - the outputs are saved in the 'output' dir. If it does not exist, the code
+      will create it at the beginning of the simulation.
+
+
+## Running the Application
+
+The application can be run in a number of modes. The relevant options are:
+
+  -d <path_to_input_dir>, --input_directory <path_to_input_dir>
+  -s, --simulation
+  -f, --fit
+  -l, --loss_analysis
+
+The following code snippets assume that it is being run from the root 
+directory of the SIRA code, and the model of interest is in the location 
+`sira/scenario_dir/ci_model_x`.
+
+The following code runs the simulation and the post processing simultanrously:
+
+    $ python sira -d scenario_dir/ci_model_x -sfl
+
+To run only the monte carlo simulation without post-processing:
+
+    $ python sira -d scenario_dir/ci_model_x -s
+
+To run for both the model fitting and the loss analysis code:
+
+    $ python sira -d scenario_dir/ci_model_x -fl
+
+Note that the fitting and loss analysis steps require the initial simulation
+to have been run first so that it has the initial output data to perform the
+analysis on.
+
+### Run Option #1: Run a simulation and destroy the container when done
 
 The following command simulataneously does the following:
 bind mounts a volume in docker, creates a container in interactive mode, 
@@ -71,7 +137,7 @@ runs a simulation, then destroys the container after simulation ends.
         siraimg:latest \
         python sira -d <scenario_dir> -sfl --aws
 
-#### Run Option #2: Build a container for reuse / experimentation
+### Run Option #2: Build a container for reuse / experimentation
 
 First, build a docker container from the prebuilt image.
 
@@ -95,74 +161,17 @@ copy the project folder from container to host:
 
     $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
 
-### Running the code
-
-To set up a scenario or impact simulation project, SIRA expects the following
-directory structure:
-
-```
-    scenario_dir/
-    └── model_foo
-        ├── input
-        │   ├── config.json
-        │   ├── model.json
-        │   └── ...
-        └── output
-            └── ...
-```
-
-The required structure is as follows:
-
-    - 'scenario directory' - it can be named anything
-    - within the scenario directory, there must exist a uniquely named
-      'model directory' for each scenario or run event.
-    - within the 'model directory', the 'input' dir must have two files, in
-      specified format:
-
-        - a model file: it must have the term 'model' at the beginning or
-          end of the file name
-        - a config file: it must have the term 'config' at the beginning or
-          end of the file name
-
-    - the outputs are saved in the 'output' dir. If it does not exist, the code
-      will create it at the beginning of the simulation.
-
-The code can be run in a number of modes. The relevant options are:
-
-  -d INPUT_DIRECTORY, --input_directory INPUT_DIRECTORY
-  -s, --simulation
-  -f, --fit
-  -l, --loss_analysis
-
-Following code snippets assume that it is being run from the root directory
-of the SIRA code, and the model of interest is in the location
-`sira/scenario_dir/ci_model_foo`.
-
-The following code runs the simulation and the post processing simultanrously:
-
-    $ python sira -d scenario_dir/ci_model_foo -sfl
-
-To run only the monte carlo simulation without post-processing:
-
-    $ python sira -d scenario_dir/ci_model_foo -s
-
-To run for both the model fitting and the loss analysis code:
-
-    $ python sira -d scenario_dir/ci_model_foo -fl
-
-Note that the fitting and loss analysis steps require the initial simulation
-to have been run first so that it has the initial output data to perform the
-analysis on.
-
 
 ## Testing
 
-**The tests are currently not working and being updated.**
-
-To run tests use unittest. Move into sira folder:
+To run tests use `unittest`. Move into sira directory:
 
     $ cd sira
     $ python -m unittest discover tests
+
+Alternately, you can just run `pytest` from the top of the sira directory:
+
+    $ pytest
 
 If you are using docker as described above, you can do this within the sira
 container.
