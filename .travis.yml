@@ -1,9 +1,9 @@
 language: python
 dist: xenial
 python:
-  - "3.6"
+  # - "3.6"
   - "3.7"
-  - "3.8"
+  # - "3.8"
 branches:
   only:
   - master
@@ -19,13 +19,15 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION  -y
+  - conda init bash
   - conda activate sira_env
+  - conda env list
   - python --version
   - pip install -U pip
   - pip install -U pytest
   - pip install codecov
   - pip install -r ./installation/requirements.txt
-script: 
+script:
   - python3 -m pytest
 after_success:
   - codecov
