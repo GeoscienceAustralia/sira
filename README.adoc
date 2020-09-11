@@ -4,7 +4,7 @@
 
 # SIRA
 
-[![Build Status](https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master)](https://travis-ci.org/GeoscienceAustralia/sira)
+image:https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master["Build Status", link="https://travis-ci.org/GeoscienceAustralia/sira"]
 
 toc::[]
 
@@ -46,7 +46,7 @@ The system is currently being designed as microservices implemented in
 docker containers. If you have docker installed on your system it is
 probably easiest to use the containers as described below.
 
-#### Building the Run Environment Using Docker
+### Building the Run Environment Using Docker
 
 Docker configuration is the preferred way to deploy the application.
 The process of building the docker images and container are outlined below:
@@ -127,7 +127,7 @@ Note that the fitting and loss analysis steps require the initial simulation
 to have been run first so that it has the initial output data to perform the
 analysis on.
 
-#### Run Option #1: Run a simulation and destroy the container when done
+### Run Option #1: Run a simulation and destroy the container when done
 
 The following command simulataneously does the following:
 bind mounts a volume in docker, creates a container in interactive mode, 
@@ -137,7 +137,7 @@ runs a simulation, then destroys the container after simulation ends.
         siraimg:latest \
         python sira -d <scenario_dir> -sfl --aws
 
-#### Run Option #2: Build a container for reuse / experimentation
+### Run Option #2: Build a container for reuse / experimentation
 
 First, build a docker container from the prebuilt image.
 
