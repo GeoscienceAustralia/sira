@@ -26,6 +26,6 @@ install:
   - pip install -r ./installation/requirements.txt
   - cd sira
 script: 
-  - python -m unittest discover tests
+  - pytest
 after_success:
   - codecov
