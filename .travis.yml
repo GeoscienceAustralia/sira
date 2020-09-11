@@ -15,11 +15,13 @@ install:
   - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
   - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
   - export PATH="$HOME/anaconda3/bin:$PATH"
+  # - source "$HOME/anaconda3/etc/profile.d/conda.sh"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
-  - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION  -y
-  - conda init bash
+  - conda info -a
+  - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
+  - eval "$(conda shell.bash hook)"
   - conda activate sira_env
   - conda env list
   - python --version
