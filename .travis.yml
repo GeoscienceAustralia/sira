@@ -17,9 +17,9 @@ matrix:
       before_install:
         # -----------------------------------------------------
         - export ANACONDA_PATH=$HOME/anaconda;
-        - export ANACONDA_PATH_WIN=`cygpath --windows $ANACONDA_PATH`;
-        # - choco install anaconda3 --params="'/JustMe /AddToPath:1 /D:${ANACONDA_PATH_WIN}'";
-        - wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Windows-x86_64.exe -0 conda.exe
+        # - export ANACONDA_PATH_WIN=`cygpath --windows $ANACONDA_PATH`;
+        - choco install anaconda3 --params="'/JustMe /AddToPath:1 /D=${ANACONDA_PATH}'";
+        # - wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Windows-x86_64.exe -0 conda.exe
         - export ANACONDA_LIB_BIN_PATH=$ANACONDA_PATH/Library/bin;
         - export PATH="$ANACONDA_PATH:$ANACONDA_LIB_BIN_PATH:$PATH";
         - source $ANACONDA_PATH/etc/profile.d/conda.sh;
