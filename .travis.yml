@@ -18,7 +18,7 @@ matrix:
         # -----------------------------------------------------
         - export ANACONDA_PATH=$HOME/anaconda;
         - export ANACONDA_PATH_WIN=`cygpath --windows $ANACONDA_PATH`;
-        - choco install anaconda3 --params="'/JustMe /AddToPath:1 /D:$ANACONDA_PATH_WIN'";
+        - choco install anaconda3 --params="'/JustMe /AddToPath:1 /D:${ANACONDA_PATH_WIN}'";
         - export ANACONDA_LIB_BIN_PATH=$ANACONDA_PATH/Library/bin;
         - export PATH="$ANACONDA_PATH:$ANACONDA_LIB_BIN_PATH:$PATH";
         - source $ANACONDA_PATH/etc/profile.d/conda.sh;
