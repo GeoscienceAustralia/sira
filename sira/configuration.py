@@ -41,7 +41,7 @@ class Configuration:
         self.HAZARD_INPUT_METHOD = str(config['HAZARD_INPUT_METHOD'])
         self.HAZARD_TYPE = str(config['HAZARD_TYPE'])
         self.NUM_SAMPLES = int(config['HAZARD_NUM_SAMPLES'])
-        if config['HAZARD_INPUT_METHOD'] is 'scenario_file':
+        if config['HAZARD_INPUT_METHOD'] == 'scenario_file':
             self.INTENSITY_MEASURE_MIN = None
             self.INTENSITY_MEASURE_MAX = None
             self.INTENSITY_MEASURE_STEP = None
