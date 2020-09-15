@@ -16,13 +16,14 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
         # -----------------------------------------------------
-        - export ANACONDA_PATH=$HOME/anaconda3;
-        - export ANACONDA_LIB_BIN_PATH=$ANACONDA_PATH/Library/bin;
-        - choco install anaconda3 --params='/JustMe /AddToPath /D:'"$ANACONDA_PATH";
-        - export PATH="$ANACONDA_PATH:$ANACONDA_LIB_BIN_PATH:$PATH";
-        - hash -r;
-        - conda config --set always_yes yes --set changeps1 no;
-        - conda update -q conda;
+        - export ANACONDA_PATH=$HOME/Anaconda3
+        - export ANACONDA_LIB_BIN_PATH=$ANACONDA_PATH/Library/bin
+        - choco install anaconda3 --params='/JustMe /AddToPath /D:'"$ANACONDA_PATH"
+        - export PATH="$ANACONDA_PATH:$ANACONDA_LIB_BIN_PATH:$/HOME/Anaconda3/bin:$PATH"
+        - hash -r
+        - conda info -a
+        # - conda config --set always_yes yes --set changeps1 no
+        - conda update -q conda
         - conda info -a
         # -----------------------------------------------------
         - conda env create -n sira-env -f ./installation/environment_${TRAVIS_OS_NAME}.yml;
