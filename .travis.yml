@@ -28,7 +28,8 @@ matrix:
         - conda info -a
         # -----------------------------------------------------
         - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
-        - $ANACONDA_SCRIPTS/conda activate sira_env
+        - source $(conda info --root)/etc/profile.d/conda.sh
+        - conda activate sira_env
         - conda list
         # -----------------------------------------------------
         - python --version
