@@ -42,6 +42,7 @@ dependencies:
     - scipy>=1.5.2
     - sqlite
     - sqlalchemy
+    - xlrd
     - pip:
         - alabaster
         - actdiag
