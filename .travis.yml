@@ -19,8 +19,10 @@ matrix:
         - export ANACONDA_PATH=C:\Tools\Anaconda3
         # - export ANACONDA_LIB_BIN_PATH=$ANACONDA_PATH\Library\bin
         - choco install anaconda3 --params='"/JustMe /AddToPath"'
-        - export PATH="$ANACONDA_PATH:$ANACONDA_PATH\Library\bin:$ANACONDA_PATH\bin:$PATH"
+        - export PATH="$ANACONDA_PATH:$ANACONDA_PATH\Library\bin:$ANACONDA_PATH\Scripts:$PATH"
         - hash -r
+        - where conda
+        - where python
         - conda info -a
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
