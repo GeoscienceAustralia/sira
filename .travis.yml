@@ -26,15 +26,14 @@ matrix:
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
-        # -----------------------------------------------------
+        # --- Create and activate the environment
         - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
         - source $(conda info --root)/etc/profile.d/conda.sh
         - conda activate sira_env
+        # --- Helpful commands for error checking
         - conda list
-        # -----------------------------------------------------
         - python --version
         - python -m pip install --upgrade pip
-        - pip3 install --upgrade pytest
         - pip3 install codecov
         # -----------------------------------------------------
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
@@ -56,10 +55,14 @@ install:
   - conda env list
   - python --version
   - pip install -U pip
-  - pip install -U pytest
+  - pip install --upgrade pytest
   - pip install codecov
   - pip install -r ./installation/requirements.txt
 script:
-  - python3 -m pytest
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+      python3 -m pytest
+    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      python -m pytest
+    fi;
 after_success:
   - codecov
