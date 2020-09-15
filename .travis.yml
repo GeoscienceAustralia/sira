@@ -17,15 +17,17 @@ matrix:
       before_install:
         # -----------------------------------------------------
         - export ANACONDA_PATH=/c/Tools/Anaconda3
+        - export ANACONDA_BIN="$ANACONDA_PATH/Library/bin:$ANACONDA_PATH/condabin"
+        - export ANACONDA_SCRIPTS=$ANACONDA_PATH/Scripts
         - choco install anaconda3 --params='"/JustMe /AddToPath"'
-        - export PATH="$ANACONDA_PATH:$ANACONDA_PATH/Library/bin:$ANACONDA_PATH/Scripts:$PATH"
+        - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
         - hash -r
         - echo $PATH
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
         # -----------------------------------------------------
-        - conda env create -n sira-env -f ./installation/environment_${TRAVIS_OS_NAME}.yml;
+        - conda env create -n sira-env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
         - conda activate sira-env
         - conda list
         # -----------------------------------------------------
@@ -39,7 +41,6 @@ matrix:
 install:
   - sudo apt-get install -y --no-install-recommends apt-utils
   - sudo apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
-  # - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
   - sudo apt-get install -y ttf-mscorefonts-installer
   - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
   - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
