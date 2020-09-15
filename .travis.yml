@@ -16,9 +16,9 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
         # -----------------------------------------------------
-        - export ANACONDA_PATH=C:\Tools\Anaconda3
+        - export ANACONDA_PATH=/c/Tools/Anaconda3
         - choco install anaconda3 --params='"/JustMe /AddToPath"'
-        - export PATH="$ANACONDA_PATH:$ANACONDA_PATH\Library\bin:$ANACONDA_PATH\Scripts:$PATH"
+        - export PATH="$ANACONDA_PATH:$ANACONDA_PATH/Library/bin:$ANACONDA_PATH/Scripts:$PATH"
         - hash -r
         - echo $PATH
         - conda config --set always_yes yes --set changeps1 no
