@@ -19,7 +19,6 @@ def read_excel_file(filepath, sheet_name=None):
             header=0,
             skiprows=0,
             index_col=None,
-            skipinitialspace=True,
             engine='openpyxl',
             read_only='True',
             data_only='True'
@@ -50,7 +49,7 @@ class TestReadingExcelFile(unittest.TestCase):
         self.model_df = {}
         self.component_names_dict = {}
         self.model_xlsx_files = [
-            x for x in self.test_model_dir.rglob(f'input/*model*.xlsx')]
+            x for x in self.test_model_dir.rglob('input/*model*.xlsx')]
 
         for model_file in self.model_xlsx_files:
             df = read_excel_file(model_file, sheet_name=None)

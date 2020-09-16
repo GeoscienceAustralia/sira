@@ -1,9 +1,9 @@
 import unittest
 from pathlib import Path
-from sira.configuration import Configuration
 import logging
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
+from sira.configuration import Configuration
 
 
 class TestInputConfFile(unittest. TestCase):
@@ -15,9 +15,9 @@ class TestInputConfFile(unittest. TestCase):
         models_dir = Path(root_dir, self.sim_dir_name)
         # ------------------------------------------------------------
         self.conf_file_paths = [
-            x for x in models_dir.rglob(f'input/*config*.json')]
+            x for x in models_dir.rglob('input/*config*.json')]
         self.model_file_paths = [
-            x for x in models_dir.rglob(f'input/*model*.json')]        
+            x for x in models_dir.rglob('input/*model*.json')]        
         # ------------------------------------------------------------
         self.confs = []
         for conf_file_path, model_file_path in \

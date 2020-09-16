@@ -33,7 +33,7 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
         self.test_root_dir = Path(__file__).resolve().parent
         self.test_model_dir = Path(self.test_root_dir, self.sim_dir_name)
         self.model_json_files = [
-            x for x in self.test_model_dir.rglob(f'input/*model*.json')]
+            x for x in self.test_model_dir.rglob('input/*model*.json')]
 
 
     def test_folder_structure(self):
@@ -70,14 +70,12 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
                     model_json_object is not None,
                     "None value object.")
             except ValueError:
-                self.assertTrue(
-                    False,
-                    "Invalid Json format.")
+                self.assertEqual(False, "Invalid Json format.")
 
     def test_required_headers_exist(self):
         for model_file in self.model_json_files:
-            with open(model_file, 'r') as f:
-                model_json_object = json.load(f, object_pairs_hook=OrderedDict)
+            with open(model_file, 'r') as fobj:
+                model_json_object = json.load(fobj, object_pairs_hook=OrderedDict)
             self.assertTrue(
                 set(self.required_headers) <= set(model_json_object .keys()),
                 "Required header name not found in \n" + str(model_file)
