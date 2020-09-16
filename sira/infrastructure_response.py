@@ -119,7 +119,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         for response_key in sorted(haz_vs_ds_index_of_comp.keys()):
             pickle.dump(
                 {response_key: haz_vs_ds_index_of_comp[response_key]},
-                handle
+                handle, pickle.HIGHEST_PROTOCOL
                 )
 
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
@@ -138,7 +138,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         for response_key in sorted(sys_output_dict.keys()):
             pickle.dump(
                 {response_key: sys_output_dict[response_key]},
-                handle
+                handle, pickle.HIGHEST_PROTOCOL
                 )
 
     sys_output_df = pd.DataFrame(sys_output_dict)
@@ -160,7 +160,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         for response_key in sorted(component_resp_dict.keys()):
             pickle.dump(
                 {response_key: component_resp_dict[response_key]},
-                handle
+                handle, pickle.HIGHEST_PROTOCOL
                 )
 
     # ------------------------------------------------------------------------
