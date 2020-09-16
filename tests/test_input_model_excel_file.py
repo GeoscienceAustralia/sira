@@ -19,9 +19,7 @@ def read_excel_file(filepath, sheet_name=None):
             header=0,
             skiprows=0,
             index_col=None,
-            engine='openpyxl',
-            read_only='True',
-            data_only='True'
+            engine='openpyxl'
         )
     return df
 
@@ -34,8 +32,9 @@ class TestReadingExcelFile(unittest.TestCase):
         self.test_root_dir = Path(__file__).resolve().parent
         self.test_model_dir = Path(self.test_root_dir, self.sim_dir_name)
     
-        self.xl_engine_args = dict(
-            engine='openpyxl', read_only='True', data_only='True')
+        self.xl_engine_args = dict(engine='openpyxl')
+        # read_only='True', data_only='True'
+
         self.required_sheets = [
             'system_meta',
             'component_list',
@@ -178,17 +177,7 @@ class TestReadingExcelFile(unittest.TestCase):
             dfa = model['comp_type_dmg_algo']
             comp_type_dmg_algo = \
                 dfa.set_index(dfa.columns[0:3].to_list())
-            # comp_type_dmg_algo = pd.read_excel(
-            #     model_file,
-            #     sheet_name='comp_type_dmg_algo',
-            #     index_col=[0, 1, 2],
-            #     header=0,
-            #     skiprows=0,
-            #     skipinitialspace=True,
-            #     engine='openpyxl',
-            #     read_only='True',
-            #     data_only='True'
-            # )
+
             self.assertTrue(
                 set(required_col_names) <= set(comp_type_dmg_algo.columns.tolist()),
                 "Required column name not found!" + '\n' +
