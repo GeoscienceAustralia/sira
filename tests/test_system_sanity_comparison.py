@@ -41,14 +41,11 @@ class TestSystemSanity(unittest.TestCase):
         response_list = calculate_response(hazards, scenario, infrastructure)
         economic_loss_array = response_list[5]
 
-        input_pickle_filename \
-            = Path(self.comparison_data_dir,
-                   "economic_loss_for_system_sanity_testing.p")
+        test_file_path = Path(
+            self.comparison_data_dir,
+            "economic_loss_for_system_sanity_testing.npy")
 
-        with open(input_pickle_filename, 'rb') as pklfile:
-            historical_economic_loss_array = \
-                pickle.load(pklfile, encoding='bytes')
-
+        historical_economic_loss_array = np.load(test_file_path)
         self.assertTrue(
             np.array_equal(economic_loss_array,
                            historical_economic_loss_array),
