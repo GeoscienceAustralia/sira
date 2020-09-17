@@ -63,7 +63,6 @@ install:
   - pip install codecov
   - pip install -r ./installation/requirements.txt
 script:
-  # - pytest --cov-report term --cov=sira tests/
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
       python3 -m pytest --cov-report term --cov=sira tests/;
     elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
