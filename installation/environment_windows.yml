@@ -10,6 +10,7 @@ dependencies:
     - brewer2mpl
     - colorama
     - configparser
+    - coverage
     - freetype
     - graphviz
     - ipython
@@ -32,6 +33,7 @@ dependencies:
     - pygments
     - pylint
     - pytest
+    - pytest-cov
     - python-igraph=0.8.2
     - pygraphviz
     - requests

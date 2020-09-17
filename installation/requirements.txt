@@ -7,6 +7,7 @@ botocore==1.17.15
 brewer2mpl==1.4.1
 colorama==0.4.1
 configparser==5.0.0
+coverage==5.3
 dask==2.19.0
 docutils==0.15.2
 imagecodecs>=2020.5.30
@@ -34,7 +35,8 @@ Pygments==2.6.1
 pygraphviz==1.5
 pylint==2.5.3
 pyparsing==2.4.7
-pytest==5.4.3
+pytest==6.0.2
+pytest-cov==2.10.1
 python-igraph==0.8.2
 pyyaml==5.3.1
 requests>=2.24.0
