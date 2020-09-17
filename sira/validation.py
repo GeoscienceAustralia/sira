@@ -1,39 +1,100 @@
+"""
+Params lists and functions for validation testing of models and config files
+Validates model and config files based on rules
+"""
+
 import os
+from pathlib import Path
 import json
-# given model file validate it based on rules
 
+# -----------------------------------------------------------------------------
+# Paths
 
+SIRA_ROOT_DIR = Path(__file__).resolve().parent
+
+path_to_test_models = Path(SIRA_ROOT_DIR, "tests", "models")
+
+# -----------------------------------------------------------------------------
+# Worksheet names / primary JSON keys
+
+# XL_WORKSHEET_NAMES
+required_model_worksheets = [
+    'system_meta',
+    'component_list',
+    'component_connections',
+    'supply_setup',
+    'output_setup',
+    'comp_type_dmg_algo',
+    'damage_state_def'
+]
+
+# XL_COMPONENT_LIST_HEADERS
+required_col_names_clist = [
+    'component_id',
+    'component_type',
+    'component_class',
+    'cost_fraction',
+    'node_type',
+    'node_cluster',
+    'operating_capacity',
+    'pos_x',
+    'pos_y'
+]
+
+# MODEL_COMPONENT_HEADERS
+required_component_headers = [
+    "component_type",
+    "component_class",
+    "cost_fraction",
+    "node_type",
+    "node_cluster",
+    "operating_capacity",
+    "pos_x",
+    "pos_y",
+    "damages_states_constructor"
+]
+
+# MODEL_CONNECTION_HEADERS
+required_col_names_conn = [
+    'origin',
+    'destination',
+    'link_capacity',
+    'weight'
+]
+
+# ALGORITHM_DEFINITION_PARAMS
+required_col_names = [
+    'is_piecewise',
+    'damage_function',
+    'damage_ratio',
+    'functionality',
+    'recovery_function',
+    'recovery_mean',
+    'recovery_std'
+]
+
+# MODEL_SECTIONS
+required_headers = [
+    "component_list",
+    "node_conn_df",
+    "sysinp_setup",
+    "sysout_setup"
+]
+
+# -----------------------------------------------------------------------------
 def config_file_valid(config_file):
+    """
+    Config File Validation Rules:
+    
+    """
     return True
 
-
+# -----------------------------------------------------------------------------
 def model_file_valid(model_file):
+    """
+    Model Validation Rules:
+    1. nodes in component list should appear in connections
+    2. nodes should not be orphans
+    3. component types should match between damage algorithms and component list
+    """
     return True
-
-
-SIRA_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-path_to_test_model_file = os.path.join(
-    SIRA_ROOT_DIR,
-    "models",
-    "test_structures",
-    "sysconfig_simple_linear.json")
-
-with open(path_to_test_model_file) as json_data:
-    parsed = json.load(json_data)
-    component_list = parsed["component_list"].keys()
-    print("component_list ", component_list)
-
-    destination = []
-    origin = []
-    for key in parsed["node_conn_df"].keys():
-        destination.append(parsed["node_conn_df"][key]["destination"])
-        origin.append(parsed["node_conn_df"][key]["origin"])
-
-    print("destination", destination)
-    print("origin", origin)
-
-# no new nodes
-# component list should appear in connections
-# no new nodes that are orphans
-# component type -> dmg algorithm and component list
