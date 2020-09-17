@@ -6,6 +6,12 @@
 
 image:https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master["Build Status", link="https://travis-ci.org/GeoscienceAustralia/sira"]
 
++++
+<a href="https://codecov.io/gh/GeoscienceAustralia/sira">
+  <img src="https://codecov.io/gh/GeoscienceAustralia/sira/branch/master/graph/badge.svg" />
+</a>
++++
+
 toc::[]
 
 
