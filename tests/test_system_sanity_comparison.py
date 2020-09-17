@@ -101,9 +101,9 @@ class TestSystemSanity(unittest.TestCase):
             format('-'*70))
 
         conf_file_paths = [
-            d for d in self.models_dir.rglob('input/*config*.json')]
+            d for d in self.models_dir.rglob('input/*config_testmdl*.json')]
         model_file_paths = [
-            d for d in self.models_dir.rglob('input/*model*.json')]
+            d for d in self.models_dir.rglob('input/*model_testmdl*.json')]
 
         for conf_file_path, model_file_path in \
             zip(conf_file_paths, model_file_paths):
