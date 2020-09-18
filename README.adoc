@@ -199,22 +199,24 @@ without affecting the data.
 
 ## Testing
 
-To run tests use `unittest`. Move into sira directory:
+To run the tests, user needs to be in the root directory of the code,
+e.g. `~/code/sira`. You can use `pytest` to run the tests, including 
+coverage report:
 
-    $ cd sira
+    $ pytest --cov-report term --cov=sira tests/
+
+Alternately, you can just run `unittest`. This provides more verbose reporting
+on the tests being run, and where issues are being encountered.
+
     $ python -m unittest discover tests
 
-Alternately, you can just run `pytest` from the top of the sira directory:
-
-    $ pytest
-
-If you are using docker as described above, you can do this within the sira
-container.
+If you are using docker as described above, you can do this from within the 
+sira container.
 
 
 ## Todo
 
-- Restructure of Python code. While the simulation has been integrated with
+- While the simulation has been integrated with
   the json serialisation/deserialisation logic, the redundant classes should
   be removed and the capacity to create, edit and delete a scenario needs to 
   be developed.
