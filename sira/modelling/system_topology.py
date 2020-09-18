@@ -22,19 +22,19 @@ class SystemTopology(object):
 
     def __init__(self, infrastructure, scenario):
 
+        self.loc_attr = 'SYSTEM_COMPONENT_LOCATION_CONF'
+        self.graph_label = "System Component Topology"
+
         self.infrastructure = infrastructure
         self.scenario = scenario
         self.gviz = ""  # placeholder for a pygraphviz agraph
         self.component_attr = {}  # Dict for system comp attributes
-        self.out_dir = ""
+        self.out_dir = scenario.output_path
 
         for comp_id in list(infrastructure.components.keys()):
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
-
-        self.graph_label = "System Component Topology"
-        self.out_dir = scenario.output_path
-
+        
         if infrastructure.system_class.lower() in \
                 ['potablewatertreatmentplant', 'pwtp',
                  'wastewatertreatmentplant', 'wwtp',
@@ -57,7 +57,7 @@ class SystemTopology(object):
 
         # Overwrite default if node locations are defined
         if hasattr(infrastructure, 'system_meta'):
-            if infrastructure.system_meta['SYSTEM_COMPONENT_LOCATION_CONF']['value']\
+            if infrastructure.system_meta[self.loc_attr]['value']\
                     == 'defined':
                 self.drawing_prog = 'neato'
 
@@ -260,13 +260,17 @@ class SystemTopology(object):
 
         # self.gviz.layout(prog=self.drawing_prog)
         if viewcontext == "as-built":
+            if self.drawing_prog == 'neato':
+                draw_args = '-n -Gdpi=300'
+            else:
+                draw_args = '-Gdpi=300'
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
                            args='-Gdpi=300')
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
                            format='png', prog=self.drawing_prog,
-                           args='-n2')
+                           args=draw_args)
 
         self.gviz.draw(os.path.join(output_path, fname + '.svg'),
                        format='svg',
@@ -502,6 +506,10 @@ class SystemTopology(object):
         # Draw the graph
 
         if viewcontext == "as-built":
+            if self.drawing_prog == 'neato':
+                draw_args = '-n -Gdpi=300'
+            else:
+                draw_args = '-Gdpi=300'
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
@@ -509,7 +517,7 @@ class SystemTopology(object):
 
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
                            format='png', prog=self.drawing_prog,
-                           args='-n -Gdpi=300')
+                           args=draw_args)
 
         self.gviz.draw(os.path.join(output_path, fname + '.svg'),
                        format='svg',
@@ -544,7 +552,8 @@ class SystemTopology(object):
         # `connector_type` refers to the line connector type. Must be one of
         # ['spline', 'ortho', 'line', 'polyline', 'curved']
         self.connector_type = 'ortho'
-        self.drawing_prog = 'neato'
+        # self.drawing_prog = 'neato'
+
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         G = self.infrastructure._component_graph.digraph
@@ -806,12 +815,16 @@ class SystemTopology(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw the graph
         if viewcontext == "as-built":
+            if self.drawing_prog == 'neato':
+                draw_args = '-n -Gdpi=300'
+            else:
+                draw_args = '-Gdpi=300'
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
                            format='png', prog=self.drawing_prog,
-                           args='-n -Gdpi=300')
+                           args=draw_args)
             self.gviz.draw(os.path.join(output_path, fname + '.jpg'),
                            format='jpg', prog=self.drawing_prog,
-                           args='-n -Gdpi=300')
+                           args=draw_args)
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
