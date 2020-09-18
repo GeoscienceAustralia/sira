@@ -1577,17 +1577,19 @@ def run_scenario_loss_analysis(scenario,
     # Nodes not considered in the loss calculations
     # NEED TO MOVE THESE TO A MORE LOGICAL PLACE
 
-    uncosted_comptypes = ['CONN_NODE', 'JUNCTION_NODE', 'JUNCTION',
-                          'SYSTEM_INPUT', 'SYSTEM_OUTPUT',
-                          'Generation Source', 'Grounding']
+    uncosted_comptypes = [
+        'CONN_NODE', 'JUNCTION_NODE', 'JUNCTION',\
+        'SYSTEM_INPUT', 'SYSTEM_OUTPUT',\
+        'Generation Source', 'Grounding'
+    ]
 
     cp_types_in_system = infrastructure.get_component_types()
     cp_types_costed = [x for x in cp_types_in_system
                        if x not in uncosted_comptypes]
 
-    comptype_resp_df = comptype_resp_df.drop(uncosted_comptypes,
-                                             level='component_type',
-                                             axis=0)
+    comptype_resp_df.drop(
+        uncosted_comptypes,
+        level='component_type', axis=0, inplace=True, errors='ignore')
     comptype_resp_df = comptype_resp_df.sort_index()
 
     # Get list of only those components that are included in cost calculations:
