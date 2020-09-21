@@ -24,7 +24,7 @@ class TestModuleRunProcess(unittest.TestCase):
         model_name = 'powerstation_coal_A'
         inputdir = Path(self.mdls_dir, model_name)
         process = subprocess.run(
-            ['python', self.code_dir, '-d', inputdir, '-s'], 
+            ['python', str(self.code_dir), '-d', str(inputdir), '-s'], 
             stdout=subprocess.PIPE, 
             universal_newlines=True)
         exitstatus = process.returncode
@@ -43,7 +43,7 @@ class TestModuleRunProcess(unittest.TestCase):
         model_name = 'potable_water_treatment_plant_A'
         inputdir = Path(self.mdls_dir, model_name)
         process = subprocess.run(
-            ['python', self.code_dir, '-d', inputdir, '-sfl'], 
+            ['python', str(self.code_dir), '-d', str(inputdir), '-sfl'], 
             stdout=subprocess.PIPE, 
             universal_newlines=True)
         exitstatus = process.returncode
