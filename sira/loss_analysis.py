@@ -1,10 +1,4 @@
-from __future__ import print_function
-from __future__ import division
-
-from builtins import str, zip, range
-
 import numpy as np
-
 np.seterr(divide='print', invalid='raise')
 import pandas as pd
 

@@ -1,8 +1,3 @@
-from __future__ import print_function
-from __future__ import division
-from builtins import str
-from builtins import range
-
 import matplotlib as mpl
 mpl.use('agg')
 
@@ -16,12 +11,11 @@ import lmfit
 import pandas as pd
 pd.options.display.float_format = '{:,.4f}'.format
 
-import os
-
 import brewer2mpl
 from colorama import Fore, init
 init()
 
+import os
 import logging
 rootLogger = logging.getLogger(__name__)
 
