@@ -24,17 +24,21 @@ import numpy as np
 np.seterr(divide='print', invalid='raise')
 import time
 import re
-
+import os
+from pathlib import Path
+import argparse
+import numpy as np
+import logging
+import logging.config
 from colorama import init, Fore, Back, Style
 init()
 
-import os
-import argparse
+# Add the source dir to system path
+src_dir = Path(__file__).resolve().parent
+sys.path.append(str(src_dir))
 
+# Import SIRA modules
 from sira.logger import configure_logger
-import logging
-import logging.config
-
 from sira.configuration import Configuration
 from sira.scenario import Scenario
 from sira.modelling.hazard import HazardsContainer
@@ -47,10 +51,8 @@ from sira.infrastructure_response import (
     pe_by_component_class
     )
 from sira.fit_model import fit_prob_exceed_model
-
 from sira.loss_analysis import run_scenario_loss_analysis
 
-import numpy as np
 
 def main():
 
