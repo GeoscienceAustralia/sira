@@ -38,21 +38,20 @@ src_dir = Path(__file__).resolve().parent
 sys.path.append(str(src_dir))
 
 # Import SIRA modules
-# pylint: disable=unresolved-import
-from logger import configure_logger
-from configuration import Configuration
-from scenario import Scenario
-from modelling.hazard import HazardsContainer
-from model_ingest import ingest_model
-from simulation import calculate_response
-from modelling.system_topology import SystemTopology
-from infrastructure_response import (
+from sira.logger import configure_logger
+from sira.configuration import Configuration
+from sira.scenario import Scenario
+from sira.modelling.hazard import HazardsContainer
+from sira.model_ingest import ingest_model
+from sira.simulation import calculate_response
+from sira.modelling.system_topology import SystemTopology
+from sira.infrastructure_response import (
     write_system_response,
     plot_mean_econ_loss,
     pe_by_component_class
     )
-from fit_model import fit_prob_exceed_model
-from loss_analysis import run_scenario_loss_analysis
+from sira.fit_model import fit_prob_exceed_model
+from sira.loss_analysis import run_scenario_loss_analysis
 
 
 def main():
