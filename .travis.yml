@@ -23,6 +23,7 @@ branches:
 #         # Install Anaconda and configure conda
 #         - choco install anaconda3 --params='"/JustMe /AddToPath"'
 #         - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
+#         - export PYTHONPATH="$PYTHONPATH:$(pwd)"
 #         - hash -r
 #         - echo $PATH
 #         - conda config --set always_yes yes --set changeps1 no
@@ -48,6 +49,7 @@ install:
   - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
   - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
   - export PATH="$HOME/anaconda3/bin:$PATH"
+  - export PYTHONPATH="$PYTHONPATH:$(pwd)"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda

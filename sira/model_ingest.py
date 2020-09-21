@@ -1,12 +1,13 @@
 import json
 from collections import OrderedDict
+from pathlib import Path
+import logging
+rootLogger = logging.getLogger(__name__)
+
 from sira.modelling.infrastructure import InfrastructureFactory
 from sira.modelling.component import (Component, ConnectionValues)
 from scripts.convert_excel_files_to_json import (
     update_json_structure, read_excel_to_json)
-from pathlib import Path
-import logging
-rootLogger = logging.getLogger(__name__)
 
 
 def ingest_model(config):
