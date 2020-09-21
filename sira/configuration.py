@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import json
 from pathlib import Path
-import scripts.convert_setup_files_to_json as converter
 
 
 class Configuration:
