@@ -2,6 +2,11 @@ import unittest
 import subprocess
 from pathlib import Path
 
+# Add the source dir to system path
+import sys
+src_dir = Path(__file__).resolve().parent.parent
+sys.path.append(str(src_dir))
+
 
 class TestModuleRunProcess(unittest.TestCase):
     """
