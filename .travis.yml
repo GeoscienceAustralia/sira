@@ -24,7 +24,6 @@ matrix:
         # Install Anaconda and configure conda
         - choco install anaconda3 --params='"/JustMe /AddToPath"'
         - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
-        - export PYTHONPATH="$PYTHONPATH:$(pwd)"
         - hash -r
         - echo $PATH
         - conda config --set always_yes yes --set changeps1 no
@@ -34,6 +33,8 @@ matrix:
         - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
         - source $(conda info --root)/etc/profile.d/conda.sh
         - conda activate sira_env
+        - export PYTHONPATH="$PYTHONPATH:$(pwd)"
+        - echo $PYTHONPATH
         # Helpful commands for error checking
         - conda list
         - python --version
