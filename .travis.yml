@@ -8,38 +8,38 @@ branches:
   only:
   - master
 
-matrix:
-  include:      
-    # ========== WINDOWS ==========
-    - name: "Python 3.7.6 on Windows"
-      os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell       # 'language: python' is an error on Travis CI Windows
-      before_install:
-        # Set up path variables for Chocolatey installation of Anaconda
-        - export ANACONDA_PATH=/c/Tools/Anaconda3
-        - export ANACONDA_BIN="$ANACONDA_PATH/Library/bin:$ANACONDA_PATH/condabin"
-        - export ANACONDA_SCRIPTS=$ANACONDA_PATH/Scripts
-      install:
-        # Install Anaconda and configure conda
-        - choco install anaconda3 --params='"/JustMe /AddToPath"'
-        - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
-        - hash -r
-        - echo $PATH
-        - conda config --set always_yes yes --set changeps1 no
-        - conda update -q conda
-        - conda info -a
-        # Create and activate the environment
-        - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
-        - source $(conda info --root)/etc/profile.d/conda.sh
-        - conda activate sira_env
-        # Helpful commands for error checking
-        - conda list
-        - python --version
-        - python -m pip install --upgrade pip
-        - pip install pytest-cov
-        - pip3 install codecov
-        # -----------------------------------------------------
-      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+# matrix:
+#   include:      
+#     # ========== WINDOWS ==========
+#     - name: "Python 3.7.6 on Windows"
+#       os: windows           # Windows 10.0.17134 N/A Build 17134
+#       language: shell       # 'language: python' is an error on Travis CI Windows
+#       before_install:
+#         # Set up path variables for Chocolatey installation of Anaconda
+#         - export ANACONDA_PATH=/c/Tools/Anaconda3
+#         - export ANACONDA_BIN="$ANACONDA_PATH/Library/bin:$ANACONDA_PATH/condabin"
+#         - export ANACONDA_SCRIPTS=$ANACONDA_PATH/Scripts
+#       install:
+#         # Install Anaconda and configure conda
+#         - choco install anaconda3 --params='"/JustMe /AddToPath"'
+#         - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
+#         - hash -r
+#         - echo $PATH
+#         - conda config --set always_yes yes --set changeps1 no
+#         - conda update -q conda
+#         - conda info -a
+#         # Create and activate the environment
+#         - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
+#         - source $(conda info --root)/etc/profile.d/conda.sh
+#         - conda activate sira_env
+#         # Helpful commands for error checking
+#         - conda list
+#         - python --version
+#         - python -m pip install --upgrade pip
+#         - pip install pytest-cov
+#         - pip3 install codecov
+#         # -----------------------------------------------------
+#       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 
 install:
   - sudo apt-get install -y --no-install-recommends apt-utils
@@ -62,12 +62,15 @@ install:
   - pip install pytest-cov
   - pip install codecov
   - pip install -r ./installation/requirements.txt
+
 script:
-  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      python3 -m pytest --cov-report term --cov=sira tests/;
-    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      python -m pytest --cov-report term --cov=sira tests/;
-    fi;
+  # - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+  #     python3 -m pytest --cov-report term --cov=sira tests/;
+  #   elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+  #     python -m pytest --cov-report term --cov=sira tests/;
+  #   fi;
+  - python3 -m coverage run -m unittest discover tests
+
 after_success:
   - codecov
   - bash <(curl -s https://codecov.io/bash)
