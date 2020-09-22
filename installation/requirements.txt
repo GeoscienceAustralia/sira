@@ -32,7 +32,7 @@ pybtex-docutils==0.2.2
 pycairo==1.19.1
 pycparser==2.20
 Pygments==2.6.1
-pygraphviz==1.5
+pygraphviz==1.6
 pylint==2.5.3
 pyparsing==2.4.7
 pytest==6.0.2
