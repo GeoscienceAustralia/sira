@@ -23,7 +23,6 @@ matrix:
       install:
         # Install Anaconda and configure conda
         - choco install anaconda3 --params='"/JustMe /AddToPath"'
-        # - choco install graphviz
         - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
         - hash -r
         - echo $PATH
@@ -42,10 +41,9 @@ matrix:
         - python -m pip install --upgrade pip
         - pip3 install pytest-cov
         - pip3 install codecov
-        # - conda install -c anaconda graphviz
-        # - conda install -c alubbock pygraphviz
-        - sudo apt-get install python3-dev graphviz libgraphviz-dev pkg-config
-        - pips3 install pygraphviz
+        - conda install -c conda-forge graphviz
+        - conda install -c conda-forge python-graphviz
+        - conda install -c alubbock pygraphviz
         # -----------------------------------------------------
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 
