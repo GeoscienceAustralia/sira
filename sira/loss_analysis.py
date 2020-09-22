@@ -964,7 +964,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
 
     axes.set_xlim(0, 100)
     axes.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    axes.set_xticklabels([''])
+    axes.set_xticklabels([' ']*5)
     axes.xaxis.grid(False)
 
     axes.set_ylim([pos.max() + bar_width * 1.5, pos.min() - bar_width * 1.5])
@@ -1072,7 +1072,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     ax1.xaxis.grid(False)
     ax1.set_xlim(0, 100)
     ax1.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    ax1.set_xticklabels([''])
+    ax1.set_xticklabels([' ']*5)
 
     ax1.yaxis.grid(False)
     ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
@@ -1264,7 +1264,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     ax1.xaxis.grid(False)
     ax1.set_xlim(0, 100)
     ax1.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    ax1.set_xticklabels([''])
+    ax1.set_xticklabels([' ']*5)
 
     ax1.yaxis.grid(False)
     ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
@@ -1401,8 +1401,8 @@ def draw_component_failure_barchart(uncosted_comptypes,
     ax.spines['right'].set_linewidth(0.5)
 
     ax.set_xlim(0, 100)
-    ax.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    ax.set_xticklabels([''])
+    ax.set_xticks(np.linspace(0, 100, 5 , endpoint=True))
+    ax.set_xticklabels([' ']*5)
     ax.xaxis.grid(True, color=grid_clr, linewidth=0.5, linestyle='-')
 
     ax.set_ylim([pos.max() + bar_width, pos.min() - bar_width])
