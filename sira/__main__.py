@@ -34,8 +34,8 @@ from colorama import init, Fore, Back, Style
 init()
 
 # Add the source dir to system path
-src_dir = Path(__file__).resolve().parent
-sys.path.append(str(src_dir))
+src_dir = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(src_dir))
 
 # Import SIRA modules
 from sira.logger import configure_logger
