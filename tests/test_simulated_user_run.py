@@ -33,7 +33,7 @@ class TestModuleRunProcess(unittest.TestCase):
             stdout=subprocess.PIPE, 
             universal_newlines=True)
         exitstatus = process.returncode
-        print(process.stdout)
+        # print(process.stdout)
         # An exit status of 0 typically indicates process ran successfully:
         self.assertEqual(exitstatus, 0)
 
@@ -52,7 +52,7 @@ class TestModuleRunProcess(unittest.TestCase):
             stdout=subprocess.PIPE, 
             universal_newlines=True)
         exitstatus = process.returncode
-        print(process.stdout)
+        # print(process.stdout)
         # An exit status of 0 typically indicates process ran successfully:
         self.assertEqual(exitstatus, 0)
 
