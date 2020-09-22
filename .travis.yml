@@ -33,13 +33,15 @@ matrix:
         - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
         - source $(conda info --root)/etc/profile.d/conda.sh
         - conda activate sira_env
+        - conda install -c anaconda graphviz
+        - conda install -c alubbock pygraphviz
         - export PYTHONPATH="$PYTHONPATH:$(pwd)"
         - echo $PYTHONPATH
         # Helpful commands for error checking
         - conda list
         - python --version
         - python -m pip install --upgrade pip
-        - pip install pytest-cov
+        - pip3 install pytest-cov
         - pip3 install codecov
         # -----------------------------------------------------
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
