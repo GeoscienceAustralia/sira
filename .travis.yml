@@ -66,6 +66,7 @@ install:
   - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
   - eval "$(conda shell.bash hook)"
   - conda activate sira_env
+  - dot -c
   - conda env list
   - python --version
   - pip install -U pip
