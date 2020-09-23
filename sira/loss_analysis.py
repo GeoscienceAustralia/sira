@@ -1269,7 +1269,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     ax1.yaxis.grid(False)
     ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
     ax1.set_yticks(barpos)
-    ax1.set_yticklabels([''])
+    ax1.set_yticklabels([])
 
     ax1.tick_params(top=False, bottom=False, left=False, right=False)
     ax1.yaxis.set_tick_params(
