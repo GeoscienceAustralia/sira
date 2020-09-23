@@ -67,6 +67,8 @@ install:
   - eval "$(conda shell.bash hook)"
   - conda activate sira_env
   - conda install graphviz pygraphviz -c conda-forge
+  - conda install libtiff
+  - conda install libpng
   - conda env list
   - python --version
   - pip install -U pip
