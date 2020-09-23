@@ -15,7 +15,6 @@ imageio==2.8.0
 imagesize==1.2.0
 ipaddress==1.0.22
 Jinja2>=2.11.2
-jpeg
 jupyterlab==2.2.0
 latexcodec==2.0.1
 libtiff==4.1.0

@@ -1,5 +1,7 @@
 build-essential
 pkg-config
+graphviz
+graphviz-dev
 libgraphviz-dev
 xml2
 libxml2-dev
