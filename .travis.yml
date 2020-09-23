@@ -60,13 +60,13 @@ install:
   - export PATH="$HOME/anaconda3/bin:$PATH"
   - export PYTHONPATH="$PYTHONPATH:$(pwd)"
   - hash -r
-  - dot -c
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
   - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
   - eval "$(conda shell.bash hook)"
   - conda activate sira_env
+  - conda install graphviz pygraphviz
   - conda env list
   - python --version
   - pip install -U pip
