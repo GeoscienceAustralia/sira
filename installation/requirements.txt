@@ -17,8 +17,6 @@ ipaddress==1.0.22
 Jinja2>=2.11.2
 jupyterlab==2.2.0
 latexcodec==2.0.1
-libtiff==4.1.0
-libpng==1.6.37
 lmfit==1.0.0
 matplotlib==3.2.2
 netcdf4==1.5.3
