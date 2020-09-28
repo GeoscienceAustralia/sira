@@ -30,7 +30,8 @@ class SystemTopology(object):
         self.gviz = ""  # placeholder for a pygraphviz agraph
         self.component_attr = {}  # Dict for system comp attributes
         self.out_dir = scenario.output_path
-
+        self.node_position_meta = self.infrastructure.system_meta[self.loc_attr]['value']
+        
         for comp_id in list(infrastructure.components.keys()):
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
@@ -57,8 +58,8 @@ class SystemTopology(object):
 
         # Overwrite default if node locations are defined
         if hasattr(infrastructure, 'system_meta'):
-            if infrastructure.system_meta[self.loc_attr]['value']\
-                    == 'defined':
+            if self.infrastructure.system_meta[self.loc_attr]['value']\
+                == 'defined':
                 self.drawing_prog = 'neato'
 
 
@@ -310,7 +311,11 @@ class SystemTopology(object):
         # `connector_type` refers to the line connector type. Must be one of
         # ['spline', 'ortho', 'line', 'polyline', 'curved']
         self.connector_type = 'ortho'
-        self.drawing_prog = 'neato'
+        if str(self.node_position_meta).lower() == 'defined':
+            self.drawing_prog = 'neato'
+        else:
+            self.drawing_prog = 'dot'
+
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         G = self.infrastructure._component_graph.digraph
@@ -344,11 +349,11 @@ class SystemTopology(object):
             fontname="Helvetica-Bold",
             fontcolor="#444444",
             fontsize=30,
-            # smoothing="graph_dist",
-            smoothing="none",
             pad=0.5,
             pack=False,
             sep="+20",
+            smoothing="none",
+            # smoothing="graph_dist",
             # ranksep="1.0 equally",
             # overlap=False,
             # overlap="voronoi",
@@ -359,8 +364,8 @@ class SystemTopology(object):
             shape="circle",
             style="rounded,filled",
             fixedsize="true",
-            width=0.25,
-            height=0.25,
+            width=0.3,
+            height=0.3,
             color=default_node_color,  # gray14
             fillcolor="white",
             fontcolor=default_node_color,  # gray14
@@ -438,8 +443,8 @@ class SystemTopology(object):
                     self.segment_long_labels(node, maxlen=7, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
                     shape="doublecircle",
-                    width=1.3,
-                    height=1.3,
+                    width=2,
+                    height=2,
                     rank="sink",
                     penwidth=1.5,
                     color="orangered",  # royalblue3
@@ -489,9 +494,10 @@ class SystemTopology(object):
             if str(self.component_attr[node]['component_class']).lower()\
                     == 'bus':
                 # POSITION MUST BE IN POINTS for this to work
-                tpos = self.gviz.get_node(node).attr['pos']
-                poslist = [int(x.strip("!")) for x in tpos.split(",")]
-                posnew = str(poslist[0]) + "," + str(poslist[1] + 25) + "!"
+                buspos = self.gviz.get_node(node).attr['pos']
+                if str(self.node_position_meta).lower() == 'defined':
+                    poslist = [int(x.strip("!")) for x in buspos.split(",")]
+                    buspos = str(poslist[0]) + "," + str(poslist[1] + 25) + "!"
                 self.gviz.get_node(node).attr.update(
                     shape="rect",
                     penwidth=1.5,
@@ -499,7 +505,7 @@ class SystemTopology(object):
                     height=0.2,
                     label="",
                     xlabel=node,
-                    xlp=posnew,
+                    xlp=buspos,
                     )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -552,7 +558,6 @@ class SystemTopology(object):
         # `connector_type` refers to the line connector type. Must be one of
         # ['spline', 'ortho', 'line', 'polyline', 'curved']
         self.connector_type = 'ortho'
-        # self.drawing_prog = 'neato'
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

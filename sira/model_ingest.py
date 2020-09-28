@@ -46,6 +46,7 @@ def read_model_from_json(config):
         model = json.load(f, object_pairs_hook=OrderedDict)
 
     # read the lists from json
+    system_meta = model['system_meta']
     component_list = model['component_list']
     node_conn_df = model['node_conn_df']
     sysinp_setup = model['sysinp_setup']
@@ -85,6 +86,7 @@ def read_model_from_json(config):
     infrastructure_system_constructor['name'] = system_class + " : " + \
                                                 system_subclass
     infrastructure_system_constructor['components'] = system_components
+    infrastructure_system_constructor['system_meta'] = dict(system_meta)
 
     # create the supply and output node dictionaries
     supply_nodes = {}

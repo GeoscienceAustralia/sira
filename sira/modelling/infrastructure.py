@@ -48,7 +48,6 @@ class Infrastructure(Base):
     _component_graph = None
     if_nominal_output = None
     system_class = None
-
     sys_dmg_states = None
 
     def __init__(self, **kwargs):
@@ -421,41 +420,15 @@ class Substation(Infrastructure):
                                  'MODEL ARTEFACT',
                                  'SYSTEM INPUT',
                                  'SYSTEM OUTPUT',
-                                 'Generator']
-        # self.ds_lims_compclasses = {
-        #     'Bus':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Disconnect Switch':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Circuit Breaker':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Current Transformer':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Voltage Transformer':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Potential Transformer':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Autotransformer':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Power Transformer':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Control Building':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Surge Protection':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'System Control':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Measurement Instrumentation':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        #     'Power Factor Correction':
-        #         [0.01, 0.05, 0.40, 0.70, 1.00],
-        # }
+                                 'Generator', 'Generation Source']
         self.ds_lims_compclasses = {
             'Bus':
                 [0.05, 0.40, 0.70, 1.00],
-            'Disconnect Switch':
+            'Control Building':
                 [0.05, 0.40, 0.70, 1.00],
             'Circuit Breaker':
+                [0.05, 0.40, 0.70, 1.00],
+            'Disconnect Switch':
                 [0.05, 0.40, 0.70, 1.00],
             'Current Transformer':
                 [0.05, 0.40, 0.70, 1.00],
@@ -467,8 +440,6 @@ class Substation(Infrastructure):
                 [0.05, 0.40, 0.70, 1.00],
             'Power Transformer':
                 [0.05, 0.40, 0.70, 1.00],
-            'Control Building':
-                [0.05, 0.40, 0.70, 1.00],
             'Surge Protection':
                 [0.05, 0.40, 0.70, 1.00],
             'System Control':
@@ -476,6 +447,8 @@ class Substation(Infrastructure):
             'Measurement Instrumentation':
                 [0.05, 0.40, 0.70, 1.00],
             'Power Factor Correction':
+                [0.05, 0.40, 0.70, 1.00],
+            'Lightning Arrester':
                 [0.05, 0.40, 0.70, 1.00],
         }
 
