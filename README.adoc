@@ -13,7 +13,6 @@ image:https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master["Build St
 
 toc::[]
 
-
 ## Overview
 
 The detailed documentation is at this https://geoscienceaustralia.github.io/sira/[link].
@@ -174,7 +173,7 @@ This keeps all data and code contained within the single container.
 But it has the disadvantage that the data is not persistent -- if we 
 delete the container, we also lose the data and outputs.
 
-#### Bind a local directories to a path in Docker container
+#### Bind a local directory to a path in Docker container
 
 When setting up to run a docker container, it might be useful to bind a 
 local directory on the host (source) to a directory on the container 

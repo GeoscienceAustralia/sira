@@ -33,6 +33,7 @@ dependencies:
     - pylint
     - pytest
     - pytest-cov
+    - codecov
     - python-igraph=0.8.2
     - requests
     - s3transfer
@@ -43,9 +44,9 @@ dependencies:
     - sqlite
     - sqlalchemy
     - xlrd
-    # - graphviz
-    # - python-graphviz
-    # - pygraphviz=1.5
+    - alubbock::graphviz
+    - alubbock::pygraphviz=1.5
+    - python-graphviz
     - pip:
         - alabaster
         - actdiag
