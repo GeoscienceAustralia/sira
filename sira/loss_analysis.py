@@ -19,6 +19,8 @@ sns.set(style='whitegrid', palette='coolwarm')
 
 import logging
 rootLogger = logging.getLogger(__name__)
+from colorama import init, Fore
+init()
 
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:
@@ -116,7 +118,7 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
 
 def comp_recovery_given_hazard_and_time(component,
                                         component_response,
-                                        comptype_dmg_states,
+                                        system_damage_states,
                                         scenario_header,
                                         hazval,
                                         time_after_impact,
@@ -145,12 +147,18 @@ def comp_recovery_given_hazard_and_time(component,
             component.component_id, time_after_impact, hazval)
     )
 
+    comptype_dmg_states = component.damage_states
+    # if len(comptype_dmg_states) != len(system_damage_states):
+    #     rootLogger.warning("*** Damage state levels are "+
+    #     "not matched between system and component.\n"
+    # )
+
     damage_functions = \
         [component.damage_states[i].response_function
-         for i, ds in enumerate(comptype_dmg_states)]
+         for i in range(len(comptype_dmg_states))]
     recovery_functions = \
         [component.damage_states[i].recovery_function
-         for i, ds in enumerate(comptype_dmg_states)]
+         for i in range(len(comptype_dmg_states))]
 
     comp_fn = component_response.loc[(component.component_id, 'func_mean'),
                                      scenario_header]
@@ -1459,7 +1467,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     comptype_num = {
         x: len(list(infrastructure.get_components_for_type(x)))
         for x in cp_types_costed
-        }
+    }
     comptype_used = {x: 0 for x in cp_types_costed}
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1472,7 +1480,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
             int(np.floor(
                 (1.0 - ctype_resp_sorted.loc[x, 'num_failures'])
                 * comptype_num[x])
-                )
+            )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Using the HAZUS method:
@@ -1491,14 +1499,22 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
         comptype_used[ct] += 1
         comps_avl_for_int_replacement = \
             comptype_for_internal_replacement[ct] - comptype_used[ct]
-        comp_type_ds = infrastructure.get_system_damage_states()
+
+        system_damage_states = infrastructure.get_system_damage_states()
+        comptype_dmg_states = infrastructure.components[c].damage_states
+
+        if len(comptype_dmg_states) != len(system_damage_states):
+            print("\n")
+            rootLogger.warning(
+                Fore.MAGENTA + "*** Damage state levels are not "+
+                "matched between system and component." + Fore.RESET)
 
         for t in scenario.restoration_time_range:
             comp_rst[t][c], restoration_time_agg[c] = \
                 comp_recovery_given_hazard_and_time(
                     infrastructure.components[c],
                     component_response,
-                    comp_type_ds,
+                    system_damage_states,
                     scenario_header,
                     sc_haz_val,
                     t,
@@ -1562,9 +1578,10 @@ def run_scenario_loss_analysis(scenario,
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Read in SIMULATED HAZARD RESPONSE for <COMPONENT TYPES>
 
-    comptype_resp_df = pd.read_csv(input_comptype_response_file,
-                                   index_col=['component_type', 'response'],
-                                   skipinitialspace=True)
+    comptype_resp_df = pd.read_csv(
+        input_comptype_response_file,
+        index_col=['component_type', 'response'],
+        skipinitialspace=True)
     comptype_resp_df.columns = hazards.hazard_scenario_name
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
