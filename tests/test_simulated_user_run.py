@@ -56,6 +56,22 @@ class TestModuleRunProcess(unittest.TestCase):
         # An exit status of 0 typically indicates process ran successfully:
         self.assertEqual(exitstatus, 0)
 
+    def test_term_run_substation_model(self):
+        """
+        This module tests:
+        running the application from the terminal,
+        for a substation model.
+        """
+        model_name = 'substation_tx_230kv'
+        inputdir = Path(self.mdls_dir, model_name)
+        process = subprocess.run(
+            ['python', str(self.code_dir), '-d', str(inputdir), '-sl'], 
+            stdout=subprocess.PIPE, 
+            universal_newlines=True)
+        exitstatus = process.returncode
+        # An exit status of 0 typically indicates process ran successfully:
+        self.assertEqual(exitstatus, 0)
+
 
 if __name__ == '__main__':
     unittest.main()
