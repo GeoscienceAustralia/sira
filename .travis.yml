@@ -46,8 +46,6 @@ matrix:
         - conda list
         - python --version
         - python -m pip install --upgrade pip
-        - pip3 install pytest-cov
-        - pip3 install codecov
         # -----------------------------------------------------
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 
@@ -73,8 +71,6 @@ install:
   - python --version
   - pip install -U pip
   - pip install --upgrade pytest
-  - pip install pytest-cov
-  - pip install codecov
   - pip install -r ./installation/requirements.txt
 
 script:
