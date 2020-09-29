@@ -75,9 +75,9 @@ install:
 
 script:
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      python3 -m pytest --cov-report term --cov=sira tests/;
+      python3 -m pytest;
     elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      python -m pytest --cov-report term --cov=sira tests/;
+      python -m pytest;
     fi;
 
 after_success:
