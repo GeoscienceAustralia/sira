@@ -1,7 +1,7 @@
 from future.builtins import str, object
 from future.utils import with_metaclass
 import inspect
-from sira.modelling.utils import class_getter
+from sira.tools.utils import class_getter
 
 
 class NoDefaultException(Exception):
