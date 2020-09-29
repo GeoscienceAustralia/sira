@@ -12,7 +12,7 @@ plt.switch_backend('agg')
 
 import matplotlib.patheffects as PathEffects
 from matplotlib import gridspec
-import sira.siraplot as spl
+import sira.tools.siraplot as spl
 
 import seaborn as sns
 sns.set(style='whitegrid', palette='coolwarm')

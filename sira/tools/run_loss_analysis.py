@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import numpy as np
 np.seterr(divide='print', invalid='raise')
 
@@ -11,8 +9,6 @@ import os
 import copy
 from colorama import Fore, Back, init, Style
 init()
-
-import sira.siraplot as spl
 
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
@@ -27,6 +23,7 @@ from sira.configuration import Configuration
 from sira.scenario import Scenario
 from sira.modelling.hazard import HazardsContainer
 from sira.model_ingest import ingest_model
+import sira.tools.siraplot as spl
 
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:

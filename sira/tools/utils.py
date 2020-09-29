@@ -1,8 +1,31 @@
+"""
+sira/tools/utils.py
+This module provides a collection of helper functions
+"""
+from pathlib import Path
+import os
+import re
 from functools import reduce
 import importlib
 from copy import deepcopy
 from collections import namedtuple
 from collections.abc import Iterable
+
+
+def relpath(path_to, start):
+    """
+    `pathlib` only implementation of `os.path.relpath`
+    Taken from answer by Brett Ryland
+    https://stackoverflow.com/a/60671745
+    """
+    path_to = Path(path_to).resolve()
+    path_from = Path(start).resolve()
+    try:
+        for p in (*reversed(path_from.parents), path_from):
+            head, tail = p, path_to.relative_to(p)
+    except ValueError:  # Stop when the paths diverge.
+        pass
+    return Path('./' * (len(path_from.parents) - len(head.parents))).joinpath(tail)
 
 
 def get_all_subclasses(cls):

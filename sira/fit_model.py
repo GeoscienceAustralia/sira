@@ -3,7 +3,7 @@ mpl.use('agg')
 
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as PathEffects
-import sira.siraplot as spl
+import sira.tools.siraplot as spl
 
 import numpy as np
 from scipy import stats
