@@ -1,6 +1,6 @@
 import unittest
 from pathlib import Path
-from sira.utilities import relpath
+from sira.tools.utils import relpath
 import json
 from collections import OrderedDict
 import logging

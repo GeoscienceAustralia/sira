@@ -1,6 +1,6 @@
 import unittest
 from pathlib import Path
-from sira.utilities import relpath
+from sira.tools.utils import relpath
 import warnings
 import pandas as pd
 import logging
