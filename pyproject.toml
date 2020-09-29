@@ -1,0 +1,25 @@
+# pyproject.toml
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--color=yes --cov-report=xml --cov-report=term --cov=sira"
+testpaths = ["tests"]
+filterwarnings = ""
+log_cli = 1
+log_cli_level = "ERROR"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.coverage.paths]
+source = ["sira"]
+
+[tool.coverage.run]
+branch = false
+omit = [
+    "./sira/tools/*",
+    "*/tests/*"
+]
+
+[tool.coverage.report]
+skip_empty = true
+show_missing = false
+ignore_errors = true
