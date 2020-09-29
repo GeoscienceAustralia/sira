@@ -6,7 +6,7 @@ rootLogger = logging.getLogger(__name__)
 
 from sira.modelling.infrastructure import InfrastructureFactory
 from sira.modelling.component import (Component, ConnectionValues)
-from scripts.convert_excel_files_to_json import (
+from sira.tools.convert_excel_files_to_json import (
     update_json_structure, read_excel_to_json)
 
 
@@ -20,18 +20,29 @@ def ingest_model(config):
     extension = Path(config.INPUT_MODEL_PATH).suffix[1:].lower()
 
     if extension == 'json':
-        return read_model_from_json(config)
+        with open(config.INPUT_MODEL_PATH, 'r') as f:
+            # ensure that damage states are ordered
+            model = json.load(f, object_pairs_hook=OrderedDict)
+        return read_model_from_json(config, model)
+
     elif extension == 'xlsx':
-        return read_model_from_xlsx(config)
+        json_obj = json.loads(
+            read_excel_to_json(config.INPUT_MODEL_PATH),
+            object_pairs_hook=OrderedDict)
+        model = update_json_structure(json_obj)
+        return read_model_from_json(config, model)
+
     else:
-        rootLogger.critical("Invalid model file type! "
-                            "Accepted types are json or xlsx.")
-        raise ValueError("Invalid model file type! " 
-                         "Accepted types are json or xlsx. "
-                         "File supplied: " + config.SYS_CONF_FILE)
+        rootLogger.critical(
+            "Invalid model file type! "
+            "Accepted types are json or xlsx.")
+        raise ValueError(
+            "Invalid model file type! " 
+            "Accepted types are json or xlsx. "
+            "File supplied: " + config.SYS_CONF_FILE)
 
 
-def read_model_from_json(config):
+def read_model_from_json(config, model):
     """
     Create an infrastructure_model and AlgorithmFactory from the
     infrastructure model in json file
@@ -40,10 +51,6 @@ def read_model_from_json(config):
     """
     system_class = config.SYSTEM_CLASS
     system_subclass = config.SYSTEM_SUBCLASS
-
-    with open(config.INPUT_MODEL_PATH, 'r') as f:
-        # ensure that damage states are ordered
-        model = json.load(f, object_pairs_hook=OrderedDict)
 
     # read the lists from json
     system_meta = model['system_meta']
@@ -99,112 +106,6 @@ def read_model_from_json(config):
         sv_dict['commodity_type'] \
             = sysinp_setup[index]['commodity_type']
 
-        supply_nodes[index] = sv_dict
-
-    infrastructure_system_constructor['supply_nodes'] = supply_nodes
-
-    output_nodes = {}
-    for index in sysout_setup:
-        op_dict = {}
-        op_dict['production_node'] \
-            = sysout_setup[index]['production_node']
-        op_dict['output_node_capacity'] \
-            = sysout_setup[index]['output_node_capacity']
-        op_dict['capacity_fraction'] \
-            = float(sysout_setup[index]['capacity_fraction'])
-        op_dict['priority'] = sysout_setup[index]['priority']
-        output_nodes[index] = op_dict
-
-    infrastructure_system_constructor['sys_dmg_states'] = []
-    for key in component_list:
-        for damages_state in component_list[key]["damages_states_constructor"]:
-            if damages_state not in \
-                    infrastructure_system_constructor['sys_dmg_states']:
-                infrastructure_system_constructor['sys_dmg_states'].\
-                    append(damages_state)
-
-    infrastructure_system_constructor['output_nodes'] = output_nodes
-
-    # set the system class
-    infrastructure_system_constructor['system_class'] = system_class
-
-    return InfrastructureFactory.create_model(infrastructure_system_constructor)
-
-
-def read_model_from_xlsx(config):
-
-    """
-    Create an infrastructure_model and AlgorithmFactory from
-    the infrastructure model in json file
-    :param config:
-    :return:
-    """
-    system_class = config.SYSTEM_CLASS
-    system_subclass = config.SYSTEM_SUBCLASS
-
-    json_obj = json.loads(read_excel_to_json(config.INPUT_MODEL_PATH),
-                          object_pairs_hook=OrderedDict)
-    model = update_json_structure(json_obj)
-
-    # read the lists from json
-    system_meta = model['system_meta']
-    component_list = model['component_list']
-    node_conn_df = model['node_conn_df']
-    sysinp_setup = model['sysinp_setup']
-    sysout_setup = model['sysout_setup']
-
-    # **************************************************************************
-    mdl_meta = {}
-    for index in system_meta:
-        mdl_meta_params = {}
-        mdl_meta_params['value'] = system_meta[index]['value']
-        mdl_meta_params['notes'] = system_meta[index]['notes']
-        mdl_meta[index] = mdl_meta_params
-
-    system_components = {}
-    for component_id in component_list:
-        component_values = {}
-
-        component_values['component_id'] = component_id
-
-        for param in component_list[component_id].keys():
-            component_values[param] = component_list[component_id][param]
-
-        # list of damage states with a function assignment!
-        system_components[component_id] = Component(**component_values)
-
-    # now we add children!
-    for index in node_conn_df:
-        component_id = node_conn_df[index]['origin']
-        system_component = system_components[component_id]
-
-        if not system_component.destination_components:
-            system_component.destination_components = {}
-        edge_values = {}
-        edge_values['link_capacity'] \
-            = float(node_conn_df[index]['link_capacity'])
-        edge_values['weight'] \
-            = float(node_conn_df[index]['weight'])
-        system_component.\
-            destination_components[node_conn_df[index]['destination']] \
-            = ConnectionValues(**edge_values)
-
-    infrastructure_system_constructor = dict()
-    infrastructure_system_constructor['system_meta'] = mdl_meta
-    infrastructure_system_constructor['name'] = \
-        system_class + " : " + system_subclass
-    infrastructure_system_constructor['components'] = system_components
-
-    # create the supply and output node dictionaries
-    supply_nodes = {}
-    for index in sysinp_setup:
-        sv_dict = {}
-        sv_dict['input_capacity'] \
-            = sysinp_setup[index]['input_capacity']
-        sv_dict['capacity_fraction'] \
-            = float(sysinp_setup[index]['capacity_fraction'])
-        sv_dict['commodity_type'] \
-            = sysinp_setup[index]['commodity_type']
         supply_nodes[index] = sv_dict
 
     infrastructure_system_constructor['supply_nodes'] = supply_nodes
