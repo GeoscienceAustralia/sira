@@ -14,12 +14,14 @@ mpl.rcParams['legend.numpoints'] = 1
 mpl.rcParams['xtick.direction'] = 'out'
 mpl.rcParams['ytick.direction'] = 'out'
 mpl.rcParams['grid.linewidth'] = 0.5
+
+# mpl.rcParams['text.usetex'] = True
+# mpl.rcParams.update()
+
+# mpl.font_manager._rebuild()
 # mpl.rcParams['font.family'] = 'serif'
 # mpl.rcParams['font.serif'] = \
 #     ['Droid Serif'] + mpl.rcParams['font.serif']
-# mpl.rcParams['text.usetex'] = True
-# mpl.rcParams.update()
-# mpl.font_manager._rebuild()
 
 class ColourPalettes(object):
 
@@ -218,7 +220,6 @@ def split_long_label(string, delims, max_chars_per_line=20):
 
 # ----------------------------------------------------------------------------
 
-
 # def calc_tick_pos(stepsize, ax_vals_list, ax_labels_list,
 #                   maxnumticks=11, plot_type='line'):
 #     '''
@@ -277,7 +278,7 @@ def add_legend_subtitle(str):
 
 def forceAspect(ax,aspect=1):
     """
-    Forces the aspect ratio to be equal
+    Forces the aspect ratio to be equal to provided ratio.
     Copy of Yann's answer to the SO question:
     https://stackoverflow.com/questions/7965743/\
         how-can-i-set-the-aspect-ratio-in-matplotlib
@@ -390,9 +391,6 @@ def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
     axis.set_title(figtitle, loc='center', y=1.04, fontweight='bold', size=11)
     axis.set_xlabel(x_lab, size=10)
     axis.set_ylabel(y_lab, size=10)
-
-    # axis.title.set_fontsize(11)
-    # for item in [axis.xaxis.label, axis.yaxis.label]: item.set_fontsize(10)
 
     # Shrink current axis width by 15%
     box = axis.get_position()
