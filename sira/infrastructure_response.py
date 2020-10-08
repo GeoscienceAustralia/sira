@@ -1,19 +1,17 @@
+import logging
 import os
 import pickle
 import zipfile
 
+import matplotlib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-import matplotlib
-
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-plt.switch_backend('agg')
 import seaborn as sns
 
-import logging
 rootLogger = logging.getLogger(__name__)
+matplotlib.use('Agg')
+plt.switch_backend('agg')
 
 
 # ****************************************************************************
@@ -22,13 +20,13 @@ rootLogger = logging.getLogger(__name__)
 
 def calc_tick_vals(val_list, xstep=0.1):
     num_ticks = int(round(len(val_list)/xstep)) + 1
-    if num_ticks>12 and num_ticks<=20:
+    if (num_ticks > 12) and (num_ticks <= 20):
         xstep = 0.2
         num_ticks = int(round(len(val_list)/xstep)) + 1
-    elif num_ticks>20:
+    elif num_ticks > 20:
         num_ticks = 11
-    tick_labels = val_list[::(num_ticks-1)]
-    if type(tick_labels[0])==float:
+    tick_labels = val_list[::(num_ticks - 1)]
+    if type(tick_labels[0]) == float:
         tick_labels = ['{:.3f}'.format(val) for val in tick_labels]
     return tick_labels
 
@@ -84,8 +82,8 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     xtick_pos = []
     for val in xtick_labels:
         xtick_pos.append(hazard_scenario_list.index(val))
-    intensity_label = hazards.intensity_measure_param+' ('+\
-                      hazards.intensity_measure_unit+')'
+    intensity_label = hazards.intensity_measure_param+' (' +\
+        hazards.intensity_measure_unit+')'
 
     ax.set_xticks(xtick_pos)
     ax.set_xticklabels(xtick_labels, rotation='vertical')
@@ -94,7 +92,9 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     ax.set_yticks(np.linspace(0.0, 1.0, 11, endpoint=True))
     ax.set_ylabel('Loss Fraction (%)', labelpad=9, size=10)
 
-    ax.set_title('Loss Ratio', loc='center', y=1.04,fontsize=12, weight='bold')
+    ax.set_title(
+        'Loss Ratio', loc='center', y=1.04,
+        fontsize=12, weight='bold')
 
     figfile = os.path.join(scenario.output_path, 'fig_lossratio_boxplot.png')
     plt.margins(0.05)
@@ -150,7 +150,8 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # Hazard response for component instances, i.e. components as-installed
     # ------------------------------------------------------------------------
     component_resp_dict = response_list[2]
-    crd_pkl = os.path.join(scenario.raw_output_dir,'component_resp_dict.pickle')
+    crd_pkl = os.path.join(
+        scenario.raw_output_dir, 'component_resp_dict.pickle')
     with open(crd_pkl, 'wb') as handle:
         for response_key in sorted(component_resp_dict.keys()):
             pickle.dump(
@@ -194,18 +195,16 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             pe_sys_econloss[i, j] = \
                 np.sum(sys_frag[:, j] >= i) / float(scenario.num_samples)
 
-    compcls_dmg_level_percentages = response_list[6]
-    comp_class_list = infrastructure.get_component_classes()
-    pe_sys_classdmg = np.zeros(
-        (len(infrastructure.get_system_damage_states()),
-         hazards.num_hazard_pts)
-        )
-
     ###########################################################################
-    # print("****************************")
+    # compcls_dmg_level_percentages = response_list[6]
+    # comp_class_list = infrastructure.get_component_classes()
+    # pe_sys_classdmg = np.zeros(
+    #     (len(infrastructure.get_system_damage_states()),
+    #      hazards.num_hazard_pts)
+    #     )
     # print('compcls_dmg_level_percentages')
     # pp.pprint(compcls_dmg_level_percentages)
-
+    #
     # for j in range(hazards.num_hazard_pts):
     #     for i in range(len(infrastructure.get_system_damage_states())):
     #         pe_sys_classdmg[i, j] = \
@@ -286,7 +285,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                         len(cp_class_map[compclass])
 
                     comp_class_frag[compclass][i, j] = \
-                        np.sum(comp_class_failures[compclass][i, j] > \
+                        np.sum(comp_class_failures[compclass][i, j] >
                                infrastructure.ds_lims_compclasses[compclass])
 
         # Probability of Exceedence -- Based on Failure of Component Classes
@@ -313,8 +312,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
     exp_damage_ratio = np.zeros((len(infrastructure.components),
                                  hazards.num_hazard_pts))
-    for l, hazard in enumerate(hazards.listOfhazards):
-        # compute expected damage ratio
+
+    for haz_idx, hazard in enumerate(hazards.listOfhazards):
         for j, component in enumerate(infrastructure.components.values()):
             # TODO remove invalid Component accesses !!
 
@@ -322,10 +321,10 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
             for damage_state_index in component.damage_states.keys():
                 x_loc, y_loc = component.get_location()
                 hazard_intensity \
-                    = hazard.get_hazard_intensity_at_location(x_loc, y_loc)
+                    = hazard.get_hazard_intensity(x_loc, y_loc)
                 component_pe_ds[damage_state_index] \
                     = component.damage_states[damage_state_index].\
-                      response_function(hazard_intensity)
+                    response_function(hazard_intensity)
 
             component_pe_ds = component_pe_ds[1:]
             pb = pe2pb(component_pe_ds)
@@ -333,7 +332,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
                            for ds in range(len(component.damage_states))])
             cf = component.cost_fraction
             loss_list = dr * cf
-            exp_damage_ratio[j, l] = np.sum(pb * loss_list)
+            exp_damage_ratio[j, haz_idx] = np.sum(pb * loss_list)
 
     # ------------------------------------------------------------------------
     # Write analytical outputs to file
@@ -374,8 +373,8 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
     # --- Output File --- mean loss of component ---
     outfile_comp_loss = os.path.join(scenario.output_path,
                                      'component_meanloss.csv')
-    component_loss_df = component_resp_df.iloc\
-        [component_resp_df.index.get_level_values(1) == 'loss_mean']
+    component_loss_df = component_resp_df.\
+        iloc[component_resp_df.index.get_level_values(1) == 'loss_mean']
     component_loss_df.reset_index(level='response', inplace=True)
     component_loss_df = component_loss_df.drop('response', axis=1)
     component_loss_df.to_csv(
@@ -414,6 +413,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
 
     # ... END POST-PROCESSING
     # **************************************************************************
+
 
 def pe2pb(pe):
     """
