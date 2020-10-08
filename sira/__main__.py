@@ -19,39 +19,39 @@ python_version  : 3.7
 """
 
 from __future__ import print_function
-import sys
-import numpy as np
-np.seterr(divide='print', invalid='raise')
-import time
-import re
-import os
-from pathlib import Path
+
 import argparse
-import numpy as np
 import logging
 import logging.config
-from colorama import init, Fore, Back, Style
+import os
+import re
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+from colorama import Fore, init
+
+# Import SIRA modules
+from sira.configuration import Configuration
+from sira.fit_model import fit_prob_exceed_model
+from sira.infrastructure_response import (pe_by_component_class,
+                                          plot_mean_econ_loss,
+                                          write_system_response)
+from sira.logger import configure_logger
+from sira.loss_analysis import run_scenario_loss_analysis
+from sira.model_ingest import ingest_model
+from sira.modelling.hazard import HazardsContainer
+from sira.modelling.system_topology import SystemTopology
+from sira.scenario import Scenario
+from sira.simulation import calculate_response
+
 init()
+np.seterr(divide='print', invalid='raise')
 
 # Add the source dir to system path
 src_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(src_dir))
-
-# Import SIRA modules
-from sira.logger import configure_logger
-from sira.configuration import Configuration
-from sira.scenario import Scenario
-from sira.modelling.hazard import HazardsContainer
-from sira.model_ingest import ingest_model
-from sira.simulation import calculate_response
-from sira.modelling.system_topology import SystemTopology
-from sira.infrastructure_response import (
-    write_system_response,
-    plot_mean_econ_loss,
-    pe_by_component_class
-    )
-from sira.fit_model import fit_prob_exceed_model
-from sira.loss_analysis import run_scenario_loss_analysis
 
 
 def main():
@@ -65,7 +65,7 @@ def main():
     parser.add_argument("-m", "--model_file", type=str)
 
     # [Or] Supply only the directory where the input files reside
-    parser.add_argument("-d", "--input_directory", type=str) 
+    parser.add_argument("-d", "--input_directory", type=str)
 
     # Tell the code what tasks to do
     parser.add_argument(
@@ -79,7 +79,7 @@ def main():
         "-v", "--verbose", dest="loglevel", type=str,
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         default="INFO",
-        help="Choose option for logging level from: \n"+
+        help="Choose option for logging level from: \n" +
              "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
 
     args = parser.parse_args()
@@ -283,6 +283,7 @@ def main():
     rootLogger.info("Model file used  : " + args.model_file)
     rootLogger.info("Outputs saved in : " +
                     Fore.YELLOW + args.output + Fore.RESET + '\n')
+
 
 if __name__ == "__main__":
     main()
