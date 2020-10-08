@@ -1,26 +1,24 @@
-import numpy as np
-np.seterr(divide='print', invalid='raise')
-import pandas as pd
-
-import os
 import copy
 import itertools
+import logging
+import os
 
 import matplotlib as mpl
-import matplotlib.pyplot as plt
-plt.switch_backend('agg')
-
 import matplotlib.patheffects as PathEffects
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from colorama import Fore, init
 from matplotlib import gridspec
+
 import sira.tools.siraplot as spl
 
-import seaborn as sns
-sns.set(style='whitegrid', palette='coolwarm')
-
-import logging
-rootLogger = logging.getLogger(__name__)
-from colorama import init, Fore
 init()
+rootLogger = logging.getLogger(__name__)
+np.seterr(divide='print', invalid='raise')
+plt.switch_backend('agg')
+sns.set(style='whitegrid', palette='coolwarm')
 
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:
@@ -33,8 +31,9 @@ RESTORATION_OFFSET = 1
 
 # *****************************************************************************
 
+
 def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
-    ''' 
+    '''
     Fills between a step plot and x-axis
 
     ********************************************************************
@@ -71,7 +70,7 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
         raise ValueError("where must be one of {{'pre', 'post', 'mid'}} "
                          "You passed in {wh}".format(wh=step_where))
 
-    # make sure y values are up-converted to arrays 
+    # make sure y values are up-converted to arrays
     if np.isscalar(y1):
         y1 = np.ones_like(x) * y1
 
@@ -79,7 +78,7 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
         y2 = np.ones_like(x) * y2
 
     # temporary array for up-converting the values to step corners
-    # 3 x 2N - 1 array 
+    # 3 x 2N - 1 array
 
     vertices = np.vstack((x, y1, y2))
 
@@ -212,6 +211,7 @@ def comp_recovery_given_hazard_and_time(component,
 
 # *****************************************************************************
 
+
 def prep_repair_list(infrastructure_obj,
                      component_meanloss,
                      component_fullrst_time,
@@ -248,7 +248,7 @@ def prep_repair_list(infrastructure_obj,
         eid = G.get_eid(*tp)
         origin = G.vs[tp[0]]['name']
         # destin = G.vs[tp[1]]['name']
-        if weight_criteria == None:
+        if weight_criteria is None:
             wt = 1.0
         elif weight_criteria == 'MIN_TIME':
             wt = component_fullrst_time.loc[origin, 'Full Restoration Time']
@@ -257,8 +257,9 @@ def prep_repair_list(infrastructure_obj,
         G.es[eid][w] = wt
 
     repair_list = {
-    outnode: {sn: 0 for sn in list(nodes_by_commoditytype.keys())}
-    for outnode in out_node_list}
+        outnode: {sn: 0 for sn in list(nodes_by_commoditytype.keys())}
+        for outnode in out_node_list
+    }
     repair_list_combined = {}
 
     for onode in out_node_list:
@@ -302,7 +303,7 @@ def prep_repair_list(infrastructure_obj,
                             weights=w, mode='OUT')[0])
                     sp_list = np.unique(sp_list)
                     RL = [G.vs[x]['name']
-                            for x in set([]).union(sp_dep, sp_list)]
+                          for x in set([]).union(sp_dep, sp_list)]
                     sp_len[cix] = len(RL)
                 if sp_len[cix] < LEN_CHK:
                     LEN_CHK = sp_len[cix]
@@ -320,6 +321,7 @@ def prep_repair_list(infrastructure_obj,
     return repair_list_combined
 
 # *****************************************************************************
+
 
 def calc_restoration_setup(component_meanloss,
                            out_node_list, comps_uncosted,
@@ -383,10 +385,10 @@ def calc_restoration_setup(component_meanloss,
             [comp_fullrst_time.loc[c, 'Full Restoration Time']
              for c in repair_list_combined[onode]]
         df = pd.DataFrame(
-            {'NodesToRepair'   : repair_list_combined[onode],
-             'OutputNode'      : [onode] * len(repair_list_combined[onode]),
+            {'NodesToRepair': repair_list_combined[onode],
+             'OutputNode': [onode] * len(repair_list_combined[onode]),
              'RestorationTimes': restore_time_each_node[onode],
-             'Fin'             : 0
+             'Fin': 0
              })
         df = df.sort_values(by=['RestorationTimes'], ascending=[0])
         rst_setup_df = rst_setup_df.append(df, sort=True)
@@ -416,7 +418,8 @@ def calc_restoration_setup(component_meanloss,
     t_init = 0
     t0 = t_init + RESTORATION_OFFSET
     for inx in rst_setup_df.index[0:rst_stream]:
-        if inx != rst_setup_df.index[0]: t0 += rst_setup_df.loc[inx, 'DeltaTC']
+        if inx != rst_setup_df.index[0]:
+            t0 += rst_setup_df.loc[inx, 'DeltaTC']
         rst_setup_df.loc[inx, 'RstStart'] = t0
         rst_setup_df.loc[inx, 'RstEnd'] = \
             rst_setup_df.loc[inx, 'RstStart'] + \
@@ -451,6 +454,7 @@ def calc_restoration_setup(component_meanloss,
     return rst_setup_df
 
 # *****************************************************************************
+
 
 def vis_restoration_process(scenario,
                             infrastructure,
@@ -646,6 +650,7 @@ def vis_restoration_process(scenario,
 
 # *****************************************************************************
 
+
 def component_criticality(infrastructure,
                           scenario,
                           ctype_scenario_outcomes,
@@ -773,6 +778,7 @@ def component_criticality(infrastructure,
 
 # *****************************************************************************
 
+
 def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
                                        ctype_loss_by_type,
                                        ctype_lossbytype_rank,
@@ -884,6 +890,7 @@ def draw_component_loss_barchart_bidir(ctype_loss_vals_tot,
 
 # *****************************************************************************
 
+
 def draw_component_loss_barchart_s1(ctype_resp_sorted,
                                     scenario_tag,
                                     hazard_type,
@@ -992,6 +999,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
 
 # *****************************************************************************
 
+
 def draw_component_loss_barchart_s2(ctype_resp_sorted,
                                     scenario_tag,
                                     hazard_type,
@@ -1042,8 +1050,11 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         color=bar_clr_1, alpha=0.75, edgecolor=None,
         label="% loss for component type",
         xerr=ctype_loss_std_by_type,
-        error_kw={'ecolor'    : 'lightcoral', 'capsize': 2,
-                  'elinewidth': 0.7, 'markeredgewidth': 0.7}
+        error_kw={
+            'ecolor': 'lightcoral',
+            'capsize': 2,
+            'elinewidth': 0.7,
+            'markeredgewidth': 0.7}
         )
 
     for p, cv in zip(barpos, ctype_loss_mean_by_type):
@@ -1111,7 +1122,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         COLR_SET = colours.Tartarize269
 
     scaled_tot_loss = [x * 100 / sum(ctype_loss_tot_mean)
-                       if sum(ctype_loss_tot_mean)>0 else 0
+                       if sum(ctype_loss_tot_mean) > 0 else 0
                        for x in ctype_loss_tot_mean]
 
     leftpos = 0.0
@@ -1134,7 +1145,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     agg_sys_loss = sum(ctype_resp_sorted['loss_tot'].values)
     ax2.set_xlabel(
         "Aggregated loss as fraction of System Value: {:.1f}% "
-            .format(round(agg_sys_loss * 100)), size=8, labelpad=12)
+        .format(round(agg_sys_loss * 100)), size=8, labelpad=12)
 
     ax2.yaxis.grid(False)
     ax2.set_yticklabels([])
@@ -1171,6 +1182,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     plt.close(fig)
 
 # *****************************************************************************
+
 
 def draw_component_loss_barchart_s3(ctype_resp_sorted,
                                     scenario_tag,
@@ -1221,9 +1233,11 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
         color=bar_clr_1, alpha=0.75, edgecolor=None,
         label="% loss for component type",
         xerr=ctype_loss_std_by_type,
-        error_kw={'ecolor'    : 'cornflowerblue', 'capsize': 0,
-                  'elinewidth': 1.2, 'markeredgewidth': 0.0}
-
+        error_kw={
+            'ecolor': 'cornflowerblue',
+            'capsize': 0,
+            'elinewidth': 1.2,
+            'markeredgewidth': 0.0}
         )
 
     def selective_rounding(fltval):
@@ -1295,7 +1309,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     stacked_bar_width = 1.0
 
     scaled_tot_loss = [x * 100 / sum(ctype_loss_tot_mean)
-                       if sum(ctype_loss_tot_mean)>0 else 0
+                       if sum(ctype_loss_tot_mean) > 0 else 0
                        for x in ctype_loss_tot_mean]
 
     leftpos = 0.0
@@ -1336,7 +1350,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     agg_sys_loss = sum(ctype_resp_sorted['loss_tot'].values)
     ax2.set_xlabel(
         "Aggregated loss as fraction of System Value: {:.0f}% "
-            .format(round(agg_sys_loss * 100)), size=8, labelpad=8)
+        .format(round(agg_sys_loss * 100)), size=8, labelpad=8)
 
     ax2.yaxis.grid(False)
     ax2.set_yticklabels([])
@@ -1371,6 +1385,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     plt.close(fig)
 
 # *****************************************************************************
+
 
 def draw_component_failure_barchart(uncosted_comptypes,
                                     ctype_failure_mean,
@@ -1409,7 +1424,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
     ax.spines['right'].set_linewidth(0.5)
 
     ax.set_xlim(0, 100)
-    ax.set_xticks(np.linspace(0, 100, 5 , endpoint=True))
+    ax.set_xticks(np.linspace(0, 100, 5, endpoint=True))
     ax.set_xticklabels([' ']*5)
     ax.xaxis.grid(True, color=grid_clr, linewidth=0.5, linestyle='-')
 
@@ -1480,7 +1495,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
             int(np.floor(
                 (1.0 - ctype_resp_sorted.loc[x, 'num_failures'])
                 * comptype_num[x])
-            )
+                )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Using the HAZUS method:
@@ -1488,31 +1503,32 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     comp_rst = {t: {n: 0 for n in nodes_costed}
                 for t in scenario.restoration_time_range}
     restoration_time_agg = {nc: 0 for nc in nodes_costed}
-    for c in nodes_costed:
-        ct = infrastructure.components[c].component_type
+    for comp_name in nodes_costed:
+        comp_obj = infrastructure.components[comp_name]
+        ct = infrastructure.components[comp_name].component_type
         haz_ix = hazards.hazard_scenario_name.index(scenario_header)
+        x_loc, y_loc = comp_obj.get_location()
         sc_haz_val = \
-            hazards.listOfhazards[haz_ix].get_hazard_intensity_at_location(
-                infrastructure.components[c].pos_x,
-                infrastructure.components[c].pos_y)
+            hazards.listOfhazards[haz_ix].get_hazard_intensity(
+                x_loc, y_loc)
 
         comptype_used[ct] += 1
         comps_avl_for_int_replacement = \
             comptype_for_internal_replacement[ct] - comptype_used[ct]
 
         system_damage_states = infrastructure.get_system_damage_states()
-        comptype_dmg_states = infrastructure.components[c].damage_states
+        comptype_dmg_states = comp_obj.damage_states
 
         if len(comptype_dmg_states) != len(system_damage_states):
             print("\n")
             rootLogger.warning(
-                Fore.MAGENTA + "*** Damage state levels are not "+
+                Fore.MAGENTA + "*** Damage state levels are not " +
                 "matched between system and component." + Fore.RESET)
 
         for t in scenario.restoration_time_range:
-            comp_rst[t][c], restoration_time_agg[c] = \
+            comp_rst[t][comp_name], restoration_time_agg[comp_name] = \
                 comp_recovery_given_hazard_and_time(
-                    infrastructure.components[c],
+                    comp_obj,
                     component_response,
                     system_damage_states,
                     scenario_header,
@@ -1529,7 +1545,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
 
     comp_rst_time_given_haz = []
     for c in nodes_costed:
-        post_rst_times = comp_rst_df.loc[c] >= RESTORATION_THRESHOLD        
+        post_rst_times = comp_rst_df.loc[c] >= RESTORATION_THRESHOLD
         if True in list(post_rst_times.array):
             time_restored = np.round(comp_rst_df.columns[post_rst_times][0], 0)
         else:
@@ -1589,8 +1605,8 @@ def run_scenario_loss_analysis(scenario,
     # NEED TO MOVE THESE TO A MORE LOGICAL PLACE
 
     uncosted_comptypes = [
-        'CONN_NODE', 'JUNCTION_NODE', 'JUNCTION',\
-        'SYSTEM_INPUT', 'SYSTEM_OUTPUT',\
+        'CONN_NODE', 'JUNCTION_NODE', 'JUNCTION',
+        'SYSTEM_INPUT', 'SYSTEM_OUTPUT',
         'Generation Source', 'Grounding'
     ]
 
@@ -1664,8 +1680,8 @@ def run_scenario_loss_analysis(scenario,
         elif config.HAZARD_INPUT_METHOD == "scenario_file":
             scenario_header = sc_haz_str
         scenario_tag = str(sc_haz_str) + " " + \
-                       hazards.intensity_measure_unit + " " + \
-                       hazards.intensity_measure_param
+            hazards.intensity_measure_unit + " " + \
+            hazards.intensity_measure_param
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Extract scenario-specific values from the 'hazard response' dataframe
@@ -1679,10 +1695,10 @@ def run_scenario_loss_analysis(scenario,
         ctype_resp_scenario['loss_per_type'] \
             = ctype_resp_scenario['loss_mean'] / comptype_value_list
 
-        ctype_resp_scenario['loss_per_type_std'] \
-            = ctype_resp_scenario['loss_std'] * \
-              [len(list(infrastructure.get_components_for_type(ct)))
-               for ct in ctype_resp_scenario.index.values.tolist()]
+        ctype_resp_scenario['loss_per_type_std'] =\
+            ctype_resp_scenario['loss_std'] * \
+            [len(list(infrastructure.get_components_for_type(ct)))
+             for ct in ctype_resp_scenario.index.values.tolist()]
 
         ctype_resp_sorted = ctype_resp_scenario.sort_values(by='loss_tot',
                                                             ascending=False)
