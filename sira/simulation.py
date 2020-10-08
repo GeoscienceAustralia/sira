@@ -3,10 +3,12 @@ This module applies a Monte Carlo process to calculate system output
 levels and losses for given hazard levels and given number of iterations.
 """
 
+import logging
 import time
 from datetime import timedelta
-import logging
+
 import numpy as np
+
 # import parmap
 rootLogger = logging.getLogger(__name__)
 
@@ -28,21 +30,23 @@ def calculate_response(hazards, scenario, infrastructure):
     # code_start_time = time.time() # start of the overall response calculation
     # capture the results from the map call in a list
     hazards_response = []
-    # Use the parallel option in the scenario to determine how to run
 
+    # # Use the parallel option in the scenario to determine how to run
     # if scenario.run_parallel_proc:
     #     rootLogger.info("Start parallel run")
-    #     hazards_response.extend(parmap.map(calculate_response_for_hazard,
-    #                                        hazards.get_listOfhazards(),
-    #                                        scenario,
-    #                                        infrastructure,
-    #                                        parallel=scenario.run_parallel_proc))
+    #     hazards_response.extend(
+    #         parmap.map(calculate_response_for_hazard,
+    #         hazards.get_listOfhazards(),
+    #         scenario,
+    #         infrastructure,
+    #         parallel=scenario.run_parallel_proc))
     #     rootLogger.info("End parallel run")
     # else:
     #     rootLogger.info("Start serial run")
     #     for hazard in hazards.listOfhazards:
     #         hazards_response.append(
-    #             calculate_response_for_hazard(hazard, scenario, infrastructure))
+    #             calculate_response_for_hazard(
+    #                 hazard, scenario, infrastructure))
     #     rootLogger.info("End serial run")
     rootLogger.info("Start serial run")
     for hazard in hazards.listOfhazards:
@@ -120,19 +124,19 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
 
     # calculate the component loss, functionality, output,
     #  economic loss and recovery output over time
-    component_sample_loss, \
-    comp_sample_func, \
-    infrastructure_sample_output, \
-    infrastructure_sample_economic_loss = \
+    (component_sample_loss,
+     comp_sample_func,
+     infrastructure_sample_output,
+     infrastructure_sample_economic_loss) = \
         infrastructure.calc_output_loss(
             scenario,
             expected_damage_state_of_components_for_n_simulations)
 
     # Construct the dictionary containing the statistics of the response
-    component_response_dict, \
-    comptype_response_dict, \
-    compclass_dmg_level_percentages, \
-    compclass_dmg_index_expected = \
+    (component_response_dict,
+     comptype_response_dict,
+     compclass_dmg_level_percentages,
+     compclass_dmg_index_expected) = \
         infrastructure.calc_response(
             component_sample_loss,
             comp_sample_func,
@@ -143,8 +147,8 @@ def calculate_response_for_hazard(hazard, scenario, infrastructure):
         "Calculating system output for hazard %s",
         hazard.hazard_scenario_name)
     infrastructure_output = {}
-    for output_index, output_comp_id in \
-        enumerate(infrastructure.output_nodes.keys()):
+    output_nodes = infrastructure.output_nodes.keys()
+    for output_index, output_comp_id in enumerate(output_nodes):
         infrastructure_output[output_comp_id] = np.mean(
             infrastructure_sample_output[:, output_index])
 
@@ -221,7 +225,7 @@ def calc_component_damage_state_for_n_simulations(
         for damage_state_index in component.damage_states.keys():
             # find the hazard intensity component is exposed too
             pos_x, pos_y = component.get_location()
-            hazard_intensity = hazard.get_hazard_intensity_at_location(
+            hazard_intensity = hazard.get_hazard_intensity(
                 pos_x, pos_y)
 
             component_pe_ds[damage_state_index] \
