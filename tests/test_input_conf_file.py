@@ -1,9 +1,11 @@
+import logging
 import unittest
 from pathlib import Path
-import logging
+
+from sira.configuration import Configuration
+
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
-from sira.configuration import Configuration
 
 
 class TestInputConfFile(unittest. TestCase):
@@ -21,10 +23,9 @@ class TestInputConfFile(unittest. TestCase):
         # ------------------------------------------------------------
         self.confs = []
         for conf_file_path, model_file_path in \
-            zip(self.conf_file_paths, self.model_file_paths):
+                zip(self.conf_file_paths, self.model_file_paths):
             conf = Configuration(conf_file_path, model_file_path)
             self.confs.append(conf)
-
 
     def test_does_file_exist(self):
         for conf_file_path in self.conf_file_paths:
@@ -52,11 +53,15 @@ class TestInputConfFile(unittest. TestCase):
 
     def test_datatype_of_INTENSITY_MEASURE_PARAM(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.HAZARD_INTENSITY_MEASURE_PARAM, str or bytes))
+            self.assertTrue(
+                isinstance(conf.HAZARD_INTENSITY_MEASURE_PARAM, str or bytes)
+            )
 
     def test_datatype_of_INTENSITY_MEASURE_UNIT(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.HAZARD_INTENSITY_MEASURE_UNIT, str or bytes))
+            self.assertTrue(
+                isinstance(conf.HAZARD_INTENSITY_MEASURE_UNIT, str or bytes)
+            )
 
     def test_datatype_of_FOCAL_HAZARD_SCENARIOS(self):
         for conf in self.confs:

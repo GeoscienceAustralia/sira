@@ -1,9 +1,11 @@
-import unittest
-from pathlib import Path
-from sira.tools.utils import relpath
-import warnings
-import pandas as pd
 import logging
+import unittest
+import warnings
+from pathlib import Path
+
+import pandas as pd
+from sira.tools.utils import relpath
+
 rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.CRITICAL)
 
@@ -27,11 +29,11 @@ def read_excel_file(filepath, sheet_name=None):
 class TestReadingExcelFile(unittest.TestCase):
 
     def setUp(self):
- 
+
         self.sim_dir_name = 'models'
         self.test_root_dir = Path(__file__).resolve().parent
         self.test_model_dir = Path(self.test_root_dir, self.sim_dir_name)
-    
+
         self.xl_engine_args = dict(engine='openpyxl')
         # read_only='True', data_only='True'
 
@@ -57,16 +59,16 @@ class TestReadingExcelFile(unittest.TestCase):
             self.component_names_dict[model_file] = \
                 component_list['component_id'].values.tolist()
 
-
     def test01_folder_structure(self):
         self.assertTrue(
             self.test_model_dir.exists(),
-            "test models folder not found at " +\
-                str(self.test_root_dir) + "!"
+            "test models folder not found at " +
+            str(self.test_root_dir) + "!"
         )
 
     def test02_model_files_exists(self):
-        print(f"\n{'-'*70}\nInitiating check on model files in MS Excel format...")
+        print(f"\n{'-'*70}\n" +
+              "Initiating check on model files in MS Excel format...")
         print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_xlsx_files:
             self.assertTrue(
@@ -80,10 +82,10 @@ class TestReadingExcelFile(unittest.TestCase):
             test_model_relpath = relpath(
                 model_file, start=Path(__file__)
             )
-            print("\nTest loading model file (xlsx): \n{}".\
-                format(test_model_relpath))
+            print("\nTest loading model file (xlsx): \n{}".
+                  format(test_model_relpath))
             df = pd.read_excel(
-                model_file, sheet_name=None, 
+                model_file, sheet_name=None,
                 **self.xl_engine_args
             )
             # check if the required worksheets exist in the loaded file
@@ -126,7 +128,7 @@ class TestReadingExcelFile(unittest.TestCase):
                 isinstance(len(component_list.index.tolist()), int)
             )
             self.assertTrue(
-                set(required_col_names_clist) <= \
+                set(required_col_names_clist) <=
                 set(component_list.columns.values.tolist()),
                 "Required column name(s) not found!"
             )
@@ -136,7 +138,7 @@ class TestReadingExcelFile(unittest.TestCase):
             component_connections = component_connections.dropna(how='all')
 
             self.assertTrue(
-                set(required_col_names_conn) <= \
+                set(required_col_names_conn) <=
                 set(component_connections.columns.values.tolist()),
                 "Required column name(s) not found!")
             origin_nodes = set(component_connections['origin'].values)
@@ -144,12 +146,12 @@ class TestReadingExcelFile(unittest.TestCase):
             all_nodes = set(component_names)
 
             # Test consistency between component definitions and connections
-            print("\nCheck origin nodes are subset of "+
+            print("\nCheck origin nodes are subset of " +
                   "primary component list in system...")
             self.assertTrue(origin_nodes.issubset(all_nodes), model_file)
             print("OK")
 
-            print("\nCheck destination nodes are subset of "+
+            print("\nCheck destination nodes are subset of " +
                   "primary component list in system...")
             self.assertTrue(destin_nodes.issubset(all_nodes), model_file)
             print("OK")
@@ -179,11 +181,15 @@ class TestReadingExcelFile(unittest.TestCase):
                 dfa.set_index(dfa.columns[0:3].to_list())
 
             self.assertTrue(
-                set(required_col_names) <= set(comp_type_dmg_algo.columns.tolist()),
+                set(required_col_names) <=
+                set(comp_type_dmg_algo.columns.tolist()),
                 "Required column name not found!" + '\n' +
-                "col expected: " + str(required_col_names) + '\n' +
-                "col supplied: " + str(comp_type_dmg_algo.columns.values.tolist()) + '\n' +
-                "file name : " + str(model_file)
+                "col expected: " +
+                str(required_col_names) + '\n' +
+                "col supplied: " +
+                str(comp_type_dmg_algo.columns.values.tolist()) + '\n' +
+                "file name : " +
+                str(model_file)
             )
             # current implemented function
             valid_function_name_list = [
@@ -211,8 +217,8 @@ class TestReadingExcelFile(unittest.TestCase):
                     f"  FILE NAME: {model_file}"
 
                 self.assertTrue(
-                    str(algo_row.damage_function).lower() in\
-                        valid_function_name_list, fn_err_msg
+                    str(algo_row.damage_function).lower() in
+                    valid_function_name_list, fn_err_msg
                 )
 
                 chk_list = ["yes", "no", "true", "false"]
@@ -226,9 +232,6 @@ class TestReadingExcelFile(unittest.TestCase):
                     isinstance(float(algo_row.recovery_mean), float))
                 self.assertTrue(
                     isinstance(float(algo_row.recovery_std), float))
-
-            # TODO damage_state['fragility_source'] not used in code
-            # self.assertTrue(isinstance(str(damage_state['fragility_source']), bytes or str), type(damage_state['fragility_source']))
 
     def test_reading_data_from_supply_setup(self):
         required_col_names = [
@@ -248,8 +251,8 @@ class TestReadingExcelFile(unittest.TestCase):
             self.assertTrue(
                 set(required_col_names) <= set(supply_setup.columns.tolist()),
                 "Required column name not found!\n" +
-                "col expected: "+str(required_col_names)+'\n'+
-                "col supplied: "+str(supply_setup.columns.values.tolist())+'\n'+
+                "col expected: "+str(required_col_names)+'\n' +
+                "col supplied: "+str(supply_setup.columns.values.tolist())+'\n' +
                 "file name : "+str(model_file)
             )
 
@@ -261,7 +264,7 @@ class TestReadingExcelFile(unittest.TestCase):
                 self.assertTrue(
                     isinstance(float(sv.capacity_fraction), float))
                 self.assertTrue(
-                    type(sv.commodity_type)==str)
+                    type(sv.commodity_type) == str)
 
     def test_reading_data_from_output_setup(self):
         required_col_names = [
@@ -289,27 +292,26 @@ class TestReadingExcelFile(unittest.TestCase):
 
             for row_tuple in output_setup.itertuples():
                 self.assertTrue(
-                    float(row_tuple.output_node_capacity), 
-                    'Expected float, got {}.'.\
-                        format(type(row_tuple.output_node_capacity))
-                )
+                    float(row_tuple.output_node_capacity),
+                    'Expected float, got {}.'.
+                    format(type(row_tuple.output_node_capacity))
+                    )
                 self.assertTrue(
-                    float(row_tuple.capacity_fraction), 
-                    'Expected float, got {}.'.\
-                        format(type(row_tuple.capacity_fraction))
-                )
+                    float(row_tuple.capacity_fraction),
+                    'Expected float, got {}.'.
+                    format(type(row_tuple.capacity_fraction))
+                    )
                 self.assertTrue(
-                    int(row_tuple.priority), 
-                    'Expected int, got {}.'.\
-                        format(type(row_tuple.priority))
-                )
+                    int(row_tuple.priority),
+                    'Expected int, got {}.'.
+                    format(type(row_tuple.priority))
+                    )
 
             self.assertTrue(output_setup['output_node_capacity'].sum() > 0)
             production_nodes = output_setup['production_node'].values.tolist()
             self.assertTrue(set(production_nodes).issubset(
                                 set(self.component_names_dict[model_file]))
-            )
-
+                            )
 
     def test_reading_data_from_damage_state_def(self):
         for model_file in self.model_xlsx_files:
@@ -333,8 +335,11 @@ class TestReadingExcelFile(unittest.TestCase):
                 )
 
         # TODO
-        # self.assertTrue(isinstance(damage_def['damage_state_definition'], bytes or str or numpy.float64), type(damage_def['damage_state_definition'])+model_file)
-        # self.assertTrue(isinstance(str(damage_def['fragility_source']), bytes or str), model_file)
+        # self.assertTrue(isinstance(damage_def['damage_state_definition'],
+        # bytes or str or numpy.float64),
+        # type(damage_def['damage_state_definition'])+model_file)
+        # self.assertTrue(isinstance(str(damage_def['fragility_source']),
+        # bytes or str), model_file)
 
 
 if __name__ == "__main__":
