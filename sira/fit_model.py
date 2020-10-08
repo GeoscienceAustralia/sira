@@ -1,23 +1,22 @@
-import matplotlib as mpl
-mpl.use('agg')
-
-import matplotlib.pyplot as plt
-import matplotlib.patheffects as PathEffects
-import sira.tools.siraplot as spl
-
-import numpy as np
-from scipy import stats
-import lmfit
-import pandas as pd
-pd.options.display.float_format = '{:,.4f}'.format
+import logging
+import os
 
 import brewer2mpl
+import lmfit
+import matplotlib as mpl
+import matplotlib.patheffects as PathEffects
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from colorama import Fore, init
-init()
+from scipy import stats
 
-import os
-import logging
+import sira.tools.siraplot as spl
+
+init()
 rootLogger = logging.getLogger(__name__)
+mpl.use('agg')
+pd.options.display.float_format = '{:,.4f}'.format
 
 MIN = 0
 MAX = 10
@@ -53,6 +52,7 @@ markers = ['o', '^', 's', 'D', 'x', '+']
 # The square root of the diagonal values are the 1-sigma uncertainties of
 # the fit parameters.
 # ----------------------------------------------------------------------------
+
 
 def lognormal_cdf(x, median, beta, loc=0):
     scale = median
@@ -134,8 +134,10 @@ def fit_prob_exceed_model(
 
     border = "-" * 79
     rootLogger.info(
-        '\n'+border+'\n'+
-        Fore.YELLOW+"Fitting system FRAGILITY data: Lognormal CDF"+Fore.RESET+
+        '\n' + border + '\n' +
+        Fore.YELLOW +
+        "Fitting system FRAGILITY data: Lognormal CDF" +
+        Fore.RESET +
         '\n' + border + '\n' +
         "\nINITIAL System Fragilities:\n\n" +
         str(sys_dmg_model) + '\n'
@@ -214,6 +216,7 @@ def fit_prob_exceed_model(
 
 # ==============================================================================
 
+
 def plot_data_model(SYS_DS,
                     hazard_input_vals,
                     sys_dmg_model,
@@ -226,7 +229,7 @@ def plot_data_model(SYS_DS,
                     PLOT_EVENTS=False):
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if sum([PLOT_DATA, PLOT_MODEL, PLOT_EVENTS])==0:
+    if sum([PLOT_DATA, PLOT_MODEL, PLOT_EVENTS]) == 0:
         raise AttributeError
 
     plt.style.use('seaborn-darkgrid')
@@ -283,7 +286,7 @@ def plot_data_model(SYS_DS,
                 event_label = event_num + ". " + \
                               config.FOCAL_HAZARD_SCENARIO_NAMES[i]+" : " + \
                               event_intensity_str
-            except:
+            except ValueError:
                 event_label = event_num + " : " + event_intensity_str
 
             ax.plot(float(haz), 0,
@@ -308,7 +311,7 @@ def plot_data_model(SYS_DS,
                 xy=(float(haz), 0), xycoords='data',
                 xytext=(float(haz), 1.038), textcoords='data',
                 ha='center', va='center', rotation=0,
-                size=8, fontweight='bold', 
+                size=8, fontweight='bold',
                 color=event_color,
                 annotation_clip=False,
                 bbox=dict(boxstyle='round, pad=0.2', fc='yellow', alpha=0.0),
@@ -337,7 +340,7 @@ def plot_data_model(SYS_DS,
     figtitle = 'System Fragility: ' + config.MODEL_NAME
 
     x_lab = config.HAZARD_INTENSITY_MEASURE_PARAM + \
-            ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
+        ' (' + config.HAZARD_INTENSITY_MEASURE_UNIT + ')'
     y_lab = 'P($D_s$ > $d_s$)'
 
     y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)
@@ -370,6 +373,7 @@ def plot_data_model(SYS_DS,
     plt.close(fig)
 
 # ==============================================================================
+
 
 def correct_crossover(
         SYS_DS,

@@ -19,7 +19,7 @@ class TestInputConfFile(unittest. TestCase):
         self.conf_file_paths = [
             x for x in models_dir.rglob('input/*config*.json')]
         self.model_file_paths = [
-            x for x in models_dir.rglob('input/*model*.json')]        
+            x for x in models_dir.rglob('input/*model*.json')]
         # ------------------------------------------------------------
         self.confs = []
         for conf_file_path, model_file_path in \

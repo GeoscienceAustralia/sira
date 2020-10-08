@@ -121,9 +121,11 @@ def main():
 
     if infrastructure.system_class.lower() in [
             'powerstation', 'PotableWaterTreatmentPlant'.lower()]:
-        pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
+        pe_sys = np.load(        # noqa: F841
+            os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
     elif infrastructure.system_class.lower() == 'substation':
-        pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
+        pe_sys = np.load(       # noqa: F841
+            os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Read in SIMULATED HAZARD RESPONSE for <COMPONENT TYPES>
