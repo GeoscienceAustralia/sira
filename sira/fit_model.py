@@ -460,20 +460,3 @@ def correct_crossover(
     return sys_dmg_fitted_params
 
 # ==============================================================================
-#
-# NORMAL CURVE FITTING
-#
-# ------------------------------------------------------------------------------
-# Parameters in scipy NORMAL distribution:
-#
-# The location (loc) keyword specifies the mean.
-# The scale (scale) keyword specifies the standard deviation.
-# https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
-#
-# Note on the covariance matrix returned by scipy.optimize.curve_fit:
-# The square root of the diagonal values are the 1-sigma uncertainties of
-# the fit parameters
-# ------------------------------------------------------------------------------
-
-def norm_cdf(x, mu, sd):
-    return stats.norm.cdf(x, loc=mu, scale=sd)
