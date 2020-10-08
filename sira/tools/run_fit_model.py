@@ -1,34 +1,21 @@
-from __future__ import print_function
+import argparse
+import json
+import os
 
 import matplotlib.pyplot as plt
-plt.switch_backend('agg')
-import matplotlib.patheffects as PathEffects
-import seaborn as sns
-
 import numpy as np
-from scipy import stats
-from scipy.optimize import curve_fit
-import lmfit
 import pandas as pd
-pd.options.display.float_format = '{:,.4f}'.format
-import json
+from colorama import Back, Fore, Style, init
+from sira.configuration import Configuration
+from sira.fit_model import fit_prob_exceed_model
+from sira.model_ingest import ingest_model
+from sira.modelling.hazard import HazardsContainer
+from sira.scenario import Scenario
 
-import os
-import warnings
-
-import sifra.sifraplot as spl
-
-import brewer2mpl
-from colorama import Fore, Back, init, Style
 init()
+plt.switch_backend('agg')
+pd.options.display.float_format = '{:,.4f}'.format
 
-import argparse
-from sifra.configuration import Configuration
-from sifra.scenario import Scenario
-from sifra.modelling.hazard import HazardsContainer
-from sifra.model_ingest import ingest_model
-from sifra.fit_model import fit_prob_exceed_model
-# ============================================================================
 
 def main():
     # ------------------------------------------------------------------------
@@ -91,21 +78,21 @@ def main():
     # ------------------------------------------------------------------------
     # READ in raw output files from prior analysis of system fragility
 
-    economic_loss_array = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'economic_loss_array.npy'))
+    # economic_loss_array = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'economic_loss_array.npy'))
 
-    calculated_output_array = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
+    # calculated_output_array = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
 
-    exp_damage_ratio = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
+    # exp_damage_ratio = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
 
-    sys_frag = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'sys_frag.npy'))
+    # sys_frag = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'sys_frag.npy'))
 
     # output_array_given_recovery = \
     #     np.load(os.path.join(
@@ -123,12 +110,12 @@ def main():
     # elif infrastructure.system_class.lower() == 'substation':
     #     pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
     elif infrastructure.system_class.lower() in [
-        "potablewatertreatmentplant", "pwtp",
-        "wastewatertreatmentplant", "wwtp",
-        "watertreatmentplant", "wtp"]:
+            "potablewatertreatmentplant", "pwtp",
+            "wastewatertreatmentplant", "wwtp",
+            "watertreatmentplant", "wtp"]:
         pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
 
-    # --------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Calculate & Plot Fitted Models
 
     if FIT_PE_DATA:
@@ -144,16 +131,19 @@ def main():
     # if SWITCH_FIT_RESTORATION_DATA:
     #     sys_rst_mdl_mode1 = fit_restoration_data(
     #         RESTORATION_TIME_RANGE, sys_fn, sys_limit_states, sc.output_path)
-    #     # sys_rst_mdl_mode2 = fit_restoration_data_multimode(
-    #     #     RESTORATION_TIME_RANGE, sys_fn, sys_limit_states, scn.output_path)
+    #     sys_rst_mdl_mode2 = fit_restoration_data_multimode(
+    #         RESTORATION_TIME_RANGE,
+    #         sys_fn, sys_limit_states, scn.output_path)
     #     print("\n" + "-" * 79)
 
-# ============================================================================
+# =============================================================================
+
 
 if __name__ == "__main__":
-    if __name__ == "__main__":
-        print()
-        print(Fore.CYAN + Back.BLACK + Style.BRIGHT +
-              ">> Initiating attempt to fit model to simulation data ... " +
-              Style.RESET_ALL + "\n")
-        main()
+    print()
+    print(
+        Fore.CYAN + Back.BLACK + Style.BRIGHT +
+        ">> Initiating attempt to fit model to simulation data ... " +
+        Style.RESET_ALL + "\n"
+    )
+    main()

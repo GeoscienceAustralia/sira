@@ -1,29 +1,30 @@
-import numpy as np
-np.seterr(divide='print', invalid='raise')
-
-import scipy.stats as stats
-import pandas as pd
-import json
-
-import os
-import copy
-from colorama import Fore, Back, init, Style
-init()
-
-import matplotlib.pyplot as plt
-plt.switch_backend('agg')
-import matplotlib.patheffects as PathEffects
-from matplotlib.font_manager import FontProperties
-from matplotlib import gridspec
-import seaborn as sns
-sns.set(style='whitegrid', palette='coolwarm')
-
 import argparse
+import copy
+import json
+import os
+
+# from matplotlib.font_manager import FontProperties
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from colorama import Back, Fore, Style, init
 from sira.configuration import Configuration
-from sira.scenario import Scenario
-from sira.modelling.hazard import HazardsContainer
+from sira.loss_analysis import (calc_comptype_damage_scenario_given_hazard,
+                                calc_restoration_setup, component_criticality,
+                                draw_component_failure_barchart,
+                                draw_component_loss_barchart_s1,
+                                draw_component_loss_barchart_s2,
+                                draw_component_loss_barchart_s3,
+                                prep_repair_list, vis_restoration_process)
 from sira.model_ingest import ingest_model
-import sira.tools.siraplot as spl
+from sira.modelling.hazard import HazardsContainer
+from sira.scenario import Scenario
+
+init()
+np.seterr(divide='print', invalid='raise')
+plt.switch_backend('agg')
+sns.set(style='whitegrid', palette='coolwarm')
 
 # **************************************************************************
 # Configuration values that can be adjusted for specific scenarios:
@@ -36,15 +37,6 @@ RESTORATION_OFFSET = 1
 
 # **************************************************************************
 
-from sira.loss_analysis import (draw_component_loss_barchart_s1,
-                                 draw_component_loss_barchart_s2,
-                                 draw_component_loss_barchart_s3,
-                                 draw_component_failure_barchart,
-                                 calc_comptype_damage_scenario_given_hazard,
-                                 prep_repair_list,
-                                 calc_restoration_setup,
-                                 vis_restoration_process,
-                                 component_criticality)
 
 def main():
 
@@ -53,15 +45,18 @@ def main():
 
     # Read in SETUP data
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--setup", type=str,
-                        help="Setup file for simulation scenario, and \n"
-                             "locations of inputs, outputs, and system model.")
-    parser.add_argument("-v", "--verbose",  type=str,
-                        help="Choose option for logging level from: \n"
-                             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
-    parser.add_argument("-d", "--dirfile", type=str,
-                        help="JSON file with location of input/output files "
-                             "from past simulation that is to be analysed\n.")
+    parser.add_argument(
+        "-s", "--setup", type=str,
+        help="Setup file for simulation scenario, and \n"
+             "locations of inputs, outputs, and system model.")
+    parser.add_argument(
+        "-v", "--verbose",  type=str,
+        help="Choose option for logging level from: \n"
+             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+    parser.add_argument(
+        "-d", "--dirfile", type=str,
+        help="JSON file with location of input/output files "
+             "from past simulation that is to be analysed\n.")
     args = parser.parse_args()
 
     if args.setup is None:
@@ -91,7 +86,6 @@ def main():
         raise NameError("Names for supplied system model names did not match."
                         "Aborting.\n")
 
-    SYS_CONFIG_FILE = config.SYS_CONF_FILE
     OUTPUT_PATH = dir_dict["OUTPUT_PATH"]
     RAW_OUTPUT_DIR = dir_dict["RAW_OUTPUT_DIR"]
 
@@ -101,21 +95,21 @@ def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # READ in raw output files from prior analysis of system fragility
 
-    economic_loss_array = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'economic_loss_array.npy'))
+    # economic_loss_array = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'economic_loss_array.npy'))
 
-    calculated_output_array = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
+    # calculated_output_array = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'calculated_output_array.npy'))
 
-    exp_damage_ratio = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
+    # exp_damage_ratio = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'exp_damage_ratio.npy'))
 
-    sys_frag = \
-        np.load(os.path.join(
-            RAW_OUTPUT_DIR, 'sys_frag.npy'))
+    # sys_frag = \
+    #     np.load(os.path.join(
+    #         RAW_OUTPUT_DIR, 'sys_frag.npy'))
 
     # TODO: NEED TO IMPLEMENT.
     # output_array_given_recovery = \
@@ -125,13 +119,11 @@ def main():
     # required_time = \
     #     np.load(os.path.join(RAW_OUTPUT_DIR, 'required_time.npy'))
 
-    if infrastructure.system_class.lower() == 'powerstation':
+    if infrastructure.system_class.lower() in [
+            'powerstation', 'PotableWaterTreatmentPlant'.lower()]:
         pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
     elif infrastructure.system_class.lower() == 'substation':
         pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy'))
-    elif infrastructure.system_class.lower() == \
-            'PotableWaterTreatmentPlant'.lower():
-        pe_sys = np.load(os.path.join(RAW_OUTPUT_DIR, 'pe_sys_econloss.npy'))
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Read in SIMULATED HAZARD RESPONSE for <COMPONENT TYPES>
@@ -162,7 +154,7 @@ def main():
         uncosted_comptypes, level='component_type', axis=0)
 
     # Get list of only those components that are included in cost calculations:
-    cpmap = {c:sorted(list(infrastructure.get_components_for_type(c)))
+    cpmap = {c: sorted(list(infrastructure.get_components_for_type(c)))
              for c in cp_types_in_system}
     comps_costed = [v for x in cp_types_costed for v in cpmap[x]]
 
@@ -193,11 +185,10 @@ def main():
     #     comps_uncosted, level='component_id', axis=0)
     component_meanloss = \
         component_response.query('response == "loss_mean"').\
-            reset_index('response').drop('response', axis=1)
+        reset_index('response').drop('response', axis=1)
 
     comptype_resp_df = comptype_resp_df.drop(
         uncosted_comptypes, level='component_type', axis=0)
-
 
     # TODO : ADD THIS BACK IN!!
     # # Read in the <SYSTEM FRAGILITY MODEL> fitted to simulated data
@@ -206,9 +197,9 @@ def main():
     #                 index_col=0)
     # system_fragility_mdl.index.name = "Damage States"
 
-    # Define the system as a network, with components as nodes
-    # Network setup with igraph
-    G = infrastructure._component_graph
+    # # Define the system as a network, with components as nodes
+    # # Network setup with igraph
+    # G = infrastructure._component_graph
     # --------------------------------------------------------------------------
     # *** END : SETUP ***
 
@@ -245,8 +236,8 @@ def main():
         elif config.HAZARD_INPUT_METHOD == "scenario_file":
             scenario_header = sc_haz_str
         scenario_tag = str(sc_haz_str) \
-                       + " " + hazards.intensity_measure_unit \
-                       + " " + hazards.intensity_measure_param
+            + " " + hazards.intensity_measure_unit \
+            + " " + hazards.intensity_measure_param
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Extract scenario-specific values from the 'hazard response' dataframe
@@ -260,21 +251,21 @@ def main():
         ctype_resp_scenario['loss_per_type']\
             = ctype_resp_scenario['loss_mean']/comptype_value_list
 
-        ctype_resp_scenario['loss_per_type_std']\
-            = ctype_resp_scenario['loss_std'] \
-              * [len(list(infrastructure.get_components_for_type(ct)))
-                 for ct in ctype_resp_scenario.index.values.tolist()]
+        ctype_resp_scenario['loss_per_type_std'] = \
+            ctype_resp_scenario['loss_std'] \
+            * [len(list(infrastructure.get_components_for_type(ct)))
+               for ct in ctype_resp_scenario.index.values.tolist()]
 
         ctype_resp_sorted = ctype_resp_scenario.sort_values(
             by='loss_tot', ascending=False)
 
-        ctype_loss_vals_tot \
-            = ctype_resp_sorted['loss_tot'].values * 100
-        ctype_loss_by_type \
-            = ctype_resp_sorted['loss_per_type'].values * 100
-        ctype_lossbytype_rank = \
-            len(ctype_loss_by_type) - \
-            stats.rankdata(ctype_loss_by_type, method='dense').astype(int)
+        # ctype_loss_by_type \
+        #     = ctype_resp_sorted['loss_per_type'].values * 100
+        # ctype_loss_vals_tot \
+        #     = ctype_resp_sorted['loss_tot'].values * 100
+        # ctype_lossbytype_rank = \
+        #     len(ctype_loss_by_type) - \
+        #     stats.rankdata(ctype_loss_by_type, method='dense').astype(int)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Economic loss percentage for component types
