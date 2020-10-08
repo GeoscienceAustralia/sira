@@ -21,6 +21,11 @@ class Configuration:
         # if file_ext != '.json':
         #     config_path = converter.convert_to_json(config_path)
 
+        self._VALID_HAZARD_INPUT_METHODS = {
+            'Calculated_Array': 'hazard_array',
+            'Hazard_File': 'scenario_file'
+        }
+
         with open(config_path, 'r') as f:
             config = json.load(f)
 
@@ -29,27 +34,40 @@ class Configuration:
         self.CONFIGURATION_ID = str(config['CONFIGURATION_ID'])
 
         # reading in simulation scenario parameters
-        self.HAZARD_INTENSITY_MEASURE_PARAM = str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
-        self.HAZARD_INTENSITY_MEASURE_UNIT = str(config['HAZARD_INTENSITY_MEASURE_UNIT'])
+        self.HAZARD_INTENSITY_MEASURE_PARAM = \
+            str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
+        self.HAZARD_INTENSITY_MEASURE_UNIT = \
+            str(config['HAZARD_INTENSITY_MEASURE_UNIT'])
         # Set of scenario(s) to investigate in detail
         #   - List of strings
         #   - Used in post processing stage
-        self.FOCAL_HAZARD_SCENARIO_NAMES = config['SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES']
+        self.FOCAL_HAZARD_SCENARIO_NAMES = \
+            config['SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES']
         self.FOCAL_HAZARD_SCENARIOS = config['SCENARIO_FOCAL_HAZARD_SCENARIOS']
 
         self.HAZARD_INPUT_METHOD = str(config['HAZARD_INPUT_METHOD'])
         self.HAZARD_TYPE = str(config['HAZARD_TYPE'])
         self.NUM_SAMPLES = int(config['HAZARD_NUM_SAMPLES'])
-        if config['HAZARD_INPUT_METHOD'] == 'scenario_file':
-            self.INTENSITY_MEASURE_MIN = None
-            self.INTENSITY_MEASURE_MAX = None
-            self.INTENSITY_MEASURE_STEP = None
-            self.SCENARIO_FILE = config['SCENARIO_FILE']
+
+        if config['HAZARD_INPUT_METHOD'] == \
+                self._VALID_HAZARD_INPUT_METHODS['Hazard_File']:
+            self.HAZARD_INPUT_FILE = \
+                str(Path(config['HAZARD_INPUT_FILE']).absolute().resolve())
+        elif config['HAZARD_INPUT_METHOD'] == \
+                self._VALID_HAZARD_INPUT_METHODS['Calculated_Array']:
+            self.HAZARD_INPUT_FILE = None
         else:
-            self.SCENARIO_FILE = None
-            self.INTENSITY_MEASURE_MIN = float(config['HAZARD_INTENSITY_MEASURE_MIN'])
-            self.INTENSITY_MEASURE_MAX = float(config['HAZARD_INTENSITY_MEASURE_MAX'])
-            self.INTENSITY_MEASURE_STEP = float(config['HAZARD_INTENSITY_MEASURE_STEP'])
+            raise ValueError(
+                "Unrecognised HAZARD_INPUT_METHOD. Valid values are: " +
+                "{}".format(list(self._VALID_HAZARD_INPUT_METHODS.values()))
+            )
+
+        self.INTENSITY_MEASURE_MIN = \
+            float(config['HAZARD_INTENSITY_MEASURE_MIN'])
+        self.INTENSITY_MEASURE_MAX = \
+            float(config['HAZARD_INTENSITY_MEASURE_MAX'])
+        self.INTENSITY_MEASURE_STEP = \
+            float(config['HAZARD_INTENSITY_MEASURE_STEP'])
 
         self.TIME_UNIT = str(config['RESTORATION_TIME_UNIT'])
         self.RESTORE_PCT_CHECKPOINTS = int(config['RESTORATION_PCT_CHECKPOINTS'])
@@ -67,7 +85,8 @@ class Configuration:
         self.MULTIPROCESS = int(config['SWITCH_MULTIPROCESS'])
         self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])
 
-        self.SWITCH_FIT_RESTORATION_DATA = bool(config['SWITCH_FIT_RESTORATION_DATA'])
+        self.SWITCH_FIT_RESTORATION_DATA = \
+            bool(config['SWITCH_FIT_RESTORATION_DATA'])
         self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
         self.INPUT_MODEL_PATH = Path(model_path)
