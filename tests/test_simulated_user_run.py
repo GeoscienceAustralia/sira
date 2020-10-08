@@ -1,16 +1,17 @@
-import unittest
 import subprocess
+import sys
+import unittest
 from pathlib import Path
 
 # Add the source dir to system path
-import sys
-src_dir = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(src_dir))
+root_dir = Path(__file__).resolve().parent.parent
+code_dir = Path(root_dir, 'sira')
+sys.path.insert(0, str(code_dir))
 
 
 class TestModuleRunProcess(unittest.TestCase):
     """
-    Sets up expected paths, and runs tests to simulate how an user would 
+    Sets up expected paths, and runs tests to simulate how an user would
     typically run the application from the terminal.
     """
 
@@ -29,8 +30,8 @@ class TestModuleRunProcess(unittest.TestCase):
         model_name = 'powerstation_coal_A'
         inputdir = Path(self.mdls_dir, model_name)
         process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(inputdir), '-s'], 
-            stdout=subprocess.PIPE, 
+            ['python', str(self.code_dir), '-d', str(inputdir), '-s'],
+            stdout=subprocess.PIPE,
             universal_newlines=True)
         exitstatus = process.returncode
         # print(process.stdout)
@@ -48,8 +49,8 @@ class TestModuleRunProcess(unittest.TestCase):
         model_name = 'potable_water_treatment_plant_A'
         inputdir = Path(self.mdls_dir, model_name)
         process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(inputdir), '-sfl'], 
-            stdout=subprocess.PIPE, 
+            ['python', str(self.code_dir), '-d', str(inputdir), '-sfl'],
+            stdout=subprocess.PIPE,
             universal_newlines=True)
         exitstatus = process.returncode
         # print(process.stdout)
@@ -65,8 +66,8 @@ class TestModuleRunProcess(unittest.TestCase):
         model_name = 'substation_tx_230kv'
         inputdir = Path(self.mdls_dir, model_name)
         process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(inputdir), '-sl'], 
-            stdout=subprocess.PIPE, 
+            ['python', str(self.code_dir), '-d', str(inputdir), '-sl'],
+            stdout=subprocess.PIPE,
             universal_newlines=True)
         exitstatus = process.returncode
         # An exit status of 0 typically indicates process ran successfully:
