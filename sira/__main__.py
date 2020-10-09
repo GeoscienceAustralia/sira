@@ -18,8 +18,6 @@ usage        : python sira [OPTIONS]
 python_version  : 3.7
 """
 
-from __future__ import print_function
-
 import argparse
 import logging
 import logging.config
@@ -31,6 +29,10 @@ from pathlib import Path
 
 import numpy as np
 from colorama import Fore, init
+
+# Add the source dir to system path
+root_dir = Path(__file__).parent
+sys.path.insert(0, str(root_dir))
 
 # Import SIRA modules
 from sira.configuration import Configuration
