@@ -1,14 +1,11 @@
-from sira.modelling.structural import Element
-from sira.modelling.component_graph import ComponentGraph
-from sira.modelling.structural import Base
-from sira.modelling.iodict import IODict
-
-from builtins import range
-from builtins import object
 import sys
+
 import numpy as np
+from sira.modelling.component_graph import ComponentGraph
+from sira.modelling.iodict import IODict
+from sira.modelling.structural import Base, Element
+
 np.set_printoptions(threshold=sys.maxsize)
-# np.set_printoptions(threshold="nan")
 
 
 class InfrastructureFactory(object):
@@ -124,7 +121,7 @@ class Infrastructure(Base):
                 self.compute_output_given_ds(comp_sample_func)
 
         return if_level_loss, if_level_functionality, \
-               if_level_output, if_level_economic_loss
+            if_level_output, if_level_economic_loss
 
     def get_nominal_output(self):
         """
@@ -136,7 +133,7 @@ class Infrastructure(Base):
             self.if_nominal_output = 0
             for output_comp in list(self.output_nodes.values()):
                 self.if_nominal_output += output_comp['output_node_capacity']
-        
+
         return self.if_nominal_output
 
     def compute_output_given_ds(self, comp_level_func):
@@ -168,7 +165,7 @@ class Infrastructure(Base):
                     supply_comp_id, output_comp_id
                     )
                 if_sample_flow = if_flow_fraction * \
-                                 supply_comp['capacity_fraction']
+                    supply_comp['capacity_fraction']
 
                 if supply_comp['commodity_type'] not in \
                         total_supply_flow_by_source:
@@ -315,13 +312,12 @@ class Infrastructure(Base):
             comp_cls_dmg_index_binned[cls_id] = tmparr.mean(0)
             tmp = comp_cls_dmg_index_binned[cls_id]
             comp_cls_dmg_index_expected[cls_id] \
-                = np.max(np.where(tmp==np.max(tmp)))
+                = np.max(np.where(tmp == np.max(tmp)))
 
         return comp_resp_dict,\
-               comptype_resp_dict,\
-               comp_cls_dmg_level_percentages,\
-               comp_cls_dmg_index_expected
-
+            comptype_resp_dict,\
+            comp_cls_dmg_level_percentages,\
+            comp_cls_dmg_index_expected
 
     def get_component_types(self):
         """
@@ -357,11 +353,12 @@ class Infrastructure(Base):
 
         :return: list of costed component classes
         """
-        uncosted_compclasses = ['JUNCTION', 'JUNCTION POINT', 'JUNCTION NODE',
-                                 'MODEL ARTEFACT',
-                                 'SYSTEM INPUT',
-                                 'SYSTEM OUTPUT',
-                                 'Generator']
+        uncosted_compclasses = [
+            'JUNCTION', 'JUNCTION POINT', 'JUNCTION NODE',
+            'MODEL ARTEFACT',
+            'SYSTEM INPUT',
+            'SYSTEM OUTPUT',
+            'Generator']
 
         component_classes = set()
 
