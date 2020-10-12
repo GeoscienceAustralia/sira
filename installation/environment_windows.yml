@@ -4,7 +4,7 @@ channels:
     - defaults
     - alubbock
 dependencies:
-    - python=3.7.6
+    - python=3.8.3
     - pip=20.1.1
     - awscli
     - brewer2mpl
