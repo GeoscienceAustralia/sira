@@ -1,10 +1,13 @@
-import os
-import ntpath
+import argparse
 import json
+import ntpath
+import os
 from collections import OrderedDict
+
 import pandas as pd
 import xlrd
-import argparse
+
+# noqa: E211
 
 
 def standardize_json_string(json_string):
@@ -61,69 +64,48 @@ def update_json_structure(main_json_obj):
             new_json_structure["component_list"][component][key] \
                 = component_list[component][key]
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"] = OrderedDict()
+        (new_json_structure
+            ["component_list"][component]
+            ["damages_states_constructor"]) = OrderedDict()
 
         # ------------------------------------------------------------------
         # Set parameter values for `None` Damage State:
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"] = OrderedDict()
+        none_ds_construct = OrderedDict()
+        none_ds_construct["damage_state_name"] = "DS0 None"
+        none_ds_construct["functionality"] = 1.0
+        none_ds_construct["damage_ratio"] = 0.0
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["damage_state_name"]\
-            = "DS0 None"
-
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["functionality"]\
-            = 1.0
-
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["damage_ratio"]\
-            = 0.0
+        (new_json_structure
+            ["component_list"][component]
+            ["damages_states_constructor"]["0"]) = none_ds_construct
 
         # ------------------------------------------------------------------
         # Set fragility algorithm for `None` Damage State:
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["response_function_constructor"]\
-            = OrderedDict()
+        none_ds_dict = OrderedDict()
+        none_ds_dict["function_name"] = "Level0Response"
+        none_ds_dict["damage_state_definition"] = "Not Available."
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["response_function_constructor"]\
-            ["function_name"] \
-            = "Level0Response"
-
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["response_function_constructor"]\
-            ["damage_state_definition"]\
-            = "Not Available."
+        (new_json_structure
+            ["component_list"][component]
+            ["damages_states_constructor"]["0"]
+            ["response_function_constructor"])\
+            = none_ds_dict
 
         # ------------------------------------------------------------------
         # Set recovery algorithm for `None` Damage State:
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["recovery_function_constructor"]\
-            = OrderedDict()
+        none_ds_dict = OrderedDict()
+        none_ds_dict["function_name"] = "Level0Response"
+        none_ds_dict["recovery_state_definition"] = "Not Available."
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["recovery_function_constructor"]\
-            ["function_name"]\
-            = "Level0Response"
+        (new_json_structure
+            ["component_list"][component]
+            ["damages_states_constructor"]["0"]
+            ["recovery_function_constructor"])\
+            = none_ds_dict
 
-        new_json_structure["component_list"][component]\
-            ["damages_states_constructor"]["0"]\
-            ["recovery_function_constructor"]\
-            ["recovery_state_definition"]\
-            = "Not Available."
         # ------------------------------------------------------------------
 
         counter = 0
@@ -134,97 +116,65 @@ def update_json_structure(main_json_obj):
 
             if component_type == component_list[component]["component_type"]:
                 damage_states_in_component = [
-                    new_json_structure["component_list"][component]\
+                    new_json_structure["component_list"][component]
                     ["damages_states_constructor"][ds]["damage_state_name"]
                     for ds in
-                    new_json_structure["component_list"][component]\
+                    new_json_structure["component_list"][component]
                     ["damages_states_constructor"]
-                    ]
+                ]
                 if damage_state not in damage_states_in_component:
 
                     counter = counter + 1
+                    frag_odict = OrderedDict()
+                    frag_odict["damage_state_name"] = damage_state
+                    frag_odict["functionality"] = fragility_data[key]["functionality"]
+                    frag_odict["damage_ratio"] = fragility_data[key]["damage_ratio"]
 
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        = OrderedDict()
+                    (new_json_structure["component_list"][component]
+                        ["damages_states_constructor"][counter])\
+                        = frag_odict
 
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["damage_state_name"]\
-                        = damage_state
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["functionality"]\
-                        = fragility_data[key]["functionality"]
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["damage_ratio"]\
-                        = fragility_data[key]["damage_ratio"]
+                    # ----------------------------------------------------------
+                    # Build the hazard response function
 
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["response_function_constructor"]\
-                        = OrderedDict()
+                    response_fn_construct = OrderedDict()
 
                     if fragility_data[key]["is_piecewise"] == "no":
-                        # -----------------------------------------------------
+
                         # <BEGIN> Non-piecewise damage function
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["function_name"]\
+
+                        response_fn_construct["function_name"]\
                             = fragility_data[key]["damage_function"]
 
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["median"]\
+                        response_fn_construct["median"]\
                             = fragility_data[key]["median"]
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["beta"]\
+
+                        response_fn_construct["beta"]\
                             = fragility_data[key]["beta"]
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["location"]\
+
+                        response_fn_construct["location"]\
                             = fragility_data[key]["location"]
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["fragility_source"]\
+
+                        response_fn_construct["fragility_source"]\
                             = fragility_data[key]["fragility_source"]
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["minimum"]\
+
+                        response_fn_construct["minimum"]\
                             = fragility_data[key]["minimum"]
 
                         if key in damage_state_df.keys():
-                            new_json_structure["component_list"][component]\
-                                ["damages_states_constructor"][counter]\
-                                ["response_function_constructor"]\
-                                ["damage_state_definition"]\
+                            response_fn_construct["damage_state_definition"]\
                                 = damage_state_df[str(eval(key).pop(0))]
                         else:
-                            new_json_structure["component_list"][component]\
-                                ["damages_states_constructor"][counter]\
-                                ["response_function_constructor"]\
-                                ["damage_state_definition"]\
+                            response_fn_construct["damage_state_definition"]\
                                 = "Not Available."
                     # <END> Non-piecewise damage function
-                    # ---------------------------------------------------------
+                    # ------------------------------------------------
                     # <BEGIN> Piecewise defined damage function
-                    else:
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["function_name"] = "PiecewiseFunction"
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["piecewise_function_constructor"] = []
+                    elif fragility_data[key]["is_piecewise"] == "yes":
+                        response_fn_construct["function_name"]\
+                            = "PiecewiseFunction"
+                        response_fn_construct["piecewise_function_constructor"]\
+                            = []
 
                         tempDic = OrderedDict()
                         tempDic["function_name"]\
@@ -247,66 +197,36 @@ def update_json_structure(main_json_obj):
                             tempDic["damage_state_definition"]\
                                 = "Not Available."
 
-                        new_json_structure["component_list"][component]\
-                            ["damages_states_constructor"][counter]\
-                            ["response_function_constructor"]\
-                            ["piecewise_function_constructor"].append(tempDic)
+                        response_fn_construct["piecewise_function_constructor"].\
+                            append(tempDic)
 
                     # <END> Piecewise defined damage function
-                    # ---------------------------------------------------------
 
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["recovery_function_constructor"]\
-                        = OrderedDict()
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["recovery_function_constructor"]\
-                        ["function_name"]\
+                    (new_json_structure
+                        ["component_list"][component]
+                        ["damages_states_constructor"][counter]
+                        ["response_function_constructor"])\
+                        = response_fn_construct
+
+                    # ----------------------------------------------------------
+                    # Build the component RECOVERY function
+
+                    recovery_fn_construct = OrderedDict()
+
+                    recovery_fn_construct["function_name"]\
                         = fragility_data[key]["recovery_function"]
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["recovery_function_constructor"]\
-                        ["mean"]\
+                    recovery_fn_construct["mean"]\
                         = fragility_data[key]["recovery_mean"]
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["recovery_function_constructor"]\
-                        ["stddev"]\
+                    recovery_fn_construct["stddev"]\
                         = fragility_data[key]["recovery_std"]
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["recovery_function_constructor"]\
-                        ["recovery_state_definition"]\
+                    recovery_fn_construct["recovery_state_definition"]\
                         = "Not Available."
 
-                else:
-                    tempDic = OrderedDict()
-
-                    tempDic["function_name"]\
-                        = fragility_data[key]["damage_function"]
-                    tempDic["median"]\
-                        = fragility_data[key]["median"]
-                    tempDic["beta"]\
-                        = fragility_data[key]["beta"]
-                    tempDic["location"]\
-                        = fragility_data[key]["location"]
-                    tempDic["fragility_source"]\
-                        = fragility_data[key]["fragility_source"]
-                    tempDic["minimum"]\
-                        = fragility_data[key]["minimum"]
-
-                    if key in damage_state_df.keys():
-                        tempDic["damage_state_definition"]\
-                            = damage_state_df[str(eval(key).pop(0))]
-                    else:
-                        tempDic["damage_state_definition"]\
-                            = "Not Available."
-
-                    new_json_structure["component_list"][component]\
-                        ["damages_states_constructor"][counter]\
-                        ["response_function_constructor"]\
-                        ["piecewise_function_constructor"].append(tempDic)
+                    (new_json_structure
+                        ["component_list"][component]
+                        ["damages_states_constructor"][counter]
+                        ["recovery_function_constructor"])\
+                        = recovery_fn_construct
 
     return new_json_structure
 
@@ -384,6 +304,7 @@ def check_if_excel_file(file_path, parser):
         msg = "{} is not recognised as an MS Excel file.".format(file_name)
         parser.error(msg)
     return True
+
 
 def main():
 
