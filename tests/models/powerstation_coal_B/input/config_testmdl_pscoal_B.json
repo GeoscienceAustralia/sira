@@ -27,8 +27,7 @@
         "Sc B"
     ],
     "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
-        "0.400",
-        "0.560"
+        "1.000"
     ], 
 
     "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
