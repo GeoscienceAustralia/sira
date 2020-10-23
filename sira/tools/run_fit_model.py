@@ -24,7 +24,7 @@ def main():
     parser.add_argument("-s", "--setup", type=str,
                         help="Setup file for simulation scenario, and \n"
                              "locations of inputs, outputs, and system model.")
-    parser.add_argument("-v", "--verbose",  type=str,
+    parser.add_argument("-v", "--verbose", type=str,
                         help="Choose option for logging level from: \n"
                              "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
     parser.add_argument("-d", "--dirfile", type=str,

@@ -232,10 +232,10 @@ def main():
         # Differentiated setup based on hazard input type - scenario vs array
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         sc_haz_str = "{:.3f}".format(float(sc_haz_str))
-        if config.HAZARD_INPUT_METHOD == "hazard_array":
+        if config.HAZARD_INPUT_METHOD == "calculated_array":
             scenario_header = hazards.hazard_scenario_name[
                 hazards.hazard_scenario_list.index(sc_haz_str)]
-        elif config.HAZARD_INPUT_METHOD == "scenario_file":
+        elif config.HAZARD_INPUT_METHOD == "hazard_file":
             scenario_header = sc_haz_str
         scenario_tag = str(sc_haz_str) \
             + " " + hazards.intensity_measure_unit \

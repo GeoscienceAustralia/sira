@@ -15,15 +15,14 @@ class InfrastructureFactory(object):
             return Substation(**config)
         elif config['system_class'].lower() == 'powerstation':
             return PowerStation(**config)
-        elif config['system_class'].lower() == \
-                'PotableWaterTreatmentPlant'.lower():
+        elif config['system_class'].lower() in ['potablewatertreatmentplant']:
             return PotableWaterTreatmentPlant(**config)
-        elif config['system_class'].lower() == \
-                'PotableWaterPumpStation'.lower():
+        elif config['system_class'].lower() == 'PotableWaterPumpStation'.lower():
             return PotableWaterPumpStation(**config)
-        elif config['system_class'].lower() == \
-                'ModelTestStructure'.lower():
+        elif config['system_class'].lower() == 'ModelTestStructure'.lower():
             return ModelTestStructure(**config)
+        elif config['system_class'].lower() in ['railnetwork', 'rail_network']:
+            return RailNetwork(**config)
 
 
 class Infrastructure(Base):
@@ -163,7 +162,7 @@ class Infrastructure(Base):
                     self.supply_nodes.items():
                 if_flow_fraction = self._component_graph.maxflow(
                     supply_comp_id, output_comp_id
-                    )
+                )
                 if_sample_flow = if_flow_fraction * \
                     supply_comp['capacity_fraction']
 
@@ -263,7 +262,7 @@ class Infrastructure(Base):
                 = np.std(component_loss[:, ct_pos_index])
 
             comptype_resp_dict[(ct_id, 'loss_tot')] \
-                = np.sum(component_loss[:, ct_pos_index])/float(num_samples)
+                = np.sum(component_loss[:, ct_pos_index]) / float(num_samples)
 
             comptype_resp_dict[(ct_id, 'func_mean')] \
                 = np.mean(comp_sample_func[:, ct_pos_index])
@@ -303,7 +302,7 @@ class Infrastructure(Base):
                                         minlength=len(comp_ds_levels))
 
             comp_cls_dmg_level_percentages_matrix \
-                = 100*(tmparr/float(len(comps_of_a_cls)))
+                = 100 * (tmparr / float(len(comps_of_a_cls)))
             comp_cls_dmg_level_percentages[(cls_id, 'mean')] \
                 = comp_cls_dmg_level_percentages_matrix.mean(0)
             comp_cls_dmg_level_percentages[(cls_id, 'std')] \
@@ -538,7 +537,7 @@ class PotableWaterTreatmentPlant(Infrastructure):
             'Circular Clarification Tank': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Sediment Flocculation': [0.0, 0.05, 0.40, 0.70, 1.00],
-            }
+        }
 
     def get_system_damage_states(self):
         """
@@ -586,7 +585,7 @@ class PotableWaterPumpStation(Infrastructure):
             'Concrete Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Steel Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
-            }
+        }
 
     def get_system_damage_states(self):
         """
@@ -619,6 +618,40 @@ class ModelTestStructure(Infrastructure):
             'Stepup Transformer': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Turbine': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Water System': [0.0, 0.05, 0.40, 0.70, 1.00]
+        }
+
+    def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings detailing the system damage levels.
+        """
+        self.sys_dmg_states = ["DS0 None",
+                               "DS1 Slight",
+                               "DS2 Moderate",
+                               "DS3 Extensive",
+                               "DS4 Complete"]
+        return self.sys_dmg_states
+
+
+class RailNetwork(Infrastructure):
+    def __init__(self, **kwargs):
+        super(RailNetwork, self).__init__(**kwargs)
+        self.uncosted_classes = [
+            'SYSTEM INPUT',
+            'SYSTEM OUTPUT',
+            'JUNCTION',
+            'JUNCTION POINT',
+            'MODEL ARTEFACT'
+        ]
+        self.ds_lims_compclasses = {
+            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Regional Railway Station': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Urban Station': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Backup Power Supply': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Commercial Electricity Supply': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Commercial Water Supply': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Rail Line Segment': [0.0, 0.05, 0.40, 0.70, 1.00]
         }
 
     def get_system_damage_states(self):

@@ -133,50 +133,48 @@ def main():
             "and must be a JSON file.\n")
         sys.exit(2)
 
-    args.config_file = os.path.join(proj_input_dir, config_file_name)
-    args.model_file = os.path.join(proj_input_dir, model_file_name)
-    args.output = os.path.join(args.input_directory, "output")
+    config_file_path = Path(proj_input_dir, config_file_name).resolve()
+    model_file_path = Path(proj_input_dir, model_file_name).resolve()
+    output_path = Path(args.input_directory, "output").resolve()
 
-    if not os.path.isfile(args.config_file):
+    if not os.path.isfile(config_file_path):
         parser.error(
-            "Unable to locate config file "+str(args.config_file)+" ...")
+            "Unable to locate config file " + str(config_file_path) + " ...")
         sys.exit(2)
 
-    if not os.path.isfile(args.model_file):
+    if not os.path.isfile(model_file_path):
         parser.error(
-            "Unable to locate model file "+str(args.model_file)+" ...")
+            "Unable to locate model file " + str(model_file_path) + " ...")
         sys.exit(2)
 
-    args.output = os.path.join(
-        os.path.dirname(os.path.dirname(args.config_file)), "output")
     try:
-        if not os.path.exists(args.output):
-            os.makedirs(args.output)
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
     except Exception:
         parser.error(
-            "Unable to create output folder " + str(args.output) + " ...")
+            "Unable to create output folder " + str(output_path) + " ...")
         sys.exit(2)
 
     # ---------------------------------------------------------------------
     # Set up logging
     # ---------------------------------------------------------------------
     timestamp = time.strftime('%Y.%m.%d %H:%M:%S')
-    log_path = os.path.join(args.output, "log.txt")
+    log_path = os.path.join(output_path, "log.txt")
     configure_logger(log_path, args.loglevel)
     rootLogger = logging.getLogger(__name__)
     print("\n")
-    rootLogger.info(Fore.GREEN +
-                    'Simulation initiated at: {}\n'.format(timestamp) +
-                    Fore.RESET)
+    rootLogger.info(
+        Fore.GREEN + 'Simulation initiated at: {}\n'.format(timestamp) + Fore.RESET
+    )
 
     # ---------------------------------------------------------------------
     # Configure simulation model.
     # Read data and control parameters and construct objects.
     # ---------------------------------------------------------------------
-    config = Configuration(args.config_file, args.model_file, args.output)
+    config = Configuration(str(config_file_path), str(model_file_path), output_path)
     scenario = Scenario(config)
-    hazards = HazardsContainer(config)
     infrastructure = ingest_model(config)
+    hazards = HazardsContainer(config, model_file_path)
 
     # ---------------------------------------------------------------------
     # SIMULATION
@@ -228,8 +226,9 @@ def main():
             "watertreatmentplant", "wtp",
             "powerstation",
             "substation",
-            "potablewaterpumpstation"
-            ]
+            "potablewaterpumpstation",
+            "modelteststructure"
+        ]
 
         if infrastructure.system_class.lower() == 'powerstation':
             args.pe_sys = os.path.join(
@@ -261,7 +260,7 @@ def main():
             rootLogger.info('End: Model fitting complete.')
         else:
             rootLogger.error("Input  pe_sys file not found: " +
-                             str(args.output))
+                             str(output_path))
 
     # -------------------------------------------------------------------------
     # SCENARIO LOSS ANALYSIS
@@ -281,10 +280,10 @@ def main():
                 rootLogger.error("Input files not found: " + str(args.cp))
 
     rootLogger.info('RUN COMPLETE.\n')
-    rootLogger.info("Config file used : " + args.config_file)
-    rootLogger.info("Model file used  : " + args.model_file)
+    rootLogger.info("Config file used : " + str(config_file_path))
+    rootLogger.info("Model file used  : " + str(model_file_path))
     rootLogger.info("Outputs saved in : " +
-                    Fore.YELLOW + args.output + Fore.RESET + '\n')
+                    Fore.YELLOW + str(output_path) + Fore.RESET + '\n')
 
 
 if __name__ == "__main__":

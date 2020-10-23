@@ -1,13 +1,14 @@
 import json
+import logging
 from collections import OrderedDict
 from pathlib import Path
-import logging
-rootLogger = logging.getLogger(__name__)
 
+from sira.modelling.component import Component, ConnectionValues
 from sira.modelling.infrastructure import InfrastructureFactory
-from sira.modelling.component import (Component, ConnectionValues)
-from sira.tools.convert_excel_files_to_json import (
-    update_json_structure, read_excel_to_json)
+from sira.tools.convert_excel_files_to_json import (read_excel_to_json,
+                                                    update_json_structure)
+
+rootLogger = logging.getLogger(__name__)
 
 
 def ingest_model(config):
@@ -37,7 +38,7 @@ def ingest_model(config):
             "Invalid model file type! "
             "Accepted types are json or xlsx.")
         raise ValueError(
-            "Invalid model file type! " 
+            "Invalid model file type! "
             "Accepted types are json or xlsx. "
             "File supplied: " + config.SYS_CONF_FILE)
 
@@ -90,8 +91,8 @@ def read_model_from_json(config, model):
             = ConnectionValues(**edge_values)
 
     infrastructure_system_constructor = dict()
-    infrastructure_system_constructor['name'] = system_class + " : " + \
-                                                system_subclass
+    infrastructure_system_constructor['name'] = \
+        system_class + " : " + system_subclass
     infrastructure_system_constructor['components'] = system_components
     infrastructure_system_constructor['system_meta'] = dict(system_meta)
 

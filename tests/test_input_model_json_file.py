@@ -35,17 +35,17 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
         self.model_json_files = [
             x for x in self.test_model_dir.rglob('input/*model*.json')]
 
-
     def test_folder_structure(self):
-        mdl_dir_list = [d for d in Path(self.test_model_dir).glob('*') 
+        mdl_dir_list = [d for d in Path(self.test_model_dir).glob('*')
                         if not str(d.name).startswith('.')]
-        self.assertTrue(Path(self.test_model_dir).is_dir(), 
-            "Directory for test models not found:\n"+str(self.test_model_dir))
+        self.assertTrue(
+            Path(self.test_model_dir).is_dir(),
+            "Directory for test models not found:\n" + str(self.test_model_dir))
         for d in mdl_dir_list:
             fullp = Path(d, 'input')
             self.assertTrue(
                 fullp.exists(),
-                "No `input` directory found in simulation model dir:\n"+str(fullp)
+                "No `input` directory found in simulation model dir:\n" + str(fullp)
             )
 
     def test_model_files_existence(self):
@@ -54,8 +54,8 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
         for model_file in self.model_json_files:
             test_model_relpath = relpath(
                 model_file, start=Path(__file__))
-            print("\nRunning check on model file (json): \n{}".\
-                format(str(test_model_relpath)))
+            print("\nRunning check on model file (json): \n{}".
+                  format(str(test_model_relpath)))
             self.assertTrue(
                 Path(model_file).exists(),
                 "Model json file not found on path at" + str(model_file) + " !")
@@ -90,10 +90,11 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
             component_list = model_json_object['component_list']
             for component in component_list.keys():
                 self.assertTrue(
-                    set(self.required_component_headers) <= set(component_list[component].keys()),
+                    set(self.required_component_headers) <=
+                    set(component_list[component].keys()),
                     "Required header names in component_list not found: \n" +
                     str(model_file) + '\n' + str(set(component_list[component].keys()))
-                    )
+                )
 
     # TODO extend test case over rest of the structure.
 

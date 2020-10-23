@@ -1,9 +1,10 @@
 import csv
-import os
+import json
 from collections import OrderedDict
 from math import asin, cos, radians, sin, sqrt
 
 import numpy as np
+import pandas as pd
 
 
 def haversine_dist(lon1, lat1, lon2, lat2):
@@ -19,7 +20,7 @@ def haversine_dist(lon1, lat1, lon2, lat2):
     # Haversine formula
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
     c = 2 * asin(sqrt(a))
     # Radius of earth in kilometres. For miles, use 3956.
     earth_raduis_km = 6372.8
@@ -47,24 +48,27 @@ def find_nearest(lon, lat, df, col):
 
 class Hazard(object):
 
-    def __init__(self, hazard_scenario_name, scenario_hazard_data,
-                 hazard_input_method):
+    def __init__(self,
+                 hazard_scenario_name,
+                 scenario_hazard_data,
+                 hazard_input_method,
+                 hazard_data_df):
         self.hazard_scenario_name = hazard_scenario_name
         self.scenario_hazard_data = scenario_hazard_data
         self.hazard_input_method = hazard_input_method
+        self.hazard_data_df = hazard_data_df
         self.round_off = 2
 
     def get_hazard_intensity(self, x_location, y_location):
-        for comp in self.scenario_hazard_data:
-            if self.hazard_input_method == 'hazard_array':
+        if str(self.hazard_input_method).lower() == 'calculated_array':
+            for comp in self.scenario_hazard_data:
                 return comp["hazard_intensity"]
-            else:
-                comp_pos_x = round(float(comp["pos_x"]), self.round_off)
-                comp_pos_y = round(float(comp["pos_y"]), self.round_off)
-                haz_loc_x = round(float(x_location), self.round_off)
-                haz_loc_y = round(float(y_location), self.round_off)
-                if (comp_pos_x == haz_loc_x) and (comp_pos_y == haz_loc_y):
-                    return comp["hazard_intensity"]
+        if str(self.hazard_input_method).lower() == 'hazard_file':
+            hazard_intensity = find_nearest(
+                x_location, y_location,
+                self.hazard_data_df, self.hazard_scenario_name
+            )
+            return hazard_intensity
 
         raise Exception("Invalid values for component location.")
 
@@ -75,13 +79,13 @@ class Hazard(object):
         return seed
 
     def __str__(self):
-        output = self.hazard_scenario_name+'\n'
+        output = self.hazard_scenario_name + '\n'
         for hazrd in self.scenario_hazard_data:
             output = output\
-                     + "pos_x: "+str(hazrd["pos_x"])\
-                     + " pos_y: " + str(hazrd["pos_y"])\
-                     + " hazard_intensity: " + str(hazrd["hazard_intensity"])\
-                     + '\n'
+                + "pos_x: " + str(hazrd["pos_x"])\
+                + " pos_y: " + str(hazrd["pos_y"])\
+                + " hazard_intensity: " + str(hazrd["hazard_intensity"])\
+                + '\n'
         return output
 
 
@@ -90,27 +94,42 @@ class HazardsContainer(object):
     The idea is to abstract the number and type of hazards to allow greater
     flexibility in the type and number of hazards to be modelled.
     """
-    def __init__(self, configuration):
+    def __init__(self, configuration, model_file_path):
+
         # string variables
         self.listOfhazards = []
         self.hazard_type = configuration.HAZARD_TYPE
-        self.intensity_measure_param = \
-            configuration.HAZARD_INTENSITY_MEASURE_PARAM
-        self.intensity_measure_unit = \
-            configuration.HAZARD_INTENSITY_MEASURE_UNIT
+        self.intensity_measure_param = configuration.HAZARD_INTENSITY_MEASURE_PARAM
+        self.intensity_measure_unit = configuration.HAZARD_INTENSITY_MEASURE_UNIT
         self.focal_hazard_scenarios = configuration.FOCAL_HAZARD_SCENARIOS
 
-        # get hazard data from scenario file
-        if configuration.HAZARD_INPUT_METHOD == "scenario_file":
+        # ---------------------------------------------------------------------
+        # Read in the model JSON file into a dict:
+        with open(model_file_path, 'r') as jfile:
+            ci_model = json.load(jfile)
+
+        # List of System Components with their attributes:
+        component_table = pd.DataFrame.from_dict(
+            ci_model['component_list'], orient="index")
+
+        # Prepare a dataframe to hold hazard attribution for each component location:
+        self.component_loc = component_table[['pos_x', 'pos_y']].copy()
+
+        # ---------------------------------------------------------------------
+        # Get hazard data from scenario file
+        if configuration.HAZARD_INPUT_METHOD.lower() == "hazard_file":
+            hazard_file_path = configuration.HAZARD_INPUT_FILE
+            self.hazard_table = pd.read_csv(hazard_file_path)
             self.scenario_hazard_data, self.hazard_scenario_list = \
                 HazardsContainer.populate_scenario_hazard_using_hazard_file(
-                    configuration.HAZARD_INPUT_FILE)
+                    hazard_file_path)
 
             self.num_hazard_pts = len(self.hazard_scenario_list)
 
-        # get hazard data from an array of hazard intensity values
-        elif configuration.HAZARD_INPUT_METHOD == "hazard_array":
-
+        # ---------------------------------------------------------------------
+        # Set up hazard data from an array of hazard intensity values
+        elif configuration.HAZARD_INPUT_METHOD.lower() == "calculated_array":
+            self.hazard_table = None
             self.num_hazard_pts = \
                 int(round((configuration.INTENSITY_MEASURE_MAX
                            - configuration.INTENSITY_MEASURE_MIN) /
@@ -132,33 +151,35 @@ class HazardsContainer(object):
             self.hazard_scenario_list = ["%0.3f" % np.float(x)
                                          for x in self.hazard_scenario_list]
 
+        # ---------------------------------------------------------------------
         for hazard_scenario_name in self.scenario_hazard_data.keys():
             self.listOfhazards.append(
                 Hazard(
                     hazard_scenario_name,
                     self.scenario_hazard_data[hazard_scenario_name],
-                    configuration.HAZARD_INPUT_METHOD
-                    )
+                    configuration.HAZARD_INPUT_METHOD,
+                    self.hazard_table
                 )
-
-        # self.hazard_scenario_name = self.hazard_scenario_list
+            )
 
     def get_listOfhazards(self):
         for hazard_intensity in self.listOfhazards:
             yield hazard_intensity
 
     @staticmethod
-    def populate_scenario_hazard_using_hazard_file(hazard_input_file):
-        root = os.path.dirname(os.path.abspath(__file__))
-        csv_path = os.path.join(root, "hazard", hazard_input_file)
+    def populate_scenario_hazard_using_hazard_file(hazard_file_path):
+        """
+        :hazard_file_path: this should be the full or relative path to the
+        hazard specification file
+        This file must have "pos_x" and "pos_y" as the first two headers.
+        These are equivalent to longitude and latitude respectively.
+        """
         scenario_hazard_data = {}
+        hazard_input = pd.read_csv(hazard_file_path)
+        hazard_scenario_list = hazard_input.columns.to_list()[2:]
 
-        with open(csv_path, "rb") as f_obj:
+        with open(hazard_file_path, "r") as f_obj:
             reader = csv.DictReader(f_obj, delimiter=',')
-
-            hazard_scenario_list \
-                = [scenario for scenario in reader.fieldnames if
-                   scenario not in ["pos_x", "pos_y"]]
 
             for scenario in hazard_scenario_list:
                 scenario_hazard_data[scenario] = []
@@ -180,8 +201,8 @@ class HazardsContainer(object):
         scenario_hazard_data = OrderedDict()
         hazard_scenario_name = []
         for i, hazard_intensity in enumerate(num_hazard_pts):
-            hazard_scenario_name.append("s_"+str(i))
-            scenario_hazard_data["s_"+str(i)] \
+            hazard_scenario_name.append("s_" + str(i))
+            scenario_hazard_data["s_" + str(i)] \
                 = [{"pos_x": 0,
                     "pos_y": 0,
                     "hazard_intensity": hazard_intensity}]

@@ -21,10 +21,12 @@ class Configuration:
         # if file_ext != '.json':
         #     config_path = converter.convert_to_json(config_path)
 
-        self._VALID_HAZARD_INPUT_METHODS = {
-            'Calculated_Array': 'hazard_array',
-            'Hazard_File': 'scenario_file'
-        }
+        self.root_dir = Path(config_path).resolve().parent.parent
+
+        self._VALID_HAZARD_INPUT_METHODS = [
+            'hazard_array', 'calculated_array'
+            'scenario_file', 'hazard_file'
+        ]
 
         with open(config_path, 'r') as f:
             config = json.load(f)
@@ -49,18 +51,21 @@ class Configuration:
         self.HAZARD_TYPE = str(config['HAZARD_TYPE'])
         self.NUM_SAMPLES = int(config['HAZARD_NUM_SAMPLES'])
 
-        if config['HAZARD_INPUT_METHOD'] == \
-                self._VALID_HAZARD_INPUT_METHODS['Hazard_File']:
-            self.HAZARD_INPUT_FILE = \
-                str(Path(config['HAZARD_INPUT_FILE']).absolute().resolve())
-        elif config['HAZARD_INPUT_METHOD'] == \
-                self._VALID_HAZARD_INPUT_METHODS['Calculated_Array']:
-            self.HAZARD_INPUT_FILE = None
+        if config['HAZARD_INPUT_METHOD'] in ['hazard_array', 'calculated_array']:
+            self.HAZARD_INPUT_METHOD = 'Calculated_Array'
+        elif config['HAZARD_INPUT_METHOD'] in ['scenario_file', 'hazard_file']:
+            self.HAZARD_INPUT_METHOD = 'Hazard_File'
         else:
             raise ValueError(
                 "Unrecognised HAZARD_INPUT_METHOD. Valid values are: " +
-                "{}".format(list(self._VALID_HAZARD_INPUT_METHODS.values()))
+                "{}".format(self._VALID_HAZARD_INPUT_METHODS)
             )
+
+        if self.HAZARD_INPUT_METHOD == 'Hazard_File':
+            self.HAZARD_INPUT_FILE = str(
+                Path(self.root_dir, 'input', config['HAZARD_INPUT_FILE']))
+        elif self.HAZARD_INPUT_METHOD == 'Calculated_Array':
+            self.HAZARD_INPUT_FILE = None
 
         self.INTENSITY_MEASURE_MIN = \
             float(config['HAZARD_INTENSITY_MEASURE_MIN'])

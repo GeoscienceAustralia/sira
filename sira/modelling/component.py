@@ -1,8 +1,8 @@
 # these are required for defining the data model
-from sira.modelling.structural import (Element,Base)
-from sira.modelling.iodict import IODict
 import numpy as np
+from sira.modelling.iodict import IODict
 from sira.modelling.responsemodels import Algorithm
+from sira.modelling.structural import Base, Element
 
 
 class DamageState(Base):
@@ -74,21 +74,21 @@ class Component(Base):
 
     def __init__(self, *arg, **kwargs):
 
-            self.damage_states = {}
-            self.destination_components = IODict()
+        self.damage_states = {}
+        self.destination_components = IODict()
 
-            for k, v in kwargs.items():
-                setattr(self, k, v)
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
-            # TODO a check about the order of the damage state
-            # the key of the damage state
-            for k, v in self.damages_states_constructor.items():
-                # json file only takes string as keys, convert the
-                # index representing the damage state to int
-                params = {}
-                for key in v.keys():
-                    params[key] = v[key]
-                self.damage_states[int(k)] = DamageState(**params)
+        # TODO a check about the order of the damage state
+        # the key of the damage state
+        for k, v in self.damages_states_constructor.items():
+            # json file only takes string as keys, convert the
+            # index representing the damage state to int
+            params = {}
+            for key in v.keys():
+                params[key] = v[key]
+            self.damage_states[int(k)] = DamageState(**params)
 
     def get_location(self):
         return self.pos_x, self.pos_y
@@ -104,7 +104,7 @@ class Component(Base):
         for damage_state_index in self.damage_states.keys():
             pe_ds[damage_state_index] = \
                 self.damage_states[damage_state_index].\
-                    response_function(hazard_intensity)
+                response_function(hazard_intensity)
 
         return pe_ds
 
@@ -128,31 +128,21 @@ class Component(Base):
 
     def __str__(self):
 
-        return "component_id           : " + \
-                    str(self.component_id) + '\n' +\
-               "component_class        : " + \
-                    str(self.component_class)+ '\n' + \
-               "component_type         : " + \
-                    str(self.component_type) + '\n' +\
-               "cost_fraction          : " + \
-                    str(self.cost_fraction) + '\n' +\
-               "node_cluster           : " + \
-                    str(self.node_cluster) + '\n' +\
-               "node_type              : " + \
-                    str(self.node_type) + '\n' +\
-               "operating_capacity     : " + \
-                    str(self.operating_capacity) + '\n' +\
-               "pos_x                  : " + \
-                    str(self.pos_x) + '\n' + \
-               "pos_y                  : " + \
-                    str(self.pos_y) + '\n' + \
-               "damage_states          : " + \
-                    str([self.damage_states[damage_state].damage_state_name
-                         for damage_state in self.damage_states]) + '\n' + \
-               "destination_components : " + \
-                    str([destination_components
-                         for destination_components
-                         in self.destination_components]) + '\n'
+        return "component_id           : " + str(self.component_id) + '\n' +\
+               "component_class        : " + str(self.component_class) + '\n' + \
+               "component_type         : " + str(self.component_type) + '\n' +\
+               "cost_fraction          : " + str(self.cost_fraction) + '\n' +\
+               "node_cluster           : " + str(self.node_cluster) + '\n' +\
+               "node_type              : " + str(self.node_type) + '\n' +\
+               "operating_capacity     : " + str(self.operating_capacity) + '\n' +\
+               "pos_x                  : " + str(self.pos_x) + '\n' + \
+               "pos_y                  : " + str(self.pos_y) + '\n' + \
+               "damage_states          : " + str(
+                   [self.damage_states[damage_state].damage_state_name
+                    for damage_state in self.damage_states]) + '\n' + \
+               "destination_components : " + str(
+                   [destination_components for destination_components
+                    in self.destination_components]) + '\n'
 
 
 class ConnectionValues(Base):

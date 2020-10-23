@@ -19,10 +19,10 @@ plt.switch_backend('agg')
 # ****************************************************************************
 
 def calc_tick_vals(val_list, xstep=0.1):
-    num_ticks = int(round(len(val_list)/xstep)) + 1
+    num_ticks = int(round(len(val_list) / xstep)) + 1
     if (num_ticks > 12) and (num_ticks <= 20):
         xstep = 0.2
-        num_ticks = int(round(len(val_list)/xstep)) + 1
+        num_ticks = int(round(len(val_list) / xstep)) + 1
     elif num_ticks > 20:
         num_ticks = 11
     tick_labels = val_list[::(num_ticks - 1)]
@@ -82,8 +82,8 @@ def plot_mean_econ_loss(scenario, economic_loss_array, hazards):
     xtick_pos = []
     for val in xtick_labels:
         xtick_pos.append(hazard_scenario_list.index(val))
-    intensity_label = hazards.intensity_measure_param+' (' +\
-        hazards.intensity_measure_unit+')'
+    intensity_label = hazards.intensity_measure_param + ' (' +\
+        hazards.intensity_measure_unit + ')'
 
     ax.set_xticks(xtick_pos)
     ax.set_xticklabels(xtick_labels, rotation='vertical')
@@ -115,7 +115,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             pickle.dump(
                 {response_key: haz_vs_ds_index_of_comp[response_key]},
                 handle, pickle.HIGHEST_PROTOCOL
-                )
+            )
 
     idshaz_zip = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.zip')
     zf = zipfile.ZipFile(idshaz_zip, mode='w', allowZip64=True)
@@ -134,7 +134,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             pickle.dump(
                 {response_key: sys_output_dict[response_key]},
                 handle, pickle.HIGHEST_PROTOCOL
-                )
+            )
 
     sys_output_df = pd.DataFrame(sys_output_dict)
     sys_output_df = sys_output_df.transpose()
@@ -157,7 +157,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             pickle.dump(
                 {response_key: component_resp_dict[response_key]},
                 handle, pickle.HIGHEST_PROTOCOL
-                )
+            )
 
     # ------------------------------------------------------------------------
     # Hazard response for component types
@@ -189,7 +189,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     pe_sys_econloss = np.zeros(
         (len(infrastructure.get_system_damage_states()),
          hazards.num_hazard_pts)
-        )
+    )
     for j in range(hazards.num_hazard_pts):
         for i in range(len(infrastructure.get_system_damage_states())):
             pe_sys_econloss[i, j] = \

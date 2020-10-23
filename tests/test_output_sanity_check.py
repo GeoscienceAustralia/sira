@@ -1,14 +1,13 @@
-import unittest
-from pathlib import Path
-import pickle
 import json
 import logging
-import numpy as np
+import unittest
+from pathlib import Path
 
+import numpy as np
 from sira.configuration import Configuration
-from sira.scenario import Scenario
-from sira.modelling.hazard import HazardsContainer
 from sira.model_ingest import ingest_model
+from sira.modelling.hazard import HazardsContainer
+from sira.scenario import Scenario
 from sira.simulation import calculate_response
 
 rootLogger = logging.getLogger(__name__)
@@ -35,7 +34,7 @@ class TestSystemSanity(unittest.TestCase):
 
         config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
-        hazards = HazardsContainer(config)
+        hazards = HazardsContainer(config, model_file_path)
         infrastructure = ingest_model(config)
 
         response_list = calculate_response(hazards, scenario, infrastructure)
@@ -49,7 +48,7 @@ class TestSystemSanity(unittest.TestCase):
         self.assertTrue(
             np.array_equal(economic_loss_array,
                            historical_economic_loss_array),
-            str(len(economic_loss_array))+'\n'+
+            str(len(economic_loss_array)) + '\n' +
             str(len(historical_economic_loss_array))
         )
 
@@ -63,16 +62,16 @@ class TestSystemSanity(unittest.TestCase):
 
         config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
-        hazards = HazardsContainer(config)
+        hazards = HazardsContainer(config, model_file_path)
         infrastructure = ingest_model(config)
         response_list = calculate_response(hazards, scenario, infrastructure)
 
         output_node_capacity = 0
         with open(model_file_path, 'r') as mdl:
             json_infra_model = json.load(mdl)
-            output_node_capacity \
-                = json_infra_model\
-                  ["sysout_setup"]["output_node"]["output_node_capacity"]
+            output_node_capacity =\
+                json_infra_model["sysout_setup"]["output_node"]\
+                ["output_node_capacity"]
 
         self.assertTrue(
             int(response_list[4][0][0]) == int(output_node_capacity)
@@ -88,7 +87,7 @@ class TestSystemSanity(unittest.TestCase):
 
         config = Configuration(conf_file_path, model_file_path)
         scenario = Scenario(config)
-        hazards = HazardsContainer(config)
+        hazards = HazardsContainer(config, model_file_path)
         infrastructure = ingest_model(config)
         response_list = calculate_response(hazards, scenario, infrastructure)
 
@@ -97,8 +96,8 @@ class TestSystemSanity(unittest.TestCase):
     # -------------------------------------------------------------------------
     def test_compare_economic_loss_for_existing_models(self):
 
-        print("\n{}\n>>> Initiating sanity check aganist pre-run models...".\
-            format('-'*70))
+        print("\n{}\n>>> Initiating sanity check aganist pre-run models...".
+              format('-' * 70))
 
         conf_file_paths = [
             d for d in self.models_dir.rglob('input/*config_testmdl*.json')]
@@ -106,14 +105,14 @@ class TestSystemSanity(unittest.TestCase):
             d for d in self.models_dir.rglob('input/*model_testmdl*.json')]
 
         for conf_file_path, model_file_path in \
-            zip(conf_file_paths, model_file_paths):
+                zip(conf_file_paths, model_file_paths):
 
             if conf_file_path.is_file():
-                print("\nMatching results for: "+Path(conf_file_path).name)
+                print("\nMatching results for: " + Path(conf_file_path).name)
 
                 config = Configuration(conf_file_path, model_file_path)
                 scenario = Scenario(config)
-                hazards = HazardsContainer(config)
+                hazards = HazardsContainer(config, model_file_path)
                 infrastructure = ingest_model(config)
 
                 response_list = calculate_response(
@@ -122,7 +121,7 @@ class TestSystemSanity(unittest.TestCase):
 
                 stored_data_file = Path(
                     self.comparison_data_dir,
-                    "economic_loss_for_"+config.SCENARIO_NAME+'.npy')
+                    "economic_loss_for_" + config.SCENARIO_NAME + '.npy')
                 econ_loss_historic = np.load(stored_data_file)
 
                 self.assertTrue(
