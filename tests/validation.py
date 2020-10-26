@@ -3,15 +3,12 @@ Params lists and functions for validation testing of models and config files
 Validates model and config files based on rules
 """
 
-import os
 from pathlib import Path
-import json
 
 # -----------------------------------------------------------------------------
 # Paths
 
 SIRA_ROOT_DIR = Path(__file__).resolve().parent
-
 path_to_test_models = Path(SIRA_ROOT_DIR, "tests", "models")
 
 # -----------------------------------------------------------------------------
@@ -69,8 +66,8 @@ required_col_names = [
     'damage_ratio',
     'functionality',
     'recovery_function',
-    'recovery_mean',
-    'recovery_std'
+    'recovery_param1',
+    'recovery_param2'
 ]
 
 # MODEL_SECTIONS
@@ -82,14 +79,15 @@ required_headers = [
 ]
 
 # -----------------------------------------------------------------------------
+
+
 def config_file_valid(config_file):
     """
     Config File Validation Rules:
-    
     """
     return True
 
-# -----------------------------------------------------------------------------
+
 def model_file_valid(model_file):
     """
     Model Validation Rules:
