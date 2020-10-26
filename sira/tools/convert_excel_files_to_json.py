@@ -216,9 +216,9 @@ def update_json_structure(main_json_obj):
                     recovery_fn_construct["function_name"]\
                         = fragility_data[key]["recovery_function"]
                     recovery_fn_construct["mean"]\
-                        = fragility_data[key]["recovery_mean"]
+                        = fragility_data[key]["recovery_param1"]
                     recovery_fn_construct["stddev"]\
-                        = fragility_data[key]["recovery_std"]
+                        = fragility_data[key]["recovery_param2"]
                     recovery_fn_construct["recovery_state_definition"]\
                         = "Not Available."
 
