@@ -104,7 +104,7 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
     else:
         raise RuntimeError(
             "should never hit end of if-elif block for validated input"
-            )
+        )
 
     # un-pack
     xx, yy1, yy2 = steps
@@ -188,8 +188,8 @@ def comp_recovery_given_hazard_and_time(component,
     #     rsd = [fragdict['tmp_rst_std'][ct][ds] for ds in comptype_dmg_states]
     # else:
     #     # Parameters for Full Restoration:
-    #     rmu = [fragdict['recovery_mean'][ct][ds] for ds in comptype_dmg_states]
-    #     rsd = [fragdict['recovery_std'][ct][ds] for ds in comptype_dmg_states]
+    #     rmu = [fragdict['recovery_param1'][ct][ds] for ds in comptype_dmg_states]
+    #     rsd = [fragdict['recovery_param2'][ct][ds] for ds in comptype_dmg_states]
     # **************************************************************************
     for dmg_index, ds in enumerate(comptype_dmg_states):
         if ds == 'DS0 None' or dmg_index == 0:
@@ -230,7 +230,7 @@ def prep_repair_list(infrastructure_obj,
     output_dict = infrastructure_obj.output_nodes
     commodity_types = list(
         set([input_dict[i]['commodity_type'] for i in list(input_dict.keys())])
-        )
+    )
     nodes_by_commoditytype = {}
     for comm_type in commodity_types:
         nodes_by_commoditytype[comm_type] = \
@@ -289,7 +289,7 @@ def prep_repair_list(infrastructure_obj,
                 sp_dep.extend(G.get_shortest_paths(
                     G.vs.find(dnode), to=G.vs.find(onode),
                     weights=w, mode='OUT')[0]
-                                )
+                )
             for cix, criteria in enumerate(vcrit):
                 sp_list = []
                 if not criteria:
@@ -316,7 +316,7 @@ def prep_repair_list(infrastructure_obj,
 
         repair_list_combined[onode] = sorted(
             [x for x in temp_repair_list if x not in uncosted_comps]
-            )
+        )
 
     return repair_list_combined
 
@@ -402,7 +402,7 @@ def calc_restoration_setup(component_meanloss,
     rst_setup_df['DeltaTC'] = pd.Series(
         rst_setup_df['RestorationTimes'].values * buffer_time_to_commission,
         index=rst_setup_df.index
-        )
+    )
 
     for k in list(repair_path.keys()):
         oldlist = repair_path[k]
@@ -449,7 +449,7 @@ def calc_restoration_setup(component_meanloss,
     rst_setup_df.to_csv(
         os.path.join(output_path, filename),
         index_label=['NodesToRepair'], sep=','
-        )
+    )
 
     return rst_setup_df
 
@@ -548,7 +548,7 @@ def vis_restoration_process(scenario,
         xy=(0, len(comps) + 3.1), xycoords=('axes fraction', 'data'),
         ha='left', va='top', annotation_clip=False,
         color='slategrey', size=18, weight='bold'
-        )
+    )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Component restoration plot
@@ -643,7 +643,7 @@ def vis_restoration_process(scenario,
     fig.savefig(
         os.path.join(scenario.output_path, fig_name),
         format='png', dpi=400, bbox_inches='tight'
-        )
+    )
     plt.close(fig)
 
     return restoration_timeline_array, time_to_full_restoration_for_lines
@@ -669,35 +669,36 @@ def component_criticality(infrastructure,
     """
     axes_lw = 0.75
 
-    sns.set(style="darkgrid",
-            rc={
-                # --- Edges & Spine ---
-                "axes.edgecolor": '0.15',
-                "axes.linewidth": axes_lw,
-                "axes.spines.bottom": True,
-                "axes.spines.left": True,
-                "axes.spines.right": False,
-                "axes.spines.top": False,
-                # --- Line style ---
-                "grid.color": 'white',
-                "grid.linestyle": '-',
-                "grid.linewidth": 2.0,
-                # --- Y-axis customisation ---
-                "ytick.left": True,
-                "ytick.labelsize": 13,
-                "ytick.major.size": 7,
-                "ytick.major.width": axes_lw,
-                "ytick.major.pad": 4,
-                "ytick.minor.left": False,
-                # --- X-axis customisation ---
-                "xtick.bottom": True,
-                "xtick.labelsize": 13,
-                "xtick.major.size": 7,
-                "xtick.major.width": axes_lw,
-                "xtick.major.pad": 4,
-                "xtick.minor.bottom": False,
-                }
-            )
+    sns.set(
+        style="darkgrid",
+        rc={
+            # --- Edges & Spine ---
+            "axes.edgecolor": '0.15',
+            "axes.linewidth": axes_lw,
+            "axes.spines.bottom": True,
+            "axes.spines.left": True,
+            "axes.spines.right": False,
+            "axes.spines.top": False,
+            # --- Line style ---
+            "grid.color": 'white',
+            "grid.linestyle": '-',
+            "grid.linewidth": 2.0,
+            # --- Y-axis customisation ---
+            "ytick.left": True,
+            "ytick.labelsize": 13,
+            "ytick.major.size": 7,
+            "ytick.major.width": axes_lw,
+            "ytick.major.pad": 4,
+            "ytick.minor.left": False,
+            # --- X-axis customisation ---
+            "xtick.bottom": True,
+            "xtick.labelsize": 13,
+            "xtick.major.size": 7,
+            "xtick.major.width": axes_lw,
+            "xtick.major.pad": 4,
+            "xtick.minor.bottom": False,
+        }
+    )
 
     fig = plt.figure(figsize=(7, 7))
     ax = fig.add_subplot(111)
@@ -735,7 +736,7 @@ def component_criticality(infrastructure,
                             alpha=0.8,
                             linewidth=0.5),
             path_effects=[PathEffects.withStroke(linewidth=2, foreground="w")]
-            )
+        )
 
         plt.annotate(
             "{0:>2.0f}   {1:<s}".format(cid, name),
@@ -925,14 +926,14 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
         align='center',
         color=bar_clr_1, alpha=0.7, edgecolor=None,
         label="% loss of total system value (for a component type)"
-        )
+    )
 
     axes.barh(
         pos + bar_width / 2.0 + bar_offset, ctype_loss_by_type, bar_width,
         align='center',
         color=bar_clr_2, alpha=0.7, edgecolor=None,
         label="% loss for component type"
-        )
+    )
 
     for p, cv in zip(pos, ctype_loss_tot_mean):
         axes.annotate(('%0.1f' % np.float(cv)) + '%',
@@ -979,7 +980,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
 
     axes.set_xlim(0, 100)
     axes.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    axes.set_xticklabels([' ']*5)
+    axes.set_xticklabels([' '] * 5)
     axes.xaxis.grid(False)
 
     axes.set_ylim([pos.max() + bar_width * 1.5, pos.min() - bar_width * 1.5])
@@ -993,7 +994,7 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
     fig.savefig(
         os.path.join(output_path, fig_name),
         format='png', bbox_inches='tight', dpi=400
-        )
+    )
 
     plt.close(fig)
 
@@ -1043,7 +1044,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
         align='center',
         color='gainsboro', alpha=0.7, edgecolor=None,
         label='',
-        )
+    )
     ax1.barh(
         barpos, ctype_loss_mean_by_type, bar_width,
         align='center',
@@ -1055,7 +1056,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
             'capsize': 2,
             'elinewidth': 0.7,
             'markeredgewidth': 0.7}
-        )
+    )
 
     for p, cv in zip(barpos, ctype_loss_mean_by_type):
         ax1.annotate(('%0.1f' % np.float(cv)) + '%',
@@ -1091,7 +1092,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     ax1.xaxis.grid(False)
     ax1.set_xlim(0, 100)
     ax1.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    ax1.set_xticklabels([' ']*5)
+    ax1.set_xticklabels([' '] * 5)
 
     ax1.yaxis.grid(False)
     ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
@@ -1177,7 +1178,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     fig.savefig(
         os.path.join(output_path, fig_name),
         format='png', bbox_inches='tight', dpi=400
-        )
+    )
 
     plt.close(fig)
 
@@ -1226,7 +1227,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
         align='center',
         color=bg_box_clr, alpha=0.85, edgecolor=None,
         label='',
-        )
+    )
     ax1.barh(
         barpos, ctype_loss_mean_by_type, bar_width,
         align='center',
@@ -1238,7 +1239,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
             'capsize': 0,
             'elinewidth': 1.2,
             'markeredgewidth': 0.0}
-        )
+    )
 
     def selective_rounding(fltval):
         return "{:>4.0f}%".format(round(fltval)) if fltval > 1.0 \
@@ -1286,7 +1287,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     ax1.xaxis.grid(False)
     ax1.set_xlim(0, 100)
     ax1.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    ax1.set_xticklabels([' ']*5)
+    ax1.set_xticklabels([' '] * 5)
 
     ax1.yaxis.grid(False)
     ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
@@ -1380,7 +1381,7 @@ def draw_component_loss_barchart_s3(ctype_resp_sorted,
     fig.savefig(
         os.path.join(output_path, fig_name),
         format='png', bbox_inches='tight', dpi=400
-        )
+    )
 
     plt.close(fig)
 
@@ -1425,7 +1426,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
 
     ax.set_xlim(0, 100)
     ax.set_xticks(np.linspace(0, 100, 5, endpoint=True))
-    ax.set_xticklabels([' ']*5)
+    ax.set_xticklabels([' '] * 5)
     ax.xaxis.grid(True, color=grid_clr, linewidth=0.5, linestyle='-')
 
     ax.set_ylim([pos.max() + bar_width, pos.min() - bar_width])
@@ -1459,7 +1460,7 @@ def draw_component_failure_barchart(uncosted_comptypes,
     fig.savefig(
         os.path.join(output_path, figname),
         format='png', bbox_inches='tight', dpi=400
-        )
+    )
 
     plt.close(fig)
 
@@ -1536,8 +1537,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
                     t,
                     comps_avl_for_int_replacement,
                     threshold_recovery=RESTORATION_THRESHOLD,
-                    threshold_exceedance=0.001
-                    )
+                    threshold_exceedance=0.001)
 
     comp_rst_df = pd.DataFrame(comp_rst,
                                index=nodes_costed,
@@ -1549,7 +1549,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
         if True in list(post_rst_times.array):
             time_restored = np.round(comp_rst_df.columns[post_rst_times][0], 0)
         else:
-            time_restored = max(scenario.restoration_time_range)+1
+            time_restored = max(scenario.restoration_time_range) + 1
         comp_rst_time_given_haz.append(time_restored)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1563,7 +1563,7 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
 
     ctype_scenario_outcomes = copy.deepcopy(
         100 * ctype_resp_sorted.drop(['func_mean', 'func_std'], axis=1)
-        )
+    )
 
     cpmap = {c: sorted(list(infrastructure.get_components_for_type(c)))
              for c in cp_types_costed}
@@ -1658,7 +1658,7 @@ def run_scenario_loss_analysis(scenario,
     for h in FOCAL_HAZARD_SCENARIOS:
         col_tp.extend(
             list(zip([h] * len(RESTORATION_STREAMS), RESTORATION_STREAMS))
-            )
+        )
 
     mcols = pd.MultiIndex.from_tuples(
         col_tp, names=['Hazard', 'Restoration Streams'])

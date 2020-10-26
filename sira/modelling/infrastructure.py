@@ -193,8 +193,8 @@ class Infrastructure(Base):
     #     recovery_parameters = component.get_recovery(damage_state)
     #     damage_parameters = component.get_damage_state(damage_state)
     #
-    #     m = recovery_parameters.recovery_mean
-    #     s = recovery_parameters.recovery_std
+    #     m = recovery_parameters.recovery_param1  # loc = mean
+    #     s = recovery_parameters.recovery_param2  # scale = standard deviation
     #     fn = damage_parameters.functionality
     #     cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
     #     return cdf + (1.0 - cdf) * fn
