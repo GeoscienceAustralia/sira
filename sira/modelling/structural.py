@@ -1,7 +1,9 @@
-from future.builtins import str, object
-from future.utils import with_metaclass
 import inspect
+
 from sira.tools.utils import class_getter
+
+# from future.builtins import str, object
+# from future.utils import with_metaclass
 
 
 class NoDefaultException(Exception):
@@ -86,7 +88,6 @@ class Element(object):
         A callable that can be used to signal that an Element has no default
         value. Simply raises a :py:exception:`NoDefaultException`.
         """
-
         raise NoDefaultException()
 
     def __init__(self, cls, description, default=None, validators=None):
@@ -101,15 +102,16 @@ class Element(object):
             raise NoDefaultException()
         return self._default() if callable(self._default) else self._default
 
+
 class StructuralMeta(type):
     """
     Metaclass for structural
-    """
 
-    #: Names of :py:class:`Element`s that cannot defined on any class ``c`` for
-    #: which ``issubclass(type(c), StructuralMeta)`` is *True*. These are names
-    #: of elements which are used internally and for the sake of the performance
-    #: of attribute lookup, are banned for other use.
+    Names of :py:class:`Element`s that cannot be defined on any class ``c`` for
+    which ``issubclass(type(c), StructuralMeta)`` is *True*. These are names
+    of elements which are used internally and for the sake of the performance
+    of attribute lookup, are banned for other use.
+    """
     DISALLOWED_FIELDS = [
         'class',
         'predecessor', '_predecessor', '_id',
@@ -133,7 +135,8 @@ class StructuralMeta(type):
             for field in StructuralMeta.DISALLOWED_FIELDS:
                 if field in params:
                     raise DisallowedElementException(
-                        'class {} cannot have Element with name "{}"'.format(name, field))
+                        'class {} cannot have Element with name "{}"'.
+                        format(name, field))
 
             return params
 
@@ -144,7 +147,6 @@ class StructuralMeta(type):
         for k, v in list(dct['__params__'].items()):
             # TODO: put validators in here
             json_desc[k] = {'class': v.cls}
-
 
         for k, v in list(extract_params_of_type(Info).items()):
             json_desc[k] = {
