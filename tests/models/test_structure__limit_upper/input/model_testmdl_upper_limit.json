@@ -46,9 +46,9 @@
                     "recovery_function_constructor": {
                         "function_name": "RecoveryFunction",
                         "recovery_95percentile": 0,
-                        "recovery_mean": 0.0,
+                        "recovery_param1": 0.0,
                         "recovery_state_definition": "Not Available.",
-                        "recovery_std": 0.5
+                        "recovery_param2": 0.5
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
@@ -62,9 +62,9 @@
                     "recovery_function_constructor": {
                         "function_name": "RecoveryFunction",
                         "recovery_95percentile": 0.1,
-                        "recovery_mean": 1.0,
+                        "recovery_param1": 1.0,
                         "recovery_state_definition": "Not Available.",
-                        "recovery_std": 0.01
+                        "recovery_param2": 0.01
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
@@ -93,9 +93,9 @@
                     "recovery_function_constructor": {
                         "function_name": "RecoveryFunction",
                         "recovery_95percentile": 0,
-                        "recovery_mean": 0.0,
+                        "recovery_param1": 0.0,
                         "recovery_state_definition": "Not Available.",
-                        "recovery_std": 0.5
+                        "recovery_param2": 0.5
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
@@ -109,9 +109,9 @@
                     "recovery_function_constructor": {
                         "function_name": "RecoveryFunction",
                         "recovery_95percentile": 0.5,
-                        "recovery_mean": 5.0,
+                        "recovery_param1": 5.0,
                         "recovery_state_definition": "Not Available.",
-                        "recovery_std": 0.303978416
+                        "recovery_param2": 0.303978416
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
@@ -139,9 +139,9 @@
                     "recovery_function_constructor": {
                         "function_name": "RecoveryFunction",
                         "recovery_95percentile": 0,
-                        "recovery_mean": 0.0,
+                        "recovery_param1": 0.0,
                         "recovery_state_definition": "Not Available.",
-                        "recovery_std": 0.5
+                        "recovery_param2": 0.5
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
@@ -155,9 +155,9 @@
                     "recovery_function_constructor": {
                         "function_name": "RecoveryFunction",
                         "recovery_95percentile": 0.1,
-                        "recovery_mean": 1.0,
+                        "recovery_param1": 1.0,
                         "recovery_state_definition": "Not Available.",
-                        "recovery_std": 0.0607956832
+                        "recovery_param2": 0.0607956832
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",

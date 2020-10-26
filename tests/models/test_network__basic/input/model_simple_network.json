@@ -112,9 +112,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 0.4177573187,
-                        "stddev": 0.05,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -132,9 +132,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 0.8355146373,
-                        "stddev": 0.1,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -152,9 +152,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 1.6710292746,
-                        "stddev": 0.2,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -172,9 +172,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 3.3420585492,
-                        "stddev": 0.4,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 }
@@ -217,9 +217,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 0.4177573187,
-                        "stddev": 0.05,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -237,9 +237,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 0.8355146373,
-                        "stddev": 0.1,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -257,9 +257,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 1.6710292746,
-                        "stddev": 0.2,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -277,9 +277,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 3.3420585492,
-                        "stddev": 0.4,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 1,
                         "recovery_state_definition": "Not Available."
                     }
                 }
@@ -322,9 +322,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 1.6710292746,
-                        "stddev": 0.2,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 3,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -342,9 +342,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 4.1775731865,
-                        "stddev": 0.5,
+                        "function_name": "Rayleigh",
+                        "mean": 1,
+                        "stddev": 7,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -362,9 +362,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 50.1308782383,
-                        "stddev": 6.0,
+                        "function_name": "Rayleigh",
+                        "mean": 2,
+                        "stddev": 28,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -382,9 +382,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 125.3271955957,
-                        "stddev": 15.0,
+                        "function_name": "Rayleigh",
+                        "mean": 5,
+                        "stddev": 100,
                         "recovery_state_definition": "Not Available."
                     }
                 }
@@ -427,9 +427,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 1.6710292746,
-                        "stddev": 0.2,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 3,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -447,9 +447,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 4.1775731865,
-                        "stddev": 0.5,
+                        "function_name": "Rayleigh",
+                        "mean": 1,
+                        "stddev": 7,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -467,9 +467,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 50.1308782383,
-                        "stddev": 6.0,
+                        "function_name": "Rayleigh",
+                        "mean": 2,
+                        "stddev": 28,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -487,9 +487,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 125.3271955957,
-                        "stddev": 15.0,
+                        "function_name": "Rayleigh",
+                        "mean": 5,
+                        "stddev": 100,
                         "recovery_state_definition": "Not Available."
                     }
                 }
@@ -532,9 +532,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 1.6710292746,
-                        "stddev": 0.2,
+                        "function_name": "Rayleigh",
+                        "mean": 0,
+                        "stddev": 3,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -552,9 +552,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 4.1775731865,
-                        "stddev": 0.5,
+                        "function_name": "Rayleigh",
+                        "mean": 1,
+                        "stddev": 7,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -572,9 +572,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 50.1308782383,
-                        "stddev": 6.0,
+                        "function_name": "Rayleigh",
+                        "mean": 2,
+                        "stddev": 28,
                         "recovery_state_definition": "Not Available."
                     }
                 },
@@ -592,9 +592,9 @@
                         "damage_state_definition": "Not Available."
                     },
                     "recovery_function_constructor": {
-                        "function_name": "Normal",
-                        "mean": 125.3271955957,
-                        "stddev": 15.0,
+                        "function_name": "Rayleigh",
+                        "mean": 5,
+                        "stddev": 100,
                         "recovery_state_definition": "Not Available."
                     }
                 }
