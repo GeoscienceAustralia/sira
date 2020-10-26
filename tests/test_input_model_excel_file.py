@@ -34,8 +34,8 @@ class TestReadingExcelFile(unittest.TestCase):
         self.test_root_dir = Path(__file__).resolve().parent
         self.test_model_dir = Path(self.test_root_dir, self.sim_dir_name)
 
-        self.xl_engine_args = dict(engine='openpyxl')
-        # read_only='True', data_only='True'
+        self.xl_engine_args = dict(
+            engine='openpyxl', read_only='True', data_only='True')
 
         self.required_sheets = [
             'system_meta',
@@ -84,16 +84,15 @@ class TestReadingExcelFile(unittest.TestCase):
             )
             print("\nTest loading model file (xlsx): \n{}".
                   format(test_model_relpath))
-            df = pd.read_excel(
-                model_file, sheet_name=None,
-                **self.xl_engine_args
-            )
+            # df = pd.read_excel(model_file, **self.xl_engine_args)
+            df = self.model_df[model_file]
+
             # check if the required worksheets exist in the loaded file
             self.assertTrue(
                 set(self.required_sheets) <= set(df.keys()),
                 "Required worksheet(s) not found in file:\n  {}\n  {}".format(
                     model_file, list(df.keys()))
-                )
+            )
 
     def test04_data_component_list_connections(self):
         print(f"\n{'-'*70}\nChecking component definitions and connections...")
@@ -171,8 +170,8 @@ class TestReadingExcelFile(unittest.TestCase):
             'damage_ratio',
             'functionality',
             'recovery_function',
-            'recovery_mean',
-            'recovery_std'
+            'recovery_param1',
+            'recovery_param2'
         ]
         for model_file in self.model_xlsx_files:
             model = self.model_df[model_file]
@@ -229,9 +228,9 @@ class TestReadingExcelFile(unittest.TestCase):
                 self.assertTrue(
                     isinstance(float(algo_row.functionality), float))
                 self.assertTrue(
-                    isinstance(float(algo_row.recovery_mean), float))
+                    isinstance(float(algo_row.recovery_param1), float))
                 self.assertTrue(
-                    isinstance(float(algo_row.recovery_std), float))
+                    isinstance(float(algo_row.recovery_param2), float))
 
     def test_reading_data_from_supply_setup(self):
         required_col_names = [
@@ -251,9 +250,9 @@ class TestReadingExcelFile(unittest.TestCase):
             self.assertTrue(
                 set(required_col_names) <= set(supply_setup.columns.tolist()),
                 "Required column name not found!\n" +
-                "col expected: "+str(required_col_names)+'\n' +
-                "col supplied: "+str(supply_setup.columns.values.tolist())+'\n' +
-                "file name : "+str(model_file)
+                "col expected: " + str(required_col_names) + '\n' +
+                "col supplied: " + str(supply_setup.columns.values.tolist()) + '\n' +
+                "file name : " + str(model_file)
             )
 
             for sv in supply_setup.itertuples():
@@ -295,31 +294,29 @@ class TestReadingExcelFile(unittest.TestCase):
                     float(row_tuple.output_node_capacity),
                     'Expected float, got {}.'.
                     format(type(row_tuple.output_node_capacity))
-                    )
+                )
                 self.assertTrue(
                     float(row_tuple.capacity_fraction),
                     'Expected float, got {}.'.
                     format(type(row_tuple.capacity_fraction))
-                    )
+                )
                 self.assertTrue(
                     int(row_tuple.priority),
                     'Expected int, got {}.'.
                     format(type(row_tuple.priority))
-                    )
+                )
 
             self.assertTrue(output_setup['output_node_capacity'].sum() > 0)
             production_nodes = output_setup['production_node'].values.tolist()
-            self.assertTrue(set(production_nodes).issubset(
-                                set(self.component_names_dict[model_file]))
-                            )
+            self.assertTrue(
+                set(production_nodes).issubset(
+                    set(self.component_names_dict[model_file]))
+            )
 
     def test_reading_data_from_damage_state_def(self):
         for model_file in self.model_xlsx_files:
             model = self.model_df[model_file]
             damage_state_def = model['damage_state_def']
-            # damage_state_def = \
-            #     damage_state_def.set_index(damage_state_def.columns[0,1].to_list())
-            # damage_state_def = damage_state_def.dropna(axis=0, how='all')
             damage_state_def = damage_state_def.dropna(axis=1, how='all')
 
             for row_tuple in damage_state_def.itertuples():
@@ -333,13 +330,6 @@ class TestReadingExcelFile(unittest.TestCase):
                     "Error in index `{}` file:\n {}".format(
                         row_tuple.damage_state, model_file)
                 )
-
-        # TODO
-        # self.assertTrue(isinstance(damage_def['damage_state_definition'],
-        # bytes or str or numpy.float64),
-        # type(damage_def['damage_state_definition'])+model_file)
-        # self.assertTrue(isinstance(str(damage_def['fragility_source']),
-        # bytes or str), model_file)
 
 
 if __name__ == "__main__":
