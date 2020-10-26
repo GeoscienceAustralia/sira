@@ -1,7 +1,9 @@
-import scipy.stats as stats
 import numpy as np
-from sira.modelling.structural import Info, Base, Element
+import scipy.stats as stats
+from sira.modelling.structural import Base
+from sira.modelling.structural import Element
 from sira.modelling.structural import Element as _Element
+from sira.modelling.structural import Info
 
 
 class Algorithm:
@@ -22,6 +24,11 @@ class Algorithm:
                                        "normal cdf",
                                        "normal_cdf"]:
             return NormalCDF(**response_params)
+        elif function_name.lower() in ["rayleigh",
+                                       "rayleighcdf",
+                                       "rayleigh_cdf",
+                                       "rayleigh cdf"]:
+            return NormalCDF(**response_params)
         elif function_name == "ConstantFunction":
             return ConstantFunction(**response_params)
         elif function_name == "Level0Response":
@@ -37,14 +44,23 @@ class Algorithm:
 
 
 class RecoveryFunction(Base):
+    """
+    Recovery functions are most commonly defined in literature in terms of
+    Normal CDF. In this case, the distribution function parameters will be:
+    param1 = loc = mean
+    prarm2 = scale = standard deviation
+    """
+    recovery_param1 = Element(
+        'float', 'Recovery function location parameter',
+        0.0, [lambda x: float(x) > 0.0])
+    recovery_param2 = Element(
+        'float', 'Recovery function scale parameter',
+        0.0, [lambda x: float(x) > 0.0])
 
-    recovery_mean = Element('float', 'Recovery mean',
-                            0.0, [lambda x: float(x) > 0.0])
-    recovery_std = Element('float', 'Recovery standard deviation',
-                           0.0, [lambda x: float(x) > 0.0])
-
-    def __call__(self, intensity_param, state):
-        return 1.0
+    def __call__(self, data_point, state):
+        return stats.norm.cdf(
+            data_point, loc=self.recovery_param1, scale=self.recovery_param2
+        )
 
 
 class StepFunc(Base):
@@ -77,6 +93,7 @@ class StepFunc(Base):
                 return y
         raise ValueError('value is greater than all xs!')
 
+
 class RayleighCDF(Base):
     """
     The Rayliegh CDF response model for components.
@@ -92,6 +109,11 @@ class RayleighCDF(Base):
         _Element.NO_DEFAULT, validators=[lambda x: float(x) > 0.])
 
     def __call__(self, x):
+        """
+        SciPy implementation of Rayleigh CDF:
+        loc = shift parameter
+        scale = scaling parameter
+        """
         return stats.rayleigh.cdf(x, loc=self.loc, scale=self.scale)
 
 
@@ -120,7 +142,7 @@ class LogNormalCDF(Base):
 
     def __call__(self, data_point):
         """
-        In scipy lognormal CDF is implemented thus:
+        SciPy implementation of LogNormal CDF:
             scipy.stats.lognorm.cdf(x, s, loc=0, scale=1)
         where,
             s = sigma   # or beta or standard deviation
@@ -161,7 +183,7 @@ class NormalCDF(Base):
 
     def __call__(self, data_point, inverse=False):
         """
-        In scipy normal CDF is implemented thus:
+        SciPy implementation of Normal CDF:
             scipy.stats.norm.cdf(x, loc=0, scale=1)
         where,
         loc = Mean
@@ -175,7 +197,6 @@ class NormalCDF(Base):
             return stats.norm.ppf(data_point,
                                   loc=self.mean,
                                   scale=self.stddev)
-
 
 
 class ConstantFunction(Base):
@@ -227,8 +248,8 @@ class Level0Recovery(Base):
     """
     Standard recovery for no damage.
     """
-    recovery_mean = 0.00001
-    recovery_std = 0.00001
+    recovery_param1 = 0.00001
+    recovery_param2 = 0.00001
 
     lower_limit = _Element(
         'float',
@@ -298,7 +319,7 @@ class PiecewiseFunction(Base):
                 if hazard_intensity <= piecewise_function.lower_limit:
                     return self.piecewise_functions[0]
             # check if upper limit function
-            elif i == len(self.piecewise_functions)-1:
+            elif i == len(self.piecewise_functions) - 1:
                 if hazard_intensity < piecewise_function.upper_limit:
 
                     return self.piecewise_functions[-1](hazard_intensity)
