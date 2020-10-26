@@ -253,21 +253,6 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
             {cc: np.zeros((scenario.num_samples, hazards.num_hazard_pts))
              for cc in cp_classes_costed}
 
-        # TODO check or correctness
-        # for j, hazard_level in enumerate(hazard.hazard_range):
-        #     for i in range(scenario.num_samples):
-        #         for compclass in cp_classes_costed:
-        #             for c in cp_class_map[compclass]:
-        #                 comp_class_failures[compclass][i, j] += \
-        #                     response_list[hazard_level.hazard_intensity]\
-        #                                  [i, infrastructure.components[c]]
-        #             comp_class_failures[compclass][i, j] /= \
-        #                 len(cp_class_map[compclass])
-        #
-        #             comp_class_frag[compclass][i, j] = \
-        #                 np.sum(comp_class_failures[compclass][i, j] > \
-        #                        infrastructure.ds_lims_compclasses[compclass])
-
         for j, (scenario_name, hazard_data) in \
                 enumerate(hazards.scenario_hazard_data.items()):
             for i in range(scenario.num_samples):
@@ -362,6 +347,7 @@ def pe_by_component_class(response_list, infrastructure, scenario, hazards):
     # --- Output File --- response of each COMPONENT to hazard ---
     outfile_comp_resp = os.path.join(scenario.output_path,
                                      'component_response.csv')
+
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.index.names = ['component_id', 'response']
     component_resp_df.columns = hazards.hazard_scenario_name

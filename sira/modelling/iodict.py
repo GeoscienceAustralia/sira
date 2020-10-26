@@ -1,4 +1,5 @@
 from collections import OrderedDict
+
 from sira.modelling.structural import Base
 
 
@@ -27,8 +28,3 @@ class IODict(OrderedDict, Base):
         :return: Item at the parameter offset.
         """
         return super(IODict, self).__getitem__(self.key_index[index])
-
-
-
-
-

@@ -31,8 +31,8 @@ import numpy as np
 from colorama import Fore, init
 
 # Add the source dir to system path
-root_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(root_dir))
+src_dir = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(src_dir))
 
 # Import SIRA modules
 from sira.configuration import Configuration
@@ -50,10 +50,6 @@ from sira.simulation import calculate_response
 
 init()
 np.seterr(divide='print', invalid='raise')
-
-# Add the source dir to system path
-src_dir = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(src_dir))
 
 
 def main():
@@ -202,7 +198,7 @@ def main():
         economic_loss_array = response_list[5]
         plot_mean_econ_loss(scenario, economic_loss_array, hazards)
 
-        if config.HAZARD_INPUT_METHOD == "hazard_array":
+        if str(config.HAZARD_INPUT_METHOD).lower() == "calculated_array":
             pe_by_component_class(
                 response_list, infrastructure, scenario, hazards)
 

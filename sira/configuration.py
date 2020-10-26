@@ -51,9 +51,11 @@ class Configuration:
         self.HAZARD_TYPE = str(config['HAZARD_TYPE'])
         self.NUM_SAMPLES = int(config['HAZARD_NUM_SAMPLES'])
 
-        if config['HAZARD_INPUT_METHOD'] in ['hazard_array', 'calculated_array']:
+        if str(config['HAZARD_INPUT_METHOD']).lower() in \
+                ['hazard_array', 'calculated_array']:
             self.HAZARD_INPUT_METHOD = 'Calculated_Array'
-        elif config['HAZARD_INPUT_METHOD'] in ['scenario_file', 'hazard_file']:
+        elif str(config['HAZARD_INPUT_METHOD']).lower() in \
+                ['scenario_file', 'hazard_file']:
             self.HAZARD_INPUT_METHOD = 'Hazard_File'
         else:
             raise ValueError(
