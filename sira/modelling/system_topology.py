@@ -37,10 +37,10 @@ class SystemTopology(object):
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
 
-        if infrastructure.system_class.lower() in \
-                ['potablewatertreatmentplant', 'pwtp',
-                 'wastewatertreatmentplant', 'wwtp',
-                 'substation']:
+        if infrastructure.system_class.lower() in [
+                'potablewatertreatmentplant', 'pwtp',
+                'wastewatertreatmentplant', 'wwtp',
+                'substation']:
             self.orientation = "TB"
             self.connector_type = "ortho"
             self.clustering = True
@@ -106,6 +106,10 @@ class SystemTopology(object):
         if self.connector_type.lower() not in \
                 ['spline', 'ortho', 'line', 'polyline', 'curved']:
             self.connector_type = 'ortho'
+        if str(self.node_position_meta).lower() == 'defined':
+            self.drawing_prog = 'neato'
+        else:
+            self.drawing_prog = 'dot'
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw graph using pygraphviz. Define general node & edge attributes.
@@ -159,7 +163,7 @@ class SystemTopology(object):
             fontcolor=default_node_color,  # gray14
             penwidth=1.5,
             fontname="Helvetica-Bold",
-            fontsize=18,
+            fontsize=22,
         )
 
         self.gviz.edge_attr.update(
@@ -167,7 +171,7 @@ class SystemTopology(object):
             arrowsize="1.0",
             style="bold",
             color=default_edge_color,  # gray12
-            penwidth=1.2,
+            penwidth=1.8,
         )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
