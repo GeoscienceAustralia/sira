@@ -39,7 +39,7 @@ matrix:
         # To avoid DLL load failure when importing pygraphviz, install 
         # both graphviz and pygraphviz from same conda channel:
         # https://github.com/pygraphviz/pygraphviz/issues/186#issuecomment-481760487
-        # - conda install graphviz pygraphviz -c alubbock
+        - conda install graphviz pygraphviz -c alubbock
         # Need to register Graphviz plugins before they can be used: 
         # https://stackoverflow.com/a/62549025
         - dot -c
