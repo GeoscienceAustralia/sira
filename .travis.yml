@@ -43,6 +43,7 @@ matrix:
         # Need to register Graphviz plugins before they can be used: 
         # https://stackoverflow.com/a/62549025
         - dot -c
+        - neato -c
         - export PYTHONPATH="$PYTHONPATH:$(pwd)"
         - echo $PYTHONPATH
         # Helpful commands for error checking
