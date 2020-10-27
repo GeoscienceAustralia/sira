@@ -20,9 +20,9 @@
 
 `HAZARD_INPUT_METHOD`
     :Description:   How the hazard is supplied. Must be one of two options:
-                    'hazard_array' or 'scenario_file'
+                    'calculated_array' or 'hazard_file'
     :Data Type:     String
-    :Example:       'hazard_array'
+    :Example:       'calculated_array'
 
 `HAZARD_TYPE`
     :Description:   The type of hazard for the impact simulation.

@@ -189,14 +189,17 @@
                 `sira.modelling.responsemodels`.
 
 
-`recovery_mean`
-  :Description: The mean of the recovery function.
+`recovery_param1`
+  :Description: The first param of the recovery function. This is the 'location'
+                paramter. For a Normal distribution, it is the mean of the distribution.
 
   :Data Type:   Float.
 
 
-`recovery_std`
-  :Description: The standard deviation of the recovery function.
+`recovery_param2`
+  :Description: The second param of the recovery function. This is the 'scale'
+                paramter. For a Normal distribution, it is the standard deviation
+                of the distribution.
                 
   :Data Type:   Float.
 

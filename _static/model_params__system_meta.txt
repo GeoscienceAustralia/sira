@@ -7,13 +7,13 @@ Users are encouraged to provide detailed information that may
 be relevant to the model configuration and post-simulation validation
 of results.
 
-`infrastructure_level`
+`INFRASTRUCTURE_LEVEL`
     :Description:   The scope of the infrastructure system.
 
     :Values:        Valid values are 'facility' or 'network'
 
 
-`system_class`
+`SYSTEM_CLASS`
     :Description:   The name of the asset class. It must have a
                     corresponding class definition in the module
                     `sira.modelling.infrastructure`.
@@ -30,10 +30,10 @@ of results.
                     'PotableWaterPumpStation']
 
 
-`system_subclass`
+`SYSTEM_SUBCLASS`
     :Description:   The subclass of the parent infrastructure system
-                    as specified in `system_class`. For example, for the
-                    system_class 'Substation', the logical system_subclass
+                    as specified in `SYSTEM_CLASS`. For example, for the
+                    SYSTEM_CLASS 'Substation', the logical system_subclass
                     options can be 'transmission', 'distribution',
                     'collector', etc.
 
@@ -42,7 +42,7 @@ of results.
                     planned future functionality expansion.
 
 
-`component_location_conf`
+`SYSTEM_COMPONENT_LOCATION_CONF`
     :Description:   Specifies whether the location information for system
                     components are specified in
                     :ref:`component list definition <model_params__component_list>`.
@@ -61,11 +61,11 @@ of results.
                     diagram.
 
     :Values:        Valid values must match: ['defined', 'undefined'].
-                    If infrastructure_level=='network', then the value must
+                    If INFRASTRUCTURE_LEVEL=='network', then the value must
                     be defined.
 
 
-`restoration_time_unit`
+`RESTORATION_TIME_UNIT`
     :Description:   The unit of time used for defining the component
                     restoration algorithms.
     
