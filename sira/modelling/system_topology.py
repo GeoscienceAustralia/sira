@@ -1,15 +1,15 @@
 import os
-import networkx as nx
 import re
 
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import networkx as nx
+
+matplotlib.use('Agg')
 plt.switch_backend('agg')
 
 # from networkx.readwrite.json_graph import node_link_data
 
-# -----------------------------------------------------------------------------
 
 class SystemTopology(object):
 
@@ -30,12 +30,13 @@ class SystemTopology(object):
         self.gviz = ""  # placeholder for a pygraphviz agraph
         self.component_attr = {}  # Dict for system comp attributes
         self.out_dir = scenario.output_path
-        self.node_position_meta = self.infrastructure.system_meta[self.loc_attr]['value']
-        
+        self.node_position_meta = \
+            self.infrastructure.system_meta[self.loc_attr]['value']
+
         for comp_id in list(infrastructure.components.keys()):
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
-        
+
         if infrastructure.system_class.lower() in \
                 ['potablewatertreatmentplant', 'pwtp',
                  'wastewatertreatmentplant', 'wwtp',
@@ -59,23 +60,19 @@ class SystemTopology(object):
         # Overwrite default if node locations are defined
         if hasattr(infrastructure, 'system_meta'):
             if self.infrastructure.system_meta[self.loc_attr]['value']\
-                == 'defined':
+                    == 'defined':
                 self.drawing_prog = 'neato'
 
-
     def draw_sys_topology(self, viewcontext):
-
         if self.infrastructure.system_class.lower() in ['substation']:
             self.draw_substation_topology(viewcontext)
         elif self.infrastructure.system_class.lower() in [
                 "potablewatertreatmentplant", "pwtp",
                 "wastewatertreatmentplant", "wwtp",
                 "watertreatmentplant", "wtp"]:
-
             self.draw_wtp_topology(viewcontext)
         else:
             self.draw_generic_sys_topology(viewcontext)
-
 
     def draw_generic_sys_topology(self, viewcontext):
         """
@@ -134,9 +131,8 @@ class SystemTopology(object):
             resolution=300,
             directed=True,
             labelloc="t",
-            label='< '+self.graph_label+'<BR/><BR/> >',
+            label='< ' + self.graph_label + '<BR/><BR/> >',
             rankdir=self.orientation,
-            #ranksep="1.0 equally",
             splines=self.connector_type,
             center="true",
             forcelabels=True,
@@ -149,7 +145,7 @@ class SystemTopology(object):
             sep=1.0,
             overlap="voronoi",
             overlap_scaling=1.0,
-            )
+        )
 
         self.gviz.node_attr.update(
             shape="circle",
@@ -164,7 +160,7 @@ class SystemTopology(object):
             penwidth=1.5,
             fontname="Helvetica-Bold",
             fontsize=18,
-            )
+        )
 
         self.gviz.edge_attr.update(
             arrowhead="normal",
@@ -172,7 +168,7 @@ class SystemTopology(object):
             style="bold",
             color=default_edge_color,  # gray12
             penwidth=1.2,
-            )
+        )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Customise nodes based on node type or defined clusters
@@ -195,7 +191,7 @@ class SystemTopology(object):
                     penwidth=2.0,
                     height=1.2,
                     width=2.2,
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() == 'sink':
                 self.gviz.get_node(node).attr.update(
@@ -205,7 +201,7 @@ class SystemTopology(object):
                     color="orangered",  # royalblue3
                     fillcolor="white",
                     fontcolor="orangered",  # royalblue3
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'dependency':
@@ -216,7 +212,7 @@ class SystemTopology(object):
                     color="orchid",
                     fillcolor="white",
                     fontcolor="orchid"
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'junction':
@@ -226,7 +222,7 @@ class SystemTopology(object):
                     height=0.5,
                     penwidth=3.5,
                     color=default_node_color,
-                    )
+                )
 
         # Clustering: whether to create subgraphs based on `node_cluster`
         #             designated for components
@@ -238,7 +234,7 @@ class SystemTopology(object):
                        if self.component_attr[k]['node_cluster'] == cluster]
                 if cluster:
                     cluster = '_'.join(cluster.split())
-                    cluster_name = 'cluster_'+cluster
+                    cluster_name = 'cluster_' + cluster
                     rank = 'same'
                 else:
                     cluster_name = ''
@@ -250,13 +246,13 @@ class SystemTopology(object):
                     label='',
                     clusterrank='local',
                     rank=rank,
-                    )
+                )
 
         for node in list(self.component_attr.keys()):
             pos_x = self.component_attr[node]['pos_x']
             pos_y = self.component_attr[node]['pos_y']
             if pos_x and pos_y:
-                node_pos = str(pos_x)+","+str(pos_y)+"!"
+                node_pos = str(pos_x) + "," + str(pos_y) + "!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
 
         # self.gviz.layout(prog=self.drawing_prog)
@@ -276,7 +272,6 @@ class SystemTopology(object):
         self.gviz.draw(os.path.join(output_path, fname + '.svg'),
                        format='svg',
                        prog=self.drawing_prog)
-
 
         # nx.readwrite.json_graph.node_link_data(self.gviz,
         #                   os.path.join(output_path, fname + '.json'))
@@ -340,7 +335,7 @@ class SystemTopology(object):
             resolution=300,
             orientation="portrait",
             labelloc="t",
-            label='< '+self.graph_label+'<BR/><BR/> >',
+            label='< ' + self.graph_label + '<BR/><BR/> >',
             bgcolor="white",
             rankdir=self.orientation,
             splines=self.connector_type,
@@ -358,7 +353,7 @@ class SystemTopology(object):
             # overlap=False,
             # overlap="voronoi",
             # overlap_scaling=1.0,
-            )
+        )
 
         self.gviz.node_attr.update(
             shape="circle",
@@ -372,7 +367,7 @@ class SystemTopology(object):
             penwidth=1.5,
             fontname="Helvetica-Bold",
             fontsize=22,
-            )
+        )
 
         self.gviz.edge_attr.update(
             arrowhead="normal",
@@ -380,7 +375,7 @@ class SystemTopology(object):
             style="bold",
             color=default_edge_color,  # gray12
             penwidth=1.8,
-            )
+        )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Clustering: whether to create subgraphs based on `node_cluster`
@@ -393,7 +388,7 @@ class SystemTopology(object):
                        if self.component_attr[k]['node_cluster'] == cluster]
                 if cluster:
                     cluster = '_'.join(cluster.split())
-                    cluster_name = 'cluster_'+cluster
+                    cluster_name = 'cluster_' + cluster
                     rank = 'same'
                 else:
                     cluster_name = ''
@@ -405,13 +400,13 @@ class SystemTopology(object):
                     label='',
                     clusterrank='local',
                     rank=rank,
-                    )
+                )
 
         for node in list(self.component_attr.keys()):
             pos_x = self.component_attr[node]['pos_x']
             pos_y = self.component_attr[node]['pos_y']
             if pos_x and pos_y:
-                node_pos = str(pos_x)+","+str(pos_y)+"!"
+                node_pos = str(pos_x) + "," + str(pos_y) + "!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -436,7 +431,7 @@ class SystemTopology(object):
                     penwidth=1.5,
                     height=1.0,
                     width=2.0,
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() == 'sink':
                 self.gviz.get_node(node).attr['label'] =\
@@ -450,7 +445,7 @@ class SystemTopology(object):
                     color="orangered",  # royalblue3
                     fillcolor="white",
                     fontcolor="orangered",  # royalblue3
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'dependency':
@@ -466,7 +461,7 @@ class SystemTopology(object):
                     color="orchid",
                     fillcolor="white",
                     fontcolor="orchid"
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'junction':
@@ -479,7 +474,7 @@ class SystemTopology(object):
                     xlabel="",
                     color="#999999",
                     fillcolor="#BBBBBB",
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'transshipment':
@@ -489,7 +484,7 @@ class SystemTopology(object):
                     fixedsize="true",
                     label="",
                     xlabel=tmplabel,
-                    )
+                )
 
             if str(self.component_attr[node]['component_class']).lower()\
                     == 'bus':
@@ -506,7 +501,7 @@ class SystemTopology(object):
                     label="",
                     xlabel=node,
                     xlp=buspos,
-                    )
+                )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw the graph
@@ -519,7 +514,7 @@ class SystemTopology(object):
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
-                           args='-Gdpi=300 -Gsize=8.27,11.69\!')
+                           args='-Gdpi=300 -Gsize=8.27,11.69\!')  # noqa: W605
 
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
                            format='png', prog=self.drawing_prog,
@@ -583,7 +578,7 @@ class SystemTopology(object):
             resolution=300,
             orientation="portrait",
             labelloc="t",
-            label='< '+self.graph_label+'<BR/><BR/> >',
+            label='< ' + self.graph_label + '<BR/><BR/> >',
             bgcolor="white",
             rankdir=self.orientation,
             # ranksep="1.0 equally",
@@ -598,7 +593,7 @@ class SystemTopology(object):
             pad=0.5,
             pack=False,
             sep="+20",
-            )
+        )
 
         self.gviz.node_attr.update(
             shape="circle",
@@ -612,7 +607,7 @@ class SystemTopology(object):
             penwidth=1.5,
             fontname="Helvetica-Bold",
             fontsize=12,
-            )
+        )
 
         self.gviz.edge_attr.update(
             arrowhead="normal",
@@ -620,7 +615,7 @@ class SystemTopology(object):
             style="bold",
             color=default_edge_color,  # gray12
             penwidth=1.0,
-            )
+        )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Clustering: whether to create subgraphs based on `node_cluster`
@@ -633,7 +628,7 @@ class SystemTopology(object):
                        if self.component_attr[k]['node_cluster'] == cluster]
                 cluster = '_'.join(cluster.split())
                 if cluster.lower() not in ['none', '']:
-                    cluster_name = 'cluster_'+cluster
+                    cluster_name = 'cluster_' + cluster
                     rank = 'same'
                 else:
                     cluster_name = ''
@@ -645,13 +640,13 @@ class SystemTopology(object):
                     label='',
                     clusterrank='local',
                     rank=rank,
-                    )
+                )
 
         for node in list(self.component_attr.keys()):
             pos_x = self.component_attr[node]['pos_x']
             pos_y = self.component_attr[node]['pos_y']
             if pos_x and pos_y:
-                node_pos = str(pos_x)+","+str(pos_y)+"!"
+                node_pos = str(pos_x) + "," + str(pos_y) + "!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -674,7 +669,7 @@ class SystemTopology(object):
                     penwidth=1.5,
                     width=1.5,
                     height=0.9,
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() == 'sink':
                 self.gviz.get_node(node).attr['label'] =\
@@ -689,7 +684,7 @@ class SystemTopology(object):
                     penwidth=1.5,
                     width=1.5,
                     height=0.9,
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'dependency':
@@ -704,7 +699,7 @@ class SystemTopology(object):
                     color="orchid",
                     fillcolor="white",
                     fontcolor="orchid"
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'junction':
@@ -719,7 +714,7 @@ class SystemTopology(object):
                     fontcolor="#777777",
                     label="",
                     xlabel=tmplabel,
-                    )
+                )
 
             if str(self.component_attr[node]['node_type']).lower() \
                     == 'transshipment':
@@ -731,7 +726,7 @@ class SystemTopology(object):
                     fixedsize="true",
                     label="",
                     xlabel=tmplabel,
-                    )
+                )
 
             if str(self.component_attr[node]['component_class']).lower() in \
                     ['large tank',
@@ -745,7 +740,7 @@ class SystemTopology(object):
                     width=2.5,
                     height=0.9,
                     xlabel="",
-                    )
+                )
 
             if str(self.component_attr[node]['component_class']).lower() in\
                     ['small tank',
@@ -759,7 +754,7 @@ class SystemTopology(object):
                     width=1.5,
                     height=0.9,
                     xlabel="",
-                    )
+                )
 
             if str(self.component_attr[node]['component_class']).lower()\
                     == 'chemical tank':
@@ -774,10 +769,10 @@ class SystemTopology(object):
                     fixedsize="true",
                     label="",
                     xlabel=tmplabel,
-                    )
+                )
 
-            if str(self.component_attr[node]['component_class']).lower() in\
-                ['building', 'small building']:
+            if str(self.component_attr[node]['component_class']).lower() in \
+                    ['building', 'small building']:
                 tmplabel =\
                     self.segment_long_labels(node, maxlen=12, delims=['_', ' '])
                 self.gviz.get_node(node).attr.update(
@@ -788,7 +783,7 @@ class SystemTopology(object):
                     height=0.9,
                     label=tmplabel,
                     xlabel="",
-                    )
+                )
 
             if str(self.component_attr[node]['component_class']).lower() in\
                     ['pump', 'pumps']:
@@ -802,7 +797,7 @@ class SystemTopology(object):
                     fixedsize="true",
                     label="",
                     xlabel=tmplabel,
-                    )
+                )
 
             if str(self.component_attr[node]['component_class']).lower() in \
                     ['switchroom', 'power supply']:
@@ -815,7 +810,7 @@ class SystemTopology(object):
                     width=1.6,
                     height=0.9,
                     xlabel="",
-                    )
+                )
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Draw the graph
@@ -830,11 +825,10 @@ class SystemTopology(object):
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
             self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
                            format='png', prog='dot',
-                           args='-Gdpi=300 -Gsize=8.27,11.69\!')
+                           args='-Gdpi=300 -Gsize=8.27,11.69\!')  # noqa: W605
         self.gviz.draw(os.path.join(output_path, fname + '.svg'),
                        format='svg',
                        prog=self.drawing_prog)
-
 
     # ==========================================================================
 
