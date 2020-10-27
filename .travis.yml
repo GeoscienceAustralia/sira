@@ -5,14 +5,14 @@ dist: xenial
 python:
   - 3.7
   - 3.8
-  - 3.9-dev
+  - 3.9
 branches:
   only:
   - master
 
 matrix:
   allow_failures:
-    - python: 3.9-dev
+    - python: 3.9
   include:      
     # ========== WINDOWS ==========
     - name: "Python 3.7.6 on Windows"
@@ -40,10 +40,10 @@ matrix:
         # both graphviz and pygraphviz from same conda channel:
         # https://github.com/pygraphviz/pygraphviz/issues/186#issuecomment-481760487
         - conda install graphviz pygraphviz -c alubbock
+        - conda install python-graphviz
         # Need to register Graphviz plugins before they can be used: 
         # https://stackoverflow.com/a/62549025
         - dot -c
-        - neato -c
         - export PYTHONPATH="$PYTHONPATH:$(pwd)"
         - echo $PYTHONPATH
         # Helpful commands for error checking
