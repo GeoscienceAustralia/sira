@@ -262,7 +262,7 @@ class SystemTopology(object):
         # self.gviz.layout(prog=self.drawing_prog)
         if viewcontext == "as-built":
             if self.drawing_prog == 'neato':
-                draw_args = '-n -Gdpi=300'
+                draw_args = '-Kneato -Gdpi=300'
             else:
                 draw_args = '-Gdpi=300'
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
@@ -512,7 +512,7 @@ class SystemTopology(object):
 
         if viewcontext == "as-built":
             if self.drawing_prog == 'neato':
-                draw_args = '-n -Gdpi=300'
+                draw_args = '-Kneato -Gdpi=300'
             else:
                 draw_args = '-Gdpi=300'
             self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
@@ -820,7 +820,7 @@ class SystemTopology(object):
         # Draw the graph
         if viewcontext == "as-built":
             if self.drawing_prog == 'neato':
-                draw_args = '-n -Gdpi=300'
+                draw_args = '-Kneato -Gdpi=300'
             else:
                 draw_args = '-Gdpi=300'
             self.gviz.draw(os.path.join(output_path, fname + '.png'),
