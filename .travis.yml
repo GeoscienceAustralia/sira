@@ -6,6 +6,7 @@ python:
   - 3.7
   - 3.8
   - 3.9
+
 branches:
   only:
   - master
@@ -14,44 +15,45 @@ matrix:
   allow_failures:
     - python: 3.9
   include:      
-    # ========== WINDOWS ==========
-    - name: "Python 3.7.6 on Windows"
+    # ================================ WINDOWS ================================
+    - name: "Python 3.8.6 on Windows"
       os: windows        # Windows 10.0.17134 N/A Build 17134
       language: shell    # 'language: python' is an error on Travis CI Windows
       before_install:
         # Set up path variables for Chocolatey installation of Anaconda
-        - export ANACONDA_PATH=/c/Tools/Anaconda3
-        - export ANACONDA_BIN="$ANACONDA_PATH/Library/bin:$ANACONDA_PATH/condabin"
-        - export ANACONDA_SCRIPTS=$ANACONDA_PATH/Scripts
+        - export CONDA_PATH=/c/tools/miniconda3
+        - export CONDA_BIN="$CONDA_PATH/Library/bin:$CONDA_PATH/condabin"
+        - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
+        - export DEV_ENV="sira_env"
       install:
+        # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
-        - choco install anaconda3 --params='"/JustMe /AddToPath"'
-        - export PATH="$ANACONDA_PATH:$ANACONDA_BIN:$ANACONDA_SCRIPTS:$PATH"
-        - hash -r
+        - choco install -y miniconda3 --params="'/InstallationType:JustMe /AddToPath:1 /D:$CONDA_PATH'"
+        - export PATH="$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH"
         - echo $PATH
+        - source $CONDA_PATH/etc/profile.d/conda.sh
+        - hash -r
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
+        # ---------------------------------------------------------------------
         # Create and activate the environment
-        - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
-        - source $(conda info --root)/etc/profile.d/conda.sh
-        - conda activate sira_env
+        - conda env create -n $DEV_ENV -f ./installation/environment_${TRAVIS_OS_NAME}.yml
+        - source $CONDA_PATH/Scripts/activate
+        - conda activate $DEV_ENV
         # To avoid DLL load failure when importing pygraphviz, install 
         # both graphviz and pygraphviz from same conda channel:
         # https://github.com/pygraphviz/pygraphviz/issues/186#issuecomment-481760487
         - conda install graphviz pygraphviz -c alubbock
-        - conda install python-graphviz
+        - conda list
+        - python --version
+        # ---------------------------------------------------------------------
         # Need to register Graphviz plugins before they can be used: 
         # https://stackoverflow.com/a/62549025
         - dot -c
-        - export PYTHONPATH="$PYTHONPATH:$(pwd)"
-        - echo $PYTHONPATH
         # Helpful commands for error checking
-        - conda list
-        - python --version
-        - python -m pip install --upgrade pip
-        # -----------------------------------------------------
-      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+        # ---------------------------------------------------------------------
+      env: PATH=$CONDA_PATH/envs/$DEV_ENV:$CONDA_PATH/envs/$DEV_ENV/Scripts:$PATH
 
 install:
   - sudo apt-get install -y --no-install-recommends apt-utils
