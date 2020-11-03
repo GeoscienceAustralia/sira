@@ -5,15 +5,12 @@ dist: xenial
 python:
   - 3.7
   - 3.8
-  - 3.9
 
 branches:
   only:
   - master
 
 jobs:
-  allow_failures:
-    - python: 3.9
   include:      
     # ================================ WINDOWS ================================
     - name: "Python 3.8.6 on Windows"
@@ -23,17 +20,15 @@ jobs:
         # Set up path variables for Chocolatey installation of Anaconda
         - export CONDA_PATH=/c/tools/miniconda3
         - export CONDA_BIN="$CONDA_PATH/Library/bin:$CONDA_PATH/condabin"
-        # - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
+        - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
         - export DEV_ENV="sira_env"
       install:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
         - choco install -y miniconda3 --params="'/InstallationType:JustMe /AddToPath:1 /D:$CONDA_PATH'"
-        - export PATH="$CONDA_PATH:$CONDA_BIN:$PATH"
-        # - . $CONDA_PATH/etc/profile.d/conda.sh
-        - echo ". $CONDA_PATH/etc/profile.d/conda.sh" >> ~/.bashrc
+        - export PATH=$CONDA_PATH:$CONDA_BIN:$PATH
+        - $CONDA_SCRIPTS/conda init
         - echo $PATH
-        # - hash -r
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
