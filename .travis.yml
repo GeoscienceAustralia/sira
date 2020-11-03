@@ -27,7 +27,7 @@ jobs:
         # Install Anaconda and configure conda
         - choco install -y miniconda3 --params="'/InstallationType:JustMe /AddToPath:1 /D:$CONDA_PATH'"
         - export PATH=$CONDA_PATH:$CONDA_BIN:$PATH
-        - $CONDA_SCRIPTS/conda init
+        - $CONDA_SCRIPTS/conda.exe init
         - echo $PATH
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
@@ -35,7 +35,6 @@ jobs:
         # ---------------------------------------------------------------------
         # Create and activate the environment
         - conda env create -n $DEV_ENV -f ./installation/environment_${TRAVIS_OS_NAME}.yml
-        # - source $CONDA_PATH/etc/profile.d/conda.sh
         - source $CONDA_PATH/Scripts/activate
         - conda activate $DEV_ENV
         # To avoid DLL load failure when importing pygraphviz, install 
