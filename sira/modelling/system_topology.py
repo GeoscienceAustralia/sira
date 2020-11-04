@@ -147,8 +147,8 @@ class SystemTopology(object):
             pad=0.5,
             nodesep=1.5,
             sep=1.0,
-            overlap="voronoi",
-            overlap_scaling=1.0,
+            # overlap="voronoi",
+            # overlap_scaling=1.0,
         )
 
         self.gviz.node_attr.update(
@@ -224,6 +224,8 @@ class SystemTopology(object):
                     shape="point",
                     width=0.5,
                     height=0.5,
+                    label="",
+                    xlabel="",
                     penwidth=3.5,
                     color=default_node_color,
                 )
