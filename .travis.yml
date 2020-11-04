@@ -1,10 +1,10 @@
-language: python
-dist: xenial
+# language: python
+# dist: xenial
 
-# ========== LINUX ==========
-python:
-  - 3.7
-  - 3.8
+# # ========== LINUX ==========
+# python:
+#   - 3.7
+#   - 3.8
 
 branches:
   only:
@@ -16,6 +16,7 @@ jobs:
     - name: "Python 3.8.6 on Windows"
       os: windows        # Windows 10.0.17134 N/A Build 17134
       language: shell    # 'language: python' is an error on Travis CI Windows
+      env: PATH=/c/tools/miniconda3/:/c/tools/miniconda3/Scripts:$PATH
       before_install:
         # Set up path variables for Chocolatey installation of Anaconda
         - export CONDA_PATH=/c/tools/miniconda3
@@ -26,54 +27,54 @@ jobs:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
         - choco install -y miniconda3 --params="'/InstallationType:JustMe /AddToPath:1 /D:$CONDA_PATH'"
-        - export PATH=$CONDA_PATH:$CONDA_BIN:$PATH
-        - $CONDA_SCRIPTS/conda.exe init
         - echo $PATH
+        # - export PATH=$CONDA_PATH:$CONDA_BIN:$PATH
+        - conda init
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
         # ---------------------------------------------------------------------
         # Create and activate the environment
         - conda env create -n $DEV_ENV -f ./installation/environment_${TRAVIS_OS_NAME}.yml
+        - conda --version ; python --version ; pip --version
         - source $CONDA_PATH/Scripts/activate
         - conda activate $DEV_ENV
         # To avoid DLL load failure when importing pygraphviz, install 
         # both graphviz and pygraphviz from same conda channel:
         # https://github.com/pygraphviz/pygraphviz/issues/186#issuecomment-481760487
         - conda install graphviz pygraphviz -c alubbock
+        - python -m pip install --upgrade pip
         - conda list
-        - python --version
         # ---------------------------------------------------------------------
         # Need to register Graphviz plugins before they can be used: 
         # https://stackoverflow.com/a/62549025
         - dot -c
         # Helpful commands for error checking
         # ---------------------------------------------------------------------
-      env: PATH=$CONDA_PATH/envs/$DEV_ENV:$CONDA_PATH/envs/$DEV_ENV/Scripts:$PATH
 
-install:
-  - sudo apt-get install -y --no-install-recommends apt-utils
-  - sudo apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
-  - sudo apt-get install -y ttf-mscorefonts-installer
-  - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
-  - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
-  - export PATH="$HOME/anaconda3/bin:$PATH"
-  - export PYTHONPATH="$PYTHONPATH:$(pwd)"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  - conda info -a
-  - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
-  - eval "$(conda shell.bash hook)"
-  - conda activate sira_env
-  - conda install graphviz pygraphviz -c conda-forge
-  - conda install libtiff
-  - conda install libpng
-  - conda env list
-  - python --version
-  - pip install -U pip
-  - pip install --upgrade pytest
-  - pip install -r ./installation/requirements.txt
+# install:
+#   - sudo apt-get install -y --no-install-recommends apt-utils
+#   - sudo apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
+#   - sudo apt-get install -y ttf-mscorefonts-installer
+#   - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
+#   - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
+#   - export PATH="$HOME/anaconda3/bin:$PATH"
+#   - export PYTHONPATH="$PYTHONPATH:$(pwd)"
+#   - hash -r
+#   - conda config --set always_yes yes --set changeps1 no
+#   - conda update -q conda
+#   - conda info -a
+#   - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
+#   - eval "$(conda shell.bash hook)"
+#   - conda activate sira_env
+#   - conda install graphviz pygraphviz -c conda-forge
+#   - conda install libtiff
+#   - conda install libpng
+#   - conda env list
+#   - python --version
+#   - pip install -U pip
+#   - pip install --upgrade pytest
+#   - pip install -r ./installation/requirements.txt
 
 script:
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
