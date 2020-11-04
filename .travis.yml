@@ -29,6 +29,7 @@ jobs:
         - choco install miniconda3 --params="'/JustMe /AddToPath'"
         - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
         - echo $PATH
+        - choco install graphviz
         - source "$CONDA_PATH/etc/profile.d/conda.sh"
         - hash -r
         - conda config --set always_yes yes --set changeps1 no
@@ -40,12 +41,12 @@ jobs:
         - conda --version ; python --version ; pip --version
         - source $CONDA_PATH/Scripts/activate
         - conda activate $DEV_ENV
+        # - python -m pip install --upgrade pip
         # To avoid DLL load failure when importing pygraphviz, install 
         # both graphviz and pygraphviz from same conda channel:
         # https://github.com/pygraphviz/pygraphviz/issues/186#issuecomment-481760487
-        - conda install -c alubbock graphviz pygraphviz
+        - conda install -c alubbock pygraphviz
         - conda install python-graphviz
-        # - python -m pip install --upgrade pip
         - conda list
         # ---------------------------------------------------------------------
         # Need to register Graphviz plugins before they can be used: 
