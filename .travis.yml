@@ -43,14 +43,14 @@ jobs:
         # To avoid DLL load failure when importing pygraphviz, install 
         # both graphviz and pygraphviz from same conda channel:
         # https://github.com/pygraphviz/pygraphviz/issues/186#issuecomment-481760487
-        - conda install graphviz pygraphviz -c alubbock
-        - python -m pip install --upgrade pip
+        - conda install -c alubbock graphviz pygraphviz
+        - conda install python-graphviz
+        # - python -m pip install --upgrade pip
         - conda list
         # ---------------------------------------------------------------------
         # Need to register Graphviz plugins before they can be used: 
         # https://stackoverflow.com/a/62549025
         - dot -c
-        # Helpful commands for error checking
         # ---------------------------------------------------------------------
 
 # install:
