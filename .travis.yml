@@ -1,4 +1,4 @@
-# language: python
+language: python
 # dist: xenial
 
 # # ========== LINUX ==========
@@ -18,18 +18,19 @@ jobs:
       language: shell    # 'language: python' is an error on Travis CI Windows
       env: PATH=/c/tools/miniconda3/:/c/tools/miniconda3/Scripts:/c/tools/miniconda3//Library/bin:$PATH
       before_install:
-        # Set up path variables for Chocolatey installation of Anaconda
-        - export CONDA_PATH=/c/tools/miniconda3
+        # Set up path variables for Chocolatey installation of miniconda
+        - export CONDA_PATH=/c/Tools/miniconda3
         - export CONDA_BIN=$CONDA_PATH/Library/bin:$CONDA_PATH/condabin
         - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
         - export DEV_ENV="sira_env"
       install:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
-        - choco install -y miniconda3 --params="'/InstallationType:JustMe /AddToPath:1 /D:$CONDA_PATH'"
+        - choco install miniconda3 --params="'/JustMe /AddToPath'"
+        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
         - echo $PATH
-        # - export PATH=$CONDA_PATH:$CONDA_BIN:$PATH
-        - . $CONDA_PATH/etc/profile.d/conda.sh
+        - source "$CONDA_PATH/etc/profile.d/conda.sh"
+        - hash -r
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
