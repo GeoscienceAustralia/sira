@@ -11,6 +11,7 @@ zip
 unzip
 jq
 gcc
+g++
 wget
 libfreetype6-dev
 libpng-dev
@@ -18,4 +19,4 @@ libcairo2-dev
 libjpeg8-dev
 libpango1.0-dev
 libgif-dev
-g++
+python3-dev

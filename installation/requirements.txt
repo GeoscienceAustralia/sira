@@ -29,7 +29,7 @@ parmap==1.5.2
 Pillow>=8.0.1
 pybtex==0.22.2
 pybtex-docutils==0.2.2
-pycairo==1.20.0
+pycairo==1.19.1
 pycparser==2.20
 Pygments==2.7.2
 pygraphviz==1.6
