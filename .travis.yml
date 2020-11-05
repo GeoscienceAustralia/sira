@@ -28,9 +28,10 @@ jobs:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
         - choco install miniconda3 --params="'/JustMe /AddToPath'"
-        - choco install graphviz
-        - export GVIZ_LOC=/c/Graphviz2.38
-        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$GVIZ_LOC:$PATH
+        # - choco install graphviz
+        # - export GVIZ_LOC=/c/Graphviz2.38/bin
+        # - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$GVIZ_LOC:$PATH
+        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
         - echo $PATH
         - source "$CONDA_PATH/etc/profile.d/conda.sh"
         - hash -r
@@ -43,7 +44,7 @@ jobs:
         - source "$CONDA_PATH/Scripts/activate"
         - conda activate sira_env
         - python -m pip install --upgrade pip
-        - conda install -c alubbock graphviz pygraphviz
+        - conda install -c alubbock pygraphviz
         - conda --version ; python --version ; pip --version
         - conda list
         # ---------------------------------------------------------------------
