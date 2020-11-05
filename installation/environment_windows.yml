@@ -14,6 +14,9 @@ dependencies:
     - freetype=2.10.4
     - ipython=7.19.0
     - jupyterlab=2.2.9
+    - imagecodecs=2020.5.30
+    - imageio=2.8.0
+    - imagesize=1.2.0
     - latexcodec=2.0.1
     - lmfit=1.0.1
     - matplotlib=3.3.2
