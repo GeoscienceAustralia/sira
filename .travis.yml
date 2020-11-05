@@ -4,7 +4,7 @@ dist: xenial
 
 # ======================== LINUX ========================
 python:
-  - 3.7
+  - 3.7.9
   - 3.8
 
 branches:
@@ -24,14 +24,14 @@ jobs:
         - export CONDA_PATH=/c/Tools/miniconda3
         - export CONDA_BIN=$CONDA_PATH/Library/bin:$CONDA_PATH/condabin
         - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
-        - export DEV_ENV="sira_env"
       install:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
         - choco install miniconda3 --params="'/JustMe /AddToPath'"
-        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
-        - echo $PATH
         - choco install graphviz
+        - export GVIZ_LOC=/c/Graphviz2.38
+        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$GVIZ_LOC:$PATH
+        - echo $PATH
         - source "$CONDA_PATH/etc/profile.d/conda.sh"
         - hash -r
         - conda config --set always_yes yes --set changeps1 no
@@ -39,11 +39,10 @@ jobs:
         - conda info -a
         # ---------------------------------------------------------------------
         # Create and activate the environment
-        - conda create -n $DEV_ENV python=$TRAVIS_PYTHON_VERSION
+        - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
         - source "$CONDA_PATH/Scripts/activate"
-        - conda activate $DEV_ENV
+        - conda activate sira_env
         - python -m pip install --upgrade pip
-        - pip --use-feature=2020-resolver install -r ./installation/requirements_windows.txt
         - conda install -c conda-forge freetype python-igraph==0.8.3
         - conda install -c alubbock pygraphviz
         - conda --version ; python --version ; pip --version
@@ -57,10 +56,10 @@ jobs:
 install:
   - sudo apt-get install -y --no-install-recommends apt-utils
   - sudo apt-get install -y  $(awk '{print $1}' ./installation/packagelist_linux.txt)
-  - sudo apt-get install -y ttf-mscorefonts-installer
-  - wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
-  - bash /tmp/Anaconda3*.sh -b -p $HOME/anaconda3
-  - export PATH="$HOME/anaconda3/bin:$PATH"
+  - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
+  - bash /tmp/miniconda.sh -b -p $HOME/miniconda
+  - source "$HOME/miniconda/etc/profile.d/conda.sh"
+  # - export PATH="$HOME/miniconda/bin:$PATH"
   - export PYTHONPATH="$PYTHONPATH:$(pwd)"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
@@ -69,13 +68,12 @@ install:
   - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
   - eval "$(conda shell.bash hook)"
   - conda activate sira_env
-  - conda install graphviz pygraphviz -c conda-forge
-  - conda install libtiff
-  - conda install libpng
-  - conda env list
+  - conda install -c conda-forge graphviz pygraphviz
+  - conda install libtiff libpng
+  - conda list
   - python --version
   - pip install -U pip
-  - pip install --upgrade pytest
+  - pip install -U pytest
   - pip install -r ./installation/requirements.txt
 
 script:
