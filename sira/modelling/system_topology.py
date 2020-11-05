@@ -63,6 +63,29 @@ class SystemTopology(object):
                     == 'defined':
                 self.drawing_prog = 'neato'
 
+    def write_graphs_to_file(
+        self, output_path, filename, 
+        viewcontext='as-built',
+        dpi=300):
+
+        draw_args = '-Gdpi=' + str(dpi)
+        if viewcontext == "as-built":
+            self.gviz.write(
+                os.path.join(output_path, filename + '_gv.dot'))
+            self.gviz.draw(
+                os.path.join(output_path, filename + '_dot.png'),
+                format='png', prog='dot',
+                args=draw_args + ' -Gsize=8.27,11.69\!')  # noqa: W605
+            if self.drawing_prog == 'neato':
+                self.gviz.draw(
+                    os.path.join(output_path, filename + '.png'),
+                    format='png', prog=self.drawing_prog,
+                    args=draw_args + ' -Kneato')
+        self.gviz.draw(
+            os.path.join(output_path, filename + '.svg'),
+            format='svg',
+            prog=self.drawing_prog)
+
     def draw_sys_topology(self, viewcontext):
         if self.infrastructure.system_class.lower() in ['substation']:
             self.draw_substation_topology(viewcontext)
@@ -142,11 +165,11 @@ class SystemTopology(object):
             forcelabels=True,
             fontname="Helvetica-Bold",
             fontcolor="#444444",
-            fontsize=26,
+            fontsize=24,
             smoothing="graph_dist",
             pad=0.5,
-            nodesep=1.5,
-            sep=1.0,
+            # nodesep=1.5,
+            # sep=1.0,
             # overlap="voronoi",
             # overlap_scaling=1.0,
         )
@@ -163,7 +186,7 @@ class SystemTopology(object):
             fontcolor=default_node_color,  # gray14
             penwidth=1.5,
             fontname="Helvetica-Bold",
-            fontsize=22,
+            fontsize=20,
         )
 
         self.gviz.edge_attr.update(
@@ -207,8 +230,7 @@ class SystemTopology(object):
                     fontcolor="orangered",  # royalblue3
                 )
 
-            if str(self.component_attr[node]['node_type']).lower() \
-                    == 'dependency':
+            if str(self.component_attr[node]['node_type']).lower() == 'dependency':
                 self.gviz.get_node(node).attr.update(
                     shape="circle",
                     rank="dependency",
@@ -218,8 +240,7 @@ class SystemTopology(object):
                     fontcolor="orchid"
                 )
 
-            if str(self.component_attr[node]['node_type']).lower() \
-                    == 'junction':
+            if str(self.component_attr[node]['node_type']).lower() == 'junction':
                 self.gviz.get_node(node).attr.update(
                     shape="point",
                     width=0.5,
@@ -261,26 +282,9 @@ class SystemTopology(object):
                 node_pos = str(pos_x) + "," + str(pos_y) + "!"
                 self.gviz.get_node(node).attr.update(pos=node_pos)
 
-        # self.gviz.layout(prog=self.drawing_prog)
-        if viewcontext == "as-built":
-            if self.drawing_prog == 'neato':
-                draw_args = '-Kneato -Gdpi=300'
-            else:
-                draw_args = '-Gdpi=300'
-            self.gviz.write(os.path.join(output_path, fname + '_gv.dot'))
-            self.gviz.draw(os.path.join(output_path, fname + '_dot.png'),
-                           format='png', prog='dot',
-                           args='-Gdpi=300')
-            self.gviz.draw(os.path.join(output_path, fname + '.png'),
-                           format='png', prog=self.drawing_prog,
-                           args=draw_args)
-
-        self.gviz.draw(os.path.join(output_path, fname + '.svg'),
-                       format='svg',
-                       prog=self.drawing_prog)
-
-        # nx.readwrite.json_graph.node_link_data(self.gviz,
-        #                   os.path.join(output_path, fname + '.json'))
+        # nx.readwrite.json_graph.node_link_data(
+        #     self.gviz, os.path.join(output_path, fname + '.json'))
+        self.write_graphs_to_file(output_path, fname)
 
     # ==========================================================================
 
