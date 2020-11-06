@@ -12,9 +12,6 @@ branches:
   - master
 
 jobs:
-  allow_failures:
-    - os: windows
-
     include:
     # ======================== WINDOWS ========================
     - name: "Python 3.8.6 on Windows"
@@ -27,7 +24,6 @@ jobs:
         - export CONDA_PATH=/c/Tools/miniconda3
         - export CONDA_BIN=$CONDA_PATH/Library/bin:$CONDA_PATH/condabin
         - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
-      install:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
         - choco install miniconda3 --params="'/JustMe /AddToPath'"
@@ -41,6 +37,7 @@ jobs:
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
+      install:
         # ---------------------------------------------------------------------
         # Create and activate the environment
         - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
