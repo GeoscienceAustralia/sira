@@ -12,7 +12,10 @@ branches:
   - master
 
 jobs:
-  include:
+  allow_failures:
+    - os: windows
+
+    include:
     # ======================== WINDOWS ========================
     - name: "Python 3.8.6 on Windows"
       os: windows        # Windows 10.0.17134 N/A Build 17134
@@ -28,10 +31,10 @@ jobs:
         # ---------------------------------------------------------------------
         # Install Anaconda and configure conda
         - choco install miniconda3 --params="'/JustMe /AddToPath'"
-        - choco install graphviz
-        - export GVIZ_LOC=/c/Graphviz2.38/bin
-        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$GVIZ_LOC:$PATH
-        # - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
+        # - choco install graphviz
+        # - export GVIZ_LOC=/c/Graphviz2.38/bin
+        # - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$GVIZ_LOC:$PATH
+        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
         - echo $PATH
         - source "$CONDA_PATH/etc/profile.d/conda.sh"
         - hash -r
@@ -44,7 +47,7 @@ jobs:
         - source "$CONDA_PATH/Scripts/activate"
         - conda activate sira_env
         - python -m pip install --upgrade pip
-        - conda install -c alubbock pygraphviz
+        - conda install -c alubbock graphviz pygraphviz
         - conda --version ; python --version ; pip --version
         - conda list
         # ---------------------------------------------------------------------
@@ -59,7 +62,7 @@ install:
   - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
   - bash /tmp/miniconda.sh -b -p $HOME/miniconda
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
-  # - export PATH="$HOME/miniconda/bin:$PATH"
+  - export PATH="$HOME/miniconda/bin:$PATH"
   - export PYTHONPATH="$PYTHONPATH:$(pwd)"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
