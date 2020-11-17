@@ -34,9 +34,9 @@ jobs:
         - echo $PATH
         - source "$CONDA_PATH/etc/profile.d/conda.sh"
         - hash -r
-        - conda update -q conda
         - conda config --set always_yes yes --set changeps1 no
         - conda config --set pip_interop_enabled True
+        - conda update -q conda
         - conda info -a
       install:
         # ---------------------------------------------------------------------
@@ -63,9 +63,9 @@ install:
   - export PATH="$HOME/miniconda/bin:$PATH"
   - export PYTHONPATH="$PYTHONPATH:$(pwd)"
   - hash -r
-  - conda update -q conda
   - conda config --set always_yes yes --set changeps1 no
   - conda config --set pip_interop_enabled True
+  - conda update -q conda
   - conda info -a
   - conda create -q -n sira_env python=$TRAVIS_PYTHON_VERSION
   - eval "$(conda shell.bash hook)"
