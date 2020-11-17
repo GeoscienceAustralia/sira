@@ -13,22 +13,21 @@ plt.switch_backend('agg')
 
 class SystemTopology(object):
 
-    orientation = "LR"          # Orientation of graph - Graphviz option
-    connector_type = "spline"   # Connector appearance - Graphviz option
-    clustering = False          # Cluster based on defined `node_cluster`
-
+    # orientation = "LR"          # Orientation of graph - Graphviz option
+    # connector_type = "spline"   # Connector appearance - Graphviz option
+    # clustering = False          # Cluster based on defined `node_cluster`
     out_file = "system_topology"
     graph_label = "System Component Topology"
 
     def __init__(self, infrastructure, scenario):
 
         self.loc_attr = 'SYSTEM_COMPONENT_LOCATION_CONF'
-        self.graph_label = "System Component Topology"
+        # self.graph_label = "System Component Topology"
 
         self.infrastructure = infrastructure
         self.scenario = scenario
-        self.gviz = ""  # placeholder for a pygraphviz agraph
-        self.component_attr = {}  # Dict for system comp attributes
+        self.gviz = ""              # placeholder for a graphviz digraph
+        self.component_attr = {}    # Dict for system comp attributes
         self.out_dir = scenario.output_path
         self.node_position_meta = \
             self.infrastructure.system_meta[self.loc_attr]['value']
@@ -36,64 +35,59 @@ class SystemTopology(object):
         for comp_id in list(infrastructure.components.keys()):
             self.component_attr[comp_id] = \
                 vars(infrastructure.components[comp_id])
-
-        if infrastructure.system_class.lower() in [
-                'potablewatertreatmentplant', 'pwtp',
-                'wastewatertreatmentplant', 'wwtp',
-                'substation']:
-            self.orientation = "TB"
-            self.connector_type = "ortho"
-            self.clustering = True
-        elif infrastructure.system_class.lower() in \
-                ['powerstation']:
-            self.orientation = "LR"
-            self.connector_type = "ortho"
-            self.clustering = True
-        else:
-            self.orientation = "TB"
-            self.connector_type = "polyline"
-            self.clustering = False
-
-        # Default drawing program
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # Default drawing parameters
+        self.orientation = "TB"           # Orientation of graph - Graphviz option
+        self.connector_type = "polyline"  # Connector appearance - Graphviz option
+        self.clustering = False           # Cluster based on defined `node_cluster`
         self.drawing_prog = 'dot'
-
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Overwrite default if node locations are defined
         if hasattr(infrastructure, 'system_meta'):
             if self.infrastructure.system_meta[self.loc_attr]['value']\
                     == 'defined':
                 self.drawing_prog = 'neato'
 
-    def write_graphs_to_file(
-        self, output_path, filename, 
-        viewcontext='as-built',
-        dpi=300):
+    def write_graphs_to_file(self, output_path, filename, dpi=300):
 
         draw_args = '-Gdpi=' + str(dpi)
-        if viewcontext == "as-built":
-            self.gviz.write(
-                os.path.join(output_path, filename + '_gv.dot'))
+
+        self.gviz.write(
+            os.path.join(output_path, filename + '_gv.dot')
+        )
+        self.gviz.draw(
+            os.path.join(output_path, filename + '_dot.png'),
+            format='png', prog='dot',
+            args=draw_args + ' -Gsize=8.27,11.69\!'  # noqa: W605
+        )
+        if self.drawing_prog == 'neato':
             self.gviz.draw(
-                os.path.join(output_path, filename + '_dot.png'),
+                os.path.join(output_path, filename + '.png'),
                 format='png', prog='dot',
-                args=draw_args + ' -Gsize=8.27,11.69\!')  # noqa: W605
-            if self.drawing_prog == 'neato':
-                self.gviz.draw(
-                    os.path.join(output_path, filename + '.png'),
-                    format='png', prog=self.drawing_prog,
-                    args=draw_args + ' -Kneato')
+                args=draw_args + ' -Kneato'
+            )
         self.gviz.draw(
             os.path.join(output_path, filename + '.svg'),
             format='svg',
             prog=self.drawing_prog)
 
     def draw_sys_topology(self, viewcontext):
-        if self.infrastructure.system_class.lower() in ['substation']:
+        substation_tags = ['substation']
+        powerstation_tags = ['powerstation']
+        wtp_tags = [
+            "potablewatertreatmentplant", "pwtp",
+            "wastewatertreatmentplant", "wwtp",
+            "watertreatmentplant", "wtp"]
+
+        if self.infrastructure.system_class.lower() in substation_tags:
             self.draw_substation_topology(viewcontext)
-        elif self.infrastructure.system_class.lower() in [
-                "potablewatertreatmentplant", "pwtp",
-                "wastewatertreatmentplant", "wwtp",
-                "watertreatmentplant", "wtp"]:
+        elif self.infrastructure.system_class.lower() in wtp_tags:
             self.draw_wtp_topology(viewcontext)
+        elif self.infrastructure.system_class.lower() in powerstation_tags:
+            self.orientation = "LR"
+            self.connector_type = "ortho"
+            self.clustering = True
+            self.draw_generic_sys_topology(viewcontext)
         else:
             self.draw_generic_sys_topology(viewcontext)
 
@@ -300,7 +294,7 @@ class SystemTopology(object):
         """
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Set up output file names & location
+        # Set up output file names & location:
 
         if not str(self.out_dir).strip():
             output_path = os.getcwd()
@@ -310,12 +304,14 @@ class SystemTopology(object):
         # strip away file ext and add our own
         fname = self.out_file.split(os.extsep)[0]
 
-        # Orientation of the graph (default is top-to-bottom):
-        self.orientation = 'TB'
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # Drawing Parameters:
+        # Note: `connector_type` refers to the line connector type. 
+        # Must be one of: ['spline', 'ortho', 'line', 'polyline', 'curved']
+        self.orientation = "TB"
+        self.connector_type = "ortho"
+        self.clustering = True
 
-        # `connector_type` refers to the line connector type. Must be one of
-        # ['spline', 'ortho', 'line', 'polyline', 'curved']
-        self.connector_type = 'ortho'
         if str(self.node_position_meta).lower() == 'defined':
             self.drawing_prog = 'neato'
         else:
@@ -557,12 +553,13 @@ class SystemTopology(object):
         # strip away file ext and add our own
         fname = self.out_file.split(os.extsep)[0]
 
-        # Orientation of the graph (default is top-to-bottom):
-        self.orientation = 'TB'
-
-        # `connector_type` refers to the line connector type. Must be one of
-        # ['spline', 'ortho', 'line', 'polyline', 'curved']
-        self.connector_type = 'ortho'
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # Drawing Parameters:
+        # Note: `connector_type` refers to the line connector type. 
+        # Must be one of: ['spline', 'ortho', 'line', 'polyline', 'curved']
+        self.orientation = "TB"
+        self.connector_type = "ortho"
+        self.clustering = True
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
