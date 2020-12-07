@@ -3,36 +3,23 @@ sira/tools/utils.py
 This module provides a collection of helper functions
 """
 from pathlib import Path
-import os
-import re
 from functools import reduce
 import importlib
 from copy import deepcopy
 from collections import namedtuple
 from collections.abc import Iterable
+import os
 
 
-def relpath(path_to, start):
-    """
-    `pathlib` only implementation of `os.path.relpath`
-    Taken from answer by Brett Ryland
-    https://stackoverflow.com/a/60671745
-    """
-    path_to = Path(path_to).resolve()
-    path_from = Path(start).resolve()
-    try:
-        for p in (*reversed(path_from.parents), path_from):
-            head, tail = p, path_to.relative_to(p)
-    except ValueError:  # Stop when the paths diverge.
-        pass
-    return Path('./' * (len(path_from.parents) - len(head.parents))).joinpath(tail)
+def relpath(self, start=None):
+    return Path(os.path.relpath(self, start))
 
 
 def get_all_subclasses(cls):
     clss = cls.__subclasses__()
     if clss:
         return ['{}.{}'.format(c.__module__, c.__name__) for c in clss] + \
-        reduce(lambda x, y: x + get_all_subclasses(y), clss, [])
+            reduce(lambda x, y: x + get_all_subclasses(y), clss, [])
     else:
         return []
 
@@ -62,6 +49,7 @@ def jsonify(obj):
         return [jsonify(v) for v in obj]
 
     return obj
+
 
 def pythonify(obj):
     """
@@ -106,7 +94,10 @@ def _make_diff(name, elements):
         return super(cls, cls).__new__(cls, *args)
 
     def __jsonify__(self):
-        res = {e: jsonify(getattr(self, e)) for e in elements if getattr(self, e) is not None}
+        res = {
+            e: jsonify(getattr(self, e))
+            for e in elements if getattr(self, e) is not None
+        }
         res['class'] = [type(self).__module__, type(self).__name__]
         return res
 
@@ -115,16 +106,19 @@ def _make_diff(name, elements):
         (namedtuple(name, elements),),
         {'__new__': __new__, '__jsonify__': __jsonify__})
 
+
 Diff = _make_diff('Diff', ['changed'])
 DictDiff = _make_diff('DictDiff', ['changed', 'dropped', 'added'])
 ListDiff = _make_diff('ListDiff', ['changed', 'dropped', 'added'])
 
 
 def find_changes(old, new):
-    if type(new) is tuple: # deliberately not isinstance... who knows what we could throw away
+    if type(new) is tuple:
+        # deliberately not isinstance... who knows what we could throw away
         new = list(new)
 
-    if type(old) is tuple: # deliberately not isinstance... who knows what we could throw away
+    if type(old) is tuple:
+        # deliberately not isinstance... who knows what we could throw away
         old = list(old)
 
     if old == new:
@@ -141,7 +135,7 @@ def find_changes(old, new):
                 all_changes[index] = changes
 
         if len(new) < len(old):
-            return ListDiff(all_changes or None, len(old)-len(new), None)
+            return ListDiff(all_changes or None, len(old) - len(new), None)
         if len(new) > len(old):
             return ListDiff(all_changes or None, None, new[len(old):])
         else:
@@ -167,7 +161,6 @@ def find_changes(old, new):
     return DictDiff(changed or None, dropped_keys or None, added or None)
 
 
-
 def reconstitute(old, changes):
     result = list(old) if type(old) == tuple else deepcopy(old)
 
@@ -190,7 +183,8 @@ def reconstitute(old, changes):
 
     else:
         assert isinstance(changes, ListDiff)
-        assert type(old) == list or type(old) == tuple # using type (not is instance) deliberately
+        assert type(old) == list or type(old) == tuple
+        # using type (not is instance) deliberately
 
         if changes.dropped is not None:
             for k in changes.dropped:
