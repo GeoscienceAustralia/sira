@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # # -*- coding: utf-8 -*-
+
 """
 title        : __main__.py
 description  : entry point for core sira component
@@ -44,7 +45,7 @@ from sira.logger import configure_logger
 from sira.loss_analysis import run_scenario_loss_analysis
 from sira.model_ingest import ingest_model
 from sira.modelling.hazard import HazardsContainer
-from sira.modelling.system_topology import SystemTopology
+from sira.modelling.system_topology import SystemTopologyGenerator
 from sira.scenario import Scenario
 from sira.simulation import calculate_response
 
@@ -58,6 +59,7 @@ def main():
     parser = argparse.ArgumentParser(
         prog='sira', description="run sira", add_help=True)
 
+    # ------------------------------------------------------------------------------
     # [Either] Supply config file and model file directly:
     parser.add_argument("-c", "--config_file", type=str)
     parser.add_argument("-m", "--model_file", type=str)
@@ -65,7 +67,9 @@ def main():
     # [Or] Supply only the directory where the input files reside
     parser.add_argument("-d", "--input_directory", type=str)
 
+    # ------------------------------------------------------------------------------
     # Tell the code what tasks to do
+
     parser.add_argument(
         "-s", "--simulation", action='store_true', default=False)
     parser.add_argument(
@@ -77,16 +81,17 @@ def main():
         "-v", "--verbose", dest="loglevel", type=str,
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         default="INFO",
-        help="Choose option for logging level from: \n" +
+        help="Choose option for logging level from: \n"
              "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
 
     args = parser.parse_args()
 
-    # error handling
-    if args.input_directory and (args.config_file or args.model_file):
-        parser.error("--input_directory and [--config_file and --model_file]"
-                     " are mutually exclusive ...")
-        sys.exit(2)
+    # ------------------------------------------------------------------------------
+    # # error handling
+    # if args.input_directory and (args.config_file or args.model_file):
+    #     parser.error("--input_directory and [--config_file and --model_file]"
+    #                  " are mutually exclusive ...")
+    #     sys.exit(2)
 
     # error handling
     if not any([args.simulation, args.fit, args.loss_analysis]):
@@ -103,6 +108,8 @@ def main():
         print("Invalid path supplied:\n {}".format(proj_root_dir))
         sys.exit(1)
 
+    # ------------------------------------------------------------------------------
+    # Locate input files
     proj_input_dir = os.path.join(proj_root_dir, "input")
     config_file_name = None
     model_file_name = None
@@ -115,34 +122,39 @@ def main():
         if modelmatch is not None:
             model_file_name = modelmatch.string
 
+    # ------------------------------------------------------------------------------
+    # Test that CONFIG file is identifiable, and is valid
     if config_file_name is None:
         parser.error(
-            "Config file not found. "
+            "Config file name does not meet required naming criteria. "
             "A valid config file name must begin with the term `config`, "
             "and must be a JSON file.\n")
         sys.exit(2)
 
-    if model_file_name is None:
-        parser.error(
-            "Model file not found. "
-            "A valid model file name must begin the term `model`, "
-            "and must be a JSON file.\n")
-        sys.exit(2)
-
     config_file_path = Path(proj_input_dir, config_file_name).resolve()
-    model_file_path = Path(proj_input_dir, model_file_name).resolve()
-    output_path = Path(args.input_directory, "output").resolve()
-
     if not os.path.isfile(config_file_path):
         parser.error(
             "Unable to locate config file " + str(config_file_path) + " ...")
         sys.exit(2)
 
+    # ------------------------------------------------------------------------------
+    # Test that MODEL file is identifiable, and is valid
+    if model_file_name is None:
+        parser.error(
+            "Model file name does not meet required naming criteria. "
+            "A valid model file name must begin the term `model`, "
+            "and must be a JSON file.\n")
+        sys.exit(2)
+
+    # ------------------------------------------------------------------------------
+    # Check output path
+    model_file_path = Path(proj_input_dir, model_file_name).resolve()
     if not os.path.isfile(model_file_path):
         parser.error(
             "Unable to locate model file " + str(model_file_path) + " ...")
         sys.exit(2)
 
+    output_path = Path(args.input_directory, "output").resolve()
     try:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
@@ -151,9 +163,9 @@ def main():
             "Unable to create output folder " + str(output_path) + " ...")
         sys.exit(2)
 
-    # ---------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Set up logging
-    # ---------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     timestamp = time.strftime('%Y.%m.%d %H:%M:%S')
     log_path = os.path.join(output_path, "log.txt")
     configure_logger(log_path, args.loglevel)
@@ -163,19 +175,19 @@ def main():
         Fore.GREEN + 'Simulation initiated at: {}\n'.format(timestamp) + Fore.RESET
     )
 
-    # ---------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Configure simulation model.
     # Read data and control parameters and construct objects.
-    # ---------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     config = Configuration(str(config_file_path), str(model_file_path), output_path)
     scenario = Scenario(config)
     infrastructure = ingest_model(config)
     hazards = HazardsContainer(config, model_file_path)
 
-    # ---------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # SIMULATION
     # Get the results of running a simulation
-    # ---------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # response_list = [
     #     {},  # [0] hazard level vs component damage state index
     #     {},  # [1] hazard level vs infrastructure output
@@ -206,13 +218,13 @@ def main():
         # Visualizations
         # Construct visualization for system topology
         # ---------------------------------------------------------------------
-        sys_topology_view = SystemTopology(infrastructure, scenario)
-        sys_topology_view.draw_sys_topology(viewcontext="as-built")
+        sys_topology_view = SystemTopologyGenerator(infrastructure, output_path)
+        sys_topology_view.draw_sys_topology()
         rootLogger.info('Simulation completed...')
 
-    # -------------------------------------------------------------------------
-    # FIT MODEL ANALYSIS
-    # -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
+    # FIT MODEL to simulation output data
+    # ------------------------------------------------------------------------------
     if args.fit:
 
         args.pe_sys = None
@@ -255,12 +267,11 @@ def main():
 
             rootLogger.info('End: Model fitting complete.')
         else:
-            rootLogger.error("Input  pe_sys file not found: " +
-                             str(output_path))
+            rootLogger.error(f"Input  pe_sys file not found: {str(output_path)}")
 
-    # -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # SCENARIO LOSS ANALYSIS
-    # -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     if args.loss_analysis:
 
         args.ct = os.path.join(config.OUTPUT_PATH, 'comptype_response.csv')
@@ -271,15 +282,15 @@ def main():
                 scenario, hazards, infrastructure, config, args.ct, args.cp)
         else:
             if args.ct is None:
-                rootLogger.error("Input files not found: " + str(args.ct))
+                rootLogger.error("Input files not found: ", str(args.ct))
             if args.cp is None:
-                rootLogger.error("Input files not found: " + str(args.cp))
+                rootLogger.error("Input files not found: ", str(args.cp))
 
     rootLogger.info('RUN COMPLETE.\n')
-    rootLogger.info("Config file used : " + str(config_file_path))
-    rootLogger.info("Model file used  : " + str(model_file_path))
-    rootLogger.info("Outputs saved in : " +
-                    Fore.YELLOW + str(output_path) + Fore.RESET + '\n')
+    rootLogger.info("Config file used : ", str(config_file_path))
+    rootLogger.info("Model file used  : ", str(model_file_path))
+    rootLogger.info("Outputs saved in : ", Fore.YELLOW,
+                    str(output_path), Fore.RESET, "\n")
 
 
 if __name__ == "__main__":
