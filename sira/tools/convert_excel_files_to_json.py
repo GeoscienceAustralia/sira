@@ -236,35 +236,35 @@ def read_excel_to_json(excel_file_path):
     system_meta = pd.read_excel(
         excel_file_path, sheet_name='system_meta',
         index_col=0, header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     system_meta = system_meta.to_json(orient='index')
     system_meta = standardize_json_string(system_meta)
 
     component_list = pd.read_excel(
         excel_file_path, sheet_name='component_list',
         index_col=0, header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     component_list = component_list.to_json(orient='index')
     component_list = standardize_json_string(component_list)
 
     node_conn_df = pd.read_excel(
         excel_file_path, sheet_name='component_connections',
         index_col=None, header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     node_conn_df = node_conn_df.to_json(orient='index')
     node_conn_df = standardize_json_string(node_conn_df)
 
     sysinp_setup = pd.read_excel(
         excel_file_path, sheet_name='supply_setup',
         index_col=0, header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     sysinp_setup = sysinp_setup.to_json(orient='index')
     sysinp_setup = standardize_json_string(sysinp_setup)
 
     sysout_setup = pd.read_excel(
         excel_file_path, sheet_name='output_setup',
         index_col=0, header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     sysout_setup = sysout_setup.sort_values(by=['priority'], ascending=True)
     sysout_setup = sysout_setup.to_json(orient='index')
     sysout_setup = standardize_json_string(sysout_setup)
@@ -272,14 +272,14 @@ def read_excel_to_json(excel_file_path):
     fragility_data = pd.read_excel(
         excel_file_path, sheet_name='comp_type_dmg_algo',
         index_col=[0, 1, 2], header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     fragility_data = fragility_data.to_json(orient='index')
     fragility_data = standardize_json_string(fragility_data)
 
     damage_state_df = pd.read_excel(
         excel_file_path, sheet_name='damage_state_def',
         index_col=[0, 1], header=0,
-        skiprows=0, skipinitialspace=True)
+        skiprows=0)
     damage_state_df = damage_state_df.to_json(orient='index')
     damage_state_df = standardize_json_string(damage_state_df)
 
