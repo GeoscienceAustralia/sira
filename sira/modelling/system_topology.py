@@ -335,7 +335,7 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Save images in multiple formats
 
-        img_formats = {'png': 'bitmap', 'pdf': 'vector'}
+        img_formats = {'png': 'bitmap', 'pdf': 'vector', 'ps2': 'vector'}
         for eng, fmt in itertools.product(engines, img_formats.keys()):
             x = arg_res if img_formats[fmt] == 'bitmap' else ''
             self.graph.graph_attr.update(size=arg_imgsize, dpi=x)  # noqa: W605
@@ -504,7 +504,7 @@ class SystemTopology_SS(SystemTopology_Generic):
         self.write_graphs_to_file(fname, dpi=300, engines=['dot'])
 
         self.graph.attr(splines="line")
-        self.write_graphs_to_file(fname, dpi=300, engines=['neato'])
+        self.write_graphs_to_file(fname, dpi=300, engines=['fdp'])
 
     def configure_sys_topology(self):
         """

@@ -45,10 +45,6 @@ jobs:
         - conda --version ; python --version ; pip --version
         - conda list
         # ---------------------------------------------------------------------
-        # Need to register Graphviz plugins before they can be used:
-        # https://stackoverflow.com/a/62549025
-        - dot -c
-        # ---------------------------------------------------------------------
 
 install:
   - sudo apt-get install -y --no-install-recommends apt-utils
