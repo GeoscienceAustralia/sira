@@ -759,7 +759,7 @@
     "component_list": {
         "commercial_power_supply": {
             "component_type": "Electric Power Commercial",
-            "component_class": "Energy Source",
+            "component_class": "Source",
             "cost_fraction": 0.02,
             "node_type": "supply",
             "node_cluster": "Supply",
@@ -864,7 +864,7 @@
         },
         "backup_power_supply": {
             "component_type": "Electric Power Backup",
-            "component_class": "Energy Source",
+            "component_class": "Source",
             "cost_fraction": 0.04,
             "node_type": "supply",
             "node_cluster": "Supply",
@@ -969,7 +969,7 @@
         },
         "well_1": {
             "component_type": "Wells",
-            "component_class": "Water Supply",
+            "component_class": "Source",
             "cost_fraction": 0.041,
             "node_type": "supply",
             "node_cluster": "Supply",
@@ -1074,7 +1074,7 @@
         },
         "well_2": {
             "component_type": "Wells",
-            "component_class": "Water Supply",
+            "component_class": "Source",
             "cost_fraction": 0.041,
             "node_type": "supply",
             "node_cluster": "Supply",
@@ -1179,7 +1179,7 @@
         },
         "feed_pump": {
             "component_type": "Vertical Pump",
-            "component_class": "Water Supply",
+            "component_class": "Source",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Supply",
@@ -1284,7 +1284,7 @@
         },
         "input_pipe_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Water Supply Pipe",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Supply",
@@ -1389,7 +1389,7 @@
         },
         "chem_tank_ph_acid": {
             "component_type": "Chemical Tanks",
-            "component_class": "Chem Dosage Stage 1",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.033,
             "node_type": "dependency",
             "node_cluster": "none",
@@ -1494,7 +1494,7 @@
         },
         "chem_tank_coag1": {
             "component_type": "Chemical Tanks",
-            "component_class": "Chem Dosage Stage 1",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.033,
             "node_type": "dependency",
             "node_cluster": "none",
@@ -1599,7 +1599,7 @@
         },
         "pipe_fb_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -1704,7 +1704,7 @@
         },
         "pipe_fb_2": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -1809,7 +1809,7 @@
         },
         "pipe_fb_3": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -1914,7 +1914,7 @@
         },
         "pipe_fb_4": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -2019,7 +2019,7 @@
         },
         "pipe_fb_5": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -2124,7 +2124,7 @@
         },
         "pipe_fb_6": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -2229,7 +2229,7 @@
         },
         "pipe_fb_7": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -2334,7 +2334,7 @@
         },
         "pipe_fb_8": {
             "component_type": "Internal Pipework",
-            "component_class": "Coagulation and Flocculation Inlets",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation Inlets",
@@ -2439,7 +2439,7 @@
         },
         "floc_basin_1": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -2544,7 +2544,7 @@
         },
         "floc_basin_2": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -2649,7 +2649,7 @@
         },
         "floc_basin_3": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -2754,7 +2754,7 @@
         },
         "floc_basin_4": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -2859,7 +2859,7 @@
         },
         "floc_basin_5": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -2964,7 +2964,7 @@
         },
         "floc_basin_6": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -3069,7 +3069,7 @@
         },
         "floc_basin_7": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -3174,7 +3174,7 @@
         },
         "floc_basin_8": {
             "component_type": "Sediment Flocculation",
-            "component_class": "Coagulation and Flocculation ",
+            "component_class": "Sedimentation Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Coagulation and Flocculation ",
@@ -3279,7 +3279,7 @@
         },
         "pump_daf": {
             "component_type": "Horizontal Pump",
-            "component_class": "DAF Connector and Pump",
+            "component_class": "Pump",
             "cost_fraction": 0.005,
             "node_type": "dependency",
             "node_cluster": "none",
@@ -3384,7 +3384,7 @@
         },
         "daf_1": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -3489,7 +3489,7 @@
         },
         "daf_2": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -3594,7 +3594,7 @@
         },
         "daf_3": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -3699,7 +3699,7 @@
         },
         "daf_4": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -3804,7 +3804,7 @@
         },
         "daf_5": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -3909,7 +3909,7 @@
         },
         "daf_6": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -4014,7 +4014,7 @@
         },
         "daf_7": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -4119,7 +4119,7 @@
         },
         "daf_8": {
             "component_type": "Basins",
-            "component_class": "Dissolved Air Flotation",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0075,
             "node_type": "transshipment",
             "node_cluster": "Dissolved Air Flotation",
@@ -4224,7 +4224,7 @@
         },
         "connector_daf": {
             "component_type": "Pipe Connectors",
-            "component_class": "DAF Connector and Pump",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "DAF Connector",
@@ -4329,7 +4329,7 @@
         },
         "pipe_oz_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Ozone Disinfection Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Ozone Disinfection Pipework",
@@ -4434,7 +4434,7 @@
         },
         "pipe_oz_2": {
             "component_type": "Internal Pipework",
-            "component_class": "Ozone Disinfection Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Ozone Disinfection Pipework",
@@ -4539,7 +4539,7 @@
         },
         "ozone_gen": {
             "component_type": "Chemical Tanks",
-            "component_class": "Ozone Disinfection",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.0025,
             "node_type": "dependency",
             "node_cluster": "Ozone Disinfection",
@@ -4644,7 +4644,7 @@
         },
         "ozone_contact_1": {
             "component_type": "Basins",
-            "component_class": "Ozone Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Ozone Disinfection",
@@ -4749,7 +4749,7 @@
         },
         "ozone_contact_2": {
             "component_type": "Basins",
-            "component_class": "Ozone Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Ozone Disinfection",
@@ -4854,7 +4854,7 @@
         },
         "connector_oz": {
             "component_type": "Pipe Connectors",
-            "component_class": "Ozone Disinfection Connector",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Ozone Disinfection Connector",
@@ -4959,7 +4959,7 @@
         },
         "pipe_ft_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5064,7 +5064,7 @@
         },
         "pipe_ft_2": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5169,7 +5169,7 @@
         },
         "pipe_ft_3": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5274,7 +5274,7 @@
         },
         "pipe_ft_4": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5379,7 +5379,7 @@
         },
         "pipe_ft_5": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5484,7 +5484,7 @@
         },
         "pipe_ft_6": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5589,7 +5589,7 @@
         },
         "pipe_ft_7": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5694,7 +5694,7 @@
         },
         "pipe_ft_8": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Inlet Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Inlet Pipework",
@@ -5799,7 +5799,7 @@
         },
         "filter_tank_1": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -5904,7 +5904,7 @@
         },
         "filter_tank_2": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6009,7 +6009,7 @@
         },
         "filter_tank_3": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6114,7 +6114,7 @@
         },
         "filter_tank_4": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6219,7 +6219,7 @@
         },
         "filter_tank_5": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6324,7 +6324,7 @@
         },
         "filter_tank_6": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6429,7 +6429,7 @@
         },
         "filter_tank_7": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6534,7 +6534,7 @@
         },
         "filter_tank_8": {
             "component_type": "Basins",
-            "component_class": "Filtration Tanks",
+            "component_class": "Large Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Tanks",
@@ -6639,7 +6639,7 @@
         },
         "pipe_ft_out_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Filtration Ouput Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Filtration Ouput Pipework",
@@ -6744,7 +6744,7 @@
         },
         "pipe_ccc_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Chlorine Disinfection Pipework",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Chlorine Disinfection Pipework",
@@ -6849,7 +6849,7 @@
         },
         "chlorine_tank": {
             "component_type": "Chemical Tanks",
-            "component_class": "Chlorine Disinfection",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.033,
             "node_type": "dependency",
             "node_cluster": "Chlorine Disinfection",
@@ -6954,7 +6954,7 @@
         },
         "chem_tank_ph_base": {
             "component_type": "Chemical Tanks",
-            "component_class": "Chlorine Disinfection",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.033,
             "node_type": "dependency",
             "node_cluster": "Chlorine Disinfection",
@@ -7059,7 +7059,7 @@
         },
         "chlorine_contact_chamber": {
             "component_type": "Basins",
-            "component_class": "Chlorine Disinfection",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Chlorine Disinfection",
@@ -7164,7 +7164,7 @@
         },
         "pipe_to_clearwell": {
             "component_type": "Internal Pipework",
-            "component_class": "Settling",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell Input Pipework",
@@ -7269,7 +7269,7 @@
         },
         "connector_clearwell": {
             "component_type": "Pipe Connectors",
-            "component_class": "Settling",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell Input Connector",
@@ -7374,7 +7374,7 @@
         },
         "clearwell_1": {
             "component_type": "Basins",
-            "component_class": "Reservoir",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell",
@@ -7479,7 +7479,7 @@
         },
         "clearwell_2": {
             "component_type": "Basins",
-            "component_class": "Reservoir",
+            "component_class": "Large Basin",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell",
@@ -7584,7 +7584,7 @@
         },
         "pipe_cw_out_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Reticulation",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell Output Pipe",
@@ -7689,7 +7689,7 @@
         },
         "pipe_cw_out_2": {
             "component_type": "Internal Pipework",
-            "component_class": "Reticulation",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell Output Pipe",
@@ -7794,7 +7794,7 @@
         },
         "pipe_connector_cw": {
             "component_type": "Pipe Connectors",
-            "component_class": "Reticulation",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "Clearwell Output Connector",
@@ -7899,7 +7899,7 @@
         },
         "pipe_uv_in_1": {
             "component_type": "Internal Pipework",
-            "component_class": "UV Disinfection Input",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection Input",
@@ -8004,7 +8004,7 @@
         },
         "pipe_uv_in_2": {
             "component_type": "Internal Pipework",
-            "component_class": "UV Disinfection Input",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection Input",
@@ -8109,7 +8109,7 @@
         },
         "uv_chamber_1": {
             "component_type": "Basins",
-            "component_class": "UV Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection",
@@ -8214,7 +8214,7 @@
         },
         "uv_chamber_2": {
             "component_type": "Basins",
-            "component_class": "UV Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection",
@@ -8319,7 +8319,7 @@
         },
         "uv_chamber_3": {
             "component_type": "Basins",
-            "component_class": "UV Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection",
@@ -8424,7 +8424,7 @@
         },
         "uv_chamber_4": {
             "component_type": "Basins",
-            "component_class": "UV Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection",
@@ -8529,7 +8529,7 @@
         },
         "uv_chamber_5": {
             "component_type": "Basins",
-            "component_class": "UV Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection",
@@ -8634,7 +8634,7 @@
         },
         "uv_chamber_6": {
             "component_type": "Basins",
-            "component_class": "UV Disinfection",
+            "component_class": "Small Basin",
             "cost_fraction": 0.025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection",
@@ -8739,7 +8739,7 @@
         },
         "pipe_connector_uv_out": {
             "component_type": "Pipe Connectors",
-            "component_class": "UV Disinfection Output",
+            "component_class": "Pipework",
             "cost_fraction": 0.0025,
             "node_type": "transshipment",
             "node_cluster": "UV Disinfection Output",
@@ -8844,7 +8844,7 @@
         },
         "pipe_large_fl_1": {
             "component_type": "Internal Pipework",
-            "component_class": "Water Conditioning",
+            "component_class": "Pipework",
             "cost_fraction": 0.0035,
             "node_type": "transshipment",
             "node_cluster": "Water Conditioning",
@@ -8949,7 +8949,7 @@
         },
         "pipe_large_fl_2": {
             "component_type": "Internal Pipework",
-            "component_class": "Water Conditioning",
+            "component_class": "Pipework",
             "cost_fraction": 0.0035,
             "node_type": "transshipment",
             "node_cluster": "Water Conditioning",
@@ -9054,7 +9054,7 @@
         },
         "chem_tank_Fl": {
             "component_type": "Chemical Tanks",
-            "component_class": "Water Conditioning",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.033,
             "node_type": "dependency",
             "node_cluster": "none",
@@ -9159,7 +9159,7 @@
         },
         "chem_tank_phosphate": {
             "component_type": "Chemical Tanks",
-            "component_class": "Water Conditioning",
+            "component_class": "Chemical Tank",
             "cost_fraction": 0.033,
             "node_type": "dependency",
             "node_cluster": "none",
@@ -9264,7 +9264,7 @@
         },
         "pipe_to_distro_1": {
             "component_type": "Elevated Pipes",
-            "component_class": "Supply to Distribution",
+            "component_class": "Pipework",
             "cost_fraction": 0.004,
             "node_type": "transshipment",
             "node_cluster": "Supply to Distribution",
@@ -9369,7 +9369,7 @@
         },
         "pipe_to_distro_2": {
             "component_type": "Elevated Pipes",
-            "component_class": "Supply to Distribution",
+            "component_class": "Pipework",
             "cost_fraction": 0.004,
             "node_type": "transshipment",
             "node_cluster": "Supply to Distribution",
@@ -9474,7 +9474,7 @@
         },
         "output_1": {
             "component_type": "SYSTEM_OUTPUT",
-            "component_class": "SYSTEM OUTPUT",
+            "component_class": "Output",
             "cost_fraction": 0.0,
             "node_type": "sink",
             "node_cluster": "OUTPUT",
@@ -9579,7 +9579,7 @@
         },
         "output_2": {
             "component_type": "SYSTEM_OUTPUT",
-            "component_class": "SYSTEM OUTPUT",
+            "component_class": "Output",
             "cost_fraction": 0.0,
             "node_type": "sink",
             "node_cluster": "OUTPUT",
