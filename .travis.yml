@@ -34,11 +34,11 @@ jobs:
         - conda config --set pip_interop_enabled True
         - conda update -q conda
         - conda info -a
-        # # Install graphviz and add to PATH
-        # - choco install graphviz
-        # - export GVIZ_LOC=/c/Graphviz2.38/bin
-        # - export PATH=$GVIZ_LOC:$PATH
-        # - dot -c
+        # Install graphviz and add to PATH
+        - choco install graphviz
+        - export GVIZ_LOC=/c/Graphviz2.38/bin
+        - export PATH=$GVIZ_LOC:$PATH
+        - dot -c
       install:
         # ---------------------------------------------------------------------
         # Create and activate the environment
