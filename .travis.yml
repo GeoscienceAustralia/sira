@@ -24,10 +24,9 @@ jobs:
         - export CONDA_PATH=/c/Tools/miniconda3
         - export CONDA_BIN=$CONDA_PATH/Library/bin:$CONDA_PATH/condabin
         - export CONDA_SCRIPTS=$CONDA_PATH/Scripts
-        # ---------------------------------------------------------------------
+        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
         # Install Anaconda and configure conda
         - choco install miniconda3 --params="'/JustMe /AddToPath'"
-        - export PATH=$CONDA_PATH:$CONDA_BIN:$CONDA_SCRIPTS:$PATH
         - echo $PATH
         - source "$CONDA_PATH/etc/profile.d/conda.sh"
         - hash -r
@@ -35,6 +34,11 @@ jobs:
         - conda config --set pip_interop_enabled True
         - conda update -q conda
         - conda info -a
+        # # Install graphviz and add to PATH
+        # - choco install graphviz
+        # - export GVIZ_LOC=/c/Graphviz2.38/bin
+        # - export PATH=$GVIZ_LOC:$PATH
+        # - dot -c
       install:
         # ---------------------------------------------------------------------
         # Create and activate the environment
