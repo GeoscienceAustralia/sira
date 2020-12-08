@@ -12,6 +12,14 @@ import graphviz as gviz
 
 # =====================================================================================
 
+def is_number(val):
+    try:
+        float(val)
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
 def split_but_preserve_delims(string, delims):
     delimsplus = [x + "+" for x in map(re.escape, delims)]
     regexPattern = '|'.join(delimsplus)
@@ -60,70 +68,62 @@ def segment_long_labels(string, maxlen=10, delims=[chr(0x20)]):
 
 
 class SystemTopologyGenerator(object):
-    substation_tags = [
+
+    def __new__(self, infrastructure, output_dir, *args):
+        topoargs = [infrastructure, output_dir]
+        system_class = infrastructure.system_class.lower()
+        target_cls = get_target_class(system_class)
+        return target_cls(*topoargs)
+
+
+def get_target_class(system_name):
+
+    system_tags = dict()
+
+    # If newer classes are required to be defined, please add their
+    # 'tags' and system names in the dict below.
+    system_tags['SS'] = [
         'substation', 'switching_station'
     ]
-    powerstation_tags = [
+    system_tags['PS'] = [
         'powerstation', 'power_station',
         'power_generator', 'power_generation'
     ]
-    wtp_tags = [
-        "potablewatertreatmentplant", "pwtp",
-        "wastewatertreatmentplant", "wwtp",
-        "watertreatmentplant", "wtp"
+    system_tags['WTP'] = [
+        'potablewatertreatmentplant', 'pwtp',
+        'wastewatertreatmentplant', 'wwtp',
+        'watertreatmentplant', 'wtp'
     ]
 
-    system_tags = dict(
-        SS=[
-            'substation', 'switching_station'
-        ],
-        PS=[
-            'powerstation', 'power_station',
-            'power_generator', 'power_generation'
-        ],
-        WTP=[
-            'potablewatertreatmentplant', 'pwtp',
-            'wastewatertreatmentplant', 'wwtp',
-            'watertreatmentplant', 'wtp'
-        ]
-    )
+    # sys_tag = "Generic"
+    # for key, value_list in system_tags.items():
+    #     if system_name in value_list:
+    #         sys_tag = key
+    # topo_cls = eval('SystemTopology_' + sys_tag)
 
-    def __init__(self, infrastructure, output_dir):
-        pass
+    # Identify the correct class based on the name provided
+    if system_name in system_tags['PS']:
+        topo_cls = SystemTopology_PS
+    elif system_name in system_tags['SS']:
+        topo_cls = SystemTopology_SS
+    elif system_name in system_tags['WTP']:
+        topo_cls = SystemTopology_WTP
+    else:
+        topo_cls = SystemTopology_Generic
 
-    def __new__(self, infrastructure, output_dir, *args):
+    # Get list of all locally defined classes
+    clsmembers = inspect.getmembers(
+        sys.modules[__name__],
+        lambda member: inspect.isclass(member) and member.__module__ == __name__)
+    clsmembers = [x[0] for x in clsmembers]
 
-        self.topoargs = [infrastructure, output_dir]
-        system_class = infrastructure.system_class.lower()
+    # Check that target class exists
+    if str(topo_cls.__name__) not in clsmembers:
+        raise NameError(
+            f"The class {topo_cls.__name__} is not defined",
+            f"in the module {__name__}")
 
-        sys_tag = "Generic"
-        for key, value_list in self.system_tags.items():
-            if system_class in value_list:
-                sys_tag = key
-        target_cls = eval('SystemTopology_' + sys_tag)
-
-        clsmembers = inspect.getmembers(
-            sys.modules[__name__],
-            lambda member: inspect.isclass(member) and member.__module__ == __name__)
-        clsmembers = [x[0] for x in clsmembers]
-
-        if target_cls not in clsmembers:
-            raiseExceptions(ValueError)
-            exit(1)
-
-        return target_cls(*self.topoargs)
-
-        # if system_class in self.powerstation_tags:
-        #     return SystemTopology_PS(*self.topoargs)
-
-        # elif system_class in self.substation_tags:
-        #     return SystemTopology_SS(*self.topoargs)
-
-        # elif system_class in self.wtp_tags:
-        #     return SystemTopology_WTP(*self.topoargs)
-
-        # else:
-        #     return SystemTopology_Generic(*self.topoargs)
+    return topo_cls
 
 
 class SystemTopology_Generic(object):
@@ -341,7 +341,7 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Save images in multiple formats
 
-        img_formats = {'png': 'bitmap', 'pdf': 'vector', 'ps2': 'vector'}
+        img_formats = {'ps2': 'vector', 'pdf': 'vector', 'png': 'bitmap'}
         for eng, fmt in itertools.product(engines, img_formats.keys()):
             x = arg_res if img_formats[fmt] == 'bitmap' else ''
             self.graph.graph_attr.update(size=canvas_size, dpi=x)  # noqa: W605
@@ -513,13 +513,13 @@ class SystemTopology_SS(SystemTopology_Generic):
 
     def draw_sys_topology(self):
         fname = Path(self.out_file).stem
-        self.clustering = True
+        self.clustering = False
         self.configure_sys_topology()
 
-        self.graph.attr(splines="ortho")
+        self.graph.attr(rankdir="TB", splines="spline")
         self.write_graphs_to_file(fname, dpi=300, engines=['dot'])
 
-        self.graph.attr(splines="line")
+        self.graph.attr(rankdir="TB", splines="line")
         self.write_graphs_to_file(fname, dpi=300, engines=['neato'])
 
     def configure_sys_topology(self):
@@ -533,10 +533,12 @@ class SystemTopology_SS(SystemTopology_Generic):
         self.graph_attr_dict.update(
             orientation="portrait",
             rankdir="TB",
-            splines=self.edge_type,
             fontsize="30",
-            sep="+20",
+            sep="+25",
+            nodesep="0.5",
             overlap="false",
+            pack="True",
+            smoothing="none",
         )
         self.build_graph_structure()
 
@@ -568,45 +570,60 @@ class SystemTopology_SS(SystemTopology_Generic):
             pos_x = self.component_attr[nid]['pos_x']
             pos_y = self.component_attr[nid]['pos_y']
             node_pos = ''
-            if pos_x and pos_y:
-                node_pos = str(pos_x) + "," + str(pos_y) + "!"
+            if is_number(pos_x) and is_number(pos_y):
+                node_pos = ''.join([str(pos_x), ",", str(pos_y), "!"])
 
             # Segment long labels to fit within nodes spaces
             label_mod = segment_long_labels(nid, delims=['_', ' '])
 
             # Custom attribute assignment based on node types
             node_type = str(self.component_attr[nid]['node_type']).lower()
+            component_class = str(self.component_attr[nid]['component_class']).lower()
+
             if node_type not in self.primary_node_types:
                 node_type = 'default'
 
-            # node_specific_attrs = eval('self.attr_nodetype_' + node_type)
-
-            if node_type == 'bus':
-                if str(self.node_position_meta).lower() == 'defined':
-                    poslist = [int(x.strip("!")) for x in node_pos.split(",")]
-                    buspos = str(poslist[0]) + "," + str(poslist[1] + 25) + "!"
-                    self.graph.node(
-                        nid, label='', xlabel=label_mod, xlp=buspos,
-                        **self.attr_nodes[node_type])
-                else:
-                    self.graph.node(
-                        nid, label='', xlabel=label_mod,
-                        **self.attr_nodes[node_type])
-
-            elif node_type == 'default':
+            if node_type == 'default':
                 self.graph.node(
                     nid, label='', xlabel=label_mod, pos=node_pos,
-                    **self.attr_nodes[node_type])
+                    **self.attr_nodes['default'])
+
+            elif node_type in ['supply', 'source']:
+                self.graph.node(
+                    nid, label=label_mod, pos=node_pos,
+                    **self.attr_nodes['supply'])
+
+            elif node_type in ['sink', 'consumer', 'output']:
+                self.graph.node(
+                    nid, label=label_mod, pos=node_pos,
+                    **self.attr_nodes['sink'])
+
+            elif node_type in ['dependency']:
+                self.graph.node(
+                    nid, label=label_mod, pos=node_pos,
+                    **self.attr_nodes['dependency'])
 
             elif node_type == 'junction':
                 self.graph.node(
                     nid, label='', xlabel='', pos=node_pos,
-                    **self.attr_nodes[node_type])
+                    **self.attr_nodes['junction'])
 
             else:
                 self.graph.node(
-                    nid, label=label_mod, pos=node_pos,
-                    **self.attr_nodes[node_type])
+                    nid, label='', xlabel=label_mod, pos=node_pos,
+                    **self.attr_nodes['default'])
+
+            # if component_class == 'bus':
+            #     if str(self.node_position_meta).lower() == 'defined':
+            #         poslist = [int(x.strip("!")) for x in node_pos.split(",")]
+            #         buspos = str(poslist[0]) + "," + str(poslist[1] + 25) + "!"
+            #         self.graph.node(
+            #             nid, label='', xlabel=label_mod, xlp=buspos,
+            #             **self.attr_nodes[node_type])
+            #     else:
+            #         self.graph.node(
+            #             nid, label='', xlabel=label_mod,
+            #             **self.attr_nodes[node_type])
 
         # ---------------------------------------------------------------------
         # Apply node clustering, if defined in config
@@ -713,7 +730,7 @@ class SystemTopology_WTP(SystemTopology_Generic):
                 attr_nodetype_largebasin = self.attr_nodes['default'].copy()
                 attr_nodetype_largebasin.update(
                     shape="rect", penwidth="1.0",
-                    width="2.5", height="0.9")
+                    width="2.6", height="1.2")
                 self.graph.node(
                     nid, label=label_mod, xlabel="",
                     pos=node_pos, **attr_nodetype_largebasin)
