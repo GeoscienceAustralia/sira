@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 import re
 import sys
 import inspect
@@ -99,15 +100,18 @@ class SystemTopologyGenerator(object):
         for key, value_list in self.system_tags.items():
             if system_class in value_list:
                 sys_tag = key
-        topo_cls = eval('SystemTopology_' + sys_tag)
+        target_cls = eval('SystemTopology_' + sys_tag)
 
         clsmembers = inspect.getmembers(
             sys.modules[__name__],
             lambda member: inspect.isclass(member) and member.__module__ == __name__)
         clsmembers = [x[0] for x in clsmembers]
-        print(clsmembers)
 
-        return topo_cls(*self.topoargs)
+        if target_cls not in clsmembers:
+            raiseExceptions(ValueError)
+            exit(1)
+
+        return target_cls(*self.topoargs)
 
         # if system_class in self.powerstation_tags:
         #     return SystemTopology_PS(*self.topoargs)
@@ -196,6 +200,8 @@ class SystemTopology_Generic(object):
             rankdir=str(self.orientation),
             overlap='False',
             sep='+5',
+            packmode='node',
+            size='11.7,16.5',  # IMPORTANT: this sets the max canvas size (inches)
             # nodesep='0.5',
         )
 
@@ -279,11 +285,11 @@ class SystemTopology_Generic(object):
     # ================================================================================
 
     def write_graphs_to_file(self, file_name,
-                             dpi=300, canvas_size='',
+                             dpi=300, paper_size='',
                              engines=['dot', 'neato']):
 
         # ---------------------------------------------------------------------
-        paper_sizes = {
+        paper_size_dict = {
             'A0': '33.1,46.8!', 'A1': '23.4,33.1!', 'A2': '16.5,23.4!',
             'A3': '11.7,16.5!', 'A4': '8.3,11.7!', 'A5': '5.8,8.3!'
         }
@@ -316,10 +322,10 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Define output image size
 
-        if canvas_size in paper_sizes.keys():
-            arg_imgsize = paper_sizes[canvas_size]
+        if paper_size in paper_size_dict.keys():
+            canvas_size = paper_size_dict[paper_size]
         else:
-            arg_imgsize = ''
+            canvas_size = '11.7,16.5'
 
         # ---------------------------------------------------------------------
         # Apply node clustering, if defined in config
@@ -338,13 +344,23 @@ class SystemTopology_Generic(object):
         img_formats = {'png': 'bitmap', 'pdf': 'vector', 'ps2': 'vector'}
         for eng, fmt in itertools.product(engines, img_formats.keys()):
             x = arg_res if img_formats[fmt] == 'bitmap' else ''
-            self.graph.graph_attr.update(size=arg_imgsize, dpi=x)  # noqa: W605
+            self.graph.graph_attr.update(size=canvas_size, dpi=x)  # noqa: W605
             self.graph.engine = eng
             self.graph.render(
                 filename=file_name + '_' + eng,
                 directory=Path(self.output_path),
                 format=fmt,
-                cleanup=True)
+                cleanup='True')
+            # try:
+            #     self.graph.render(
+            #         filename=file_name + '_' + eng,
+            #         directory=Path(self.output_path),
+            #         format=fmt,
+            #         cleanup=True)
+            # except Exception as inst:
+            #     print(inst)
+            #     warnings.warn(
+            #         f"Graph rendering with engine {eng} for format {fmt} failed!")
 
     # ================================================================================
 
@@ -504,7 +520,7 @@ class SystemTopology_SS(SystemTopology_Generic):
         self.write_graphs_to_file(fname, dpi=300, engines=['dot'])
 
         self.graph.attr(splines="line")
-        self.write_graphs_to_file(fname, dpi=300, engines=['fdp'])
+        self.write_graphs_to_file(fname, dpi=300, engines=['neato'])
 
     def configure_sys_topology(self):
         """
