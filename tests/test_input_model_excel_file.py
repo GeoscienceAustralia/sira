@@ -198,9 +198,8 @@ class TestReadingExcelFile(unittest.TestCase):
                 "normal", "normalcdf", "normal_cdf",
                 "constantfunction", "constant_function",
                 "level0response",
-                "level0recovery",
                 "piecewisefunction", "piecewise_function",
-                "recoveryfunction", "recovery_function"
+                # "level0recovery", "recoveryfunction", "recovery_function"
             ]
 
             for algo_row in comp_type_dmg_algo.itertuples():
