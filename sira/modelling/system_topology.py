@@ -148,6 +148,7 @@ class SystemTopology_Generic(object):
                 vars(infrastructure.components[comp_id])
 
         self.primary_node_types = ['supply', 'sink', 'dependency', 'junction']
+        self.engines_valid = ['dot', 'neato', 'fdp', 'sfdp']
 
         # ---------------------------------------------------------------------
         # Orientation of the graph (default is top-to-bottom):
@@ -297,9 +298,8 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Check that valid layout engine names are supplied
 
-        engines_valid = ['dot', 'neato', 'fdp', 'sfdp']
-        engines_invalid = list(np.setdiff1d(engines, engines_valid))
-        engines_matched = list(set(engines_valid).intersection(set(engines)))
+        engines_invalid = list(np.setdiff1d(engines, self.engines_valid))
+        engines_matched = list(set(self.engines_valid).intersection(set(engines)))
         if engines_matched:
             engines = engines_matched
         else:
@@ -445,7 +445,6 @@ class SystemTopology_Generic(object):
                     name=cluster_name,
                     style='invis',
                     label='',
-                    clusterrank='local',
                     rank=rank)
 
     # ================================================================================
@@ -455,7 +454,7 @@ class SystemTopology_Generic(object):
         Draws the component configuration for a given infrastructure system.
 
         :output: generates and saves the system topology diagram in the
-        following formats: (graphviz) dot, png, pdf.
+        following formats: (graphviz) dot, png, pdf, ps2.
         """
 
         self.build_graph_structure()
@@ -527,7 +526,7 @@ class SystemTopology_SS(SystemTopology_Generic):
         Draws the component configuration for a given infrastructure system.
 
         :output: generates and saves the system topology diagram in the
-        following formats: (graphviz) dot, png, pdf.
+        following formats: (graphviz) dot, png, pdf, ps2.
         """
 
         self.graph_attr_dict.update(
@@ -653,7 +652,7 @@ class SystemTopology_WTP(SystemTopology_Generic):
         Draws the component configuration for a given infrastructure system.
 
         :output: generates and saves the system topology diagram in the
-        following formats: (graphviz) dot, png, pdf.
+        following formats: (graphviz) dot, png, pdf, ps2.
         """
 
         self.graph_attr_dict.update(
