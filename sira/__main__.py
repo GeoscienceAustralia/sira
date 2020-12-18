@@ -179,7 +179,7 @@ def main():
     # Configure simulation model.
     # Read data and control parameters and construct objects.
     # ------------------------------------------------------------------------------
-    config = Configuration(str(config_file_path), str(model_file_path), output_path)
+    config = Configuration(str(config_file_path), str(model_file_path), str(output_path))
     scenario = Scenario(config)
     infrastructure = ingest_model(config)
     hazards = HazardsContainer(config, model_file_path)
@@ -287,11 +287,10 @@ def main():
                 rootLogger.error("Input files not found: ", str(args.cp))
 
     rootLogger.info('RUN COMPLETE.\n')
-    rootLogger.info("Config file used : ", str(config_file_path))
-    rootLogger.info("Model file used  : ", str(model_file_path))
-    rootLogger.info("Outputs saved in : ", Fore.YELLOW,
-                    str(output_path), Fore.RESET, "\n")
-
+    rootLogger.info(f"Config file used : {str(config_file_path)}")
+    rootLogger.info(f"Model file used  : {str(model_file_path)}")
+    rootLogger.info(f"Outputs saved in : {Fore.YELLOW} {str(output_path)}\
+        {Fore.RESET} \n")
 
 if __name__ == "__main__":
     main()
