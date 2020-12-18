@@ -1,78 +1,45 @@
 import subprocess
-import sys
-import unittest
+import pytest
 from pathlib import Path
 
-# Add the source dir to system path
-root_dir = Path(__file__).resolve().parent.parent
-code_dir = Path(root_dir, 'sira')
-sys.path.insert(0, str(code_dir))
+# ------------------------------------------------------------------------------
 
+testdata = [
+    ('', 'powerstation_coal_A', '-s'),
+    ('', 'substation_tx_230kv', '-sl'),
+    ('', 'potable_water_treatment_plant_A', '-sfl'),
+    ('', 'test_network__basic', '-s')
+]
 
-class TestModuleRunProcess(unittest.TestCase):
+# ------------------------------------------------------------------------------
+
+@pytest.mark.modelrun
+@pytest.mark.parametrize(
+    "dir_setup, model_name, run_arg",
+    testdata,
+    indirect=["dir_setup"])
+def test_run_model(dir_setup, model_name, run_arg):
     """
-    Sets up expected paths, and runs tests to simulate how an user would
-    typically run the application from the terminal.
+    This module tests:
+    running the application from the terminal,
+    for a powerstation model.
     """
 
-    def setUp(self):
-        self.root_dir = Path(__file__).resolve().parent.parent
-        self.test_dir = Path(self.root_dir, 'tests')
-        self.code_dir = Path(self.root_dir, 'sira')
-        self.mdls_dir = Path(self.test_dir, 'models')
+    code_dir, mdls_dir = dir_setup
 
-    def test_term_run_psmodel(self):
-        """
-        This module tests:
-        running the application from the terminal,
-        for a powerstation model.
-        """
-        model_name = 'powerstation_coal_A'
-        inputdir = Path(self.mdls_dir, model_name)
-        process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(inputdir), '-s'],
-            stdout=subprocess.PIPE,
-            universal_newlines=True)
-        exitstatus = process.returncode
-        # print(process.stdout)
-        # An exit status of 0 typically indicates process ran successfully:
-        self.assertEqual(exitstatus, 0)
+    inputdir = Path(mdls_dir, model_name)
+    cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
 
-    def test_full_term_run_wtpmodel(self):
-        """
-        This module tests:
-        - running the application from the terminal, for
-        - damage simulation to a water treatment plant model, followed by
-        - fragility curve fitting, and
-        - loss & recovery analysis.
-        """
-        model_name = 'potable_water_treatment_plant_A'
-        inputdir = Path(self.mdls_dir, model_name)
-        process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(inputdir), '-sfl'],
-            stdout=subprocess.PIPE,
-            universal_newlines=True)
-        exitstatus = process.returncode
-        # print(process.stdout)
-        # An exit status of 0 typically indicates process ran successfully:
-        self.assertEqual(exitstatus, 0)
+    process = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        universal_newlines=True)
+    exitstatus = process.returncode
 
-    def test_term_run_substation_model(self):
-        """
-        This module tests:
-        running the application from the terminal,
-        for a substation model.
-        """
-        model_name = 'substation_tx_230kv'
-        inputdir = Path(self.mdls_dir, model_name)
-        process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(inputdir), '-sl'],
-            stdout=subprocess.PIPE,
-            universal_newlines=True)
-        exitstatus = process.returncode
-        # An exit status of 0 typically indicates process ran successfully:
-        self.assertEqual(exitstatus, 0)
+    # An exit status of 0 typically indicates process ran successfully:
+    assert exitstatus == 0, f"Run failed for {model_name} with args {run_arg}"
 
+# ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    unittest.main()
+    pytest.main([__file__])
