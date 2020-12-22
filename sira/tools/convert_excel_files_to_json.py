@@ -10,6 +10,70 @@ import xlrd
 # noqa: E211
 
 
+def assign_function_params(
+        function_data_dict,
+        function_purpose):
+
+    # `function_purpose`  must be in ["damage_function", "recovery_function"]
+    function_name = function_data_dict[function_purpose]
+    funcname_nocase = function_name.lower()
+    param_names = []
+
+    # --------------------------------------------------------------------------------
+    # Set the param names based on the functions recognised in the app
+
+    if funcname_nocase in [
+            "stepfunc", "step_func", "stepfunction", "step_function"]:
+        param_names = ['xys']
+
+    elif funcname_nocase in [
+            "lognormal", "lognormalcdf", "lognormal_cdf"]:
+        # median = scale, loction = loc, beta = shape = sigma
+        param_names = ['median', 'location', 'beta']
+
+    elif funcname_nocase in [
+            "normal", "normalcdf", "normal_cdf"]:
+        # stddev = scale, loc = mean
+        param_names = ['stddev', 'mean']
+
+    elif funcname_nocase in [
+            "rayleigh", "rayleighcdf", "rayleigh_cdf"]:
+        param_names = ['scale', 'loc']
+
+    elif funcname_nocase in [
+            "ConstantFunction".lower(), "constant_function"]:
+        param_names = ['amplitude']
+
+    elif funcname_nocase in [
+            "PiecewiseFunction".lower(), "piecewise_function"]:
+        param_names = ['piecewise_function_constructor']
+
+    else:
+        raise ValueError(f"Function name not recognised or supported {function_name}")
+
+    # --------------------------------------------------------------------------------
+    func_construct = OrderedDict()
+    func_construct["function_name"] = function_name
+
+    # lognorm_params = ['median', 'loc', 'beta']
+    damage_param_headers = ["ds_scale", "ds_location", "ds_shape"]
+    recovery_param_headers = ["recovery_param1", "recovery_param2", "recovery_param3"]
+    extra_fields = ["fragility_source", "lower_limit", "upper_limit"]
+
+    if function_purpose == "damage_function":
+        for param, header in zip(param_names, damage_param_headers):
+            func_construct[param] = function_data_dict[header]
+        for field in extra_fields:
+            func_construct[field] = function_data_dict[field]
+
+    if function_purpose == "recovery_function":
+        for param, header in zip(param_names, recovery_param_headers):
+            func_construct[param] = function_data_dict[header]
+
+    # --------------------------------------------------------------------------------
+    return func_construct
+
+
 def standardize_json_string(json_string):
     """
     Replace " with ' if they occur within square brackets
@@ -40,20 +104,22 @@ def standardize_json_string(json_string):
 
 def update_json_structure(main_json_obj):
 
-    system_meta = main_json_obj["system_meta"]
-    sysout_setup = main_json_obj["sysout_setup"]
-    sysinp_setup = main_json_obj["sysinp_setup"]
-    node_conn_df = main_json_obj["node_conn_df"]
     component_list = main_json_obj["component_list"]
-
-    damage_state_df = main_json_obj["damage_state_df"]
+    damage_state_def = main_json_obj["damage_state_df"]
     fragility_data = main_json_obj["fragility_data"]
 
+    new_def = OrderedDict()
+    for key in damage_state_def.keys():
+        newkey = eval(key)
+        cmp, ds = newkey[0], newkey[1]
+        new_def[(cmp, ds)] = damage_state_def[key]["damage_state_definition"]
+    damage_state_def = new_def
+
     new_json_structure = OrderedDict()
-    new_json_structure["system_meta"] = system_meta
-    new_json_structure["sysout_setup"] = sysout_setup
-    new_json_structure["sysinp_setup"] = sysinp_setup
-    new_json_structure["node_conn_df"] = node_conn_df
+    new_json_structure["system_meta"] = main_json_obj["system_meta"]
+    new_json_structure["sysout_setup"] = main_json_obj["sysout_setup"]
+    new_json_structure["sysinp_setup"] = main_json_obj["sysinp_setup"]
+    new_json_structure["node_conn_df"] = main_json_obj["node_conn_df"]
     new_json_structure["component_list"] = OrderedDict()
 
     for component in component_list:
@@ -68,7 +134,7 @@ def update_json_structure(main_json_obj):
             ["component_list"][component]
             ["damages_states_constructor"]) = OrderedDict()
 
-        # ------------------------------------------------------------------
+        # ----------------------------------------------------------------------------
         # Set parameter values for `None` Damage State:
 
         none_ds_construct = OrderedDict()
@@ -80,9 +146,7 @@ def update_json_structure(main_json_obj):
             ["component_list"][component]
             ["damages_states_constructor"]["0"]) = none_ds_construct
 
-        # ------------------------------------------------------------------
         # Set fragility algorithm for `None` Damage State:
-
         none_ds_dict = OrderedDict()
         none_ds_dict["function_name"] = "Level0Response"
         none_ds_dict["damage_state_definition"] = "Not Available."
@@ -93,9 +157,7 @@ def update_json_structure(main_json_obj):
             ["response_function_constructor"])\
             = none_ds_dict
 
-        # ------------------------------------------------------------------
         # Set recovery algorithm for `None` Damage State:
-
         none_ds_dict = OrderedDict()
         none_ds_dict["function_name"] = "Level0Response"
         none_ds_dict["recovery_state_definition"] = "Not Available."
@@ -106,127 +168,102 @@ def update_json_structure(main_json_obj):
             ["recovery_function_constructor"])\
             = none_ds_dict
 
-        # ------------------------------------------------------------------
+        # ----------------------------------------------------------------------------
 
         counter = 0
 
-        for key in fragility_data.keys():
-            component_type = eval(key)[1]
-            damage_state = eval(key)[2]
+        for frag_key in fragility_data.keys():
+            component_type = eval(frag_key)[1]
+            damage_state = eval(frag_key)[2]
 
             if component_type == component_list[component]["component_type"]:
+                ds_constructor = new_json_structure["component_list"][
+                    component]["damages_states_constructor"]
                 damage_states_in_component = [
-                    new_json_structure["component_list"][component]
-                    ["damages_states_constructor"][ds]["damage_state_name"]
-                    for ds in
-                    new_json_structure["component_list"][component]
-                    ["damages_states_constructor"]
+                    ds_constructor[ds]["damage_state_name"]
+                    for ds in ds_constructor
                 ]
-                if damage_state not in damage_states_in_component:
 
+                # ####################################################################
+                # IF damage state is not already added to the damage state list, then
+                # increment counter, init response function constructor, and add
+                # funtionality and damage ratio data. This ensures that algorithms
+                # that require multi-row definition, e.g. for piecewise functions,
+                # are correctly defined.
+
+                if damage_state not in damage_states_in_component:
                     counter = counter + 1
                     frag_odict = OrderedDict()
                     frag_odict["damage_state_name"] = damage_state
-                    frag_odict["functionality"] = fragility_data[key]["functionality"]
-                    frag_odict["damage_ratio"] = fragility_data[key]["damage_ratio"]
+
+                    frag_odict["functionality"] = \
+                        fragility_data[frag_key]["functionality"]
+                    frag_odict["damage_ratio"] = \
+                        fragility_data[frag_key]["damage_ratio"]
 
                     (new_json_structure["component_list"][component]
                         ["damages_states_constructor"][counter])\
                         = frag_odict
 
-                    # ----------------------------------------------------------
-                    # Build the hazard response function
-
+                    # Initiate the hazard response function
                     response_fn_construct = OrderedDict()
 
-                    if fragility_data[key]["is_piecewise"] == "no":
+                # ####################################################################
+                # <BEGIN> Non-piecewise damage function
 
-                        # <BEGIN> Non-piecewise damage function
+                if fragility_data[frag_key]["is_piecewise"] == "no":
 
-                        response_fn_construct["function_name"]\
-                            = fragility_data[key]["damage_function"]
+                    response_fn_construct = assign_function_params(
+                        fragility_data[frag_key], "damage_function")
 
-                        response_fn_construct["median"]\
-                            = fragility_data[key]["median"]
+                # <END> Non-piecewise damage function
+                # --------------------------------------------------------------------
+                # <BEGIN> Piecewise defined damage function
 
-                        response_fn_construct["beta"]\
-                            = fragility_data[key]["beta"]
+                elif fragility_data[frag_key]["is_piecewise"] == "yes":
+                    response_fn_construct["function_name"] = "PiecewiseFunction"  # noqa
 
-                        response_fn_construct["location"]\
-                            = fragility_data[key]["location"]
+                    try:
+                        if response_fn_construct["piecewise_function_constructor"]:
+                            pass
+                    except (NameError, KeyError, TypeError):
+                        response_fn_construct["piecewise_function_constructor"] = []
 
-                        response_fn_construct["fragility_source"]\
-                            = fragility_data[key]["fragility_source"]
+                    tempDic = OrderedDict()
+                    tempDic = assign_function_params(
+                        fragility_data[frag_key], "damage_function")
 
-                        response_fn_construct["minimum"]\
-                            = fragility_data[key]["minimum"]
+                    response_fn_construct["piecewise_function_constructor"].append(
+                        tempDic)
 
-                        if key in damage_state_df.keys():
-                            response_fn_construct["damage_state_definition"]\
-                                = damage_state_df[str(eval(key).pop(0))]
-                        else:
-                            response_fn_construct["damage_state_definition"]\
-                                = "Not Available."
-                    # <END> Non-piecewise damage function
-                    # ------------------------------------------------
-                    # <BEGIN> Piecewise defined damage function
-                    elif fragility_data[key]["is_piecewise"] == "yes":
-                        response_fn_construct["function_name"]\
-                            = "PiecewiseFunction"
-                        response_fn_construct["piecewise_function_constructor"]\
-                            = []
+                # <END> Piecewise defined damage function
+                # ####################################################################
 
-                        tempDic = OrderedDict()
-                        tempDic["function_name"]\
-                            = fragility_data[key]["damage_function"]
-                        tempDic["median"]\
-                            = fragility_data[key]["median"]
-                        tempDic["beta"]\
-                            = fragility_data[key]["beta"]
-                        tempDic["location"]\
-                            = fragility_data[key]["location"]
-                        tempDic["fragility_source"]\
-                            = fragility_data[key]["fragility_source"]
-                        tempDic["minimum"]\
-                            = fragility_data[key]["minimum"]
+                response_fn_construct["damage_state_definition"] = \
+                    damage_state_def.get(
+                        (component_type, damage_state),
+                        "Unavailable")
 
-                        if key in damage_state_df.keys():
-                            tempDic["damage_state_definition"]\
-                                = damage_state_df[str(eval(key).pop(0))]
-                        else:
-                            tempDic["damage_state_definition"]\
-                                = "Not Available."
+                (new_json_structure
+                    ["component_list"][component]
+                    ["damages_states_constructor"][counter]
+                    ["response_function_constructor"])\
+                    = response_fn_construct
 
-                        response_fn_construct["piecewise_function_constructor"].\
-                            append(tempDic)
+                # ####################################################################
+                # Build the component RECOVERY function
 
-                    # <END> Piecewise defined damage function
+                recovery_fn_construct = OrderedDict()
+                recovery_fn_construct = assign_function_params(
+                    fragility_data[frag_key], "recovery_function")
 
-                    (new_json_structure
-                        ["component_list"][component]
-                        ["damages_states_constructor"][counter]
-                        ["response_function_constructor"])\
-                        = response_fn_construct
+                recovery_fn_construct["recovery_state_definition"] = "Unavailable."
 
-                    # ----------------------------------------------------------
-                    # Build the component RECOVERY function
-
-                    recovery_fn_construct = OrderedDict()
-
-                    recovery_fn_construct["function_name"]\
-                        = fragility_data[key]["recovery_function"]
-                    recovery_fn_construct["mean"]\
-                        = fragility_data[key]["recovery_param1"]
-                    recovery_fn_construct["stddev"]\
-                        = fragility_data[key]["recovery_param2"]
-                    recovery_fn_construct["recovery_state_definition"]\
-                        = "Not Available."
-
-                    (new_json_structure
-                        ["component_list"][component]
-                        ["damages_states_constructor"][counter]
-                        ["recovery_function_constructor"])\
-                        = recovery_fn_construct
+                (new_json_structure
+                    ["component_list"][component]
+                    ["damages_states_constructor"][counter]
+                    ["recovery_function_constructor"])\
+                    = recovery_fn_construct
 
     return new_json_structure
 
@@ -283,7 +320,7 @@ def read_excel_to_json(excel_file_path):
     damage_state_df = damage_state_df.to_json(orient='index')
     damage_state_df = standardize_json_string(damage_state_df)
 
-    sys_model_json = '{ ' \
+    sys_model_json = '{'\
                      '"system_meta": ' + system_meta + ',' \
                      '"component_list": ' + component_list + ',' \
                      '"node_conn_df": ' + node_conn_df + ',' \
@@ -291,7 +328,7 @@ def read_excel_to_json(excel_file_path):
                      '"sysout_setup": ' + sysout_setup + ',' \
                      '"fragility_data": ' + fragility_data + ',' \
                      '"damage_state_df": ' + damage_state_df + \
-                     ' }'
+                     '}'
 
     return sys_model_json
 
@@ -322,16 +359,19 @@ def main():
         parent_folder_name = ntpath.dirname(excel_file_path)
         file_name_full = ntpath.basename(excel_file_path)
         file_name = os.path.splitext(ntpath.basename(excel_file_path))[0]
+
         print("\nConverting system model from MS Excel to JSON...")
         print("***")
         print("File Location   : {}".format(parent_folder_name))
         print("Source file     : {}".format(file_name_full))
+
         json_obj = json.loads(
             read_excel_to_json(excel_file_path), object_pairs_hook=OrderedDict)
         new_json_structure_obj = update_json_structure(json_obj)
         json_file_path = os.path.join(parent_folder_name, file_name + '.json')
         with open(json_file_path, 'w+') as outfile:
             json.dump(new_json_structure_obj, outfile, indent=4)
+
         print("Conversion done : {}".format(ntpath.basename(json_file_path)))
         print("***")
 
