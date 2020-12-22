@@ -344,17 +344,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -364,17 +365,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -384,17 +386,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -404,17 +407,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -449,17 +453,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.44,
-                        "beta": 0.55,
                         "location": 0,
+                        "beta": 0.55,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to rail support and unloader bracing frame elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -469,17 +474,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.645,
-                        "beta": 0.61,
                         "location": 0,
+                        "beta": 0.61,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of unloader structural elements leading to misalignment of machine components and conveyors. Minor derailment from tracks on wharf."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -489,17 +495,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.845,
-                        "beta": 0.595,
                         "location": 0,
+                        "beta": 0.595,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Failure of bracing elements on unloader leading to permanent distortion of equipment.  Damage to power supply and control equipment. Major derailment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -509,17 +516,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "beta": 0.505,
                         "location": 0,
+                        "beta": 0.505,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturning with major distortion of structural elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -554,17 +562,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.44,
-                        "beta": 0.55,
                         "location": 0,
+                        "beta": 0.55,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to rail support and unloader bracing frame elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -574,17 +583,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.645,
-                        "beta": 0.61,
                         "location": 0,
+                        "beta": 0.61,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of unloader structural elements leading to misalignment of machine components and conveyors. Minor derailment from tracks on wharf."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -594,17 +604,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.845,
-                        "beta": 0.595,
                         "location": 0,
+                        "beta": 0.595,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Failure of bracing elements on unloader leading to permanent distortion of equipment.  Damage to power supply and control equipment. Major derailment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -614,17 +625,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "beta": 0.505,
                         "location": 0,
+                        "beta": 0.505,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturning with major distortion of structural elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -659,17 +671,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "beta": 0.2,
                         "location": 0,
+                        "beta": 0.2,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Some deformation at hold down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 0.2,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 0.2,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -679,17 +692,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "beta": 0.27,
                         "location": 0,
+                        "beta": 0.27,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces and soem anchor bolts stretched."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 0.5,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 0.5,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -699,17 +713,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Many steel bracing elements have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Many truss arch members have buckeld in compression.  Some of the structural connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some foundation oviement due to settlement and some anchor bolts failed.  "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -719,17 +734,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.35,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the shelter structure.   "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 4.3,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 4.3,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -764,17 +780,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.39,
-                        "beta": 0.55,
                         "location": 0,
+                        "beta": 0.55,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -784,17 +801,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.595,
-                        "beta": 0.61,
                         "location": 0,
+                        "beta": 0.61,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -804,17 +822,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.795,
-                        "beta": 0.595,
                         "location": 0,
+                        "beta": 0.595,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -824,17 +843,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.505,
                         "location": 0,
+                        "beta": 0.505,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturning with major distortion of structural elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -869,17 +889,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.39,
-                        "beta": 0.55,
                         "location": 0,
+                        "beta": 0.55,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -889,17 +910,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.595,
-                        "beta": 0.61,
                         "location": 0,
+                        "beta": 0.61,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -909,17 +931,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.795,
-                        "beta": 0.595,
                         "location": 0,
+                        "beta": 0.595,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -929,17 +952,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.505,
                         "location": 0,
+                        "beta": 0.505,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturning with major distortion of structural elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -974,17 +998,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.39,
-                        "beta": 0.55,
                         "location": 0,
+                        "beta": 0.55,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -994,17 +1019,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.595,
-                        "beta": 0.61,
                         "location": 0,
+                        "beta": 0.61,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1014,17 +1040,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.795,
-                        "beta": 0.595,
                         "location": 0,
+                        "beta": 0.595,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1034,17 +1061,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.505,
                         "location": 0,
+                        "beta": 0.505,
                         "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturning with major distortion of structural elements."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1079,17 +1107,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "beta": 0.275,
                         "location": 0,
+                        "beta": 0.275,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1099,17 +1128,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1119,17 +1149,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.435,
                         "location": 0,
+                        "beta": 0.435,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1139,17 +1170,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.455,
                         "location": 0,
+                        "beta": 0.455,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1184,17 +1216,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "beta": 0.275,
                         "location": 0,
+                        "beta": 0.275,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1204,17 +1237,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1224,17 +1258,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.435,
                         "location": 0,
+                        "beta": 0.435,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1244,17 +1279,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.455,
                         "location": 0,
+                        "beta": 0.455,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1289,17 +1325,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "beta": 0.275,
                         "location": 0,
+                        "beta": 0.275,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1309,17 +1346,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1329,17 +1367,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.435,
                         "location": 0,
+                        "beta": 0.435,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1349,17 +1388,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.455,
                         "location": 0,
+                        "beta": 0.455,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1394,17 +1434,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "beta": 0.275,
                         "location": 0,
+                        "beta": 0.275,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1414,17 +1455,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1434,17 +1476,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.435,
                         "location": 0,
+                        "beta": 0.435,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1454,17 +1497,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.455,
                         "location": 0,
+                        "beta": 0.455,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1499,17 +1543,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.45,
-                        "beta": 0.2,
                         "location": 0,
+                        "beta": 0.2,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1519,17 +1564,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.585,
-                        "beta": 0.295,
                         "location": 0,
+                        "beta": 0.295,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1539,17 +1585,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1559,17 +1606,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1604,17 +1652,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.45,
-                        "beta": 0.2,
                         "location": 0,
+                        "beta": 0.2,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1624,17 +1673,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.585,
-                        "beta": 0.295,
                         "location": 0,
+                        "beta": 0.295,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1644,17 +1694,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1664,17 +1715,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1709,17 +1761,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.43,
-                        "beta": 0.16,
                         "location": 0,
+                        "beta": 0.16,
                         "fragility_source": "HAZUS-MH MR3 Table 8.6 Small Pumping Plants",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor movement of intake structure and minor damage to freshwater pumps and pipework."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.1215913664,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.1215913664,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1729,17 +1782,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "beta": 0.27,
                         "location": 0,
+                        "beta": 0.27,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial liquefaction of soils in the vicinity of intake structure leading to some horizontal movement and rotation with attendent damage to pipework. Horizontal movement to freshwater pumps and peripheral pipework."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 4.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 4.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1749,17 +1803,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.78,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive liquefaction leading to large scale movement of intake structures with major damage to both pipework and pumping facilities.  Control equipment damaged."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 8.0,
-                        "stddev": 0.9119352479,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 8.0,
+                        "mean": 0.9119352479,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1769,17 +1824,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 12.0,
-                        "stddev": 1.8238704957,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 12.0,
+                        "mean": 1.8238704957,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1814,17 +1870,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.42,
-                        "beta": 0.16,
                         "location": 0,
+                        "beta": 0.16,
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to water handling pumps and pipework.  Minor damage to plant superstructure."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.1823870496,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.1823870496,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1834,17 +1891,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Moderate structural damage to demin plant superstructure.  Deformation of pump hold-down and pipework with some leakage at flanges and valves.  Some movement of pumphouse substructure due to liquefaction."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 10.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 10.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1854,17 +1912,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.78,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Rupture of some water mains due to failure of  supporting strucuture. Significant movement of pumps and motors leading to some misalignment.  Extensive damage to demin plant superstructure, power supply and control panels.  Movement of demin substructure and other valve chambers significant leading to damage to water mains."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 21.0,
-                        "stddev": 1.8238704957,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 21.0,
+                        "mean": 1.8238704957,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1874,17 +1933,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 42.8571428571,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 42.8571428571,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -1919,17 +1979,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.46,
-                        "beta": 0.23,
                         "location": 0,
+                        "beta": 0.23,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 3.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 3.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -1939,17 +2000,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "beta": 0.25,
                         "location": 0,
+                        "beta": 0.25,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 20.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 20.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -1959,17 +2021,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.825,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 60.0,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 60.0,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -1979,17 +2042,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.8,
-                        "beta": 0.6,
                         "location": 0,
+                        "beta": 0.6,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 102.8571428571,
-                        "stddev": 4.8636546553,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 102.8571428571,
+                        "mean": 4.8636546553,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2024,17 +2088,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.46,
-                        "beta": 0.23,
                         "location": 0,
+                        "beta": 0.23,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 3.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 3.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2044,17 +2109,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "beta": 0.25,
                         "location": 0,
+                        "beta": 0.25,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 20.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 20.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2064,17 +2130,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.825,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 60.0,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 60.0,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2084,17 +2151,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.8,
-                        "beta": 0.6,
                         "location": 0,
+                        "beta": 0.6,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 102.8571428571,
-                        "stddev": 4.8636546553,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 102.8571428571,
+                        "mean": 4.8636546553,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2129,17 +2197,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "minor damage to supporting structure and electrical equipment"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2149,17 +2218,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "beta": 0.5,
                         "location": 0,
+                        "beta": 0.5,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2169,17 +2239,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2189,17 +2260,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair. "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2234,17 +2306,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "minor damage to supporting structure and electrical equipment"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2254,17 +2327,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "beta": 0.5,
                         "location": 0,
+                        "beta": 0.5,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2274,17 +2348,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2294,17 +2369,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair. "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2339,17 +2415,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "minor damage to supporting structure and electrical equipment"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2359,17 +2436,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "beta": 0.5,
                         "location": 0,
+                        "beta": 0.5,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2379,17 +2457,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2399,17 +2478,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair. "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2444,17 +2524,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "minor damage to supporting structure and electrical equipment"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2464,17 +2545,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "beta": 0.5,
                         "location": 0,
+                        "beta": 0.5,
                         "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2484,17 +2566,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2504,17 +2587,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Sim to main feed conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair. "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2549,17 +2633,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.45,
-                        "beta": 0.2,
                         "location": 0,
+                        "beta": 0.2,
                         "fragility_source": "SIM to supply conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformation to supporting structure with some yielding of hold-down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 0.2,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 0.2,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2569,17 +2654,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.59,
-                        "beta": 0.3,
                         "location": 0,
+                        "beta": 0.3,
                         "fragility_source": "SIM to supply conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformaton to steel supporting structure with misaligment of ash handling conveyors"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 0.5,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 0.5,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2589,17 +2675,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.775,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "SIM to supply conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Horizontal displacement of structure with failure of bracing elements and damage to ash silo structure."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2609,17 +2696,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "SIM to supply conveyor",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Partial or complete collapse of ash handling system."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 4.3,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 4.3,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2654,17 +2742,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "beta": 0.2,
                         "location": 0,
+                        "beta": 0.2,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to structure with deformation of holding down bolts and with some bracing connections."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2674,17 +2763,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "beta": 0.27,
                         "location": 0,
+                        "beta": 0.27,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement.  Yielding of bracing elements.  Damage to flue leading to gas leakage."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2694,17 +2784,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major horizontal deformation with permanent drift.  Failure of bracing elements and extensive damage to flue with many leakage points."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2714,17 +2805,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.35,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair including collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2759,17 +2851,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "beta": 0.2,
                         "location": 0,
+                        "beta": 0.2,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to structure with deformation of holding down bolts and with some bracing connections."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2779,17 +2872,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "beta": 0.27,
                         "location": 0,
+                        "beta": 0.27,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement.  Yielding of bracing elements.  Damage to flue leading to gas leakage."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2799,17 +2893,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Major horizontal deformation with permanent drift.  Failure of bracing elements and extensive damage to flue with many leakage points."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2819,17 +2914,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.35,
-                        "beta": 0.35,
                         "location": 0,
+                        "beta": 0.35,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Damage beyond repair including collapse."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2864,17 +2960,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.475,
-                        "beta": 0.25,
                         "location": 0,
+                        "beta": 0.25,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Minor spalling at some precast panel corners."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2884,17 +2981,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.615,
-                        "beta": 0.33,
                         "location": 0,
+                        "beta": 0.33,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces.  More significant spalling damage to precast panels with deformation at panel connections."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -2904,17 +3002,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.77,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Most steel members have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Some of the structural members or connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some anchor bolts stretched. Partial collapse of portions of the structure may have occurred due to failed critical elements or connections."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -2924,17 +3023,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.4,
                         "location": 0,
+                        "beta": 0.4,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the building.   "
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -2969,17 +3069,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to condensor pipework.  Some horizontal deformation of condensor support connections and steam supply to turbine."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -2989,17 +3090,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.3,
                         "location": 0,
+                        "beta": 0.3,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant horizontal deformation of both condensor and turbine relative to supporting plinth leading to misalignment of turbine shaft to generator and steam leakage in pipework."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 20.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 20.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3009,17 +3111,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to turbine shaft to generator requiring replacement.  Internal damage to condensor requiring replacement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 50.0,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 50.0,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3029,17 +3132,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Irreparable damage to turbine and condensor."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 102.8571428571,
-                        "stddev": 4.8636546553,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 102.8571428571,
+                        "mean": 4.8636546553,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3074,17 +3178,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to condensor pipework.  Some horizontal deformation of condensor support connections and steam supply to turbine."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3094,17 +3199,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.3,
                         "location": 0,
+                        "beta": 0.3,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant horizontal deformation of both condensor and turbine relative to supporting plinth leading to misalignment of turbine shaft to generator and steam leakage in pipework."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 20.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 20.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3114,17 +3220,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to turbine shaft to generator requiring replacement.  Internal damage to condensor requiring replacement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 50.0,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 50.0,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3134,17 +3241,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Irreparable damage to turbine and condensor."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 102.8571428571,
-                        "stddev": 4.8636546553,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 102.8571428571,
+                        "mean": 4.8636546553,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3179,17 +3287,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to generator electrical connectivity. Some horizonrtal deformation to generator support with distortion of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 3.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 3.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3199,17 +3308,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.3,
                         "location": 0,
+                        "beta": 0.3,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant horizontal deformation leading to misalignment of generator to turbine shaft."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 20.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 20.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3219,17 +3329,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to generator to turbine shaft requiring  replacement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 60.0,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 60.0,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3239,17 +3350,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Irreparable damage to generator."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 102.8571428571,
-                        "stddev": 4.8636546553,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 102.8571428571,
+                        "mean": 4.8636546553,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3284,17 +3396,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to generator electrical connectivity. Some horizonrtal deformation to generator support with distortion of holding down bolts."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 3.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 3.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3304,17 +3417,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "beta": 0.3,
                         "location": 0,
+                        "beta": 0.3,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant horizontal deformation leading to misalignment of generator to turbine shaft."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 20.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 20.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3324,17 +3438,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to generator to turbine shaft requiring  replacement."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 60.0,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 60.0,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3344,17 +3459,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "beta": 0.28,
                         "location": 0,
+                        "beta": 0.28,
                         "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Irreparable damage to generator."
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 102.8571428571,
-                        "stddev": 4.8636546553,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 102.8571428571,
+                        "mean": 4.8636546553,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3389,17 +3505,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Porcelain Gasket Leak"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3409,17 +3526,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.9,
-                        "beta": 0.26,
                         "location": 0,
+                        "beta": 0.26,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Porcelain Break, Major break in Radiator"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3429,17 +3547,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.25,
-                        "beta": 0.21,
                         "location": 0,
+                        "beta": 0.21,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Anchorage Failure"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3449,17 +3568,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.65,
-                        "beta": 0.11,
                         "location": 0,
+                        "beta": 0.11,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturn"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3494,17 +3614,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "beta": 0.34,
                         "location": 0,
+                        "beta": 0.34,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Porcelain Gasket Leak"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 5.0,
-                        "stddev": 0.303978416,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 5.0,
+                        "mean": 0.303978416,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3514,17 +3635,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.9,
-                        "beta": 0.26,
                         "location": 0,
+                        "beta": 0.26,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Porcelain Break, Major break in Radiator"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 17.0,
-                        "stddev": 0.6079568319,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 17.0,
+                        "mean": 0.6079568319,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3534,17 +3656,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.25,
-                        "beta": 0.21,
                         "location": 0,
+                        "beta": 0.21,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Anchorage Failure"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 37.0,
-                        "stddev": 1.2159136638,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 37.0,
+                        "mean": 1.2159136638,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3554,17 +3677,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.65,
-                        "beta": 0.11,
                         "location": 0,
+                        "beta": 0.11,
                         "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturn"
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 77.1428571429,
-                        "stddev": 2.4318273276,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 77.1428571429,
+                        "mean": 2.4318273276,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3599,17 +3723,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3619,17 +3744,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3639,17 +3765,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3659,17 +3786,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
@@ -3704,17 +3832,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "2": {
@@ -3724,17 +3853,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "3": {
@@ -3744,17 +3874,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 },
                 "4": {
@@ -3764,17 +3895,18 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "beta": 0.01,
                         "location": 0,
+                        "beta": 0.01,
                         "fragility_source": "Not Available.",
-                        "minimum": null,
-                        "damage_state_definition": "Not Available."
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
                         "function_name": "Normal",
-                        "mean": 1.0,
-                        "stddev": 0.0607956832,
-                        "recovery_state_definition": "Not Available."
+                        "stddev": 1.0,
+                        "mean": 0.0607956832,
+                        "recovery_state_definition": "Unavailable."
                     }
                 }
             }
