@@ -1,7 +1,6 @@
 import numpy as np
 import scipy.stats as stats
 from sira.modelling.structural import Base
-from sira.modelling.structural import Element
 from sira.modelling.structural import Element as _Element
 from sira.modelling.structural import Info
 
@@ -12,101 +11,75 @@ class Algorithm:
     def factory(response_params):
 
         function_name = response_params["function_name"]
-        if function_name == "StepFunc":
+        funcname_nocase = str(function_name).casefold()
+
+        if funcname_nocase in [
+                "stepfunc", "step_func", "stepfunction", "step_function"]:
             return StepFunc(**response_params)
-        elif function_name.lower() in ["lognormal",
-                                       "lognormalcdf",
-                                       "lognormal cdf",
-                                       "lognormal_cdf"]:
+
+        elif funcname_nocase in [
+                "lognormal", "lognormalcdf", "lognormal_cdf"]:
             return LogNormalCDF(**response_params)
-        elif function_name.lower() in ["normal",
-                                       "normalcdf",
-                                       "normal cdf",
-                                       "normal_cdf"]:
+
+        elif funcname_nocase in [
+                "normal", "normalcdf", "normal_cdf"]:
             return NormalCDF(**response_params)
-        elif function_name.lower() in ["rayleigh",
-                                       "rayleighcdf",
-                                       "rayleigh_cdf",
-                                       "rayleigh cdf"]:
-            return NormalCDF(**response_params)
-        elif function_name == "ConstantFunction":
+
+        elif funcname_nocase in [
+                "rayleigh", "rayleighcdf", "rayleigh_cdf"]:
+            return RayleighCDF(**response_params)
+
+        elif funcname_nocase in [
+                "ConstantFunction".lower(), "constant_function"]:
             return ConstantFunction(**response_params)
-        elif function_name == "Level0Response":
+
+        elif funcname_nocase in [
+                "Level0Response".lower(), "Level0Recovery".lower()]:
             return Level0Response(**response_params)
-        elif function_name == "Level0Recovery":
-            return Level0Recovery()
-        elif function_name == "PiecewiseFunction":
+
+        elif funcname_nocase in [
+                "PiecewiseFunction".lower(), "piecewise_function"]:
             return PiecewiseFunction(**response_params)
-        elif function_name == "RecoveryFunction":
-            return RecoveryFunction(**response_params)
 
         raise ValueError("No response model matches {}".format(function_name))
 
 
-class RecoveryFunction(Base):
+class Level0Response(Base):
     """
-    Recovery functions are most commonly defined in literature in terms of
-    Normal CDF. In this case, the distribution function parameters will be:
-    param1 = loc = mean
-    prarm2 = scale = standard deviation
+    Standard response for no damage.
     """
-    recovery_param1 = Element(
-        'float', 'Recovery function location parameter',
-        0.0, [lambda x: float(x) > 0.0])
-    recovery_param2 = Element(
-        'float', 'Recovery function scale parameter',
-        0.0, [lambda x: float(x) > 0.0])
-
-    def __call__(self, data_point, state):
-        return stats.norm.cdf(
-            data_point, loc=self.recovery_param1, scale=self.recovery_param2
-        )
-
-
-class StepFunc(Base):
-    """
-    A response model that does not have a cumulative distribution
-    function, rather a series of steps for damage.
-    """
-    xys = _Element(
-        'XYPairs', 'A list of X, Y pairs.', list,
-        [lambda xy: [(float(x), float(y)) for x, y in xy]])
+    mode = 1
+    damage_ratio = 0.0
+    functionality = 1.0
+    beta = 0.0
+    median = 1.0
 
     lower_limit = _Element(
         'float',
         'lower limit of function if part of piecewise function',
-        None,
-        [lambda x: float(x) > 0.])
-
+        None, [lambda x: float(x) > 0.])
     upper_limit = _Element(
         'float',
         'upper limit of function  if part of piecewise function',
-        None,
-        [lambda x: float(x) > 0.])
+        None, [lambda x: float(x) > 0.])
 
-    def __call__(self, hazard_intensity):
-        """
-        Note that intervals are closed on the right.
-        """
-        for x, y in self.xys:
-            if hazard_intensity < x:
-                return y
-        raise ValueError('value is greater than all xs!')
+    def __call__(self, hazard_level):
+        return 0.0
 
 
 class RayleighCDF(Base):
     """
     The Rayliegh CDF response model for components.
     """
-    loc = _Element(
-        'float',
-        'Location parameter for Rayleigh CDF.',
-        default=0, validators=[lambda x: float(x) >= 0.])
-
     scale = _Element(
         'float',
         'Scale parameter for Rayleigh CDF.',
         _Element.NO_DEFAULT, validators=[lambda x: float(x) > 0.])
+
+    loc = _Element(
+        'float',
+        'Location parameter for Rayleigh CDF.',
+        default=0, validators=[lambda x: float(x) >= 0.])
 
     def __call__(self, x):
         """
@@ -128,6 +101,9 @@ class LogNormalCDF(Base):
     beta = _Element('float', 'Log standard deviation of the log normal CDF',
                     _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
+    location = _Element('float', 'Location parameter of the log normal CDF',
+                        0.0, [lambda x: float(x) > 0.])
+
     lower_limit = _Element(
         'float',
         'lower limit of function if part of piecewise function',
@@ -145,12 +121,12 @@ class LogNormalCDF(Base):
         SciPy implementation of LogNormal CDF:
             scipy.stats.lognorm.cdf(x, s, loc=0, scale=1)
         where,
-            s = sigma   # or beta or standard deviation
+            s = sigma   # or beta or standard deviation (shape parameter)
             scale = exp(mean) = median
             loc is used to shift the distribution and commonly not used
         """
-        return stats.lognorm.cdf(data_point,
-                                 self.beta, loc=0, scale=self.median)
+        return stats.lognorm.cdf(
+            data_point, self.beta, loc=self.location, scale=self.median)
 
 
 class NormalCDF(Base):
@@ -211,57 +187,45 @@ class ConstantFunction(Base):
     lower_limit = _Element(
         'float',
         'lower limit of function if part of piecewise function',
-        None, [lambda x: float(x) > 0.])
+        None, [lambda x: float(x) >= 0.])
     upper_limit = _Element(
         'float',
         'upper limit of function  if part of piecewise function',
-        None, [lambda x: float(x) > 0.])
+        None, [lambda x: float(x) >= 0])
 
     def __call__(self, hazard_intensity):
         return self.amplitude
 
 
-class Level0Response(Base):
+class StepFunc(Base):
     """
-    Standard response for no damage.
+    A response model that does not have a cumulative distribution
+    function, rather a series of steps for damage.
     """
-    mode = 1
-    damage_ratio = 0.0
-    functionality = 1.0
-    beta = 0.0
-    median = 1.0
+    xys = _Element(
+        'XYPairs', 'A list of X, Y pairs.', list,
+        [lambda xy: [(float(x), float(y)) for x, y in xy]])
 
     lower_limit = _Element(
         'float',
         'lower limit of function if part of piecewise function',
-        None, [lambda x: float(x) > 0.])
+        None,
+        [lambda x: float(x) > 0.])
+
     upper_limit = _Element(
         'float',
         'upper limit of function  if part of piecewise function',
-        None, [lambda x: float(x) > 0.])
+        None,
+        [lambda x: float(x) > 0.])
 
-    def __call__(self, hazard_level):
-        return 0.0
-
-
-class Level0Recovery(Base):
-    """
-    Standard recovery for no damage.
-    """
-    recovery_param1 = 0.00001
-    recovery_param2 = 0.00001
-
-    lower_limit = _Element(
-        'float',
-        'lower limit of function if part of piecewise function',
-        None, [lambda x: float(x) > 0.])
-    upper_limit = _Element(
-        'float',
-        'upper limit of function  if part of piecewise function',
-        None, [lambda x: float(x) > 0.])
-
-    def __call__(self, hazard_level):
-        return 0.0
+    def __call__(self, hazard_intensity):
+        """
+        Note that intervals are closed on the right.
+        """
+        for x, y in self.xys:
+            if hazard_intensity < x:
+                return y
+        raise ValueError('value is greater than all xs!')
 
 
 class XYPairs(Base):
@@ -287,44 +251,45 @@ class XYPairs(Base):
 
 class PiecewiseFunction(Base):
     """
-    first function will only have one value if anything less than that always
-    use that function last function will also have one value if anything
-    greater than use that function in-between function will always have two
-    range values they will only be defined for those values
+    This class builds a piecwise function defined by algorithm constructor
+    data of a specified format. This data is part of the defined
+    attributes of a system Component.
 
-    input: hazard value
-    output: probability
+    Each dict in the list contains:
+        - the parameters required to construct an algorithm, and
+        - the conditions where that algorithm will be applicable
     """
     piecewise_function_constructor = None
-    piecewise_functions = None
 
     def __init__(self, *arg, **kwargs):
-
-        self.piecewise_functions = []
+        """
+        input: a list of dicts.
+        Dict name must be: 'piecewise_function_constructor'
+        """
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-        for function_constructor in self.piecewise_function_constructor:
-            function_params = {}
-            for key in function_constructor.keys():
-                function_params[key] = function_constructor[key]
+        self.functions = []
+        self.conditions = []
+        for param_dict in self.piecewise_function_constructor:
+            lo = param_dict['lower_limit']
+            hi = param_dict['upper_limit']
+            cond = f"(x >= {lo}) & (x < {hi})"
+            self.conditions.append(cond)
+            self.functions.append(Algorithm.factory(param_dict))
 
-            self.piecewise_functions.append(Algorithm.factory(function_params))
+    def pwfunc(self, x):
+        x = np.asarray(x)
+        y = np.zeros(x.shape)
+        for i, cond in enumerate(self.conditions):
+            func = self.functions[i]
+            y += eval(cond) * func(x)
+        return y
 
     def __call__(self, hazard_intensity):
-
-        for i, piecewise_function in enumerate(self.piecewise_functions):
-            # check if lower limit function
-            if i == 0:
-                if hazard_intensity <= piecewise_function.lower_limit:
-                    return self.piecewise_functions[0]
-            # check if upper limit function
-            elif i == len(self.piecewise_functions) - 1:
-                if hazard_intensity < piecewise_function.upper_limit:
-
-                    return self.piecewise_functions[-1](hazard_intensity)
-            # any other function between the limits
-            else:
-                if piecewise_function.lower_limit <= hazard_intensity < \
-                        piecewise_function.upper_limit:
-                    return self.piecewise_functions[i](hazard_intensity)
+        """
+        input: hazard intensity value
+        output: probability of a response (linked to a damage state)
+        """
+        vectorized_pwf = np.vectorize(self.pwfunc)
+        return vectorized_pwf(hazard_intensity)
