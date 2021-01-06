@@ -222,13 +222,13 @@ class StepFunc(Base):
         """
         Note that intervals are closed on the right.
         """
-        for x, y in self.xys:
+        for x, y in self.xys:  # noqa: E1133
             if hazard_intensity < x:
                 return y
         raise ValueError('value is greater than all xs!')
 
 
-class XYPairs(Base):
+class XYPairs(object):
     """
     A list of float values that implement a step function.
     """
@@ -249,7 +249,7 @@ class XYPairs(Base):
         return iter(self.pairs)
 
 
-class PiecewiseFunction(Base):
+class PiecewiseFunction(object):
     """
     This class builds a piecwise function defined by algorithm constructor
     data of a specified format. This data is part of the defined
@@ -261,29 +261,47 @@ class PiecewiseFunction(Base):
     """
     piecewise_function_constructor = None
 
-    def __init__(self, *arg, **kwargs):
+    def __init__(self, **kwargs):
         """
         input: a list of dicts.
-        Dict name must be: 'piecewise_function_constructor'
+        Dict name must be 'piecewise_function_constructor'
         """
         for k, v in kwargs.items():
             setattr(self, k, v)
 
         self.functions = []
-        self.conditions = []
-        for param_dict in self.piecewise_function_constructor:
-            lo = param_dict['lower_limit']
-            hi = param_dict['upper_limit']
-            cond = f"(x >= {lo}) & (x < {hi})"
-            self.conditions.append(cond)
+        self.validranges = []
+        for param_dict in self.piecewise_function_constructor:  # noqa: E1133
+            lo = self.check_limit(param_dict['lower_limit'], which_lim='lower')
+            hi = self.check_limit(param_dict['upper_limit'], which_lim='upper')
             self.functions.append(Algorithm.factory(param_dict))
+            self.validranges.append((lo, hi))
+
+    def check_limit(self, val, which_lim):
+        if which_lim == 'lower':
+            inf, infstr = -np.inf, ['-np.inf', '-inf']
+        else:
+            inf, infstr = np.inf, ['np.inf', '+np.inf', 'inf', '+inf']
+
+        if (val is None) or str(val) in ['', 'NA', *infstr]:
+            val = inf
+        else:
+            try:
+                val = float(val)
+            except ValueError:
+                print(f"Invalid value passed for {which_lim} limit of function.")
+                exit(1)
+        return val
+
+    def condfunc(self, x, func_lims):
+        return (x >= func_lims[0]) & (x < func_lims[1])
 
     def pwfunc(self, x):
         x = np.asarray(x)
         y = np.zeros(x.shape)
-        for i, cond in enumerate(self.conditions):
-            func = self.functions[i]
-            y += eval(cond) * func(x)
+        for i, func in enumerate(self.functions):
+            func_lims = self.validranges[i]
+            y += self.condfunc(x, func_lims) * func(x)   # noqa: W0123
         return y
 
     def __call__(self, hazard_intensity):
