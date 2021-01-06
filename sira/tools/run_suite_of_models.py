@@ -18,9 +18,9 @@ if not project_root_dir.is_dir():
 #     - one single config file in json
 #     - one or more model files in json
 
-config_file_path = [x for x in project_root_dir.glob(f'*config*.json')][0]
+config_file_path = [x for x in project_root_dir.glob('*config*.json')][0]
 config_file_name = config_file_path.name
-model_file_path_list = [x for x in project_root_dir.rglob(f'*model*.json')]
+model_file_path_list = [x for x in project_root_dir.rglob('*model*.json')]
 
 if not config_file_path.is_file():
     print("config file dose not exist.")
@@ -66,7 +66,7 @@ for model_file_path in model_file_path_list:
 # ------------------------------------------------------------------------------
 # Run each distinct model with the same scenario config setup
 
-model_dir_path_list = [x for x in Path(project_root_dir).glob('*') 
+model_dir_path_list = [x for x in Path(project_root_dir).glob('*')
                        if not re.search(r'^[_.]', x.name)]
 for model_dir_path in model_dir_path_list:
     if model_dir_path.is_dir():
