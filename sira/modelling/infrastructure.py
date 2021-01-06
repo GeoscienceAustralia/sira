@@ -130,7 +130,8 @@ class Infrastructure(Base):
         """
         if not self.if_nominal_output:
             self.if_nominal_output = 0
-            for output_comp in list(self.output_nodes.values()):
+            # `output_nodes` is a dict
+            for output_comp in list(self.output_nodes.values()):   # noqa: E1101
                 self.if_nominal_output += output_comp['output_node_capacity']
 
         return self.if_nominal_output
@@ -152,14 +153,13 @@ class Infrastructure(Base):
                 self.components, comp_level_func)
 
         # calculate the capacity
-        # system_flows_sample = []
         system_outflows_sample = np.zeros(len(self.output_nodes))
         for output_index, (output_comp_id, output_comp) in \
-                enumerate(self.output_nodes.items()):
+                enumerate(self.output_nodes.items()):   # noqa: E1101
             # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
             for (supply_comp_id, supply_comp) in \
-                    self.supply_nodes.items():
+                    self.supply_nodes.items():   # noqa: E1101
                 if_flow_fraction = self._component_graph.maxflow(
                     supply_comp_id, output_comp_id
                 )
@@ -246,7 +246,7 @@ class Infrastructure(Base):
 
             comp_resp_dict[(comp_id, 'num_failures')] \
                 = np.mean(component_damage_state_ind[:, comp_index]
-                          >= (len(component.damage_states) - 1))
+                          >= (len(component.damage_states) - 1))  # noqa:W503
 
         # ---------------------------------------------------------------
         # Collate aggregate response of component grouped by their TYPE:
@@ -273,7 +273,7 @@ class Infrastructure(Base):
             acomponent = self.components[comps_of_a_type[0]]
             comptype_resp_dict[(ct_id, 'num_failures')] \
                 = np.mean(component_damage_state_ind[:, ct_pos_index]
-                          >= (len(acomponent.damage_states) - 1))
+                          >= (len(acomponent.damage_states) - 1))  # noqa:W503
         # ---------------------------------------------------------------
 
         # comp_dmg_state_array_exp = \
@@ -406,6 +406,9 @@ class Infrastructure(Base):
         """
         for component in list(self.components.values()):
             yield component.component_class
+
+    def get_component_graph(self):
+        return self._component_graph.digraph
 
 
 class Substation(Infrastructure):
