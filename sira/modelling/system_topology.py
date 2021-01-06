@@ -1,13 +1,14 @@
-from logging import raiseExceptions
 import re
 import sys
 import inspect
 import warnings
 import itertools
 from pathlib import Path
+from graphviz.backend import CalledProcessError
 
 import numpy as np
 import graphviz as gviz
+# from numpy.core.numeric import NaN
 
 
 # =====================================================================================
@@ -53,7 +54,9 @@ def join_list_elems_given_len(str_list, num_str=20):
     return newlist
 
 
-def segment_long_labels(string, maxlen=10, delims=[chr(0x20)]):
+def segment_long_labels(string, maxlen=10, delims=''):
+    if delims in ['', 'NA', None]:
+        delims = [chr(0x20)]
     if (not delims) and (len(string) > maxlen):
         str_list = re.findall("(?s).{1," + str(maxlen) + "}", string)
     elif len(string) > maxlen:
@@ -69,7 +72,7 @@ def segment_long_labels(string, maxlen=10, delims=[chr(0x20)]):
 
 class SystemTopologyGenerator(object):
 
-    def __new__(self, infrastructure, output_dir, *args):
+    def __new__(self, infrastructure, output_dir):
         topoargs = [infrastructure, output_dir]
         system_class = infrastructure.system_class.lower()
         target_cls = get_target_class(system_class)
@@ -286,8 +289,8 @@ class SystemTopology_Generic(object):
     # ================================================================================
 
     def write_graphs_to_file(self, file_name,
-                             dpi=300, paper_size='',
-                             engines=['dot', 'neato']):
+                             dpi=300, paper_size=None,
+                             engines=''):
 
         # ---------------------------------------------------------------------
         paper_size_dict = {
@@ -297,6 +300,9 @@ class SystemTopology_Generic(object):
 
         # ---------------------------------------------------------------------
         # Check that valid layout engine names are supplied
+
+        if not engines:
+            engines = ['dot', 'neato']
 
         engines_invalid = list(np.setdiff1d(engines, self.engines_valid))
         engines_matched = list(set(self.engines_valid).intersection(set(engines)))
@@ -351,16 +357,17 @@ class SystemTopology_Generic(object):
                 directory=Path(self.output_path),
                 format=fmt,
                 cleanup='True')
-            # try:
-            #     self.graph.render(
-            #         filename=file_name + '_' + eng,
-            #         directory=Path(self.output_path),
-            #         format=fmt,
-            #         cleanup=True)
-            # except Exception as inst:
-            #     print(inst)
-            #     warnings.warn(
-            #         f"Graph rendering with engine {eng} for format {fmt} failed!")
+        try:
+            self.graph.engine = 'dot'
+            self.apply_node_clustering()
+            self.graph.render(
+                filename=file_name + '_clustered',
+                directory=Path(self.output_path),
+                format='png',
+                cleanup=True)
+        except (AssertionError, ValueError, TypeError, CalledProcessError) as inst:
+            print(inst)
+            warnings.warn("Graph rendering node clustering failed!")
 
     # ================================================================================
 
@@ -390,7 +397,8 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Build the graph representing system topology, and
         # Define general node & edge attributes.
-        G = self.infrastructure._component_graph.digraph
+        # G = self.infrastructure._component_graph.digraph
+        G = self.infrastructure.get_component_graph()
         elist = G.get_edgelist()
         named_elist = []
         for tpl in elist:
@@ -494,6 +502,7 @@ class SystemTopology_PS(SystemTopology_Generic):
 
     def __init__(self, *args):
         super(SystemTopology_PS, self).__init__(*args)
+        self.graph_label = "Power Station Topology"
 
     def draw_sys_topology(self):
         fname = Path(self.out_file).stem
@@ -509,6 +518,7 @@ class SystemTopology_SS(SystemTopology_Generic):
 
     def __init__(self, *args):
         super(SystemTopology_SS, self).__init__(*args)
+        self.graph_label = "Electric Substation Topology"
 
     def draw_sys_topology(self):
         fname = Path(self.out_file).stem
@@ -577,7 +587,6 @@ class SystemTopology_SS(SystemTopology_Generic):
 
             # Custom attribute assignment based on node types
             node_type = str(self.component_attr[nid]['node_type']).lower()
-            component_class = str(self.component_attr[nid]['component_class']).lower()
 
             if node_type not in self.primary_node_types:
                 node_type = 'default'
@@ -612,6 +621,7 @@ class SystemTopology_SS(SystemTopology_Generic):
                     nid, label='', xlabel=label_mod, pos=node_pos,
                     **self.attr_nodes['default'])
 
+            # component_class = str(self.component_attr[nid]['component_class']).lower()
             # if component_class == 'bus':
             #     if str(self.node_position_meta).lower() == 'defined':
             #         poslist = [int(x.strip("!")) for x in node_pos.split(",")]
@@ -639,6 +649,7 @@ class SystemTopology_WTP(SystemTopology_Generic):
 
     def __init__(self, *args):
         super(SystemTopology_WTP, self).__init__(*args)
+        self.graph_label = "Treatment Plant Topology"
 
     def draw_sys_topology(self):
         fname = Path(self.out_file).stem
@@ -722,7 +733,12 @@ class SystemTopology_WTP(SystemTopology_Generic):
                     nid, label=label_mod, xlabel="", pos=node_pos,
                     **self.attr_nodes['default'])
 
-            elif component_class in [
+            else:
+                self.graph.node(
+                    nid, label=label_mod, xlabel="",
+                    pos=node_pos, **self.attr_nodes['default'])
+
+            if component_class in [
                     'large tank', 'large basin',
                     'sedimentation basin',
                     'sedimentation basin - large']:
@@ -781,11 +797,6 @@ class SystemTopology_WTP(SystemTopology_Generic):
                 self.graph.node(
                     nid, label=label_mod, xlabel="",
                     pos=node_pos, **attr_nodetype_switchroom)
-
-            else:
-                self.graph.node(
-                    nid, label=label_mod, xlabel="",
-                    pos=node_pos, **self.attr_nodes['default'])
 
         # ---------------------------------------------------------------------
         # Apply node clustering, if defined in config
