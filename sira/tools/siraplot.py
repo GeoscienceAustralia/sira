@@ -39,7 +39,7 @@ class ColourPalettes(object):
             '#FFA8BB', '#426600', '#FF0010', '#5EF1F2', '#00998F',
             '#E0FF66', '#740AFF', '#990000', '#FFFF80', '#FFFF00',
             '#FF5005'
-            ]
+        ]
 
         # ---------------------------------------------------------------------
         # Sasha Trubetskoy's list of 20 simple distinct colours
@@ -264,19 +264,19 @@ def split_long_label(string, delims, max_chars_per_line=20):
 
 # ----------------------------------------------------------------------------
 
-def add_legend_subtitle(str):
+def add_legend_subtitle(string):
     """
     Places a subtitle over the legend.
     Useful for plots with multiple groups of legends.
     :param str: sub-title for legend
     """
-    label = "\n" + ' '.join(['$\\bf{'+i+'}$' for i in str.split(' ')])
+    label = "\n" + ' '.join(['$\\bf{' + i + '}$' for i in string.split(' ')])
     plt.plot([0], marker='None', linestyle='None',
              label=label)
 
 # ----------------------------------------------------------------------------
 
-def forceAspect(ax,aspect=1):
+def forceAspect(ax, aspect=1):
     """
     Forces the aspect ratio to be equal to provided ratio.
     Copy of Yann's answer to the SO question:
@@ -287,16 +287,17 @@ def forceAspect(ax,aspect=1):
     :param aspect:
     """
     im = ax.get_images()
-    extent =  im[0].get_extent()
-    ax.set_aspect(abs((extent[1]-extent[0])/(extent[3]-extent[2]))/aspect)
+    extent = im[0].get_extent()
+    ax.set_aspect(abs((extent[1] - extent[0]) / (extent[3] - extent[2])) / aspect)
 
 # ----------------------------------------------------------------------------
 
-def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
+
+def format_fig(axis, figtitle, x_lim, y_lim,
+               x_lab=None, y_lab=None,
                x_scale=None, y_scale=None,
                x_tick_pos=None, y_tick_pos=None,
                x_tick_val=None, y_tick_val=None,
-               x_lim=[], y_lim=[],
                x_grid=False, y_grid=False,
                x_margin=None, y_margin=None,
                add_legend=False, legend_title=None,
@@ -333,15 +334,15 @@ def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
     axis.set_axisbelow(True)
 
     if x_scale is not None:
-        if x_scale.lower()=='linear':
+        if x_scale.lower() == 'linear':
             axis.set_xscale('linear')
-        elif x_scale.lower()=='log':
+        elif x_scale.lower() == 'log':
             axis.set_xscale('log')
 
     if y_scale is not None:
-        if y_scale.lower()=='linear':
+        if y_scale.lower() == 'linear':
             axis.set_yscale('linear')
-        elif y_scale.lower()=='log':
+        elif y_scale.lower() == 'log':
             axis.set_yscale('log')
 
     axis.tick_params(
@@ -383,9 +384,9 @@ def format_fig(axis, figtitle=None, x_lab=None, y_lab=None,
 
     axis.margins(x_margin, y_margin)
 
-    if len(x_lim) == 2:
+    if type(x_lim) == list and len(x_lim) == 2:
         axis.set_xlim(x_lim)
-    if len(y_lim) == 2:
+    if type(y_lim) == list and len(y_lim) == 2:
         axis.set_ylim(y_lim)
 
     axis.set_title(figtitle, loc='center', y=1.04, fontweight='bold', size=11)
