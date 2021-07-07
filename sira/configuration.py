@@ -59,8 +59,8 @@ class Configuration:
             self.HAZARD_INPUT_METHOD = 'Hazard_File'
         else:
             raise ValueError(
-                "Unrecognised HAZARD_INPUT_METHOD. Valid values are: " +
-                "{}".format(self._VALID_HAZARD_INPUT_METHODS)
+                "Unrecognised HAZARD_INPUT_METHOD. Valid values are: {}".format(
+                    self._VALID_HAZARD_INPUT_METHODS)
             )
 
         if self.HAZARD_INPUT_METHOD == 'Hazard_File':
