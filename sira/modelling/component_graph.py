@@ -22,7 +22,7 @@ class ComponentGraph(object):
         if comp_sample_func is None:
             comp_sample_func = [1.0] * len(components)
 
-        # TODO make this part of components?
+        # TODO make this part of components?  # noqa: W0511
         # create a map that will convert 'stack_1' -> 17 for editing
         # the functionality (comp_sample_func)
         self.id_index_map = {
@@ -47,7 +47,7 @@ class ComponentGraph(object):
                 # check if the parent component is a dependent node type
                 if component.node_type == 'dependency':
                     # combine the dependent nodes functionality
-                    # TODO investigate the correctness of the logic:
+                    # TODO investigate the correctness of the logic:  # noqa: W0511
                     self.update_dependency(
                         comp_sample_func, comp_index, dest_index)
 
