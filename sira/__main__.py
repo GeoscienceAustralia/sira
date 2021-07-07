@@ -37,7 +37,6 @@ sys.path.insert(0, str(src_dir))
 
 # Import SIRA modules
 from sira.configuration import Configuration
-from sira.fit_model import fit_prob_exceed_model
 from sira.infrastructure_response import (pe_by_component_class,
                                           plot_mean_econ_loss,
                                           write_system_response)
@@ -48,6 +47,7 @@ from sira.modelling.hazard import HazardsContainer
 from sira.modelling.system_topology import SystemTopologyGenerator
 from sira.scenario import Scenario
 from sira.simulation import calculate_response
+from sira.fit_model import fit_prob_exceed_model
 
 init()
 np.seterr(divide='print', invalid='raise')
@@ -158,7 +158,7 @@ def main():
     try:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
-    except Exception:
+    except (FileNotFoundError, OSError):
         parser.error(
             "Unable to create output folder " + str(output_path) + " ...")
         sys.exit(2)
@@ -219,7 +219,7 @@ def main():
         # Construct visualization for system topology
         # ---------------------------------------------------------------------
         sys_topology_view = SystemTopologyGenerator(infrastructure, output_path)
-        sys_topology_view.draw_sys_topology()
+        sys_topology_view.draw_sys_topology()  # noqa:E1101
         rootLogger.info('Simulation completed...')
 
     # ------------------------------------------------------------------------------
@@ -251,9 +251,7 @@ def main():
                 config.RAW_OUTPUT_DIR, 'pe_sys_econloss.npy')
 
         if args.pe_sys is not None:
-            rootLogger.info('Start: Attempting to fit MODEL to simulation '
-                            'data...')
-
+            rootLogger.info('Initiating model fitting for simulated system fragility data...')
             hazard_scenarios = hazards.hazard_scenario_list
             sys_limit_states = infrastructure.get_system_damage_states()
             pe_sys = np.load(args.pe_sys)
@@ -263,11 +261,12 @@ def main():
                 pe_sys,
                 sys_limit_states,
                 config.OUTPUT_PATH,
-                config)
-
-            rootLogger.info('End: Model fitting complete.')
+                config,
+                # distribution='lognormal_cdf'
+            )
+            rootLogger.info('Model fitting complete.')
         else:
-            rootLogger.error(f"Input  pe_sys file not found: {str(output_path)}")
+            rootLogger.error("Input pe_sys file not found: %s", str(output_path))
 
     # ------------------------------------------------------------------------------
     # SCENARIO LOSS ANALYSIS
@@ -282,15 +281,15 @@ def main():
                 scenario, hazards, infrastructure, config, args.ct, args.cp)
         else:
             if args.ct is None:
-                rootLogger.error("Input files not found: ", str(args.ct))
+                rootLogger.error("Input files not found: %s", str(args.ct))
             if args.cp is None:
-                rootLogger.error("Input files not found: ", str(args.cp))
+                rootLogger.error("Input files not found: %s", str(args.cp))
 
-    rootLogger.info('RUN COMPLETE.\n')
-    rootLogger.info(f"Config file used : {str(config_file_path)}")
-    rootLogger.info(f"Model file used  : {str(model_file_path)}")
-    rootLogger.info(f"Outputs saved in : {Fore.YELLOW} {str(output_path)}\
-        {Fore.RESET} \n")
+    rootLogger.info("RUN COMPLETE.\n")
+    rootLogger.info("Config file used : %s", str(config_file_path))
+    rootLogger.info("Model file used  : %s", str(model_file_path))
+    rootLogger.info("Outputs saved in : %s%s%s\n",
+                    Fore.YELLOW, str(output_path), Fore.RESET)
 
 if __name__ == "__main__":
     main()
