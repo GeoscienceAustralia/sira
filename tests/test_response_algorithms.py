@@ -91,16 +91,15 @@ def test_algorithm_mdl_pw_parametric():
 
 @pytest.mark.algorithms
 @pytest.mark.parametrize("func_constructor, xval, expected", [
-    ("func_data_rayleigh", 0.0, "0.000"),
-    ("func_data_rayleigh", 0.0, "0.000"),
-    ("func_data_rayleigh", 6.0, "0.338"),
-    ("func_data_rayleigh", 12.0, "1.000"),
-    ("func_data_piecewise2", 0.0, "0.000"),
-    ("func_data_piecewise2", 0.2, "0.000"),
-    ("func_data_piecewise2", 0.7, "1.000"),
-    ("func_data_piecewise2", 1.2, "3.000")
+    (func_data_rayleigh, 0.0, "0.000"),
+    (func_data_rayleigh, 0.0, "0.000"),
+    (func_data_rayleigh, 6.0, "0.338"),
+    (func_data_rayleigh, 12.0, "1.000"),
+    (func_data_piecewise2, 0.0, "0.000"),
+    (func_data_piecewise2, 0.2, "0.000"),
+    (func_data_piecewise2, 0.7, "1.000"),
+    (func_data_piecewise2, 1.2, "3.000")
 ])
 def test_algorithm_mdls(func_constructor, xval, expected):
-    func_params = eval(func_constructor)
-    fn = Algorithm.factory(func_params)
+    fn = Algorithm.factory(func_constructor)
     assert "{:.3f}".format(fn(xval)) == expected
