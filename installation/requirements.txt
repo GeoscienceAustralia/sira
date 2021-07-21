@@ -31,7 +31,7 @@ pybtex==0.22.2
 pybtex-docutils==0.2.2
 pycairo==1.19.1
 pycparser==2.20
-Pygments==2.7.2
+Pygments==2.7.4
 pylint==2.6.0
 pyparsing==2.4.7
 pytest==6.1.2
