@@ -25,10 +25,6 @@ sns.set(style='whitegrid', palette='coolwarm')
 
 RESTORATION_THRESHOLD = 0.98
 
-# Restoration time starts x time units after hazard impact:
-# This represents lead up time for damage and safety assessments
-RESTORATION_OFFSET = 1
-
 # *****************************************************************************
 
 
@@ -113,17 +109,19 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
     return ax.fill_between(xx, yy1, y2=yy2, **kwargs)
 
 
-# *****************************************************************************
+# *************************************************************************************
 
-def comp_recovery_given_hazard_and_time(component,
-                                        component_response,
-                                        system_damage_states,
-                                        scenario_header,
-                                        hazval,
-                                        time_after_impact,
-                                        comps_avl_for_int_replacement,
-                                        threshold_recovery=0.98,
-                                        threshold_exceedance=0.001):
+def comp_recovery_given_hazard_and_time(
+    component,
+    component_response,
+    scenario_header,
+    hazval,
+    time_after_impact,
+    comps_avl_for_int_replacement,  # noqa:W0613
+    threshold_recovery=0.98,
+    threshold_exceedance=0.001,
+):
+
     """
     Calculates level of recovery of component at time t after impact
     Hazard transfer parameter is INTENSITY_MEASURE.
@@ -139,12 +137,6 @@ def comp_recovery_given_hazard_and_time(component,
     rsd = [    1.0, 0.5, 1.5, 3.5, 15.0]
     --------------------------------------------------------------------------
     """
-
-    rootLogger.info(
-        "Calculating Recovery Level "
-        "for component: {} at time [{}] for hazard [{}]".format(
-            component.component_id, time_after_impact, hazval)
-    )
 
     comptype_dmg_states = component.damage_states
     # if len(comptype_dmg_states) != len(system_damage_states):
@@ -179,8 +171,9 @@ def comp_recovery_given_hazard_and_time(component,
         elif dmg_index == num_dmg_states - 1:
             pb[dmg_index] = pe[dmg_index]
 
-    # **************************************************************************
-    # TODO: implement alternate functions for temporary restoration
+    # *********************************************************************************
+    # Component 'cannibalisation' for temporary restoration
+    # TODO: implement alternate functions for temporary restoration  # noqa:W0511
     # reqtime_X = np.array(np.zeros(num_dmg_states))
     # if comps_avl_for_int_replacement >= 1:
     #     # Parameters for Temporary Restoration:
@@ -190,7 +183,7 @@ def comp_recovery_given_hazard_and_time(component,
     #     # Parameters for Full Restoration:
     #     rmu = [fragdict['recovery_param1'][ct][ds] for ds in comptype_dmg_states]
     #     rsd = [fragdict['recovery_param2'][ct][ds] for ds in comptype_dmg_states]
-    # **************************************************************************
+    # *********************************************************************************
     for dmg_index, ds in enumerate(comptype_dmg_states):
         if ds == 'DS0 None' or dmg_index == 0:
             recov[dmg_index] = 1.0
@@ -225,7 +218,7 @@ def prep_repair_list(infrastructure_obj,
        [1] the priority assigned to the output line
        [2] a weighting criterion applied to each node in the system
     """
-    G = infrastructure_obj._component_graph.digraph
+    G = infrastructure_obj.get_component_graph()
     input_dict = infrastructure_obj.supply_nodes
     output_dict = infrastructure_obj.output_nodes
     commodity_types = list(
@@ -543,8 +536,7 @@ def vis_restoration_process(scenario,
     # Primary Figure Title
 
     ax1.annotate(
-        "Restoration Prognosis for: "
-        + hazard_type + " " + scenario_tag,
+        f"Restoration Prognosis for: {hazard_type} {scenario_tag}",
         xy=(0, len(comps) + 3.1), xycoords=('axes fraction', 'data'),
         ha='left', va='top', annotation_clip=False,
         color='slategrey', size=18, weight='bold'
@@ -555,8 +547,7 @@ def vis_restoration_process(scenario,
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     ax1.annotate(
-        "Component Restoration Timeline for " + str(num_rst_steams) +
-        " Repair Streams\n",
+        f"Component Restoration Timeline for {str(num_rst_steams)} Repair Streams\n",
         xy=(0, len(comps) + 1.8), xycoords=('axes fraction', 'data'),
         ha='left', va='top', annotation_clip=False,
         color='k', size=16, weight='normal')
@@ -625,11 +616,12 @@ def vis_restoration_process(scenario,
         else:
             repair_time_for_line = time_to_full_restoration_for_lines[onode]
 
+        restoration_arr_template = np.array(
+            list(np.zeros(int(repair_time_for_line)))
+            + list(np.ones(max(xtiks) + 1 - int(repair_time_for_line)))
+        )
         restoration_timeline_array[x, :] = \
-            100. * output_dict[onode]['capacity_fraction'] * \
-            np.array(list(np.zeros(int(repair_time_for_line))) +
-                     list(np.ones(max(xtiks) + 1 - int(repair_time_for_line)))
-                     )
+            100 * output_dict[onode]['capacity_fraction'] * restoration_arr_template
 
     xrst = np.array(list(range(0, max(xtiks) + 1, 1)))
     yrst = np.sum(restoration_timeline_array, axis=0)
@@ -744,10 +736,11 @@ def component_criticality(infrastructure,
             xycoords=('axes fraction', 'axes fraction'),
             ha='left', va='top', rotation=0, size=9)
 
+    txt_infra = "Infrastructure: " + infrastructure.system_class + "\n"
+    txt_haz = "Hazard: " + hazard_type + "\n"
+    txt_scenario = "Scenario: " + scenario_tag
     ax.text(1.05, 0.995,
-            "Infrastructure: " + infrastructure.system_class + "\n" +
-            "Hazard: " + hazard_type + "\n" +
-            "Scenario: " + scenario_tag,
+            txt_infra + txt_haz + txt_scenario,
             ha='left', va='top', rotation=0, linespacing=1.5,
             fontsize=11, clip_on=False, transform=ax.transAxes)
 
@@ -1380,11 +1373,10 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
     comptype_for_internal_replacement = {}
 
     for x in cp_types_costed:
-        comptype_for_internal_replacement[x] = \
-            int(np.floor(
-                (1.0 - ctype_resp_sorted.loc[x, 'num_failures'])
-                * comptype_num[x])
-                )
+        comptype_for_internal_replacement[x] = int(
+            np.floor(
+                (1.0 - ctype_resp_sorted.loc[x, 'num_failures']) * comptype_num[x])
+        )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Using the HAZUS method:
@@ -1411,15 +1403,18 @@ def calc_comptype_damage_scenario_given_hazard(infrastructure,
         if len(comptype_dmg_states) != len(system_damage_states):
             print("\n")
             rootLogger.warning(
-                Fore.MAGENTA + "*** Damage state levels are not " +
-                "matched between system and component." + Fore.RESET)
+                "%s *** Damage state levels are not matched"
+                " between system and component.%s", Fore.MAGENTA, Fore.RESET)
+
+        rootLogger.info(
+            "Calculating Recovery Level for component: %s for hazard [%s]",
+            comp_obj.component_id, sc_haz_val)
 
         for t in scenario.restoration_time_range:
             comp_rst[t][comp_name], restoration_time_agg[comp_name] = \
                 comp_recovery_given_hazard_and_time(
                     comp_obj,
                     component_response,
-                    system_damage_states,
                     scenario_header,
                     sc_haz_val,
                     t,
@@ -1676,15 +1671,14 @@ def run_scenario_loss_analysis(scenario,
             # Check if nothing to repair, i.e. if repair list is empty:
             comps_to_repair = rst_setup_df.index.values.tolist()
             if not comps_to_repair:
-                rootLogger.warning("*** For scenario: " + scenario_tag)
+                rootLogger.warning("*** For scenario: %s", scenario_tag)
                 rootLogger.warning("Nothing to repair. Time to repair is zero.")
-                rootLogger.warning(
-                    "Skipping repair visualisation for this scenario.")
+                rootLogger.warning("Skipping repair visualisation for this scenario.")
                 break
 
             fig_rst_gantt_name = 'fig_SC_' + sc_haz_str + '_str' + \
                                  str(num_rst_steams) + '_restoration.png'
-            restoration_timeline_array, time_to_full_restoration_for_lines = \
+            _, time_to_full_restoration_for_lines = \
                 vis_restoration_process(
                     scenario,
                     infrastructure,
