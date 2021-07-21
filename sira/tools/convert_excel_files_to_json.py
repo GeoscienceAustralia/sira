@@ -3,6 +3,7 @@ import json
 import ntpath
 import os
 from collections import OrderedDict
+import ast
 
 import pandas as pd
 import xlrd
@@ -55,8 +56,10 @@ def assign_function_params(
     func_construct = OrderedDict()
     func_construct["function_name"] = function_name
 
+    # TODO: GENERALISE THE PARAM NAMES  # noqa:W0511
     # lognorm_params = ['median', 'loc', 'beta']
-    damage_param_headers = ["ds_scale", "ds_location", "ds_shape"]
+    # damage_param_headers = ["ds_scale", "ds_location", "ds_shape"]
+    damage_param_headers = ['median', 'location', 'beta']
     recovery_param_headers = ["recovery_param1", "recovery_param2", "recovery_param3"]
     extra_fields = ["fragility_source", "lower_limit", "upper_limit"]
 
@@ -110,7 +113,7 @@ def update_json_structure(main_json_obj):
 
     new_def = OrderedDict()
     for key in damage_state_def.keys():
-        newkey = eval(key)
+        newkey = ast.literal_eval(key)
         cmp, ds = newkey[0], newkey[1]
         new_def[(cmp, ds)] = damage_state_def[key]["damage_state_definition"]
     damage_state_def = new_def
@@ -173,8 +176,8 @@ def update_json_structure(main_json_obj):
         counter = 0
 
         for frag_key in fragility_data.keys():
-            component_type = eval(frag_key)[1]
-            damage_state = eval(frag_key)[2]
+            component_type = ast.literal_eval(frag_key)[1]
+            damage_state = ast.literal_eval(frag_key)[2]
 
             if component_type == component_list[component]["component_type"]:
                 ds_constructor = new_json_structure["component_list"][
