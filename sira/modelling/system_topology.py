@@ -4,10 +4,10 @@ import inspect
 import warnings
 import itertools
 from pathlib import Path
-from graphviz.backend import CalledProcessError
 
 import numpy as np
-import graphviz as gviz
+import networkx as nx
+
 # from numpy.core.numeric import NaN
 
 
@@ -39,14 +39,11 @@ def join_list_elems_given_len(str_list, num_str=20):
     str_list.reverse()
     while str_list:
         elem = str_list.pop()
-        # elemnxt = ""
         while str_list and len(elem + str_list[-1]) <= num_str:
             elemnxt = str_list.pop()
             if len(elem + elemnxt) <= num_str:
                 elem = elem + elemnxt
-                # elemnxt_used = True
             else:
-                # elemnxt_used = False
                 exit()
             i += 1
         newlist.append(elem)
@@ -54,7 +51,7 @@ def join_list_elems_given_len(str_list, num_str=20):
     return newlist
 
 
-def segment_long_labels(string, maxlen=10, delims=''):
+def segment_long_labels(string, delims, maxlen=10):
     if delims in ['', 'NA', None]:
         delims = [chr(0x20)]
     if (not delims) and (len(string) > maxlen):
@@ -65,21 +62,14 @@ def segment_long_labels(string, maxlen=10, delims=''):
     else:
         return string
 
-    return "\n".join(str_list)
+    # mod = "\n".join(str_list)
+    mod = "<" + "<BR/>".join(str_list) + ">"
+    return mod
 
 # =====================================================================================
 
 
 class SystemTopologyGenerator(object):
-
-    def __new__(self, infrastructure, output_dir):
-        topoargs = [infrastructure, output_dir]
-        system_class = infrastructure.system_class.lower()
-        target_cls = get_target_class(system_class)
-        return target_cls(*topoargs)
-
-
-def get_target_class(system_name):
 
     system_tags = dict()
 
@@ -95,95 +85,99 @@ def get_target_class(system_name):
     system_tags['WTP'] = [
         'potablewatertreatmentplant', 'pwtp',
         'wastewatertreatmentplant', 'wwtp',
-        'watertreatmentplant', 'wtp'
+        'watertreatmentplant', 'wtp',
+        'potablewaterpumpstation'
     ]
 
-    # sys_tag = "Generic"
-    # for key, value_list in system_tags.items():
-    #     if system_name in value_list:
-    #         sys_tag = key
-    # topo_cls = eval('SystemTopology_' + sys_tag)
+    def __new__(self, infrastructure, output_dir):
+        topoargs = [infrastructure, output_dir]
+        system_class = infrastructure.system_class.lower()
+        target_cls = self._get_target_class(self, system_class)
+        return target_cls(*topoargs)
 
-    # Identify the correct class based on the name provided
-    if system_name in system_tags['PS']:
-        topo_cls = SystemTopology_PS
-    elif system_name in system_tags['SS']:
-        topo_cls = SystemTopology_SS
-    elif system_name in system_tags['WTP']:
-        topo_cls = SystemTopology_WTP
-    else:
-        topo_cls = SystemTopology_Generic
+    def _get_target_class(self, system_name):
 
-    # Get list of all locally defined classes
-    clsmembers = inspect.getmembers(
-        sys.modules[__name__],
-        lambda member: inspect.isclass(member) and member.__module__ == __name__)
-    clsmembers = [x[0] for x in clsmembers]
+        # sys_tag = "Generic"
+        # for key, value_list in system_tags.items():
+        #     if system_name in value_list:
+        #         sys_tag = key
+        # topo_cls = eval('SystemTopology_' + sys_tag)
 
-    # Check that target class exists
-    if str(topo_cls.__name__) not in clsmembers:
-        raise NameError(
-            f"The class {topo_cls.__name__} is not defined",
-            f"in the module {__name__}")
+        # Identify the correct class based on the name provided
+        if system_name.lower() in self.system_tags['PS']:
+            topo_cls = SystemTopology_PS
+        elif system_name.lower() in self.system_tags['SS']:
+            topo_cls = SystemTopology_SS
+        elif system_name.lower() in self.system_tags['WTP']:
+            topo_cls = SystemTopology_WTP
+        else:
+            topo_cls = SystemTopology_Generic
 
-    return topo_cls
+        # Get list of all locally defined classes
+        clsmembers = inspect.getmembers(
+            sys.modules[__name__],
+            lambda member: inspect.isclass(member) and member.__module__ == __name__)
+        clsmembers = [x[0] for x in clsmembers]
+
+        # Check that target class exists
+        if str(topo_cls.__name__) not in clsmembers:
+            raise NameError(
+                f"The class {topo_cls.__name__} is not defined",
+                f"in the module {__name__}")
+
+        return topo_cls
 
 
 class SystemTopology_Generic(object):
 
     out_file = "system_topology"
-    graph_label = "System Component Topology"
 
     def __init__(self, infrastructure, output_dir):
 
         self.loc_attr = 'SYSTEM_COMPONENT_LOCATION_CONF'
         self.graph_label = "System Component Topology"
-        self.graph = {}  # placeholder for the system's graph representation
+        self.agraph = ""  # placeholder for the system's graph representation
 
         self.infrastructure = infrastructure
         self.component_attr = {}  # Dict for system comp attributes
         self.output_path = output_dir if Path(str(output_dir)).is_dir() else Path.cwd()
 
-        self.node_position_meta = \
-            self.infrastructure.system_meta[self.loc_attr]['value']
+        self.node_position_meta \
+            = self.infrastructure.system_meta[self.loc_attr]['value']
         for comp_id in list(infrastructure.components.keys()):
-            self.component_attr[comp_id] = \
-                vars(infrastructure.components[comp_id])
-
-        self.primary_node_types = ['supply', 'sink', 'dependency', 'junction']
-        self.engines_valid = ['dot', 'neato', 'fdp', 'sfdp']
+            self.component_attr[comp_id] \
+                = vars(infrastructure.components[comp_id])
 
         # ---------------------------------------------------------------------
         # Orientation of the graph (default is top-to-bottom):
         # orientation_options = ['TB', 'LR', 'RL', 'BT']
         # edge_type refers to the line connector type in Graphviz
         # connector_options = ['spline', 'ortho', 'line', 'polyline', 'curved']
+        self.primary_node_types = ['supply', 'sink', 'dependency', 'junction']
+        self.engines_valid = ['dot', 'neato', 'fdp', 'sfdp']
 
+        # ---------------------------------------------------------------------
         # Default drawing parameters
+
         self.orientation = "TB"
-        self.layout_engine = "dot"
         self.clustering = False
 
         if str(self.node_position_meta).lower() == 'defined':
-            self.edge_type = 'ortho'
+            self.edge_type = "ortho"
+            self.layout_engine = "neato"
         else:
-            self.edge_type = 'spline'
+            self.edge_type = "spline"
+            self.layout_engine = "dot"
 
         self.set_core_attributes()
-
-        # ---------------------------------------------------------------------
-        # Overwrite default if node locations are defined
-        if hasattr(infrastructure, 'system_meta'):
-            if self.infrastructure.system_meta[self.loc_attr]['value'] == 'defined':
-                self.layout_engine = 'neato'
 
     # ================================================================================
 
     def set_core_attributes(self):
 
         # Default colours
-        default_node_color = "royalblue3"
-        default_edge_color = "royalblue2"
+        self.default_node_color = "royalblue3"
+        self.default_edge_color = "royalblue2"
 
         # Default GRAPH attributes
         self.graph_attr_dict = dict(
@@ -192,21 +186,23 @@ class SystemTopology_Generic(object):
             concentrate='False',
             resolution='300',
             labelloc="t",
-            label='< ' + self.graph_label + '<BR/><BR/> >',
+            label=f"< {self.graph_label} <BR/><BR/> >",
             bgcolor="white",
             splines=str(self.edge_type),
             center="True",
             forcelabels="True",
             fontname="Helvetica-Bold",
-            fontcolor='#444444',
-            fontsize='24',
+            fontcolor="#444444",
+            fontsize="24",
             pack="False",
             rankdir=str(self.orientation),
             overlap='False',
-            sep='+5',
+            pad='0.5',
             packmode='node',
-            size='11.7,16.5',  # IMPORTANT: this sets the max canvas size (inches)
-            # nodesep='0.5',
+            mode="sgd",
+            maxiter="200",
+            sep='+2',
+            # size='11.7,16.5',  # IMPORTANT: this sets the max canvas size (inches)
         )
 
         # Default EDGE attributes
@@ -214,77 +210,111 @@ class SystemTopology_Generic(object):
             arrowhead="normal",
             arrowsize="1.0",
             style="bold",
-            color=str(default_edge_color),
-            penwidth="1.8",
+            color=str(self.default_edge_color),
+            penwidth="2.0",
+            fontsize="30",
         )
 
-        # ----------------------------------------------------------------------------
         # Default attributes for primary NODE types
-
         self.attr_nodes = {}
 
         self.attr_nodes['default'] = dict(
             shape="circle",
             style="filled",
-            fixedsize="true",
-            width="1.9",
-            height="1.9",
-            xlp="0, 0",
-            color=str(default_node_color),
+            width="2.5",
+            height="2.5",
+            fixedsize="True",
+            color=str(self.default_node_color),
             fillcolor="white",
-            fontcolor="#555555",
-            penwidth="1.5",
+            fontcolor=str(self.default_node_color),
+            penwidth="2",
             fontname="Helvetica-Bold",
-            fontsize="20",
+            fontsize="30",
             margin="0.2,0.1"
         )
 
         self.attr_nodes['supply'] = dict(
             shape="rect",
-            rank="supply",
             style="rounded,filled",
-            fixedsize="true",
+            width="4",
+            height="1.8",
+            rank="supply",
+            fixedsize="False",
             color="limegreen",
             fillcolor="white",
             fontcolor="limegreen",
+            fontsize="30",
             penwidth="2.0",
-            width="2.4",
-            height="1.2",
         )
 
         self.attr_nodes['sink'] = dict(
             shape="doublecircle",
-            width="2",
-            height="2",
+            width="2.4",
+            height="2.4",
             rank="sink",
             penwidth="2.0",
             color="orangered",
             fillcolor="white",
             fontcolor="orangered",
+            fontsize="30",
         )
 
         self.attr_nodes['dependency'] = dict(
             shape="rect",
+            width="3.5",
+            height="1.8",
             style="rounded, filled",
             rank="dependency",
-            penwidth="3.5",
-            width="2.2",
-            height="1.0",
+            penwidth="3.0",
             color="orchid",
             fontcolor="orchid",
             fillcolor="white",
+            fontsize="30",
         )
 
         self.attr_nodes['junction'] = dict(
             shape="point",
-            width="0.3",
-            height="0.3",
-            label="",
-            xlabel="",
-            color="#777777",
-            fillcolor="#777777",
-            fontcolor="#777777",
+            width="0.4",
+            height="0.4",
+            color="#888888",
+            fillcolor="#AAAAAA",
+            fontcolor="#888888",
+            fontsize="30",
         )
+
+    # ================================================================================
+
+    def build_graph_structure(self):
+
+        # ---------------------------------------------------------------------
+        # Set up output file names & location
+        # fname = Path(self.out_file).stem
+
+        # ---------------------------------------------------------------------
+        # Build the graph representing system topology, and
+        # Define general node & edge attributes.
+
+        G = self.infrastructure.get_component_graph()
+
+        elist = G.get_edgelist()
+        named_elist = []
+        for tpl in elist:
+            named_elist.append((G.vs[tpl[0]]['name'], G.vs[tpl[1]]['name']))
+
+        G_nx = nx.DiGraph(named_elist)
+        self.agraph = nx.nx_agraph.to_agraph(G_nx)
+
+        # ---------------------------------------------------------------------
+
+        self.agraph.graph_attr.update(**self.graph_attr_dict)
+        self.agraph.node_attr.update(**self.attr_nodes['default'])
+        self.agraph.edge_attr.update(**self.attr_edges_default)
+
+    # ================================================================================
+
+    def update_appearance_attributes(self):
+
+        pass
 
     # ================================================================================
 
@@ -306,10 +336,12 @@ class SystemTopology_Generic(object):
 
         engines_invalid = list(np.setdiff1d(engines, self.engines_valid))
         engines_matched = list(set(self.engines_valid).intersection(set(engines)))
+
         if engines_matched:
             engines = engines_matched
         else:
             engines = ['dot']
+
         if engines_invalid:
             warnings.warn(f"Invalid layout engines supplied: {engines_invalid}")
             warnings.warn(f"Using these layout engines: {engines}")
@@ -328,6 +360,7 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Define output image size
 
+        canvas_size = '8.27,11.69'
         if paper_size in paper_size_dict.keys():
             canvas_size = paper_size_dict[paper_size]
         else:
@@ -340,34 +373,28 @@ class SystemTopology_Generic(object):
             self.apply_node_clustering()
 
         # Save graph in plain Graphviz dot format
-        self.graph.save(
-            filename=file_name + '.gv',
-            directory=Path(self.output_path))
+        self.agraph.write(Path(self.output_path, file_name + '_gv.dot'))
 
         # ---------------------------------------------------------------------
         # Save images in multiple formats
 
         img_formats = {'ps2': 'vector', 'pdf': 'vector', 'png': 'bitmap'}
+        draw_args = f"-Gdpi={arg_res} -Gsize={canvas_size}!"  # noqa: W1401
+
         for eng, fmt in itertools.product(engines, img_formats.keys()):
-            x = arg_res if img_formats[fmt] == 'bitmap' else ''
-            self.graph.graph_attr.update(size=canvas_size, dpi=x)  # noqa: W605
-            self.graph.engine = eng
-            self.graph.render(
-                filename=file_name + '_' + eng,
-                directory=Path(self.output_path),
-                format=fmt,
-                cleanup='True')
-        try:
-            self.graph.engine = 'dot'
-            self.apply_node_clustering()
-            self.graph.render(
-                filename=file_name + '_clustered',
-                directory=Path(self.output_path),
-                format='png',
-                cleanup=True)
-        except (AssertionError, ValueError, TypeError, CalledProcessError) as inst:
-            print(inst)
-            warnings.warn("Graph rendering node clustering failed!")
+            self.agraph.draw(
+                path=Path(self.output_path, f"{file_name}_{eng}.{fmt}"),
+                format=fmt, prog=eng, args=draw_args)
+
+        # try:
+        #     self.apply_node_clustering()
+        #     self.agraph.draw(
+        #         path=Path(self.output_path, f"{file_name}_clustered_.png"),
+        #         format='png', prog='dot',
+        #         args=f"-Gdpi={arg_res} -Gsize={canvas_size}!")
+        # except (AssertionError, ValueError, TypeError) as inst:
+        #     print(inst)
+        #     warnings.warn("Graph rendering node clustering failed!")
 
     # ================================================================================
 
@@ -379,51 +406,9 @@ class SystemTopology_Generic(object):
         # Default drawing parameters
         self.clustering = False
         self.configure_sys_topology()
-        self.graph.attr(rankdir="LR", splines=self.edge_type)
-
-        # Customise layout engines to be used?
-        # Default engines: ['dot', 'neato']
+        self.agraph.graph_attr["rankdir"] = "LR"
+        self.agraph.graph_attr["splines"] = self.edge_type
         self.write_graphs_to_file(fname)
-
-    # ================================================================================
-
-    def build_graph_structure(self):
-
-        # ---------------------------------------------------------------------
-        # Set up output file names & location
-
-        fname = Path(self.out_file).stem
-
-        # ---------------------------------------------------------------------
-        # Build the graph representing system topology, and
-        # Define general node & edge attributes.
-        # G = self.infrastructure._component_graph.digraph
-        G = self.infrastructure.get_component_graph()
-        elist = G.get_edgelist()
-        named_elist = []
-        for tpl in elist:
-            named_elist.append((G.vs[tpl[0]]['name'], G.vs[tpl[1]]['name']))
-
-        # ---------------------------------------------------------------------
-        # # Generate dot language representation of graph using networkx & pydot
-        # G_nx = nx.DiGraph(named_elist)
-        # G_dot = nx.nx_pydot.to_pydot(G_nx).to_string()
-        # self.graph = gviz.Source(G_dot, name='system_component_topology')
-
-        # ---------------------------------------------------------------------
-        # If required define custom system-wide graph attributes here
-        # ...
-
-        # ---------------------------------------------------------------------
-        # Generate dot language representation of graph using python-graphviz
-        self.graph = gviz.Digraph(
-            name='system_component_topology',
-            filename=fname, engine=self.layout_engine,
-            graph_attr=self.graph_attr_dict,
-            node_attr=self.attr_nodes['default'],
-            edge_attr=self.attr_edges_default
-        )
-        self.graph.edges(named_elist)
 
     # ================================================================================
 
@@ -446,14 +431,14 @@ class SystemTopology_Generic(object):
             else:
                 cluster_name = ''
                 rank = ''
-            with self.graph.subgraph(name=cluster_name) as sg:
-                for n in grp:
-                    sg.node(n)
-                sg.graph_attr.update(
-                    name=cluster_name,
-                    style='invis',
-                    label='',
-                    rank=rank)
+            self.agraph.add_subgraph(
+                nbunch=grp,
+                name=cluster_name,
+                style='invis',
+                label='',
+                clusterrank='local',
+                rank=rank,
+            )
 
     # ================================================================================
 
@@ -471,29 +456,29 @@ class SystemTopology_Generic(object):
         # Customise node attributes based on node type or defined clusters
 
         # node_specific_attrs = {}
-        for nid in list(self.component_attr.keys()):
+        for node_id in list(self.component_attr.keys()):
 
             # Position assignment for nodes
-            pos_x = self.component_attr[nid]['pos_x']
-            pos_y = self.component_attr[nid]['pos_y']
+            pos_x = self.component_attr[node_id]['pos_x']
+            pos_y = self.component_attr[node_id]['pos_y']
             node_pos = ''
-            if pos_x and pos_y:
+            if is_number(pos_x) and is_number(pos_y):
                 node_pos = str(pos_x) + "," + str(pos_y) + "!"
 
             # Segment long labels to fit within nodes spaces
-            label_mod = segment_long_labels(nid, delims=['_', ' '])
+            label_mod = segment_long_labels(node_id, delims=['_', ' '])
 
             # Custom attribute assignment based on node types
-            node_type = str(self.component_attr[nid]['node_type']).lower()
+            node_type = str(self.component_attr[node_id]['node_type']).lower()
             if node_type not in self.primary_node_types:
                 node_type = 'default'
-            # node_specific_attrs = eval('self.attr_nodetype_' + node_type)
-            # self.graph.node(nid, label_mod, pos=node_pos, **node_specific_attrs)
-            self.graph.node(nid, label=label_mod, pos=node_pos,
-                            **self.attr_nodes[node_type])
 
-        # ---------------------------------------------------------------------
-        return self.graph
+            self.agraph.get_node(node_id).attr.update(
+                label=label_mod, pos=node_pos,
+                **self.attr_nodes[node_type]
+            )
+
+        return self.agraph
 
 # =====================================================================================
 
@@ -508,7 +493,7 @@ class SystemTopology_PS(SystemTopology_Generic):
         fname = Path(self.out_file).stem
         self.clustering = False
         self.configure_sys_topology()
-        self.graph.attr(rankdir="LR", splines="spline")
+        self.agraph.graph_attr["rankdir"] = "LR"
         self.write_graphs_to_file(fname, dpi=300, engines=['dot', 'neato'])
 
 # =====================================================================================
@@ -523,13 +508,14 @@ class SystemTopology_SS(SystemTopology_Generic):
     def draw_sys_topology(self):
         fname = Path(self.out_file).stem
         self.clustering = False
+        self.build_graph_structure()
         self.configure_sys_topology()
 
-        self.graph.attr(rankdir="TB", splines="spline")
+        self.agraph.graph_attr.update(rankdir="TB", splines="spline")
         self.write_graphs_to_file(fname, dpi=300, engines=['dot'])
 
-        self.graph.attr(rankdir="TB", splines="line")
-        self.write_graphs_to_file(fname, dpi=300, engines=['neato'])
+        self.agraph.graph_attr.update(rankdir="TB", splines="ortho")
+        self.write_graphs_to_file(fname, dpi=600, engines=['neato'])
 
     def configure_sys_topology(self):
         """
@@ -539,108 +525,168 @@ class SystemTopology_SS(SystemTopology_Generic):
         following formats: (graphviz) dot, png, pdf, ps2.
         """
 
-        self.graph_attr_dict.update(
+        # ----------------------------------------------------------------------------
+        self.agraph.graph_attr.update(
             orientation="portrait",
+            concentrate="False",
             rankdir="TB",
-            fontsize="30",
-            sep="+25",
-            nodesep="0.5",
-            overlap="false",
-            pack="True",
+            center="True",
+            forcelabels="True",
+            fontsize="50",
+            pad="0.1",
+            pack="False",
+            sep="+1",
+            overlap="False",
             smoothing="none",
+            ratio="auto",
+            scale="1.0",
         )
-        self.build_graph_structure()
+
+        self.agraph.edge_attr.update(
+            arrowhead="normal",
+            arrowsize="5",
+            penwidth="10",
+            color=str(self.default_edge_color),
+        )
 
         # ---------------------------------------------------------------------
         # Customise node attributes based on node type or defined clusters
 
+        NODE_FONTSIZE = 33
+
         self.attr_nodes['default'].update(
             shape="circle",
             style="rounded,filled",
-            width="0.3",
-            height="0.3",
-            fontsize="22",
+            width="0.5",
+            height="0.5",
+            penwidth="4",
+            color=str(self.default_node_color),
+            fontsize=str(NODE_FONTSIZE),
+            fontcolor=str(self.default_node_color),
+        )
+
+        self.attr_nodes['supply'].update(
+            shape="rect",
+            rank="supply",
+            style="rounded, filled",
+            peripheries="1",
+            width="3.5",
+            height="1.8",
+            penwidth="4.0",
+            color="limegreen",
+            fillcolor="white",
+            fontcolor="limegreen",
+            fontsize=str(NODE_FONTSIZE),
+        )
+
+        self.attr_nodes['sink'].update(
+            shape="circle",
+            rank="sink",
+            peripheries="2",
+            width="2.5",
+            height="2.5",
+            penwidth="4",
+            color="orangered",
+            fillcolor="white",
+            fontcolor="orangered",
+            fontsize=str(NODE_FONTSIZE),
+        )
+
+        self.attr_nodes['dependency'].update(
+            width="3.0",
+            height="1.8",
+            penwidth="4.0",
+            fontsize=str(NODE_FONTSIZE),
         )
 
         self.attr_nodes['bus'] = self.attr_nodes['default'].copy()
         self.attr_nodes['bus'].update(
             shape="rect",
-            penwidth="1.5",
-            width="2.3",
-            height="0.2",
+            width="3.0",
+            height="0.5",
+            penwidth="4.0",
+            labelloc="c",
+            fontsize=str(NODE_FONTSIZE),
         )
 
         self.primary_node_types.append('bus')
 
-        # node_specific_attrs = {}
-        for nid in list(self.component_attr.keys()):
+        # ----------------------------------------------------------------------------
+        # Apply node clustering, if defined in config
+
+        if self.clustering and self.layout_engine not in ['neato', 'fdp', 'sfdp']:
+            self.apply_node_clustering()
+
+        # ----------------------------------------------------------------------------
+
+        for node_id in list(self.component_attr.keys()):
 
             # Position assignment for nodes
-            pos_x = self.component_attr[nid]['pos_x']
-            pos_y = self.component_attr[nid]['pos_y']
+            pos_x = self.component_attr[node_id]['pos_x']
+            pos_y = self.component_attr[node_id]['pos_y']
             node_pos = ''
             if is_number(pos_x) and is_number(pos_y):
-                node_pos = ''.join([str(pos_x), ",", str(pos_y), "!"])
+                node_pos = str(pos_x) + "," + str(pos_y) + "!"
 
             # Segment long labels to fit within nodes spaces
-            label_mod = segment_long_labels(nid, delims=['_', ' '])
+            label_mod = segment_long_labels(node_id, delims=['_', ' '], maxlen=12)
 
             # Custom attribute assignment based on node types
-            node_type = str(self.component_attr[nid]['node_type']).lower()
+            node_type = str(self.component_attr[node_id]['node_type']).lower()
 
             if node_type not in self.primary_node_types:
                 node_type = 'default'
 
             if node_type == 'default':
-                self.graph.node(
-                    nid, label='', xlabel=label_mod, pos=node_pos,
+                self.agraph.get_node(node_id).attr.update(
+                    label='', xlabel=label_mod, pos=node_pos,
                     **self.attr_nodes['default'])
 
             elif node_type in ['supply', 'source']:
-                self.graph.node(
-                    nid, label=label_mod, pos=node_pos,
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, pos=node_pos,
                     **self.attr_nodes['supply'])
 
             elif node_type in ['sink', 'consumer', 'output']:
-                self.graph.node(
-                    nid, label=label_mod, pos=node_pos,
+                label_mod = segment_long_labels(node_id, delims=['_', ' '], maxlen=8)
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, pos=node_pos,
                     **self.attr_nodes['sink'])
 
             elif node_type in ['dependency']:
-                self.graph.node(
-                    nid, label=label_mod, pos=node_pos,
+                label_mod = segment_long_labels(node_id, delims=['_', ' '], maxlen=8)
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, pos=node_pos,
                     **self.attr_nodes['dependency'])
 
             elif node_type == 'junction':
-                self.graph.node(
-                    nid, label='', xlabel='', pos=node_pos,
+                self.agraph.get_node(node_id).attr.update(
+                    label="", xlabel="", pos=node_pos,
                     **self.attr_nodes['junction'])
 
             else:
-                self.graph.node(
-                    nid, label='', xlabel=label_mod, pos=node_pos,
+                self.agraph.get_node(node_id).attr.update(
+                    label="", xlabel=label_mod, pos=node_pos,
                     **self.attr_nodes['default'])
 
-            # component_class = str(self.component_attr[nid]['component_class']).lower()
-            # if component_class == 'bus':
-            #     if str(self.node_position_meta).lower() == 'defined':
-            #         poslist = [int(x.strip("!")) for x in node_pos.split(",")]
-            #         buspos = str(poslist[0]) + "," + str(poslist[1] + 25) + "!"
-            #         self.graph.node(
-            #             nid, label='', xlabel=label_mod, xlp=buspos,
-            #             **self.attr_nodes[node_type])
-            #     else:
-            #         self.graph.node(
-            #             nid, label='', xlabel=label_mod,
-            #             **self.attr_nodes[node_type])
+            component_class = \
+                str(self.component_attr[node_id]['component_class']).lower()
+            if component_class == 'bus':
+                label_mod = segment_long_labels(node_id, delims=['_', ' '], maxlen=7)
+                label_mod = label_mod[1:-1]
+                # xlabel_new = \
+                #     "<<TABLE BORDER='0' CELLBORDER='0' CELLSPACING='0'>"\
+                #     + "<TR><TD CELLPADDING='0' ALIGN='right'>"\
+                #     + label_mod\
+                #     + "</TD></TR></TABLE>>"
+                xlabel_new = f"<<I>{label_mod}</I>>"
 
-        # ---------------------------------------------------------------------
-        # Apply node clustering, if defined in config
+                self.agraph.get_node(node_id).attr.update(
+                    label="", xlabel=xlabel_new,
+                    **self.attr_nodes[component_class])
 
-        if self.clustering and self.layout_engine not in ['neato', 'fdp', 'sfdp']:
-            self.apply_node_clustering()
-        # ---------------------------------------------------------------------
-        return self.graph
+        # ----------------------------------------------------------------------------
+        return self.agraph
 
 # =====================================================================================
 
@@ -654,9 +700,14 @@ class SystemTopology_WTP(SystemTopology_Generic):
     def draw_sys_topology(self):
         fname = Path(self.out_file).stem
         self.clustering = False
+        self.build_graph_structure()
         self.configure_sys_topology()
-        self.graph.attr(rankdir="TB", splines="ortho")
-        self.write_graphs_to_file(fname, dpi=300, engines=['dot', 'neato'])
+
+        self.agraph.graph_attr.update(rankdir="TB", splines="spline")
+        self.write_graphs_to_file(fname, dpi=300, engines=['dot'])
+
+        self.agraph.graph_attr.update(rankdir="TB", splines="spline")
+        self.write_graphs_to_file(fname, dpi=600, engines=['neato'])
 
     def configure_sys_topology(self):
         """
@@ -666,144 +717,189 @@ class SystemTopology_WTP(SystemTopology_Generic):
         following formats: (graphviz) dot, png, pdf, ps2.
         """
 
-        self.graph_attr_dict.update(
+        # ----------------------------------------------------------------------------
+        self.agraph.graph_attr.update(
             orientation="portrait",
+            concentrate="False",
             rankdir="TB",
-            pad="0.5",
-            sep="+20",
+            center="True",
+            forcelabels="True",
+            fontsize="60",
+            pad="0.1",
             pack="False",
+            sep="+1",
+            overlap="False",
             smoothing="none",
-            overlap="voronoi",
+            ratio="auto",
+            scale="1",
         )
-        self.build_graph_structure()
 
-        # ---------------------------------------------------------------------
+        self.agraph.edge_attr.update(
+            arrowhead="normal",
+            penwidth="50",
+            # arrowsize="50",
+            color=str(self.default_edge_color),
+        )
+
+        # ----------------------------------------------------------------------------
         # Customise node attributes based on type of infrastructure system
+
+        NODE_FONTSIZE = 35
 
         self.attr_nodes['default'].update(
             shape="circle",
-            style="rounded,filled",
-            margin="20.0",
-            # width="0.3",
-            # height="0.3",
-            # fontsize="15",
+            style="filled",
+            width="3.6",
+            height="3.6",
+            fixedsize="True",
+            penwidth="3",
+            fontsize=str(NODE_FONTSIZE),
         )
 
-        # ---------------------------------------------------------------------
+        self.attr_nodes['supply'].update(
+            width="4.7",
+            height="2.5",
+            fixedsize="True",
+            penwidth="3",
+            fontsize=str(NODE_FONTSIZE),
+        )
+
+        self.attr_nodes['sink'].update(
+            width="3.5",
+            height="3.5",
+            fixedsize="True",
+            penwidth="3",
+            fontsize=str(NODE_FONTSIZE),
+        )
+
+        self.attr_nodes['dependency'].update(
+            width="4.7",
+            height="2.5",
+            fixedsize="True",
+            penwidth="3",
+            fontsize=str(NODE_FONTSIZE),
+        )
+
+        self.attr_nodes['large_basin'] = self.attr_nodes['default'].copy()
+        self.attr_nodes['large_basin'].update(
+            shape="rect", width="5", height="2.5")
+
+        self.attr_nodes['small_basin'] = self.attr_nodes['default'].copy()
+        self.attr_nodes['small_basin'].update(
+            shape="rect", width="3.5", height="2")
+
+        self.attr_nodes['chemical_tank'] = self.attr_nodes['default'].copy()
+        self.attr_nodes['chemical_tank'].update(
+            shape="circle", width="4.0", height="1.8", fixedsize="False")
+
+        self.attr_nodes['building'] = self.attr_nodes['default'].copy()
+        self.attr_nodes['building'].update(
+            shape="box", style="rounded", width="4.5", height="2")
+
+        self.attr_nodes['pump'] = self.attr_nodes['default'].copy()
+        self.attr_nodes['pump'].update(
+            shape="hexagon", width="4", height="4", fixedsize="False")
+
+        self.attr_nodes['switchroom'] = self.attr_nodes['default'].copy()
+        self.attr_nodes['switchroom'].update(
+            shape="rect", style="rounded", width="3.2", height="1.8")
+
+        self.primary_node_types.extend([
+            'large_basin', 'small_basin', 'chemical_tank',
+            'building', 'pump', 'switchroom'])
+
+        # ----------------------------------------------------------------------------
         # Apply custom node attributes based on node type
 
-        # node_specific_attrs = {}
-        for nid in list(self.component_attr.keys()):
+        for node_id in list(self.component_attr.keys()):
 
             # Position assignment for nodes
-            pos_x = self.component_attr[nid]['pos_x']
-            pos_y = self.component_attr[nid]['pos_y']
+            pos_x = self.component_attr[node_id]['pos_x']
+            pos_y = self.component_attr[node_id]['pos_y']
             node_pos = ''
-            if pos_x and pos_y:
+            if is_number(pos_x) and is_number(pos_y):
                 node_pos = str(pos_x) + "," + str(pos_y) + "!"
 
             # Segment long labels to fit within nodes spaces
-            label_mod = segment_long_labels(nid, maxlen=10, delims=['_', ' '])
+            label_mod = segment_long_labels(node_id, delims=['_', ' '], maxlen=10)
 
             # Custom attribute assignment based on node types
-            node_type = str(self.component_attr[nid]['node_type']).lower()
-            component_class = str(self.component_attr[nid]['component_class']).lower()
+            node_type = str(self.component_attr[node_id]['node_type']).lower()
+
+            component_class = \
+                str(self.component_attr[node_id]['component_class']).lower()
 
             if node_type not in self.primary_node_types:
                 node_type = 'default'
 
             if node_type in ['supply', 'source']:
-                self.graph.node(
-                    nid, label_mod, pos=node_pos, **self.attr_nodes['supply'])
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, pos=node_pos,
+                    **self.attr_nodes['supply'])
 
             elif node_type in ['sink', 'consumer', 'output']:
-                self.graph.node(
-                    nid, label_mod, pos=node_pos, **self.attr_nodes['sink'])
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, pos=node_pos,
+                    **self.attr_nodes['sink'])
 
             elif node_type in ['dependency']:
-                self.graph.node(
-                    nid, label_mod, pos=node_pos, **self.attr_nodes['dependency'])
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, pos=node_pos,
+                    **self.attr_nodes['dependency'])
 
-            elif node_type in ['junction']:
-                self.graph.node(
-                    nid, label="", pos=node_pos, **self.attr_nodes['junction'])
-
-            elif node_type in ['transshipment']:
-                self.graph.node(
-                    nid, label=label_mod, xlabel="", pos=node_pos,
-                    **self.attr_nodes['default'])
+            elif node_type == 'junction':
+                self.agraph.get_node(node_id).attr.update(
+                    label="", xlabel="", pos=node_pos,
+                    **self.attr_nodes['junction'])
 
             else:
-                self.graph.node(
-                    nid, label=label_mod, xlabel="",
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, xlabel="",
                     pos=node_pos, **self.attr_nodes['default'])
 
             if component_class in [
-                    'large tank', 'large basin',
+                    'large tank', 'large basin', 'laarge_basin',
                     'sedimentation basin',
                     'sedimentation basin - large']:
-                attr_nodetype_largebasin = self.attr_nodes['default'].copy()
-                attr_nodetype_largebasin.update(
-                    shape="rect", penwidth="1.0",
-                    width="2.6", height="1.2")
-                self.graph.node(
-                    nid, label=label_mod, xlabel="",
-                    pos=node_pos, **attr_nodetype_largebasin)
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, xlabel="",
+                    pos=node_pos, **self.attr_nodes['large_basin'])
 
             elif component_class in [
-                    'small tank', 'small basin',
+                    'small_basin', 'small tank', 'small basin',
                     'sedimentation basin - small',
                     'chlorination tank']:
-                attr_nodetype_smallbasin = self.attr_nodes['default'].copy()
-                attr_nodetype_smallbasin.update(
-                    shape="rect", penwidth="1.0",
-                    width="2.0", height="0.9")
-                self.graph.node(
-                    nid, label=label_mod, xlabel="",
-                    pos=node_pos, **attr_nodetype_smallbasin)
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, xlabel="",
+                    pos=node_pos, **self.attr_nodes['small_basin'])
 
-            elif component_class in ['chemical tank']:
-                attr_nodetype_chemtank = self.attr_nodes['default'].copy()
-                attr_nodetype_chemtank.update(
-                    shape="circle", penwidth="1.0",
-                    width="1.0", height="0.7", fixedsize="True")
-                self.graph.node(
-                    nid, label="", xlabel=label_mod,
-                    pos=node_pos, **attr_nodetype_chemtank)
+            elif component_class in ['chemical tank', 'chemical_tank']:
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, xlabel="",
+                    pos=node_pos, **self.attr_nodes['chemical_tank'])
 
             elif component_class in ['building', 'small building']:
-                attr_nodetype_building_sml = self.attr_nodes['default'].copy()
-                attr_nodetype_building_sml.update(
-                    shape="box", style="rounded", penwidth="2.0",
-                    width="1.8", height="0.9")
-                self.graph.node(
-                    nid, label=label_mod, xlabel="",
-                    pos=node_pos, **attr_nodetype_building_sml)
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, xlabel="",
+                    pos=node_pos, **self.attr_nodes['building'])
 
             elif component_class in ['pump', 'pumps']:
-                attr_nodetype_pump = self.attr_nodes['default'].copy()
-                attr_nodetype_pump.update(
-                    shape="hexagon", penwidth="1.0",
-                    width="0.5", height="0.5", fixedsize="True")
-                self.graph.node(
-                    nid, label="", xlabel=label_mod,
-                    pos=node_pos, **attr_nodetype_pump)
+                self.agraph.get_node(node_id).attr.update(
+                    label="", xlabel=label_mod,
+                    pos=node_pos, **self.attr_nodes['pump'])
 
             elif component_class in ['switchroom', 'power supply']:
-                attr_nodetype_switchroom = self.attr_nodes['default'].copy()
-                attr_nodetype_switchroom.update(
-                    shape="rect", style="rounded", penwidth="1.0",
-                    width="1.6", height="0.9")
-                self.graph.node(
-                    nid, label=label_mod, xlabel="",
-                    pos=node_pos, **attr_nodetype_switchroom)
+                self.agraph.get_node(node_id).attr.update(
+                    label=label_mod, xlabel="",
+                    pos=node_pos, **self.attr_nodes['switchroom'])
 
-        # ---------------------------------------------------------------------
+        # ----------------------------------------------------------------------------
         # Apply node clustering, if defined in config
 
         if self.clustering and self.layout_engine not in ['neato', 'fdp', 'sfdp']:
             self.apply_node_clustering()
-        # ---------------------------------------------------------------------
-        return self.graph
+
+        # ----------------------------------------------------------------------------
+        return self.agraph
 
 # =====================================================================================
