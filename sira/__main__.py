@@ -27,6 +27,7 @@ import re
 import sys
 import time
 from pathlib import Path
+# from typing import IO
 
 import numpy as np
 from colorama import Fore, init
@@ -109,50 +110,55 @@ def main():
         sys.exit(1)
 
     # ------------------------------------------------------------------------------
+
+    class InvalidOrMissingInputFile(Exception):
+        def __init__(self, type_of_file):
+            super(InvalidOrMissingInputFile, self).__init__()
+            raise NameError(
+                f"\n{str(type_of_file)} file error: invalid or missing input file."
+                "\n  A valid model file name must begin the term `model`, "
+                "\n  A valid config file name must begin with the term `config`, and"
+                "\n  It must be in JSON format.\n")
+
+    class MissingInputDir(IOError):
+        def __init__(self):
+            super(MissingInputDir, self).__init__()
+            raise IOError("Missing input directory for project.")
+
+    # ------------------------------------------------------------------------------
     # Locate input files
-    proj_input_dir = os.path.join(proj_root_dir, "input")
+
+    proj_input_dir = Path(proj_root_dir, "input").resolve()
     config_file_name = None
     model_file_name = None
 
+    if not Path(proj_input_dir).exists():
+        raise MissingInputDir()
+
     for fname in os.listdir(proj_input_dir):
+
         confmatch = re.search(r"(?i)^config.*\.json$", fname)
         if confmatch is not None:
             config_file_name = confmatch.string
+
         modelmatch = re.search(r"(?i)^model.*\.json$", fname)
         if modelmatch is not None:
             model_file_name = modelmatch.string
 
-    # ------------------------------------------------------------------------------
-    # Test that CONFIG file is identifiable, and is valid
     if config_file_name is None:
-        parser.error(
-            "Config file name does not meet required naming criteria. "
-            "A valid config file name must begin with the term `config`, "
-            "and must be a JSON file.\n")
-        sys.exit(2)
+        raise InvalidOrMissingInputFile("CONFIG")
+
+    if model_file_name is None:
+        raise InvalidOrMissingInputFile("MODEL")
+
+    # --------------------------------------------------------------------
+    # Define paths for CONFIG and MODEL
 
     config_file_path = Path(proj_input_dir, config_file_name).resolve()
-    if not os.path.isfile(config_file_path):
-        parser.error(
-            "Unable to locate config file " + str(config_file_path) + " ...")
-        sys.exit(2)
-
-    # ------------------------------------------------------------------------------
-    # Test that MODEL file is identifiable, and is valid
-    if model_file_name is None:
-        parser.error(
-            "Model file name does not meet required naming criteria. "
-            "A valid model file name must begin the term `model`, "
-            "and must be a JSON file.\n")
-        sys.exit(2)
+    model_file_path = Path(proj_input_dir, model_file_name).resolve()
 
     # ------------------------------------------------------------------------------
     # Check output path
-    model_file_path = Path(proj_input_dir, model_file_name).resolve()
-    if not os.path.isfile(model_file_path):
-        parser.error(
-            "Unable to locate model file " + str(model_file_path) + " ...")
-        sys.exit(2)
 
     output_path = Path(args.input_directory, "output").resolve()
     try:
@@ -250,19 +256,27 @@ def main():
             args.pe_sys = os.path.join(
                 config.RAW_OUTPUT_DIR, 'pe_sys_econloss.npy')
 
+        config_data_dict = dict(
+            model_name=config.MODEL_NAME,
+            x_param=config.HAZARD_INTENSITY_MEASURE_PARAM,
+            x_unit=config.HAZARD_INTENSITY_MEASURE_UNIT,
+            scenario_metrics=config.FOCAL_HAZARD_SCENARIOS,
+            scneario_names=config.FOCAL_HAZARD_SCENARIO_NAMES
+        )
+
         if args.pe_sys is not None:
             rootLogger.info('Initiating model fitting for simulated system fragility data...')
             hazard_scenarios = hazards.hazard_scenario_list
             sys_limit_states = infrastructure.get_system_damage_states()
             pe_sys = np.load(args.pe_sys)
-            # Calculate & Plot Fitted Models
+            # Calculate & Plot Fitted Models:
             fit_prob_exceed_model(
                 hazard_scenarios,
                 pe_sys,
                 sys_limit_states,
-                config.OUTPUT_PATH,
-                config,
-                # distribution='lognormal_cdf'
+                config_data_dict,
+                output_path=config.OUTPUT_PATH,
+                distribution='normal_cdf'
             )
             rootLogger.info('Model fitting complete.')
         else:

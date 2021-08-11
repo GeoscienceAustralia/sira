@@ -46,10 +46,8 @@ class TestSystemSanity(unittest.TestCase):
 
         historical_economic_loss_array = np.load(test_file_path)
         self.assertTrue(
-            np.array_equal(economic_loss_array,
-                           historical_economic_loss_array),
-            str(len(economic_loss_array)) + '\n' +
-            str(len(historical_economic_loss_array))
+            np.array_equal(economic_loss_array, historical_economic_loss_array),
+            f"{len(economic_loss_array)} '\n'{len(historical_economic_loss_array)}"
         )
 
     # -------------------------------------------------------------------------
@@ -70,8 +68,7 @@ class TestSystemSanity(unittest.TestCase):
         with open(model_file_path, 'r') as mdl:
             json_infra_model = json.load(mdl)
             output_node_capacity =\
-                json_infra_model["sysout_setup"]["output_node"]\
-                ["output_node_capacity"]
+                json_infra_model["sysout_setup"]["output_node"]["output_node_capacity"]
 
         self.assertTrue(
             int(response_list[4][0][0]) == int(output_node_capacity)

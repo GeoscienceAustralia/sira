@@ -79,20 +79,3 @@ required_headers = [
 ]
 
 # -----------------------------------------------------------------------------
-
-
-def config_file_valid(config_file):
-    """
-    Config File Validation Rules:
-    """
-    return True
-
-
-def model_file_valid(model_file):
-    """
-    Model Validation Rules:
-    1. nodes in component list should appear in connections
-    2. nodes should not be orphans
-    3. component types should match between damage algorithms and component list
-    """
-    return True

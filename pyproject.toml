@@ -10,7 +10,10 @@ log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(linen
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 markers = [
     "modelrun: marks tests of direct model runs",
+    "bad_or_missing_inputfile: checks code for incorrectly named or missing input files",
+    "missinginputdir: checks for missing input directory",
     "algorithms: marks tests for responsemodels",
+    "modelfitting: tests for fitting distribution models to exceedance probability data",
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
 ]
 

@@ -331,6 +331,12 @@ class SystemTopology_Generic(object):
         # ---------------------------------------------------------------------
         # Check that valid layout engine names are supplied
 
+        # if not engines:
+        #     if str(self.node_position_meta).lower() == 'defined':
+        #         engines = ['dot', 'neato']
+        #     else:
+        #         engines = ['dot']
+
         if not engines:
             engines = ['dot', 'neato']
 
@@ -382,9 +388,14 @@ class SystemTopology_Generic(object):
         draw_args = f"-Gdpi={arg_res} -Gsize={canvas_size}!"  # noqa: W1401
 
         for eng, fmt in itertools.product(engines, img_formats.keys()):
-            self.agraph.draw(
-                path=Path(self.output_path, f"{file_name}_{eng}.{fmt}"),
-                format=fmt, prog=eng, args=draw_args)
+            try:
+                self.agraph.draw(
+                    path=Path(self.output_path, f"{file_name}_{eng}.{fmt}"),
+                    format=fmt, prog=eng, args=draw_args)
+            except (OSError, AssertionError, ValueError, TypeError):
+                warnings.warn(
+                    "Graph rendering failed for: {}, {}".format(eng, fmt),
+                    stacklevel=2)
 
         # try:
         #     self.apply_node_clustering()

@@ -1,5 +1,4 @@
 import sys
-import warnings
 import logging
 import json
 from collections import OrderedDict
@@ -85,34 +84,6 @@ def rayleigh_cdf(x, loc, scale):
     return stats.rayleigh.cdf(x, loc=loc, scale=scale)
 
 
-def res_lognorm_cdf(params, x, data, eps=None):
-    v = params.valuesdict()
-    median = v['median']
-    beta = v['beta']
-    loc = 0
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        model = lognormal_cdf(x, median, beta, loc=loc)
-    if eps is None:
-        return (model - data)
-    return (model - data) / eps
-
-
-def res_norm_cdf(params, x, data, eps=None):
-    v = params.valuesdict()
-    model = normal_cdf(x, v['mean'], v['stddev'])
-    if eps is None:
-        return (model - data)
-    return (model - data) / eps
-
-
-def res_rayleigh_cdf(params, x, data, eps=None):
-    v = params.valuesdict()
-    model = stats.rayleigh.cdf(x, loc=v['loc'], scale=v['scale'])
-    if eps is None:
-        return (model - data)
-    return (model - data) / eps
-
 # ====================================================================================
 
 
@@ -134,9 +105,18 @@ def display_dict(pdict, width=4, level=0, init_space=0):
             print(f"{' '*(init_space + width*level)}{str(key):<10} = {val_fmt}")
 
 
-def fit_cdf_lmfitmodel(x_sample, y_sample, dist):
+def fit_cdf_model(x_sample, y_sample, dist, params_est="undefined", tag=None):
     """
     Fits given array-like data using `lmfit.Model` method
+
+    :returns:   A dictionary of fitted parameters.
+                The structure of the output:
+
+                fitted_model = OrderedDict(
+                    function=str(),
+                    parameters=OrderedDict(),
+                    fit_statistics={}
+                )
     """
 
     # Locate x-values where the y-values are changing
@@ -160,8 +140,24 @@ def fit_cdf_lmfitmodel(x_sample, y_sample, dist):
         func = normal_cdf
         model_dist = lmfit.Model(func)
         model_params = model_dist.make_params()
-        model_params.add('mean', value=np.mean(xs), min=min(xs), max=np.mean(xs) * 2)
-        model_params.add('stddev', value=np.std(xs), min=0, max=np.mean(xs) * 0.9)
+        if params_est == "undefined":
+            model_params.add(
+                'mean',
+                value=np.mean(xs), min=min(xs), max=np.mean(xs) * 2)
+            model_params.add(
+                'stddev',
+                value=np.std(xs), min=0, max=np.mean(xs) * 0.9)
+        else:
+            param = 'mean'
+            model_params.add(
+                param,
+                value=params_est[param].value,
+                min=params_est[param].min, max=params_est[param].max)
+            param = 'stddev'
+            model_params.add(
+                param,
+                value=params_est[param].value,
+                min=params_est[param].min, max=params_est[param].max)
 
     # -------------------------------------------------------------------------
     # LOGNORMAL CDF -- set up model and params
@@ -172,9 +168,22 @@ def fit_cdf_lmfitmodel(x_sample, y_sample, dist):
         init_med = np.mean(xs)
         init_lsd = abs(np.std(xs))
         model_params = model_dist.make_params()
-        model_params.add('median', value=init_med, min=min(xs), max=init_med * 2)
-        model_params.add('beta', value=init_lsd, min=sys.float_info.min, max=init_med * 2)
-        model_params.add('loc', value=0, vary=False)
+        if params_est == "undefined":
+            model_params.add('median', value=init_med, min=min(xs), max=init_med * 2)
+            model_params.add('beta', value=init_lsd, min=sys.float_info.min, max=init_med * 2)
+            model_params.add('loc', value=0, vary=False)
+        else:
+            param = 'median'
+            model_params.add(
+                param,
+                value=params_est[param].value,
+                min=params_est[param].min, max=params_est[param].max)
+            param = 'beta'
+            model_params.add(
+                param,
+                value=params_est[param].value,
+                min=params_est[param].min, max=params_est[param].max)
+            model_params.add('loc', value=0, vary=False)
 
     # -------------------------------------------------------------------------
     # RAYLEIGH CDF -- set up model and params
@@ -197,131 +206,35 @@ def fit_cdf_lmfitmodel(x_sample, y_sample, dist):
     fitresult = model_dist.fit(y_sample, params=model_params, x=x_sample,
                                nan_policy='omit', max_nfev=10000)
 
-    params_odict = {}
+    params_odict = OrderedDict()
     params_odict['function'] = str(func.__name__).lower()
     params_odict['parameters'] = fitresult.params.valuesdict()
-    params_odict['fit_statistics'] = {}
+    params_odict['fit_statistics'] = OrderedDict()
     params_odict['fit_statistics']['chisqr'] = fitresult.chisqr
     params_odict['fit_statistics']['max_nfev'] = fitresult.nfev
 
     # -------------------------------------------------------------------------
+    func_name = params_odict['function']
+    if tag is not None:
+        fit_data_header = f"{Fore.YELLOW}{tag} | Distribution: {func_name}{Fore.RESET}"
+    else:
+        fit_data_header = f"{Fore.RESET}Distribution: {func_name}{Fore.RESET}"
+    print("\n" + "-" * 88)
+    print(fit_data_header)
+    print("-" * 88)
+    # print(fitresult.fit_report(modelpars=fitresult.params))
+    display_dict(params_odict)
 
     return params_odict
 
-
 # ====================================================================================
-
-def fit_cdf_model_minimizer(x_sample, y_sample, dist, params_est="undefined"):
-
-    """
-    Fits a CDF model to simulated probability data
-
-    :returns:   A dictionary of fitted parameters.
-                The structure of the output:
-
-                fitted_model = dict(
-                    function=str(),
-                    parameters=OrderedDict(),
-                    fit_statistics={}
-                )
-
-    """
-
-    # ------------------------------------------------------------------------------
-    # Locate x-values where the y-values are changing
-    x_sample = np.asarray(x_sample)
-    y_sample = np.asarray(y_sample)
-    change_ndx = np.where(y_sample[:-1] != y_sample[1:])[0]
-    change_ndx = list(change_ndx)
-
-    if not (change_ndx[-1] == len(y_sample)):
-        change_ndx.insert(len(change_ndx), change_ndx[-1] + 1)
-
-    if change_ndx[0] != 0:
-        change_ndx.insert(0, change_ndx[0] - 1)
-
-    xs = x_sample[change_ndx]
-
-    # ------------------------------------------------------------------------------
-    # SETUP THE DISTRIBUTION FOR FITTING
-
-    if dist.lower() in ["normal", "normal_cdf"]:
-        func_name = "normal_cdf"
-        est_mean = np.mean(xs)
-        est_sdev = np.std(xs)
-        params_est = lmfit.Parameters()
-        params_est.add('mean', value=est_mean, min=min(xs), max=est_mean * 2)
-        params_est.add('stddev', value=est_sdev, min=0, max=est_mean * 0.9)
-        func2min = res_norm_cdf
-
-    elif dist.lower() in ["rayleigh", "rayleigh_cdf"]:
-        func_name = "rayleigh_cdf"
-        est_loc = xs[0]
-        est_scale = np.std(xs)
-        params_est = lmfit.Parameters()
-        params_est.add('loc', value=est_loc, min=None, max=None)
-        params_est.add('scale', value=est_scale, min=None, max=None)
-        func2min = res_rayleigh_cdf
-
-    elif dist.lower() in ["lognormal", "lognormal_cdf"]:
-        func_name = "lognormal_cdf"
-        est_median = np.mean(xs)
-        est_beta = np.std(xs)
-        est_loc = 0
-        if params_est == "undefined":
-            params_est = lmfit.Parameters()
-            params_est.add(
-                'median', value=est_median, min=min(xs), max=est_median * 2)
-            params_est.add(
-                'beta', value=est_beta, min=sys.float_info.min, max=est_beta * 2)
-            params_est.add(
-                'loc', value=est_loc, vary=False)
-        func2min = res_lognorm_cdf
-
-    else:
-        raise ValueError(f"The distribution {dist} is not supported.")
-
-    # ------------------------------------------------------------------------------
-    # PARAMETER ESTIMATION
-
-    minimizer_result = lmfit.minimize(
-        func2min,
-        params_est,
-        args=(x_sample, y_sample),
-        method='leastsq',
-        nan_policy='omit',
-        max_nfev=10000
-    )
-    print(f"Distribution: {func_name}")
-    minimizer_result.params.pretty_print()
-
-    # -------------------------------------------------------------------------
-    # BUILD THE OUTPUT DICTIONARY
-
-    fitted_model_params = OrderedDict()
-    fitted_model_params = minimizer_result.params.valuesdict()
-
-    fitted_model_goodness = {}
-    fitted_model_goodness['chisqr'] = minimizer_result.chisqr
-    fitted_model_goodness['max_nfev'] = minimizer_result.nfev
-
-    fitted_model = dict(
-        function=str(func_name),
-        parameters=fitted_model_params,
-        fit_statistics=fitted_model_goodness
-    )
-    # -------------------------------------------------------------------------
-    return fitted_model
-
-# ====================================================================================
-
 
 def fit_prob_exceed_model(
         xdata,
         ydata_2d,
         system_limit_states,
+        config_data_dict,
         output_path,
-        config_obj,
         distribution='lognormal_cdf',
         CROSSOVER_THRESHOLD=0.005,
         CROSSOVER_CORRECTION=True):
@@ -329,8 +242,8 @@ def fit_prob_exceed_model(
     Fit a Lognormal CDF model to simulated probability exceedance data
 
     :param xdata: input values for hazard intensity (numpy array)
-    :param ydata_2d:   probability of exceedance (2D numpy array)
-                        its shape is (num_damage_states x num_hazards_points)
+    :param ydata_2d: probability of exceedance (2D numpy array)
+                     its shape is (num_damage_states x num_hazards_points)
     :param system_limit_states: discrete damage states (list of strings)
     :param output_path: directory path for writing output (string)
     :returns:  fitted exceedance model parameters (PANDAS dataframe)
@@ -343,11 +256,10 @@ def fit_prob_exceed_model(
     fitted_params_dict = {i: {} for i in range(1, len(system_limit_states))}
     xdata = [float(x) for x in xdata]
 
-    borderA = "=" * 75
-    borderB = '-' * 75
+    borderA = "=" * 88
+    borderB = '-' * 88
     msg_fitresults_init = \
-        f"\n\n{borderA}"\
-        f"\n{Fore.BLUE}Fitting system FRAGILITY data:{Fore.RESET}"
+        f"\n\n{Fore.BLUE}Fitting system FRAGILITY data...{Fore.RESET}"
     rootLogger.info(msg_fitresults_init)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -359,20 +271,17 @@ def fit_prob_exceed_model(
         y_sample = ydata_2d[dx]
         ds_level = system_limit_states[dx]
 
-        print(borderB)
-        print(f"{Fore.YELLOW}Estimated Parameters for: {ds_level}{Fore.RESET}\n")
-        params_odict = fit_cdf_model_minimizer(x_sample, y_sample, dist=distribution)
+        params_odict = fit_cdf_model(
+            x_sample, y_sample, dist=distribution, tag=f"Limit State: {ds_level}")
         fitted_params_dict[dx] = params_odict
-        # display_dict(params_odict)
 
-    print(f"{borderA}\n")
+    print(f"\n{borderA}\n")
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for crossover, and correct as needed
 
     if CROSSOVER_CORRECTION and (len(system_limit_states[1:]) >= 2):
-        # fitted_params_dict = correct_crossover(
-        correct_crossover(
+        fitted_params_dict = correct_crossover(
             system_limit_states,
             xdata,
             ydata_2d,
@@ -386,7 +295,8 @@ def fit_prob_exceed_model(
         {"system_fragility_model": fitted_params_dict}, default=str, indent=4)
 
     msg_fitresults_final = \
-        f"\n\n{color.YELLOW}{color.BOLD}Set of Fitted Models:{color.END}\n\n"\
+        f"\n{borderA}\n"\
+        f"\n{color.YELLOW}{color.BOLD}Set of Fitted Models:{color.END}\n"\
         f"{fitted_params_json}\n"\
         f"\n{borderB}\n"
     rootLogger.info(msg_fitresults_final)
@@ -398,14 +308,13 @@ def fit_prob_exceed_model(
             f, ensure_ascii=False, indent=4)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    config_data = dict(
-        model_name=config_obj.MODEL_NAME,
-        x_param=config_obj.HAZARD_INTENSITY_MEASURE_PARAM,
-        x_unit=config_obj.HAZARD_INTENSITY_MEASURE_UNIT,
-        scenario_metrics=config_obj.FOCAL_HAZARD_SCENARIOS,
-        scneario_names=config_obj.FOCAL_HAZARD_SCENARIO_NAMES
-    )
+    # config_data = dict(
+    #     model_name=config_obj.MODEL_NAME,
+    #     x_param=config_obj.HAZARD_INTENSITY_MEASURE_PARAM,
+    #     x_unit=config_obj.HAZARD_INTENSITY_MEASURE_UNIT,
+    #     scenario_metrics=config_obj.FOCAL_HAZARD_SCENARIOS,
+    #     scneario_names=config_obj.FOCAL_HAZARD_SCENARIO_NAMES
+    # )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Plot the simulation data
@@ -419,7 +328,7 @@ def fit_prob_exceed_model(
                     PLOT_DATA=True,
                     PLOT_MODEL=False,
                     PLOT_EVENTS=False,
-                    **config_data)
+                    **config_data_dict)
 
     plot_data_model(xdata,
                     ydata_2d,
@@ -430,7 +339,7 @@ def fit_prob_exceed_model(
                     PLOT_DATA=False,
                     PLOT_MODEL=True,
                     PLOT_EVENTS=False,
-                    **config_data)
+                    **config_data_dict)
 
     plot_data_model(xdata,
                     ydata_2d,
@@ -441,7 +350,7 @@ def fit_prob_exceed_model(
                     PLOT_DATA=False,
                     PLOT_MODEL=True,
                     PLOT_EVENTS=True,
-                    **config_data)
+                    **config_data_dict)
 
     return fitted_params_dict
 
@@ -636,100 +545,122 @@ def correct_crossover(
     This function works only for lognormal cdf's.
     """
 
-    msg_check_crossover = "Checking for crossover [ THRESHOLD = {} ]".format(
-        str(CROSSOVER_THRESHOLD))
+    msg_check_crossover = \
+        f"\nChecking for crossover [ THRESHOLD = {str(CROSSOVER_THRESHOLD)} ]"
     rootLogger.info(Fore.GREEN + msg_check_crossover + Fore.RESET)
 
     params_pe = lmfit.Parameters()
 
-    for dx in range(1, len(SYS_DS)):
+    ds_iter = iter(range(1, len(SYS_DS)))
+    for dx in ds_iter:
 
         ############################################################################
+        overlap_condition = np.sum(ydata_2d[dx] > ydata_2d[dx - 1])
+        if overlap_condition == 0:
+            msg_overlap_none = \
+                f"{Fore.GREEN}"\
+                "NO crossover detected in data for the pair: "\
+                f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}"\
+                f"{Fore.RESET}"
+            # rootLogger.info(msg_overlap_none)
+            print(msg_overlap_none)
+            continue
+        else:
+            msg_overlap_found = \
+                f"{Fore.MAGENTA}"\
+                "**Crossover detected in data for the pair : "\
+                f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}**"\
+                f"{Fore.RESET}"
+            # rootLogger.info(msg_overlap_found)
+            print(msg_overlap_found)
+
+        ############################################################################
+
         x_sample = xdata
         y_sample = ydata_2d[dx]
-
-        mu_hi = fitted_params_set[dx]['parameters']['median']
-        sd_hi = fitted_params_set[dx]['parameters']['beta']
-        loc_hi = fitted_params_set[dx]['parameters']['loc']
 
         function_name = fitted_params_set[dx]['function']
         distribution = get_distribution_func(function_name)
 
+        param_names = list(fitted_params_set[dx]['parameters'].keys())
+        param_1 = param_names[0]
+        param_2 = param_names[1]
+
+        # --------------------------------------------------------------------------
         params_hi = fitted_params_set[dx]['parameters']
         y_model_hi = distribution(x_sample, **params_hi)
-        MAX = 2 * params_hi['median']
 
-        params_pe.add('median', value=params_hi['median'], min=0, max=MAX)
-        params_pe.add('beta', value=params_hi['beta'], min=0, max=MAX)
-        params_pe.add('loc', value=0.0, vary=False)
+        mu_hi = fitted_params_set[dx]['parameters'][param_1]
+        sd_hi = fitted_params_set[dx]['parameters'][param_2]
+        # loc_hi = fitted_params_set[dx]['parameters']['loc']
+        MAX = 2 * params_hi[param_1]
 
-        # fitted_params_set[dx] = lmfit.minimize(
-        #     res_lognorm_cdf, params_pe, args=(x_sample, y_sample),
-        #     # method='leastsq', nan_policy='omit'
-        # )
+        # print("##################################")
+        # print("##################################")
 
-        fitted_params_set[dx] = fit_cdf_model_minimizer(
-            x_sample, y_sample, dist=function_name, params_est=params_pe
-        )
+        params_pe.add(param_1, value=params_hi[param_1], min=0, max=MAX)
+        params_pe.add(param_2, value=params_hi[param_2], min=0, max=MAX)
+        # params_pe.add('loc', value=0.0, vary=False)
+
+        # fitted_params_set[dx] = fit_cdf_model(
+        #     x_sample, y_sample, dist=function_name, params_est=params_pe,
+        #     tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
+
+        # --------------------------------------------------------------------------
+        params_lo = fitted_params_set[dx - 1]['parameters']
+        y_model_lo = distribution(x_sample, **params_lo)
+
+        mu_lo = fitted_params_set[dx - 1]['parameters'][param_1]
+        sd_lo = fitted_params_set[dx - 1]['parameters'][param_2]
+        # loc_lo = fitted_params_set[dx - 1]['parameters']['loc']
+
+        if abs(max(y_model_lo - y_model_hi)) > CROSSOVER_THRESHOLD:
+            # Test if higher curve is co-incident with, or exceeds lower curve
+            # Note: `loc` param for lognorm assumed zero
+            # if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
+            if (mu_hi <= mu_lo):
+                cx_msg_1 = f"\n {Fore.MAGENTA}*** Mean of higher curve too low: "\
+                           f"resampling{Fore.RESET}"
+                cx_msg_2 = f"{Fore.MAGENTA}{param_1}: {str(mu_hi)} {str(mu_lo)} {Fore.RESET}"
+                rootLogger.info(cx_msg_1)
+                rootLogger.info(cx_msg_2)
+                params_pe.add(param_1, value=mu_hi, min=mu_lo)
+                fitted_params_set[dx] = fit_cdf_model(
+                    x_sample, y_sample, dist=function_name, params_est=params_pe,
+                    tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
+                # (mu_hi, sd_hi, _) = (
+                #     fitted_params_set[dx]['parameters'][param_1],
+                #     fitted_params_set[dx]['parameters'][param_2],
+                #     fitted_params_set[dx]['parameters']['loc'])
+                (mu_hi, sd_hi) = (
+                    fitted_params_set[dx]['parameters'][param_1],
+                    fitted_params_set[dx]['parameters'][param_2])
+
+            # Thresholds for testing top or bottom crossover
+            delta_top = sd_lo - (mu_hi - mu_lo)
+            delta_btm = sd_lo + (mu_hi - mu_lo)
+
+            # Test for top crossover: resample if crossover detected
+            if (sd_hi < sd_lo) and (sd_hi <= delta_top):
+                rootLogger.info(
+                    "%s*** Attempting to correct upper crossover%s",
+                    Fore.MAGENTA, Fore.RESET)
+                params_pe.add(param_2, value=sd_hi, min=delta_top)
+                fitted_params_set[dx] = fit_cdf_model(
+                    x_sample, y_sample, dist=function_name, params_est=params_pe,
+                    tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
+
+            # Test for bottom crossover: resample if crossover detected
+            elif sd_hi >= delta_btm:
+                rootLogger.info(
+                    "%s*** Attempting to correct lower crossover%s",
+                    Fore.MAGENTA, Fore.RESET)
+                params_pe.add(param_2, value=sd_hi, max=delta_btm)
+                fitted_params_set[dx] = fit_cdf_model(
+                    x_sample, y_sample, dist=function_name, params_est=params_pe,
+                    tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
 
         ############################################################################
-        if dx >= 2:
-            params_lo = fitted_params_set[dx - 1]['parameters']
-            mu_lo = fitted_params_set[dx - 1]['parameters']['median']
-            sd_lo = fitted_params_set[dx - 1]['parameters']['beta']
-            loc_lo = fitted_params_set[dx - 1]['parameters']['loc']
-            y_model_lo = distribution(x_sample, **params_lo)
-
-            if abs(min(y_model_lo - y_model_hi)) > CROSSOVER_THRESHOLD:
-                msg_overlap_found = \
-                    f"{Fore.MAGENTA}"\
-                    "There is overlap for curve pair : "\
-                    f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}"\
-                    f"{Fore.RESET}"
-                rootLogger.info(msg_overlap_found)
-
-                # Test if higher curve is co-incident with, or
-                # precedes lower curve
-                if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
-                    rootLogger.info(" *** Mean of higher curve too low: "
-                                    "resampling")
-                    rootLogger.info("median %s %s", str(mu_hi), str(mu_lo))
-                    params_pe.add('median', value=mu_hi, min=mu_lo)
-                    # fitted_params_set[dx] = lmfit.minimize(
-                    #     res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
-                    fitted_params_set[dx] = fit_cdf_model_minimizer(
-                        x_sample, y_sample, dist=function_name, params_est=params_pe
-                    )
-                    (mu_hi, sd_hi, loc_hi) = (
-                        fitted_params_set[dx]['parameters']['median'],
-                        fitted_params_set[dx]['parameters']['beta'],
-                        fitted_params_set[dx]['parameters']['loc'])
-
-                # Thresholds for testing top or bottom crossover
-                delta_top = sd_lo - (mu_hi - mu_lo) / 1.0
-                delta_btm = sd_lo + (mu_hi - mu_lo) / 1.0
-
-                # Test for top crossover: resample if crossover detected
-                if (sd_hi < sd_lo) and (sd_hi <= delta_top):
-                    rootLogger.info("*** Attempting to correct upper crossover")
-                    params_pe.add('beta', value=sd_hi, min=delta_top)
-                    fitted_params_set[dx] = lmfit.minimize(
-                        res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
-
-                # Test for bottom crossover: resample if crossover detected
-                elif sd_hi >= delta_btm:
-                    rootLogger.info("*** Attempting to correct lower crossover")
-                    params_pe.add('beta', value=sd_hi, max=delta_btm)
-                    fitted_params_set[dx] = lmfit.minimize(
-                        res_lognorm_cdf, params_pe, args=(x_sample, y_sample))
-
-            else:
-                msg_overlap_none = \
-                    f"{Fore.GREEN}"\
-                    "There is NO overlap for curve pair: "\
-                    f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}"\
-                    f"{Fore.RESET}\n"
-                rootLogger.info(msg_overlap_none)
 
     return fitted_params_set
 

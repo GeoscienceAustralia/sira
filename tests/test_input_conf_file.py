@@ -8,7 +8,7 @@ rootLogger = logging.getLogger(__name__)
 rootLogger.setLevel(logging.INFO)
 
 
-class TestInputConfFile(unittest. TestCase):
+class TestInputConfFile(unittest.TestCase):
 
     def setUp(self):
 

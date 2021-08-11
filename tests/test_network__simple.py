@@ -3,11 +3,6 @@ import sys
 import unittest
 from pathlib import Path
 
-# from sira.configuration import Configuration
-# from sira.model_ingest import ingest_model
-# from sira.modelling.hazard import HazardsContainer
-# from sira.scenario import Scenario
-# from sira.simulation import calculate_response
 
 # Add the source dir to system path
 root_dir = Path(__file__).resolve().parent.parent
@@ -35,20 +30,9 @@ class TestNetworkModelling(unittest.TestCase):
         model_name = 'test_network__basic'
         target_mdl_dir = Path(self.mdls_dir, model_name)
 
-        # input_dir = Path(self.mdls_dir, model_name, 'input')
-        # conf_file_path = [d for d in input_dir.glob('*config*.json')].pop()
-        # model_file_path = [d for d in input_dir.glob('*model*.json')].pop()
-
-        # config = Configuration(conf_file_path, model_file_path)
-        # scenario = Scenario(config)
-        # hazards = HazardsContainer(config, model_file_path)
-        # infrastructure = ingest_model(config)
-        # response_list = calculate_response(hazards, scenario, infrastructure)
-
         process = subprocess.run(
             ['python', str(self.code_dir), '-d', str(target_mdl_dir), '-s'],
-            stdout=subprocess.PIPE,
-            universal_newlines=True)
+            stdout=subprocess.PIPE, universal_newlines=True, check=True)
         exitstatus = process.returncode
         # An exit status of 0 typically indicates process ran successfully:
         self.assertEqual(exitstatus, 0)

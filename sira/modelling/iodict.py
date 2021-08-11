@@ -8,7 +8,7 @@ class IODict(OrderedDict, Base):
     An indexable, ordered dictionary.
     The infrastructure components required a data structure that maintains its order,
     and also provides key and index value access.
-    It must also support the _jsonify__ and __pythonify__ methods.
+    It must also support the __jsonify__ and __pythonify__ methods.
     """
 
     def __init__(self, *args, **kwargs):
@@ -28,4 +28,3 @@ class IODict(OrderedDict, Base):
         :return: Item at the parameter offset.
         """
         return super(IODict, self).__getitem__(self.key_index[index])
-

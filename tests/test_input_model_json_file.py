@@ -36,17 +36,11 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
             x for x in self.test_model_dir.rglob('input/*model*.json')]
 
     def test_folder_structure(self):
-        mdl_dir_list = [d for d in Path(self.test_model_dir).glob('*')
-                        if not str(d.name).startswith('.')]
+        # mdl_dir_list = [d for d in Path(self.test_model_dir).glob('*')
+        #                 if not str(d.name).startswith('.')]
         self.assertTrue(
             Path(self.test_model_dir).is_dir(),
             "Directory for test models not found:\n" + str(self.test_model_dir))
-        for d in mdl_dir_list:
-            fullp = Path(d, 'input')
-            self.assertTrue(
-                fullp.exists(),
-                "No `input` directory found in simulation model dir:\n" + str(fullp)
-            )
 
     def test_model_files_existence(self):
         print(f"\n{'-'*70}\n>>> Initiating check on JSON model files...")
@@ -89,14 +83,13 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
 
             component_list = model_json_object['component_list']
             for component in component_list.keys():
+                required_components = set(self.required_component_headers)
+                component_keys = set(component_list[component].keys())
                 self.assertTrue(
-                    set(self.required_component_headers) <=
-                    set(component_list[component].keys()),
-                    "Required header names in component_list not found: \n" +
-                    str(model_file) + '\n' + str(set(component_list[component].keys()))
+                    required_components <= component_keys,
+                    "Required header names in component_list not found: "
+                    f"\n  {str(model_file)}\n  str(component_keys))"
                 )
-
-    # TODO extend test case over rest of the structure.
 
 
 if __name__ == '__main__':

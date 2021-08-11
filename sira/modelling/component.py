@@ -6,29 +6,30 @@ from sira.modelling.structural import Base, Element
 
 
 class DamageState(Base):
-    damage_state_name \
-        = Element('str',
-                  'Name of the damage state.')
-    functionality \
-        = Element('float',
-                  'Level of functionality for this damage level',
-                  0.0,
-                  [lambda x: float(x) >= 0.0])
-    damage_ratio \
-        = Element('float',
-                  'damage ratio',
-                  0.0,
-                  [lambda x: float(x) >= 0.0])
+    damage_state_name = Element(
+        'str',
+        'Name of the damage state.')
+    functionality = Element(
+        'float',
+        'Level of functionality for this damage level',
+        0.0,
+        [lambda x: float(x) >= 0.0])
+    damage_ratio = Element(
+        'float',
+        'damage ratio',
+        0.0,
+        [lambda x: float(x) >= 0.0])
 
-    response_function_constructor \
-        = Element('json', 'Definition of damage function.')
-    recovery_function_constructor \
-        = Element('json', 'Definition of recovery function.')
+    response_function_constructor = Element(
+        'json', 'Definition of damage function.')
+    recovery_function_constructor = Element(
+        'json', 'Definition of recovery function.')
 
     response_function = Element('ResponseAlgorithm', 'Algorithm.')
     recovery_function = Element('RecoveryAlgorithm', 'Algorithm.')
 
-    def __init__(self, *arg, **kwargs):
+    def __init__(self, **kwargs):
+        super(DamageState, self).__init__()
 
         self.response_function = None
         self.recovery_function = None
@@ -72,7 +73,8 @@ class Component(Base):
 
     damage_states = None
 
-    def __init__(self, *arg, **kwargs):
+    def __init__(self, **kwargs):
+        super(Component, self).__init__()
 
         self.damage_states = {}
         self.destination_components = IODict()
