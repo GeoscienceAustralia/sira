@@ -16,7 +16,7 @@ imageio==2.9.0
 imagesize==1.2.0
 ipaddress==1.0.22
 Jinja2>=2.11.2
-jupyterlab==2.2.9
+jupyterlab==2.2.10
 latexcodec==2.0.1
 lmfit==1.0.0
 matplotlib==3.3.2
