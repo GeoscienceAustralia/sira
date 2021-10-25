@@ -7,6 +7,7 @@ from pathlib import Path
 testdata = [
     ('_', 'powerstation_coal_A', '-s'),
     ('_', 'substation_tx_230kv', '-sl'),
+    ('_', 'pumping_station_testbed', '-s'),
     ('_', 'potable_water_treatment_plant_A', '-sfl'),
     ('_', 'test_network__basic', '-s'),
     ('_', 'test_structure__parallel_piecewise', '-s')

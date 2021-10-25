@@ -1,0 +1,3249 @@
+{
+    "system_meta": {
+        "MODEL_NAME": {
+            "value": "Generic Water Pumping Station",
+            "notes": null
+        },
+        "INFRASTRUCTURE_LEVEL": {
+            "value": "facility",
+            "notes": null
+        },
+        "SYSTEM_CLASS": {
+            "value": "PotableWaterPumpStation",
+            "notes": null
+        },
+        "SYSTEM_SUBCLASS": {
+            "value": "Freshwater Pumping Station",
+            "notes": null
+        },
+        "SYSTEM_COMPONENT_LOCATION_CONF": {
+            "value": "defined",
+            "notes": null
+        },
+        "RESTORATION_TIME_UNIT": {
+            "value": "days",
+            "notes": null
+        },
+        "HAZARD_INTENSITY_MEASURE_PARAM": {
+            "value": "PGA",
+            "notes": null
+        },
+        "HAZARD_INTENSITY_MEASURE_UNIT": {
+            "value": "g",
+            "notes": null
+        }
+    },
+    "sysout_setup": {
+        "Output_Freshwater": {
+            "production_node": "Pipe_Main_Outlet",
+            "output_node_capacity": 150,
+            "capacity_fraction": 1,
+            "priority": 1
+        }
+    },
+    "sysinp_setup": {
+        "Water_Supply": {
+            "input_capacity": 100,
+            "capacity_fraction": 1,
+            "commodity_type": "Untreated Water"
+        },
+        "Commercial_Power_Supply": {
+            "input_capacity": 100,
+            "capacity_fraction": 1,
+            "commodity_type": "Electric Power"
+        }
+    },
+    "node_conn_df": {
+        "0": {
+            "origin": "Commercial_Power_Supply",
+            "destination": "Supplier_Connection_Switchboard",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "1": {
+            "origin": "Supplier_Connection_Switchboard",
+            "destination": "Mains_Incomer",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "2": {
+            "origin": "Mains_Incomer",
+            "destination": "Customer_Main_Switchboard",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "3": {
+            "origin": "SWITCHROOM_HV",
+            "destination": "Supplier_Connection_Switchboard",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "4": {
+            "origin": "SWITCHROOM_HV",
+            "destination": "Customer_Main_Switchboard",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "5": {
+            "origin": "SWITCHROOM_HV",
+            "destination": "Mains_Incomer",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "6": {
+            "origin": "Customer_Main_Switchboard",
+            "destination": "Tx_Aux",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "7": {
+            "origin": "Diesel_Storage_Tank",
+            "destination": "Standby_Genset_No1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "8": {
+            "origin": "Standby_Genset_No1",
+            "destination": "Tx_Gen",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "9": {
+            "origin": "Tx_Gen",
+            "destination": "Generator_Incomer",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "10": {
+            "origin": "Generator_Incomer",
+            "destination": "Customer_Main_Switchboard",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "11": {
+            "origin": "Customer_Main_Switchboard",
+            "destination": "Tx_Isolating_No1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "12": {
+            "origin": "Customer_Main_Switchboard",
+            "destination": "Tx_Isolating_No2",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "13": {
+            "origin": "Customer_Main_Switchboard",
+            "destination": "Tx_Isolating_No3",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "14": {
+            "origin": "TRANSFORMER_ROOM",
+            "destination": "Tx_Isolating_No1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "15": {
+            "origin": "TRANSFORMER_ROOM",
+            "destination": "Tx_Isolating_No2",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "16": {
+            "origin": "TRANSFORMER_ROOM",
+            "destination": "Tx_Isolating_No3",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "17": {
+            "origin": "Tx_Isolating_No1",
+            "destination": "Pump_N1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "18": {
+            "origin": "Tx_Isolating_No2",
+            "destination": "Pump_N2",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "19": {
+            "origin": "Tx_Isolating_No3",
+            "destination": "Pump_N3",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "20": {
+            "origin": "Customer_Main_Switchboard",
+            "destination": "Tx_Aux",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "21": {
+            "origin": "Tx_Aux",
+            "destination": "Switchboard_LV",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "22": {
+            "origin": "Switchboard_LV",
+            "destination": "Auxiliary_Electrical_Systems",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "23": {
+            "origin": "Auxiliary_Electrical_Systems",
+            "destination": "JUNCTION_AUX",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "24": {
+            "origin": "JUNCTION_AUX",
+            "destination": "Customer_Main_Switchboard",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "25": {
+            "origin": "Auxiliary_Electrical_Systems",
+            "destination": "Pump_N1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "26": {
+            "origin": "Auxiliary_Electrical_Systems",
+            "destination": "Pump_N2",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "27": {
+            "origin": "Auxiliary_Electrical_Systems",
+            "destination": "Pump_N3",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "28": {
+            "origin": "Water_Supply",
+            "destination": "Pipe_Main_Inlet",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "29": {
+            "origin": "Pipe_Main_Inlet",
+            "destination": "Pumphouse_Inlet_Joint",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "30": {
+            "origin": "Pumphouse_Inlet_Joint",
+            "destination": "Pump_N1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "31": {
+            "origin": "Pumphouse_Inlet_Joint",
+            "destination": "Pump_N2",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "32": {
+            "origin": "Pumphouse_Inlet_Joint",
+            "destination": "Pump_N3",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "33": {
+            "origin": "PUMP_ROOM",
+            "destination": "Pump_N1",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "34": {
+            "origin": "PUMP_ROOM",
+            "destination": "Pump_N2",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "35": {
+            "origin": "PUMP_ROOM",
+            "destination": "Pump_N3",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "36": {
+            "origin": "Pump_N1",
+            "destination": "Pump_Output_Connector",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "37": {
+            "origin": "Pump_N2",
+            "destination": "Pump_Output_Connector",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "38": {
+            "origin": "Pump_N3",
+            "destination": "Pump_Output_Connector",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "39": {
+            "origin": "Pump_Output_Connector",
+            "destination": "Pipe_Main_Outlet",
+            "link_capacity": 1,
+            "weight": 1
+        },
+        "40": {
+            "origin": "Pipe_Main_Outlet",
+            "destination": "Output_Freshwater",
+            "link_capacity": 1,
+            "weight": 1
+        }
+    },
+    "component_list": {
+        "Water_Supply": {
+            "component_type": "SYSTEM_INPUT",
+            "component_class": "MODEL ARTEFACT",
+            "cost_fraction": 0.0,
+            "node_type": "supply",
+            "node_cluster": "ZONE_01",
+            "operating_capacity": 1,
+            "pos_x": 4,
+            "pos_y": 5,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.4177573187,
+                        "mean": 0.05,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 3.3420585492,
+                        "mean": 0.4,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pipe_Main_Inlet": {
+            "component_type": "Pipe Main Inlet",
+            "component_class": "Pipework",
+            "cost_fraction": 0.0296956772,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_01",
+            "operating_capacity": 1,
+            "pos_x": 10,
+            "pos_y": 5,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "Assigned fragility & recovery algorithm for: `Elevated Pipework`",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.53,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 16.7102927461,
+                        "mean": 2.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 25.0654391191,
+                        "mean": 3.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pumphouse_Inlet_Joint": {
+            "component_type": "Pipework Elevated",
+            "component_class": "Pipework",
+            "cost_fraction": 0.0296956772,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_01",
+            "operating_capacity": 1,
+            "pos_x": 40,
+            "pos_y": 5,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.53,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 16.7102927461,
+                        "mean": 2.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 25.0654391191,
+                        "mean": 3.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Commercial_Power_Supply": {
+            "component_type": "SYSTEM_INPUT",
+            "component_class": "MODEL ARTEFACT",
+            "cost_fraction": 0.0,
+            "node_type": "supply",
+            "node_cluster": "ZONE_02",
+            "operating_capacity": 1,
+            "pos_x": 4,
+            "pos_y": 25,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.4177573187,
+                        "mean": 0.05,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 3.3420585492,
+                        "mean": 0.4,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Supplier_Connection_Switchboard": {
+            "component_type": "Electric Switchboard",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0415739481,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_02",
+            "operating_capacity": 1,
+            "pos_x": 10,
+            "pos_y": 25,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.02,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.4,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.67,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.85,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Mains_Incomer": {
+            "component_type": "Electric Control Panel",
+            "component_class": "Electrical Control Equipment",
+            "cost_fraction": 0.0,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_02",
+            "operating_capacity": 1,
+            "pos_x": 15,
+            "pos_y": 25,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.15,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Based on HAZUS curves for `Chlorination Equipment`.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.7,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 83.5514637305,
+                        "mean": 10.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 125.3271955957,
+                        "mean": 15.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "SWITCHROOM_HV": {
+            "component_type": "Switchrooms",
+            "component_class": "Building",
+            "cost_fraction": 0.0935413832,
+            "node_type": "dependency",
+            "node_cluster": "ZONE_02",
+            "operating_capacity": 1,
+            "pos_x": 15,
+            "pos_y": 30,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.15,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": "GA adaptation. HAZUS Unanchored algorithm for swtichrooms. Building 0.15 for Extensive and Complete.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor joint movement between precast panels.  Minor yielding of welded inter-panel connections and roof plane bracing elements.  Some movement of switchgear panels"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.02,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.3,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Significant movement at panel joints with damage to mastic sealant.  Yielding around bolting of diagonal bracing connections and braced members resulting in slack.  Cladding and doors damaged.  Some damage to precast wall panel connections due to yielding at connections.  Unrestrained equipment moves with some cable damage below."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.55,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive yielding of bolts and brace end connections. Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged.  Precast panel damage at connections more extensive with some failures at welds.  Some overturning of switch gear panels and UPS equipment."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 16.7102927461,
+                        "mean": 2.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.8,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Building has numerous failures in structural system with extensive drift and detachment of some precast panels.  Equipment extensively damaged."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 25.0654391191,
+                        "mean": 3.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Customer_Main_Switchboard": {
+            "component_type": "Electric Switchboard",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0207869741,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_02",
+            "operating_capacity": 1,
+            "pos_x": 20,
+            "pos_y": 25,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.02,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.4,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.67,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.85,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Diesel_Storage_Tank": {
+            "component_type": "Diesel Storage Tank Horizontal",
+            "component_class": "Steel Tank",
+            "cost_fraction": 0.0124721844,
+            "node_type": "dependency",
+            "node_cluster": "ZONE_03",
+            "operating_capacity": 1,
+            "pos_x": 4,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.14,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor base movement."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.27,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive movement without overturning but with damage to diesel pipework."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Wall buckling of tank due to sloshing of fuel"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Standby_Genset_No1": {
+            "component_type": "Backup Genset",
+            "component_class": "Generator",
+            "cost_fraction": 0.0249443689,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_03",
+            "operating_capacity": 1,
+            "pos_x": 10,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.27,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor base movement."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.35,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive movement without overturning with damage to fuel supply pipework and cabling."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive movement without overturning/ Rupture of diesel fuel lines and extensive cable damage. Digital motor failure with stepping."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Overturning of assembly with extensive damage to motor, generator and switchgear."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Tx_Gen": {
+            "component_type": "Transformer Kiosk",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0207869741,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_03",
+            "operating_capacity": 1,
+            "pos_x": 15,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.14,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Assigned fragility of algorithm for: `Transformer`.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.27,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.8,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.8,
+                        "location": 0,
+                        "beta": 0.39,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Generator_Incomer": {
+            "component_type": "Electric Control Panel",
+            "component_class": "Electrical Control Equipment",
+            "cost_fraction": 0.0,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_03",
+            "operating_capacity": 1,
+            "pos_x": 20,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.15,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Based on HAZUS curves for `Chlorination Equipment`.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.7,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 83.5514637305,
+                        "mean": 10.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 125.3271955957,
+                        "mean": 15.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Tx_Aux": {
+            "component_type": "Transformer Kiosk",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0083147896,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_04",
+            "operating_capacity": 1,
+            "pos_x": 30,
+            "pos_y": 30,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.14,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Assigned fragility of algorithm for: `Transformer`.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.27,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.8,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.8,
+                        "location": 0,
+                        "beta": 0.39,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "JUNCTION_AUX": {
+            "component_type": "JUNCTION_NODE",
+            "component_class": "MODEL ARTEFACT",
+            "cost_fraction": 0.0,
+            "node_type": "junction",
+            "node_cluster": "ZONE_04",
+            "operating_capacity": 1,
+            "pos_x": 30,
+            "pos_y": 35,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.4177573187,
+                        "mean": 0.05,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 9.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 3.3420585492,
+                        "mean": 0.4,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Switchboard_LV": {
+            "component_type": "Electric Switchboard",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.087305291,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_04",
+            "operating_capacity": 1,
+            "pos_x": 35,
+            "pos_y": 30,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.02,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.4,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.67,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.85,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Auxiliary_Electrical_Systems": {
+            "component_type": "Electric Control Panel",
+            "component_class": "Electrical Control Equipment",
+            "cost_fraction": 0.0,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_04",
+            "operating_capacity": 1,
+            "pos_x": 40,
+            "pos_y": 30,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.15,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Based on HAZUS curves for `Chlorination Equipment`.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.7,
+                        "location": 0,
+                        "beta": 0.7,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 83.5514637305,
+                        "mean": 10.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 125.3271955957,
+                        "mean": 15.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "TRANSFORMER_ROOM": {
+            "component_type": "Building Tilt-up Concrete",
+            "component_class": "Building",
+            "cost_fraction": 0.2078697405,
+            "node_type": "dependency",
+            "node_cluster": "ZONE_05",
+            "operating_capacity": 1,
+            "pos_x": 25,
+            "pos_y": 10,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.23,
+                        "location": 0,
+                        "beta": 0.25,
+                        "fragility_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to cladding and doors due to building sway."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.0835514637,
+                        "mean": 0.01,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.38,
+                        "location": 0,
+                        "beta": 0.35,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Some yielding of bolts in moment connections of steel portal frames.  Yielding around bolting of diagonal bracing connections and braced member resulting in slack.  Cladding and doors more extensively damaged.  Some damage to precast wall panel connections where present."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.1671029275,
+                        "mean": 0.02,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.3,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.55,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive yielding of bolts in moment connections of steel portal frames with permanent drift.  Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged due to significant permanent drift in the building.  Precast panel damage more extensive."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.8,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Building has numerous failures in structural system and extensive drift to the point of collapse."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Tx_Isolating_No1": {
+            "component_type": "Transformer Dry Type",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0207869741,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_05",
+            "operating_capacity": 1,
+            "pos_x": 30,
+            "pos_y": 15,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.1,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Adapted from EPN14 115/12KV",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor base movement."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.21,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.48,
+                        "location": 0,
+                        "beta": 0.39,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Internal overturning of air cooled core."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Tx_Isolating_No2": {
+            "component_type": "Transformer Dry Type",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0207869741,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_05",
+            "operating_capacity": 1,
+            "pos_x": 30,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.1,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Adapted from EPN14 115/12KV",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor base movement."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.21,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.48,
+                        "location": 0,
+                        "beta": 0.39,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Internal overturning of air cooled core."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Tx_Isolating_No3": {
+            "component_type": "Transformer Dry Type",
+            "component_class": "Electric Power Equipment",
+            "cost_fraction": 0.0207869741,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_05",
+            "operating_capacity": 1,
+            "pos_x": 30,
+            "pos_y": 25,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.1,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": "Adapted from EPN14 115/12KV",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor base movement."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.21,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": null
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.48,
+                        "location": 0,
+                        "beta": 0.39,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Internal overturning of air cooled core."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "PUMP_ROOM": {
+            "component_type": "Building Tilt-up Concrete",
+            "component_class": "Building",
+            "cost_fraction": 0.2078697405,
+            "node_type": "dependency",
+            "node_cluster": "ZONE_06",
+            "operating_capacity": 1,
+            "pos_x": 35,
+            "pos_y": 10,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.23,
+                        "location": 0,
+                        "beta": 0.25,
+                        "fragility_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Minor damage to cladding and doors due to building sway."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.0835514637,
+                        "mean": 0.01,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.38,
+                        "location": 0,
+                        "beta": 0.35,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Some yielding of bolts in moment connections of steel portal frames.  Yielding around bolting of diagonal bracing connections and braced member resulting in slack.  Cladding and doors more extensively damaged.  Some damage to precast wall panel connections where present."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.1671029275,
+                        "mean": 0.02,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.3,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.55,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Extensive yielding of bolts in moment connections of steel portal frames with permanent drift.  Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged due to significant permanent drift in the building.  Precast panel damage more extensive."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.8,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Building has numerous failures in structural system and extensive drift to the point of collapse."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pump_N1": {
+            "component_type": "Pump Horizontal 1500kW",
+            "component_class": "Pump",
+            "cost_fraction": 0.0311804611,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_06",
+            "operating_capacity": 1,
+            "pos_x": 45,
+            "pos_y": 15,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.13,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.28,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.55,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.05,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pump_N2": {
+            "component_type": "Pump Horizontal 1500kW",
+            "component_class": "Pump",
+            "cost_fraction": 0.0311804611,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_06",
+            "operating_capacity": 1,
+            "pos_x": 45,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.13,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.28,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.55,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.05,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pump_N3": {
+            "component_type": "Pump Horizontal 1500kW",
+            "component_class": "Pump",
+            "cost_fraction": 0.0311804611,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_06",
+            "operating_capacity": 1,
+            "pos_x": 45,
+            "pos_y": 25,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.13,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.28,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.55,
+                        "location": 0,
+                        "beta": 0.5,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 4.1775731865,
+                        "mean": 0.5,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 1.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.05,
+                        "location": 0,
+                        "beta": 0.4,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 8.355146373,
+                        "mean": 1.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pump_Output_Connector": {
+            "component_type": "Pipework Elevated",
+            "component_class": "Pipework",
+            "cost_fraction": 0.0296956772,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_06",
+            "operating_capacity": 1,
+            "pos_x": 50,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.53,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 16.7102927461,
+                        "mean": 2.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 25.0654391191,
+                        "mean": 3.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Pipe_Main_Outlet": {
+            "component_type": "Pipework Elevated",
+            "component_class": "Pipework",
+            "cost_fraction": 0.0296956772,
+            "node_type": "transshipment",
+            "node_cluster": "ZONE_06",
+            "operating_capacity": 1,
+            "pos_x": 55,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 0.95,
+                    "damage_ratio": 0.01,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 0.75,
+                    "damage_ratio": 0.05,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.11,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 0.3,
+                    "damage_ratio": 0.1,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 0.53,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 16.7102927461,
+                        "mean": 2.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 0.0,
+                    "damage_ratio": 0.5,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 1.0,
+                        "location": 0,
+                        "beta": 0.6,
+                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Unavailable"
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 25.0654391191,
+                        "mean": 3.0,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        },
+        "Output_Freshwater": {
+            "component_type": "SYSTEM_OUTPUT",
+            "component_class": "MODEL ARTEFACT",
+            "cost_fraction": 0.0,
+            "node_type": "sink",
+            "node_cluster": "ZONE_07",
+            "operating_capacity": 1,
+            "pos_x": 60,
+            "pos_y": 20,
+            "damages_states_constructor": {
+                "0": {
+                    "damage_state_name": "DS0 None",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Level0Response",
+                        "damage_state_definition": "Not Available."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Level0Response",
+                        "recovery_state_definition": "Not Available."
+                    }
+                },
+                "1": {
+                    "damage_state_name": "DS1 Slight",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.4177573187,
+                        "mean": 0.05,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "2": {
+                    "damage_state_name": "DS2 Moderate",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 0.8355146373,
+                        "mean": 0.1,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "3": {
+                    "damage_state_name": "DS3 Extensive",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 1.6710292746,
+                        "mean": 0.2,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                },
+                "4": {
+                    "damage_state_name": "DS4 Complete",
+                    "functionality": 1.0,
+                    "damage_ratio": 0.0,
+                    "response_function_constructor": {
+                        "function_name": "Lognormal",
+                        "median": 101.0,
+                        "location": 0,
+                        "beta": 1.0,
+                        "fragility_source": null,
+                        "lower_limit": null,
+                        "upper_limit": null,
+                        "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
+                    },
+                    "recovery_function_constructor": {
+                        "function_name": "Normal",
+                        "stddev": 3.3420585492,
+                        "mean": 0.4,
+                        "recovery_state_definition": "Unavailable."
+                    }
+                }
+            }
+        }
+    }
+}

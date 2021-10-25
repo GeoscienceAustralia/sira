@@ -896,7 +896,7 @@ class SystemTopology_WTP(SystemTopology_Generic):
 
             elif component_class in ['pump', 'pumps']:
                 self.agraph.get_node(node_id).attr.update(
-                    label="", xlabel=label_mod,
+                    label=label_mod, xlabel="",
                     pos=node_pos, **self.attr_nodes['pump'])
 
             elif component_class in ['switchroom', 'power supply']:

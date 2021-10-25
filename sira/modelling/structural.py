@@ -16,7 +16,6 @@ class NoDefaultException(Exception):
     :py:func:`generate_element_base`, which returns a class which extends
     :py:class:`_Base`.
     """
-    pass
 
 
 class ValidationError(Exception):
@@ -32,7 +31,6 @@ class ValidationError(Exception):
           *validators* to :py:class:`Element.__init__`) fails or raises an
           exception of this type.
     """
-    pass
 
 
 # class AlreadySavedException(Exception):
@@ -49,7 +47,6 @@ class DisallowedElementException(ValueError):
     name. Disallowed names are specified by
     :py:attr:StructuralMeta.DISALLOWED_FIELDS.
     """
-    pass
 
 
 class MultipleBasesOfTypeBaseError(ValueError):
@@ -65,7 +62,6 @@ class MultipleBasesOfTypeBaseError(ValueError):
     practicalities would need to be considered so stop this for now and see how
     we go.
     """
-    pass
 
 
 class Info(str):
@@ -73,7 +69,6 @@ class Info(str):
     Strings that provide 'metadata' on classes. At present, this is only used to
     identify immutable strings on a class when they are displayed.
     """
-    pass
 
 
 class Element(object):
@@ -145,7 +140,7 @@ class StructuralMeta(type):
         # create a json description of the class
         json_desc = {}
         for k, v in list(dct['__params__'].items()):
-            # TODO: put validators in here
+            # TODO: put validators in here  # noqa: W0511
             json_desc[k] = {'class': v.cls}
 
         for k, v in list(extract_params_of_type(Info).items()):
@@ -186,7 +181,7 @@ class StructuralMeta(type):
                             # default = jsonify(default)
                             if default:
                                 cls.__json_desc__[k]['default'] = default
-            except:
+            except Exception:  # pylint: disable=broad-except
                 v['class'] = '.'.join(['__builtin__', v['class']])
 
         super(StructuralMeta, cls).__init__(name, bases, dct)
@@ -204,11 +199,11 @@ class Base(metaclass=StructuralMeta):
 
         if self._predecessor is None:
             # then we provide default values for each element
-            for k, v in list(self.__params__.items()):
+            for k, v in list(self.__params__.items()):  # pylint: disable=no-member
                 if k not in kwargs:
                     try:
                         kwargs[k] = v.default
-                    except NoDefaultException:
-                        raise ValueError('Must provide value for {}'.format(k))
+                    except NoDefaultException as error:
+                        raise ValueError('Must provide value for {}'.format(k)) from error
         for k, v in list(kwargs.items()):
             setattr(self, k, v)

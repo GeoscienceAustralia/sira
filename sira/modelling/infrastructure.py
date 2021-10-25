@@ -145,12 +145,14 @@ class Infrastructure(Base):
         :return: An array of the output level for each output node.
         """
         # Create the component graph if one does not yet exist
-        if not self._component_graph:
-            self._component_graph = ComponentGraph(
-                self.components, comp_level_func)
-        else:
-            self._component_graph.update_capacity(
-                self.components, comp_level_func)
+        # if not self._component_graph:
+        #     self._component_graph = ComponentGraph(
+        #         self.components, comp_level_func)
+        # else:
+        #     self._component_graph.update_capacity(
+        #         self.components, comp_level_func)
+        self._component_graph.update_capacity(
+            self.components, comp_level_func)
 
         # calculate the capacity
         system_outflows_sample = np.zeros(len(self.output_nodes))
@@ -568,26 +570,38 @@ class PotableWaterPumpStation(Infrastructure):
                                  'JUNCTION POINT', 'JUNCTION',
                                  'MODEL ARTEFACT']
         self.ds_lims_compclasses = {
-            'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Air Compression Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Backup Generator': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Basins': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Buildings': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Chlorination Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Electric Power Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Electric Power Supply': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Electric Power Commercial': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Electric Power Backup': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Electrical Control Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Horizontal Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Vertical Pumps': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Elevated Pipes': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Internal Pipework': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Chemical Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Concrete Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Steel Tanks': [0.0, 0.05, 0.40, 0.70, 1.00],
-            'Wells': [0.0, 0.05, 0.40, 0.70, 1.00],
+            'SYSTEM INPUT':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'SYSTEM OUTPUT':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Generator':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Basin':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Building':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chlorination Equipment':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Equipment':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Supply Commercial':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electric Power Supply Backup':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Electrical Control Equipment':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Pump':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Pipework':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Chemical Tank':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Concrete Tank':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Steel Tank':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
+            'Well':
+                [0.0, 0.05, 0.40, 0.70, 1.00],
         }
 
     def get_system_damage_states(self):

@@ -53,6 +53,7 @@ class TestReadingExcelFile(unittest.TestCase):
             x for x in self.test_model_dir.rglob('input/*model*.xlsx')]
 
         for model_file in self.model_xlsx_files:
+            print(model_file)
             df = read_excel_file(model_file, sheet_name=None)
             self.model_df[model_file] = df
             component_list = df['component_list']
@@ -62,13 +63,12 @@ class TestReadingExcelFile(unittest.TestCase):
     def test01_folder_structure(self):
         self.assertTrue(
             self.test_model_dir.exists(),
-            "test models folder not found at " +
-            str(self.test_root_dir) + "!"
+            f"test models folder not found at {str(self.test_root_dir)}!"
         )
 
     def test02_model_files_exists(self):
-        print(f"\n{'-'*70}\n" +
-              "Initiating check on model files in MS Excel format...")
+        print("\n" + '-' * 70)
+        print("Initiating check on model files in MS Excel format...")
         print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_xlsx_files:
             self.assertTrue(
@@ -127,30 +127,29 @@ class TestReadingExcelFile(unittest.TestCase):
                 isinstance(len(component_list.index.tolist()), int)
             )
             self.assertTrue(
-                set(required_col_names_clist) <=
-                set(component_list.columns.values.tolist()),
+                set(required_col_names_clist) <= set(component_list.columns.values.tolist()),
                 "Required column name(s) not found!"
             )
 
             # Test component connections
             component_connections = model['component_connections']
             component_connections = component_connections.dropna(how='all')
-
+            col_names_in_file = component_connections.columns.values.tolist()
             self.assertTrue(
-                set(required_col_names_conn) <=
-                set(component_connections.columns.values.tolist()),
-                "Required column name(s) not found!")
+                set(required_col_names_conn) == set(col_names_in_file),
+                f"Required column name(s) not found in {model_file}\n"
+                f"Columns names read: {col_names_in_file}")
             origin_nodes = set(component_connections['origin'].values)
             destin_nodes = set(component_connections['destination'].values)
             all_nodes = set(component_names)
 
             # Test consistency between component definitions and connections
-            print("\nCheck origin nodes are subset of " +
+            print("\nCheck origin nodes are subset of "
                   "primary component list in system...")
             self.assertTrue(origin_nodes.issubset(all_nodes), model_file)
             print("OK")
 
-            print("\nCheck destination nodes are subset of " +
+            print("\nCheck destination nodes are subset of "
                   "primary component list in system...")
             self.assertTrue(destin_nodes.issubset(all_nodes), model_file)
             print("OK")
@@ -180,15 +179,11 @@ class TestReadingExcelFile(unittest.TestCase):
                 dfa.set_index(dfa.columns[0:3].to_list())
 
             self.assertTrue(
-                set(required_col_names) <=
-                set(comp_type_dmg_algo.columns.tolist()),
-                "Required column name not found!" + '\n' +
-                "col expected: " +
-                str(required_col_names) + '\n' +
-                "col supplied: " +
-                str(comp_type_dmg_algo.columns.values.tolist()) + '\n' +
-                "file name : " +
-                str(model_file)
+                set(required_col_names) <= set(comp_type_dmg_algo.columns.tolist()),
+                "Required column name not found!\n"
+                f"col expected: {str(required_col_names)}\n"
+                f"col supplied: {str(comp_type_dmg_algo.columns.values.tolist())}\n"
+                f"file name : {str(model_file)}"
             )
             # current implemented function
             valid_function_name_list = [
@@ -248,10 +243,10 @@ class TestReadingExcelFile(unittest.TestCase):
 
             self.assertTrue(
                 set(required_col_names) <= set(supply_setup.columns.tolist()),
-                "Required column name not found!\n" +
-                "col expected: " + str(required_col_names) + '\n' +
-                "col supplied: " + str(supply_setup.columns.values.tolist()) + '\n' +
-                "file name : " + str(model_file)
+                "Required column name not found!\n"
+                f"col expected: {str(required_col_names)}\n"
+                f"col supplied: {str(supply_setup.columns.values.tolist())}\n"
+                f"file name   : {str(model_file)}"
             )
 
             for sv in supply_setup.itertuples():
@@ -309,7 +304,8 @@ class TestReadingExcelFile(unittest.TestCase):
             production_nodes = output_setup['production_node'].values.tolist()
             self.assertTrue(
                 set(production_nodes).issubset(
-                    set(self.component_names_dict[model_file]))
+                    set(self.component_names_dict[model_file])),
+                f"Error in output_setup in model file: {model_file}"
             )
 
     def test_reading_data_from_damage_state_def(self):

@@ -551,28 +551,28 @@ def correct_crossover(
 
     params_pe = lmfit.Parameters()
 
-    ds_iter = iter(range(1, len(SYS_DS)))
+    ds_iter = iter(range(2, len(SYS_DS)))
     for dx in ds_iter:
 
         ############################################################################
-        overlap_condition = np.sum(ydata_2d[dx] > ydata_2d[dx - 1])
-        if overlap_condition == 0:
-            msg_overlap_none = \
-                f"{Fore.GREEN}"\
-                "NO crossover detected in data for the pair: "\
-                f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}"\
-                f"{Fore.RESET}"
-            # rootLogger.info(msg_overlap_none)
-            print(msg_overlap_none)
-            continue
-        else:
-            msg_overlap_found = \
-                f"{Fore.MAGENTA}"\
-                "**Crossover detected in data for the pair : "\
-                f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}**"\
-                f"{Fore.RESET}"
-            # rootLogger.info(msg_overlap_found)
-            print(msg_overlap_found)
+        # overlap_condition = np.sum(ydata_2d[dx] > ydata_2d[dx - 1])
+        # if overlap_condition == 0:
+        #     msg_overlap_none = \
+        #         f"{Fore.GREEN}"\
+        #         "NO crossover detected in data for the pair: "\
+        #         f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}"\
+        #         f"{Fore.RESET}"
+        #     # rootLogger.info(msg_overlap_none)
+        #     print(msg_overlap_none)
+        #     continue
+        # else:
+        #     msg_overlap_found = \
+        #         f"{Fore.MAGENTA}"\
+        #         "**Crossover detected in data for the pair : "\
+        #         f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}**"\
+        #         f"{Fore.RESET}"
+        #     # rootLogger.info(msg_overlap_found)
+        #     print(msg_overlap_found)
 
         ############################################################################
 
@@ -592,19 +592,11 @@ def correct_crossover(
 
         mu_hi = fitted_params_set[dx]['parameters'][param_1]
         sd_hi = fitted_params_set[dx]['parameters'][param_2]
-        # loc_hi = fitted_params_set[dx]['parameters']['loc']
-        MAX = 2 * params_hi[param_1]
 
-        # print("##################################")
-        # print("##################################")
+        MAX = 2 * params_hi[param_1]
 
         params_pe.add(param_1, value=params_hi[param_1], min=0, max=MAX)
         params_pe.add(param_2, value=params_hi[param_2], min=0, max=MAX)
-        # params_pe.add('loc', value=0.0, vary=False)
-
-        # fitted_params_set[dx] = fit_cdf_model(
-        #     x_sample, y_sample, dist=function_name, params_est=params_pe,
-        #     tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
 
         # --------------------------------------------------------------------------
         params_lo = fitted_params_set[dx - 1]['parameters']
@@ -612,12 +604,10 @@ def correct_crossover(
 
         mu_lo = fitted_params_set[dx - 1]['parameters'][param_1]
         sd_lo = fitted_params_set[dx - 1]['parameters'][param_2]
-        # loc_lo = fitted_params_set[dx - 1]['parameters']['loc']
 
         if abs(max(y_model_lo - y_model_hi)) > CROSSOVER_THRESHOLD:
             # Test if higher curve is co-incident with, or exceeds lower curve
             # Note: `loc` param for lognorm assumed zero
-            # if (mu_hi <= mu_lo) or (loc_hi < loc_lo):
             if (mu_hi <= mu_lo):
                 cx_msg_1 = f"\n {Fore.MAGENTA}*** Mean of higher curve too low: "\
                            f"resampling{Fore.RESET}"
@@ -628,10 +618,7 @@ def correct_crossover(
                 fitted_params_set[dx] = fit_cdf_model(
                     x_sample, y_sample, dist=function_name, params_est=params_pe,
                     tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
-                # (mu_hi, sd_hi, _) = (
-                #     fitted_params_set[dx]['parameters'][param_1],
-                #     fitted_params_set[dx]['parameters'][param_2],
-                #     fitted_params_set[dx]['parameters']['loc'])
+
                 (mu_hi, sd_hi) = (
                     fitted_params_set[dx]['parameters'][param_1],
                     fitted_params_set[dx]['parameters'][param_2])
