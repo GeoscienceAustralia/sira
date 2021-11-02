@@ -1,0 +1,21 @@
+name: SIRA Build and Test usng Anaconda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        $CONDA/bin/conda env update --file installation/environment.yml --name base
+    - name: Run Test Suite with pytest
+      run: |
+        conda install pytest
+        $CONDA/bin/pytest

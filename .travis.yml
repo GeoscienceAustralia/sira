@@ -37,7 +37,7 @@ jobs:
       install:
         # ---------------------------------------------------------------------
         # Create and activate the environment
-        - conda env create -n sira_env -f ./installation/environment_${TRAVIS_OS_NAME}.yml
+        - conda env create -n sira_env -f ./installation/environment.yml
         - source "$CONDA_PATH/Scripts/activate"
         - conda activate sira_env
         - python -m pip install --upgrade pip
