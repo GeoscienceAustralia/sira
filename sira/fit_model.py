@@ -71,8 +71,9 @@ class color:
 
 def lognormal_cdf(x, median, beta, loc=0):
     x = np.asarray(x)
-    logn_cdf = 0.5 + 0.5 * erf(
-        (np.log(x - loc) - np.log(median)) / (np.sqrt(2) * beta))
+    with np.errstate(divide='ignore'):
+        logn_cdf = 0.5 + 0.5 * erf(
+            (np.log(x - loc) - np.log(median)) / (np.sqrt(2) * beta))
     return logn_cdf
 
 
