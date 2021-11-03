@@ -1,6 +1,6 @@
 actdiag==2.0.0
 alabaster==0.7.12
-awscli
+awscli>=1.20.0
 blockdiag==2.0.1
 botocore==1.22.9
 brewer2mpl==1.4.1
