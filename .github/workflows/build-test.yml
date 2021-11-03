@@ -18,8 +18,6 @@ jobs:
         $CONDA/bin/conda list
         pip install -U pip
         pip install -r ./installation/requirements.txt
-    - name: Install coverage dependency
-      run: pip install --upgrade coverage[toml]
     - name: Run Test Suite with pytest
       run: |
         pip install pytest
