@@ -14,7 +14,7 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        sudo apt-get install jpeg libtiff libpng
+        $CONDA/bin/conda install libtiff libpng
         sudo apt-get install graphviz graphviz-dev
         pip install -U pip
         pip install -r ./installation/requirements.txt
