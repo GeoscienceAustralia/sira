@@ -17,8 +17,9 @@ jobs:
         $CONDA/bin/conda install libtiff libpng
         $CONDA/bin/conda list
         pip install -U pip
+        sudo apt-get install graphviz graphviz-dev
         pip install -r ./installation/requirements.txt
+        pip install pygraphviz
     - name: Run Test Suite with pytest
       run: |
-        pip install pytest
         pytest
