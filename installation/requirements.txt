@@ -6,7 +6,8 @@ botocore~=1.22.0
 brewer2mpl==1.4.1
 colorama>=0.4.3
 configparser==5.0.2
-coverage==6.1.1
+coveralls
+coverage[toml]
 docutils>=0.15.2
 flake8==4.0.1
 graphviz==0.17
