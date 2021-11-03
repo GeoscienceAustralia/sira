@@ -14,8 +14,11 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        $CONDA/bin/conda env update --file installation/environment.yml --name base
+        $CONDA/bin/conda libtiff libpng
+        $CONDA/bin/conda list
+        pip install -U pip
+        pip install -r ./installation/requirements.txt
     - name: Run Test Suite with pytest
       run: |
-        conda install pytest
-        $CONDA/bin/pytest
+        pip install pytest
+        pytest
