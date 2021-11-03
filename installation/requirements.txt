@@ -52,5 +52,6 @@ sphinxcontrib-blockdiag==2.0.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-seqdiag==2.0.0
 sphinxcontrib-websupport==1.2.4
+toml==0.10.2
 tornado==6.1
 xlrd==2.0.1
