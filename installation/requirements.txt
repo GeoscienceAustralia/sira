@@ -7,7 +7,7 @@ brewer2mpl==1.4.1
 colorama==0.4.4
 configparser==5.0.2
 coverage==6.1.1
-docutils==0.18
+docutils>=0.17
 flake8==4.0.1
 graphviz==0.17
 imagecodecs>=2021.8.26
