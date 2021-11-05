@@ -3,7 +3,7 @@
 minversion = "6.0"
 addopts = "--color=yes --cov-report=xml --cov-report=term --cov=sira"
 testpaths = ["tests"]
-filterwarnings = ""
+filterwarnings = "ignore::DeprecationWarning"
 log_cli = 1
 log_cli_level = "ERROR"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"

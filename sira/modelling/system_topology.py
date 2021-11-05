@@ -140,7 +140,10 @@ class SystemTopology_Generic(object):
 
         self.infrastructure = infrastructure
         self.component_attr = {}  # Dict for system comp attributes
-        self.output_path = output_dir if Path(str(output_dir)).is_dir() else Path.cwd()
+        if Path(str(output_dir)).is_dir():
+            self.output_path = output_dir
+        else:
+            self.output_path = Path.cwd()
 
         self.node_position_meta \
             = self.infrastructure.system_meta[self.loc_attr]['value']
@@ -379,6 +382,7 @@ class SystemTopology_Generic(object):
             self.apply_node_clustering()
 
         # Save graph in plain Graphviz dot format
+        print(self.output_path)
         self.agraph.write(Path(self.output_path, file_name + '_gv.dot'))
 
         # ---------------------------------------------------------------------

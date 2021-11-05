@@ -81,17 +81,17 @@ def fill_between_steps(ax, x, y1, y2=0, step_where='pre', **kwargs):
     # this logic is lifted from lines.py
     # this should probably be centralized someplace
     if step_where == 'pre':
-        steps = np.zeros((3, 2 * len(x) - 1), np.float)
+        steps = np.zeros((3, 2 * len(x) - 1), float)
         steps[0, 0::2], steps[0, 1::2] = vertices[0, :], vertices[0, :-1]
         steps[1:, 0::2], steps[1:, 1:-1:2] = vertices[1:, :], vertices[1:, 1:]
 
     elif step_where == 'post':
-        steps = np.zeros((3, 2 * len(x) - 1), np.float)
+        steps = np.zeros((3, 2 * len(x) - 1), float)
         steps[0, ::2], steps[0, 1:-1:2] = vertices[0, :], vertices[0, 1:]
         steps[1:, 0::2], steps[1:, 1::2] = vertices[1:, :], vertices[1:, :-1]
 
     elif step_where == 'mid':
-        steps = np.zeros((3, 2 * len(x)), np.float)
+        steps = np.zeros((3, 2 * len(x)), float)
         steps[0, 1:-1:2] = 0.5 * (vertices[0, :-1] + vertices[0, 1:])
         steps[0, 2::2] = 0.5 * (vertices[0, :-1] + vertices[0, 1:])
         steps[0, 0] = vertices[0, 0]
@@ -501,7 +501,7 @@ def vis_restoration_process(scenario,
     xbase = 5.0
     xmax = \
         int(xstep * np.ceil(
-            1.01 * max(rst_setup_df['RstEnd']) / np.float(xstep)))
+            1.01 * max(rst_setup_df['RstEnd']) / float(xstep)))
 
     # Limit number of x-steps for labelling
     if xmax / xstep > 15:
@@ -817,14 +817,14 @@ def draw_component_loss_barchart_s1(ctype_resp_sorted,
     )
 
     for p, cv in zip(pos, ctype_loss_tot_mean):
-        axes.annotate(('%0.1f' % np.float(cv)) + '%',
+        axes.annotate(('%0.1f' % float(cv)) + '%',
                       xy=(cv + 0.7, p - bar_width / 2.0 - bar_offset),
                       xycoords=('data', 'data'),
                       ha='left', va='center', size=8, color=bar_clr_1,
                       annotation_clip=False)
 
     for p, cv in zip(pos, ctype_loss_by_type):
-        axes.annotate(('%0.1f' % np.float(cv)) + '%',
+        axes.annotate(('%0.1f' % float(cv)) + '%',
                       xy=(cv + 0.7, p + bar_width / 2.0 + bar_offset * 2),
                       xycoords=('data', 'data'),
                       ha='left', va='center', size=8, color=bar_clr_2,
@@ -940,7 +940,7 @@ def draw_component_loss_barchart_s2(ctype_resp_sorted,
     )
 
     for p, cv in zip(barpos, ctype_loss_mean_by_type):
-        ax1.annotate(('%0.1f' % np.float(cv)) + '%',
+        ax1.annotate(('%0.1f' % float(cv)) + '%',
                      xy=(cv + 0.7, p - bar_width * 0.8),
                      xycoords=('data', 'data'),
                      ha='left', va='center',

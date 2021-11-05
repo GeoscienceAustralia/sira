@@ -69,23 +69,23 @@ class Infrastructure(Base):
         """
         # Component loss caused by the damage
         if_level_loss = np.zeros(
-            (scenario.num_samples, len(self.components)), dtype=np.float64)
+            (scenario.num_samples, len(self.components)), dtype=float)
         # Infrastructure loss: sum of component loss
         if_level_economic_loss = np.zeros(
-            scenario.num_samples, dtype=np.float64)
+            scenario.num_samples, dtype=float)
         # Component functionality
         if_level_functionality = np.zeros(
-            (scenario.num_samples, len(self.components)), dtype=np.float64)
+            (scenario.num_samples, len(self.components)), dtype=float)
         # output for the level of damage
         if_level_output = np.zeros(
-            (scenario.num_samples, len(self.output_nodes)), dtype=np.float64)
+            (scenario.num_samples, len(self.output_nodes)), dtype=float)
 
         # ********************
         # NOT YET IMPLEMENTED:
         # output available as recovery progresses
         # if_output_given_recovery = \
         #     np.zeros((scenario.num_samples, scenario.num_time_steps),
-        #              dtype=np.float64)
+        #              dtype=float)
 
         # iterate through the samples
         for sample_index in range(scenario.num_samples):

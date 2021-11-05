@@ -40,8 +40,10 @@ def test_run_model(dir_setup, model_name, run_arg):
     inputdir = Path(mdls_dir, model_name)
     cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
 
+    # process = subprocess.run(
+    #     cmd, stdout=subprocess.PIPE, universal_newlines=True, check=False)
     process = subprocess.run(
-        cmd, stdout=subprocess.PIPE, universal_newlines=True, check=True)
+        cmd, universal_newlines=True, check=False)
     exitstatus = process.returncode
 
     # An exit status of 0 typically indicates process ran successfully:
@@ -72,11 +74,22 @@ def test_catch_improper_inpufilename(dir_setup, model_name, run_arg):
 def test_missing_inputdir(dir_setup, model_name, run_arg):
     code_dir, mdls_dir = dir_setup
     inputdir = Path(mdls_dir, model_name)
+    err_msg = "Input directory missing"
     cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
     proc = subprocess.run(
-        cmd, capture_output=True, universal_newlines=True, check=False)
+        cmd,
+        stderr=subprocess.PIPE,
+        universal_newlines=True,
+        check=False
+    )
+    print("="*60)
+    print(str(inputdir))
+    print("="*60)
+    print(proc.stderr)
+    print("="*60)
+
     assert proc.returncode == 1
-    assert "Missing input directory" in str(proc.stderr)
+    assert err_msg.lower() in str(proc.stderr).lower()
 
 
 if __name__ == '__main__':

@@ -148,7 +148,7 @@ class HazardsContainer(object):
             self.scenario_hazard_data, self.hazard_scenario_name = \
                 HazardsContainer.populate_scenario_hazard_using_hazard_array(
                     self.hazard_scenario_list)
-            self.hazard_scenario_list = ["%0.3f" % np.float(x)
+            self.hazard_scenario_list = ["%0.3f" % float(x)
                                          for x in self.hazard_scenario_list]
 
         # ---------------------------------------------------------------------
