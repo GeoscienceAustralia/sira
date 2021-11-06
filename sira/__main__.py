@@ -128,7 +128,8 @@ def main():
     # ------------------------------------------------------------------------------
     # Locate input files
 
-    proj_input_dir = Path(proj_root_dir, "input").resolve()
+    # proj_input_dir = Path(proj_root_dir, "input").resolve()
+    proj_input_dir = Path(proj_root_dir, "input")
     config_file_name = None
     model_file_name = None
 

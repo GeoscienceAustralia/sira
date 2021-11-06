@@ -78,14 +78,19 @@ def test_missing_inputdir(dir_setup, model_name, run_arg):
     cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
     proc = subprocess.run(
         cmd,
-        capture_output=True,
+        # capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
         universal_newlines=True,
-        check=False
+        check=False,
+        shell=False
     )
     print("*" * 60)
-    print(str(inputdir))
+    print(f"Input dir: {str(inputdir)}")
     print("*" * 60)
-    print(proc.stderr)
+    print(f"proc.stdout: {proc.stdout}")
+    print("*" * 60)
+    print(f"proc.stderr: {proc.stderr}")
     print("*" * 60)
 
     assert proc.returncode == 1
