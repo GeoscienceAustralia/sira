@@ -120,21 +120,19 @@ def main():
                 "\n  A valid config file name must begin with the term `config`, and"
                 "\n  It must be in JSON format.\n")
 
-    class MissingInputDir(Exception):
-        def __init__(self, msg):
-            super(MissingInputDir, self).__init__()
-            raise IOError(str(msg))
-
     # ------------------------------------------------------------------------------
     # Locate input files
 
-    # proj_input_dir = Path(proj_root_dir, "input").resolve()
-    proj_input_dir = Path(proj_root_dir, "input")
-    config_file_name = None
-    model_file_name = None
+    try:
+        proj_input_dir = Path(proj_root_dir, "input").resolve()
+    except (IOError, OSError):
+        raise IOError("Input directory missing.")
 
     if not Path(proj_input_dir).exists():
-        raise MissingInputDir("Input directory missing.")
+        raise IOError("Input directory missing.")
+
+    config_file_name = None
+    model_file_name = None
 
     for fname in os.listdir(proj_input_dir):
 
