@@ -126,10 +126,10 @@ def main():
     try:
         proj_input_dir = Path(proj_root_dir, "input").resolve()
     except (IOError, OSError):
-        raise IOError("Input directory missing.")
+        raise IOError("Invalid path")
 
     if not Path(proj_input_dir).exists():
-        raise IOError("Input directory missing.")
+        raise IOError("Invalid path")
 
     config_file_name = None
     model_file_name = None

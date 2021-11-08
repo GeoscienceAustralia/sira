@@ -74,7 +74,7 @@ def test_catch_improper_inpufilename(dir_setup, model_name, run_arg):
 def test_missing_inputdir(dir_setup, model_name, run_arg):
     code_dir, mdls_dir = dir_setup
     inputdir = Path(mdls_dir, model_name)
-    err_msg = "Input directory missing"
+    err_msg = "Invalid path"
     cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
     proc = subprocess.run(
         cmd,
@@ -84,17 +84,16 @@ def test_missing_inputdir(dir_setup, model_name, run_arg):
         check=False,
         shell=False
     )
+    msg_out = str(proc.stdout).lower() + str(proc.stderr).lower()
 
-    print("*" * 60)
-    print(f"Input dir: {str(inputdir)}")
-    print("*" * 60)
-    print(f"proc.stdout: {proc.stdout}")
-    print("*" * 60)
-    print(f"proc.stderr: {proc.stderr}")
-    print("*" * 60)
+    print("*" * 80)
+    print(f"Input dir:\n {str(inputdir)}")
+    print("*" * 80)
+    print(f"combined msg:\n {msg_out}")
+    print("*" * 80)
 
     assert proc.returncode == 1
-    assert err_msg.lower() in str(proc.stderr).lower()
+    assert err_msg.lower() in msg_out
 
 
 if __name__ == '__main__':
