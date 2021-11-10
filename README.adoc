@@ -5,6 +5,12 @@
 # SIRA
 
 image:https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master["Build Status", link="https://travis-ci.org/GeoscienceAustralia/sira"]
+
++++
+<a href="https://github.com/GeoscienceAustralia/sira/actions">
+  <img src="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test.yml/badge.svg">
+</a>
++++
 +++
 <a href="https://codecov.io/gh/GeoscienceAustralia/sira">
   <img src="https://codecov.io/gh/GeoscienceAustralia/sira/branch/master/graph/badge.svg" />
@@ -110,8 +116,8 @@ The application can be run in a number of modes. The relevant options are:
   -f, --fit
   -l, --loss_analysis
 
-The following code snippets assume that it is being run from the root 
-directory of the SIRA code, and the model of interest is in the location 
+The following code snippets assume that it is being run from the root
+directory of the SIRA code, and the model of interest is in the location
 `sira/scenario_dir/ci_model_x`.
 
 The following code runs the simulation and the post processing simultanrously:
@@ -133,7 +139,7 @@ analysis on.
 ### Option #1: Run a simulation and destroy the container when done
 
 The following command simulataneously does the following:
-bind mounts a volume in docker, creates a container in interactive mode, 
+bind mounts a volume in docker, creates a container in interactive mode,
 runs a simulation, then destroys the container after simulation ends.
 
     $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
@@ -159,7 +165,7 @@ Run the sira code for the scenario in the specified directory:
 
     $ python sira -d /path/to/scenario_dir -sfl
 
-The process for accessing the required data for simulation from within 
+The process for accessing the required data for simulation from within
 docker are discussed in the following sections.
 
 #### Copy data into the container
@@ -169,16 +175,16 @@ copy the project folder from container to host:
 
     $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
 
-This keeps all data and code contained within the single container. 
-But it has the disadvantage that the data is not persistent -- if we 
+This keeps all data and code contained within the single container.
+But it has the disadvantage that the data is not persistent -- if we
 delete the container, we also lose the data and outputs.
 
 #### Bind a local directory to a path in Docker container
 
-When setting up to run a docker container, it might be useful to bind a 
-local directory on the host (source) to a directory on the container 
-(destination or target). This allows us to access data on the specified 
-location on the local drive, and write outputs there, from within the 
+When setting up to run a docker container, it might be useful to bind a
+local directory on the host (source) to a directory on the container
+(destination or target). This allows us to access data on the specified
+location on the local drive, and write outputs there, from within the
 container. The generic command to achieve this is:
 
     $ docker run -it \
@@ -192,14 +198,14 @@ A specific example might look like the following:
       --mount source=/Users/x/code/models/,\
       destination=/models,type=bind sira_img:latest
 
-This process maintains the separation of code and data. And data 
-persistence is maintained -- we can build and delete a container 
+This process maintains the separation of code and data. And data
+persistence is maintained -- we can build and delete a container
 without affecting the data.
 
 ## Testing
 
 To run the tests, user needs to be in the root directory of the code,
-e.g. `~/code/sira`. You can use `pytest` to run the tests, including 
+e.g. `~/code/sira`. You can use `pytest` to run the tests, including
 coverage report:
 
     $ pytest --cov-report term --cov=sira tests/
@@ -209,7 +215,7 @@ on the tests being run, and where issues are being encountered.
 
     $ python -m unittest discover tests
 
-If you are using docker as described above, you can do this from within the 
+If you are using docker as described above, you can do this from within the
 sira container.
 
 
@@ -217,7 +223,7 @@ sira container.
 
 - While the simulation has been integrated with
   the json serialisation/deserialisation logic, the redundant classes should
-  be removed and the capacity to create, edit and delete a scenario needs to 
+  be removed and the capacity to create, edit and delete a scenario needs to
   be developed.
 
 - The handling of types within the web API is inconsistent; in some cases it

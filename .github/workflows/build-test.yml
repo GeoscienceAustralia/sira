@@ -1,4 +1,4 @@
-name: Build and Test SIRA
+name: Build and Test
 
 on: [push]
 
@@ -22,3 +22,5 @@ jobs:
     - name: Run Test Suite with pytest
       run: |
         pytest
+    - name: Upload Coverage to covercov
+      uses: codecov/codecov-action@v2
