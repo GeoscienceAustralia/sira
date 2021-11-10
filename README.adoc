@@ -4,18 +4,8 @@
 
 # SIRA
 
-image:https://travis-ci.org/GeoscienceAustralia/sira.svg?branch=master["Build Status", link="https://travis-ci.org/GeoscienceAustralia/sira"]
-
-+++
-<a href="https://github.com/GeoscienceAustralia/sira/actions">
-  <img src="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test.yml/badge.svg">
-</a>
-+++
-+++
-<a href="https://codecov.io/gh/GeoscienceAustralia/sira">
-  <img src="https://codecov.io/gh/GeoscienceAustralia/sira/branch/master/graph/badge.svg" />
-</a>
-+++
+image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test.yml/badge.svg?branch=master["build and test", link="https://github.com/GeoscienceAustralia/sira/actions"]
+image:https://codecov.io/gh/GeoscienceAustralia/sira/branch/master/graph/badge.svg["codecov", link="https://codecov.io/gh/GeoscienceAustralia/sira"]
 
 toc::[]
 
@@ -217,29 +207,3 @@ on the tests being run, and where issues are being encountered.
 
 If you are using docker as described above, you can do this from within the
 sira container.
-
-
-## Todo
-
-- While the simulation has been integrated with
-  the json serialisation/deserialisation logic, the redundant classes should
-  be removed and the capacity to create, edit and delete a scenario needs to
-  be developed.
-
-- The handling of types within the web API is inconsistent; in some cases it
-  works with instances, in others dicts and in others, JSON docs. This
-  inconsistency goes beyond just the web API and makes everything harder to get.
-  One of the main reasons for this is the late addtion of 'attributes'. These
-  are meant to provide metadata about instances and I did not have a clear
-  feel for whether they should be part of the instance or just associated with
-  it. I went for the latter, which I think is the right choice, but did not
-  have the time to make the API consistent throughout.
-
-- Consider whether a framework like https://redux.js.org/[Redux] would be useful.
-
-- Perhaps get rid of `ng_select`. I started with this before realising how easy
-  simple HTML selects would be to work with and before reading about reactive
-  forms (I'm not sure how/if one could use `ng_select` with them). One benefit of
-  `ng_select` may be handling large lists and one may want to do some testing
-  before removing it.
-
