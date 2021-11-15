@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
         python-version: ['3.8', '3.9']
 
     steps:
@@ -28,6 +28,15 @@ jobs:
           sudo apt-get install graphviz graphviz-dev
           pip install -U pip
           pip install -r ./installation/requirements.txt
+
+      - name: Install dependencies for ${{ matrix.os }}
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          $CONDA/bin/conda config --set always_yes yes --set changeps1 no
+          $CONDA/bin/conda config --set pip_interop_enabled True
+          $CONDA/bin/conda env create -n sira_env -f ./installation/environment.yml
+          $CONDA/bin/conda activate sira_env
+          $CONDA/bin/conda list
 
       - name: Run Test Suite with pytest
         run: |
