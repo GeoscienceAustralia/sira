@@ -114,17 +114,17 @@ The following code runs the simulation and the post processing simultanrously:
 
     $ python sira -d scenario_dir/ci_model_x -sfl
 
-To run only the monte carlo simulation without post-processing:
+To run only the Monte Carlo simulation without post-processing:
 
     $ python sira -d scenario_dir/ci_model_x -s
 
-To run for both the model fitting and the loss analysis code:
+To run both the model fitting and the loss analysis code:
 
     $ python sira -d scenario_dir/ci_model_x -fl
 
-Note that the fitting and loss analysis steps require the initial simulation
-to have been run first so that it has the initial output data to perform the
-analysis on.
+Note that the model fitting and loss analysis steps require that the
+initial simulation be run first so that it has the initial output data
+to perform the analysis on.
 
 ### Option #1: Run a simulation and destroy the container when done
 
@@ -199,11 +199,6 @@ e.g. `~/code/sira`. You can use `pytest` to run the tests, including
 coverage report:
 
     $ pytest --cov-report term --cov=sira tests/
-
-Alternately, you can just run `unittest`. This provides more verbose reporting
-on the tests being run, and where issues are being encountered.
-
-    $ python -m unittest discover tests
 
 If you are using docker as described above, you can do this from within the
 sira container.
