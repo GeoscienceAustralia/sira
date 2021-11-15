@@ -31,16 +31,19 @@ jobs:
 
       - name: Install dependencies for ${{ matrix.os }}
         if: ${{ matrix.os == 'windows-latest' }}
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: sira_env
+          environment-file: installation/environment.yml
+          python-version: ${{ matrix.python-version }}
+          auto-activate-base: false
+        shell: bash -l {0}
         run: |
-          $CONDA/bin/conda config --set always_yes yes --set changeps1 no
-          $CONDA/bin/conda config --set pip_interop_enabled True
-          $CONDA/bin/conda env create -n sira_env -f ./installation/environment.yml
-          $CONDA/bin/conda activate sira_env
-          $CONDA/bin/conda list
+          conda info
+          conda list
 
-      - name: Run Test Suite with pytest
-        run: |
-          pytest
+      - name: Run pytest
+        run: pytest
 
       - name: Upload Coverage to covercov
         uses: codecov/codecov-action@v2
