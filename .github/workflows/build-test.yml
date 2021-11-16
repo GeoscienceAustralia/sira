@@ -24,8 +24,8 @@ jobs:
       - name: Install dependencies for ${{ matrix.os }}
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
-          $CONDA/bin/conda install libtiff libpng
           sudo apt-get install graphviz graphviz-dev
+          $CONDA/bin/conda install libtiff libpng
           pip install -U pip
           pip install -r ./installation/requirements.txt
 
@@ -34,16 +34,18 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: sira_env
-          environment-file: installation/environment.yml
+          environment-file: ./installation/environment.yml
           python-version: ${{ matrix.python-version }}
           auto-activate-base: false
+
+      - name: List conda packages
         shell: bash -l {0}
-        run: |
-          conda info
-          conda list
+        run: conda info
+        run: conda list
 
       - name: Run pytest
+        shell: bash -l {0}
         run: pytest
 
-      - name: Upload Coverage to covercov
+      - name: Upload Coverage to codecov
         uses: codecov/codecov-action@v2
