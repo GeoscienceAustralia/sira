@@ -28,14 +28,11 @@ jobs:
 
   build-windows:
     runs-on: "windows-latest"
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.8
 
       - name: Install dependencies for windows
         uses: conda-incubator/setup-miniconda@v2
@@ -43,7 +40,7 @@ jobs:
           auto-update-conda: true
           auto-activate-base: false
           activate-environment: sira_env
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.8
           environment-file: ./installation/environment.yml
 
       - name: List conda packages
