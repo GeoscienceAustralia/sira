@@ -35,7 +35,7 @@ jobs:
         shell: powershell
         run: |
           C:\Miniconda\condabin\conda.bat activate test_env
-          pytest
+          python -m pytest
 
       - name: Upload Coverage to codecov
         uses: codecov/codecov-action@v2
