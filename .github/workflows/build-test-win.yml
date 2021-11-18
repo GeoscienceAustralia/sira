@@ -31,6 +31,7 @@ jobs:
       - name: Install dependencies with conda
         shell: powershell
         run: |
+          echo ${{ env.CONDA }}
           ${{ env.CONDA }} init powershell
           ${{ env.CONDA }} create -n base python=${{ matrix.python-version }}
           ${{ env.CONDA }} env update -f ./installation/environment.yml -n base
