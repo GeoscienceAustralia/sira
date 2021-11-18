@@ -23,18 +23,19 @@ jobs:
 
       - name: Install dependencies with conda
         run: |
+          C:\Miniconda\condabin\conda.bat init powershell
           C:\Miniconda\condabin\conda.bat create -n sira_env python=${{ matrix.python-version }}
           C:\Miniconda\condabin\conda.bat activate sira_env
           C:\Miniconda\condabin\conda.bat env update --file ./installation/environment.yml
 
       - name: List conda packages
-        shell: bash -l {0}
+        shell: powershell
         run: |
-          conda info
-          conda list
+          C:\Miniconda\condabin\conda.bat info
+          C:\Miniconda\condabin\conda.bat list
 
       - name: Run pytest
-        shell: bash -l {0}
+        shell: powershell
         run: pytest
 
       - name: Upload Coverage to codecov
