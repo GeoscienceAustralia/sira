@@ -24,26 +24,25 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Set environment variables
+      - name: Set conda path
         run: |
-          echo "CONDA=C:\Miniconda\condabin\conda.bat" >> $GITHUB_ENV
+          echo "C:\Miniconda\condabin\" >> $GITHUB_PATH
 
       - name: Install dependencies with conda
         shell: powershell
         run: |
-          echo ${{ env.CONDA }}
-          ${{ env.CONDA }} init powershell
-          ${{ env.CONDA }} create -n base python=${{ matrix.python-version }}
-          ${{ env.CONDA }} env update -f ./installation/environment.yml -n base
-          ${{ env.CONDA }} activate base
-          ${{ env.CONDA }} install -c conda-forge pygraphviz
-          ${{ env.CONDA }} info
-          ${{ env.CONDA }} list
+          conda init powershell
+          conda create -n base python=${{ matrix.python-version }}
+          conda env update -f ./installation/environment.yml -n base
+          conda activate base
+          conda install -c conda-forge pygraphviz
+          conda info
+          conda list
 
       - name: Run pytest
         shell: powershell
         run: |
-          ${{ env.CONDA }} activate base
+          conda activate base
           python -m pytest
 
       - name: Upload Coverage to codecov
