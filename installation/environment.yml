@@ -3,7 +3,6 @@ channels:
     - conda-forge
     - default
 dependencies:
-    - python=3.8.6
     - pip=21.3.1
     - awscli=1.21.9
     - brewer2mpl=1.4.1
