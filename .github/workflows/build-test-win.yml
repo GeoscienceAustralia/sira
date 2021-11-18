@@ -22,8 +22,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies with conda
-        shell: bash -l {0}
+        shell: powershell
         run: |
+          C:\Miniconda\condabin\conda.bat init powershell
           C:\Miniconda\condabin\conda.bat create -n base python=${{ matrix.python-version }}
           C:\Miniconda\condabin\conda.bat env update -f ./installation/environment.yml -n base
           C:\Miniconda\condabin\conda.bat activate base
@@ -31,7 +32,7 @@ jobs:
           C:\Miniconda\condabin\conda.bat list
 
       - name: Run pytest
-        shell: bash -l {0}
+        shell: powershell
         run: |
           C:\Miniconda\condabin\conda.bat activate base
           python -m pytest
