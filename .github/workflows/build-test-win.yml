@@ -24,7 +24,6 @@ jobs:
       - name: Install dependencies with conda
         shell: bash -l {0}
         run: |
-          C:\Miniconda\condabin\conda.bat init powershell
           C:\Miniconda\condabin\conda.bat create -n base python=${{ matrix.python-version }}
           C:\Miniconda\condabin\conda.bat env update -f ./installation/environment.yml -n base
           C:\Miniconda\condabin\conda.bat activate base
