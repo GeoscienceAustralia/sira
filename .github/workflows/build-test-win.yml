@@ -22,21 +22,20 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies with conda
-        run: |
-          C:\Miniconda\condabin\conda.bat init powershell
-          C:\Miniconda\condabin\conda.bat create -n sira_env python=${{ matrix.python-version }}
-          C:\Miniconda\condabin\conda.bat activate sira_env
-          C:\Miniconda\condabin\conda.bat env update --file ./installation/environment.yml
-
-      - name: List conda packages
         shell: powershell
         run: |
+          C:\Miniconda\condabin\conda.bat init powershell
+          C:\Miniconda\condabin\conda.bat create -n test_env python=${{ matrix.python-version }}
+          C:\Miniconda\condabin\conda.bat activate test_env
+          C:\Miniconda\condabin\conda.bat env update --file ./installation/environment.yml
           C:\Miniconda\condabin\conda.bat info
           C:\Miniconda\condabin\conda.bat list
 
       - name: Run pytest
         shell: powershell
-        run: pytest
+        run: |
+          C:\Miniconda\condabin\conda.bat activate test_env
+          pytest
 
       - name: Upload Coverage to codecov
         uses: codecov/codecov-action@v2
