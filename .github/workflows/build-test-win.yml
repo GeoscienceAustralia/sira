@@ -1,4 +1,4 @@
-name: Build and Test on Windows
+name: CI on Win
 
 on:
   push:
@@ -26,8 +26,8 @@ jobs:
         run: |
           C:\Miniconda\condabin\conda.bat init powershell
           C:\Miniconda\condabin\conda.bat create -n test_env python=${{ matrix.python-version }}
+          C:\Miniconda\condabin\conda.bat env update -f ./installation/environment.yml -n test_env
           C:\Miniconda\condabin\conda.bat activate test_env
-          C:\Miniconda\condabin\conda.bat env update --file ./installation/environment.yml
           C:\Miniconda\condabin\conda.bat info
           C:\Miniconda\condabin\conda.bat list
 
