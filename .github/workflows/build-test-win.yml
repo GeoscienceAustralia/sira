@@ -26,7 +26,7 @@ jobs:
 
       - name: Set conda path
         run: |
-          echo "C:\Miniconda\condabin\" >> $GITHUB_PATH
+          echo "C:\Miniconda\condabin\conda.bin" >> $GITHUB_PATH
 
       - name: Install dependencies with conda
         shell: powershell
