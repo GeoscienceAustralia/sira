@@ -2,7 +2,7 @@ name: CI on WIN
 
 on:
   push:
-    branches: [master]
+    branches: [testing-build, master]
   pull_request:
     branches: [master]
 
