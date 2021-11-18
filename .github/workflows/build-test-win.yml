@@ -1,4 +1,4 @@
-name: CI on Win
+name: CI WIN
 
 on:
   push:
@@ -25,16 +25,16 @@ jobs:
         shell: powershell
         run: |
           C:\Miniconda\condabin\conda.bat init powershell
-          C:\Miniconda\condabin\conda.bat create -n test_env python=${{ matrix.python-version }}
-          C:\Miniconda\condabin\conda.bat env update -f ./installation/environment.yml -n test_env
-          C:\Miniconda\condabin\conda.bat activate test_env
+          C:\Miniconda\condabin\conda.bat create -n base python=${{ matrix.python-version }}
+          C:\Miniconda\condabin\conda.bat env update -f ./installation/environment.yml -n base
+          C:\Miniconda\condabin\conda.bat activate base
           C:\Miniconda\condabin\conda.bat info
           C:\Miniconda\condabin\conda.bat list
 
       - name: Run pytest
         shell: powershell
         run: |
-          C:\Miniconda\condabin\conda.bat activate test_env
+          C:\Miniconda\condabin\conda.bat activate base
           python -m pytest
 
       - name: Upload Coverage to codecov
