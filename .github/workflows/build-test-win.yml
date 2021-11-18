@@ -1,4 +1,4 @@
-name: CI WIN
+name: CI on WIN
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies with conda
-        shell: powershell
+        shell: bash -l {0}
         run: |
           C:\Miniconda\condabin\conda.bat init powershell
           C:\Miniconda\condabin\conda.bat create -n base python=${{ matrix.python-version }}
@@ -32,7 +32,7 @@ jobs:
           C:\Miniconda\condabin\conda.bat list
 
       - name: Run pytest
-        shell: powershell
+        shell: bash -l {0}
         run: |
           C:\Miniconda\condabin\conda.bat activate base
           python -m pytest
