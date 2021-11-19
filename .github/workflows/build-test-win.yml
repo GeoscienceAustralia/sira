@@ -1,8 +1,8 @@
-name: CI on Win
+name: CI on WIN
 
 on:
   push:
-    branches: [master]
+    branches: [testing-build, master]
   pull_request:
     branches: [master]
 
@@ -10,12 +10,19 @@ jobs:
 
   build-windows:
     runs-on: "windows-latest"
+
+    env:
+      CONDA: C:\Miniconda\condabin\conda.bat
+
     strategy:
       matrix:
         python-version: ['3.8', '3.9']
 
     steps:
-      - uses: actions/checkout@v2
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -24,17 +31,22 @@ jobs:
       - name: Install dependencies with conda
         shell: powershell
         run: |
-          C:\Miniconda\condabin\conda.bat init powershell
-          C:\Miniconda\condabin\conda.bat create -n test_env python=${{ matrix.python-version }}
-          C:\Miniconda\condabin\conda.bat env update -f ./installation/environment.yml -n test_env
-          C:\Miniconda\condabin\conda.bat activate test_env
-          C:\Miniconda\condabin\conda.bat info
-          C:\Miniconda\condabin\conda.bat list
+          ${{ env.CONDA }} init powershell
+          ${{ env.CONDA }} create -n base python=${{ matrix.python-version }}
+          ${{ env.CONDA }} env update -f ./installation/environment.yml -n base
+          ${{ env.CONDA }} activate base
+          ${{ env.CONDA }} install -c conda-forge pygraphviz
+
+      - name: Check environment
+        shell: powershell
+        run: |
+          ${{ env.CONDA }} info
+          ${{ env.CONDA }} list
 
       - name: Run pytest
         shell: powershell
         run: |
-          C:\Miniconda\condabin\conda.bat activate test_env
+          ${{ env.CONDA }} activate base
           python -m pytest
 
       - name: Upload Coverage to codecov

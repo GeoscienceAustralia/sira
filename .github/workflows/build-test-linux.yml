@@ -1,8 +1,8 @@
-name: Build and Test on Linux
+name: CI on LINUX
 
 on:
   push:
-    branches: [master]
+    branches: [testing-build, master]
   pull_request:
     branches: [master]
 
