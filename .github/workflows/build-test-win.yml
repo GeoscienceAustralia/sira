@@ -36,6 +36,10 @@ jobs:
           ${{ env.CONDA }} env update -f ./installation/environment.yml -n base
           ${{ env.CONDA }} activate base
           ${{ env.CONDA }} install -c conda-forge pygraphviz
+
+      - name: Check environment
+        shell: powershell
+        run: |
           ${{ env.CONDA }} info
           ${{ env.CONDA }} list
 
