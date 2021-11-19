@@ -10,6 +10,10 @@ jobs:
 
   build-windows:
     runs-on: "windows-latest"
+
+    env:
+      CONDA: C:\Miniconda\condabin\conda.bat
+
     strategy:
       matrix:
         python-version: ['3.8', '3.9']
@@ -24,25 +28,21 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Set conda path
-        run: |
-          echo "C:\Miniconda\condabin\conda.bin" >> $GITHUB_PATH
-
       - name: Install dependencies with conda
         shell: powershell
         run: |
-          conda init powershell
-          conda create -n base python=${{ matrix.python-version }}
-          conda env update -f ./installation/environment.yml -n base
-          conda activate base
-          conda install -c conda-forge pygraphviz
-          conda info
-          conda list
+          ${{ env.CONDA }} init powershell
+          ${{ env.CONDA }} create -n base python=${{ matrix.python-version }}
+          ${{ env.CONDA }} env update -f ./installation/environment.yml -n base
+          ${{ env.CONDA }} activate base
+          ${{ env.CONDA }} install -c conda-forge pygraphviz
+          ${{ env.CONDA }} info
+          ${{ env.CONDA }} list
 
       - name: Run pytest
         shell: powershell
         run: |
-          conda activate base
+          ${{ env.CONDA }} activate base
           python -m pytest
 
       - name: Upload Coverage to codecov
