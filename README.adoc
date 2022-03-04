@@ -196,8 +196,11 @@ without affecting the data.
 ## Testing
 
 To run the tests, user needs to be in the root directory of the code,
-e.g. `~/code/sira`. You can use `pytest` to run the tests, including
-coverage report:
+e.g. `~/code/sira`. Then simply run:
+
+    $ pytest
+
+If you want to explicitly ask `pytest` to run coverage reports, then run:
 
     $ pytest --cov-report term --cov=sira tests/
 
