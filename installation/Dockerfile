@@ -23,16 +23,16 @@ RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula selec
 RUN apt-get install -y ttf-mscorefonts-installer
 
 # install anaconda3
-RUN wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
+RUN wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh
 RUN bash /tmp/Anaconda3*.sh -b -p /root/anaconda3
 RUN rm /tmp/Anaconda3*.sh
-RUN /root/anaconda3/bin/conda create -n sira_env python=3.7.6  -y
+RUN /root/anaconda3/bin/conda create -n sira_env python=3.8.6  -y
 
 ENV PATH="/root/anaconda3/envs/sira_env/bin:$PATH"
 
 # install packages not available in /root/anaconda3/bin/conda
-ADD requirements.txt .
-RUN pip install -r requirements.txt
+ADD installation/requirements.txt .
+RUN pip install -r installation/requirements.txt
 
 ARG CACHE_DATE
 RUN git clone --single-branch --branch master https://github.com/GeoscienceAustralia/sira.git

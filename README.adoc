@@ -4,8 +4,8 @@
 
 # SIRA
 
-image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml/badge.svg?branch=master["CI on Linux", link="https://github.com/GeoscienceAustralia/sira/actions"]
-image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml/badge.svg?branch=master["CI on windows", link="https://github.com/GeoscienceAustralia/sira/actions"]
+image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml/badge.svg?branch=master["CI on Linux", link="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml"]
+image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml/badge.svg?branch=master["CI on windows", link="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml"]
 image:https://codecov.io/gh/GeoscienceAustralia/sira/branch/master/graph/badge.svg["codecov", link="https://codecov.io/gh/GeoscienceAustralia/sira"]
 
 toc::[]
