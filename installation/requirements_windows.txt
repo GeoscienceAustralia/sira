@@ -11,7 +11,7 @@ colorama==0.4.3
 configparser==5.0.1
 coverage==5.3
 graphviz==0.15
-ipython==7.19.0
+ipython==8.1.1
 imagecodecs==2020.5.30
 imageio==2.8.0
 imagesize==1.2.0
@@ -21,7 +21,7 @@ lmfit==1.0.1
 matplotlib==3.3.2
 netcdf4==1.5.4
 networkx==2.5
-numpy==1.19.2
+numpy==1.22.2
 openpyxl==3.0.5
 pandas==1.1.4
 parmap==1.5.2
