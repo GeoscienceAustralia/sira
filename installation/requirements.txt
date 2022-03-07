@@ -10,6 +10,7 @@ coveralls
 coverage[toml]
 docutils>=0.15.2
 flake8==4.0.1
+funcparserlib==0.3.5
 graphviz==0.17
 imagecodecs==2022.2.22
 imageio==2.10.1

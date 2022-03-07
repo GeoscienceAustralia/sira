@@ -26,7 +26,7 @@ RUN apt-get install -y ttf-mscorefonts-installer
 RUN wget -P /tmp https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh
 RUN bash /tmp/Anaconda3*.sh -b -p /root/anaconda3
 RUN rm /tmp/Anaconda3*.sh
-RUN /root/anaconda3/bin/conda create -n sira_env python=3.8.6  -y
+RUN /root/anaconda3/bin/conda create -n sira_env python=3.9  -y
 
 ENV PATH="/root/anaconda3/envs/sira_env/bin:$PATH"
 
