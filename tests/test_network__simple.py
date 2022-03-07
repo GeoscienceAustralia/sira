@@ -31,7 +31,7 @@ class TestNetworkModelling(unittest.TestCase):
         target_mdl_dir = Path(self.mdls_dir, model_name)
 
         process = subprocess.run(
-            ['python', str(self.code_dir), '-d', str(target_mdl_dir), '-s'],
+            [sys.executable, str(self.code_dir), '-d', str(target_mdl_dir), '-s'],
             stdout=subprocess.PIPE, universal_newlines=True, check=True)
         exitstatus = process.returncode
         # An exit status of 0 typically indicates process ran successfully:

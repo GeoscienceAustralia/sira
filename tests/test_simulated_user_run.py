@@ -1,4 +1,5 @@
 import subprocess
+import sys
 import pytest
 from pathlib import Path
 
@@ -38,10 +39,8 @@ def test_run_model(dir_setup, model_name, run_arg):
     """
     code_dir, mdls_dir = dir_setup
     inputdir = Path(mdls_dir, model_name)
-    cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
+    cmd = [sys.executable, str(code_dir), '-d', str(inputdir), run_arg]
 
-    # process = subprocess.run(
-    #     cmd, stdout=subprocess.PIPE, universal_newlines=True, check=False)
     process = subprocess.run(
         cmd, universal_newlines=True, check=False)
     exitstatus = process.returncode
@@ -58,7 +57,7 @@ def test_run_model(dir_setup, model_name, run_arg):
 def test_catch_improper_inpufilename(dir_setup, model_name, run_arg):
     code_dir, mdls_dir = dir_setup
     inputdir = Path(mdls_dir, model_name)
-    cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
+    cmd = [sys.executable, str(code_dir), '-d', str(inputdir), run_arg]
 
     proc = subprocess.run(
         cmd, capture_output=True, universal_newlines=True, check=False)
@@ -75,7 +74,7 @@ def test_missing_inputdir(dir_setup, model_name, run_arg):
     code_dir, mdls_dir = dir_setup
     inputdir = Path(mdls_dir, model_name)
     err_msg = "Invalid path"
-    cmd = ['python', str(code_dir), '-d', str(inputdir), run_arg]
+    cmd = [sys.executable, str(code_dir), '-d', str(inputdir), run_arg]
     proc = subprocess.run(
         cmd,
         stdout=subprocess.PIPE,
