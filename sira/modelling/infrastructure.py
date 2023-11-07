@@ -451,6 +451,8 @@ class Substation(Infrastructure):
                 [0.05, 0.40, 0.70, 1.00],
             'Lightning Arrester':
                 [0.05, 0.40, 0.70, 1.00],
+            'Station Power Supply':
+                [0.05, 0.40, 0.70, 1.00],
         }
 
     def get_system_damage_states(self):
