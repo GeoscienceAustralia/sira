@@ -17,11 +17,9 @@ mpl.rcParams['grid.linewidth'] = 0.5
 
 # mpl.rcParams['text.usetex'] = True
 # mpl.rcParams.update()
-
 # mpl.font_manager._rebuild()
 # mpl.rcParams['font.family'] = 'serif'
-# mpl.rcParams['font.serif'] = \
-#     ['Droid Serif'] + mpl.rcParams['font.serif']
+# mpl.rcParams['font.serif'] = ['Droid Serif'] + mpl.rcParams['font.serif']
 
 class ColourPalettes(object):
 
@@ -141,11 +139,13 @@ class ColourPalettes(object):
         self.__BrewerSpectral = \
             brewer2mpl.get_map('Spectral', 'Diverging', 11).mpl_colors
 
-        self.__FiveLevels = [self.__BrewerPaired[9],
-                             self.__BrewerPaired[3],
-                             self.__BrewerPaired[1],
-                             self.__BrewerPaired[7],
-                             self.__BrewerPaired[5]]
+        self.__FiveLevels = [
+            self.__BrewerPaired[9],
+            self.__BrewerPaired[3],
+            self.__BrewerPaired[1],
+            self.__BrewerPaired[7],
+            self.__BrewerPaired[5]
+        ]
         # ---------------------------------------------------------------------
 
     @property
@@ -191,9 +191,7 @@ class ColourPalettes(object):
     def get(self, attr):
         return getattr(self, attr)
 
-
 # ----------------------------------------------------------------------------
-
 
 def split_long_label(string, delims, max_chars_per_line=20):
     '''
@@ -217,50 +215,6 @@ def split_long_label(string, delims, max_chars_per_line=20):
         lines.extend(str_list)
     lines = ''.join(lines)
     return lines
-
-# ----------------------------------------------------------------------------
-
-# def calc_tick_pos(stepsize, ax_vals_list, ax_labels_list,
-#                   maxnumticks=11, plot_type='line'):
-#     '''
-#     Calculates appropriate tick positions based on
-#     given input parameters
-#     '''
-#     stepsize = stepsize
-#     numticks = int(round((max(ax_vals_list) - min(ax_vals_list)) / stepsize))
-#
-#     while numticks > maxnumticks:
-#         stepsize = stepsize * 2.0
-#         numticks = int(round((max(ax_vals_list) - min(ax_vals_list)) /
-#                              stepsize))
-#
-#     skip = int(len(ax_vals_list) / numticks)
-#     ndx_all = range(1, len(ax_vals_list) + 1, 1)
-#
-#     if plot_type == 'box':
-#         tick_pos = ndx_all[0::skip]
-#         if max(tick_pos) != max(ndx_all):
-#             numticks += 1
-#             tick_pos = np.append(tick_pos, max(ndx_all))
-#
-#         tick_val = np.zeros(len(tick_pos))
-#         i = 0
-#         for j in tick_pos:
-#             tick_val[i] = ax_labels_list[j - 1]
-#             i += 1
-#
-#     elif plot_type == 'line':
-#         tick_pos = ax_vals_list[0::skip]
-#         if max(tick_pos) != max(ax_vals_list):
-#             numticks += 1
-#             tick_pos = np.append(tick_pos, max(ax_vals_list))
-#         tick_val = tick_pos
-#
-#     else:
-#         tick_pos = ax_vals_list
-#         tick_val = ax_labels_list
-#
-#     return tick_pos, tick_val
 
 # ----------------------------------------------------------------------------
 
@@ -292,16 +246,16 @@ def forceAspect(ax, aspect=1):
 
 # ----------------------------------------------------------------------------
 
-
-def format_fig(axis, figtitle, x_lim, y_lim,
-               x_lab=None, y_lab=None,
-               x_scale=None, y_scale=None,
-               x_tick_pos=None, y_tick_pos=None,
-               x_tick_val=None, y_tick_val=None,
-               x_grid=False, y_grid=False,
-               x_margin=None, y_margin=None,
-               add_legend=False, legend_title=None,
-               aspectratio=0):
+def format_fig(
+        axis, figtitle, x_lim, y_lim,
+        x_lab=None, y_lab=None,
+        x_scale=None, y_scale=None,
+        x_tick_pos=None, y_tick_pos=None,
+        x_tick_val=None, y_tick_val=None,
+        x_grid=False, y_grid=False,
+        x_margin=None, y_margin=None,
+        add_legend=False, legend_title=None,
+        aspectratio=0):
     """
     Customises plots to a clean consistent appearance
     """
@@ -384,9 +338,9 @@ def format_fig(axis, figtitle, x_lim, y_lim,
 
     axis.margins(x_margin, y_margin)
 
-    if type(x_lim) == list and len(x_lim) == 2:
+    if isinstance(x_lim, list) and len(x_lim) == 2:
         axis.set_xlim(x_lim)
-    if type(y_lim) == list and len(y_lim) == 2:
+    if isinstance(x_lim, list) and len(y_lim) == 2:
         axis.set_ylim(y_lim)
 
     axis.set_title(figtitle, loc='center', y=1.04, fontweight='bold', size=11)
@@ -395,10 +349,7 @@ def format_fig(axis, figtitle, x_lim, y_lim,
 
     # Shrink current axis width by 15%
     box = axis.get_position()
-    axis.set_position([box.x0,
-                       box.y0,
-                       box.width * 0.85,
-                       box.height])
+    axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
 
     # Put a legend to the right of the current axis
     if add_legend is True:

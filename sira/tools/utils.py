@@ -31,12 +31,12 @@ def jsonify(obj):
 
     The algorithm is:
 
-        - if the object has a method ``__jsonify__``, return the result of
-          calling it, otherwise
-        - if ``isinstance(obj, dict)``, transform the key/value (``k:v``) pairs
-          with ``jsonify(k): jsonify(v)``, otherwise
-        - if the object is iterable but not a string, transform the elements (``v``)
-          with ``jsonify(v)``.
+    - if the object has a method ``__jsonify__``, return the result of
+        calling it, otherwise
+    - if ``isinstance(obj, dict)``, transform the key/value (``k:v``) pairs
+        with ``jsonify(k): jsonify(v)``, otherwise
+    - if the object is iterable but not a string, transform the elements (``v``)
+        with ``jsonify(v)``.
     """
 
     if hasattr(obj, '__jsonify__'):
@@ -113,21 +113,21 @@ ListDiff = _make_diff('ListDiff', ['changed', 'dropped', 'added'])
 
 
 def find_changes(old, new):
-    if type(new) is tuple:
+    if isinstance(new, tuple):
         # deliberately not isinstance... who knows what we could throw away
         new = list(new)
 
-    if type(old) is tuple:
+    if isinstance(old, tuple):
         # deliberately not isinstance... who knows what we could throw away
         old = list(old)
 
     if old == new:
         return None
 
-    if type(old) != type(new):
+    if type(old) is not type(new):
         return Diff(new or None)
 
-    if type(new) == list:
+    if isinstance(new, list):
         all_changes = {}
         for a, b, index in zip(old, new, range(len(new))):
             changes = find_changes(a, b)
@@ -143,7 +143,7 @@ def find_changes(old, new):
 
         return ListDiff(all_changes or None, None, None)
 
-    if type(new) != dict:
+    if not isinstance(new, dict):
         return Diff(new or None)
 
     new_keys = set(new.keys())
@@ -162,7 +162,7 @@ def find_changes(old, new):
 
 
 def reconstitute(old, changes):
-    result = list(old) if type(old) == tuple else deepcopy(old)
+    result = list(old) if isinstance(old, tuple) else deepcopy(old)
 
     if isinstance(changes, Diff):
         result = changes.changed
@@ -183,7 +183,7 @@ def reconstitute(old, changes):
 
     else:
         assert isinstance(changes, ListDiff)
-        assert type(old) == list or type(old) == tuple
+        assert isinstance(old, list) or isinstance(old, tuple)
         # using type (not is instance) deliberately
 
         if changes.dropped is not None:
@@ -198,3 +198,41 @@ def reconstitute(old, changes):
                 result[int(k)] = reconstitute(old[int(k)], v)
 
     return result
+
+
+def wrap_file_path(
+        file_path,
+        max_width=85,
+        first_line_indent=" " * 9,
+        subsequent_indent=" " * 9):
+    # Replace backslashes with forward slashes for consistent splitting
+    file_path = file_path.replace('\\', '/')
+    path_components = file_path.split('/')
+
+    lines = []
+    current_line = first_line_indent
+    for i, component in enumerate(path_components):
+        # If this isn't the first component, then add a slash before it
+        if i > 0:
+            # Check if adding slash + component would exceed max_width
+            if len(current_line) + len(component) + 1 > max_width:
+                # If so, start a new line
+                lines.append(current_line)
+                current_line = subsequent_indent + '/' + component
+            else:
+                # Otherwise, add slash and component to current line
+                current_line += '/' + component
+        else:
+            # For the first component, just add it
+            # (it might be an empty string if path starts with '/')
+            current_line += component
+
+    # Add the last line
+    if current_line:
+        lines.append(current_line)
+
+    txtblock = '\n'.join(lines)
+    if '\\' in file_path:
+        txtblock = txtblock.replace('/', '\\')
+
+    return txtblock

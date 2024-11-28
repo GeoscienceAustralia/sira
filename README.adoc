@@ -43,69 +43,58 @@ developing code. This gives us the tools to manage the package
 dependencies and requirements in a transparent manner, and impact of
 dependency changes on software behaviour.
 
-The system is currently being designed as microservices implemented in
-docker containers. If you have docker installed on your system it is
-probably easiest to use the containers as described below.
+### Set up the environment
 
-### Building the Run Environment Using Docker
+The recommended process to set up the environment is to use `mamba` and `uv`.
+This approach works equally well in Windows and Linux, and within Docker. Move
+into the `sira/installation` directory, and use the provided conda environment file
+(yaml) and `pip` requirements file (txt) to install the required packages:
 
-Docker configuration is the preferred way to deploy the application.
-The process of building the docker images and container are outlined below:
-
-Step 1: Delete all containers
-
-    $ docker rm $(docker stop $(docker ps -aq))
-
-Step 2: Delete all images
-
-    $ docker rmi $(docker images --filter "dangling=true" -q)
-
-Step 3: Build the docker image
-
-    $ docker build -t siraimg . --build-arg CACHE_DATE="$(date)"
+    $ mamba env create -f sira_env.yml
+    $ mamba activate sira_env
+    $ pip install uv
+    $ uv pip install -r sira_req.txt
 
 ### Required Directory Structure
 
 To set up a scenario or impact simulation project, SIRA expects the following
-directory structure:
+directory shown below.
 
 ```
-    scenario_dir/
-    └── model_x
-        │
-        ├── input
-        │   ├── config_assetx.json
-        │   └── model_assetx.json
-        └── output
-            ├── ...
-            └── ...
+    model_dir
+    │
+    ├── input
+    │   ├── config_assetx.json
+    │   └── model_assetx.json
+    └── output
+        ├── ...
+        └── ...
 ```
 
 Explanation of the required structure is as follows:
 
-    - 'scenario directory' - it can be named anything
-    - within the scenario directory, there must exist a uniquely named
-      'model directory' for each scenario or run event.
+    - 'model directory' - it can be named anything
     - within the 'model directory', the 'input' dir must have two files, in
-      specified format:
+        specified format:
 
         - a model file: it must have the term 'model' at the beginning or
-          end of the file name
+            end of the file name
         - a config file: it must have the term 'config' at the beginning or
-          end of the file name
+            end of the file name
 
     - the outputs are saved in the 'output' dir. If it does not exist, the code
-      will create it at the beginning of the simulation.
+        will create it at the beginning of the simulation.
+    - The output folder location can be specified in the `config` file.
 
 
 ## Running the Application
 
 The application can be run in a number of modes. The relevant options are:
 
-  -d <path_to_input_dir>, --input_directory <path_to_input_dir>
-  -s, --simulation
-  -f, --fit
-  -l, --loss_analysis
+    -d <path_to_input_dir>, --input_directory <path_to_input_dir>
+    -s, --simulation
+    -f, --fit
+    -l, --loss_analysis
 
 The following code snippets assume that it is being run from the root
 directory of the SIRA code, and the model of interest is in the location
@@ -126,72 +115,6 @@ To run both the model fitting and the loss analysis code:
 Note that the model fitting and loss analysis steps require that the
 initial simulation be run first so that it has the initial output data
 to perform the analysis on.
-
-### Option #1: Run a simulation and destroy the container when done
-
-The following command simulataneously does the following:
-bind mounts a volume in docker, creates a container in interactive mode,
-runs a simulation, then destroys the container after simulation ends.
-
-    $ docker run -it --rm -v /abs/local/path/<scenario_dir>:/<scenario_dir> \
-      siraimg:latest \
-      python sira -d <scenario_dir> -sfl --aws
-
-### Option #2: Build a container for reuse / experimentation
-
-First, build a docker container from the prebuilt image.
-
-    $ docker create --name=sira_x -it siraimg:latest
-
-Then start and attach the container:
-
-    $ docker start sira_x
-    $ docker attach sira_x
-
-It is possible to combine the above steps in one:
-
-    $ docker start -a -i sira_x
-
-Run the sira code for the scenario in the specified directory:
-
-    $ python sira -d /path/to/scenario_dir -sfl
-
-The process for accessing the required data for simulation from within
-docker are discussed in the following sections.
-
-#### Copy data into the container
-
-From outside of docker, on a terminal, use the following command to
-copy the project folder from container to host:
-
-    $ docker cp $(docker ps -alq):/from/path/in/container /to/path/in/host/
-
-This keeps all data and code contained within the single container.
-But it has the disadvantage that the data is not persistent -- if we
-delete the container, we also lose the data and outputs.
-
-#### Bind a local directory to a path in Docker container
-
-When setting up to run a docker container, it might be useful to bind a
-local directory on the host (source) to a directory on the container
-(destination or target). This allows us to access data on the specified
-location on the local drive, and write outputs there, from within the
-container. The generic command to achieve this is:
-
-    $ docker run -it \
-      --name=docker_container_name \
-      --mount source=/path/in/local/host/,\
-      destination=/path/in/container,type=bind docker_image_name:latest
-
-A specific example might look like the following:
-    $ docker run -it \
-      --name=sira_x \
-      --mount source=/Users/x/code/models/,\
-      destination=/models,type=bind sira_img:latest
-
-This process maintains the separation of code and data. And data
-persistence is maintained -- we can build and delete a container
-without affecting the data.
 
 ## Testing
 

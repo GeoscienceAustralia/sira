@@ -334,7 +334,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "data_source": "Assigned unbreakable fragiity.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -355,7 +355,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -376,7 +376,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -397,7 +397,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -443,7 +443,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "Assigned fragility & recovery algorithm for: `Elevated Pipework`",
+                        "data_source": "Assigned fragility & recovery algorithm for: `Elevated Pipework`",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -464,7 +464,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -485,7 +485,7 @@
                         "median": 0.53,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -506,7 +506,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -552,7 +552,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -573,7 +573,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -594,7 +594,7 @@
                         "median": 0.53,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -615,7 +615,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -661,7 +661,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "data_source": "Assigned unbreakable fragiity.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -682,7 +682,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -703,7 +703,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -724,7 +724,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -770,7 +770,7 @@
                         "median": 0.4,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
+                        "data_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -791,7 +791,7 @@
                         "median": 0.67,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -812,7 +812,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -833,7 +833,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -879,7 +879,7 @@
                         "median": 0.15,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Based on HAZUS curves for `Chlorination Equipment`.",
+                        "data_source": "Based on HAZUS curves for `Chlorination Equipment`.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -900,7 +900,7 @@
                         "median": 0.7,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -921,7 +921,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -942,7 +942,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -988,7 +988,7 @@
                         "median": 0.15,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "GA adaptation. HAZUS Unanchored algorithm for swtichrooms. Building 0.15 for Extensive and Complete.",
+                        "data_source": "GA adaptation. HAZUS Unanchored algorithm for swtichrooms. Building 0.15 for Extensive and Complete.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor joint movement between precast panels.  Minor yielding of welded inter-panel connections and roof plane bracing elements.  Some movement of switchgear panels"
@@ -1009,7 +1009,7 @@
                         "median": 0.3,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant movement at panel joints with damage to mastic sealant.  Yielding around bolting of diagonal bracing connections and braced members resulting in slack.  Cladding and doors damaged.  Some damage to precast wall panel connections due to yielding at connections.  Unrestrained equipment moves with some cable damage below."
@@ -1030,7 +1030,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive yielding of bolts and brace end connections. Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged.  Precast panel damage at connections more extensive with some failures at welds.  Some overturning of switch gear panels and UPS equipment."
@@ -1051,7 +1051,7 @@
                         "median": 0.8,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Building has numerous failures in structural system with extensive drift and detachment of some precast panels.  Equipment extensively damaged."
@@ -1097,7 +1097,7 @@
                         "median": 0.4,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
+                        "data_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1118,7 +1118,7 @@
                         "median": 0.67,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1139,7 +1139,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1160,7 +1160,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1206,7 +1206,7 @@
                         "median": 0.14,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor base movement."
@@ -1227,7 +1227,7 @@
                         "median": 0.27,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive movement without overturning but with damage to diesel pipework."
@@ -1248,7 +1248,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Wall buckling of tank due to sloshing of fuel"
@@ -1269,7 +1269,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -1315,7 +1315,7 @@
                         "median": 0.27,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor base movement."
@@ -1336,7 +1336,7 @@
                         "median": 0.35,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive movement without overturning with damage to fuel supply pipework and cabling."
@@ -1357,7 +1357,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive movement without overturning/ Rupture of diesel fuel lines and extensive cable damage. Digital motor failure with stepping."
@@ -1378,7 +1378,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturning of assembly with extensive damage to motor, generator and switchgear."
@@ -1424,7 +1424,7 @@
                         "median": 0.14,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Assigned fragility of algorithm for: `Transformer`.",
+                        "data_source": "Assigned fragility of algorithm for: `Transformer`.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1445,7 +1445,7 @@
                         "median": 0.27,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1466,7 +1466,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1487,7 +1487,7 @@
                         "median": 0.8,
                         "location": 0,
                         "beta": 0.39,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1533,7 +1533,7 @@
                         "median": 0.15,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Based on HAZUS curves for `Chlorination Equipment`.",
+                        "data_source": "Based on HAZUS curves for `Chlorination Equipment`.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1554,7 +1554,7 @@
                         "median": 0.7,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1575,7 +1575,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1596,7 +1596,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1642,7 +1642,7 @@
                         "median": 0.14,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Assigned fragility of algorithm for: `Transformer`.",
+                        "data_source": "Assigned fragility of algorithm for: `Transformer`.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1663,7 +1663,7 @@
                         "median": 0.27,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1684,7 +1684,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1705,7 +1705,7 @@
                         "median": 0.8,
                         "location": 0,
                         "beta": 0.39,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1751,7 +1751,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "data_source": "Assigned unbreakable fragiity.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1772,7 +1772,7 @@
                         "median": 9.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1793,7 +1793,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1814,7 +1814,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1860,7 +1860,7 @@
                         "median": 0.4,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
+                        "data_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1881,7 +1881,7 @@
                         "median": 0.67,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1902,7 +1902,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1923,7 +1923,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1969,7 +1969,7 @@
                         "median": 0.15,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Based on HAZUS curves for `Chlorination Equipment`.",
+                        "data_source": "Based on HAZUS curves for `Chlorination Equipment`.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -1990,7 +1990,7 @@
                         "median": 0.7,
                         "location": 0,
                         "beta": 0.7,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2011,7 +2011,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2032,7 +2032,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2078,7 +2078,7 @@
                         "median": 0.23,
                         "location": 0,
                         "beta": 0.25,
-                        "fragility_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
+                        "data_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to cladding and doors due to building sway."
@@ -2099,7 +2099,7 @@
                         "median": 0.38,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Some yielding of bolts in moment connections of steel portal frames.  Yielding around bolting of diagonal bracing connections and braced member resulting in slack.  Cladding and doors more extensively damaged.  Some damage to precast wall panel connections where present."
@@ -2120,7 +2120,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive yielding of bolts in moment connections of steel portal frames with permanent drift.  Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged due to significant permanent drift in the building.  Precast panel damage more extensive."
@@ -2141,7 +2141,7 @@
                         "median": 0.8,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Building has numerous failures in structural system and extensive drift to the point of collapse."
@@ -2187,7 +2187,7 @@
                         "median": 0.1,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Adapted from EPN14 115/12KV",
+                        "data_source": "Adapted from EPN14 115/12KV",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor base movement."
@@ -2208,7 +2208,7 @@
                         "median": 0.21,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
@@ -2229,7 +2229,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -2250,7 +2250,7 @@
                         "median": 0.48,
                         "location": 0,
                         "beta": 0.39,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Internal overturning of air cooled core."
@@ -2296,7 +2296,7 @@
                         "median": 0.1,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Adapted from EPN14 115/12KV",
+                        "data_source": "Adapted from EPN14 115/12KV",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor base movement."
@@ -2317,7 +2317,7 @@
                         "median": 0.21,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
@@ -2338,7 +2338,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -2359,7 +2359,7 @@
                         "median": 0.48,
                         "location": 0,
                         "beta": 0.39,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Internal overturning of air cooled core."
@@ -2405,7 +2405,7 @@
                         "median": 0.1,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "Adapted from EPN14 115/12KV",
+                        "data_source": "Adapted from EPN14 115/12KV",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor base movement."
@@ -2426,7 +2426,7 @@
                         "median": 0.21,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
@@ -2447,7 +2447,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -2468,7 +2468,7 @@
                         "median": 0.48,
                         "location": 0,
                         "beta": 0.39,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Internal overturning of air cooled core."
@@ -2514,7 +2514,7 @@
                         "median": 0.23,
                         "location": 0,
                         "beta": 0.25,
-                        "fragility_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
+                        "data_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to cladding and doors due to building sway."
@@ -2535,7 +2535,7 @@
                         "median": 0.38,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Some yielding of bolts in moment connections of steel portal frames.  Yielding around bolting of diagonal bracing connections and braced member resulting in slack.  Cladding and doors more extensively damaged.  Some damage to precast wall panel connections where present."
@@ -2556,7 +2556,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive yielding of bolts in moment connections of steel portal frames with permanent drift.  Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged due to significant permanent drift in the building.  Precast panel damage more extensive."
@@ -2577,7 +2577,7 @@
                         "median": 0.8,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Building has numerous failures in structural system and extensive drift to the point of collapse."
@@ -2623,7 +2623,7 @@
                         "median": 0.13,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
+                        "data_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2644,7 +2644,7 @@
                         "median": 0.28,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2665,7 +2665,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2686,7 +2686,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2732,7 +2732,7 @@
                         "median": 0.13,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
+                        "data_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2753,7 +2753,7 @@
                         "median": 0.28,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2774,7 +2774,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2795,7 +2795,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2841,7 +2841,7 @@
                         "median": 0.13,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
+                        "data_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2862,7 +2862,7 @@
                         "median": 0.28,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2883,7 +2883,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2904,7 +2904,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2950,7 +2950,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2971,7 +2971,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -2992,7 +2992,7 @@
                         "median": 0.53,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -3013,7 +3013,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -3059,7 +3059,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -3080,7 +3080,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.11,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -3101,7 +3101,7 @@
                         "median": 0.53,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -3122,7 +3122,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
+                        "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Unavailable"
@@ -3168,7 +3168,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": "Assigned unbreakable fragiity.",
+                        "data_source": "Assigned unbreakable fragiity.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -3189,7 +3189,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -3210,7 +3210,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -3231,7 +3231,7 @@
                         "median": 101.0,
                         "location": 0,
                         "beta": 1.0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."

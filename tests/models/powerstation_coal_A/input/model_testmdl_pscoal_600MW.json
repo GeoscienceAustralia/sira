@@ -346,7 +346,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -367,7 +367,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -388,7 +388,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -409,7 +409,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -455,7 +455,7 @@
                         "median": 0.44,
                         "location": 0,
                         "beta": 0.55,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to rail support and unloader bracing frame elements."
@@ -476,7 +476,7 @@
                         "median": 0.645,
                         "location": 0,
                         "beta": 0.61,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of unloader structural elements leading to misalignment of machine components and conveyors. Minor derailment from tracks on wharf."
@@ -497,7 +497,7 @@
                         "median": 0.845,
                         "location": 0,
                         "beta": 0.595,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Failure of bracing elements on unloader leading to permanent distortion of equipment.  Damage to power supply and control equipment. Major derailment."
@@ -518,7 +518,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.505,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturning with major distortion of structural elements."
@@ -564,7 +564,7 @@
                         "median": 0.44,
                         "location": 0,
                         "beta": 0.55,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to rail support and unloader bracing frame elements."
@@ -585,7 +585,7 @@
                         "median": 0.645,
                         "location": 0,
                         "beta": 0.61,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of unloader structural elements leading to misalignment of machine components and conveyors. Minor derailment from tracks on wharf."
@@ -606,7 +606,7 @@
                         "median": 0.845,
                         "location": 0,
                         "beta": 0.595,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Failure of bracing elements on unloader leading to permanent distortion of equipment.  Damage to power supply and control equipment. Major derailment."
@@ -627,7 +627,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.505,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturning with major distortion of structural elements."
@@ -673,7 +673,7 @@
                         "median": 0.67,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Some deformation at hold down bolts."
@@ -694,7 +694,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.27,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces and soem anchor bolts stretched."
@@ -715,7 +715,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Many steel bracing elements have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Many truss arch members have buckeld in compression.  Some of the structural connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some foundation oviement due to settlement and some anchor bolts failed.  "
@@ -736,7 +736,7 @@
                         "median": 1.35,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the shelter structure.   "
@@ -782,7 +782,7 @@
                         "median": 0.39,
                         "location": 0,
                         "beta": 0.55,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
@@ -803,7 +803,7 @@
                         "median": 0.595,
                         "location": 0,
                         "beta": 0.61,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
@@ -824,7 +824,7 @@
                         "median": 0.795,
                         "location": 0,
                         "beta": 0.595,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
@@ -845,7 +845,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.505,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturning with major distortion of structural elements."
@@ -891,7 +891,7 @@
                         "median": 0.39,
                         "location": 0,
                         "beta": 0.55,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
@@ -912,7 +912,7 @@
                         "median": 0.595,
                         "location": 0,
                         "beta": 0.61,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
@@ -933,7 +933,7 @@
                         "median": 0.795,
                         "location": 0,
                         "beta": 0.595,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
@@ -954,7 +954,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.505,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturning with major distortion of structural elements."
@@ -1000,7 +1000,7 @@
                         "median": 0.39,
                         "location": 0,
                         "beta": 0.55,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to rail support and stacker reclaimer bracing elements."
@@ -1021,7 +1021,7 @@
                         "median": 0.595,
                         "location": 0,
                         "beta": 0.61,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of stacker structural elements leading to misalignment of machine components and conveyors."
@@ -1042,7 +1042,7 @@
                         "median": 0.795,
                         "location": 0,
                         "beta": 0.595,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Ground deformation leading to gross movement of support rails. Failure of bracing elements on stacker leading to permanent distortion of equipment.  Damage to power supply and control equipment."
@@ -1063,7 +1063,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.505,
-                        "fragility_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
+                        "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturning with major distortion of structural elements."
@@ -1109,7 +1109,7 @@
                         "median": 0.335,
                         "location": 0,
                         "beta": 0.275,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
@@ -1130,7 +1130,7 @@
                         "median": 0.5,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
@@ -1151,7 +1151,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.435,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
@@ -1172,7 +1172,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.455,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse."
@@ -1218,7 +1218,7 @@
                         "median": 0.335,
                         "location": 0,
                         "beta": 0.275,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
@@ -1239,7 +1239,7 @@
                         "median": 0.5,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
@@ -1260,7 +1260,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.435,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
@@ -1281,7 +1281,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.455,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse."
@@ -1327,7 +1327,7 @@
                         "median": 0.335,
                         "location": 0,
                         "beta": 0.275,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
@@ -1348,7 +1348,7 @@
                         "median": 0.5,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
@@ -1369,7 +1369,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.435,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
@@ -1390,7 +1390,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.455,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse."
@@ -1436,7 +1436,7 @@
                         "median": 0.335,
                         "location": 0,
                         "beta": 0.275,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
@@ -1457,7 +1457,7 @@
                         "median": 0.5,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
@@ -1478,7 +1478,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.435,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
@@ -1499,7 +1499,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.455,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse."
@@ -1545,7 +1545,7 @@
                         "median": 0.45,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
@@ -1566,7 +1566,7 @@
                         "median": 0.585,
                         "location": 0,
                         "beta": 0.295,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
@@ -1587,7 +1587,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
@@ -1608,7 +1608,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse."
@@ -1654,7 +1654,7 @@
                         "median": 0.45,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation of support structure with some yeilding of holding down bolts."
@@ -1675,7 +1675,7 @@
                         "median": 0.585,
                         "location": 0,
                         "beta": 0.295,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement of conveyor system.  Misalignment of feed conveyors."
@@ -1696,7 +1696,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to supporting structure with failure of  bracing elelments. Damage to seating of conveyor structure on supporting frame.  Possible permanent drift due to foundation settlement."
@@ -1717,7 +1717,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse."
@@ -1763,7 +1763,7 @@
                         "median": 0.43,
                         "location": 0,
                         "beta": 0.16,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.6 Small Pumping Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.6 Small Pumping Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor movement of intake structure and minor damage to freshwater pumps and pipework."
@@ -1784,7 +1784,7 @@
                         "median": 0.57,
                         "location": 0,
                         "beta": 0.27,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial liquefaction of soils in the vicinity of intake structure leading to some horizontal movement and rotation with attendent damage to pipework. Horizontal movement to freshwater pumps and peripheral pipework."
@@ -1805,7 +1805,7 @@
                         "median": 0.78,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Extensive liquefaction leading to large scale movement of intake structures with major damage to both pipework and pumping facilities.  Control equipment damaged."
@@ -1826,7 +1826,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair"
@@ -1872,7 +1872,7 @@
                         "median": 0.42,
                         "location": 0,
                         "beta": 0.16,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to water handling pumps and pipework.  Minor damage to plant superstructure."
@@ -1893,7 +1893,7 @@
                         "median": 0.57,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Moderate structural damage to demin plant superstructure.  Deformation of pump hold-down and pipework with some leakage at flanges and valves.  Some movement of pumphouse substructure due to liquefaction."
@@ -1914,7 +1914,7 @@
                         "median": 0.78,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Rupture of some water mains due to failure of  supporting strucuture. Significant movement of pumps and motors leading to some misalignment.  Extensive damage to demin plant superstructure, power supply and control panels.  Movement of demin substructure and other valve chambers significant leading to damage to water mains."
@@ -1935,7 +1935,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair."
@@ -1981,7 +1981,7 @@
                         "median": 0.46,
                         "location": 0,
                         "beta": 0.23,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
@@ -2002,7 +2002,7 @@
                         "median": 0.57,
                         "location": 0,
                         "beta": 0.25,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
@@ -2023,7 +2023,7 @@
                         "median": 0.825,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
@@ -2044,7 +2044,7 @@
                         "median": 1.8,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair"
@@ -2090,7 +2090,7 @@
                         "median": 0.46,
                         "location": 0,
                         "beta": 0.23,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
@@ -2111,7 +2111,7 @@
                         "median": 0.57,
                         "location": 0,
                         "beta": 0.25,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
@@ -2132,7 +2132,7 @@
                         "median": 0.825,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
@@ -2153,7 +2153,7 @@
                         "median": 1.8,
                         "location": 0,
                         "beta": 0.6,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair"
@@ -2199,7 +2199,7 @@
                         "median": 0.35,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "minor damage to supporting structure and electrical equipment"
@@ -2220,7 +2220,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
@@ -2241,7 +2241,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
@@ -2262,7 +2262,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair. "
@@ -2308,7 +2308,7 @@
                         "median": 0.35,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "minor damage to supporting structure and electrical equipment"
@@ -2329,7 +2329,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
@@ -2350,7 +2350,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
@@ -2371,7 +2371,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair. "
@@ -2417,7 +2417,7 @@
                         "median": 0.35,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "minor damage to supporting structure and electrical equipment"
@@ -2438,7 +2438,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
@@ -2459,7 +2459,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
@@ -2480,7 +2480,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair. "
@@ -2526,7 +2526,7 @@
                         "median": 0.35,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "minor damage to supporting structure and electrical equipment"
@@ -2547,7 +2547,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "significant deformation to supporting structure.  Leakage of flue gases. Some damage to internal discharge electrodes and collector panels."
@@ -2568,7 +2568,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major deformation of supporting structure with failure of key bracing elements and permanent offset.  Internal discharge electrodes and collector panels extensively damaged.  Damage to high voltage power supply and control equipment."
@@ -2589,7 +2589,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair. "
@@ -2635,7 +2635,7 @@
                         "median": 0.45,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "SIM to supply conveyor",
+                        "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to supporting structure with some yielding of hold-down bolts."
@@ -2656,7 +2656,7 @@
                         "median": 0.59,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "SIM to supply conveyor",
+                        "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformaton to steel supporting structure with misaligment of ash handling conveyors"
@@ -2677,7 +2677,7 @@
                         "median": 0.775,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "SIM to supply conveyor",
+                        "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Horizontal displacement of structure with failure of bracing elements and damage to ash silo structure."
@@ -2698,7 +2698,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "SIM to supply conveyor",
+                        "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse of ash handling system."
@@ -2744,7 +2744,7 @@
                         "median": 0.67,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to structure with deformation of holding down bolts and with some bracing connections."
@@ -2765,7 +2765,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.27,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement.  Yielding of bracing elements.  Damage to flue leading to gas leakage."
@@ -2786,7 +2786,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major horizontal deformation with permanent drift.  Failure of bracing elements and extensive damage to flue with many leakage points."
@@ -2807,7 +2807,7 @@
                         "median": 1.35,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair including collapse."
@@ -2853,7 +2853,7 @@
                         "median": 0.67,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to structure with deformation of holding down bolts and with some bracing connections."
@@ -2874,7 +2874,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.27,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation of supporting structure with horizontal displacement.  Yielding of bracing elements.  Damage to flue leading to gas leakage."
@@ -2895,7 +2895,7 @@
                         "median": 1.05,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major horizontal deformation with permanent drift.  Failure of bracing elements and extensive damage to flue with many leakage points."
@@ -2916,7 +2916,7 @@
                         "median": 1.35,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair including collapse."
@@ -2962,7 +2962,7 @@
                         "median": 0.475,
                         "location": 0,
                         "beta": 0.25,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Minor spalling at some precast panel corners."
@@ -2983,7 +2983,7 @@
                         "median": 0.615,
                         "location": 0,
                         "beta": 0.33,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces.  More significant spalling damage to precast panels with deformation at panel connections."
@@ -3004,7 +3004,7 @@
                         "median": 0.77,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Most steel members have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Some of the structural members or connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some anchor bolts stretched. Partial collapse of portions of the structure may have occurred due to failed critical elements or connections."
@@ -3025,7 +3025,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the building.   "
@@ -3071,7 +3071,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to condensor pipework.  Some horizontal deformation of condensor support connections and steam supply to turbine."
@@ -3092,7 +3092,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant horizontal deformation of both condensor and turbine relative to supporting plinth leading to misalignment of turbine shaft to generator and steam leakage in pipework."
@@ -3113,7 +3113,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to turbine shaft to generator requiring replacement.  Internal damage to condensor requiring replacement."
@@ -3134,7 +3134,7 @@
                         "median": 1.55,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Irreparable damage to turbine and condensor."
@@ -3180,7 +3180,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to condensor pipework.  Some horizontal deformation of condensor support connections and steam supply to turbine."
@@ -3201,7 +3201,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant horizontal deformation of both condensor and turbine relative to supporting plinth leading to misalignment of turbine shaft to generator and steam leakage in pipework."
@@ -3222,7 +3222,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to turbine shaft to generator requiring replacement.  Internal damage to condensor requiring replacement."
@@ -3243,7 +3243,7 @@
                         "median": 1.55,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Irreparable damage to turbine and condensor."
@@ -3289,7 +3289,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to generator electrical connectivity. Some horizonrtal deformation to generator support with distortion of holding down bolts."
@@ -3310,7 +3310,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant horizontal deformation leading to misalignment of generator to turbine shaft."
@@ -3331,7 +3331,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to generator to turbine shaft requiring  replacement."
@@ -3352,7 +3352,7 @@
                         "median": 1.55,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Irreparable damage to generator."
@@ -3398,7 +3398,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor damage to generator electrical connectivity. Some horizonrtal deformation to generator support with distortion of holding down bolts."
@@ -3419,7 +3419,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant horizontal deformation leading to misalignment of generator to turbine shaft."
@@ -3440,7 +3440,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Large horizontal deformation of both condensor and turbine relative to supporting plinth leading to damage to generator to turbine shaft requiring  replacement."
@@ -3461,7 +3461,7 @@
                         "median": 1.55,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Irreparable damage to generator."
@@ -3507,7 +3507,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain Gasket Leak"
@@ -3528,7 +3528,7 @@
                         "median": 0.9,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain Break, Major break in Radiator"
@@ -3549,7 +3549,7 @@
                         "median": 1.25,
                         "location": 0,
                         "beta": 0.21,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage Failure"
@@ -3570,7 +3570,7 @@
                         "median": 1.65,
                         "location": 0,
                         "beta": 0.11,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturn"
@@ -3616,7 +3616,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain Gasket Leak"
@@ -3637,7 +3637,7 @@
                         "median": 0.9,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain Break, Major break in Radiator"
@@ -3658,7 +3658,7 @@
                         "median": 1.25,
                         "location": 0,
                         "beta": 0.21,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage Failure"
@@ -3679,7 +3679,7 @@
                         "median": 1.65,
                         "location": 0,
                         "beta": 0.11,
-                        "fragility_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
+                        "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Overturn"
@@ -3725,7 +3725,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3746,7 +3746,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3767,7 +3767,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3788,7 +3788,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3834,7 +3834,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3855,7 +3855,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3876,7 +3876,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null
@@ -3897,7 +3897,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": null

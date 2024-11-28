@@ -15,7 +15,7 @@ func_data_piecewise1 = {
             "function_name": "normal",
             "mean": 0.3,
             "stddev": 0.5,
-            "fragility_source": "source mysterio",
+            "data_source": "source mysterio",
             "minimum": 'null',
             "lower_limit": 0.2,
             "upper_limit": 0.5,
@@ -25,7 +25,7 @@ func_data_piecewise1 = {
             "function_name": "normal",
             "mean": 0.3,
             "stddev": 0.7,
-            "fragility_source": "source mysterio",
+            "data_source": "source mysterio",
             "minimum": 'null',
             "lower_limit": 0.5,
             "upper_limit": 0.95,
@@ -36,7 +36,7 @@ func_data_piecewise1 = {
             "median": 0.4,
             "beta": 0.7,
             "location": 0,
-            "fragility_source": "source mysterio",
+            "data_source": "source mysterio",
             "minimum": 'null',
             "lower_limit": 0.95,
             "upper_limit": 2.0,
@@ -51,7 +51,7 @@ func_data_piecewise2 = {
         {
             "function_name": "ConstantFunction",
             "amplitude": 1,
-            "fragility_source": "source mysterio",
+            "data_source": "source mysterio",
             "minimum": 'null',
             "lower_limit": 0.3,
             "upper_limit": 0.85,
@@ -60,7 +60,7 @@ func_data_piecewise2 = {
         {
             "function_name": "ConstantFunction",
             "amplitude": 3,
-            "fragility_source": "source mysterio",
+            "data_source": "source mysterio",
             "minimum": 'null',
             "lower_limit": 0.85,
             "upper_limit": 2.0,
@@ -73,7 +73,7 @@ func_data_rayleigh = {
     "function_name": "RayleighCDF",
     "loc": 5.0,
     "scale": 1.1,
-    "fragility_source": "Not Available.",
+    "data_source": "Not Available.",
     "damage_state_definition": "Not Available."
 }
 

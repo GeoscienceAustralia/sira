@@ -119,7 +119,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -140,7 +140,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -161,7 +161,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -182,7 +182,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -231,7 +231,7 @@
                                 "median": 0.25,
                                 "location": 0,
                                 "beta": 0.15,
-                                "fragility_source": "Syner-G EPN10, Table 3.17, Report D3.3",
+                                "data_source": "Syner-G EPN10, Table 3.17, Report D3.3",
                                 "lower_limit": 0.95,
                                 "upper_limit": 0.2
                             },
@@ -240,7 +240,7 @@
                                 "median": 0.35,
                                 "location": 0,
                                 "beta": 0.1,
-                                "fragility_source": "Syner-G EPN10, Table 3.17, Report D3.3",
+                                "data_source": "Syner-G EPN10, Table 3.17, Report D3.3",
                                 "lower_limit": 2.0,
                                 "upper_limit": 0.95
                             }
@@ -263,7 +263,7 @@
                         "median": 0.57,
                         "location": 0,
                         "beta": 0.375,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformaton to steel supporting structure with misaligment of ash handling conveyors"
@@ -284,7 +284,7 @@
                         "median": 0.78,
                         "location": 0,
                         "beta": 0.475,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Horizontal displacement of structure with failure of bracing elements and damage to ash silo structure."
@@ -305,7 +305,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.475,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
+                        "data_source": "HAZUS-MH MR3 Table 8.7 Medium/large Anchored Pumping Plants",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Partial or complete collapse of ash handling system."
@@ -351,7 +351,7 @@
                         "median": 0.35,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformation to supporting structure and minor damage at lateral restraint points to boiler.  No internal damage to boiler."
@@ -372,7 +372,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.5,
-                        "fragility_source": "HAZUS-MH Table D8.8 Electircal equipment ",
+                        "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Significant deformation to supporting structure with deformation at holding down bolts and yielding of bracing elements.  Damage to internal boiler pipes requiring access for repair."
@@ -393,7 +393,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Major damage to boiler support with failure of many bracing elements.  Large deformations damage connecting pipework. Widespread damage to internal steam pipes in boiler requring extensive replacement."
@@ -414,7 +414,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Sim to main feed conveyor",
+                        "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Damage beyond repair"
@@ -460,7 +460,7 @@
                         "median": 0.75,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Some deformation at hold down bolts."
@@ -481,7 +481,7 @@
                         "median": 1.0,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces and soem anchor bolts stretched."
@@ -502,7 +502,7 @@
                         "median": 1.33,
                         "location": 0,
                         "beta": 0.34,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Many steel bracing elements have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Many truss arch members have buckeld in compression.  Some of the structural connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some foundation oviement due to settlement and some anchor bolts failed.  "
@@ -523,7 +523,7 @@
                         "median": 1.55,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
+                        "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the shelter structure.   "
@@ -569,7 +569,7 @@
                         "median": 0.28,
                         "location": 0,
                         "beta": 0.25,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Minor deformations in connections or hairline cracks in a few welds.  Minor brace deformation.  Some deformation at hold down bolts."
@@ -590,7 +590,7 @@
                         "median": 0.43,
                         "location": 0,
                         "beta": 0.35,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Some steel members have yielded exhibiting observable permanent rotations at connections.  A few welded connections may exhibit major cracks through welds or a few bolted connections may exhibit broken bolts or enlarged bolt holes.  Some yielding of braces and soem anchor bolts stretched."
@@ -611,7 +611,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Many steel bracing elements have exceeded their yield capacity resulting in significant permanent lateral deformation of the structure.  Many truss arch members have buckeld in compression.  Some of the structural connections may have exceeded their ultimate capacity exhibited by major permanent member rotations at connections, buckled flanges and failed connections.  Some foundation oviement due to settlement and some anchor bolts failed.  "
@@ -632,7 +632,7 @@
                         "median": 0.85,
                         "location": 0,
                         "beta": 0.4,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "A significant proportion of the structural elements have exceeded their ultimate capacities or some critical structural elements or connections have failed resulting in dangerous permanent lateral displacement, partial collapse or collapse of the shelter structure.   "
@@ -678,7 +678,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -699,7 +699,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -720,7 +720,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -741,7 +741,7 @@
                         "median": 10.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"

@@ -1,4 +1,3 @@
-# these are required for defining the data model
 import numpy as np
 from sira.modelling.iodict import IODict
 from sira.modelling.responsemodels import Algorithm
@@ -12,7 +11,7 @@ class DamageState(Base):
     functionality = Element(
         'float',
         'Level of functionality for this damage level',
-        0.0,
+        1.0,
         [lambda x: float(x) >= 0.0])
     damage_ratio = Element(
         'float',
@@ -53,23 +52,28 @@ class Component(Base):
     component_id = Element('str', 'Id of component.')
     component_class = Element('str', 'Class of component.')
     component_type = Element('str', 'Type of component.')
-    cost_fraction = Element('float',
-                            'Cost as a fraction of total value of system')
+    cost_fraction = Element('float', 'Cost as a fraction of total value of system')
     node_cluster = Element('str', 'Node cluster.')
     node_type = Element('str', 'Class of node.')
-    operating_capacity = Element('float',
-                                 'Component nominal operating capacity')
-    pos_x = Element('float',
-                    'Component locational value on the x-axis / longitude')
-    pos_y = Element('float',
-                    'Component locational value on the y-axis / latitude')
+    operating_capacity = Element('float', 'Component nominal operating capacity')
+
+    pos_x = Element(
+        'float',
+        'Component locational value on the x-axis / longitude')
+    pos_y = Element(
+        'float',
+        'Component locational value on the y-axis / latitude')
+    site_id = Element(
+        'int',
+        'An integer value mapping to a hazard site identifier')
 
     damages_states_constructor = {}
     # Element('json', 'Information about damage states.')
 
-    destination_components = Element('IODict',
-                                     'List of connected components',
-                                     IODict)
+    destination_components = Element(
+        'IODict',
+        'List of connected components',
+        IODict)
 
     damage_states = None
 
@@ -93,7 +97,7 @@ class Component(Base):
             self.damage_states[int(k)] = DamageState(**params)
 
     def get_location(self):
-        return self.pos_x, self.pos_y
+        return self.pos_x, self.pos_y, self.site_id
 
     def pe_ds(self, hazard_intensity):
         """
@@ -114,7 +118,7 @@ class Component(Base):
         """
         Return the required damage state.
         :param ds_index: The index of the damage state,
-                         as supplied by expose_to method. Integer value.
+            as produced by `expose_to` method. Integer value.
         :return: The fragility function object
         """
         return self.damage_states[ds_index]
@@ -130,21 +134,25 @@ class Component(Base):
 
     def __str__(self):
 
-        return "component_id           : " + str(self.component_id) + '\n' +\
-               "component_class        : " + str(self.component_class) + '\n' + \
-               "component_type         : " + str(self.component_type) + '\n' +\
-               "cost_fraction          : " + str(self.cost_fraction) + '\n' +\
-               "node_cluster           : " + str(self.node_cluster) + '\n' +\
-               "node_type              : " + str(self.node_type) + '\n' +\
-               "operating_capacity     : " + str(self.operating_capacity) + '\n' +\
-               "pos_x                  : " + str(self.pos_x) + '\n' + \
-               "pos_y                  : " + str(self.pos_y) + '\n' + \
-               "damage_states          : " + str(
-                   [self.damage_states[damage_state].damage_state_name
-                    for damage_state in self.damage_states]) + '\n' + \
-               "destination_components : " + str(
-                   [destination_components for destination_components
-                    in self.destination_components]) + '\n'
+        return f"""
+            component_id           : {str(self.component_id)} '\n'
+            component_class        : {str(self.component_class)} '\n'
+            component_type         : {str(self.component_type)} '\n'
+            cost_fraction          : {str(self.cost_fraction)} '\n'
+            node_cluster           : {str(self.node_cluster)} '\n'
+            node_type              : {str(self.node_type)} '\n'
+            operating_capacity     : {str(self.operating_capacity)} '\n'
+            pos_x                  : {str(self.pos_x)} '\n'
+            pos_y                  : {str(self.pos_y)} '\n'
+            damage_states          : {
+            str([
+                self.damage_states[damage_state].damage_state_name
+                for damage_state in self.damage_states])} '\n'
+            destination_components : {
+            str([
+                destination_components
+                for destination_components in self.destination_components])}'\n'
+        """
 
 
 class ConnectionValues(Base):
@@ -152,9 +160,12 @@ class ConnectionValues(Base):
     Each connection between two components has a capacity and
     a weight.
     """
-    link_capacity = Element('float', 'Link capacity', 0.0)
+    link_capacity = Element('float', 'Link capacity', 1.0)
     weight = Element('float', 'Weight', 0.0)
 
     def __str__(self):
-        return "{ " + "weight: " + str(self.weight) + '\n' + \
-               "link_capacity: " + str(self.link_capacity) + " }"
+        cv = f"""
+        weight:        {str(self.weight)}
+        link_capacity: {str(self.link_capacity)}
+        """
+        return cv

@@ -10,10 +10,13 @@ class ComponentGraph(object):
     def __init__(self, components, comp_sample_func=None):
         """
         Construct a graph from the igraph package using the component dict.
-        :param components:  Dict of components that represent the
-                            infrastructure model
-        :param comp_sample_func: Array of the functionality of each
-                                 component (1.0 -> 0.0).
+
+        Parameters:
+        -----------
+        components:
+            Dict of components that represent the infrastructure model
+        comp_sample_func:
+            Array of the functionality of each component (1.0 -> 0.0).
         """
         # create the directed graph
         self.digraph = igraph.Graph(directed=True)
@@ -60,8 +63,9 @@ class ComponentGraph(object):
                 # connect the parent and child vertices with an edge.
                 # The functionality of the parent vertex is the value
                 # of the edge capacity.
-                self.digraph.add_edge(comp_id, dest_comp_id,
-                                      capacity=comp_sample_func[comp_index])
+                self.digraph.add_edge(
+                    comp_id, dest_comp_id,
+                    capacity=comp_sample_func[comp_index])
 
         # Here digraph.vs is a `igraph.VertexSeq` object and
         # it can be used as an iterable
@@ -74,7 +78,6 @@ class ComponentGraph(object):
         Update the graph to change the edge's capacity value to
         reflect the new functionality of the parent vertice.
         """
-
         # iterate through the infrastructure components
         # (using a list of sorted keys as we're trying to match the old code)
         for comp_id in components.keys():
@@ -99,8 +102,9 @@ class ComponentGraph(object):
                     comp_sample_func[comp_index]   # noqa:E1136
 
     def update_dependency(self, comp_sample_func, parent, dependent):
-        min_capacity = min(comp_sample_func[parent],
-                           comp_sample_func[dependent])
+        min_capacity = min(
+            comp_sample_func[parent],
+            comp_sample_func[dependent])
         comp_sample_func[dependent] = min_capacity
 
     def dump_graph(self, external=None):
@@ -143,5 +147,4 @@ class ComponentGraph(object):
         for v in self.digraph.vs:   # noqa:E1133
             v["betweenness"] = centrality_estimate[v.index]
         # for v in self.digraph.vs:
-        #     print("{:40} : {}".format(v["name"],
-        #                               v["betweenness"]))
+        #     print("{:40} : {}".format(v["name"], v["betweenness"]))

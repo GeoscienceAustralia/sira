@@ -15,8 +15,9 @@ def ingest_model(config):
     """
     Reads a model file into python objects
     :param config: path to json or xlsx file containing system model
-    :return:  -List of algorithms for each component in particular damage state
-              -Object of class infrastructure
+    :return:
+        - List of algorithms for each component in particular damage state
+        - Object of class infrastructure
     """
     extension = Path(config.INPUT_MODEL_PATH).suffix[1:].lower()
 
@@ -123,12 +124,12 @@ def read_model_from_json(config, model):
         op_dict['priority'] = sysout_setup[index]['priority']
         output_nodes[index] = op_dict
 
-    infrastructure_system_constructor['sys_dmg_states'] = []
+    infrastructure_system_constructor['system_dmg_states'] = []
     for key in component_list:
         for damages_state in component_list[key]["damages_states_constructor"]:
             if damages_state not in \
-                    infrastructure_system_constructor['sys_dmg_states']:
-                infrastructure_system_constructor['sys_dmg_states'].\
+                    infrastructure_system_constructor['system_dmg_states']:
+                infrastructure_system_constructor['system_dmg_states'].\
                     append(damages_state)
 
     infrastructure_system_constructor['output_nodes'] = output_nodes

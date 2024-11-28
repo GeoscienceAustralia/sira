@@ -4,9 +4,11 @@ import ntpath
 import os
 from collections import OrderedDict
 import ast
-
+import datetime
+import textwrap
 import pandas as pd
 import xlrd
+from pathlib import Path
 
 # noqa: E211
 
@@ -15,7 +17,7 @@ def assign_function_params(
         function_data_dict,
         function_purpose):
 
-    # `function_purpose`  must be in ["damage_function", "recovery_function"]
+    # `function_purpose` must be in ["damage_function", "recovery_function"]
     function_name = function_data_dict[function_purpose]
     funcname_nocase = function_name.lower()
     param_names = []
@@ -61,7 +63,7 @@ def assign_function_params(
     # damage_param_headers = ["ds_scale", "ds_location", "ds_shape"]
     damage_param_headers = ['median', 'location', 'beta']
     recovery_param_headers = ["recovery_param1", "recovery_param2", "recovery_param3"]
-    extra_fields = ["fragility_source", "lower_limit", "upper_limit"]
+    extra_fields = ["data_source", "lower_limit", "upper_limit"]
 
     if function_purpose == "damage_function":
         for param, header in zip(param_names, damage_param_headers):
@@ -355,28 +357,41 @@ def main():
                         type=str,
                         help="Path to file to be converted")
     args = parser.parse_args()
-    excel_file_path = ntpath.expanduser(args.model_file)
+    # excel_file_path = ntpath.expanduser(args.model_file)
+    excel_file_path = Path(args.model_file).expanduser().resolve()
     check_if_excel_file(excel_file_path, parser)
 
     try:
-        parent_folder_name = ntpath.dirname(excel_file_path)
-        file_name_full = ntpath.basename(excel_file_path)
-        file_name = os.path.splitext(ntpath.basename(excel_file_path))[0]
+        # parent_folder_name = ntpath.dirname(excel_file_path)
+        # file_name_full = ntpath.basename(excel_file_path)
+        # file_name = os.path.splitext(ntpath.basename(excel_file_path))[0]
+
+        # parent_folder_name = excel_file_path.parent
+        # file_name_full = excel_file_path.name
+        model_dir = excel_file_path.parent
+        file_name = excel_file_path.stem
+
+        txtwrapper = textwrap.TextWrapper(
+            width=77, initial_indent=" " * 5, subsequent_indent=" " * 5,
+            break_long_words=False)
+        folder_wrapped = txtwrapper.fill(str(model_dir))
 
         print("\nConverting system model from MS Excel to JSON...")
-        print("***")
-        print("File Location   : {}".format(parent_folder_name))
-        print("Source file     : {}".format(file_name_full))
+        print("--------------------------------------------------")
+        print("File Location: \n{}\n".format(folder_wrapped))
+        print("Source file: {}".format(excel_file_path.name))
 
         json_obj = json.loads(
-            read_excel_to_json(excel_file_path), object_pairs_hook=OrderedDict)
+            read_excel_to_json(excel_file_path),
+            object_pairs_hook=OrderedDict)
         new_json_structure_obj = update_json_structure(json_obj)
-        json_file_path = os.path.join(parent_folder_name, file_name + '.json')
+        json_file_path = Path(excel_file_path.parent, file_name + '.json')
         with open(json_file_path, 'w+') as outfile:
             json.dump(new_json_structure_obj, outfile, indent=4)
 
-        print("Conversion done : {}".format(ntpath.basename(json_file_path)))
-        print("***")
+        print(f"Output file: {format(ntpath.basename(json_file_path))}")
+        print(f"\nConversion complete. {datetime.datetime.now()}")
+        print("--------------------------------------------------")
 
     except xlrd.biffh.XLRDError as err:
         print("Invalid format:", excel_file_path)

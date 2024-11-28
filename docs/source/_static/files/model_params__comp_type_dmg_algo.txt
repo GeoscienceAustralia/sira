@@ -225,7 +225,7 @@
   :Data Type:   Float
 
 
-`fragility_source`
+`data_source`
   :Description: Source or reference from which the fragility algorithm
                 was taken or adapted, how it was adapted, or how it
                 was developed.

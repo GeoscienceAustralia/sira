@@ -1,10 +1,10 @@
 import sys
-
 import numpy as np
 from sira.modelling.component_graph import ComponentGraph
 from sira.modelling.iodict import IODict
 from sira.modelling.structural import Base, Element
-
+import logging
+rootLogger = logging.getLogger(__name__)
 np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -23,6 +23,12 @@ class InfrastructureFactory(object):
             return ModelTestStructure(**config)
         elif config['system_class'].lower() in ['railnetwork', 'rail_network']:
             return RailNetwork(**config)
+        elif config['system_class'].lower() in [
+                'electricpowernetwork', 'electric power network', 'electric_power_network',
+                'electricitypowernetwork', 'electricity power network']:
+            return ElectricPowerNetwork(**config)
+        else:
+            return GenericInfrastructure(**config)
 
 
 class Infrastructure(Base):
@@ -44,7 +50,8 @@ class Infrastructure(Base):
     _component_graph = None
     if_nominal_output = None
     system_class = None
-    sys_dmg_states = None
+    system_dmg_states = None
+    system_output_capacity = None
 
     def __init__(self, **kwargs):
         """
@@ -56,7 +63,21 @@ class Infrastructure(Base):
         if not getattr(self, "components", None):
             self.components = IODict()
 
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
+        self.ds_lims_compclasses = {}
+
         self._component_graph = ComponentGraph(self.components)
+        self.system_output_capacity = self.get_nominal_output()
+
+    def get_ds_lims_for_compclass(self, component_class):
+        """
+        Get damage state limits for a component class.
+        Returns default limits if component class is not explicitly defined.
+
+        :param component_class: The component class to get limits for
+        :return: List of damage state limits
+        """
+        return self.ds_lims_compclasses.get(component_class, self.default_ds_lims)
 
     def calc_output_loss(self, scenario, component_damage_state_ind):
         """
@@ -88,6 +109,7 @@ class Infrastructure(Base):
         #              dtype=float)
 
         # iterate through the samples
+        # rootLogger.info("Initiating calculation of loss of system output ...")
         for sample_index in range(scenario.num_samples):
             # initialise the function and loss arrays for the sample
             # component_function_at_time = []
@@ -201,10 +223,11 @@ class Infrastructure(Base):
     #     cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
     #     return cdf + (1.0 - cdf) * fn
 
-    def calc_response(self,
-                      component_loss,
-                      comp_sample_func,
-                      component_damage_state_ind):
+    def calc_response(
+            self,
+            component_loss,
+            comp_sample_func,
+            component_damage_state_ind):
         """
         Convert the arrays into dicts for subsequent analysis
         :param component_loss: The array of component loss values
@@ -231,8 +254,9 @@ class Infrastructure(Base):
             comp_ds_levels = component.damage_states
 
             comp_damage_state_ind_binned[comp_id] \
-                = np.bincount(component_damage_state_array[:, comp_index],
-                              minlength=len(comp_ds_levels))
+                = np.bincount(
+                    component_damage_state_array[:, comp_index],
+                    minlength=len(comp_ds_levels))
 
             comp_resp_dict[(comp_id, 'loss_mean')] \
                 = np.mean(component_loss[:, comp_index])
@@ -247,8 +271,9 @@ class Infrastructure(Base):
                 = np.std(comp_sample_func[:, comp_index])
 
             comp_resp_dict[(comp_id, 'num_failures')] \
-                = np.mean(component_damage_state_ind[:, comp_index]
-                          >= (len(component.damage_states) - 1))  # noqa:W503
+                = np.mean(
+                    component_damage_state_ind[:, comp_index]\
+                    >= (len(component.damage_states) - 1))  # noqa:W503
 
         # ---------------------------------------------------------------
         # Collate aggregate response of component grouped by their TYPE:
@@ -300,8 +325,10 @@ class Infrastructure(Base):
             # Iterate over number of samples
             tmparr = np.zeros(shape=(rows, len(comp_ds_levels)))
             for i in range(rows):
-                tmparr[i] = np.bincount(comp_cls_dmg_indices_tmp[i],
-                                        minlength=len(comp_ds_levels))
+                tmparr[i] = np.bincount(
+                    comp_cls_dmg_indices_tmp[i],
+                    minlength=len(comp_ds_levels)
+                )
 
             comp_cls_dmg_level_percentages_matrix \
                 = 100 * (tmparr / float(len(comps_of_a_cls)))
@@ -315,9 +342,9 @@ class Infrastructure(Base):
             comp_cls_dmg_index_expected[cls_id] \
                 = np.max(np.where(tmp == np.max(tmp)))
 
-        return comp_resp_dict,\
-            comptype_resp_dict,\
-            comp_cls_dmg_level_percentages,\
+        return comp_resp_dict, \
+            comptype_resp_dict, \
+            comp_cls_dmg_level_percentages, \
             comp_cls_dmg_index_expected
 
     def get_component_types(self):
@@ -327,7 +354,8 @@ class Infrastructure(Base):
 
         :return: list of costed component types
         """
-        uncosted_comptypes = {'CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT'}
+        uncosted_comptypes = [
+            'JUNCTION_NODE', 'CONN_NODE', 'SYSTEM_INPUT', 'SYSTEM_OUTPUT']
 
         component_types = set()
 
@@ -386,18 +414,19 @@ class Infrastructure(Base):
         """
         # TODO: THIS IS A HACK. NEED A BETTER SOLUTION!
         one_comp_obj = list(self.components.values())[0]
-        self.sys_dmg_states = [one_comp_obj.damage_states[ds].damage_state_name
-                               for ds in one_comp_obj.damage_states]
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            one_comp_obj.damage_states[ds].damage_state_name
+            for ds in one_comp_obj.damage_states]
+        return self.system_dmg_states
 
-    def get_dmg_scale_bounds(self):
+    def get_system_damage_state_bounds(self):
         """
         An array of damage scale boundaries
         :param scenario: The values for the simulation scenarios
         :return:  Array of real numbers representing damage state boundaries
         """
         # todo introduce system subclass to infrastructure
-        return [0.01, 0.05, 0.40, 0.70, 1.00]
+        return [0.01, 0.05, 0.40, 0.60, 1.00]
 
     def get_component_class_list(self):
         """
@@ -413,15 +442,63 @@ class Infrastructure(Base):
         return self._component_graph.digraph
 
 
+class GenericInfrastructure(Infrastructure):
+    def __init__(self, **kwargs):
+        super(GenericInfrastructure, self).__init__(**kwargs)
+        # Define basic uncosted classes, typically used as model artefacts
+        self.uncosted_classes = [
+            'SYSTEM INPUT',
+            'SYSTEM OUTPUT',
+            'JUNCTION',
+            'JUNCTION POINT',
+            'MODEL ARTEFACT'
+        ]
+
+        self.type = "GenericInfrastructure"
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
+        self.ds_lims_compclasses = {}
+
+    def get_ds_lims_for_compclass(self, component_class):
+        """
+        Get damage state limits for a component class.
+        Returns default limits if component class is not explicitly defined.
+
+        :param component_class: The component class to get limits for
+        :return: List of damage state limits
+        """
+        return self.ds_lims_compclasses.get(component_class, self.default_ds_lims)
+
+    def get_system_damage_states(self):
+        """
+        Return a list of the damage state labels
+        :return: List of strings representing the system damage levels.
+        """
+        self.system_dmg_states = [
+            "DS0 None",
+            "DS1 Slight",
+            "DS2 Moderate",
+            "DS3 Extensive",
+            "DS4 Complete"]
+        return self.system_dmg_states
+
+    def get_system_damage_state_bounds(self):
+        """
+        Return default damage scale boundaries
+        :return: Array of real numbers representing damage state boundaries
+        """
+        return [0.02, 0.1, 0.25, 0.5, 1.0]
+
+
 class Substation(Infrastructure):
     def __init__(self, **kwargs):
         # Initialise the substation
         super(Substation, self).__init__(**kwargs)
-        self.uncosted_classes = ['JUNCTION', 'JUNCTION POINT', 'JUNCTION NODE',
-                                 'MODEL ARTEFACT',
-                                 'SYSTEM INPUT',
-                                 'SYSTEM OUTPUT',
-                                 'Generator', 'Generation Source']
+        self.type = "Substation"
+        self.uncosted_classes = [
+            'JUNCTION', 'JUNCTION POINT', 'JUNCTION NODE',
+            'MODEL ARTEFACT', 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+            'Generator', 'Generation Source']
+        self.default_ds_lims = [0.05, 0.40, 0.70, 1.00]
         self.ds_lims_compclasses = {
             'Bus':
                 [0.05, 0.40, 0.70, 1.00],
@@ -460,13 +537,14 @@ class Substation(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ['DS0 None',
-                               'DS1 Minor',
-                               'DS2 Extensive',
-                               'DS3 Complete']
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            'DS0 None',
+            'DS1 Minor',
+            'DS2 Extensive',
+            'DS3 Complete']
+        return self.system_dmg_states
 
-    def get_dmg_scale_bounds(self):
+    def get_system_damage_state_bounds(self):
         """
         An array of damage scale boundaries
         :param scenario: The values for the simulation scenarios
@@ -482,10 +560,11 @@ class PowerStation(Infrastructure):
         super(PowerStation, self).__init__(**kwargs)
         # Initiate the power station values, which have been used in all
         # current testing
-        self.uncosted_classes = ['SYSTEM INPUT',
-                                 'SYSTEM OUTPUT',
-                                 'JUNCTION', 'JUNCTION POINT',
-                                 'MODEL ARTEFACT']
+        self.type = "PowerStation"
+        self.uncosted_classes = [
+            'MODEL ARTEFACT', 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+            'JUNCTION', 'JUNCTION POINT']
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
         self.ds_lims_compclasses = {
             'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -504,10 +583,9 @@ class PowerStation(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS0 None",
-                               "DS1 Slight", "DS2 Moderate",
-                               "DS3 Extensive", "DS4 Complete"]
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            "DS0 None", "DS1 Slight", "DS2 Moderate", "DS3 Extensive", "DS4 Complete"]
+        return self.system_dmg_states
 
 
 class PotableWaterTreatmentPlant(Infrastructure):
@@ -515,10 +593,11 @@ class PotableWaterTreatmentPlant(Infrastructure):
         super(PotableWaterTreatmentPlant, self).__init__(**kwargs)
         # Initiate the water treatment plant values, which have been used
         # in all current testing
-        self.uncosted_classes = ['SYSTEM INPUT',
-                                 'SYSTEM OUTPUT',
-                                 'JUNCTION POINT', 'JUNCTION',
-                                 'MODEL ARTEFACT']
+        self.type = "PotableWaterTreatmentPlant"
+        self.uncosted_classes = [
+            'MODEL ARTEFACT', 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+            'JUNCTION', 'JUNCTION POINT']
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
         self.ds_lims_compclasses = {
             'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Air Compression Equipment': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -551,14 +630,15 @@ class PotableWaterTreatmentPlant(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS0 None",
-                               "DS1 Slight",
-                               "DS2 Moderate",
-                               "DS3 Extensive",
-                               "DS4 Complete"]
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            "DS0 None",
+            "DS1 Slight",
+            "DS2 Moderate",
+            "DS3 Extensive",
+            "DS4 Complete"]
+        return self.system_dmg_states
 
-    def get_dmg_scale_bounds(self):
+    def get_system_damage_state_bounds(self):
         return [0.01, 0.05, 0.40, 0.70, 1.00]
 
 
@@ -567,10 +647,11 @@ class PotableWaterPumpStation(Infrastructure):
         super(PotableWaterPumpStation, self).__init__(**kwargs)
         # Initiate the water treatment plant values, which have been used
         # in all current testing
-        self.uncosted_classes = ['SYSTEM INPUT',
-                                 'SYSTEM OUTPUT',
-                                 'JUNCTION POINT', 'JUNCTION',
-                                 'MODEL ARTEFACT']
+        self.type = "PotableWaterPumpStation"
+        self.uncosted_classes = [
+            'MODEL ARTEFACT', 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+            'JUNCTION', 'JUNCTION POINT']
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
         self.ds_lims_compclasses = {
             'SYSTEM INPUT':
                 [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -606,26 +687,41 @@ class PotableWaterPumpStation(Infrastructure):
                 [0.0, 0.05, 0.40, 0.70, 1.00],
         }
 
+    def get_system_damage_state_bounds(self):
+        return [0.01, 0.1, 0.25, 0.5, 1.0]
+
     def get_system_damage_states(self):
         """
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS0 None",
-                               "DS1 Slight",
-                               "DS2 Moderate",
-                               "DS3 Extensive",
-                               "DS4 Complete"]
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            "DS0 None",
+            "DS1 Slight",
+            "DS2 Moderate",
+            "DS3 Extensive",
+            "DS4 Complete"]
+        return self.system_dmg_states
+
+    def get_ds_lims_for_compclass(self, component_class):
+        """
+        Get damage state limits for a component class.
+        Returns default limits if component class is not explicitly defined.
+
+        :param component_class: The component class to get limits for
+        :return: List of damage state limits
+        """
+        return self.ds_lims_compclasses.get(component_class, self.default_ds_lims)
 
 
 class ModelTestStructure(Infrastructure):
     def __init__(self, **kwargs):
         super(ModelTestStructure, self).__init__(**kwargs)
-        self.uncosted_classes = ['SYSTEM INPUT',
-                                 'SYSTEM OUTPUT',
-                                 'JUNCTION', 'JUNCTION POINT',
-                                 'MODEL ARTEFACT']
+        self.type = "ModelTestStructure"
+        self.uncosted_classes = [
+            'MODEL ARTEFACT', 'SYSTEM INPUT', 'SYSTEM OUTPUT',
+            'JUNCTION', 'JUNCTION POINT']
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
         self.ds_lims_compclasses = {
             'Boiler': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Control Building': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -644,17 +740,19 @@ class ModelTestStructure(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS0 None",
-                               "DS1 Slight",
-                               "DS2 Moderate",
-                               "DS3 Extensive",
-                               "DS4 Complete"]
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            "DS0 None",
+            "DS1 Slight",
+            "DS2 Moderate",
+            "DS3 Extensive",
+            "DS4 Complete"]
+        return self.system_dmg_states
 
 
 class RailNetwork(Infrastructure):
     def __init__(self, **kwargs):
         super(RailNetwork, self).__init__(**kwargs)
+        self.type = "RailNetwork"
         self.uncosted_classes = [
             'SYSTEM INPUT',
             'SYSTEM OUTPUT',
@@ -662,6 +760,7 @@ class RailNetwork(Infrastructure):
             'JUNCTION POINT',
             'MODEL ARTEFACT'
         ]
+        self.default_ds_lims = [0.0, 0.05, 0.40, 0.70, 1.00]
         self.ds_lims_compclasses = {
             'SYSTEM OUTPUT': [0.0, 0.05, 0.40, 0.70, 1.00],
             'Regional Railway Station': [0.0, 0.05, 0.40, 0.70, 1.00],
@@ -678,9 +777,72 @@ class RailNetwork(Infrastructure):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        self.sys_dmg_states = ["DS0 None",
-                               "DS1 Slight",
-                               "DS2 Moderate",
-                               "DS3 Extensive",
-                               "DS4 Complete"]
-        return self.sys_dmg_states
+        self.system_dmg_states = [
+            "DS0 None",
+            "DS1 Slight",
+            "DS2 Moderate",
+            "DS3 Extensive",
+            "DS4 Complete"]
+        return self.system_dmg_states
+
+
+# =====================================================================================
+
+class ElectricPowerNetwork(Infrastructure):
+    def __init__(self, **kwargs):
+        # Initialise the power network class
+        super(ElectricPowerNetwork, self).__init__(**kwargs)
+        self.type = "ElectricPowerNetwork"
+        self.uncosted_classes = [
+            'JUNCTION',
+            'JUNCTION POINT',
+            'JUNCTION NODE',
+            'MODEL ARTEFACT',
+            'SYSTEM INPUT',
+            'SYSTEM OUTPUT',
+            'FUEL SOURCE',
+            'INTER NETWORK INTERFACE'
+        ]
+        self.default_ds_lims = [0.05, 0.40, 0.70, 1.00]
+        self.ds_lims_compclasses = {
+            'Distribution Substation':
+                [0.05, 0.40, 0.70, 1.00],
+            'Zone Substation':
+                [0.05, 0.40, 0.70, 1.00],
+            'Transmission Substation':
+                [0.05, 0.40, 0.70, 1.00],
+            'Terminal Substation':
+                [0.05, 0.40, 0.70, 1.00],
+            'Power Generation Thermal':
+                [0.05, 0.40, 0.70, 1.00],
+            'Power Generation Solar Farm':
+                [0.05, 0.40, 0.70, 1.00],
+            'Power Generation Wind Turbine Onshore':
+                [0.05, 0.40, 0.70, 1.00],
+            'Power Generation Wind Turbine Offshore':
+                [0.05, 0.40, 0.70, 1.00],
+            'Power Generation Geothermal':
+                [0.05, 0.40, 0.70, 1.00],
+        }
+
+    def get_system_damage_states(self):
+        """
+        The list of the damage state labels.
+        :return: List of strings detailing the system damage levels.
+        """
+        self.system_dmg_states = [
+            'DS0 None',
+            'DS1 Minor',
+            'DS2 Extensive',
+            'DS3 Complete']
+        return self.system_dmg_states
+
+    def get_system_damage_state_bounds(self):
+        """
+        An array of damage scale boundaries.
+        :param scenario: The values for the simulation scenarios
+        :return:  Array of real numbers representing damage state boundaries
+        """
+        # [0.1, 0.5, 0.8, 1.0]
+        # return [0.01, 0.05, 0.40, 0.70, 1.00]
+        return [0.05, 0.4, 0.7, 1.0]

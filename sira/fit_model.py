@@ -7,6 +7,7 @@ from pathlib import Path
 import matplotlib as mpl
 import matplotlib.patheffects as PathEffects
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 import numpy as np
 import pandas as pd
@@ -21,7 +22,6 @@ import sira.tools.siraplot as spl
 
 init()
 rootLogger = logging.getLogger(__name__)
-mpl.use('agg')
 pd.options.display.float_format = '{:,.4f}'.format
 
 # -----------------------------------------------------------------------------
@@ -84,9 +84,7 @@ def normal_cdf(x, mean, stddev):
 def rayleigh_cdf(x, loc, scale):
     return stats.rayleigh.cdf(x, loc=loc, scale=scale)
 
-
 # ====================================================================================
-
 
 def display_dict(pdict, width=4, level=0, init_space=0):
     """Neatly prints a dict of params"""
@@ -96,14 +94,14 @@ def display_dict(pdict, width=4, level=0, init_space=0):
             val_fmt = f"{value:<.4f}"
         else:
             val_fmt = f"{str(value):<12}"
-        if not(isinstance(value, dict) or isinstance(value, OrderedDict)) and (level < 1):
+        if not (isinstance(value, dict) or isinstance(value, OrderedDict)) and (level < 1):
             print(' ' * init_space + '[' + str(key) + ']')
             print(f"{' ' * (init_space + width)}{val_fmt}")
         if isinstance(value, dict):
             print(' ' * (init_space + width * level) + '[' + str(key) + ']')
             display_dict(value, level=level + 1, init_space=ip)
         elif level > 0:
-            print(f"{' '*(init_space + width*level)}{str(key):<10} = {val_fmt}")
+            print(f"{' ' * (init_space + width * level)}{str(key):<10} = {val_fmt}")
 
 
 def fit_cdf_model(x_sample, y_sample, dist, params_est="undefined", tag=None):
@@ -121,8 +119,19 @@ def fit_cdf_model(x_sample, y_sample, dist, params_est="undefined", tag=None):
     """
 
     # Locate x-values where the y-values are changing
-    x_sample = np.asarray(x_sample)
-    y_sample = np.asarray(y_sample)
+    x_sample = np.array(x_sample)
+    y_sample = np.array(y_sample)
+
+    if y_sample.size == 0:
+        rootLogger.error(f"{Fore.RED}y-values array is empty.\n{Fore.RESET}")
+        raise ValueError()
+    if np.all(y_sample == 0):
+        rootLogger.error(f"{Fore.RED}y-values array is all zeros.\n{Fore.RESET}")
+        raise ValueError()
+    if len(np.unique(y_sample)) == 1:
+        rootLogger.error(f"{Fore.RED}y-values all values in array are same. Nothing to fit.\n{Fore.RESET}")
+        raise ValueError()
+
     change_ndx = np.where(y_sample[:-1] != y_sample[1:])[0]
     change_ndx = list(change_ndx)
 
@@ -204,8 +213,9 @@ def fit_cdf_model(x_sample, y_sample, dist, params_est="undefined", tag=None):
     # -------------------------------------------------------------------------
     # Perform the fit
     # -------------------------------------------------------------------------
-    fitresult = model_dist.fit(y_sample, params=model_params, x=x_sample,
-                               nan_policy='omit', max_nfev=10000)
+    fitresult = model_dist.fit(
+        y_sample, params=model_params, x=x_sample,
+        nan_policy='omit', max_nfev=10000)
 
     params_odict = OrderedDict()
     params_odict['function'] = str(func.__name__).lower()
@@ -244,11 +254,16 @@ def fit_prob_exceed_model(
 
     :param xdata: input values for hazard intensity (numpy array)
     :param ydata_2d: probability of exceedance (2D numpy array)
-                     its shape is (num_damage_states x num_hazards_points)
+        its shape is (num_damage_states x num_hazards_points)
     :param system_limit_states: discrete damage states (list of strings)
     :param output_path: directory path for writing output (string)
     :returns:  fitted exceedance model parameters (PANDAS dataframe)
     """
+
+    # Debug prints
+    print("\nDebug - Damage States:", system_limit_states)
+    print("Debug - ydata_2d shape:", ydata_2d.shape)
+    print("Debug - First few values of ydata_2d:\n", ydata_2d[:, :5])  # Show first 5 columns
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # INITIAL SETUP
@@ -257,10 +272,10 @@ def fit_prob_exceed_model(
     fitted_params_dict = {i: {} for i in range(1, len(system_limit_states))}
     xdata = [float(x) for x in xdata]
 
-    borderA = "=" * 88
-    borderB = '-' * 88
+    borderA = "=" * 80
+    borderB = '-' * 80
     msg_fitresults_init = \
-        f"\n\n{Fore.BLUE}Fitting system FRAGILITY data...{Fore.RESET}"
+        f"{Fore.BLUE}Fitting system FRAGILITY data...{Fore.RESET}"
     rootLogger.info(msg_fitresults_init)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -272,11 +287,16 @@ def fit_prob_exceed_model(
         y_sample = ydata_2d[dx]
         ds_level = system_limit_states[dx]
 
+        print(f"\nDebug - Processing DS{dx}: {ds_level}")
+        print(f"Debug - y_sample mean: {np.mean(y_sample)}")
+        print(f"Debug - y_sample min/max: {np.min(y_sample)}/{np.max(y_sample)}")
+
         params_odict = fit_cdf_model(
             x_sample, y_sample, dist=distribution, tag=f"Limit State: {ds_level}")
         fitted_params_dict[dx] = params_odict
 
     print(f"\n{borderA}\n")
+    print(params_odict)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Check for crossover, and correct as needed
@@ -307,15 +327,6 @@ def fit_prob_exceed_model(
         json.dump(
             {"system_fragility_model": fitted_params_dict},
             f, ensure_ascii=False, indent=4)
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # config_data = dict(
-    #     model_name=config_obj.MODEL_NAME,
-    #     x_param=config_obj.HAZARD_INTENSITY_MEASURE_PARAM,
-    #     x_unit=config_obj.HAZARD_INTENSITY_MEASURE_UNIT,
-    #     scenario_metrics=config_obj.FOCAL_HAZARD_SCENARIOS,
-    #     scneario_names=config_obj.FOCAL_HAZARD_SCENARIO_NAMES
-    # )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Plot the simulation data
@@ -355,8 +366,6 @@ def fit_prob_exceed_model(
 
     return fitted_params_dict
 
-# ====================================================================================
-
 
 def get_distribution_func(function_name):
     if function_name.lower() in ["normal", "normal_cdf"]:
@@ -390,16 +399,70 @@ def plot_data_model(x_vals,
     scenario_metrics = conf_data.get('scenario_metrics')
     scneario_names = conf_data.get('scneario_names')
 
-    plt.style.use('seaborn-darkgrid')
+    sns.set_style('darkgrid')
     mpl.rc('grid', linewidth=0.7)
     mpl.rc('font', family='sans-serif')
 
     colours = spl.ColourPalettes()
     COLR_DS = colours.FiveLevels[-1 * len(SYS_DS):]
 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    def calc_xtick_vals(x_max, XTICK_GAP, format_string='{:.1f}'):
+        NUM_XTICKS = int(np.round(x_max / XTICK_GAP) + 1)
+        xtick_pos = np.linspace(0.0, x_max, num=NUM_XTICKS, endpoint=True)
+        xtick_val = [format_string.format(i) for i in xtick_pos]
+        return xtick_pos, xtick_val
+
+    x_max = float(max(x_vals))
+    if x_max <= 1.0:
+        XTICK_GAP = 0.1
+    elif x_max <= 3.0:
+        XTICK_GAP = 0.2
+    elif x_max <= 5.0:
+        XTICK_GAP = 0.5
+    elif x_max <= 10:
+        XTICK_GAP = 1
+    elif x_max <= 50:
+        XTICK_GAP = 5
+    elif x_max <= 100:
+        XTICK_GAP = 10
+    else:
+        XTICK_GAP = int(x_max / 10)
+    if x_max <= 1.0:
+        sfmt = '{:.2f}'
+    else:
+        sfmt = '{:.1f}'
+
+    x_unit = str(x_unit)
+    if x_max is None or x_max in ["", "nan", "na"]:
+        if x_unit.lower() == "g":
+            x_max = 1.4
+            XTICK_GAP = 0.2
+            sfmt = '{:.2f}'
+        elif x_param.lower() in ["sa", "spectral acceleration"]:
+            x_max = 15
+            XTICK_GAP = 1
+            sfmt = '{:.0f}'
+        elif x_unit.lower() in ["m/s^2", "m/s2"]:
+            x_max = 10
+            XTICK_GAP = 1
+            sfmt = '{:.0f}'
+        elif x_param.lower() in ["k", "k-out-of-n"]:
+            x_max = 5
+            XTICK_GAP = 1
+            sfmt = '{:.0f}'
+
+    if x_unit.lower() not in ["g", "m/s^2", "m/s2", "k", "k-out-of-n", "none", "na", "nan"]:
+        print(f"X-axis unit found is: {x_unit}.")
+        raise ValueError("X-axis unit must be g or m/s^2")
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     fig = plt.figure(figsize=(9, 5))
     ax = fig.add_subplot(111)
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # --------------------------------------------------------------------------
     # [Plot 1 of 3] The Data Points
 
     if PLOT_DATA:
@@ -411,13 +474,12 @@ def plot_data_model(x_vals,
                     markersize=3, markeredgewidth=1, markeredgecolor=None,
                     zorder=10)
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # --------------------------------------------------------------------------
     # [Plot 2 of 3] The Fitted Model
 
     if PLOT_MODEL:
         spl.add_legend_subtitle("FITTED MODEL")
-        xmax = max(x_vals)
-        xformodel = np.linspace(0, xmax, 101, endpoint=True)
+        xformodel = np.linspace(0, x_max, 121, endpoint=True)
         dmg_mdl_arr = np.zeros((len(SYS_DS), len(xformodel)))
 
         for dx in range(1, len(SYS_DS)):
@@ -432,7 +494,7 @@ def plot_data_model(x_vals,
                     alpha=0.65, linestyle='-', linewidth=1.6,
                     zorder=9)
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # --------------------------------------------------------------------------
     # [Plot 3 of 3] The Scenario Events
 
     if PLOT_EVENTS:
@@ -440,7 +502,7 @@ def plot_data_model(x_vals,
         for i, haz in enumerate(scenario_metrics):
             event_num = str(i + 1)
             event_intensity_str = "{:.3f}".format(float(haz))
-            event_color = colours.BrewerSpectral[i]
+            event_color = colours.GreenArmytage[i]
             try:
                 event_label = event_num + ". " + \
                     scneario_names[i] + " : " + \
@@ -496,39 +558,48 @@ def plot_data_model(x_vals,
     ax.set_axisbelow('line')
 
     outfig = Path(out_path, file_name)
-    figtitle = 'System Fragility: ' + model_name
+    figtitle = f"System Fragility: {model_name}"
 
-    x_lab = x_param + ' (' + x_unit + ')'
-    y_lab = 'P($D_s$ > $d_s$)'
+    if x_unit is None or x_unit.lower() in ["none", "na"]:
+        x_lab = x_param
+    else:
+        x_lab = f"{x_param} ({x_unit})"
+    # x_lab = x_param + ' (' + x_unit + ')'
+    y_lab = "Probability of Exceedance  P($D_s$ > $d_s$)"
 
-    y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)
+    x_tick_pos, x_tick_val = calc_xtick_vals(
+        x_max, XTICK_GAP=XTICK_GAP, format_string=sfmt)
+    # x_tick_pos = np.linspace(0.0, max(x_vals), num=6, endpoint=True)
+    # x_tick_val = ['{:.2f}'.format(i) for i in x_tick_pos]
+
+    y_tick_pos = np.linspace(0.0, 1.0, num=11, endpoint=True)
     y_tick_val = ['{:.1f}'.format(i) for i in y_tick_pos]
-    x_tick_pos = np.linspace(0.0, max(x_vals), num=6, endpoint=True)
-    x_tick_val = ['{:.2f}'.format(i) for i in x_tick_pos]
 
-    ax.set_title(figtitle, loc='center', y=1.06, fontweight='bold', size=11)
+    ax.set_title(figtitle, loc='center', y=1.04, fontweight='bold', size=10)
     ax.set_xlabel(x_lab, size=10, labelpad=10)
     ax.set_ylabel(y_lab, size=10, labelpad=10)
 
     ax.set_xlim(0, max(x_tick_pos))
     ax.set_xticks(x_tick_pos)
     ax.set_xticklabels(x_tick_val, size=9)
+
     ax.set_ylim(0, max(y_tick_pos))
     ax.set_yticks(y_tick_pos)
     ax.set_yticklabels(y_tick_val, size=9)
-    ax.margins(0, 0)
+
     ax.tick_params(axis='both', pad=7)
+    ax.margins(0, 0)
 
     # Shrink current axis width by 15%
     box = ax.get_position()
     ax.set_position([box.x0, box.y0, box.width * 0.85, box.height])
 
     # Put a legend to the right of the current axis
-    ax.legend(title='', loc='upper left', ncol=1,
-              bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 9})
+    ax.legend(
+        title='', loc='upper left', ncol=1,
+        bbox_to_anchor=(1.02, 1.0), frameon=0, prop={'size': 9})
 
-    plt.savefig(outfig,
-                format='jpg', dpi=300, bbox_inches='tight')
+    plt.savefig(outfig, format='jpg', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
 # ====================================================================================
@@ -554,28 +625,6 @@ def correct_crossover(
 
     ds_iter = iter(range(2, len(SYS_DS)))
     for dx in ds_iter:
-
-        ############################################################################
-        # overlap_condition = np.sum(ydata_2d[dx] > ydata_2d[dx - 1])
-        # if overlap_condition == 0:
-        #     msg_overlap_none = \
-        #         f"{Fore.GREEN}"\
-        #         "NO crossover detected in data for the pair: "\
-        #         f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}"\
-        #         f"{Fore.RESET}"
-        #     # rootLogger.info(msg_overlap_none)
-        #     print(msg_overlap_none)
-        #     continue
-        # else:
-        #     msg_overlap_found = \
-        #         f"{Fore.MAGENTA}"\
-        #         "**Crossover detected in data for the pair : "\
-        #         f"{SYS_DS[dx - 1]} - {SYS_DS[dx]}**"\
-        #         f"{Fore.RESET}"
-        #     # rootLogger.info(msg_overlap_found)
-        #     print(msg_overlap_found)
-
-        ############################################################################
 
         x_sample = xdata
         y_sample = ydata_2d[dx]
@@ -648,7 +697,7 @@ def correct_crossover(
                     x_sample, y_sample, dist=function_name, params_est=params_pe,
                     tag=f"Limit State: {SYS_DS[dx]} | crossover correction attempt")
 
-        ############################################################################
+        # --------------------------------------------------------------------------
 
     return fitted_params_set
 

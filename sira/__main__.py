@@ -2,21 +2,22 @@
 # # -*- coding: utf-8 -*-
 
 """
-title        : __main__.py
-description  : entry point for core sira component
-usage        : python sira [OPTIONS]
-               -h                    Display this usage message
-               -d [input_directory]  Specify the directory with the required
-                                     config and model files
-               -s                    Run simulation
-               -f                    Conduct model fitting. Must be done
-                                     after a complete run with `-s` flag
-               -l                    Conduct loss analysis. Must be done
-                                     after a complete run with `-s` flag
-               -v [LEVEL]            Choose `verbose` mode, or choose logging
-                                     level DEBUG, INFO, WARNING, ERROR, CRITICAL
+title:        __main__.py
+description:  entry point for core sira component
+usage:
+    python sira [OPTIONS]
+    -h                    Display this usage message
+    -d [input_directory]  Specify the directory with the required
+                            config and model files
+    -s                    Run simulation
+    -f                    Conduct model fitting. Must be done
+                            after a complete run with `-s` flag
+    -l                    Conduct loss analysis. Must be done
+                            after a complete run with `-s` flag
+    -v [LEVEL]            Choose `verbose` mode, or choose logging
+                            level DEBUG, INFO, WARNING, ERROR, CRITICAL
 
-python_version  : 3.7
+python_version  : 3.11
 """
 
 import argparse
@@ -25,10 +26,9 @@ import logging.config
 import os
 import re
 import sys
-import time
+from time import time, strftime, localtime
+from datetime import timedelta
 from pathlib import Path
-# from typing import IO
-
 import numpy as np
 from colorama import Fore, init
 
@@ -38,17 +38,18 @@ sys.path.insert(0, str(src_dir))
 
 # Import SIRA modules
 from sira.configuration import Configuration
-from sira.infrastructure_response import (pe_by_component_class,
-                                          plot_mean_econ_loss,
-                                          write_system_response)
+from sira.infrastructure_response import (
+    pe_by_component_class,
+    write_system_response)
 from sira.logger import configure_logger
 from sira.loss_analysis import run_scenario_loss_analysis
 from sira.model_ingest import ingest_model
+from sira.simulation import calculate_response
+from sira.fit_model import fit_prob_exceed_model
 from sira.modelling.hazard import HazardsContainer
 from sira.modelling.system_topology import SystemTopologyGenerator
 from sira.scenario import Scenario
-from sira.simulation import calculate_response
-from sira.fit_model import fit_prob_exceed_model
+from sira.tools import utils
 
 init()
 np.seterr(divide='print', invalid='raise')
@@ -56,6 +57,7 @@ np.seterr(divide='print', invalid='raise')
 
 def main():
 
+    # ------------------------------------------------------------------------------
     # define arg parser
     parser = argparse.ArgumentParser(
         prog='sira', description="run sira", add_help=True)
@@ -69,21 +71,27 @@ def main():
     parser.add_argument("-d", "--input_directory", type=str)
 
     # ------------------------------------------------------------------------------
-    # Tell the code what tasks to do
+    # Define the sim arguments - tell the code what tasks to do
 
+    VERBOSITY_CHOICES = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
     parser.add_argument(
         "-s", "--simulation", action='store_true', default=False)
+    # parser.add_argument(
+    #     "-x", "--donot_draw_topology", action='store_true', default=False)
+    parser.add_argument(
+        "-t", "--draw_topology", action='store_true', default=False)
     parser.add_argument(
         "-f", "--fit", action='store_true', default=False)
     parser.add_argument(
         "-l", "--loss_analysis", action='store_true', default=False)
-
     parser.add_argument(
-        "-v", "--verbose", dest="loglevel", type=str,
-        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        "-v", "--verbose",
+        dest="loglevel",
+        type=str,
+        choices=VERBOSITY_CHOICES,
         default="INFO",
-        help="Choose option for logging level from: \n"
-             "DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+        help=f"Choose one of these options for logging: \n{VERBOSITY_CHOICES}"
+    )
 
     args = parser.parse_args()
 
@@ -93,14 +101,18 @@ def main():
     #     parser.error("--input_directory and [--config_file and --model_file]"
     #                  " are mutually exclusive ...")
     #     sys.exit(2)
+    # ------------------------------------------------------------------------------
 
     # error handling
-    if not any([args.simulation, args.fit, args.loss_analysis]):
+    if not any([args.simulation, args.fit, args.loss_analysis, args.draw_topology]):
         parser.error(
-            "\nAt least one of these three flags is required:\n"
-            " --simulation (-s) or --fit (-f) or --loss_analysis (-s).\n"
-            " The options for fit or loss_analysis requires the -s flag, "
-            " or a previous completed run with the -s flag.")
+            "\nOne of these flags is required:\n"
+            " --simulation (-s) or \n"
+            " --fit (-f) or \n"
+            " --loss_analysis (-s) or \n"
+            " --draw_topology (-t).\n"
+            " The options for fit or loss_analysis requires the -s flag,\n"
+            " or a previously completed run with the -s flag.\n")
         sys.exit(2)
 
     proj_root_dir = args.input_directory
@@ -150,49 +162,39 @@ def main():
     if model_file_name is None:
         raise InvalidOrMissingInputFile("MODEL")
 
-    # --------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
     # Define paths for CONFIG and MODEL
 
     config_file_path = Path(proj_input_dir, config_file_name).resolve()
     model_file_path = Path(proj_input_dir, model_file_name).resolve()
 
-    # ------------------------------------------------------------------------------
-    # Check output path
+    # ---------------------------------------------------------------------------------
+    # Configure simulation model.
+    # Read data and control parameters and construct objects.
+    # ---------------------------------------------------------------------------------
+    config = Configuration(str(config_file_path), str(model_file_path))
+    scenario = Scenario(config)
+    infrastructure = ingest_model(config)
+    hazards_container = HazardsContainer(config, model_file_path)
+    output_path = config.OUTPUT_DIR
 
-    output_path = Path(args.input_directory, "output").resolve()
-    try:
-        if not os.path.exists(output_path):
-            os.makedirs(output_path)
-    except (FileNotFoundError, OSError):
-        parser.error(
-            "Unable to create output folder " + str(output_path) + " ...")
-        sys.exit(2)
-
-    # ------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------
     # Set up logging
-    # ------------------------------------------------------------------------------
-    timestamp = time.strftime('%Y.%m.%d %H:%M:%S')
+    # ---------------------------------------------------------------------------------
+    start_time = time()
+    start_time_strf = strftime('%Y-%m-%d %H:%M:%S', localtime(start_time))
     log_path = os.path.join(output_path, "log.txt")
     configure_logger(log_path, args.loglevel)
     rootLogger = logging.getLogger(__name__)
     print("\n")
     rootLogger.info(
-        Fore.GREEN + 'Simulation initiated at: {}\n'.format(timestamp) + Fore.RESET
-    )
+        f"{Fore.GREEN}Simulation initiated at: {start_time_strf}{Fore.RESET}\n")
+    print("-" * 80)
 
-    # ------------------------------------------------------------------------------
-    # Configure simulation model.
-    # Read data and control parameters and construct objects.
-    # ------------------------------------------------------------------------------
-    config = Configuration(str(config_file_path), str(model_file_path), str(output_path))
-    scenario = Scenario(config)
-    infrastructure = ingest_model(config)
-    hazards = HazardsContainer(config, model_file_path)
-
-    # ------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------
     # SIMULATION
     # Get the results of running a simulation
-    # ------------------------------------------------------------------------------
+    #
     # response_list = [
     #     {},  # [0] hazard level vs component damage state index
     #     {},  # [1] hazard level vs infrastructure output
@@ -202,34 +204,34 @@ def main():
     #     [],  # [5] array of infrastructure econ loss per sample
     #     {},  # [6] hazard level vs component class dmg level pct
     #     {}]  # [7] hazard level vs component class expected damage index
+    # ---------------------------------------------------------------------------------
     if args.simulation:
 
-        response_list = calculate_response(hazards, scenario, infrastructure)
+        response_list = calculate_response(hazards_container, scenario, infrastructure)
 
-        # ---------------------------------------------------------------------
         # Post simulation processing.
         # After the simulation has run the results are aggregated, saved
         # and the system fragility is calculated.
-        # ---------------------------------------------------------------------
-        write_system_response(response_list, infrastructure, scenario, hazards)
-        economic_loss_array = response_list[5]
-        plot_mean_econ_loss(scenario, economic_loss_array, hazards)
+        pe_sys_econloss = write_system_response(
+            response_list, infrastructure, scenario, hazards_container)
 
-        if str(config.HAZARD_INPUT_METHOD).lower() == "calculated_array":
-            pe_by_component_class(
-                response_list, infrastructure, scenario, hazards)
+        # if str(config.HAZARD_INPUT_METHOD).lower() == "calculated_array":
+        pe_by_component_class(
+            response_list, infrastructure, scenario, hazards_container)
+        print("\n")
+        rootLogger.info('Hazard impact simulation completed...')
 
-        # ---------------------------------------------------------------------
-        # Visualizations
+    if args.draw_topology:
+
         # Construct visualization for system topology
-        # ---------------------------------------------------------------------
+        rootLogger.info(
+            f"{Fore.CYAN}Attempting to draw system topology ...{Fore.RESET}")
         sys_topology_view = SystemTopologyGenerator(infrastructure, output_path)
         sys_topology_view.draw_sys_topology()  # noqa:E1101
-        rootLogger.info('Simulation completed...')
 
-    # ------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------
     # FIT MODEL to simulation output data
-    # ------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------
     if args.fit:
 
         args.pe_sys = None
@@ -243,11 +245,7 @@ def main():
             "modelteststructure"
         ]
 
-        if infrastructure.system_class.lower() == 'powerstation':
-            args.pe_sys = os.path.join(
-                config.RAW_OUTPUT_DIR, 'pe_sys_econloss.npy')
-
-        elif infrastructure.system_class.lower() == 'substation':
+        if infrastructure.system_class.lower() == 'substation':
             args.pe_sys = os.path.join(
                 config.RAW_OUTPUT_DIR, 'pe_sys_cpfailrate.npy')
 
@@ -263,46 +261,84 @@ def main():
             scneario_names=config.FOCAL_HAZARD_SCENARIO_NAMES
         )
 
+        rootLogger.info(
+            f"{Fore.CYAN}Initiating model fitting for simulated system "
+            f"fragility data...{Fore.RESET}")
         if args.pe_sys is not None:
-            rootLogger.info('Initiating model fitting for simulated system fragility data...')
-            hazard_scenarios = hazards.hazard_scenario_list
+            hazard_events = hazards_container.hazard_intensity_list
             sys_limit_states = infrastructure.get_system_damage_states()
             pe_sys = np.load(args.pe_sys)
+
+            print()
+            rootLogger.info(f"Infrastructure type: {infrastructure.system_class}")
+            rootLogger.info(f"System Limit States: {sys_limit_states}")
+            rootLogger.info(
+                f"System Limit State Bounds: "
+                f"{infrastructure.get_system_damage_state_bounds()}")
+
             # Calculate & Plot Fitted Models:
             fit_prob_exceed_model(
-                hazard_scenarios,
+                hazard_events,
                 pe_sys,
                 sys_limit_states,
                 config_data_dict,
-                output_path=config.OUTPUT_PATH,
-                distribution='normal_cdf'
+                output_path=config.OUTPUT_DIR
             )
             rootLogger.info('Model fitting complete.')
         else:
-            rootLogger.error("Input pe_sys file not found: %s", str(output_path))
+            rootLogger.error(f"Input pe_sys file not found: {str(output_path)}")
 
-    # ------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------
     # SCENARIO LOSS ANALYSIS
-    # ------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------
     if args.loss_analysis:
 
-        args.ct = os.path.join(config.OUTPUT_PATH, 'comptype_response.csv')
-        args.cp = os.path.join(config.OUTPUT_PATH, 'component_response.csv')
+        print()
+        rootLogger.info(f"{Fore.CYAN}Calculating system loss metrics...{Fore.RESET}")
 
-        if args.ct is not None and args.cp is not None:
-            run_scenario_loss_analysis(
-                scenario, hazards, infrastructure, config, args.ct, args.cp)
-        else:
-            if args.ct is None:
-                rootLogger.error("Input files not found: %s", str(args.ct))
-            if args.cp is None:
-                rootLogger.error("Input files not found: %s", str(args.cp))
+        args.ct = Path(config.OUTPUT_DIR, 'comptype_response.csv')
+        args.cp = Path(config.OUTPUT_DIR, 'component_response.csv')
 
-    rootLogger.info("RUN COMPLETE.\n")
-    rootLogger.info("Config file used : %s", str(config_file_path))
-    rootLogger.info("Model file used  : %s", str(model_file_path))
-    rootLogger.info("Outputs saved in : %s%s%s\n",
-                    Fore.YELLOW, str(output_path), Fore.RESET)
+        if config.FOCAL_HAZARD_SCENARIOS:
+            if args.ct is not None and args.cp is not None:
+                run_scenario_loss_analysis(
+                    scenario, hazards_container, infrastructure,
+                    config, args.ct, args.cp)
+            else:
+                if args.ct is None:
+                    rootLogger.error(
+                        f"Input files not found: {' ' * 9}\n{str(args.ct)}")
+                if args.cp is None:
+                    rootLogger.error(
+                        f"Input files not found: {' ' * 9}\n{str(args.cp)}")
+
+    # ---------------------------------------------------------------------------------
+    rootLogger.info("RUN COMPLETE.")
+    print("-" * 80)
+
+    outfolder_wrapped = utils.wrap_file_path(
+        str(output_path), first_line_indent="", subsequent_indent=" " * 9)
+
+    rootLogger.info(f"Config file name  : {str(Path(config_file_path).name)}")
+    rootLogger.info(f"Model  file name  : {str(Path(model_file_path.name))}")
+
+    if config.HAZARD_INPUT_METHOD in ['hazard_file', 'scenario_file']:
+        scnfile_wrap = utils.wrap_file_path(
+            str(config.HAZARD_INPUT_FILE), max_width=95)
+        rootLogger.info(f"Hazard input file : \n{scnfile_wrap}")
+
+    rootLogger.info(
+        f"Outputs saved in  : \n{Fore.YELLOW}{outfolder_wrapped}{Fore.RESET}\n")
+
+    completion_time = time()
+    completion_time_strf = strftime('%Y-%m-%d %H:%M:%S', localtime(completion_time))
+    print("-" * 80)
+    rootLogger.info(
+        f"{Fore.GREEN}Simulation completed at : {completion_time_strf}{Fore.RESET}")
+    run_duration = timedelta(seconds=completion_time - start_time)
+    rootLogger.info(
+        f"{Fore.GREEN}Run time : {run_duration}\n{Fore.RESET}")
+    # ------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     main()

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import json
 from pathlib import Path
-
+import sys
 
 class Configuration:
     """
@@ -13,9 +13,9 @@ class Configuration:
         """
         :param config_path: path to the config file
         :param run_mode: Default is 'impact' - this runs the full MC simulation
-                         If option is 'analysis' then new output folders are
-                         not created
+            If option is 'analysis' then new output folders are not created
         """
+
         # cater for 3 different types of config files .conf, .json , .ini
         # file_ext = Path(config_path).suffix
         # if file_ext != '.json':
@@ -53,21 +53,31 @@ class Configuration:
 
         if str(config['HAZARD_INPUT_METHOD']).lower() in \
                 ['hazard_array', 'calculated_array']:
-            self.HAZARD_INPUT_METHOD = 'Calculated_Array'
+            self.HAZARD_INPUT_METHOD = 'calculated_array'
         elif str(config['HAZARD_INPUT_METHOD']).lower() in \
                 ['scenario_file', 'hazard_file']:
-            self.HAZARD_INPUT_METHOD = 'Hazard_File'
+            self.HAZARD_INPUT_METHOD = 'hazard_file'
         else:
             raise ValueError(
                 "Unrecognised HAZARD_INPUT_METHOD. Valid values are: {}".format(
                     self._VALID_HAZARD_INPUT_METHODS)
             )
 
-        if self.HAZARD_INPUT_METHOD == 'Hazard_File':
+        if self.HAZARD_INPUT_METHOD in ['hazard_file', 'scenario_file']:
+            try:
+                haz_dir = Path(config['HAZARD_INPUT_DIR'])
+            except KeyError:
+                haz_dir = Path(self.root_dir, 'input')
+            self.HAZARD_INPUT_DIR = Path(haz_dir).resolve()
             self.HAZARD_INPUT_FILE = str(
-                Path(self.root_dir, 'input', config['HAZARD_INPUT_FILE']))
-        elif self.HAZARD_INPUT_METHOD == 'Calculated_Array':
+                Path(self.HAZARD_INPUT_DIR, config['HAZARD_INPUT_FILE']))
+            self.HAZARD_INPUT_HEADER = str(config['HAZARD_INPUT_HEADER'])
+            self.HAZARD_SCALING_FACTOR = float(config['HAZARD_SCALING_FACTOR'])
+
+        elif self.HAZARD_INPUT_METHOD.lower() == 'calculated_array':
             self.HAZARD_INPUT_FILE = None
+            self.HAZARD_INPUT_HEADER = "hazard_intensity"
+            self.HAZARD_SCALING_FACTOR = 1.0
 
         self.INTENSITY_MEASURE_MIN = \
             float(config['HAZARD_INTENSITY_MEASURE_MIN'])
@@ -97,19 +107,30 @@ class Configuration:
         self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
         self.INPUT_MODEL_PATH = Path(model_path)
-        if output_path is not None:
-            self.OUTPUT_PATH = Path(output_path)
+
+        # Set up output directory
+        if output_path is None:
+            try:
+                # By default, get output dir name from config file
+                output_path = config['OUTPUT_DIR']
+                self.OUTPUT_DIR = Path(self.root_dir, output_path).resolve()
+            except KeyError:
+                # if not key for OUTPUT_DIR in config file, use a default
+                output_path = "output"
+                self.OUTPUT_DIR = Path(self.root_dir, output_path).resolve()
         else:
-            input_dir = Path(config_path).resolve().parent
-            parent_dir = input_dir.parent
-            self.OUTPUT_PATH = Path(parent_dir, 'output')
+            self.OUTPUT_DIR = Path(output_path)
 
-        # create output dir: root/SCENARIO_NAME+self.timestamp
-        if not self.OUTPUT_PATH.exists():
-            self.OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
+        # Make the dir it it does not exist
+        try:
+            if not self.OUTPUT_DIR.exists():
+                self.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        except (FileNotFoundError, OSError):
+            raise IOError(
+                "Unable to create output folder " + str(output_path) + " ...")
+            sys.exit(2)
 
-        self.RAW_OUTPUT_DIR = Path(self.OUTPUT_PATH, 'RAW_OUTPUT')
-        # create output dir: root/SCENARIO_NAME+self.timestamp/RAW_OUTPUT
+        self.RAW_OUTPUT_DIR = Path(self.OUTPUT_DIR, 'RAW_OUTPUT')
         if not self.RAW_OUTPUT_DIR.exists():
             self.RAW_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

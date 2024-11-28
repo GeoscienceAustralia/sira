@@ -40,7 +40,7 @@
         "WasteWaterTreatmentPlant",
         "WWTP",
         "PotableWaterPumpStation",
-        "ElectricityTransmissionNetwork",
+        "ElectricPowerNetwork",
         "ModelTestStructure",
         "RailNetwork"
     ],

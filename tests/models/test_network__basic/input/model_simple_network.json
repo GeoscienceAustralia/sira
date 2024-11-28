@@ -107,7 +107,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": "Uncosted component. Assumed invulnerable in the modelling context.",
+                        "data_source": "Uncosted component. Assumed invulnerable in the modelling context.",
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -128,7 +128,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -149,7 +149,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -170,7 +170,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -216,7 +216,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": "Uncosted component. Assumed invulnerable in the modelling context.",
+                        "data_source": "Uncosted component. Assumed invulnerable in the modelling context.",
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -237,7 +237,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": "Uncosted component. Assumed invulnerable in the modelling context.",
+                        "data_source": "Uncosted component. Assumed invulnerable in the modelling context.",
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -258,7 +258,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": "Uncosted component. Assumed invulnerable in the modelling context.",
+                        "data_source": "Uncosted component. Assumed invulnerable in the modelling context.",
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -279,7 +279,7 @@
                         "median": 101.0,
                         "location": 1.0,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 1.0,
                         "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
@@ -325,7 +325,7 @@
                         "median": 0.23,
                         "location": 0.25,
                         "beta": 0,
-                        "fragility_source": "Matched to Australian URM post 1945.",
+                        "data_source": "Matched to Australian URM post 1945.",
                         "lower_limit": 0.95,
                         "upper_limit": 0.01,
                         "damage_state_definition": null
@@ -346,7 +346,7 @@
                         "median": 0.38,
                         "location": 0.35,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.75,
                         "upper_limit": 0.05,
                         "damage_state_definition": null
@@ -367,7 +367,7 @@
                         "median": 0.55,
                         "location": 0.4,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.3,
                         "upper_limit": 0.3,
                         "damage_state_definition": null
@@ -388,7 +388,7 @@
                         "median": 0.8,
                         "location": 0.4,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.0,
                         "upper_limit": 1.0,
                         "damage_state_definition": null
@@ -434,7 +434,7 @@
                         "median": 0.23,
                         "location": 0.25,
                         "beta": 0,
-                        "fragility_source": "Matched to Australian URM post 1945.",
+                        "data_source": "Matched to Australian URM post 1945.",
                         "lower_limit": 0.95,
                         "upper_limit": 0.01,
                         "damage_state_definition": null
@@ -455,7 +455,7 @@
                         "median": 0.38,
                         "location": 0.35,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.75,
                         "upper_limit": 0.05,
                         "damage_state_definition": null
@@ -476,7 +476,7 @@
                         "median": 0.55,
                         "location": 0.4,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.3,
                         "upper_limit": 0.3,
                         "damage_state_definition": null
@@ -497,7 +497,7 @@
                         "median": 0.8,
                         "location": 0.4,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.0,
                         "upper_limit": 1.0,
                         "damage_state_definition": null
@@ -543,7 +543,7 @@
                         "median": 0.23,
                         "location": 0.25,
                         "beta": 0,
-                        "fragility_source": "Matched to Australian URM post 1945.",
+                        "data_source": "Matched to Australian URM post 1945.",
                         "lower_limit": 0.95,
                         "upper_limit": 0.01,
                         "damage_state_definition": null
@@ -564,7 +564,7 @@
                         "median": 0.38,
                         "location": 0.35,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.75,
                         "upper_limit": 0.05,
                         "damage_state_definition": null
@@ -585,7 +585,7 @@
                         "median": 0.55,
                         "location": 0.4,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.3,
                         "upper_limit": 0.3,
                         "damage_state_definition": null
@@ -606,7 +606,7 @@
                         "median": 0.8,
                         "location": 0.4,
                         "beta": 0,
-                        "fragility_source": null,
+                        "data_source": null,
                         "lower_limit": 0.0,
                         "upper_limit": 1.0,
                         "damage_state_definition": null

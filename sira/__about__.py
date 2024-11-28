@@ -2,7 +2,7 @@ __packagename__ = "sira"
 __description__ = "Systemic Infrastructure Resilience Analysis"
 __url__ = "https://github.com/GeoscienceAustralia/sira"
 
-__version__ = "0.1.0"
+__version__ = "0.3.0"
 
 __author__ = "Geoscience Australia"
 __email__ = "maruf.rahman@ga.gov.au"

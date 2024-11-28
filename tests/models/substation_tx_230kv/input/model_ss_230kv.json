@@ -2041,7 +2041,7 @@
                         "median": 4.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Source. Unbreakable.",
+                        "data_source": "Source. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -2087,7 +2087,7 @@
                         "median": 4.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Source. Unbreakable.",
+                        "data_source": "Source. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -2133,7 +2133,7 @@
                         "median": 4.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Source. Unbreakable.",
+                        "data_source": "Source. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -2179,7 +2179,7 @@
                         "median": 4.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Source. Unbreakable.",
+                        "data_source": "Source. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -2225,7 +2225,7 @@
                         "median": 4.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Source. Unbreakable.",
+                        "data_source": "Source. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -2271,7 +2271,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2317,7 +2317,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2363,7 +2363,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2409,7 +2409,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2455,7 +2455,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2501,7 +2501,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2547,7 +2547,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2593,7 +2593,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2639,7 +2639,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2685,7 +2685,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2731,7 +2731,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2777,7 +2777,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2823,7 +2823,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2869,7 +2869,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2915,7 +2915,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -2961,7 +2961,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.26,
-                        "fragility_source": "Vanzi voltage transformer Syner-G Table 5.14",
+                        "data_source": "Vanzi voltage transformer Syner-G Table 5.14",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3007,7 +3007,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3053,7 +3053,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3099,7 +3099,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3145,7 +3145,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3191,7 +3191,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3237,7 +3237,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3283,7 +3283,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3329,7 +3329,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3375,7 +3375,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3421,7 +3421,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3467,7 +3467,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3513,7 +3513,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3559,7 +3559,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3605,7 +3605,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3651,7 +3651,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3697,7 +3697,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3743,7 +3743,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3789,7 +3789,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3835,7 +3835,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3881,7 +3881,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3927,7 +3927,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -3973,7 +3973,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4019,7 +4019,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4065,7 +4065,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4111,7 +4111,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4157,7 +4157,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4203,7 +4203,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4249,7 +4249,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4295,7 +4295,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4341,7 +4341,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4387,7 +4387,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4433,7 +4433,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4479,7 +4479,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4525,7 +4525,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4571,7 +4571,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4617,7 +4617,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4663,7 +4663,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4709,7 +4709,7 @@
                         "median": 0.51,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
+                        "data_source": "Median mid-way between Vanzi current and voltage transformer with damage threshold just below 0.4g",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Porcelain cracking or overturning"
@@ -4755,7 +4755,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -4801,7 +4801,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -4847,7 +4847,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -4893,7 +4893,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -4939,7 +4939,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -4985,7 +4985,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5031,7 +5031,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5077,7 +5077,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5123,7 +5123,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5169,7 +5169,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5215,7 +5215,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5261,7 +5261,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5307,7 +5307,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5353,7 +5353,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5399,7 +5399,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5445,7 +5445,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5491,7 +5491,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5537,7 +5537,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5583,7 +5583,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5629,7 +5629,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5675,7 +5675,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5721,7 +5721,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5767,7 +5767,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5813,7 +5813,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5859,7 +5859,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5905,7 +5905,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5951,7 +5951,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -5997,7 +5997,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6043,7 +6043,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6089,7 +6089,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6135,7 +6135,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6181,7 +6181,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6227,7 +6227,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6273,7 +6273,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6319,7 +6319,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6365,7 +6365,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6411,7 +6411,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6457,7 +6457,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6503,7 +6503,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6549,7 +6549,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6595,7 +6595,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6641,7 +6641,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6687,7 +6687,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6733,7 +6733,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6779,7 +6779,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6825,7 +6825,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6871,7 +6871,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6917,7 +6917,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -6963,7 +6963,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7009,7 +7009,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7055,7 +7055,7 @@
                         "median": 0.6,
                         "location": 0,
                         "beta": 0.28,
-                        "fragility_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
+                        "data_source": "Expert judgement derived at Symposium .  Vulnerability corresponds closely with Vanzi horizontal disconnect (Syner-G Table 5.6).",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7101,7 +7101,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7147,7 +7147,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7193,7 +7193,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7239,7 +7239,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7285,7 +7285,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7331,7 +7331,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7377,7 +7377,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7423,7 +7423,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7469,7 +7469,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7515,7 +7515,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.3,
-                        "fragility_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
+                        "data_source": "Midway between Vanzi discharger and ligntning arrestor (Syner-G Table 5.4 and Table 5,5)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Anchorage failure or overturning."
@@ -7561,7 +7561,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7607,7 +7607,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7653,7 +7653,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7699,7 +7699,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7745,7 +7745,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7791,7 +7791,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7837,7 +7837,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7883,7 +7883,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7929,7 +7929,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -7975,7 +7975,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8021,7 +8021,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8067,7 +8067,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8113,7 +8113,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8159,7 +8159,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8205,7 +8205,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8251,7 +8251,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8297,7 +8297,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8343,7 +8343,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8389,7 +8389,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8435,7 +8435,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8481,7 +8481,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8527,7 +8527,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8573,7 +8573,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8619,7 +8619,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8665,7 +8665,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8711,7 +8711,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8757,7 +8757,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8803,7 +8803,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8849,7 +8849,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8895,7 +8895,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8941,7 +8941,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -8987,7 +8987,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -9033,7 +9033,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
+                        "data_source": "Expert judgement derived at Symposium with some validation to performance testing of CB by manufacturer.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Two porcelain column breakages with damage to anchorge"
@@ -9079,7 +9079,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived at Symposium. Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)",
+                        "data_source": "Expert judgement derived at Symposium. Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator"
@@ -9125,7 +9125,7 @@
                         "median": 0.55,
                         "location": 0,
                         "beta": 0.2,
-                        "fragility_source": "Expert judgement derived through concensus at Symposium. Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)",
+                        "data_source": "Expert judgement derived through concensus at Symposium. Note that vulnerability is greater than that assessed by Anagnos (Syner-G Table 3.22)",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Gasket leakage to 2 or more bushings.  One porcelain bushing breakage and major break in radiator"
@@ -9171,7 +9171,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Assigned extremely high fragility as Bus is not modelled",
+                        "data_source": "Assigned extremely high fragility as Bus is not modelled",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9217,7 +9217,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Assigned extremely high fragility as Bus is not modelled",
+                        "data_source": "Assigned extremely high fragility as Bus is not modelled",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9263,7 +9263,7 @@
                         "median": 0.86,
                         "location": 0,
                         "beta": 0.38,
-                        "fragility_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable.",
+                        "data_source": "RC Frame with masonry infill wall adapation of power house (0.3g assumed design level) at extensive damage state.  Extensive damage state is assmed to be the severity at which the control equipment is rendered inoperable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "Most infill walls exhibit large cracks.  Some bricks may dislodge and fall.  Some walls may bulge out-of-plane.  A few walls may fall partially or fully.  A few concrete columns or beams may fail in shear resulting in partial collapse.  Structure may exhibit permanent lateral deformation. Most partitions are cracked and many need replacement.  Ceiling \u201cT\u201d bar system exhibits extensive buckling and with many light fittings fall.  Extensive damage to exterior wall panels and most connections require inspection."
@@ -9309,7 +9309,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9355,7 +9355,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9401,7 +9401,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9447,7 +9447,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9493,7 +9493,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9539,7 +9539,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9585,7 +9585,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9631,7 +9631,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Sink. Unbreakable.",
+                        "data_source": "Sink. Unbreakable.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9677,7 +9677,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9723,7 +9723,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9769,7 +9769,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9815,7 +9815,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9861,7 +9861,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9907,7 +9907,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9953,7 +9953,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -9999,7 +9999,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -10045,7 +10045,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -10091,7 +10091,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"
@@ -10137,7 +10137,7 @@
                         "median": 99.0,
                         "location": 0,
                         "beta": 0.01,
-                        "fragility_source": "Dummy node for interconnections.",
+                        "data_source": "Dummy node for interconnections.",
                         "lower_limit": null,
                         "upper_limit": null,
                         "damage_state_definition": "not available"

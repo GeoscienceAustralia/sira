@@ -66,7 +66,7 @@
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "function_name": "ConstantFunction",
                         "amplitude": 1
                     }
@@ -111,7 +111,7 @@
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "function_name": "ConstantFunction",
                         "amplitude": 1
                     }
@@ -155,7 +155,7 @@
                     },
                     "response_function_constructor": {
                         "damage_state_definition": "Not Available.",
-                        "fragility_source": "Not Available.",
+                        "data_source": "Not Available.",
                         "function_name": "ConstantFunction",
                         "amplitude": 1
                     }

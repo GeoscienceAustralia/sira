@@ -62,3 +62,4 @@ sphinxcontrib-websupport==1.2.4
 toml==0.10.2
 tornado==6.1
 xlrd==2.0.1
+pyarrow
