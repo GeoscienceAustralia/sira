@@ -702,6 +702,11 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             sys_output_array
         )
 
+        np.save(
+            os.path.join(scenario.raw_output_dir, 'economic_loss_array.npy'),
+            sys_economic_loss_array
+        )
+
     if not str(scenario.infrastructure_level).lower() == "network":
         path_pe_sys_econloss = Path(scenario.raw_output_dir, 'pe_sys_econloss.npy')
         outpath_wrapped = utils.wrap_file_path(str(path_pe_sys_econloss))
