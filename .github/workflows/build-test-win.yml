@@ -11,9 +11,6 @@ jobs:
   build-windows:
     runs-on: "windows-latest"
 
-    env:
-      CONDA: C:\Miniconda\condabin\conda.bat
-
     strategy:
       matrix:
         python-version: ['3.11']
@@ -23,31 +20,33 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - name: Setup Micromamba
+        uses: mamba-org/setup-micromamba@v1
         with:
-          python-version: ${{ matrix.python-version }}
+          environment-file: ./installation/sira_env.yml
+          environment-name: sira_env
+          create-args: >-
+            python=${{ matrix.python-version }}
+          init-shell: powershell
+          cache-environment: true
 
-      - name: Install dependencies with conda
+      - name: Install uv and requirements
         shell: powershell
         run: |
-          ${{ env.CONDA }} init powershell
-          ${{ env.CONDA }} create -n base python=${{ matrix.python-version }}
-          ${{ env.CONDA }} env update -f ./installation/sira_env.yml -n base
-          ${{ env.CONDA }} activate base
-          ${{ env.CONDA }} install uv
-          $uv pip install -r ./installation/sira_req.txt
+          micromamba activate sira_env
+          micromamba install uv
+          uv pip install -r ./installation/sira_req.txt
 
       - name: Check environment
         shell: powershell
         run: |
-          ${{ env.CONDA }} info
-          ${{ env.CONDA }} list
+          micromamba info
+          micromamba list
 
       - name: Run pytest
         shell: powershell
         run: |
-          ${{ env.CONDA }} activate base
+          micromamba activate sira_env
           python -m pytest
 
       - name: Upload Coverage to codecov

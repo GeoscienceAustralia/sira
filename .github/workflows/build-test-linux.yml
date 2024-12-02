@@ -7,7 +7,6 @@ on:
     branches: [master]
 
 jobs:
-
   build-linux:
     runs-on: "ubuntu-latest"
     strategy:
@@ -15,27 +14,37 @@ jobs:
         python-version: ['3.11']
 
     steps:
-
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
+      - name: Install System Dependencies
         run: |
+          sudo apt-get update
           sudo apt-get install graphviz graphviz-dev
-          $CONDA/bin/conda install libtiff libpng
-          $CONDA/bin/conda env create -f ./installation/sira_env.yml
-          $CONDA/bin/conda activate sira_env
-          $CONDA/bin/conda install uv
+
+      - name: Setup Micromamba
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: ./installation/sira_env.yml
+          environment-name: sira_env
+          create-args: >-
+            python=${{ matrix.python-version }}
+            libtiff
+            libpng
+          cache-environment: true
+
+      - name: Install uv and requirements
+        shell: bash -l {0}
+        run: |
+          micromamba activate sira_env
+          pip install uv
           uv pip install -r ./installation/sira_req.txt
 
       - name: Run pytest
         shell: bash -l {0}
-        run: pytest
+        run: |
+          micromamba activate sira_env
+          pytest
 
       - name: Upload Coverage to codecov
         uses: codecov/codecov-action@v2
