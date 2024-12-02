@@ -311,6 +311,7 @@
             "operating_capacity": 1,
             "pos_x": 4,
             "pos_y": 5,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -327,16 +328,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": "Assigned unbreakable fragiity.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -348,16 +349,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -369,16 +370,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -390,16 +391,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -420,6 +421,7 @@
             "operating_capacity": 1,
             "pos_x": 10,
             "pos_y": 5,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -436,16 +438,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "Assigned fragility & recovery algorithm for: `Elevated Pipework`",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -457,16 +459,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -478,16 +480,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.53,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.1,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -499,16 +501,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 0.5,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -529,6 +531,7 @@
             "operating_capacity": 1,
             "pos_x": 40,
             "pos_y": 5,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -545,16 +548,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -566,16 +569,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -587,16 +590,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.53,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -608,16 +611,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -638,6 +641,7 @@
             "operating_capacity": 1,
             "pos_x": 4,
             "pos_y": 25,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -654,16 +658,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": "Assigned unbreakable fragiity.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -675,16 +679,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -696,16 +700,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -717,16 +721,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -747,6 +751,7 @@
             "operating_capacity": 1,
             "pos_x": 10,
             "pos_y": 25,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -763,16 +768,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.02,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.4,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.02,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -784,16 +789,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -805,16 +810,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -826,16 +831,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -856,6 +861,7 @@
             "operating_capacity": 1,
             "pos_x": 15,
             "pos_y": 25,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -872,16 +878,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.15,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Based on HAZUS curves for `Chlorination Equipment`.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -893,16 +899,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.7,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -914,16 +920,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -935,16 +941,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -965,6 +971,7 @@
             "operating_capacity": 1,
             "pos_x": 15,
             "pos_y": 30,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -981,16 +988,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.15,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "GA adaptation. HAZUS Unanchored algorithm for swtichrooms. Building 0.15 for Extensive and Complete.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor joint movement between precast panels.  Minor yielding of welded inter-panel connections and roof plane bracing elements.  Some movement of switchgear panels"
                     },
                     "recovery_function_constructor": {
@@ -1002,16 +1009,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.02,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.3,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.02,
                         "damage_state_definition": "Significant movement at panel joints with damage to mastic sealant.  Yielding around bolting of diagonal bracing connections and braced members resulting in slack.  Cladding and doors damaged.  Some damage to precast wall panel connections due to yielding at connections.  Unrestrained equipment moves with some cable damage below."
                     },
                     "recovery_function_constructor": {
@@ -1023,16 +1030,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Extensive yielding of bolts and brace end connections. Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged.  Precast panel damage at connections more extensive with some failures at welds.  Some overturning of switch gear panels and UPS equipment."
                     },
                     "recovery_function_constructor": {
@@ -1044,16 +1051,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.8,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Building has numerous failures in structural system with extensive drift and detachment of some precast panels.  Equipment extensively damaged."
                     },
                     "recovery_function_constructor": {
@@ -1074,6 +1081,7 @@
             "operating_capacity": 1,
             "pos_x": 20,
             "pos_y": 25,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1090,16 +1098,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.02,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.4,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.02,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1111,16 +1119,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1132,16 +1140,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1153,16 +1161,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1183,6 +1191,7 @@
             "operating_capacity": 1,
             "pos_x": 4,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1199,16 +1208,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.14,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor base movement."
                     },
                     "recovery_function_constructor": {
@@ -1220,16 +1229,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.27,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Extensive movement without overturning but with damage to diesel pipework."
                     },
                     "recovery_function_constructor": {
@@ -1241,16 +1250,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Wall buckling of tank due to sloshing of fuel"
                     },
                     "recovery_function_constructor": {
@@ -1262,16 +1271,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -1292,6 +1301,7 @@
             "operating_capacity": 1,
             "pos_x": 10,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1308,16 +1318,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.27,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "GA adaptation of HAZUS algorithm for `Chlorination Equipment`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor base movement."
                     },
                     "recovery_function_constructor": {
@@ -1329,16 +1339,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Extensive movement without overturning with damage to fuel supply pipework and cabling."
                     },
                     "recovery_function_constructor": {
@@ -1350,16 +1360,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Extensive movement without overturning/ Rupture of diesel fuel lines and extensive cable damage. Digital motor failure with stepping."
                     },
                     "recovery_function_constructor": {
@@ -1371,16 +1381,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Overturning of assembly with extensive damage to motor, generator and switchgear."
                     },
                     "recovery_function_constructor": {
@@ -1401,6 +1411,7 @@
             "operating_capacity": 1,
             "pos_x": 15,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1417,16 +1428,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.14,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Assigned fragility of algorithm for: `Transformer`.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1438,16 +1449,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.27,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1459,16 +1470,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.8,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.8,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1480,16 +1491,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.8,
-                        "location": 0,
-                        "beta": 0.39,
+                        "location": 0.39,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1510,6 +1521,7 @@
             "operating_capacity": 1,
             "pos_x": 20,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1526,16 +1538,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.15,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Based on HAZUS curves for `Chlorination Equipment`.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1547,16 +1559,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.7,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1568,16 +1580,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1589,16 +1601,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1619,6 +1631,7 @@
             "operating_capacity": 1,
             "pos_x": 30,
             "pos_y": 30,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1635,16 +1648,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.14,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Assigned fragility of algorithm for: `Transformer`.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1656,16 +1669,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.27,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1677,16 +1690,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.8,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.8,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1698,16 +1711,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.8,
-                        "location": 0,
-                        "beta": 0.39,
+                        "location": 0.39,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1728,6 +1741,7 @@
             "operating_capacity": 1,
             "pos_x": 30,
             "pos_y": 35,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1744,16 +1758,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": "Assigned unbreakable fragiity.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1765,16 +1779,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 9.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1786,16 +1800,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1807,16 +1821,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1837,6 +1851,7 @@
             "operating_capacity": 1,
             "pos_x": 35,
             "pos_y": 30,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1853,16 +1868,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.02,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.4,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "Nominally assigned the same attributes as Electrical Kiosk Switchroom ",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.02,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1874,16 +1889,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1895,16 +1910,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1916,16 +1931,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1946,6 +1961,7 @@
             "operating_capacity": 1,
             "pos_x": 40,
             "pos_y": 30,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1962,16 +1978,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.15,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Based on HAZUS curves for `Chlorination Equipment`.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -1983,16 +1999,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.7,
-                        "location": 0,
-                        "beta": 0.7,
+                        "location": 0.7,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2004,16 +2020,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2025,16 +2041,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2055,6 +2071,7 @@
             "operating_capacity": 1,
             "pos_x": 25,
             "pos_y": 10,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2071,16 +2088,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.23,
-                        "location": 0,
-                        "beta": 0.25,
+                        "location": 0.25,
+                        "beta": 0,
                         "data_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor damage to cladding and doors due to building sway."
                     },
                     "recovery_function_constructor": {
@@ -2092,16 +2109,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.38,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Some yielding of bolts in moment connections of steel portal frames.  Yielding around bolting of diagonal bracing connections and braced member resulting in slack.  Cladding and doors more extensively damaged.  Some damage to precast wall panel connections where present."
                     },
                     "recovery_function_constructor": {
@@ -2113,16 +2130,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.3,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.3,
                         "damage_state_definition": "Extensive yielding of bolts in moment connections of steel portal frames with permanent drift.  Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged due to significant permanent drift in the building.  Precast panel damage more extensive."
                     },
                     "recovery_function_constructor": {
@@ -2134,16 +2151,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.8,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Building has numerous failures in structural system and extensive drift to the point of collapse."
                     },
                     "recovery_function_constructor": {
@@ -2164,6 +2181,7 @@
             "operating_capacity": 1,
             "pos_x": 30,
             "pos_y": 15,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2180,16 +2198,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.1,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Adapted from EPN14 115/12KV",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor base movement."
                     },
                     "recovery_function_constructor": {
@@ -2201,16 +2219,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.21,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
                     },
                     "recovery_function_constructor": {
@@ -2222,16 +2240,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -2243,16 +2261,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.48,
-                        "location": 0,
-                        "beta": 0.39,
+                        "location": 0.39,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Internal overturning of air cooled core."
                     },
                     "recovery_function_constructor": {
@@ -2273,6 +2291,7 @@
             "operating_capacity": 1,
             "pos_x": 30,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2289,16 +2308,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.1,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Adapted from EPN14 115/12KV",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor base movement."
                     },
                     "recovery_function_constructor": {
@@ -2310,16 +2329,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.21,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
                     },
                     "recovery_function_constructor": {
@@ -2331,16 +2350,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -2352,16 +2371,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.48,
-                        "location": 0,
-                        "beta": 0.39,
+                        "location": 0.39,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Internal overturning of air cooled core."
                     },
                     "recovery_function_constructor": {
@@ -2382,6 +2401,7 @@
             "operating_capacity": 1,
             "pos_x": 30,
             "pos_y": 25,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2398,16 +2418,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.1,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "Adapted from EPN14 115/12KV",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor base movement."
                     },
                     "recovery_function_constructor": {
@@ -2419,16 +2439,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.21,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Extensive sliding damage to cables beneath transformer."
                     },
                     "recovery_function_constructor": {
@@ -2440,16 +2460,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 1.0,
                         "damage_state_definition": null
                     },
                     "recovery_function_constructor": {
@@ -2461,16 +2481,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.48,
-                        "location": 0,
-                        "beta": 0.39,
+                        "location": 0.39,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Internal overturning of air cooled core."
                     },
                     "recovery_function_constructor": {
@@ -2491,6 +2511,7 @@
             "operating_capacity": 1,
             "pos_x": 35,
             "pos_y": 10,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2507,16 +2528,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.23,
-                        "location": 0,
-                        "beta": 0.25,
+                        "location": 0.25,
+                        "beta": 0,
                         "data_source": "Algorithm based on fragility for Philippines Power House, adjusted to 0.15g",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Minor damage to cladding and doors due to building sway."
                     },
                     "recovery_function_constructor": {
@@ -2528,16 +2549,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.38,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Some yielding of bolts in moment connections of steel portal frames.  Yielding around bolting of diagonal bracing connections and braced member resulting in slack.  Cladding and doors more extensively damaged.  Some damage to precast wall panel connections where present."
                     },
                     "recovery_function_constructor": {
@@ -2549,16 +2570,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.3,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.3,
                         "damage_state_definition": "Extensive yielding of bolts in moment connections of steel portal frames with permanent drift.  Some tension failures of diagonal bracing end connections and significant slack in non-failed bracing.  Cladding and doors more extensively damaged due to significant permanent drift in the building.  Precast panel damage more extensive."
                     },
                     "recovery_function_constructor": {
@@ -2570,16 +2591,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.8,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Building has numerous failures in structural system and extensive drift to the point of collapse."
                     },
                     "recovery_function_constructor": {
@@ -2600,6 +2621,7 @@
             "operating_capacity": 1,
             "pos_x": 45,
             "pos_y": 15,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2616,16 +2638,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.13,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2637,16 +2659,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.28,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2658,16 +2680,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2679,16 +2701,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2709,6 +2731,7 @@
             "operating_capacity": 1,
             "pos_x": 45,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2725,16 +2748,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.13,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2746,16 +2769,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.28,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2767,16 +2790,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2788,16 +2811,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2818,6 +2841,7 @@
             "operating_capacity": 1,
             "pos_x": 45,
             "pos_y": 25,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2834,16 +2858,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.13,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithm for `Pumping Station - Small with Unanchored Components`. NIBS 2004, Table 8.6.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2855,16 +2879,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.28,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2876,16 +2900,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2897,16 +2921,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 1.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 1.0,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2927,6 +2951,7 @@
             "operating_capacity": 1,
             "pos_x": 50,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2943,16 +2968,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2964,16 +2989,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -2985,16 +3010,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.53,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -3006,16 +3031,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -3036,6 +3061,7 @@
             "operating_capacity": 1,
             "pos_x": 55,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3052,16 +3078,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 0.95,
-                    "damage_ratio": 0.01,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.95,
+                        "upper_limit": 0.01,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -3073,16 +3099,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 0.75,
-                    "damage_ratio": 0.05,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.11,
+                        "location": 1.11,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.75,
+                        "upper_limit": 0.05,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -3094,16 +3120,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 0.3,
-                    "damage_ratio": 0.1,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.53,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.3,
+                        "upper_limit": 0.1,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -3115,16 +3141,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 0.0,
-                    "damage_ratio": 0.5,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "HAZUS algorithms for `Eleveted Pipes - Anchored`. NIBS 2003, Table A.8.6, Table 15B.5.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 0.0,
+                        "upper_limit": 0.5,
                         "damage_state_definition": "Unavailable"
                     },
                     "recovery_function_constructor": {
@@ -3145,6 +3171,7 @@
             "operating_capacity": 1,
             "pos_x": 60,
             "pos_y": 20,
+            "site_id": 0,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3161,16 +3188,16 @@
                 },
                 "1": {
                     "damage_state_name": "DS1 Slight",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": "Assigned unbreakable fragiity.",
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -3182,16 +3209,16 @@
                 },
                 "2": {
                     "damage_state_name": "DS2 Moderate",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -3203,16 +3230,16 @@
                 },
                 "3": {
                     "damage_state_name": "DS3 Extensive",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {
@@ -3224,16 +3251,16 @@
                 },
                 "4": {
                     "damage_state_name": "DS4 Complete",
-                    "functionality": 1.0,
-                    "damage_ratio": 0.0,
+                    "functionality": null,
+                    "damage_ratio": null,
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 101.0,
-                        "location": 0,
-                        "beta": 1.0,
+                        "location": 1.0,
+                        "beta": 0,
                         "data_source": null,
-                        "lower_limit": null,
-                        "upper_limit": null,
+                        "lower_limit": 1.0,
+                        "upper_limit": 0.0,
                         "damage_state_definition": "Model artefact. Assumed seismically invulnerable for simulation purposes."
                     },
                     "recovery_function_constructor": {

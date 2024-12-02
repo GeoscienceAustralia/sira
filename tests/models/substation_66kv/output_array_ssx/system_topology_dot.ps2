@@ -1,0 +1,3136 @@
+%!PS-Adobe-3.0
+%%Creator: graphviz version 12.0.0 (0)
+%%Title: 
+%%Pages: (atend)
+%%BoundingBox: (atend)
+%%EndComments
+save
+%%BeginProlog
+/DotDict 200 dict def
+DotDict begin
+
+/setupLatin1 {
+mark
+/EncodingVector 256 array def
+ EncodingVector 0
+
+ISOLatin1Encoding 0 255 getinterval putinterval
+EncodingVector 45 /hyphen put
+
+% Set up ISO Latin 1 character encoding
+/starnetISO {
+        dup dup findfont dup length dict begin
+        { 1 index /FID ne { def }{ pop pop } ifelse
+        } forall
+        /Encoding EncodingVector def
+        currentdict end definefont
+} def
+/Times-Roman starnetISO def
+/Times-Italic starnetISO def
+/Times-Bold starnetISO def
+/Times-BoldItalic starnetISO def
+/Helvetica starnetISO def
+/Helvetica-Oblique starnetISO def
+/Helvetica-Bold starnetISO def
+/Helvetica-BoldOblique starnetISO def
+/Courier starnetISO def
+/Courier-Oblique starnetISO def
+/Courier-Bold starnetISO def
+/Courier-BoldOblique starnetISO def
+cleartomark
+} bind def
+
+%%BeginResource: procset graphviz 0 0
+/coord-font-family /Times-Roman def
+/default-font-family /Times-Roman def
+/coordfont coord-font-family findfont 8 scalefont def
+
+/InvScaleFactor 1.0 def
+/set_scale {
+       dup 1 exch div /InvScaleFactor exch def
+       scale
+} bind def
+
+% styles
+/solid { [] 0 setdash } bind def
+/dashed { [9 InvScaleFactor mul dup ] 0 setdash } bind def
+/dotted { [1 InvScaleFactor mul 6 InvScaleFactor mul] 0 setdash } bind def
+/invis {/fill {newpath} def /stroke {newpath} def /show {pop newpath} def} bind def
+/bold { 2 setlinewidth } bind def
+/filled { } bind def
+/unfilled { } bind def
+/rounded { } bind def
+/diagonals { } bind def
+/tapered { } bind def
+
+% hooks for setting color 
+/nodecolor { sethsbcolor } bind def
+/edgecolor { sethsbcolor } bind def
+/graphcolor { sethsbcolor } bind def
+/nopcolor {pop pop pop} bind def
+
+/beginpage {	% i j npages
+	/npages exch def
+	/j exch def
+	/i exch def
+	/str 10 string def
+	npages 1 gt {
+		gsave
+			coordfont setfont
+			0 0 moveto
+			(\() show i str cvs show (,) show j str cvs show (\)) show
+		grestore
+	} if
+} bind def
+
+/set_font {
+	findfont exch
+	scalefont setfont
+} def
+
+% draw text fitted to its expected width
+/alignedtext {			% width text
+	/text exch def
+	/width exch def
+	gsave
+		width 0 gt {
+			[] 0 setdash
+			text stringwidth pop width exch sub text length div 0 text ashow
+		} if
+	grestore
+} def
+
+/boxprim {				% xcorner ycorner xsize ysize
+		4 2 roll
+		moveto
+		2 copy
+		exch 0 rlineto
+		0 exch rlineto
+		pop neg 0 rlineto
+		closepath
+} bind def
+
+/ellipse_path {
+	/ry exch def
+	/rx exch def
+	/y exch def
+	/x exch def
+	matrix currentmatrix
+	newpath
+	x y translate
+	rx ry scale
+	0 0 1 0 360 arc
+	setmatrix
+} bind def
+
+/endpage { showpage } bind def
+/showpage { } def
+
+/layercolorseq
+	[	% layer color sequence - darkest to lightest
+		[0 0 0]
+		[.2 .8 .8]
+		[.4 .8 .8]
+		[.6 .8 .8]
+		[.8 .8 .8]
+	]
+def
+
+/layerlen layercolorseq length def
+
+/setlayer {/maxlayer exch def /curlayer exch def
+	layercolorseq curlayer 1 sub layerlen mod get
+	aload pop sethsbcolor
+	/nodecolor {nopcolor} def
+	/edgecolor {nopcolor} def
+	/graphcolor {nopcolor} def
+} bind def
+
+/onlayer { curlayer ne {invis} if } def
+
+/onlayers {
+	/myupper exch def
+	/mylower exch def
+	curlayer mylower lt
+	curlayer myupper gt
+	or
+	{invis} if
+} def
+
+/curlayer 0 def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+14 default-font-family set_font
+% /arrowlength 10 def
+% /arrowwidth 5 def
+
+% make sure pdfmark is harmless for PS-interpreters other than Distiller
+/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse
+% make '<<' and '>>' safe on PS Level 1 devices
+/languagelevel where {pop languagelevel}{1} ifelse
+2 lt {
+    userdict (<<) cvn ([) cvn load put
+    userdict (>>) cvn ([) cvn load put
+} if
+
+%%EndSetup
+setupLatin1
+%%Page: 1 1
+%%PageBoundingBox: 150 150 4733 13865
+%%PageOrientation: Portrait
+<< /PageSize [4733 13865] >> setpagedevice
+0 0 1 beginpage
+gsave
+150 150 4583 13715 boxprim clip newpath
+4.16667 4.16667 set_scale 0 rotate 72 72 translate
+[ /CropBox [150 150 4733 13865] /PAGES pdfmark
+0 0 1 graphcolor
+newpath -36 -36 moveto
+-36 3255.7 lineto
+1064 3255.7 lineto
+1064 -36 lineto
+closepath fill
+0 0 0.26667 graphcolor
+25 /Helvetica-Bold set_font
+336.25 3191.95 moveto 355.5 ( Electric Substation Topology ) alignedtext
+0 0 0.26667 graphcolor
+25 /Helvetica-Bold set_font
+510.625 3162.7 moveto 6.75 ( ) alignedtext
+% CTRL_BLDG
+gsave
+0 0 1 nodecolor
+newpath 402 3153.2 moveto
+402 3153.2 282 3153.2 282 3153.2 curveto
+276 3153.2 270 3147.2 270 3141.2 curveto
+270 3141.2 270 3078.8 270 3078.8 curveto
+270 3072.8 276 3066.8 282 3066.8 curveto
+282 3066.8 402 3066.8 402 3066.8 curveto
+408 3066.8 414 3072.8 414 3078.8 curveto
+414 3078.8 414 3141.2 414 3141.2 curveto
+414 3147.2 408 3153.2 402 3153.2 curveto
+closepath fill
+3 setlinewidth
+filled
+0.83922 0.48235 0.8549 nodecolor
+newpath 402 3153.2 moveto
+402 3153.2 282 3153.2 282 3153.2 curveto
+276 3153.2 270 3147.2 270 3141.2 curveto
+270 3141.2 270 3078.8 270 3078.8 curveto
+270 3072.8 276 3066.8 282 3066.8 curveto
+282 3066.8 402 3066.8 402 3066.8 curveto
+408 3066.8 414 3072.8 414 3078.8 curveto
+414 3078.8 414 3141.2 414 3141.2 curveto
+414 3147.2 408 3153.2 402 3153.2 curveto
+stroke
+0.83922 0.48235 0.8549 nodecolor
+18 /Helvetica-Bold set_font
+313.125 3113.9 moveto 57.75 (CTRL_) alignedtext
+0.83922 0.48235 0.8549 nodecolor
+18 /Helvetica-Bold set_font
+316.5 3092.9 moveto 51 (BLDG) alignedtext
+grestore
+% CTRL_EQP_BATTERY
+gsave
+0 0 1 nodecolor
+390 3001.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+390 3001.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+277.05 3033.7 moveto 105.75 (CTRL_EQP_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+288.3 3012.7 moveto 83.25 (BATTERY) alignedtext
+grestore
+% CTRL_BLDG->CTRL_EQP_BATTERY
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 361.662 3065.416 moveto
+368.66 3049.905 376.166 3033.265 381.694 3021.011 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 384.796 3022.647 moveto
+385.718 3012.092 lineto
+378.415 3019.768 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 384.796 3022.647 moveto
+385.718 3012.092 lineto
+378.415 3019.768 lineto
+closepath stroke
+grestore
+% CTRL_EQP
+gsave
+0 0 1 nodecolor
+295 2929.2 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+295 2929.2 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+191.8 2940.3 moveto 96 (CTRL_EQP) alignedtext
+grestore
+% CTRL_BLDG->CTRL_EQP
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 330.623 3065.718 moveto
+320.951 3028.922 307.506 2977.775 300.211 2950.025 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 303.629 2949.259 moveto
+297.702 2940.477 lineto
+296.859 2951.038 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 303.629 2949.259 moveto
+297.702 2940.477 lineto
+296.859 2951.038 lineto
+closepath stroke
+grestore
+% CTRL_EQP_BATTERY->CTRL_EQP
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 383.767 2995.981 moveto
+369.345 2985.293 333.272 2958.562 311.812 2942.659 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 313.931 2939.873 moveto
+303.813 2936.731 lineto
+309.763 2945.497 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 313.931 2939.873 moveto
+303.813 2936.731 lineto
+309.763 2945.497 lineto
+closepath stroke
+grestore
+% CTRL_LINES_JNC1
+gsave
+0 0 0.66667 nodecolor
+514 2856.8 7.2 7.2 ellipse_path fill
+2 setlinewidth
+filled
+0 0 0.53333 nodecolor
+514 2856.8 7.2 7.2 ellipse_path stroke
+grestore
+% CTRL_EQP->CTRL_LINES_JNC1
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 302.794 2925.694 moveto
+333.734 2915.748 448.441 2878.875 494.587 2864.041 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 495.636 2867.38 moveto
+504.085 2860.987 lineto
+493.494 2860.716 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 495.636 2867.38 moveto
+504.085 2860.987 lineto
+493.494 2860.716 lineto
+closepath stroke
+grestore
+% LINE_X02
+gsave
+0 0 1 nodecolor
+389 844.8 64.8 64.8 ellipse_path fill
+4 setlinewidth
+filled
+0.043137 1 1 nodecolor
+389 844.8 64.8 64.8 ellipse_path stroke
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+347.75 838.2 moveto 82.5 (LINE_X02) alignedtext
+grestore
+% CTRL_EQP->LINE_X02
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 298.514 2921.49 moveto
+311.216 2896.594 354 2806.865 354 2727.8 curveto
+354 2727.8 354 2727.8 354 1046.2 curveto
+354 1004.632 361.398 958.928 369.391 921.676 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 372.714 922.861 moveto
+371.46 912.341 lineto
+365.879 921.346 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 372.714 922.861 moveto
+371.46 912.341 lineto
+365.879 921.346 lineto
+closepath stroke
+grestore
+% LINE_X03
+gsave
+0 0 1 nodecolor
+330 584.8 64.8 64.8 ellipse_path fill
+4 setlinewidth
+filled
+0.043137 1 1 nodecolor
+330 584.8 64.8 64.8 ellipse_path stroke
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+288.75 578.2 moveto 82.5 (LINE_X03) alignedtext
+grestore
+% CTRL_EQP->LINE_X03
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 291.486 2921.49 moveto
+278.784 2896.594 236 2806.865 236 2727.8 curveto
+236 2727.8 236 2727.8 236 843.8 curveto
+236 776.133 264.899 704.186 290.649 653.509 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 293.694 655.239 moveto
+295.199 644.752 lineto
+287.483 652.012 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 293.694 655.239 moveto
+295.199 644.752 lineto
+287.483 652.012 lineto
+closepath stroke
+grestore
+% LINE_X05
+gsave
+0 0 1 nodecolor
+271 324.8 64.8 64.8 ellipse_path fill
+4 setlinewidth
+filled
+0.043137 1 1 nodecolor
+271 324.8 64.8 64.8 ellipse_path stroke
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+229.75 318.2 moveto 82.5 (LINE_X05) alignedtext
+grestore
+% CTRL_EQP->LINE_X05
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 287.842 2924.69 moveto
+254.728 2907.899 118 2832.243 118 2727.8 curveto
+118 2727.8 118 2727.8 118 583.8 curveto
+118 505.199 171.187 429.596 214.843 380.78 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 217.227 383.36 moveto
+221.387 373.616 lineto
+212.058 378.639 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 217.227 383.36 moveto
+221.387 373.616 lineto
+212.058 378.639 lineto
+closepath stroke
+grestore
+% LINE_X08
+gsave
+0 0 1 nodecolor
+259 64.8 64.8 64.8 ellipse_path fill
+4 setlinewidth
+filled
+0.043137 1 1 nodecolor
+259 64.8 64.8 64.8 ellipse_path stroke
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+217.75 58.2 moveto 82.5 (LINE_X08) alignedtext
+grestore
+% CTRL_EQP->LINE_X08
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 286.802 2926.879 moveto
+239.157 2918.696 0 2870.514 0 2727.8 curveto
+0 2727.8 0 2727.8 0 323.8 curveto
+0 217.702 110.441 140.154 187.086 99.111 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 188.686 102.224 moveto
+195.921 94.485 lineto
+185.439 96.023 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 188.686 102.224 moveto
+195.921 94.485 lineto
+185.439 96.023 lineto
+closepath stroke
+grestore
+% LINE_SSC-17
+gsave
+0 0 1 nodecolor
+514 2726.8 64.8 64.8 ellipse_path fill
+4 setlinewidth
+filled
+0.33333 0.75294 0.80392 nodecolor
+514 2726.8 64.8 64.8 ellipse_path stroke
+4 setlinewidth
+filled
+0.33333 0.75294 0.80392 nodecolor
+newpath 556.859 2775.4 moveto
+471.141 2775.4 lineto
+stroke
+4 setlinewidth
+filled
+0.33333 0.75294 0.80392 nodecolor
+newpath 556.859 2678.2 moveto
+471.141 2678.2 lineto
+stroke
+0.33333 0.75294 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+488.5 2730.7 moveto 51 (LINE_) alignedtext
+0.33333 0.75294 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+482.875 2709.7 moveto 62.25 (SSC-17) alignedtext
+grestore
+% CTRL_LINES_JNC1->LINE_SSC-17
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514 2848.918 moveto
+514 2840.143 514 2823.965 514 2806.227 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2806.473 moveto
+514 2796.473 lineto
+510.5 2806.473 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2806.473 moveto
+514 2796.473 lineto
+510.5 2806.473 lineto
+closepath stroke
+grestore
+% LINE_SSM-SSB-17
+gsave
+0 0 1 nodecolor
+691 1466.8 64.8 64.8 ellipse_path fill
+4 setlinewidth
+filled
+0.043137 1 1 nodecolor
+691 1466.8 64.8 64.8 ellipse_path stroke
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+665.5 1481.2 moveto 51 (LINE_) alignedtext
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+647.125 1460.2 moveto 87.75 (SSM-SSB-) alignedtext
+0.043137 1 1 nodecolor
+18 /Helvetica-Bold set_font
+681.25 1439.2 moveto 19.5 (17) alignedtext
+grestore
+% CTRL_LINES_JNC1->LINE_SSM-SSB-17
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 520.973 2852.531 moveto
+559.742 2833.827 747 2736.312 747 2597.8 curveto
+747 2597.8 747 2597.8 747 1951 curveto
+747 1806.881 722.114 1640.18 705.522 1545.049 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 708.999 1544.615 moveto
+703.815 1535.375 lineto
+702.106 1545.831 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 708.999 1544.615 moveto
+703.815 1535.375 lineto
+702.106 1545.831 lineto
+closepath stroke
+grestore
+% VT_RTX206
+gsave
+0 0 1 nodecolor
+514 2596.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+514 2596.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+408.55 2607.9 moveto 98.25 (VT_RTX206) alignedtext
+grestore
+% LINE_SSC-17->VT_RTX206
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514 2660.3 moveto
+514 2644.904 514 2629.623 514 2618.025 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2618.227 moveto
+514 2608.227 lineto
+510.5 2618.227 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2618.227 moveto
+514 2608.227 lineto
+510.5 2618.227 lineto
+closepath stroke
+grestore
+% DS_RTX206_5
+gsave
+0 0 1 nodecolor
+514 2524.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+514 2524.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+397.3 2556.5 moveto 109.5 (DS_RTX206_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+447.175 2535.5 moveto 9.75 (5) alignedtext
+grestore
+% VT_RTX206->DS_RTX206_5
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514 2588.266 moveto
+514 2578.262 514 2560.204 514 2546 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2546.12 moveto
+514 2536.12 lineto
+510.5 2546.12 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2546.12 moveto
+514 2536.12 lineto
+510.5 2546.12 lineto
+closepath stroke
+grestore
+% TX_STN22
+gsave
+0 0 1 nodecolor
+1005 1264.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+1005 1264.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+909.3 1275.5 moveto 88.5 (TX_STN22) alignedtext
+grestore
+% TX_STN22->CTRL_EQP_BATTERY
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 1006.439 1272.645 moveto
+1011.474 1298.654 1028 1389.806 1028 1465.8 curveto
+1028 2857.8 1028 2857.8 1028 2857.8 curveto
+1028 2987.074 522.879 2999.353 411.54 3000.489 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 411.537 2996.989 moveto
+401.564 3000.564 lineto
+411.589 3003.989 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 411.537 2996.989 moveto
+401.564 3000.564 lineto
+411.589 3003.989 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-A
+gsave
+0 0 1 nodecolor
+newpath 581.2 982 moveto
+581.2 982 446.8 982 446.8 982 curveto
+444.4 982 442 979.6 442 977.2 curveto
+442 977.2 442 972.4 442 972.4 curveto
+442 970 444.4 967.6 446.8 967.6 curveto
+446.8 967.6 581.2 967.6 581.2 967.6 curveto
+583.6 967.6 586 970 586 972.4 curveto
+586 972.4 586 977.2 586 977.2 curveto
+586 979.6 583.6 982 581.2 982 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 581.2 982 moveto
+581.2 982 446.8 982 446.8 982 curveto
+444.4 982 442 979.6 442 977.2 curveto
+442 977.2 442 972.4 442 972.4 curveto
+442 970 444.4 967.6 446.8 967.6 curveto
+446.8 967.6 581.2 967.6 581.2 967.6 curveto
+583.6 967.6 586 970 586 972.4 curveto
+586 972.4 586 977.2 586 977.2 curveto
+586 979.6 583.6 982 581.2 982 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+329.5 1006.9 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+358 985.9 moveto 55.5 (SEC-A) alignedtext
+grestore
+% BUS_RTX22_SEC-A->LINE_X02
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.555 966.176 moveto
+494.15 953.474 468.202 926.903 443.833 901.949 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 446.56 899.732 moveto
+437.07 895.023 lineto
+441.552 904.623 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 446.56 899.732 moveto
+437.07 895.023 lineto
+441.552 904.623 lineto
+closepath stroke
+grestore
+% DS_RTX103_8
+gsave
+0 0 1 nodecolor
+519 844.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+519 844.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+511.8 876.9 moveto 109.5 (DS_RTX103_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+561.675 855.9 moveto 9.75 (8) alignedtext
+grestore
+% BUS_RTX22_SEC-A->DS_RTX103_8
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 503.301 966.176 moveto
+490.891 945.181 492.169 886.301 504.404 859.452 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.126 861.674 moveto
+509.833 851.431 lineto
+501.329 857.751 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.126 861.674 moveto
+509.833 851.431 lineto
+501.329 857.751 lineto
+closepath stroke
+grestore
+% DS_RTX103_8->BUS_RTX22_SEC-A
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.226 848.924 moveto
+541.326 863.274 541.862 923.493 530.758 954.765 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 527.763 952.915 moveto
+526.602 963.446 lineto
+534.077 955.938 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 527.763 952.915 moveto
+526.602 963.446 lineto
+534.077 955.938 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-B
+gsave
+0 0 1 nodecolor
+newpath 586.2 722 moveto
+586.2 722 451.8 722 451.8 722 curveto
+449.4 722 447 719.6 447 717.2 curveto
+447 717.2 447 712.4 447 712.4 curveto
+447 710 449.4 707.6 451.8 707.6 curveto
+451.8 707.6 586.2 707.6 586.2 707.6 curveto
+588.6 707.6 591 710 591 712.4 curveto
+591 712.4 591 717.2 591 717.2 curveto
+591 719.6 588.6 722 586.2 722 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 586.2 722 moveto
+586.2 722 451.8 722 451.8 722 curveto
+449.4 722 447 719.6 447 717.2 curveto
+447 717.2 447 712.4 447 712.4 curveto
+447 710 449.4 707.6 451.8 707.6 curveto
+451.8 707.6 586.2 707.6 586.2 707.6 curveto
+588.6 707.6 591 710 591 712.4 curveto
+591 712.4 591 717.2 591 717.2 curveto
+591 719.6 588.6 722 586.2 722 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+334.5 746.9 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+363 725.9 moveto 55.5 (SEC-B) alignedtext
+grestore
+% DS_RTX103_8->BUS_RTX22_SEC-B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.608 840.636 moveto
+496.059 826.283 493.139 766.639 502.848 735.275 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.006 736.79 moveto
+506.781 726.224 lineto
+499.586 734 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.006 736.79 moveto
+506.781 726.224 lineto
+499.586 734 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-B->LINE_X03
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.743 706.176 moveto
+485.958 691.422 436.546 657.958 395.337 630.049 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 397.534 627.311 moveto
+387.292 624.601 lineto
+393.609 633.106 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 397.534 627.311 moveto
+387.292 624.601 lineto
+393.609 633.106 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-B->DS_RTX103_8
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.012 723.447 moveto
+543.157 744.351 544.233 802.685 533.24 829.717 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.349 827.74 moveto
+528 838.072 lineto
+536.279 831.46 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.349 827.74 moveto
+528 838.072 lineto
+536.279 831.46 lineto
+closepath stroke
+grestore
+% DS_RTX105_8
+gsave
+0 0 1 nodecolor
+519 584.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+519 584.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+402.3 616.9 moveto 109.5 (DS_RTX105_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+452.175 595.9 moveto 9.75 (8) alignedtext
+grestore
+% BUS_RTX22_SEC-B->DS_RTX105_8
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 508.003 706.176 moveto
+494.834 685.277 493.761 626.838 504.784 599.822 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.668 601.812 moveto
+510.038 591.485 lineto
+501.745 598.08 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.668 601.812 moveto
+510.038 591.485 lineto
+501.745 598.08 lineto
+closepath stroke
+grestore
+% DS_RTX102_5
+gsave
+0 0 1 nodecolor
+614 1047.2 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+614 1047.2 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+497.3 1079.3 moveto 109.5 (DS_RTX102_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+547.175 1058.3 moveto 9.75 (5) alignedtext
+grestore
+% DS_RTX102_5->BUS_RTX22_SEC-A
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 607.439 1041.581 moveto
+593.016 1031.427 558.024 1006.793 535.193 990.72 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 537.488 988.055 moveto
+527.296 985.16 lineto
+533.458 993.779 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 537.488 988.055 moveto
+527.296 985.16 lineto
+533.458 993.779 lineto
+closepath stroke
+grestore
+% CT_RTX102
+gsave
+0 0 1 nodecolor
+615 1119.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+615 1119.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+508.8 1130.7 moveto 99 (CT_RTX102) alignedtext
+grestore
+% CT_RTX102->DS_RTX102_5
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 614.893 1111.066 moveto
+614.751 1101.062 614.494 1083.004 614.293 1068.8 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 617.794 1068.869 moveto
+614.152 1058.92 lineto
+610.795 1068.969 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 617.794 1068.869 moveto
+614.152 1058.92 lineto
+610.795 1068.969 lineto
+closepath stroke
+grestore
+% CB_RTX102_0
+gsave
+0 0 1 nodecolor
+619 1192 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+619 1192 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+501.55 1224.1 moveto 110.25 (CB_RTX102_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+551.8 1203.1 moveto 9.75 (0) alignedtext
+grestore
+% CB_RTX102_0->CT_RTX102
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 618.572 1183.466 moveto
+617.998 1173.357 616.956 1155.023 616.145 1140.753 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 619.646 1140.676 moveto
+615.585 1130.891 lineto
+612.658 1141.074 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 619.646 1140.676 moveto
+615.585 1130.891 lineto
+612.658 1141.074 lineto
+closepath stroke
+grestore
+% DS_RTX102_4
+gsave
+0 0 1 nodecolor
+622 1264.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+622 1264.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+505.3 1296.5 moveto 109.5 (DS_RTX102_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+555.175 1275.5 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX102_4->CB_RTX102_0
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 621.679 1255.866 moveto
+621.253 1245.862 620.483 1227.804 619.878 1213.6 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 623.379 1213.56 moveto
+619.457 1203.718 lineto
+616.386 1213.858 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 623.379 1213.56 moveto
+619.457 1203.718 lineto
+616.386 1213.858 lineto
+closepath stroke
+grestore
+% DS_RTX105_8->BUS_RTX22_SEC-B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.348 588.924 moveto
+541.939 603.21 544.871 662.956 535.146 694.344 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 531.986 692.835 moveto
+531.205 703.401 lineto
+538.405 695.628 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 531.986 692.835 moveto
+531.205 703.401 lineto
+538.405 695.628 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-C
+gsave
+0 0 1 nodecolor
+newpath 586.2 462 moveto
+586.2 462 451.8 462 451.8 462 curveto
+449.4 462 447 459.6 447 457.2 curveto
+447 457.2 447 452.4 447 452.4 curveto
+447 450 449.4 447.6 451.8 447.6 curveto
+451.8 447.6 586.2 447.6 586.2 447.6 curveto
+588.6 447.6 591 450 591 452.4 curveto
+591 452.4 591 457.2 591 457.2 curveto
+591 459.6 588.6 462 586.2 462 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 586.2 462 moveto
+586.2 462 451.8 462 451.8 462 curveto
+449.4 462 447 459.6 447 457.2 curveto
+447 457.2 447 452.4 447 452.4 curveto
+447 450 449.4 447.6 451.8 447.6 curveto
+451.8 447.6 586.2 447.6 586.2 447.6 curveto
+588.6 447.6 591 450 591 452.4 curveto
+591 452.4 591 457.2 591 457.2 curveto
+591 459.6 588.6 462 586.2 462 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+334.5 486.9 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+363 465.9 moveto 55.5 (SEC-C) alignedtext
+grestore
+% DS_RTX105_8->BUS_RTX22_SEC-C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.608 580.636 moveto
+496.059 566.283 493.139 506.639 502.848 475.275 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.006 476.79 moveto
+506.781 466.224 lineto
+499.586 474 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.006 476.79 moveto
+506.781 466.224 lineto
+499.586 474 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-C->LINE_X05
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 504.229 446.176 moveto
+472.865 429.988 397.862 391.277 341.316 362.092 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 343.094 359.071 moveto
+332.602 357.595 lineto
+339.883 365.291 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 343.094 359.071 moveto
+332.602 357.595 lineto
+339.883 365.291 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-C->DS_RTX105_8
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.012 463.447 moveto
+543.157 484.351 544.233 542.685 533.24 569.717 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.349 567.74 moveto
+528 578.072 lineto
+536.279 571.46 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.349 567.74 moveto
+528 578.072 lineto
+536.279 571.46 lineto
+closepath stroke
+grestore
+% DS_RTX108_8
+gsave
+0 0 1 nodecolor
+519 324.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+519 324.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+402.3 356.9 moveto 109.5 (DS_RTX108_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+452.175 335.9 moveto 9.75 (8) alignedtext
+grestore
+% BUS_RTX22_SEC-C->DS_RTX108_8
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 508.003 446.176 moveto
+494.834 425.277 493.761 366.838 504.784 339.822 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.668 341.812 moveto
+510.038 331.485 lineto
+501.745 338.08 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 507.668 341.812 moveto
+510.038 331.485 lineto
+501.745 338.08 lineto
+closepath stroke
+grestore
+% DS_RTX103_5
+gsave
+0 0 1 nodecolor
+686 1047.2 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+686 1047.2 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+569.3 1022.9 moveto 109.5 (DS_RTX103_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+619.175 1001.9 moveto 9.75 (5) alignedtext
+grestore
+% DS_RTX103_5->BUS_RTX22_SEC-B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 682.889 1039.548 moveto
+668.724 1009.338 608.707 882.116 555 780 curveto
+546.791 764.393 536.971 746.956 529.663 734.198 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 532.884 732.777 moveto
+524.856 725.862 lineto
+526.82 736.274 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 532.884 732.777 moveto
+524.856 725.862 lineto
+526.82 736.274 lineto
+closepath stroke
+grestore
+% CT_RTX103
+gsave
+0 0 1 nodecolor
+704 1119.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+704 1119.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+696.8 1130.7 moveto 99 (CT_RTX103) alignedtext
+grestore
+% CT_RTX103->DS_RTX103_5
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 702.141 1111.331 moveto
+699.555 1101.213 694.771 1082.503 691.08 1068.068 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 694.493 1067.289 moveto
+688.625 1058.468 lineto
+687.712 1069.023 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 694.493 1067.289 moveto
+688.625 1058.468 lineto
+687.712 1069.023 lineto
+closepath stroke
+grestore
+% CB_RTX103_0
+gsave
+0 0 1 nodecolor
+705 1192 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+705 1192 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+697.8 1224.1 moveto 110.25 (CB_RTX103_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+748.05 1203.1 moveto 9.75 (0) alignedtext
+grestore
+% CB_RTX103_0->CT_RTX103
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 704.893 1183.466 moveto
+704.751 1173.462 704.494 1155.404 704.293 1141.2 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 707.794 1141.269 moveto
+704.152 1131.32 lineto
+700.795 1141.369 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 707.794 1141.269 moveto
+704.152 1131.32 lineto
+700.795 1141.369 lineto
+closepath stroke
+grestore
+% DS_RTX103_4
+gsave
+0 0 1 nodecolor
+705 1264.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+705 1264.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+697.8 1296.5 moveto 109.5 (DS_RTX103_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+747.675 1275.5 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX103_4->CB_RTX103_0
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 705 1255.866 moveto
+705 1245.862 705 1227.804 705 1213.6 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 708.5 1213.72 moveto
+705 1203.72 lineto
+701.5 1213.72 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 708.5 1213.72 moveto
+705 1203.72 lineto
+701.5 1213.72 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-A
+gsave
+0 0 1 nodecolor
+newpath 840.2 1344 moveto
+840.2 1344 705.8 1344 705.8 1344 curveto
+703.4 1344 701 1341.6 701 1339.2 curveto
+701 1339.2 701 1334.4 701 1334.4 curveto
+701 1332 703.4 1329.6 705.8 1329.6 curveto
+705.8 1329.6 840.2 1329.6 840.2 1329.6 curveto
+842.6 1329.6 845 1332 845 1334.4 curveto
+845 1334.4 845 1339.2 845 1339.2 curveto
+845 1341.6 842.6 1344 840.2 1344 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 840.2 1344 moveto
+840.2 1344 705.8 1344 705.8 1344 curveto
+703.4 1344 701 1341.6 701 1339.2 curveto
+701 1339.2 701 1334.4 701 1334.4 curveto
+701 1332 703.4 1329.6 705.8 1329.6 curveto
+705.8 1329.6 840.2 1329.6 840.2 1329.6 curveto
+842.6 1329.6 845 1332 845 1334.4 curveto
+845 1334.4 845 1339.2 845 1339.2 curveto
+845 1341.6 842.6 1344 840.2 1344 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+588.5 1368.9 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+620.375 1347.9 moveto 48.75 (PRI-A) alignedtext
+grestore
+% BUS_RTX22_PRI-A->TX_STN22
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 798.27 1328.132 moveto
+844.703 1314.042 942.704 1284.304 984.938 1271.488 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 985.925 1274.846 moveto
+994.478 1268.593 lineto
+983.893 1268.147 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 985.925 1274.846 moveto
+994.478 1268.593 lineto
+983.893 1268.147 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-A->DS_RTX102_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 756.553 1328.132 moveto
+728.315 1314.967 670.778 1288.141 640.922 1274.222 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 642.643 1271.163 moveto
+632.101 1270.109 lineto
+639.685 1277.507 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 642.643 1271.163 moveto
+632.101 1270.109 lineto
+639.685 1277.507 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-A->DS_RTX103_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 765.723 1328.266 moveto
+754.695 1316.849 733.534 1294.941 719.339 1280.245 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 722.046 1278.01 moveto
+712.581 1273.249 lineto
+717.011 1282.873 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 722.046 1278.01 moveto
+712.581 1273.249 lineto
+717.011 1282.873 lineto
+closepath stroke
+grestore
+% DS_RTX106_4
+gsave
+0 0 1 nodecolor
+830 1466.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+830 1466.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+822.8 1498.9 moveto 109.5 (DS_RTX106_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+872.675 1477.9 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX22_PRI-A->DS_RTX106_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 787.15 1345.2 moveto
+808.877 1365.171 835.039 1420.562 837.767 1448.789 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 834.303 1448.245 moveto
+836.859 1458.527 lineto
+841.273 1448.895 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 834.303 1448.245 moveto
+836.859 1458.527 lineto
+841.273 1448.895 lineto
+closepath stroke
+grestore
+% DS_RTX105_4
+gsave
+0 0 1 nodecolor
+779 1264.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+779 1264.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+786.2 1240.1 moveto 109.5 (DS_RTX105_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+836.075 1219.1 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX22_PRI-A->DS_RTX105_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 773.642 1328.266 moveto
+774.504 1318.157 776.066 1299.823 777.282 1285.553 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 780.762 1285.946 moveto
+778.123 1275.685 lineto
+773.787 1285.352 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 780.762 1285.946 moveto
+778.123 1275.685 lineto
+773.787 1285.352 lineto
+closepath stroke
+grestore
+% DS_RTX106_4->BUS_RTX22_PRI-A
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 822.361 1463.357 moveto
+800.513 1450.527 770.405 1390.301 765.645 1358.15 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 769.147 1358.251 moveto
+765.476 1348.313 lineto
+762.148 1358.372 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 769.147 1358.251 moveto
+765.476 1348.313 lineto
+762.148 1358.372 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-B
+gsave
+0 0 1 nodecolor
+newpath 935.2 1604 moveto
+935.2 1604 800.8 1604 800.8 1604 curveto
+798.4 1604 796 1601.6 796 1599.2 curveto
+796 1599.2 796 1594.4 796 1594.4 curveto
+796 1592 798.4 1589.6 800.8 1589.6 curveto
+800.8 1589.6 935.2 1589.6 935.2 1589.6 curveto
+937.6 1589.6 940 1592 940 1594.4 curveto
+940 1594.4 940 1599.2 940 1599.2 curveto
+940 1601.6 937.6 1604 935.2 1604 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 935.2 1604 moveto
+935.2 1604 800.8 1604 800.8 1604 curveto
+798.4 1604 796 1601.6 796 1599.2 curveto
+796 1599.2 796 1594.4 796 1594.4 curveto
+796 1592 798.4 1589.6 800.8 1589.6 curveto
+800.8 1589.6 935.2 1589.6 935.2 1589.6 curveto
+937.6 1589.6 940 1592 940 1594.4 curveto
+940 1594.4 940 1599.2 940 1599.2 curveto
+940 1601.6 937.6 1604 935.2 1604 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+683.5 1628.9 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+715.375 1607.9 moveto 48.75 (PRI-B) alignedtext
+grestore
+% DS_RTX106_4->BUS_RTX22_PRI-B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 837.677 1470.507 moveto
+857.484 1483.865 878.349 1543.403 878.376 1575.361 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 874.918 1574.81 moveto
+877.119 1585.174 lineto
+881.861 1575.7 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 874.918 1574.81 moveto
+877.119 1585.174 lineto
+881.861 1575.7 lineto
+closepath stroke
+grestore
+% CB_RTX105_0
+gsave
+0 0 1 nodecolor
+783 1192 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+783 1192 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+790.2 1167.7 moveto 110.25 (CB_RTX105_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+840.45 1146.7 moveto 9.75 (0) alignedtext
+grestore
+% DS_RTX105_4->CB_RTX105_0
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 779.428 1255.866 moveto
+780.002 1245.757 781.044 1227.423 781.855 1213.153 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 785.342 1213.474 moveto
+782.415 1203.291 lineto
+778.354 1213.076 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 785.342 1213.474 moveto
+782.415 1203.291 lineto
+778.354 1213.076 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-B->DS_RTX106_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 854.74 1588.176 moveto
+835.968 1567.926 818.089 1512.432 819.729 1484.429 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 823.111 1485.33 moveto
+822.18 1474.776 lineto
+816.326 1483.607 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 823.111 1485.33 moveto
+822.18 1474.776 lineto
+816.326 1483.607 lineto
+closepath stroke
+grestore
+% DS_RTX108_4
+gsave
+0 0 1 nodecolor
+902 1466.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+902 1466.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+785.3 1442.5 moveto 109.5 (DS_RTX108_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+835.175 1421.5 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX22_PRI-B->DS_RTX108_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 870.025 1588.176 moveto
+875.21 1568.655 889.096 1516.378 896.753 1487.554 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 900.066 1488.712 moveto
+899.251 1478.149 lineto
+893.301 1486.915 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 900.066 1488.712 moveto
+899.251 1478.149 lineto
+893.301 1486.915 lineto
+closepath stroke
+grestore
+% DS_RTX109_4
+gsave
+0 0 1 nodecolor
+868 1702 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+868 1702 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+751.3 1734.1 moveto 109.5 (DS_RTX109_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+801.175 1713.1 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX22_PRI-B->DS_RTX109_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 880.025 1605.358 moveto
+891.855 1622.763 892.892 1665.85 883.136 1687.756 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 880.375 1685.599 moveto
+877.423 1695.774 lineto
+886.076 1689.661 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 880.375 1685.599 moveto
+877.423 1695.774 lineto
+886.076 1689.661 lineto
+closepath stroke
+grestore
+% CT_RTX105
+gsave
+0 0 1 nodecolor
+791 1119.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+791 1119.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+684.8 1095.3 moveto 99 (CT_RTX105) alignedtext
+grestore
+% CB_RTX105_0->CT_RTX105
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 783.856 1183.466 moveto
+785.005 1173.357 787.088 1155.023 788.71 1140.753 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 792.181 1141.208 moveto
+789.832 1130.877 lineto
+785.225 1140.417 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 792.181 1141.208 moveto
+789.832 1130.877 lineto
+785.225 1140.417 lineto
+closepath stroke
+grestore
+% DS_RTX104_4
+gsave
+0 0 1 nodecolor
+543 1466.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+543 1466.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+426.3 1498.9 moveto 109.5 (DS_RTX104_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+476.175 1477.9 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX104_4->BUS_RTX22_PRI-A
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 546.905 1459.22 moveto
+554.805 1446.44 573.911 1418.106 597 1402 curveto
+635.299 1375.284 685.997 1358.341 723.14 1348.613 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 723.887 1352.034 moveto
+732.734 1346.205 lineto
+722.183 1345.244 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 723.887 1352.034 moveto
+732.734 1346.205 lineto
+722.183 1345.244 lineto
+closepath stroke
+grestore
+% VT_RTX104
+gsave
+0 0 1 nodecolor
+525 1596.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+525 1596.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+419.55 1607.9 moveto 98.25 (VT_RTX104) alignedtext
+grestore
+% VT_RTX104->DS_RTX104_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.072 1588.176 moveto
+528.805 1568.744 536.102 1516.855 540.166 1487.95 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 543.608 1488.611 moveto
+541.535 1478.221 lineto
+536.676 1487.636 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 543.608 1488.611 moveto
+541.535 1478.221 lineto
+536.676 1487.636 lineto
+closepath stroke
+grestore
+% PTX_66-22KV_T3
+gsave
+0 0 1 nodecolor
+508 1702 36 36 ellipse_path fill
+2 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+508 1702 36 36 ellipse_path stroke
+2 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+508 1702 40 40 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+496.375 1695.4 moveto 23.25 (TX) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+395.25 1766.9 moveto 70.5 (PTX_66-) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+393 1745.9 moveto 75 (22KV_T3) alignedtext
+grestore
+% PTX_66-22KV_T3->VT_RTX104
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514.475 1661.69 moveto
+516.957 1646.624 519.684 1630.073 521.74 1617.593 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 525.126 1618.567 moveto
+523.298 1608.131 lineto
+518.219 1617.429 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 525.126 1618.567 moveto
+523.298 1608.131 lineto
+518.219 1617.429 lineto
+closepath stroke
+grestore
+% LA_RTX202
+gsave
+0 0 1 nodecolor
+508 1807.2 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+508 1807.2 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+401.8 1818.3 moveto 99 (LA_RTX202) alignedtext
+grestore
+% LA_RTX202->PTX_66-22KV_T3
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 508 1798.778 moveto
+508 1789.424 508 1772.497 508 1755.447 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.5 1755.535 moveto
+508 1745.535 lineto
+504.5 1755.535 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.5 1755.535 moveto
+508 1745.535 lineto
+504.5 1755.535 lineto
+closepath stroke
+grestore
+% DS_RTX202_4
+gsave
+0 0 1 nodecolor
+508 1879.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+508 1879.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+391.3 1911.7 moveto 109.5 (DS_RTX202_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+441.175 1890.7 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX202_4->LA_RTX202
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 508 1871.066 moveto
+508 1861.062 508 1843.004 508 1828.8 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.5 1828.92 moveto
+508 1818.92 lineto
+504.5 1828.92 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.5 1828.92 moveto
+508 1818.92 lineto
+504.5 1828.92 lineto
+closepath stroke
+grestore
+% BUS_RTX66_A
+gsave
+0 0 1 nodecolor
+newpath 581.2 1959.2 moveto
+581.2 1959.2 446.8 1959.2 446.8 1959.2 curveto
+444.4 1959.2 442 1956.8 442 1954.4 curveto
+442 1954.4 442 1949.6 442 1949.6 curveto
+442 1947.2 444.4 1944.8 446.8 1944.8 curveto
+446.8 1944.8 581.2 1944.8 581.2 1944.8 curveto
+583.6 1944.8 586 1947.2 586 1949.6 curveto
+586 1949.6 586 1954.4 586 1954.4 curveto
+586 1956.8 583.6 1959.2 581.2 1959.2 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 581.2 1959.2 moveto
+581.2 1959.2 446.8 1959.2 446.8 1959.2 curveto
+444.4 1959.2 442 1956.8 442 1954.4 curveto
+442 1954.4 442 1949.6 442 1949.6 curveto
+442 1947.2 444.4 1944.8 446.8 1944.8 curveto
+446.8 1944.8 581.2 1944.8 581.2 1944.8 curveto
+583.6 1944.8 586 1947.2 586 1949.6 curveto
+586 1949.6 586 1954.4 586 1954.4 curveto
+586 1956.8 583.6 1959.2 581.2 1959.2 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+329.5 1984.1 moveto 112.5 (BUS_RTX66_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+379.375 1963.1 moveto 12.75 (A) alignedtext
+grestore
+% BUS_RTX66_A->DS_RTX202_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 513.358 1943.466 moveto
+512.496 1933.357 510.934 1915.023 509.718 1900.753 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 513.213 1900.552 moveto
+508.877 1890.885 lineto
+506.238 1901.146 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 513.213 1900.552 moveto
+508.877 1890.885 lineto
+506.238 1901.146 lineto
+closepath stroke
+grestore
+% DS_RTX203_4
+gsave
+0 0 1 nodecolor
+514 2057.2 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+514 2057.2 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+397.3 2089.3 moveto 109.5 (DS_RTX203_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+447.175 2068.3 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX66_A->DS_RTX203_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.025 1960.558 moveto
+537.855 1977.963 538.892 2021.05 529.136 2042.956 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.375 2040.799 moveto
+523.423 2050.974 lineto
+532.076 2044.861 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.375 2040.799 moveto
+523.423 2050.974 lineto
+532.076 2044.861 lineto
+closepath stroke
+grestore
+% DS_RTX201_4
+gsave
+0 0 1 nodecolor
+580 1879.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+580 1879.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+572.8 1911.7 moveto 109.5 (DS_RTX201_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+622.675 1890.7 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX66_A->DS_RTX201_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 521.063 1943.466 moveto
+531.767 1932.049 552.305 1910.141 566.083 1895.445 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 568.326 1898.169 moveto
+572.612 1888.48 lineto
+563.22 1893.382 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 568.326 1898.169 moveto
+572.612 1888.48 lineto
+563.22 1893.382 lineto
+closepath stroke
+grestore
+% DS_RTX203_4->BUS_RTX66_A
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.334 2053.44 moveto
+491.694 2042.03 488.468 1997.939 496.654 1972.123 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 499.709 1973.856 moveto
+500.71 1963.308 lineto
+493.35 1970.93 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 499.709 1973.856 moveto
+500.71 1963.308 lineto
+493.35 1970.93 lineto
+closepath stroke
+grestore
+% BUS_RTX66_B
+gsave
+0 0 1 nodecolor
+newpath 581.2 2169.6 moveto
+581.2 2169.6 446.8 2169.6 446.8 2169.6 curveto
+444.4 2169.6 442 2167.2 442 2164.8 curveto
+442 2164.8 442 2160 442 2160 curveto
+442 2157.6 444.4 2155.2 446.8 2155.2 curveto
+446.8 2155.2 581.2 2155.2 581.2 2155.2 curveto
+583.6 2155.2 586 2157.6 586 2160 curveto
+586 2160 586 2164.8 586 2164.8 curveto
+586 2167.2 583.6 2169.6 581.2 2169.6 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 581.2 2169.6 moveto
+581.2 2169.6 446.8 2169.6 446.8 2169.6 curveto
+444.4 2169.6 442 2167.2 442 2164.8 curveto
+442 2164.8 442 2160 442 2160 curveto
+442 2157.6 444.4 2155.2 446.8 2155.2 curveto
+446.8 2155.2 581.2 2155.2 581.2 2155.2 curveto
+583.6 2155.2 586 2157.6 586 2160 curveto
+586 2160 586 2164.8 586 2164.8 curveto
+586 2167.2 583.6 2169.6 581.2 2169.6 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+329.5 2194.5 moveto 112.5 (BUS_RTX66_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+379.375 2173.5 moveto 12.75 (B) alignedtext
+grestore
+% DS_RTX203_4->BUS_RTX66_B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 521.688 2060.977 moveto
+536.342 2072.439 539.543 2116.672 531.291 2142.451 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 528.25 2140.69 moveto
+527.208 2151.233 lineto
+534.597 2143.641 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 528.25 2140.69 moveto
+527.208 2151.233 lineto
+534.597 2143.641 lineto
+closepath stroke
+grestore
+% CB_RTX201_0
+gsave
+0 0 1 nodecolor
+596 1807.2 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+596 1807.2 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+478.55 1782.9 moveto 110.25 (CB_RTX201_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+528.8 1761.9 moveto 9.75 (0) alignedtext
+grestore
+% DS_RTX201_4->CB_RTX201_0
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 581.652 1871.331 moveto
+583.952 1861.213 588.204 1842.503 591.485 1828.068 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 594.859 1829.014 moveto
+593.662 1818.487 lineto
+588.033 1827.462 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 594.859 1829.014 moveto
+593.662 1818.487 lineto
+588.033 1827.462 lineto
+closepath stroke
+grestore
+% BUS_RTX66_B->DS_RTX203_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 502.068 2153.978 moveto
+490.161 2136.679 489.084 2093.483 498.839 2071.501 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 501.623 2073.625 moveto
+504.56 2063.445 lineto
+495.916 2069.572 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 501.623 2073.625 moveto
+504.56 2063.445 lineto
+495.916 2069.572 lineto
+closepath stroke
+grestore
+% DS_RTX205_4
+gsave
+0 0 1 nodecolor
+514 2234.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+514 2234.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+397.3 2252.5 moveto 109.5 (DS_RTX205_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+447.175 2231.5 moveto 9.75 (4) alignedtext
+grestore
+% BUS_RTX66_B->DS_RTX205_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 528.104 2170.963 moveto
+537.439 2183.355 538.226 2208.049 530.467 2222.516 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 528.194 2219.818 moveto
+523.99 2229.543 lineto
+533.341 2224.562 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 528.194 2219.818 moveto
+523.99 2229.543 lineto
+533.341 2224.562 lineto
+closepath stroke
+grestore
+% DS_RTX201_5
+gsave
+0 0 1 nodecolor
+613 1702 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+613 1702 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+605.8 1734.1 moveto 109.5 (DS_RTX201_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+655.675 1713.1 moveto 9.75 (5) alignedtext
+grestore
+% CB_RTX201_0->DS_RTX201_5
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 597.223 1798.778 moveto
+599.808 1783.084 605.904 1746.076 609.717 1722.931 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 613.124 1723.777 moveto
+611.296 1713.341 lineto
+606.218 1722.64 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 613.124 1723.777 moveto
+611.296 1713.341 lineto
+606.218 1722.64 lineto
+closepath stroke
+grestore
+% DS_RTX108_8->BUS_RTX22_SEC-C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 526.348 328.924 moveto
+541.939 343.21 544.871 402.956 535.146 434.344 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 531.986 432.835 moveto
+531.205 443.401 lineto
+538.405 435.628 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 531.986 432.835 moveto
+531.205 443.401 lineto
+538.405 435.628 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-D
+gsave
+0 0 1 nodecolor
+newpath 586.2 202 moveto
+586.2 202 451.8 202 451.8 202 curveto
+449.4 202 447 199.6 447 197.2 curveto
+447 197.2 447 192.4 447 192.4 curveto
+447 190 449.4 187.6 451.8 187.6 curveto
+451.8 187.6 586.2 187.6 586.2 187.6 curveto
+588.6 187.6 591 190 591 192.4 curveto
+591 192.4 591 197.2 591 197.2 curveto
+591 199.6 588.6 202 586.2 202 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 586.2 202 moveto
+586.2 202 451.8 202 451.8 202 curveto
+449.4 202 447 199.6 447 197.2 curveto
+447 197.2 447 192.4 447 192.4 curveto
+447 190 449.4 187.6 451.8 187.6 curveto
+451.8 187.6 586.2 187.6 586.2 187.6 curveto
+588.6 187.6 591 190 591 192.4 curveto
+591 192.4 591 197.2 591 197.2 curveto
+591 199.6 588.6 202 586.2 202 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+334.5 226.9 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+363 205.9 moveto 55.5 (SEC-D) alignedtext
+grestore
+% DS_RTX108_8->BUS_RTX22_SEC-D
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 511.608 320.636 moveto
+496.059 306.283 493.139 246.639 502.848 215.275 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.006 216.79 moveto
+506.781 206.224 lineto
+499.586 214 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.006 216.79 moveto
+506.781 206.224 lineto
+499.586 214 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-D->LINE_X08
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 503.514 186.176 moveto
+470.103 169.727 389.455 130.024 329.868 100.689 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 331.486 97.584 moveto
+320.968 96.307 lineto
+328.394 103.864 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 331.486 97.584 moveto
+320.968 96.307 lineto
+328.394 103.864 lineto
+closepath stroke
+grestore
+% BUS_RTX22_SEC-D->DS_RTX108_8
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.012 203.447 moveto
+543.157 224.351 544.233 282.685 533.24 309.717 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.349 307.74 moveto
+528 318.072 lineto
+536.279 311.46 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.349 307.74 moveto
+528 318.072 lineto
+536.279 311.46 lineto
+closepath stroke
+grestore
+% DS_RTX105_5
+gsave
+0 0 1 nodecolor
+748 714.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+748 714.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+631.3 746.9 moveto 109.5 (DS_RTX105_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+681.175 725.9 moveto 9.75 (5) alignedtext
+grestore
+% DS_RTX105_5->BUS_RTX22_SEC-C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 742.787 707.927 moveto
+714.628 676.201 580.271 524.83 534.394 473.143 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 537.066 470.882 moveto
+527.811 465.726 lineto
+531.831 475.529 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 537.066 470.882 moveto
+527.811 465.726 lineto
+531.831 475.529 lineto
+closepath stroke
+grestore
+% CT_RTX105->DS_RTX105_5
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 790.217 1111.265 moveto
+785.244 1064.68 758.017 809.638 750.137 735.822 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 753.661 735.856 moveto
+749.119 726.284 lineto
+746.701 736.599 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 753.661 735.856 moveto
+749.119 726.284 lineto
+746.701 736.599 lineto
+closepath stroke
+grestore
+% CB_RTX108_0
+gsave
+0 0 1 nodecolor
+910 1336.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+910 1336.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+792.55 1368.9 moveto 110.25 (CB_RTX108_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+842.8 1347.9 moveto 9.75 (0) alignedtext
+grestore
+% DS_RTX108_4->CB_RTX108_0
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 902.476 1458.176 moveto
+903.691 1438.744 906.934 1386.855 908.741 1357.95 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 912.217 1358.443 moveto
+909.347 1348.245 lineto
+905.23 1358.007 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 912.217 1358.443 moveto
+909.347 1348.245 lineto
+905.23 1358.007 lineto
+closepath stroke
+grestore
+% DS_RTX109_4->BUS_RTX22_PRI-B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 860.334 1698.24 moveto
+845.694 1686.83 842.468 1642.739 850.654 1616.923 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 853.709 1618.656 moveto
+854.71 1608.108 lineto
+847.35 1615.73 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 853.709 1618.656 moveto
+854.71 1608.108 lineto
+847.35 1615.73 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-C
+gsave
+0 0 1 nodecolor
+newpath 935.2 1814.4 moveto
+935.2 1814.4 800.8 1814.4 800.8 1814.4 curveto
+798.4 1814.4 796 1812 796 1809.6 curveto
+796 1809.6 796 1804.8 796 1804.8 curveto
+796 1802.4 798.4 1800 800.8 1800 curveto
+800.8 1800 935.2 1800 935.2 1800 curveto
+937.6 1800 940 1802.4 940 1804.8 curveto
+940 1804.8 940 1809.6 940 1809.6 curveto
+940 1812 937.6 1814.4 935.2 1814.4 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 935.2 1814.4 moveto
+935.2 1814.4 800.8 1814.4 800.8 1814.4 curveto
+798.4 1814.4 796 1812 796 1809.6 curveto
+796 1809.6 796 1804.8 796 1804.8 curveto
+796 1802.4 798.4 1800 800.8 1800 curveto
+800.8 1800 935.2 1800 935.2 1800 curveto
+937.6 1800 940 1802.4 940 1804.8 curveto
+940 1804.8 940 1809.6 940 1809.6 curveto
+940 1812 937.6 1814.4 935.2 1814.4 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+683.5 1839.3 moveto 112.5 (BUS_RTX22_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+715.375 1818.3 moveto 48.75 (PRI-C) alignedtext
+grestore
+% DS_RTX109_4->BUS_RTX22_PRI-C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 875.688 1705.777 moveto
+890.342 1717.239 893.543 1761.472 885.291 1787.251 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 882.25 1785.49 moveto
+881.208 1796.033 lineto
+888.597 1788.441 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 882.25 1785.49 moveto
+881.208 1796.033 lineto
+888.597 1788.441 lineto
+closepath stroke
+grestore
+% DS_RTX108_5
+gsave
+0 0 1 nodecolor
+910 974.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+910 974.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+793.3 1006.9 moveto 109.5 (DS_RTX108_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+843.175 985.9 moveto 9.75 (5) alignedtext
+grestore
+% DS_RTX108_5->BUS_RTX22_SEC-D
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 910 966.202 moveto
+910 935.143 910 814.79 910 715.8 curveto
+910 715.8 910 715.8 910 453.8 curveto
+910 295.935 685.203 229.138 576.51 206.067 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 577.318 202.66 moveto
+566.818 204.076 lineto
+575.909 209.517 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 577.318 202.66 moveto
+566.818 204.076 lineto
+575.909 209.517 lineto
+closepath stroke
+grestore
+% CT_RTX108
+gsave
+0 0 1 nodecolor
+910 1264.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+910 1264.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+902.8 1240.1 moveto 99 (CT_RTX108) alignedtext
+grestore
+% CT_RTX108->DS_RTX108_5
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 910 1255.707 moveto
+910 1218.233 910 1054.253 910 996.233 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 913.5 996.41 moveto
+910 986.41 lineto
+906.5 996.41 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 913.5 996.41 moveto
+910 986.41 lineto
+906.5 996.41 lineto
+closepath stroke
+grestore
+% CB_RTX108_0->CT_RTX108
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 910 1328.266 moveto
+910 1318.262 910 1300.204 910 1286 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 913.5 1286.12 moveto
+910 1276.12 lineto
+906.5 1286.12 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 913.5 1286.12 moveto
+910 1276.12 lineto
+906.5 1286.12 lineto
+closepath stroke
+grestore
+% BUS_RTX22_PRI-C->DS_RTX109_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 856.068 1798.778 moveto
+844.161 1781.479 843.084 1738.283 852.839 1716.301 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 855.623 1718.425 moveto
+858.56 1708.245 lineto
+849.916 1714.372 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 855.623 1718.425 moveto
+858.56 1708.245 lineto
+849.916 1714.372 lineto
+closepath stroke
+grestore
+% DS_RTX110_4
+gsave
+0 0 1 nodecolor
+652 1879.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+652 1879.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+536.05 1855.3 moveto 108.75 (DS_RTX110_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+585.55 1834.3 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX110_4->BUS_RTX22_PRI-C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 659.688 1876.094 moveto
+686.984 1867.198 780.388 1836.755 832.367 1819.814 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 833.323 1823.183 moveto
+841.746 1816.757 lineto
+831.154 1816.528 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 833.323 1823.183 moveto
+841.746 1816.757 lineto
+831.154 1816.528 lineto
+closepath stroke
+grestore
+% VT_RTX110
+gsave
+0 0 1 nodecolor
+651 1952 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+651 1952 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+546.3 1963.1 moveto 97.5 (VT_RTX110) alignedtext
+grestore
+% VT_RTX110->DS_RTX110_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 651.107 1943.466 moveto
+651.249 1933.462 651.506 1915.404 651.707 1901.2 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 655.205 1901.369 moveto
+651.848 1891.32 lineto
+648.206 1901.269 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 655.205 1901.369 moveto
+651.848 1891.32 lineto
+648.206 1901.269 lineto
+closepath stroke
+grestore
+% PTX_66-22KV_T1
+gsave
+0 0 1 nodecolor
+619 2057.2 36 36 ellipse_path fill
+2 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+619 2057.2 36 36 ellipse_path stroke
+2 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+619 2057.2 40 40 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+607.375 2050.6 moveto 23.25 (TX) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+581.25 2122.1 moveto 70.5 (PTX_66-) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+579 2101.1 moveto 75 (22KV_T1) alignedtext
+grestore
+% PTX_66-22KV_T1->VT_RTX110
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 630.825 2018.065 moveto
+635.637 2002.546 640.991 1985.28 644.973 1972.436 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 648.27 1973.622 moveto
+647.889 1963.034 lineto
+641.584 1971.549 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 648.27 1973.622 moveto
+647.889 1963.034 lineto
+641.584 1971.549 lineto
+closepath stroke
+grestore
+% LA_RTX207
+gsave
+0 0 1 nodecolor
+651 2162.4 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+651 2162.4 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+544.8 2173.5 moveto 99 (LA_RTX207) alignedtext
+grestore
+% LA_RTX207->PTX_66-22KV_T1
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 648.801 2154.307 moveto
+645.795 2144.613 640.137 2126.366 634.552 2108.354 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 637.932 2107.436 moveto
+631.627 2098.922 lineto
+631.246 2109.51 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 637.932 2107.436 moveto
+631.627 2098.922 lineto
+631.246 2109.51 lineto
+closepath stroke
+grestore
+% DS_RTX207_4
+gsave
+0 0 1 nodecolor
+618 2234.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+618 2234.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+501.3 2266.9 moveto 109.5 (DS_RTX207_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+551.175 2245.9 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX207_4->LA_RTX207
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 621.285 2226.792 moveto
+626.128 2216.461 635.354 2196.778 642.247 2182.073 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 645.368 2183.66 moveto
+646.444 2173.12 lineto
+639.03 2180.689 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 645.368 2183.66 moveto
+646.444 2173.12 lineto
+639.03 2180.689 lineto
+closepath stroke
+grestore
+% VT_RTX201
+gsave
+0 0 1 nodecolor
+613 1596.8 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+613 1596.8 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+507.55 1572.5 moveto 98.25 (VT_RTX201) alignedtext
+grestore
+% DS_RTX201_5->VT_RTX201
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 613 1693.578 moveto
+613 1678.034 613 1641.583 613 1618.399 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 616.5 1618.46 moveto
+613 1608.46 lineto
+609.5 1618.46 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 616.5 1618.46 moveto
+613 1608.46 lineto
+609.5 1618.46 lineto
+closepath stroke
+grestore
+% VT_RTX201->LINE_SSM-SSB-17
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 616.975 1589.276 moveto
+623.378 1578.769 636.635 1557.015 650.184 1534.78 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 653.04 1536.819 moveto
+655.255 1526.458 lineto
+647.063 1533.176 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 653.04 1536.819 moveto
+655.255 1526.458 lineto
+647.063 1533.176 lineto
+closepath stroke
+grestore
+% DS_RTX205_4->BUS_RTX66_B
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 506.061 2231.769 moveto
+493.265 2224.655 489.361 2200.339 494.348 2182.728 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 497.505 2184.239 moveto
+498.605 2173.701 lineto
+491.174 2181.253 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 497.505 2184.239 moveto
+498.605 2173.701 lineto
+491.174 2181.253 lineto
+closepath stroke
+grestore
+% BUS_RTX66_C
+gsave
+0 0 1 nodecolor
+newpath 581.2 2314.4 moveto
+581.2 2314.4 446.8 2314.4 446.8 2314.4 curveto
+444.4 2314.4 442 2312 442 2309.6 curveto
+442 2309.6 442 2304.8 442 2304.8 curveto
+442 2302.4 444.4 2300 446.8 2300 curveto
+446.8 2300 581.2 2300 581.2 2300 curveto
+583.6 2300 586 2302.4 586 2304.8 curveto
+586 2304.8 586 2309.6 586 2309.6 curveto
+586 2312 583.6 2314.4 581.2 2314.4 curveto
+closepath fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+newpath 581.2 2314.4 moveto
+581.2 2314.4 446.8 2314.4 446.8 2314.4 curveto
+444.4 2314.4 442 2312 442 2309.6 curveto
+442 2309.6 442 2304.8 442 2304.8 curveto
+442 2302.4 444.4 2300 446.8 2300 curveto
+446.8 2300 581.2 2300 581.2 2300 curveto
+583.6 2300 586 2302.4 586 2304.8 curveto
+586 2304.8 586 2309.6 586 2309.6 curveto
+586 2312 583.6 2314.4 581.2 2314.4 curveto
+stroke
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+329.5 2339.3 moveto 112.5 (BUS_RTX66_) alignedtext
+0 0 0.46667 nodecolor
+18 /Helvetica-Bold set_font
+379.375 2318.3 moveto 12.75 (C) alignedtext
+grestore
+% DS_RTX205_4->BUS_RTX66_C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 521.803 2237.756 moveto
+534.769 2244.807 538.695 2269.434 533.579 2287.126 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.525 2285.4 moveto
+529.384 2295.933 lineto
+536.844 2288.41 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 530.525 2285.4 moveto
+529.384 2295.933 lineto
+536.844 2288.41 lineto
+closepath stroke
+grestore
+% BUS_RTX66_C->DS_RTX207_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 525.13 2298.666 moveto
+543.265 2286.39 579.315 2261.987 600.775 2247.46 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 602.654 2250.415 moveto
+608.973 2241.911 lineto
+598.73 2244.618 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 602.654 2250.415 moveto
+608.973 2241.911 lineto
+598.73 2244.618 lineto
+closepath stroke
+grestore
+% BUS_RTX66_C->DS_RTX205_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 499.918 2298.666 moveto
+490.538 2286.251 489.764 2261.432 497.595 2246.97 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 499.865 2249.667 moveto
+504.131 2239.969 lineto
+494.749 2244.89 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 499.865 2249.667 moveto
+504.131 2239.969 lineto
+494.749 2244.89 lineto
+closepath stroke
+grestore
+% CB_RTX206_0
+gsave
+0 0 1 nodecolor
+514 2452 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+514 2452 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+396.55 2484.1 moveto 110.25 (CB_RTX206_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+446.8 2463.1 moveto 9.75 (0) alignedtext
+grestore
+% DS_RTX206_5->CB_RTX206_0
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514 2515.866 moveto
+514 2505.862 514 2487.804 514 2473.6 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2473.72 moveto
+514 2463.72 lineto
+510.5 2473.72 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2473.72 moveto
+514 2463.72 lineto
+510.5 2473.72 lineto
+closepath stroke
+grestore
+% DS_RTX206_4
+gsave
+0 0 1 nodecolor
+514 2379.6 7.2 7.2 ellipse_path fill
+3 setlinewidth
+filled
+0.62353 0.71373 0.80392 nodecolor
+514 2379.6 7.2 7.2 ellipse_path stroke
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+397.3 2411.7 moveto 109.5 (DS_RTX206_) alignedtext
+0.62353 0.71373 0.80392 nodecolor
+18 /Helvetica-Bold set_font
+447.175 2390.7 moveto 9.75 (4) alignedtext
+grestore
+% DS_RTX206_4->BUS_RTX66_C
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514 2371.066 moveto
+514 2361.062 514 2343.004 514 2328.8 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2328.92 moveto
+514 2318.92 lineto
+510.5 2328.92 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2328.92 moveto
+514 2318.92 lineto
+510.5 2328.92 lineto
+closepath stroke
+grestore
+% CB_RTX206_0->DS_RTX206_4
+gsave
+2 setlinewidth
+bold
+0.62353 0.71765 0.93333 edgecolor
+newpath 514 2443.466 moveto
+514 2433.462 514 2415.404 514 2401.2 curveto
+stroke
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2401.32 moveto
+514 2391.32 lineto
+510.5 2401.32 lineto
+closepath fill
+2 setlinewidth
+solid
+0.62353 0.71765 0.93333 edgecolor
+newpath 517.5 2401.32 moveto
+514 2391.32 lineto
+510.5 2401.32 lineto
+closepath stroke
+grestore
+endpage
+showpage
+grestore
+%%PageTrailer
+%%EndPage: 1
+%%Trailer
+%%Pages: 1
+%%BoundingBox: 150 150 4733 13865
+end
+restore
+%%EOF

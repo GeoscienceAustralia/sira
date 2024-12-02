@@ -323,6 +323,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -344,8 +345,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -365,8 +366,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -386,8 +387,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -407,8 +408,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -432,6 +433,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -453,8 +455,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.44,
-                        "location": 0,
-                        "beta": 0.55,
+                        "location": 0.55,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -474,8 +476,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.645,
-                        "location": 0,
-                        "beta": 0.61,
+                        "location": 0.61,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -495,8 +497,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.845,
-                        "location": 0,
-                        "beta": 0.595,
+                        "location": 0.595,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -516,8 +518,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.505,
+                        "location": 0.505,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -541,6 +543,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -562,8 +565,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.44,
-                        "location": 0,
-                        "beta": 0.55,
+                        "location": 0.55,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -583,8 +586,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.645,
-                        "location": 0,
-                        "beta": 0.61,
+                        "location": 0.61,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -604,8 +607,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.845,
-                        "location": 0,
-                        "beta": 0.595,
+                        "location": 0.595,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -625,8 +628,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.505,
+                        "location": 0.505,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -650,6 +653,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -671,8 +675,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "location": 0,
-                        "beta": 0.2,
+                        "location": 0.2,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -692,8 +696,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "location": 0,
-                        "beta": 0.27,
+                        "location": 0.27,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -713,8 +717,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -734,8 +738,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.35,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -759,6 +763,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -780,8 +785,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.39,
-                        "location": 0,
-                        "beta": 0.55,
+                        "location": 0.55,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -801,8 +806,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.595,
-                        "location": 0,
-                        "beta": 0.61,
+                        "location": 0.61,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -822,8 +827,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.795,
-                        "location": 0,
-                        "beta": 0.595,
+                        "location": 0.595,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -843,8 +848,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.505,
+                        "location": 0.505,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -868,6 +873,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -889,8 +895,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.39,
-                        "location": 0,
-                        "beta": 0.55,
+                        "location": 0.55,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -910,8 +916,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.595,
-                        "location": 0,
-                        "beta": 0.61,
+                        "location": 0.61,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -931,8 +937,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.795,
-                        "location": 0,
-                        "beta": 0.595,
+                        "location": 0.595,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -952,8 +958,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.505,
+                        "location": 0.505,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -977,6 +983,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -998,8 +1005,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.39,
-                        "location": 0,
-                        "beta": 0.55,
+                        "location": 0.55,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1019,8 +1026,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.595,
-                        "location": 0,
-                        "beta": 0.61,
+                        "location": 0.61,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1040,8 +1047,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.795,
-                        "location": 0,
-                        "beta": 0.595,
+                        "location": 0.595,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1061,8 +1068,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.505,
+                        "location": 0.505,
+                        "beta": 0,
                         "data_source": "Assume unanchored refinery electrical/mechanical equipment MH HAZUS Table C8.2",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1086,6 +1093,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1107,8 +1115,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "location": 0,
-                        "beta": 0.275,
+                        "location": 0.275,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1128,8 +1136,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1149,8 +1157,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.435,
+                        "location": 0.435,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1170,8 +1178,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.455,
+                        "location": 0.455,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1195,6 +1203,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1216,8 +1225,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "location": 0,
-                        "beta": 0.275,
+                        "location": 0.275,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1237,8 +1246,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1258,8 +1267,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.435,
+                        "location": 0.435,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1279,8 +1288,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.455,
+                        "location": 0.455,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1304,6 +1313,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1325,8 +1335,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "location": 0,
-                        "beta": 0.275,
+                        "location": 0.275,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1346,8 +1356,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1367,8 +1377,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.435,
+                        "location": 0.435,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1388,8 +1398,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.455,
+                        "location": 0.455,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1413,6 +1423,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1434,8 +1445,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.335,
-                        "location": 0,
-                        "beta": 0.275,
+                        "location": 0.275,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1455,8 +1466,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.5,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1476,8 +1487,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.435,
+                        "location": 0.435,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1497,8 +1508,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.455,
+                        "location": 0.455,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1522,6 +1533,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1543,8 +1555,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.45,
-                        "location": 0,
-                        "beta": 0.2,
+                        "location": 0.2,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1564,8 +1576,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.585,
-                        "location": 0,
-                        "beta": 0.295,
+                        "location": 0.295,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1585,8 +1597,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1606,8 +1618,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1631,6 +1643,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1652,8 +1665,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.45,
-                        "location": 0,
-                        "beta": 0.2,
+                        "location": 0.2,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1673,8 +1686,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.585,
-                        "location": 0,
-                        "beta": 0.295,
+                        "location": 0.295,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1694,8 +1707,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1715,8 +1728,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1740,6 +1753,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1761,8 +1775,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.43,
-                        "location": 0,
-                        "beta": 0.16,
+                        "location": 0.16,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.6 Small Pumping Plants",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1782,8 +1796,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "location": 0,
-                        "beta": 0.27,
+                        "location": 0.27,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1803,8 +1817,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.78,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1824,8 +1838,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1849,6 +1863,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1870,8 +1885,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.42,
-                        "location": 0,
-                        "beta": 0.16,
+                        "location": 0.16,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1891,8 +1906,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1912,8 +1927,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.78,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1933,8 +1948,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.3 Small Water Treatment Plants",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -1958,6 +1973,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -1979,8 +1995,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.46,
-                        "location": 0,
-                        "beta": 0.23,
+                        "location": 0.23,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2000,8 +2016,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "location": 0,
-                        "beta": 0.25,
+                        "location": 0.25,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2021,8 +2037,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.825,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2042,8 +2058,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.8,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2067,6 +2083,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2088,8 +2105,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.46,
-                        "location": 0,
-                        "beta": 0.23,
+                        "location": 0.23,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2109,8 +2126,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.57,
-                        "location": 0,
-                        "beta": 0.25,
+                        "location": 0.25,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2130,8 +2147,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.825,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2151,8 +2168,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.8,
-                        "location": 0,
-                        "beta": 0.6,
+                        "location": 0.6,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2176,6 +2193,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2197,8 +2215,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2218,8 +2236,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2239,8 +2257,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2260,8 +2278,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2285,6 +2303,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2306,8 +2325,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2327,8 +2346,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2348,8 +2367,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2369,8 +2388,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2394,6 +2413,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2415,8 +2435,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2436,8 +2456,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2457,8 +2477,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2478,8 +2498,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2503,6 +2523,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2524,8 +2545,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.35,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2545,8 +2566,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.5,
+                        "location": 0.5,
+                        "beta": 0,
                         "data_source": "HAZUS-MH Table D8.8 Electircal equipment ",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2566,8 +2587,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2587,8 +2608,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Sim to main feed conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2612,6 +2633,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2633,8 +2655,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.45,
-                        "location": 0,
-                        "beta": 0.2,
+                        "location": 0.2,
+                        "beta": 0,
                         "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2654,8 +2676,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.59,
-                        "location": 0,
-                        "beta": 0.3,
+                        "location": 0.3,
+                        "beta": 0,
                         "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2675,8 +2697,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.775,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2696,8 +2718,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "SIM to supply conveyor",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2721,6 +2743,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2742,8 +2765,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "location": 0,
-                        "beta": 0.2,
+                        "location": 0.2,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2763,8 +2786,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "location": 0,
-                        "beta": 0.27,
+                        "location": 0.27,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2784,8 +2807,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2805,8 +2828,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.35,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2830,6 +2853,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2851,8 +2875,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.67,
-                        "location": 0,
-                        "beta": 0.2,
+                        "location": 0.2,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2872,8 +2896,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.85,
-                        "location": 0,
-                        "beta": 0.27,
+                        "location": 0.27,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2893,8 +2917,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.05,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2914,8 +2938,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.35,
-                        "location": 0,
-                        "beta": 0.35,
+                        "location": 0.35,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2939,6 +2963,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -2960,8 +2985,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.475,
-                        "location": 0,
-                        "beta": 0.25,
+                        "location": 0.25,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -2981,8 +3006,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.615,
-                        "location": 0,
-                        "beta": 0.33,
+                        "location": 0.33,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3002,8 +3027,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.77,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3023,8 +3048,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.4,
+                        "location": 0.4,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3048,6 +3073,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3069,8 +3095,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3090,8 +3116,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.3,
+                        "location": 0.3,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3111,8 +3137,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3132,8 +3158,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3157,6 +3183,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3178,8 +3205,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3199,8 +3226,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.3,
+                        "location": 0.3,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3220,8 +3247,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3241,8 +3268,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3266,6 +3293,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3287,8 +3315,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3308,8 +3336,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.3,
+                        "location": 0.3,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3329,8 +3357,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3350,8 +3378,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3375,6 +3403,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3396,8 +3425,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.75,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3417,8 +3446,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.0,
-                        "location": 0,
-                        "beta": 0.3,
+                        "location": 0.3,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3438,8 +3467,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.33,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3459,8 +3488,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.55,
-                        "location": 0,
-                        "beta": 0.28,
+                        "location": 0.28,
+                        "beta": 0,
                         "data_source": "HAZUS-MH MR3 Table 8.22.a Generation Facilities",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3484,6 +3513,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3505,8 +3535,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3526,8 +3556,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.9,
-                        "location": 0,
-                        "beta": 0.26,
+                        "location": 0.26,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3547,8 +3577,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.25,
-                        "location": 0,
-                        "beta": 0.21,
+                        "location": 0.21,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3568,8 +3598,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.65,
-                        "location": 0,
-                        "beta": 0.11,
+                        "location": 0.11,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3593,6 +3623,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3614,8 +3645,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.55,
-                        "location": 0,
-                        "beta": 0.34,
+                        "location": 0.34,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3635,8 +3666,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 0.9,
-                        "location": 0,
-                        "beta": 0.26,
+                        "location": 0.26,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3656,8 +3687,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.25,
-                        "location": 0,
-                        "beta": 0.21,
+                        "location": 0.21,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3677,8 +3708,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 1.65,
-                        "location": 0,
-                        "beta": 0.11,
+                        "location": 0.11,
+                        "beta": 0,
                         "data_source": "Assume Syner G Table 3.22 230kV with Anchored Sub Components",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3702,6 +3733,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3723,8 +3755,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3744,8 +3776,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3765,8 +3797,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3786,8 +3818,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3811,6 +3843,7 @@
             "operating_capacity": 1,
             "pos_x": null,
             "pos_y": null,
+            "site_id": null,
             "damages_states_constructor": {
                 "0": {
                     "damage_state_name": "DS0 None",
@@ -3832,8 +3865,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3853,8 +3886,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3874,8 +3907,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,
@@ -3895,8 +3928,8 @@
                     "response_function_constructor": {
                         "function_name": "Lognormal",
                         "median": 10.0,
-                        "location": 0,
-                        "beta": 0.01,
+                        "location": 0.01,
+                        "beta": 0,
                         "data_source": "Not Available.",
                         "lower_limit": null,
                         "upper_limit": null,

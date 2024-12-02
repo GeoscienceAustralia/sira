@@ -43,13 +43,12 @@ class TestReadingInfrastructureModelJsonFile(unittest.TestCase):
             "Directory for test models not found:\n" + str(self.test_model_dir))
 
     def test_model_files_existence(self):
-        print(f"\n{'-'*70}\n>>> Initiating check on JSON model files...")
+        print(f"\n{'-' * 70}\n>>> Initiating check on JSON model files...")
         print("Test model directory: {}".format(self.test_model_dir))
         for model_file in self.model_json_files:
             test_model_relpath = relpath(
                 model_file, start=Path(__file__))
-            print("\nRunning check on model file (json): \n{}".
-                  format(str(test_model_relpath)))
+            print(f"\nRunning check on model file (json): \n{str(test_model_relpath)}")
             self.assertTrue(
                 Path(model_file).exists(),
                 "Model json file not found on path at" + str(model_file) + " !")

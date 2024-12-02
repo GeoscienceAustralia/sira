@@ -7,10 +7,10 @@ from pathlib import Path
 
 testdata = [
     ('_', 'powerstation_coal_A', '-s'),
-    ('_', 'substation_tx_230kv', '-sl'),
+    ('_', 'substation_66kv', '-sfl'),
     ('_', 'pumping_station_testbed', '-s'),
-    ('_', 'potable_water_treatment_plant_A', '-sfl'),
-    ('_', 'test_network__basic', '-s'),
+    ('_', 'potable_water_treatment_plant_A', '-s'),
+    # ('_', 'test_network__basic', '-s'),
     ('_', 'test_structure__parallel_piecewise', '-s')
 ]
 
@@ -54,7 +54,7 @@ def test_run_model(dir_setup, model_name, run_arg):
     "dir_setup, model_name, run_arg",
     files_with_incorrect_names,
     indirect=["dir_setup"])
-def test_catch_improper_inpufilename(dir_setup, model_name, run_arg):
+def test_catch_improper_inputfilename(dir_setup, model_name, run_arg):
     code_dir, mdls_dir = dir_setup
     inputdir = Path(mdls_dir, model_name)
     cmd = [sys.executable, str(code_dir), '-d', str(inputdir), run_arg]

@@ -3,8 +3,14 @@
     "SCENARIO_NAME": "lower_limit",
     "MODEL_NAME": "Simple Test Structure LL",
 
-    "HAZARD_INPUT_METHOD": "hazard_array",
     "HAZARD_TYPE": "earthquake",
+    "HAZARD_INPUT_METHOD": "calculated_array",
+	"HAZARD_INPUT_DIR": "../NA",
+	"HAZARD_INPUT_FILE": "NA",
+	"HAZARD_INPUT_HEADER": "PGA",
+	"HAZARD_SCALING_FACTOR": 1.0,
+	"OUTPUT_DIR": "./output",
+
     "HAZARD_NUM_SAMPLES": 10,
     "HAZARD_INTENSITY_MEASURE_MAX": 5.0,
     "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
@@ -42,11 +48,13 @@
         "WasteWaterTreatmentPlant",
         "WWTP",
         "PotableWaterPumpStation",
-        "ModelTestStructure"
+        "ElectricPowerNetwork",
+        "ModelTestStructure",
+        "RailNetwork"
     ],
     
     "SWITCH_MULTIPROCESS": 1,
     "SWITCH_RUN_CONTEXT": 0,
-    "SWITCH_SAVE_VARS_NPY": 1,
+    "SWITCH_SAVE_VARS_NPY": 0,
     "SWITCH_FIT_RESTORATION_DATA": 0
 }

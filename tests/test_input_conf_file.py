@@ -29,117 +29,111 @@ class TestInputConfFile(unittest.TestCase):
 
     def test_does_file_exist(self):
         for conf_file_path in self.conf_file_paths:
-            self.assertEqual(conf_file_path.exists(), True)
+            print(conf_file_path)
+            print(conf_file_path.exists())
+            print()
+            assert conf_file_path.exists()
+            # self.assertEqual(conf_file_path.exists(), True)
 
     def test_datatype_of_SCENARIO_NAME(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SCENARIO_NAME, str or bytes))
+            self.assertIsInstance(conf.SCENARIO_NAME, (str, bytes))
 
     def test_datatype_of_INTENSITY_MEASURE_MIN(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_MIN, float))
+            self.assertIsInstance(conf.INTENSITY_MEASURE_MIN, float)
 
     def test_datatype_of_INTENSITY_MEASURE_MAX(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_MAX, float))
+            self.assertIsInstance(conf.INTENSITY_MEASURE_MAX, float)
 
     def test_datatype_of_INTENSITY_MEASURE_STEP(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INTENSITY_MEASURE_STEP, float))
+            self.assertIsInstance(conf.INTENSITY_MEASURE_STEP, float)
 
     def test_datatype_of_NUM_SAMPLES(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.NUM_SAMPLES, int))
+            self.assertIsInstance(conf.NUM_SAMPLES, int)
 
     def test_datatype_of_INTENSITY_MEASURE_PARAM(self):
         for conf in self.confs:
-            self.assertTrue(
-                isinstance(conf.HAZARD_INTENSITY_MEASURE_PARAM, str or bytes)
-            )
+            self.assertIsInstance(conf.HAZARD_INTENSITY_MEASURE_PARAM, (str, bytes))
 
     def test_datatype_of_INTENSITY_MEASURE_UNIT(self):
         for conf in self.confs:
-            self.assertTrue(
-                isinstance(conf.HAZARD_INTENSITY_MEASURE_UNIT, str or bytes)
-            )
+            self.assertIsInstance(conf.HAZARD_INTENSITY_MEASURE_UNIT, (str, bytes))
 
     def test_datatype_of_FOCAL_HAZARD_SCENARIOS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.FOCAL_HAZARD_SCENARIOS, list))
+            self.assertIsInstance(conf.FOCAL_HAZARD_SCENARIOS, list)
 
     def test_datatype_of_FOCAL_HAZARD_SCENARIO_NAMES(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.FOCAL_HAZARD_SCENARIO_NAMES, list))
+            self.assertIsInstance(conf.FOCAL_HAZARD_SCENARIO_NAMES, list)
 
     def test_datatype_of_TIME_UNIT(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.TIME_UNIT, str or bytes))
+            self.assertIsInstance(conf.TIME_UNIT, (str, bytes))
 
     def test_datatype_of_RESTORE_PCT_CHKPOINTS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.RESTORE_PCT_CHECKPOINTS, int))
+            self.assertIsInstance(conf.RESTORE_PCT_CHECKPOINTS, int)
 
     def test_datatype_of_RESTORE_TIME_STEP(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.RESTORE_TIME_STEP, int))
+            self.assertIsInstance(conf.RESTORE_TIME_STEP, int)
 
     def test_datatype_of_RESTORE_TIME_MAX(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.RESTORE_TIME_MAX, int))
+            self.assertIsInstance(conf.RESTORE_TIME_MAX, int)
 
     def test_datatype_of_RESTORATION_STREAMS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.RESTORATION_STREAMS, list))
+            self.assertIsInstance(conf.RESTORATION_STREAMS, list)
 
     def test_datatype_of_INFRASTRUCTURE_LEVEL(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.INFRASTRUCTURE_LEVEL,
-                                       str or bytes))
+            self.assertIsInstance(conf.INFRASTRUCTURE_LEVEL, (str, bytes))
 
     def test_datatype_of_SYSTEM_CLASSES(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYSTEM_CLASSES, list))
+            self.assertIsInstance(conf.SYSTEM_CLASSES, list)
 
     def test_datatype_of_SYSTEM_CLASS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYSTEM_CLASS, str or bytes))
+            self.assertIsInstance(conf.SYSTEM_CLASS, (str, bytes))
 
     def test_datatype_of_SYSTEM_SUBCLASS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYSTEM_SUBCLASS, str or bytes))
+            self.assertIsInstance(conf.SYSTEM_SUBCLASS, (str, bytes))
 
     def test_datatype_of_COMMODITY_FLOW_TYPES(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.COMMODITY_FLOW_TYPES, int))
+            assert isinstance(conf.COMMODITY_FLOW_TYPES, int)
 
     def test_datatype_of_COMPONENT_LOCATION_CONF(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.COMPONENT_LOCATION_CONF,
-                                       str or bytes))
+            self.assertIsInstance(conf.COMPONENT_LOCATION_CONF, (str, bytes))
 
     def test_datatype_of_SYS_CONF_FILE_NAME(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SYS_CONF_FILE_NAME, str or bytes))
-
-    # def test_datatype_of_FIT_PE_DATA(self):
-    #     for conf in self.confs:
-    #         self.assertTrue(isinstance(conf.SWITCH_FIT_PE_DATA, bool))
+            self.assertIsInstance(conf.SYS_CONF_FILE_NAME, (str, bytes))
 
     def test_datatype_of_FIT_RESTORATION_DATA(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SWITCH_FIT_RESTORATION_DATA, bool))
+            self.assertIsInstance(conf.SWITCH_FIT_RESTORATION_DATA, bool)
 
     def test_datatype_of_SWITCH_SAVE_VARS_NPY(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.SWITCH_SAVE_VARS_NPY, bool))
+            self.assertIsInstance(conf.SWITCH_SAVE_VARS_NPY, bool)
 
     def test_datatype_of_MULTIPROCESS(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.MULTIPROCESS, int))
+            self.assertIsInstance(conf.MULTIPROCESS, int)
 
     def test_datatype_of_RUN_CONTEXT(self):
         for conf in self.confs:
-            self.assertTrue(isinstance(conf.RUN_CONTEXT, int))
+            self.assertIsInstance(conf.RUN_CONTEXT, int)
 
 
 if __name__ == "__main__":

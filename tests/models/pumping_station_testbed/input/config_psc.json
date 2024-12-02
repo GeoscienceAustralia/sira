@@ -1,6 +1,6 @@
 {
 	"CONFIGURATION_ID" : "PWPS EQ Config 1",
-    "SCENARIO_NAME" : "Test setup for earthquake impact",
+    "SCENARIO_NAME" : "pump_station_mdl",
     "MODEL_NAME" : "Generic Water Pumping Station",
 
     "HAZARD_INPUT_METHOD": "hazard_array",

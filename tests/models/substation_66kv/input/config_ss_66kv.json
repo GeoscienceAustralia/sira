@@ -1,39 +1,43 @@
 {
-	"CONFIGURATION_ID": "SS_EQ_config",
-    "SCENARIO_NAME": "test_ss_tx_230kv",
-    "MODEL_NAME": "Transmission Substation Co-located with Generation",
+	"CONFIGURATION_ID": "init config - SS REG 66KV",
+    "SCENARIO_NAME": "substation_66kv_regional",
+    "MODEL_NAME": "SSX 66-22kV Substation",
 
-    "HAZARD_INPUT_METHOD": "hazard_array",
+	"OUTPUT_DIR": "./output_array_ssx",
     "HAZARD_TYPE": "earthquake",
-    "HAZARD_NUM_SAMPLES": 10,
-    "HAZARD_INTENSITY_MEASURE_MAX": 1.5,
-    "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
-    "HAZARD_INTENSITY_MEASURE_STEP": 0.1,
-    "HAZARD_INTENSITY_MEASURE_PARAM": "PGA", 
-    "HAZARD_INTENSITY_MEASURE_UNIT": "g",
- 
-    "RESTORATION_TIME_MAX": 10.0, 
-    "RESTORATION_TIME_STEP": 1, 
-    "RESTORATION_TIME_UNIT": "week",
-    "RESTORATION_PCT_CHECKPOINTS": 21, 
-    "RESTORATION_STREAMS": [
-        5, 
-        10, 
-        20
-    ],
+    "HAZARD_INPUT_METHOD": "calculated_array",
+	"HAZARD_INPUT_DIR": "../_project_hazard_portfolio/filtered",
+	"HAZARD_INPUT_FILE": "hazard_ssx.csv",
+	"HAZARD_INPUT_HEADER": "gmv_PGA",
+	"HAZARD_SCALING_FACTOR": 1.0,
 
-    "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
-        "Sc A"
+    "HAZARD_NUM_SAMPLES": 10,
+    "HAZARD_INTENSITY_MEASURE_MAX": 1.2,
+    "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
+    "HAZARD_INTENSITY_MEASURE_STEP": 0.01,
+    "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
+    "HAZARD_INTENSITY_MEASURE_UNIT": "g",
+
+    "RESTORATION_STREAMS": [
+        5, 20
     ],
-    "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
-        "0.400"
-    ], 
+    "RESTORATION_PCT_CHECKPOINTS": 21,
+    "RESTORATION_TIME_MAX": 90.0,
+    "RESTORATION_TIME_STEP": 1,
+    "RESTORATION_TIME_UNIT": "days",
+
+	"SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
+		"EVT RP0500",
+		"EVT RP5000"
+	],
+	"SCENARIO_FOCAL_HAZARD_SCENARIOS": [
+		"0.03",
+		"0.60"
+	],
 
     "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
-    "SYSTEM_COMMODITY_FLOW_TYPES": 1, 
+    "SYSTEM_COMMODITY_FLOW_TYPES": 1,
     "SYSTEM_CLASS": "Substation",
-    "SYSTEM_SUBCLASS": "Transmission Substation",
-    "SYSTEM_COMPONENT_LOCATION_CONF": "undefined",
     "SYSTEM_CLASSES": [
         "PowerStation",
         "Substation",
@@ -41,11 +45,17 @@
         "PWTP",
         "WasteWaterTreatmentPlant",
         "WWTP",
-        "PotableWaterPumpStation"
+        "PotableWaterPumpStation",
+        "ElectricPowerNetwork",
+        "ModelTestStructure",
+        "RailNetwork"
     ],
+    "SYSTEM_SUBCLASS": "Transmission Substation",
+    "SYSTEM_COMPONENT_LOCATION_CONF": "defined",
 
     "SWITCH_MULTIPROCESS": 1,
-    "SWITCH_RUN_CONTEXT": 0,
-    "SWITCH_SAVE_VARS_NPY": 1,
-    "SWITCH_FIT_RESTORATION_DATA": 0
+    "SWITCH_RUN_CONTEXT": 1,
+
+    "SWITCH_FIT_RESTORATION_DATA": 0,
+    "SWITCH_SAVE_VARS_NPY": 0
 }

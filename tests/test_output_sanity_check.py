@@ -42,7 +42,7 @@ class TestSystemSanity(unittest.TestCase):
 
         test_file_path = Path(
             self.comparison_data_dir,
-            "economic_loss_for_system_sanity_testing.npy")
+            "economic_loss_array__system_sanity_testing.npy")
 
         historical_economic_loss_array = np.load(test_file_path)
         self.assertTrue(
@@ -90,23 +90,19 @@ class TestSystemSanity(unittest.TestCase):
 
         self.assertTrue(int(response_list[4][0][0]) == int(0))
 
-    # -------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------
     def test_compare_economic_loss_for_existing_models(self):
-
         print("\n{}\n>>> Initiating sanity check aganist pre-run models...".
               format('-' * 70))
-
         conf_file_paths = [
             d for d in self.models_dir.rglob('input/*config_testmdl*.json')]
         model_file_paths = [
             d for d in self.models_dir.rglob('input/*model_testmdl*.json')]
 
-        for conf_file_path, model_file_path in \
-                zip(conf_file_paths, model_file_paths):
+        for conf_file_path, model_file_path in zip(conf_file_paths, model_file_paths):
 
             if conf_file_path.is_file():
                 print("\nMatching results for: " + Path(conf_file_path).name)
-
                 config = Configuration(conf_file_path, model_file_path)
                 scenario = Scenario(config)
                 hazards = HazardsContainer(config, model_file_path)
@@ -118,7 +114,7 @@ class TestSystemSanity(unittest.TestCase):
 
                 stored_data_file = Path(
                     self.comparison_data_dir,
-                    "economic_loss_for_" + config.SCENARIO_NAME + '.npy')
+                    "economic_loss_array__" + config.SCENARIO_NAME + '.npy')
                 econ_loss_historic = np.load(stored_data_file)
 
                 self.assertTrue(
@@ -126,6 +122,7 @@ class TestSystemSanity(unittest.TestCase):
                     conf_file_path
                 )
                 print("OK")
+    # -----------------------------------------------------------------------------
 
 
 if __name__ == '__main__':
