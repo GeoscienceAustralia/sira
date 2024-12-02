@@ -290,9 +290,9 @@ def fit_prob_exceed_model(
         y_sample = ydata_2d[dx]
         ds_level = system_limit_states[dx]
 
-        print(f"\nDebug - Processing DS{dx}: {ds_level}")
-        print(f"Debug - y_sample mean: {np.mean(y_sample)}")
-        print(f"Debug - y_sample min/max: {np.min(y_sample)}/{np.max(y_sample)}")
+        print(f"\nDebug info - Processing DS{dx}: {ds_level}")
+        print(f"Debug info - y_sample mean: {np.mean(y_sample)}")
+        print(f"Debug info - y_sample min/max: {np.min(y_sample)}/{np.max(y_sample)}")
 
         params_odict = fit_cdf_model(
             x_sample, y_sample, dist=distribution, tag=f"Limit State: {ds_level}")

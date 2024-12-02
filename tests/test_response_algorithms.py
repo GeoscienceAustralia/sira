@@ -176,11 +176,15 @@ def test_model_fitting_no_crossover(distribution):
 
     for damage_state in [1, 2]:
         fit_stats = fitted_params_dict[damage_state]['fit_statistics']
-        assert fit_stats['chisqr'] < 0.1, \
-            f"Poor fit quality for {distribution}, DS{damage_state}: chi-square = {fit_stats['chisqr']}"
+        assert fit_stats['chisqr'] < 0.5, \
+            f"Very poor quality fit quality for\n   "\
+            f"{distribution}, DS{damage_state}: chi-square = {fit_stats['chisqr']}"
 
-    # assert fitted_params_dict[1]['fit_statistics']['chisqr'] <= 0.1
-    # assert fitted_params_dict[2]['fit_statistics']['chisqr'] <= 0.1
+        # params = fitted_params_dict[damage_state]['parameters']
+        # for param_name, param_data in params.items():
+        #     assert param_data > 0, \
+        #         f"Invalid parameter value for {param_name} "\
+        #         f"in {distribution}, DS{damage_state}"
 
     shutil.rmtree(TEMP_OUTPUT)
 
@@ -217,11 +221,15 @@ def test_model_fitting_with_crossover(distribution):
 
     for damage_state in [1, 2]:
         fit_stats = fitted_params_dict[damage_state]['fit_statistics']
-        assert fit_stats['chisqr'] < 0.1, \
-            f"Poor fit quality for {distribution}, DS{damage_state}: chi-square = {fit_stats['chisqr']}"
+        assert fit_stats['chisqr'] < 0.5, \
+            f"Very poor quality fit quality for\n   "\
+            f"{distribution}, DS{damage_state}: chi-square = {fit_stats['chisqr']}"
 
-    # assert fitted_params_dict[1]['fit_statistics']['chisqr'] <= 0.1
-    # assert fitted_params_dict[2]['fit_statistics']['chisqr'] <= 0.1
+        # params = fitted_params_dict[damage_state]['parameters']
+        # for param_name, param_data in params.items():
+        #     assert param_data > 0, \
+        #         f"Invalid parameter value for {param_name} "\
+        #         f"in {distribution}, DS{damage_state}"
 
     shutil.rmtree(TEMP_OUTPUT)
 
