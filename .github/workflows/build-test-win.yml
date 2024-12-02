@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.8', '3.9']
+        python-version: ['3.11']
 
     steps:
 
@@ -33,9 +33,10 @@ jobs:
         run: |
           ${{ env.CONDA }} init powershell
           ${{ env.CONDA }} create -n base python=${{ matrix.python-version }}
-          ${{ env.CONDA }} env update -f ./installation/environment.yml -n base
+          ${{ env.CONDA }} env update -f ./installation/sira_env.yml -n base
           ${{ env.CONDA }} activate base
-          ${{ env.CONDA }} install -c conda-forge pygraphviz
+          ${{ env.CONDA }} install uv
+          $uv pip install -r ./installation/sira_req.txt
 
       - name: Check environment
         shell: powershell

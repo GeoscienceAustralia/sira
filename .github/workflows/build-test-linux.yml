@@ -12,7 +12,7 @@ jobs:
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        python-version: ['3.8', '3.9']
+        python-version: ['3.11']
 
     steps:
 
@@ -28,8 +28,10 @@ jobs:
         run: |
           sudo apt-get install graphviz graphviz-dev
           $CONDA/bin/conda install libtiff libpng
-          pip install -U pip
-          pip install -r ./installation/requirements.txt
+          $CONDA/bin/conda env create -f ./installation/sira_env.yml
+          $CONDA/bin/conda activate sira_env
+          $CONDA/bin/conda install uv
+          uv pip install -r ./installation/sira_req.txt
 
       - name: Run pytest
         shell: bash -l {0}
