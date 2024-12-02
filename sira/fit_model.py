@@ -260,6 +260,9 @@ def fit_prob_exceed_model(
     :returns:  fitted exceedance model parameters (PANDAS dataframe)
     """
 
+    xdata = np.array(xdata)
+    ydata_2d = np.array(ydata_2d)
+
     # Debug prints
     print("\nDebug - Damage States:", system_limit_states)
     print("Debug - ydata_2d shape:", ydata_2d.shape)
