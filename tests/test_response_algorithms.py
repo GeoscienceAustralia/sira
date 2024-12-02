@@ -167,9 +167,23 @@ def test_model_fitting_no_crossover(distribution):
         output_path=TEMP_OUTPUT,
         distribution=distribution
     )
-    assert fitted_params_dict[1]['fit_statistics']['chisqr'] <= 0.1
-    assert fitted_params_dict[2]['fit_statistics']['chisqr'] <= 0.1
+
+    print("\nFitted Parameters Dictionary:")
+    for ds in [1, 2]:
+        print(f"\nDamage State {ds}:")
+        print("Fit Statistics:", fitted_params_dict[ds]['fit_statistics'])
+        print("Parameters:", fitted_params_dict[ds]['parameters'])
+
+    for damage_state in [1, 2]:
+        fit_stats = fitted_params_dict[damage_state]['fit_statistics']
+        assert fit_stats['chisqr'] < 0.1, \
+            f"Poor fit quality for {distribution}, DS{damage_state}: chi-square = {fit_stats['chisqr']}"
+
+    # assert fitted_params_dict[1]['fit_statistics']['chisqr'] <= 0.1
+    # assert fitted_params_dict[2]['fit_statistics']['chisqr'] <= 0.1
+
     shutil.rmtree(TEMP_OUTPUT)
+
 
 # ------------------------------------------------
 # Test model fitting, for data WITH CROSSOVER
@@ -194,8 +208,21 @@ def test_model_fitting_with_crossover(distribution):
         output_path=TEMP_OUTPUT,
         distribution=distribution
     )
-    assert fitted_params_dict[1]['fit_statistics']['chisqr'] <= 0.1
-    assert fitted_params_dict[2]['fit_statistics']['chisqr'] <= 0.1
+
+    print("\nFitted Parameters Dictionary:")
+    for ds in [1, 2]:
+        print(f"\nDamage State {ds}:")
+        print("Fit Statistics:", fitted_params_dict[ds]['fit_statistics'])
+        print("Parameters:", fitted_params_dict[ds]['parameters'])
+
+    for damage_state in [1, 2]:
+        fit_stats = fitted_params_dict[damage_state]['fit_statistics']
+        assert fit_stats['chisqr'] < 0.1, \
+            f"Poor fit quality for {distribution}, DS{damage_state}: chi-square = {fit_stats['chisqr']}"
+
+    # assert fitted_params_dict[1]['fit_statistics']['chisqr'] <= 0.1
+    # assert fitted_params_dict[2]['fit_statistics']['chisqr'] <= 0.1
+
     shutil.rmtree(TEMP_OUTPUT)
 
 
