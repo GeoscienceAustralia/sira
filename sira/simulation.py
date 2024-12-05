@@ -231,7 +231,6 @@ def calculate_response(hazards, scenario, infrastructure):
                     except Exception as e:
                         rootLogger.error(f"Chunk processing failed: {str(e)}")
                         rootLogger.error(f"Exception details: {traceback.format_exc()}")
-                        exit()
                         raise
         print()
         rootLogger.info("Completed parallel run")
