@@ -6,11 +6,11 @@ from pathlib import Path
 # ------------------------------------------------------------------------------
 
 testdata = [
-    ('_', 'powerstation_coal_A', '-s'),
-    ('_', 'substation_66kv', '-sfl'),
-    ('_', 'pumping_station_testbed', '-s'),
-    ('_', 'potable_water_treatment_plant_A', '-s'),
-    # ('_', 'test_network__basic', '-s'),
+    ('_', 'powerstation_coal_A', '-st'),
+    ('_', 'substation_66kv', '-stfl'),
+    ('_', 'pumping_station_testbed', '-st'),
+    ('_', 'potable_water_treatment_plant_A', '-st'),
+    ('_', 'test_network__basic', '-s'),
     ('_', 'test_structure__parallel_piecewise', '-s')
 ]
 
