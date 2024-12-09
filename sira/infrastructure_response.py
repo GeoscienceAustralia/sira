@@ -720,18 +720,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
 # -------------------------------------------------------------------------------------
 
-@njit
-def _calculate_class_failures(response_array, comp_indices, threshold=2):
-    """Vectorised calculation of class failures"""
-    mask = response_array[:, :, comp_indices] >= threshold
-    return np.sum(mask, axis=2) / len(comp_indices)
-
-@njit
-def _calculate_exceedance_probs(frag_array, num_samples):
-    """Calculate exceedance probabilities for damage states"""
-    return np.sum(frag_array >= 0, axis=0) / float(num_samples)
-
-@njit
+# @njit
 def _pe2pb(pe):
     """Numba-optimized version of pe2pb"""
     pex = np.sort(pe)[::-1]
