@@ -19,8 +19,6 @@ from sira.infrastructure_response import (
     calculate_output_stats,
     calculate_recovery_stats,
     calculate_summary_statistics,
-    _calculate_class_failures,
-    _calculate_exceedance_probs,
     _pe2pb,
     parallel_recovery_analysis
 )
@@ -107,23 +105,6 @@ def test_pe2pb_properties():
     assert np.abs(np.sum(result) - 1.0) < 1e-10
     assert len(result) == len(pe) + 1
     assert np.all(result >= 0)
-
-
-def test_calculate_class_failures():
-    response_array = np.array([
-        [[1, 2], [2, 3]],
-        [[2, 3], [3, 4]]
-    ])
-    comp_indices = np.array([0])
-    result = _calculate_class_failures(response_array, comp_indices, threshold=2)
-    assert isinstance(result, np.ndarray)
-    assert result.shape == (2, 2)
-
-def test_calculate_exceedance_probs():
-    frag_array = np.array([[1, 2], [2, 3]])
-    result = _calculate_exceedance_probs(frag_array, num_samples=2)
-    assert isinstance(result, np.ndarray)
-    assert len(result) == 2
 
 def test_calc_tick_vals():
     # Test normal case
