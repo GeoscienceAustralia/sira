@@ -23,11 +23,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
 
-      - name: Install System Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install graphviz graphviz-dev
-
       - name: Setup Micromamba
         uses: mamba-org/setup-micromamba@v2
         with:
@@ -80,7 +75,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv pip install tox tox-gh-actions
+          python -m pip install tox tox-gh-actions
 
       - name: Download coverage data
         uses: actions/download-artifact@v4
@@ -89,10 +84,19 @@ jobs:
 
       - name: Combine coverage
         run: |
-          uv tool install "coverage[toml]"
-          coverage combine
-          coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+          python -Im pip install --upgrade coverage[toml]
+          python -Im coverage combine
+          python -Im coverage html --skip-covered --skip-empty
+          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+
           python -m tox -e coverage
           export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
           echo "total=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload HTML report if check had failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: htmlcov
+        if: ${{ failure() }}

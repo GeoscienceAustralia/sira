@@ -1,18 +1,22 @@
-:toc: macro
-:toc-title:
-:toclevels: 4
+<a href="https://geoscienceaustralia.github.io/sira/"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-0c457d" alt="SIRA Documentation" /></a>
+<a href="https://github.com/GeoscienceAustralia/sira/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT%2FApache--2.0-e8702a" alt="License: MIT / Apache 2.0" /></a>
+<a href="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml"><img src="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml/badge.svg" alt="CI-LINUX"></a>
+<a href="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml"><img src="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml/badge.svg" alt="CI-WIN" /></a>
+
 
 # SIRA
 
-image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml/badge.svg?branch=master["CI-LINUX", link="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-linux.yml"]
-image:https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml/badge.svg?branch=master["CI-WIN", link="https://github.com/GeoscienceAustralia/sira/actions/workflows/build-test-win.yml"]
+- [SIRA](#sira)
+  - [Overview](#overview)
+  - [Setup Instructions](#setup-instructions)
+    + [Build Environment](#build-environment)
+    + [Required Directory Structure](#required-directory-structure)
+  - [Running the Application](#running-the-application)
+  - [Testing](#testing)
 
+## [Overview](#oveview)
 
-toc::[]
-
-## Overview
-
-The detailed documentation is at this https://geoscienceaustralia.github.io/sira/[link].
+The detailed documentation see the related [gihub pages](https://geoscienceaustralia.github.io/sira/).
 
 SIRA stands for **Systemic Infrastructure Resilience Analysis**.
 It represents a methodology and supporting code for systematising vulnerability
@@ -36,29 +40,31 @@ models of a infrastructure facility or a network to be used in
 impact simulation.
 
 
-## Setup Instructions
+## [Setup Instructions](#setup-instructions)
 
 It is good practice to set up a virtual environment for working with
 developing code. This gives us the tools to manage the package
 dependencies and requirements in a transparent manner, and impact of
 dependency changes on software behaviour.
 
-### Set up the environment
+### [Build Environment](#build-environment)
 
 The recommended process to set up the environment is to use `mamba` and `uv`.
 This approach works equally well in Windows and Linux, and within Docker. Move
 into the `sira/installation` directory, and use the provided conda environment file
 (yaml) and `pip` requirements file (txt) to install the required packages:
 
-    $ mamba env create -f sira_env.yml
-    $ mamba activate sira_env
-    $ pip install uv
-    $ uv pip install -r sira_req.txt
+```
+    mamba env create -f sira_env.yml
+    mamba activate sira_env
+    pip install uv
+    uv pip install -r sira_req.txt
+```
 
-### Required Directory Structure
+### [Required Directory Structure](#required-directory-structure)
 
 To set up a scenario or impact simulation project, SIRA expects the following
-directory shown below.
+directory structure for the model to be run.
 
 ```
     model_dir
@@ -71,23 +77,27 @@ directory shown below.
         └── ...
 ```
 
-Explanation of the required structure is as follows:
+Notes on the required directory structure:
 
-    - 'model directory' - it can be named anything
-    - within the 'model directory', the 'input' dir must have two files, in
-        specified format:
+- **model directory**: it can be named anything.
 
-        - a model file: it must have the term 'model' at the beginning or
-            end of the file name
-        - a config file: it must have the term 'config' at the beginning or
-            end of the file name
+- **input directory**: must reside within the 'model directory'. The input dir must have two files, and their naming must follow a the specified format:
 
-    - the outputs are saved in the 'output' dir. If it does not exist, the code
-        will create it at the beginning of the simulation.
-    - The output folder location can be specified in the `config` file.
+    + **model file**: it must have the term 'model' at the beginning or
+      end of the file name
+    + **config file**: it must have the term 'config' at the beginning or
+      end of the file name
+
+- **output directory**: the outputs are saved in this dir.
+
+    + If it does not exist, it will be created at the beginning of the simulation.
+    + The default name is 'output' and default location is within the 'model directory'.
+    + The user can define a custom name and relative location within the config file.
+
+- **scenario file location**: If an event set is being used for the simulation, the location and name of the relevant file need to be specified in the parameters "HAZARD_INPUT_DIR" and "HAZARD_INPUT_FILE", respectively.
 
 
-## Running the Application
+## [Running the Application](#running-the-application)
 
 The application can be run in a number of modes. The relevant options are:
 
@@ -102,30 +112,30 @@ directory of the SIRA code, and the model of interest is in the location
 
 The following code runs the simulation and the post processing simultanrously:
 
-    $ python sira -d scenario_dir/ci_model_x -sfl
+    python sira -d scenario_dir/ci_model_x -sfl
 
 To run only the Monte Carlo simulation without post-processing:
 
-    $ python sira -d scenario_dir/ci_model_x -s
+    python sira -d scenario_dir/ci_model_x -s
 
 To run both the model fitting and the loss analysis code:
 
-    $ python sira -d scenario_dir/ci_model_x -fl
+    python sira -d scenario_dir/ci_model_x -fl
 
 Note that the model fitting and loss analysis steps require that the
 initial simulation be run first so that it has the initial output data
 to perform the analysis on.
 
-## Testing
+## [Testing](#testing)
 
 To run the tests, user needs to be in the root directory of the code,
 e.g. `~/code/sira`. Then simply run:
 
-    $ pytest
+    pytest
 
 If you want to explicitly ask `pytest` to run coverage reports, then run:
 
-    $ pytest --cov-report term --cov=sira tests/
+    pytest --cov-report term --cov=sira tests/
 
 If you are using docker as described above, you can do this from within the
 sira container.
