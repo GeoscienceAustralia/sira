@@ -1,4 +1,4 @@
-name: CI on LINUX
+name: CI-LINUX
 
 on:
   push:
@@ -7,15 +7,21 @@ on:
     branches: [master]
 
 jobs:
-  build-linux:
-    runs-on: "ubuntu-latest"
+
+  tests:
+    name: "Tests on ${{ matrix.os }} Python ${{ matrix.python-version }}"
+    runs-on: "${{ matrix.os }}"
+
     strategy:
       matrix:
-        python-version: ['3.11']
+        os:
+          - ubuntu-latest
+        python-version:
+          - "3.11"
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - name: Check out repo
+        uses: actions/checkout@v4
 
       - name: Install System Dependencies
         run: |
@@ -23,7 +29,7 @@ jobs:
           sudo apt-get install graphviz graphviz-dev
 
       - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: ./installation/sira_env.yml
           environment-name: sira_env
@@ -46,5 +52,47 @@ jobs:
           micromamba activate sira_env
           pytest
 
-      - name: Upload Coverage to codecov
-        uses: codecov/codecov-action@v2
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-data-${{ matrix.python-version }}
+          path: .coverage.*
+          include-hidden-files: true
+          if-no-files-found: ignore
+
+  coverage:
+    name: Coverage
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: |
+          uv install tox tox-gh-actions
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-data-*
+
+      - name: Combine coverage
+        run: |
+          uv tool install "coverage[toml]"
+          coverage combine
+          coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+          python -m tox -e coverage
+          export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
+          echo "total=$TOTAL" >> $GITHUB_ENV
+          echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
