@@ -15,6 +15,7 @@ markers = [
     "algorithms: marks tests for responsemodels",
     "modelfitting: tests for fitting distribution models to exceedance probability data",
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks integration tests"
 ]
 
 [tool.coverage.paths]
