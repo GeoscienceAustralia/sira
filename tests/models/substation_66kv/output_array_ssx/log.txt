@@ -1,64 +1,64 @@
-2024-12-09 10:28:56,361,361.0 - INFO     [__main__:190] [32mSimulation initiated at: 2024-12-09 10:28:56[39m
+2024-12-10 12:24:54,633,633.0 - INFO     [__main__:190] [32mSimulation initiated at: 2024-12-10 12:24:54[39m
 
-2024-12-09 10:28:56,362,362.0 - INFO     [sira.simulation:184] Initiating calculation of component damage states for hazard event set.
-2024-12-09 10:28:56,362,362.0 - INFO     [sira.simulation:190] Starting parallel run
-2024-12-09 10:28:56,363,363.0 - INFO     [sira.simulation:212] Allocating 41 chunks across 8 processes
-2024-12-09 10:29:11,425,425.0 - INFO     [sira.simulation:236] Completed parallel run
-2024-12-09 10:29:11,437,437.0 - INFO     [sira.infrastructure_response:407] Writing [36mcomponent type response[39m to: 
+2024-12-10 12:24:54,634,634.0 - INFO     [sira.simulation:184] Initiating calculation of component damage states for hazard event set.
+2024-12-10 12:24:54,634,634.0 - INFO     [sira.simulation:190] Starting parallel run
+2024-12-10 12:24:54,635,635.0 - INFO     [sira.simulation:212] Allocating 41 chunks across 8 processes
+2024-12-10 12:25:11,729,729.0 - INFO     [sira.simulation:236] Completed parallel run
+2024-12-10 12:25:11,741,741.0 - INFO     [sira.infrastructure_response:407] Writing [36mcomponent type response[39m to: 
 [33m         C:/code/sira/tests/models/substation_66kv/output_array_ssx
          /comptype_response.csv[39m
-2024-12-09 10:29:11,451,451.0 - INFO     [sira.infrastructure_response:410] Done.
+2024-12-10 12:25:11,763,763.0 - INFO     [sira.infrastructure_response:410] Done.
 
-2024-12-09 10:29:11,476,476.0 - INFO     [sira.infrastructure_response:438] 
+2024-12-10 12:25:11,809,809.0 - INFO     [sira.infrastructure_response:438] 
 Writing component hazard response data to: 
 [33m         C:/code/sira/tests/models/substation_66kv/output_array_ssx
          /component_response.csv[39m
-2024-12-09 10:29:11,507,507.0 - INFO     [sira.infrastructure_response:441] Done.
+2024-12-10 12:25:11,847,847.0 - INFO     [sira.infrastructure_response:441] Done.
 
-2024-12-09 10:29:11,507,507.0 - INFO     [sira.infrastructure_response:457] Collating data output line capacities of system ...
-2024-12-09 10:29:11,524,524.0 - INFO     [sira.infrastructure_response:481] Writing [36msystem line capacity data[39m to: 
+2024-12-10 12:25:11,848,848.0 - INFO     [sira.infrastructure_response:457] Collating data output line capacities of system ...
+2024-12-10 12:25:11,868,868.0 - INFO     [sira.infrastructure_response:481] Writing [36msystem line capacity data[39m to: 
 [33m         C:/code/sira/tests/models/substation_66kv/output_array_ssx
          /system_output_vs_hazard_intensity.csv[39m
-2024-12-09 10:29:11,526,526.0 - INFO     [sira.infrastructure_response:485] Done.
+2024-12-10 12:25:11,870,870.0 - INFO     [sira.infrastructure_response:485] Done.
 
-2024-12-09 10:29:11,526,526.0 - INFO     [sira.infrastructure_response:492] Collating data on system loss and output ...
-2024-12-09 10:29:11,528,528.0 - INFO     [sira.infrastructure_response:512] Done.
+2024-12-10 12:25:11,870,870.0 - INFO     [sira.infrastructure_response:492] Collating data on system loss and output ...
+2024-12-10 12:25:11,873,873.0 - INFO     [sira.infrastructure_response:512] Done.
 
-2024-12-09 10:29:11,528,528.0 - INFO     [sira.infrastructure_response:526] Calculating system recovery information ...
-2024-12-09 10:29:11,528,528.0 - INFO     [sira.infrastructure_response:292] Processing 121 events in 1 chunks of 121
+2024-12-10 12:25:11,874,874.0 - INFO     [sira.infrastructure_response:526] Calculating system recovery information ...
+2024-12-10 12:25:11,874,874.0 - INFO     [sira.infrastructure_response:292] Processing 121 events in 1 chunks of 121
 
-2024-12-09 10:29:37,273,273.0 - INFO     [sira.infrastructure_response:560] Writing [36msystem hazard response data[39m to:
+2024-12-10 12:25:40,535,535.0 - INFO     [sira.infrastructure_response:560] Writing [36msystem hazard response data[39m to:
 [33m         C:/code/sira/tests/models/substation_66kv/output_array_ssx
          /system_response.csv[39m
-2024-12-09 10:29:37,276,276.0 - INFO     [sira.infrastructure_response:563] Done.
+2024-12-10 12:25:40,542,542.0 - INFO     [sira.infrastructure_response:563] Done.
 
-2024-12-09 10:29:37,284,284.0 - INFO     [sira.infrastructure_response:318] 
+2024-12-10 12:25:40,562,562.0 - INFO     [sira.infrastructure_response:318] 
 [36mCalculating summary stats for system loss...[39m
-2024-12-09 10:29:38,403,403.0 - INFO     [sira.infrastructure_response:334] 
+2024-12-10 12:25:41,871,871.0 - INFO     [sira.infrastructure_response:334] 
 [36mCalculating summary stats for system output...[39m
-2024-12-09 10:29:39,495,495.0 - INFO     [sira.infrastructure_response:350] 
+2024-12-10 12:25:43,038,38.0 - INFO     [sira.infrastructure_response:350] 
 [36mCalculating summary stats for system recovery...[39m
-2024-12-09 10:29:40,643,643.0 - INFO     [sira.infrastructure_response:588] 
+2024-12-10 12:25:44,181,181.0 - INFO     [sira.infrastructure_response:588] 
 [36mCalculating correlations between loss & output...[39m
-2024-12-09 10:29:44,060,60.0 - INFO     [sira.infrastructure_response:714] Writing prob of exceedance data to: 
+2024-12-10 12:25:48,045,45.0 - INFO     [sira.infrastructure_response:714] Writing prob of exceedance data to: 
 [33m         C:/code/sira/tests/models/substation_66kv/output_array_ssx/RAW_OUTPUT
          /pe_sys_econloss.npy[39m
-2024-12-09 10:29:44,062,62.0 - INFO     [sira.infrastructure_response:717] Done.
+2024-12-10 12:25:48,047,47.0 - INFO     [sira.infrastructure_response:717] Done.
 
-2024-12-09 10:29:44,065,65.0 - INFO     [__main__:222] Hazard impact simulation completed...
-2024-12-09 10:29:44,066,66.0 - INFO     [__main__:227] [36mAttempting to draw system topology ...[39m
-2024-12-09 10:29:44,099,99.0 - INFO     [sira.modelling.system_topology:555] Drawing schematic of Electric Substation Topology using `dot` ...
-2024-12-09 10:29:48,891,891.0 - INFO     [sira.modelling.system_topology:583]     Done!
-2024-12-09 10:29:48,892,892.0 - INFO     [sira.modelling.system_topology:585] Drawing schematic of Electric Substation Topology using `neato` ...
-2024-12-09 10:29:56,436,436.0 - INFO     [sira.modelling.system_topology:606]     Done!
-2024-12-09 10:29:56,436,436.0 - INFO     [__main__:264] [36mInitiating model fitting for simulated system fragility data...[39m
-2024-12-09 10:29:56,450,450.0 - INFO     [__main__:273] Infrastructure type: Substation
-2024-12-09 10:29:56,450,450.0 - INFO     [__main__:274] System Limit States: ['DS0 None', 'DS1 Minor', 'DS2 Extensive', 'DS3 Complete']
-2024-12-09 10:29:56,450,450.0 - INFO     [__main__:275] System Limit State Bounds: [0.05, 0.4, 0.7, 1.0]
-2024-12-09 10:29:56,452,452.0 - INFO     [sira.fit_model:282] [34mFitting system FRAGILITY data...[39m
-2024-12-09 10:29:56,489,489.0 - INFO     [sira.fit_model:625] [32m
+2024-12-10 12:25:48,052,52.0 - INFO     [__main__:222] Hazard impact simulation completed...
+2024-12-10 12:25:48,052,52.0 - INFO     [__main__:227] [36mAttempting to draw system topology ...[39m
+2024-12-10 12:25:48,087,87.0 - INFO     [sira.modelling.system_topology:555] Drawing schematic of Electric Substation Topology using `dot` ...
+2024-12-10 12:25:52,559,559.0 - INFO     [sira.modelling.system_topology:583]     Done!
+2024-12-10 12:25:52,559,559.0 - INFO     [sira.modelling.system_topology:585] Drawing schematic of Electric Substation Topology using `neato` ...
+2024-12-10 12:26:00,202,202.0 - INFO     [sira.modelling.system_topology:606]     Done!
+2024-12-10 12:26:00,203,203.0 - INFO     [__main__:264] [36mInitiating model fitting for simulated system fragility data...[39m
+2024-12-10 12:26:00,210,210.0 - INFO     [__main__:273] Infrastructure type: Substation
+2024-12-10 12:26:00,210,210.0 - INFO     [__main__:274] System Limit States: ['DS0 None', 'DS1 Minor', 'DS2 Extensive', 'DS3 Complete']
+2024-12-10 12:26:00,211,211.0 - INFO     [__main__:275] System Limit State Bounds: [0.05, 0.4, 0.7, 1.0]
+2024-12-10 12:26:00,212,212.0 - INFO     [sira.fit_model:282] [34mFitting system FRAGILITY data...[39m
+2024-12-10 12:26:00,238,238.0 - INFO     [sira.fit_model:625] [32m
 Checking for crossover [ THRESHOLD = 0.005 ][39m
-2024-12-09 10:29:56,492,492.0 - INFO     [sira.fit_model:326] 
+2024-12-10 12:26:00,240,240.0 - INFO     [sira.fit_model:326] 
 ================================================================================
 
 [93m[1mSet of Fitted Models:[0m
@@ -105,29 +105,29 @@ Checking for crossover [ THRESHOLD = 0.005 ][39m
 
 --------------------------------------------------------------------------------
 
-2024-12-09 10:29:58,557,557.0 - INFO     [__main__:287] Model fitting complete.
-2024-12-09 10:29:58,558,558.0 - INFO     [__main__:297] [36mCalculating system loss metrics...[39m
-2024-12-09 10:29:58,558,558.0 - INFO     [sira.loss_analysis:1806] [35mInitiating : SCENARIO LOSS ANALYSIS
+2024-12-10 12:26:02,101,101.0 - INFO     [__main__:287] Model fitting complete.
+2024-12-10 12:26:02,101,101.0 - INFO     [__main__:297] [36mCalculating system loss metrics...[39m
+2024-12-10 12:26:02,103,103.0 - INFO     [sira.loss_analysis:1806] [35mInitiating : SCENARIO LOSS ANALYSIS
 [39m
-2024-12-09 10:29:58,636,636.0 - INFO     [sira.loss_analysis:1941] [35mRunning analysis for scenario_header: 0.030[39m
+2024-12-10 12:26:02,176,176.0 - INFO     [sira.loss_analysis:1941] [35mRunning analysis for scenario_header: 0.030[39m
 
-2024-12-09 10:30:00,754,754.0 - WARNING  [sira.loss_analysis:770] [31m
+2024-12-10 12:26:03,972,972.0 - WARNING  [sira.loss_analysis:770] [31m
 Found nodes without recovery times that are not in uncosted list:
-{'BUS_RTX22_SEC-D', 'BUS_RTX22_PRI-B', 'BUS_RTX22_PRI-A', 'CB_RTX108_0', 'LA_RTX207', 'BUS_RTX22_SEC-A', 'DS_RTX110_4', 'CB_RTX103_0', 'DS_RTX104_4', 'CTRL_BLDG', 'DS_RTX103_8', 'DS_RTX108_5', 'CB_RTX102_0', 'DS_RTX206_4', 'VT_RTX104', 'DS_RTX201_4', 'PTX_66-22KV_T1', 'DS_RTX105_5', 'BUS_RTX22_SEC-B', 'CT_RTX102', 'DS_RTX108_4', 'DS_RTX203_4', 'CB_RTX201_0', 'DS_RTX109_4', 'PTX_66-22KV_T3', 'BUS_RTX66_A', 'DS_RTX102_5', 'DS_RTX206_5', 'DS_RTX105_8', 'DS_RTX108_8', 'DS_RTX202_4', 'CT_RTX105', 'DS_RTX103_5', 'BUS_RTX66_B', 'BUS_RTX66_C', 'CTRL_EQP_BATTERY', 'DS_RTX102_4', 'LA_RTX202', 'DS_RTX106_4', 'BUS_RTX22_PRI-C', 'DS_RTX207_4', 'BUS_RTX22_SEC-C', 'VT_RTX110', 'DS_RTX105_4', 'DS_RTX201_5', 'CT_RTX103', 'CTRL_EQP', 'DS_RTX103_4', 'DS_RTX205_4', 'VT_RTX206', 'TX_STN22', 'CB_RTX206_0', 'CT_RTX108', 'VT_RTX201', 'CB_RTX105_0'}
+{'CB_RTX201_0', 'BUS_RTX22_SEC-C', 'CTRL_BLDG', 'CT_RTX105', 'DS_RTX202_4', 'DS_RTX207_4', 'DS_RTX103_5', 'DS_RTX105_4', 'LA_RTX202', 'BUS_RTX22_PRI-A', 'CB_RTX105_0', 'CB_RTX103_0', 'CT_RTX108', 'DS_RTX103_8', 'BUS_RTX66_A', 'CTRL_EQP', 'DS_RTX102_5', 'DS_RTX109_4', 'CT_RTX102', 'CT_RTX103', 'BUS_RTX22_SEC-D', 'DS_RTX106_4', 'BUS_RTX66_B', 'DS_RTX206_4', 'PTX_66-22KV_T1', 'PTX_66-22KV_T3', 'DS_RTX103_4', 'DS_RTX110_4', 'CB_RTX102_0', 'DS_RTX102_4', 'DS_RTX104_4', 'DS_RTX105_5', 'DS_RTX205_4', 'DS_RTX108_8', 'BUS_RTX22_SEC-A', 'VT_RTX110', 'DS_RTX108_4', 'VT_RTX201', 'DS_RTX105_8', 'DS_RTX108_5', 'DS_RTX203_4', 'DS_RTX201_5', 'CB_RTX108_0', 'CB_RTX206_0', 'DS_RTX206_5', 'DS_RTX201_4', 'BUS_RTX22_SEC-B', 'BUS_RTX22_PRI-B', 'BUS_RTX22_PRI-C', 'LA_RTX207', 'VT_RTX206', 'TX_STN22', 'VT_RTX104', 'BUS_RTX66_C', 'CTRL_EQP_BATTERY'}
 [39m
-2024-12-09 10:30:00,797,797.0 - INFO     [sira.loss_analysis:1941] [35mRunning analysis for scenario_header: 0.600[39m
+2024-12-10 12:26:04,006,6.0 - INFO     [sira.loss_analysis:1941] [35mRunning analysis for scenario_header: 0.600[39m
 
-2024-12-09 10:30:02,718,718.0 - WARNING  [sira.loss_analysis:770] [31m
+2024-12-10 12:26:06,033,33.0 - WARNING  [sira.loss_analysis:770] [31m
 Found nodes without recovery times that are not in uncosted list:
-{'VT_RTX104', 'BUS_RTX22_PRI-A', 'BUS_RTX66_B', 'CB_RTX108_0', 'CTRL_BLDG', 'BUS_RTX22_SEC-A', 'BUS_RTX22_SEC-B', 'VT_RTX206', 'BUS_RTX22_PRI-C', 'CB_RTX206_0', 'CB_RTX102_0', 'VT_RTX110', 'CT_RTX108', 'CB_RTX105_0', 'CT_RTX105'}
+{'CB_RTX105_0', 'CTRL_BLDG', 'CB_RTX102_0', 'CT_RTX105', 'CT_RTX108', 'CB_RTX108_0', 'CB_RTX206_0', 'BUS_RTX22_SEC-B', 'BUS_RTX22_SEC-A', 'VT_RTX110', 'BUS_RTX22_PRI-C', 'VT_RTX206', 'VT_RTX104', 'BUS_RTX66_B', 'BUS_RTX22_PRI-A'}
 [39m
-2024-12-09 10:30:05,925,925.0 - INFO     [sira.loss_analysis:2050] End: SCENARIO LOSS ANALYSIS
-2024-12-09 10:30:05,926,926.0 - INFO     [__main__:316] RUN COMPLETE.
-2024-12-09 10:30:05,926,926.0 - INFO     [__main__:322] Config file name  : config_ss_66kv.json
-2024-12-09 10:30:05,926,926.0 - INFO     [__main__:323] Model  file name  : model_ss_66kv.json
-2024-12-09 10:30:05,926,926.0 - INFO     [__main__:330] Outputs saved in  : 
+2024-12-10 12:26:09,447,447.0 - INFO     [sira.loss_analysis:2050] End: SCENARIO LOSS ANALYSIS
+2024-12-10 12:26:09,447,447.0 - INFO     [__main__:316] RUN COMPLETE.
+2024-12-10 12:26:09,447,447.0 - INFO     [__main__:322] Config file name  : config_ss_66kv.json
+2024-12-10 12:26:09,447,447.0 - INFO     [__main__:323] Model  file name  : model_ss_66kv.json
+2024-12-10 12:26:09,447,447.0 - INFO     [__main__:330] Outputs saved in  : 
 [33mC:/code/sira/tests/models/substation_66kv/output_array_ssx[39m
 
-2024-12-09 10:30:05,927,927.0 - INFO     [__main__:336] [32mSimulation completed at : 2024-12-09 10:30:05[39m
-2024-12-09 10:30:05,927,927.0 - INFO     [__main__:339] [32mRun time : 0:01:09.566632
+2024-12-10 12:26:09,448,448.0 - INFO     [__main__:336] [32mSimulation completed at : 2024-12-10 12:26:09[39m
+2024-12-10 12:26:09,448,448.0 - INFO     [__main__:339] [32mRun time : 0:01:14.817806
 [39m
