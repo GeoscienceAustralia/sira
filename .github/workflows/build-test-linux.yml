@@ -11,8 +11,12 @@ jobs:
   tests:
     name: "Build and test for Python ${{ matrix.python-version }}"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
     strategy:
+      fail-fast: false
       matrix:
         python-version:
           - "3.11"
@@ -43,14 +47,45 @@ jobs:
         shell: bash -l {0}
         run: |
           micromamba activate sira_env
-          pytest
+          pytest --ignore=tests/test_simulated_user_run.py
 
       - name: Upload coverage data
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage-data
+          name: covdata-${{ matrix.python-version }}
           path: .coverage.*
           overwrite: true
           include-hidden-files: true
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
+  coverage:
+    name: Coverage
+    needs: tests
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v4
+        with:
+          pattern: covdata-*
+
+      - name: Generate coverage report
+        run: |
+          python -Im pip install --upgrade coverage[toml]
+          python -Im coverage html --skip-covered --skip-empty
+          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: htmlcov

@@ -28,7 +28,7 @@ imagecodecs
 imageio
 imagesize
 ipympl
-ipython
+ipython >= 8.30.0
 ipywidgets
 Jinja2
 jupyter_bokeh

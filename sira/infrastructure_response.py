@@ -698,12 +698,12 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
     if scenario.save_vars_npy:
         np.save(
-            os.path.join(scenario.raw_output_dir, 'sys_output_array.npy'),
+            Path(scenario.raw_output_dir, 'sys_output_array.npy'),
             sys_output_array
         )
 
         np.save(
-            os.path.join(scenario.raw_output_dir, 'economic_loss_array.npy'),
+            Path(scenario.raw_output_dir, 'economic_loss_array.npy'),
             sys_economic_loss_array
         )
 
