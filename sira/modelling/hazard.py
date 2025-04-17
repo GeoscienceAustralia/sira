@@ -5,6 +5,7 @@ from collections import OrderedDict
 from math import asin, cos, radians, sin, sqrt
 import numpy as np
 import pandas as pd
+import dask.dataframe as dd   # type: ignore
 from pathlib import Path
 import logging
 rootLogger = logging.getLogger(__name__)
@@ -228,8 +229,10 @@ class HazardsContainer(object):
         rootLogger.info("Reading in hazard data file...")
         if hazard_file_path.suffix == '.csv':
             hazard_input_df = pd.read_csv(hazard_file_path, dtype=dtypes)
+            # hazard_input_df = dd.read_csv(hazard_file_path, dtype=dtypes)
         if hazard_file_path.suffix == '.parquet':
             hazard_input_df = pd.read_parquet(hazard_file_path)
+            # hazard_input_df = dd.read_parquet(hazard_file_path)
             hazard_input_df.reset_index(inplace=True)
         rootLogger.info("    Completed ingesting hazard data!")
 
@@ -242,7 +245,6 @@ class HazardsContainer(object):
         hazard_input_df = hazard_input_df.unstack(level=-1, fill_value=0)
         hazard_input_df = hazard_input_df.droplevel(axis='columns', level=0)
 
-        # return hazard_input_df, hazard_data_dict, hazard_scenario_list, hazard_intensity_list
         return hazard_input_df, hazard_scenario_list, hazard_intensity_list
 
     @staticmethod
@@ -272,5 +274,4 @@ class HazardsContainer(object):
         hazard_input_df = hazard_input_df.unstack(level=-1, fill_value=0)
         hazard_input_df = hazard_input_df.droplevel(axis='columns', level=0)
 
-        # return hazard_input_df, hazard_data_dict, hazard_scenario_list
         return hazard_input_df, hazard_scenario_list

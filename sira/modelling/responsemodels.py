@@ -95,14 +95,17 @@ class LogNormalCDF(Base):
     The lognormal CDF response model for components.
     """
 
-    median = _Element('float', 'Median of the log normal CDF.',
-                      _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
+    median = _Element(
+        'float', 'Median of the log normal CDF.',
+        _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
-    beta = _Element('float', 'Log standard deviation of the log normal CDF',
-                    _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
+    beta = _Element(
+        'float', 'Log standard deviation of the log normal CDF',
+        _Element.NO_DEFAULT, [lambda x: float(x) > 0.])
 
-    location = _Element('float', 'Location parameter of the log normal CDF',
-                        0.0, [lambda x: float(x) > 0.])
+    location = _Element(
+        'float', 'Location parameter of the log normal CDF',
+        0.0, [lambda x: float(x) > 0.])
 
     lower_limit = _Element(
         'float',
@@ -166,13 +169,9 @@ class NormalCDF(Base):
         scale = Standard Deviation i.e. square root of Variance
         """
         if not inverse:
-            return stats.norm.cdf(data_point,
-                                  loc=self.mean,
-                                  scale=self.stddev)
+            return stats.norm.cdf(data_point, loc=self.mean, scale=self.stddev)
         elif inverse:
-            return stats.norm.ppf(data_point,
-                                  loc=self.mean,
-                                  scale=self.stddev)
+            return stats.norm.ppf(data_point, loc=self.mean, scale=self.stddev)
 
 
 class ConstantFunction(Base):

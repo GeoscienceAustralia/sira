@@ -1,29 +1,37 @@
 import logging
-import os
-from pathlib import Path
+import pickle
 import math
+import os
+import time
+from pathlib import Path
 from tqdm import tqdm
-import dask.dataframe as dd                         # type: ignore
-from dask.diagnostics.progress import ProgressBar   # type: ignore
 from contextlib import nullcontext
+from typing import List, Union, Tuple, Optional, Dict, Any
+
+import dask  # type: ignore
+import dask.dataframe as dd   # type: ignore
+from dask.diagnostics.progress import ProgressBar  # type: ignore
 
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from typing import List, Union, Tuple, Optional
 
+import threading
+import traceback
 from numba import njit
-from concurrent.futures import ProcessPoolExecutor
-import pickle
-import pyarrow as pa           # type: ignore
-import pyarrow.parquet as pq   # type: ignore
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from multiprocessing import shared_memory, cpu_count
+
 from colorama import Fore, init
 init()
 
-from sira.tools import utils
 import sira.loss_analysis as loss_analysis
+from sira.tools import utils
+from sira.tools.parallelisation import get_available_cores
+from sira.modelling.responsemodels import Algorithm
+import psutil  # For memory monitoring
 
 rootLogger = logging.getLogger(__name__)
 matplotlib.use('Agg')
@@ -32,8 +40,12 @@ plt.switch_backend('agg')
 mpl_looger = logging.getLogger('matplotlib')
 mpl_looger.setLevel(logging.WARNING)
 
-
 CALC_SYSTEM_RECOVERY = True
+
+# Configure Dask settings for better performance:
+dask.config.set({"dataframe.shuffle.method": "tasks"})
+# Maximum rows to process in each worker chunk:
+MAX_ROWS_PER_CHUNK = 5000
 
 # ****************************************************************************
 # BEGIN POST-PROCESSING ...
@@ -198,8 +210,14 @@ def plot_mean_econ_loss(
 
 
 def analyze_single_event(
-        event_id, infrastructure, scenario, hazards, component_resp_df,
-        components_costed, components_uncosted):
+        event_id,
+        infrastructure,
+        scenario,
+        hazards,
+        component_resp_df,
+        components_costed,
+        components_uncosted
+):
     """
     Wrapper function to analyze a single hazard event
     """
@@ -214,8 +232,332 @@ def analyze_single_event(
         verbosity=False
     )
 
-def process_chunk(
-        chunk_events,
+# =====================================================================================
+
+# Function to extract minimal infrastructure data
+def extract_essential_infrastructure_data(infrastructure):
+    """
+    Extract only the essential infrastructure data needed for recovery calculation
+
+    This function minimizes memory usage by extracting only the necessary
+    attributes for recovery time calculation.
+
+    Parameters
+    ----------
+    infrastructure : Infrastructure object
+        Full infrastructure model
+
+    Returns
+    -------
+    dict
+        Minimal infrastructure data needed for recovery analysis
+    """
+    # Only extract the minimal data needed for recovery calculation
+    minimal_data = {
+        'system_class': infrastructure.system_class,
+        'system_output_capacity': infrastructure.system_output_capacity,
+        'uncosted_classes': infrastructure.uncosted_classes,
+        'components': {}
+    }
+
+    # Only include necessary component attributes for recovery calculation
+    for comp_id, component in infrastructure.components.items():
+        comp_data = {
+            'component_class': component.component_class,
+            'damage_states': {}
+        }
+
+        # Extract only damage state data needed for recovery
+        for ds_id, ds in component.damage_states.items():
+            comp_data['damage_states'][ds_id] = {
+                'damage_ratio': ds.damage_ratio,
+                'functionality': ds.functionality,
+                'recovery_function_constructor': ds.recovery_function_constructor \
+                if hasattr(ds, 'recovery_function_constructor') else None
+            }
+
+        minimal_data['components'][comp_id] = comp_data
+
+    return minimal_data
+
+# Function to extract minimal scenario data
+def extract_essential_scenario_data(scenario):
+    """
+    Extract only the essential scenario data needed for recovery calculation
+
+    Parameters
+    ----------
+    scenario : Scenario object
+        Full scenario model
+
+    Returns
+    -------
+    dict
+        Minimal scenario data needed for recovery analysis
+    """
+    # Only extract the minimal data needed for recovery calculation
+    return {
+        'time_step': scenario.time_step,
+        'restoration_pct_steps': scenario.restoration_pct_steps,
+        'output_path': str(scenario.output_path)
+    }
+
+
+def to_dask_dataframe(df, num_partitions=None):
+    """
+    Convert pandas DataFrame to optimally partitioned Dask DataFrame
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame to convert
+    num_partitions : int, optional
+        Number of partitions to use. If None, calculates based on CPU count and dataframe size.
+
+    Returns
+    -------
+    dask.dataframe.DataFrame
+        Dask DataFrame with optimal partitioning
+    """
+    if df is None or df.empty:
+        return None
+
+    # Determine appropriate number of partitions based on dataframe size and available cores
+    if num_partitions is None:
+        # Estimate memory per row (in bytes)
+        sample_size = min(1000, len(df))
+        if sample_size > 0:
+            memory_per_row = df.memory_usage(deep=True).sum() / len(df)
+
+            # Target partition size: aim for ~100MB chunks (adjust as needed)
+            target_partition_size = 100 * 1024 * 1024  # 100MB in bytes
+            rows_per_partition = max(1, int(target_partition_size / memory_per_row))
+
+            # Calculate partitions needed
+            num_partitions = max(1, min(
+                cpu_count() * 2,  # Cap at 2x CPU count
+                math.ceil(len(df) / rows_per_partition)
+            ))
+        else:
+            num_partitions = 1
+
+    # Create Dask DataFrame with calculated partitions
+    return dd.from_pandas(df, npartitions=num_partitions)
+
+
+def process_event_batch(
+        batch_events,
+        component_resp_df_path,
+        minimal_infrastructure,
+        minimal_scenario,
+        components_costed,
+        batch_id
+):
+    """
+    Process a small batch of events using Dask dataframes, minimizing memory usage
+
+    Parameters
+    ----------
+    batch_events : list
+        List of event IDs to process
+    component_resp_df_path : str
+        Path to the parquet file containing component response data
+    minimal_infrastructure : dict
+        Minimal infrastructure data needed for recovery analysis
+    minimal_scenario : dict
+        Minimal scenario data needed for recovery analysis
+    components_costed : list
+        List of costed component IDs
+    batch_id : int
+        Identifier for this batch
+
+    Returns
+    -------
+    tuple
+        (batch_id, recovery_times, num_processed)
+    """
+    start_time = time.time()
+    batch_size = len(batch_events)
+
+    # Monitor memory usage
+    process = psutil.Process(os.getpid())
+    initial_memory = process.memory_info().rss / 1024 / 1024  # MB
+
+    try:
+        # Load only the required portion of the dataframe for these events
+        # Reading from parquet with filters
+        filters = [[('event_id', 'in', batch_events)]]
+        # Assumes a column titled "event_id" is present in the parquet file
+        batch_df = pd.read_parquet(
+            component_resp_df_path,
+            filters=filters
+        )
+
+        mid_memory = process.memory_info().rss / 1024 / 1024  # MB
+
+        recovery_times = []
+        num_processed = 0
+
+        # Process each event in the batch
+        for event_id in batch_events:
+            try:
+                # Check if this event exists in our filtered dataframe
+                if event_id in batch_df.index:
+                    # Process the event using minimal data
+                    event_data = batch_df.loc[event_id]
+
+                    # Calculate recovery time
+                    recovery_time = calculate_recovery_time(
+                        event_id,
+                        event_data,
+                        minimal_infrastructure,
+                        components_costed
+                    )
+                    recovery_times.append(recovery_time)
+                    num_processed += 1
+                else:
+                    # Event not found - add default
+                    recovery_times.append(0)
+            except Exception as e:
+                # Log error but continue with next event
+                print(f"Error processing event {event_id} in batch {batch_id}: {e}")
+                recovery_times.append(0)
+
+        # Calculate processing statistics
+        end_time = time.time()
+        processing_time = end_time - start_time
+        final_memory = process.memory_info().rss / 1024 / 1024  # MB
+        memory_change = final_memory - initial_memory
+
+        print(
+            f"Batch {batch_id}: Processed {num_processed}/{batch_size} "
+            f"events in {processing_time:.2f}s. "
+            f"Memory: {initial_memory:.1f}MB → "
+            f"{final_memory:.1f}MB ({memory_change:+.1f}MB)"
+        )
+
+        return batch_id, recovery_times, num_processed
+
+    except Exception as e:
+        print(f"Error processing batch {batch_id}: {e}")
+        print(traceback.format_exc())
+        # Return empty results with batch ID to maintain order
+        return batch_id, [0] * len(batch_events), 0
+
+
+def calculate_recovery_time(
+        event_id,
+        event_data,
+        minimal_infrastructure,
+        components_costed):
+    """
+    Calculate recovery time for a single event using minimal component data
+
+    Parameters
+    ----------
+    event_id : str
+        Event identifier
+    event_data : pandas.Series or pandas.DataFrame
+        Component response data for this event
+    minimal_infrastructure : dict
+        Minimal infrastructure data for recovery calculation
+    components_costed : list
+        List of costed component IDs
+
+    Returns
+    -------
+    float
+        Recovery time for this event
+    """
+    try:
+        # Extract component states for this event
+        event_component_states = {}
+
+        # Process component data for this event
+        # Handle different DataFrame formats
+        if isinstance(event_data, pd.Series):
+            # Series format - with MultiIndex columns
+            for comp_id in components_costed:
+                try:
+                    ds_key = (comp_id, 'damage_state')
+                    if ds_key in event_data:
+                        damage_state = int(event_data[ds_key])
+                        functionality = float(
+                            event_data.get((comp_id, 'func_mean'), 1.0)
+                        )
+                        event_component_states[comp_id] = {
+                            'damage_state': damage_state,
+                            'functionality': functionality
+                        }
+                except Exception:
+                    # Skip components with missing or invalid data
+                    pass
+        else:
+            # Try to handle as DataFrame or other format
+            try:
+                for comp_id in components_costed:
+                    try:
+                        damage_state = int(
+                            event_data.get((comp_id, 'damage_state'), 0))
+                        functionality = float(
+                            event_data.get((comp_id, 'func_mean'), 1.0))
+                        event_component_states[comp_id] = {
+                            'damage_state': damage_state,
+                            'functionality': functionality
+                        }
+                    except (KeyError, ValueError, TypeError):
+                        # Skip this component
+                        pass
+            except Exception:
+                # Handle case where event_data is in a different format
+                pass
+
+        # Calculate recovery times for damaged components
+        max_recovery_time = 0
+        recovery_times = []
+
+        for comp_id, state in event_component_states.items():
+            if comp_id in minimal_infrastructure['components']:
+                damage_state = state['damage_state']
+                comp_info = minimal_infrastructure['components'][comp_id]
+
+                if damage_state > 0 and damage_state in comp_info['damage_states']:
+                    # Calculate recovery time based on damage state
+                    ds_info = comp_info['damage_states'][damage_state]
+
+                    # Different methods to get recovery time based on available data
+                    if 'recovery_function_constructor' in \
+                            ds_info and ds_info['recovery_function_constructor']:
+                        # Use recovery function if available
+                        try:
+                            recovery_func = Algorithm.factory(ds_info['recovery_function_constructor'])
+                            recovery_curve = recovery_func(1.0)  # Get full recovery time
+                            recovery_time = max(recovery_curve)
+                            recovery_times.append(recovery_time)
+                        except Exception:
+                            # Fallback if recovery function fails
+                            recovery_time = damage_state * 100  # Simple estimate
+                            recovery_times.append(recovery_time)
+                    else:
+                        # Simple recovery time estimation based on damage state
+                        recovery_time = damage_state * 100  # Simple estimate
+                        recovery_times.append(recovery_time)
+
+        # Get maximum recovery time
+        if recovery_times:
+            max_recovery_time = max(recovery_times)
+
+        return max_recovery_time
+
+    except Exception as e:
+        # Log error but continue processing
+        print(f"Error calculating recovery time for event {event_id}: {e}")
+        return 0  # Default recovery time
+
+# =====================================================================================
+
+def dask_parallel_recovery_analysis(
+        hazard_event_list,
         infrastructure,
         scenario,
         hazards,
@@ -223,80 +565,231 @@ def process_chunk(
         components_costed,
         components_uncosted):
     """
-    Process a chunk of hazard events in parallel
-    """
-    with ProcessPoolExecutor() as executor:
-        futures = []
-        for event_id in chunk_events:
-            future = executor.submit(
-                analyze_single_event,
-                event_id,
-                infrastructure,
-                scenario,
-                hazards,
-                component_resp_df,
-                components_costed,
-                components_uncosted
-            )
-            futures.append(future)
+    Parallel recovery analysis using Dask for processing large datasets
+    with minimal memory usage
 
-        # Get results as they complete
-        chunk_recovery_times = [
-            f.result()['Full Restoration Time'].max()
-            for f in futures]
-
-    return chunk_recovery_times
-
-
-def parallel_recovery_analysis(
-        hazard_event_list,
-        infrastructure,
-        scenario,
-        hazards,
-        component_resp_df,
-        components_costed,
-        components_uncosted,
-        chunk_size: int = 10000):
-    """
-    Parallel processing of recovery analysis across hazard events in chunks
+    This implementation uses Dask dataframes to efficiently process data in
+    partitions and manages memory carefully to avoid out-of-memory errors.
 
     Parameters
     ----------
     hazard_event_list : list
         List of hazard events to process
     infrastructure : Infrastructure object
-        The infrastructure system being analyzed
+        Infrastructure system being analyzed
     scenario : Scenario object
-        The scenario being analyzed
+        Scenario being analyzed
     hazards : Hazard object
-        The hazards being analyzed
-    component_resp_df : DataFrame
+        Hazards being analyzed
+    component_resp_df : pandas.DataFrame
         Component response data
     components_costed : list
         List of costed component IDs
     components_uncosted : list
         List of uncosted component IDs
-    chunk_size : int, optional
-        Size of chunks to process at once, by default 20000
 
     Returns
     -------
     list
-        List of recovery times for all hazard events
+        List of recovery times for all events
     """
-    total_events = len(hazard_event_list)
-    if total_events <= chunk_size:
-        chunk_size = total_events
-    num_chunks = math.ceil(total_events / chunk_size)
-    recovery_times = []
-    rootLogger.info(f"Processing {total_events} events in {num_chunks} chunks of {chunk_size}\n")
+    rootLogger.info("Starting Dask-based recovery analysis with memory tracking...")
 
-    # Chunk the hazard events
-    pbar = tqdm(total=total_events, desc="Processing recovery analysis")
-    for i in range(0, total_events, chunk_size):
-        chunk = hazard_event_list[i:i + chunk_size]
-        chunk_results = process_chunk(
-            chunk,
+    # Monitor available memory
+    mem = psutil.virtual_memory()
+    total_gb = mem.total / (1024**3)
+    available_gb = mem.available / (1024**3)
+
+    rootLogger.info(f"Total physical memory: {total_gb:.2f} GB")
+    rootLogger.info(f"Available memory: {available_gb:.2f} GB")
+    rootLogger.info(f"Current memory usage: {(total_gb - available_gb):.2f} GB")
+
+    total_events = len(hazard_event_list)
+
+    # Create temp directory for intermediate files
+    temp_dir = Path(scenario.output_path, "temp_dask_recovery")
+    temp_dir.mkdir(exist_ok=True)
+
+    # Convert component_resp_df to Dask dataframe and save to parquet
+    rootLogger.info("Converting component response data to Dask format...")
+
+    try:
+        # Save component_resp_df to parquet with event_id column for filtering
+        comp_resp_path = Path(temp_dir, "component_resp.parquet")
+
+        # Make sure we have an explicit event_id column for filtering
+        temp_df = component_resp_df.copy()
+        if 'event_id' not in temp_df.columns and isinstance(temp_df.index, pd.Index):
+            # Add event_id as explicit column from index
+            temp_df['event_id'] = temp_df.index
+
+        # Save to parquet with index
+        temp_df.to_parquet(comp_resp_path, engine='pyarrow', index=True)
+
+        # Free memory
+        del temp_df
+
+        # Extract minimal infrastructure and scenario data
+        rootLogger.info("Extracting essential infrastructure and scenario data...")
+        minimal_infrastructure = extract_essential_infrastructure_data(infrastructure)
+        minimal_scenario = extract_essential_scenario_data(scenario)
+
+        # Determine optimal batch and worker configuration
+        available_cores = min(get_available_cores(), 48)  # Cap at 48 cores
+
+        # Calculate memory-based limits
+        # Estimate 2GB base per worker + overhead
+        memory_per_worker_gb = 2.0
+        max_workers_by_memory = max(1, int(available_gb / memory_per_worker_gb))
+        num_workers = min(available_cores, max_workers_by_memory)
+
+        # Calculate optimal batch size
+        # Smaller batches for very large datasets to avoid memory issues
+        if total_events > 1_000_000:
+            batch_size = 1000
+        elif total_events > 100_000:
+            batch_size = 2000
+        else:
+            batch_size = 5000
+
+        # Cap batch size at MAX_ROWS_PER_CHUNK
+        batch_size = min(batch_size, MAX_ROWS_PER_CHUNK)
+
+        # Calculate number of batches
+        num_batches = math.ceil(total_events / batch_size)
+
+        rootLogger.info(
+            f"Processing {total_events} events in {num_batches} batches with "
+            f"{batch_size} events per batch using {num_workers} workers"
+        )
+
+        # Create checkpoint file for recovery
+        checkpoint_file = Path(scenario.output_path, "recovery_checkpoint.pkl")
+        recovery_times = []
+
+        # Load checkpoint if it exists
+        if checkpoint_file.exists():
+            try:
+                with open(checkpoint_file, 'rb') as f:
+                    recovery_times = pickle.load(f)
+                    rootLogger.info(f"Loaded checkpoint with {len(recovery_times)} events already processed")
+
+                    # If we have all results, return them
+                    if len(recovery_times) == total_events:
+                        rootLogger.info("All events already processed in checkpoint. Returning results.")
+                        return recovery_times
+
+                    # If we have partial results, adjust hazard_event_list
+                    hazard_event_list = hazard_event_list[len(recovery_times):]
+                    total_events = len(hazard_event_list)
+                    num_batches = math.ceil(total_events / batch_size)
+
+                    rootLogger.info(f"Continuing with remaining {total_events} events")
+            except Exception as e:
+                rootLogger.warning(f"Failed to load checkpoint: {e}")
+                recovery_times = []
+
+        # Progress tracking
+        pbar = tqdm(total=total_events, desc="Processing recovery analysis")
+        progress_lock = threading.Lock()
+
+        # Create batches of events
+        batches = []
+        for i in range(0, total_events, batch_size):
+            end_idx = min(i + batch_size, total_events)
+            batch_id = i // batch_size
+            current_batch = hazard_event_list[i:end_idx]
+            batches.append((batch_id, current_batch))
+
+        # Results collection
+        all_results = {}
+        checkpoint_interval = 5000  # Save checkpoint every 5000 events
+
+        # Process batches in parallel
+        with ProcessPoolExecutor(max_workers=num_workers) as executor:
+            futures = []
+
+            # Submit all batches for processing
+            for batch_id, batch_events in batches:
+                future = executor.submit(
+                    process_event_batch,
+                    batch_events,
+                    str(comp_resp_path),
+                    minimal_infrastructure,
+                    minimal_scenario,
+                    components_costed,
+                    batch_id
+                )
+                futures.append(future)
+
+            # Process results as they complete
+            for future in as_completed(futures):
+                try:
+                    batch_id, batch_results, num_processed = future.result()
+                    all_results[batch_id] = batch_results
+
+                    # Update progress
+                    with progress_lock:
+                        pbar.update(len(batches[batch_id][1]))  # Update with actual batch size
+
+                    # Save checkpoint at regular intervals
+                    current_processed = sum(len(batches[i][1]) for i in all_results.keys())
+                    if current_processed % checkpoint_interval == 0:
+                        # Sort and combine results from all processed batches
+                        temp_recovery_times = recovery_times.copy()
+                        for i in sorted(all_results.keys()):
+                            temp_recovery_times.extend(all_results[i])
+
+                        # Save checkpoint
+                        with open(checkpoint_file, 'wb') as f:
+                            pickle.dump(temp_recovery_times, f)
+                        rootLogger.info(f"Checkpoint saved: {len(temp_recovery_times)} events processed")
+
+                except Exception as e:
+                    rootLogger.error(f"Error processing batch: {str(e)}")
+                    # Add default values for this batch to maintain result order
+                    batch_id = futures.index(future)
+                    if 0 <= batch_id < len(batches):
+                        all_results[batch_id] = [0] * len(batches[batch_id][1])
+
+        # Close progress bar
+        pbar.close()
+
+        # Combine results in correct order
+        batch_results = []
+        for i in range(len(batches)):
+            if i in all_results:
+                batch_results.extend(all_results[i])
+            else:
+                # Fill with zeros for missing batches
+                batch_results.extend([0] * len(batches[i][1]))
+
+        # Combine with any previously checkpointed results
+        recovery_times.extend(batch_results)
+
+        # Save final checkpoint
+        with open(checkpoint_file, 'wb') as f:
+            pickle.dump(recovery_times, f)
+
+        # Verify we have the correct number of results
+        if len(recovery_times) < total_events + len(hazard_event_list) - len(batches[0][1]):
+            rootLogger.warning(
+                f"Expected {total_events} results but got {len(recovery_times)}. "
+                "Adding default values to match."
+            )
+            recovery_times = recovery_times + [0] * (
+                total_events + len(hazard_event_list) - len(batches[0][1]) - len(recovery_times)
+            )
+
+        return recovery_times
+
+    except Exception as e:
+        rootLogger.error(f"Dask-based processing failed: {str(e)}")
+        rootLogger.error(traceback.format_exc())
+        rootLogger.info("Falling back to sequential processing...")
+
+        return sequential_recovery_analysis(
+            hazard_event_list,
             infrastructure,
             scenario,
             hazards,
@@ -304,16 +797,92 @@ def parallel_recovery_analysis(
             components_costed,
             components_uncosted
         )
-        recovery_times.extend(chunk_results)
-        pbar.update(len(chunk))
 
-    pbar.close()
-    print()
+    finally:
+        # Clean up temporary files
+        try:
+            if 'comp_resp_path' in locals() and Path(comp_resp_path).exists():
+                # Optionally keep files for debugging
+                if not scenario.save_vars_npy:
+                    import shutil
+                    shutil.rmtree(temp_dir, ignore_errors=True)
+                    rootLogger.info(f"Cleaned up temporary directory: {temp_dir}")
+        except Exception as e:
+            rootLogger.warning(f"Error cleaning up temp files: {e}")
+
+# =====================================================================================
+
+def sequential_recovery_analysis(
+        hazard_event_list,
+        infrastructure,
+        scenario,
+        hazards,
+        component_resp_df,
+        components_costed,
+        components_uncosted):
+    """
+    Sequential processing fallback for recovery analysis
+    """
+    rootLogger.info("Processing events sequentially...")
+    recovery_times = []
+
+    # Use smaller chunks even in sequential mode to minimize memory usage
+    chunk_size = 1000
+    num_chunks = math.ceil(len(hazard_event_list) / chunk_size)
+
+    # Extract minimal data once
+    minimal_infrastructure = extract_essential_infrastructure_data(infrastructure)
+
+    for chunk_idx in range(num_chunks):
+        start_idx = chunk_idx * chunk_size
+        end_idx = min(start_idx + chunk_size, len(hazard_event_list))
+        chunk_events = hazard_event_list[start_idx:end_idx]
+
+        chunk_pbar = tqdm(
+            chunk_events,
+            desc=f"Processing chunk {chunk_idx + 1}/{num_chunks}",
+            leave=False
+        )
+
+        chunk_results = []
+        for event_id in chunk_pbar:
+            try:
+                # Use the original analyze_single_event function
+                result = analyze_single_event(
+                    event_id,
+                    infrastructure,
+                    scenario,
+                    hazards,
+                    component_resp_df,
+                    components_costed,
+                    components_uncosted
+                )
+
+                # Extract only the recovery time
+                if result and 'Full Restoration Time' in result:
+                    recovery_time = result['Full Restoration Time'].max()
+                else:
+                    recovery_time = 0
+
+                chunk_results.append(recovery_time)
+            except (KeyError, ValueError, AttributeError, RuntimeError, IndexError) as e:
+                rootLogger.warning(f"Error processing event {event_id}: {str(e)}")
+                chunk_results.append(0)  # Default recovery time
+
+        # Extend recovery times with chunk results
+        recovery_times.extend(chunk_results)
+
+        # Save checkpoint after each chunk
+        checkpoint_file = Path(scenario.output_path, "recovery_checkpoint_sequential.pkl")
+        with open(checkpoint_file, 'wb') as f:
+            pickle.dump(recovery_times, f)
+        rootLogger.info(f"Checkpoint saved: {len(recovery_times)}/{len(hazard_event_list)} events processed")
+
     return recovery_times
 
 
 def calculate_loss_stats(df, progress_bar=True):
-    """Calculate summary statistics for loss -- using dash dataframe"""
+    """Calculate summary statistics for loss -- using dask dataframe"""
     print()
     rootLogger.info(
         f"\n{Fore.CYAN}Calculating summary stats for system loss...{Fore.RESET}")
@@ -329,7 +898,7 @@ def calculate_loss_stats(df, progress_bar=True):
         }
 
 def calculate_output_stats(df, progress_bar=True):
-    """Calculate summary statistics for output -- using dash dataframe"""
+    """Calculate summary statistics for output -- using dask dataframe"""
     print()
     rootLogger.info(
         f"\n{Fore.CYAN}Calculating summary stats for system output...{Fore.RESET}")
@@ -345,7 +914,7 @@ def calculate_output_stats(df, progress_bar=True):
         }
 
 def calculate_recovery_stats(df, progress_bar=True):
-    """Calculate summary statistics for recovery time -- using dash dataframe"""
+    """Calculate summary statistics for recovery time -- using dask dataframe"""
     print()
     rootLogger.info(
         f"\n{Fore.CYAN}Calculating summary stats for system recovery...{Fore.RESET}")
@@ -374,22 +943,6 @@ def calculate_summary_statistics(df, calc_recovery=False):
 
 
 def write_system_response(response_list, infrastructure, scenario, hazards):
-
-    # ------------------------------------------------------------------------
-    # haz_vs_ds_index_of_comp = response_list[0]
-    # haz_vs_ds_df = pd.DataFrame.from_dict(haz_vs_ds_index_of_comp)
-    # haz_vs_ds_table = pa.Table.from_pandas(haz_vs_ds_df)
-    # haz_vs_ds_path = Path(scenario.raw_output_dir, 'ids_comp_vs_haz.parquet')
-    # pq.write_table(haz_vs_ds_table, haz_vs_ds_path)
-
-    # haz_vs_ds_index_of_comp = response_list[0]
-    # idshaz = os.path.join(scenario.raw_output_dir, 'ids_comp_vs_haz.pickle')
-    # with open(idshaz, 'wb') as handle:
-    #     for response_key in sorted(haz_vs_ds_index_of_comp.keys()):
-    #         pickle.dump(
-    #             {response_key: haz_vs_ds_index_of_comp[response_key]},
-    #             handle, pickle.HIGHEST_PROTOCOL
-    #         )
 
     # ---------------------------------------------------------------------------------
     # Hazard response for component types
@@ -435,26 +988,17 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     if scenario.hazard_input_method.lower() in ["calculated_array"]:
         outfile_comp_resp = Path(scenario.output_path, 'component_response.csv')
         outpath_wrapped = utils.wrap_file_path(str(outfile_comp_resp))
-        rootLogger.info(f"\nWriting component hazard response data to: \n"
+        rootLogger.info(f"Writing component hazard response data to: \n"
                         f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
         component_resp_df.to_csv(outfile_comp_resp, sep=',')
         rootLogger.info("Done.\n")
-
-    # =================================================================================
-    # Option to save as parquet file - if space if space becomes an issue
-    # ---------------------------------------------------------------------------------
-    # component_response_dict = response_list[2]
-    # crd_df = pd.DataFrame.from_dict(component_response_dict)
-    # crd_table = pa.Table.from_pandas(crd_df)
-    # crd_path = Path(scenario.raw_output_dir, 'component_response_dict.parquet')
-    # pq.write_table(crd_table, crd_path)
 
     # =================================================================================
     # System output file (for given hazard transfer parameter value)
     # ---------------------------------------------------------------------------------
     sys_output_dict = response_list[1]
 
-    rootLogger.info("Collating data output line capacities of system ...")
+    rootLogger.info("Collating data on output line capacities of system ...")
     sys_output_df = pd.DataFrame(sys_output_dict)
     sys_output_df = sys_output_df.transpose()
     sys_output_df.index.name = 'event_id'
@@ -507,12 +1051,18 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     output_array_mean = np.mean(output_array, axis=0)
     output_array_std = np.std(output_array, axis=0)
 
-    df_sys_response = pd.DataFrame(columns=out_cols)
+    # Create dataframe without recovery times first
+    df_sys_response = pd.DataFrame(columns=out_cols[:5])
     hazard_event_list = hazards.hazard_data_df.index.tolist()
     rootLogger.info("Done.\n")
 
     # -----------------------------------------------
     # Calculate recovery times for each hazard event
+    df_sys_response[out_cols[0]] = hazard_event_list
+    df_sys_response[out_cols[1]] = np.mean(sys_economic_loss_array, axis=0)
+    df_sys_response[out_cols[2]] = np.std(sys_economic_loss_array, axis=0)
+    df_sys_response[out_cols[3]] = output_array_mean
+    df_sys_response[out_cols[4]] = output_array_std
 
     if CALC_SYSTEM_RECOVERY:
         recovery_time_100pct = []
@@ -524,7 +1074,9 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             if comp_id not in components_uncosted]
 
         rootLogger.info("Calculating system recovery information ...")
-        recovery_time_100pct = parallel_recovery_analysis(
+
+        # Use our new dask-based recovery analysis
+        recovery_time_100pct = dask_parallel_recovery_analysis(
             hazard_event_list,
             infrastructure,
             scenario,
@@ -532,17 +1084,27 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
             component_resp_df,
             components_costed,
             components_uncosted)
+
+        # IMPORTANT: Ensure recovery_time_100pct has the correct length
+        if recovery_time_100pct is not None:
+            if len(recovery_time_100pct) != len(hazard_event_list):
+                rootLogger.warning(
+                    f"Recovery time length ({len(recovery_time_100pct)}) does not match "
+                    f"hazard event list length ({len(hazard_event_list)}). Adjusting..."
+                )
+
+                if len(recovery_time_100pct) < len(hazard_event_list):
+                    # Add zeros to match length
+                    recovery_time_100pct.extend([0] * (len(hazard_event_list) - len(recovery_time_100pct)))
+                else:
+                    # Truncate to match length
+                    recovery_time_100pct = recovery_time_100pct[:len(hazard_event_list)]
+
+            # Now add to dataframe
+            df_sys_response[out_cols[5]] = recovery_time_100pct
     else:
-        recovery_time_100pct = None
-
-    # =================================================================================
-
-    df_sys_response[out_cols[0]] = hazard_event_list
-    df_sys_response[out_cols[1]] = np.mean(sys_economic_loss_array, axis=0)
-    df_sys_response[out_cols[2]] = np.std(sys_economic_loss_array, axis=0)
-    df_sys_response[out_cols[3]] = output_array_mean
-    df_sys_response[out_cols[4]] = output_array_std
-    df_sys_response[out_cols[5]] = recovery_time_100pct
+        # Add zeros for recovery time if not calculated
+        df_sys_response[out_cols[5]] = [0] * len(hazard_event_list)
 
     if (scenario.infrastructure_level).lower() == 'facility':
         if scenario.hazard_input_method in ['calculated_array', 'hazard_array']:
@@ -567,10 +1129,10 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # ---------------------------------------------------------------------------------
     # Calculating summary statistics using Dask - for speed on large datasets
 
-    df = dd.from_pandas(df_sys_response, npartitions=12)
+    dask_df = to_dask_dataframe(df_sys_response)
 
     # Calculate summary statistics
-    summary_stats = calculate_summary_statistics(df, calc_recovery=CALC_SYSTEM_RECOVERY)
+    summary_stats = calculate_summary_statistics(dask_df, calc_recovery=CALC_SYSTEM_RECOVERY)
 
     # Convert to DataFrame for better display
     summary_df = pd.DataFrame(summary_stats)
@@ -589,11 +1151,11 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         f"\n{Fore.CYAN}Calculating correlations between loss & output...{Fore.RESET}")
     with ProgressBar():
         # Calculate appropriate fraction based on total rows
-        total_rows = len(df.compute())  # Be careful with this on very large datasets
+        total_rows = len(dask_df.compute())  # Be careful with this on very large datasets
         desired_sample_size = min(1_000_000, total_rows)
         sample_fraction = desired_sample_size / total_rows
         # Sample the data using frac
-        sample_df = df.sample(frac=sample_fraction).compute()
+        sample_df = dask_df.sample(frac=sample_fraction).compute()
 
     # Create separate plots for each distribution/scatter
     plot_params = [
@@ -687,15 +1249,6 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         np.mean(sys_fragility >= ds, axis=0) for ds in range(num_ds)
     ], dtype=np.float32)
 
-    # *************************************************************************
-    # Suppressing saving of this file - due to the disc space and time required
-    # -------------------------------------------------------------------------
-    # path_sys_frag = Path(scenario.raw_output_dir, 'sys_fragility.npy')
-    # outpath_wrapped = utils.wrap_file_path(str(path_sys_frag))
-    # rootLogger.info(f"Writing system fragility data to: \n{outpath_wrapped}")
-    # np.save(path_sys_frag, sys_fragility)
-    # -------------------------------------------------------------------------
-
     if scenario.save_vars_npy:
         np.save(
             Path(scenario.raw_output_dir, 'sys_output_array.npy'),
@@ -709,7 +1262,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
     if not str(scenario.infrastructure_level).lower() == "network":
         path_pe_sys_econloss = Path(scenario.raw_output_dir, 'pe_sys_econloss.npy')
-        outpath_wrapped = utils.wrap_file_path(str(path_pe_sys_econloss))
+        outpath_wrapped = utils.wrap_file_path(str(path_pe_sys_econloss), max_width=120)
         print()
         rootLogger.info(f"Writing prob of exceedance data to: \n"
                         f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
@@ -720,7 +1273,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
 # -------------------------------------------------------------------------------------
 
-# @njit
+@njit
 def _pe2pb(pe):
     """Numba-optimized version of pe2pb"""
     pex = np.sort(pe)[::-1]
@@ -733,7 +1286,7 @@ def _pe2pb(pe):
 
 # -------------------------------------------------------------------------------------
 
-def pe_by_component_class(response_list, infrastructure, scenario, hazards):
+def exceedance_prob_by_component_class(response_list, infrastructure, scenario, hazards):
     """
     Calculates probability of exceedance based on failure of component classes.
     Damage state boundaries for Component Type Failures (Substations) are

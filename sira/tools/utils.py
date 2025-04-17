@@ -202,7 +202,7 @@ def reconstitute(old, changes):
 
 def wrap_file_path(
         file_path,
-        max_width=85,
+        max_width=100,
         first_line_indent=" " * 9,
         subsequent_indent=" " * 9):
     # Replace backslashes with forward slashes for consistent splitting

@@ -103,7 +103,7 @@ def analyse_system_recovery(
         comps_uncosted,
         verbosity=True):
     """
-    Analyses system recovery without using preset time ranges
+    Analyses system recovery for specified hazard scenario
     """
 
     # Calculate recovery time for each component

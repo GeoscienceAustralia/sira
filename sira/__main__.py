@@ -39,7 +39,7 @@ sys.path.insert(0, str(src_dir))
 # Import SIRA modules
 from sira.configuration import Configuration
 from sira.infrastructure_response import (
-    pe_by_component_class,
+    exceedance_prob_by_component_class,
     write_system_response)
 from sira.logger import configure_logger
 from sira.loss_analysis import run_scenario_loss_analysis
@@ -216,7 +216,7 @@ def main():
             response_list, infrastructure, scenario, hazards_container)
 
         # if str(config.HAZARD_INPUT_METHOD).lower() == "calculated_array":
-        pe_by_component_class(
+        exceedance_prob_by_component_class(
             response_list, infrastructure, scenario, hazards_container)
         print("\n")
         rootLogger.info('Hazard impact simulation completed...')
@@ -316,9 +316,6 @@ def main():
     rootLogger.info("RUN COMPLETE.")
     print("-" * 80)
 
-    outfolder_wrapped = utils.wrap_file_path(
-        str(output_path), first_line_indent="", subsequent_indent=" " * 9)
-
     rootLogger.info(f"Config file name  : {str(Path(config_file_path).name)}")
     rootLogger.info(f"Model  file name  : {str(Path(model_file_path.name))}")
 
@@ -327,6 +324,7 @@ def main():
             str(config.HAZARD_INPUT_FILE), max_width=95)
         rootLogger.info(f"Hazard input file : \n{scnfile_wrap}")
 
+    outfolder_wrapped = utils.wrap_file_path(str(output_path))
     rootLogger.info(
         f"Outputs saved in  : \n{Fore.YELLOW}{outfolder_wrapped}{Fore.RESET}\n")
 
