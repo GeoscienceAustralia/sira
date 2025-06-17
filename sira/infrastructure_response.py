@@ -10,6 +10,8 @@ from typing import List, Union, Tuple, Optional, Dict, Any
 
 import dask  # type: ignore
 import dask.dataframe as dd   # type: ignore
+from dask.dataframe import from_pandas as pandas_to_dask  # type: ignore
+from dask import config as dconfig  # type: ignore
 from dask.diagnostics.progress import ProgressBar  # type: ignore
 
 import matplotlib
@@ -23,6 +25,7 @@ import traceback
 from numba import njit
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from multiprocessing import shared_memory, cpu_count
+import psutil
 
 from colorama import Fore, init
 init()
@@ -31,7 +34,7 @@ import sira.loss_analysis as loss_analysis
 from sira.tools import utils
 from sira.tools.parallelisation import get_available_cores
 from sira.modelling.responsemodels import Algorithm
-import psutil  # For memory monitoring
+from sira.recovery_analysis_optimised import parallel_recovery_analysis_optimised  # type: ignore
 
 rootLogger = logging.getLogger(__name__)
 matplotlib.use('Agg')
@@ -43,7 +46,8 @@ mpl_looger.setLevel(logging.WARNING)
 CALC_SYSTEM_RECOVERY = True
 
 # Configure Dask settings for better performance:
-dask.config.set({"dataframe.shuffle.method": "tasks"})
+dconfig.set({"dataframe.shuffle.method": "tasks"})
+
 # Maximum rows to process in each worker chunk:
 MAX_ROWS_PER_CHUNK = 5000
 
@@ -319,8 +323,9 @@ def to_dask_dataframe(df, num_partitions=None):
     dask.dataframe.DataFrame
         Dask DataFrame with optimal partitioning
     """
-    if df is None or df.empty:
-        return None
+
+    # if df is None or df.empty:
+    #     return None
 
     # Determine appropriate number of partitions based on dataframe size and available cores
     if num_partitions is None:
@@ -342,7 +347,7 @@ def to_dask_dataframe(df, num_partitions=None):
             num_partitions = 1
 
     # Create Dask DataFrame with calculated partitions
-    return dd.from_pandas(df, npartitions=num_partitions)
+    return pandas_to_dask(df, npartitions=num_partitions)
 
 
 def process_event_batch(
@@ -480,15 +485,32 @@ def calculate_recovery_time(
             for comp_id in components_costed:
                 try:
                     ds_key = (comp_id, 'damage_state')
+                    func_key = (comp_id, 'func_mean')
+                    # Try both MultiIndex and flat column names
                     if ds_key in event_data:
-                        damage_state = int(event_data[ds_key])
-                        functionality = float(
-                            event_data.get((comp_id, 'func_mean'), 1.0)
-                        )
-                        event_component_states[comp_id] = {
-                            'damage_state': damage_state,
-                            'functionality': functionality
-                        }
+                        ds_val = event_data[ds_key]
+                    elif f"{comp_id}_damage_state" in event_data:
+                        ds_val = event_data[f"{comp_id}_damage_state"]
+                    else:
+                        continue
+                    if isinstance(ds_val, pd.Series):
+                        ds_val = ds_val.iloc[0]
+                    damage_state = int(ds_val)
+
+                    if func_key in event_data:
+                        func_val = event_data[func_key]
+                        if isinstance(func_val, pd.Series):
+                            func_val = func_val.iloc[0]
+                        functionality = float(func_val)
+                    elif f"{comp_id}_func_mean" in event_data:
+                        functionality = float(event_data[f"{comp_id}_func_mean"])
+                    else:
+                        functionality = 1.0
+
+                    event_component_states[comp_id] = {
+                        'damage_state': damage_state,
+                        'functionality': functionality
+                    }
                 except Exception:
                     # Skip components with missing or invalid data
                     pass
@@ -497,10 +519,18 @@ def calculate_recovery_time(
             try:
                 for comp_id in components_costed:
                     try:
-                        damage_state = int(
-                            event_data.get((comp_id, 'damage_state'), 0))
-                        functionality = float(
-                            event_data.get((comp_id, 'func_mean'), 1.0))
+                        if (comp_id, 'damage_state') in event_data:
+                            damage_state = int(event_data[(comp_id, 'damage_state')])
+                        elif f"{comp_id}_damage_state" in event_data:
+                            damage_state = int(event_data[f"{comp_id}_damage_state"])
+                        else:
+                            damage_state = 0
+                        if (comp_id, 'func_mean') in event_data:
+                            functionality = float(event_data[(comp_id, 'func_mean')])
+                        elif f"{comp_id}_func_mean" in event_data:
+                            functionality = float(event_data[f"{comp_id}_func_mean"])
+                        else:
+                            functionality = 1.0
                         event_component_states[comp_id] = {
                             'damage_state': damage_state,
                             'functionality': functionality
@@ -513,7 +543,6 @@ def calculate_recovery_time(
                 pass
 
         # Calculate recovery times for damaged components
-        max_recovery_time = 0
         recovery_times = []
 
         for comp_id, state in event_component_states.items():
@@ -532,7 +561,13 @@ def calculate_recovery_time(
                         try:
                             recovery_func = Algorithm.factory(ds_info['recovery_function_constructor'])
                             recovery_curve = recovery_func(1.0)  # Get full recovery time
-                            recovery_time = max(recovery_curve)
+                            if isinstance(recovery_curve, (list, np.ndarray)):
+                                recovery_time = max(recovery_curve)
+                            else:
+                                try:
+                                    recovery_time = float(recovery_curve)  # type: ignore
+                                except (TypeError, ValueError):
+                                    recovery_time = 0.0  # or another sensible default
                             recovery_times.append(recovery_time)
                         except Exception:
                             # Fallback if recovery function fails
@@ -546,6 +581,8 @@ def calculate_recovery_time(
         # Get maximum recovery time
         if recovery_times:
             max_recovery_time = max(recovery_times)
+        else:
+            max_recovery_time = np.nan  # No damaged components
 
         return max_recovery_time
 
@@ -859,10 +896,13 @@ def sequential_recovery_analysis(
                 )
 
                 # Extract only the recovery time
-                if result and 'Full Restoration Time' in result:
+                if result is not None and (
+                    (isinstance(result, pd.DataFrame) and 'Full Restoration Time' in result.columns) or\
+                    ('Full Restoration Time' in result)
+                ):
                     recovery_time = result['Full Restoration Time'].max()
                 else:
-                    recovery_time = 0
+                    recovery_time = np.nan
 
                 chunk_results.append(recovery_time)
             except (KeyError, ValueError, AttributeError, RuntimeError, IndexError) as e:
@@ -985,13 +1025,21 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     component_resp_df = component_resp_df.transpose()
     component_resp_df.index.names = ['hazard_event']
 
-    if scenario.hazard_input_method.lower() in ["calculated_array"]:
-        outfile_comp_resp = Path(scenario.output_path, 'component_response.csv')
-        outpath_wrapped = utils.wrap_file_path(str(outfile_comp_resp))
-        rootLogger.info(f"Writing component hazard response data to: \n"
-                        f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
-        component_resp_df.to_csv(outfile_comp_resp, sep=',')
-        rootLogger.info("Done.\n")
+    # if scenario.hazard_input_method.lower() in ["calculated_array"]:
+    #     outfile_comp_resp = Path(scenario.output_path, 'component_response.csv')
+    #     outpath_wrapped = utils.wrap_file_path(str(outfile_comp_resp))
+    #     rootLogger.info(f"Writing component hazard response data to: \n"
+    #                     f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
+    #     component_resp_df.to_csv(outfile_comp_resp, sep=',')
+    #     rootLogger.info("Done.\n")
+
+    outfile_comp_resp = Path(scenario.output_path, 'component_response.csv')
+    outpath_wrapped = utils.wrap_file_path(str(outfile_comp_resp))
+    rootLogger.info(
+        f"Writing component hazard response data to: \n"
+        f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
+    component_resp_df.to_csv(outfile_comp_resp, sep=',')
+    rootLogger.info("Done.\n")
 
     # =================================================================================
     # System output file (for given hazard transfer parameter value)
@@ -1058,6 +1106,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
     # -----------------------------------------------
     # Calculate recovery times for each hazard event
+
     df_sys_response[out_cols[0]] = hazard_event_list
     df_sys_response[out_cols[1]] = np.mean(sys_economic_loss_array, axis=0)
     df_sys_response[out_cols[2]] = np.std(sys_economic_loss_array, axis=0)
@@ -1065,7 +1114,6 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     df_sys_response[out_cols[4]] = output_array_std
 
     if CALC_SYSTEM_RECOVERY:
-        recovery_time_100pct = []
         components_uncosted = [
             comp_id for comp_id, component in infrastructure.components.items()
             if component.component_class in infrastructure.uncosted_classes]
@@ -1075,36 +1123,50 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
         rootLogger.info("Calculating system recovery information ...")
 
-        # Use our new dask-based recovery analysis
-        recovery_time_100pct = dask_parallel_recovery_analysis(
-            hazard_event_list,
-            infrastructure,
-            scenario,
-            hazards,
-            component_resp_df,
-            components_costed,
-            components_uncosted)
+        # Determine recovery method from scenario configuration
+        recovery_method = getattr(scenario, 'recovery_method', 'max')  # Default to 'max'
+        num_repair_streams = getattr(scenario, 'num_repair_streams', 100)  # Default to 100
 
-        # IMPORTANT: Ensure recovery_time_100pct has the correct length
+        rootLogger.info(f"Recovery method: {recovery_method}")
+        if recovery_method == 'parallel_streams':
+            rootLogger.info(f"Number of repair streams: {num_repair_streams}")
+
+        # Call the optimized recovery analysis
+        recovery_time_100pct = parallel_recovery_analysis_optimised(
+            hazard_event_list=hazard_event_list,
+            infrastructure=infrastructure,
+            scenario=scenario,
+            component_resp_df=component_resp_df,
+            components_costed=components_costed,
+            recovery_method=recovery_method,
+            num_repair_streams=num_repair_streams,
+            max_workers=getattr(scenario, 'recovery_max_workers', None),  # None = use all available
+            batch_size=getattr(scenario, 'recovery_batch_size', None)  # None = auto-calculate
+        )
+
+        # Validate results
         if recovery_time_100pct is not None:
+            non_zero_count = sum(1 for t in recovery_time_100pct if t > 0)
+            rootLogger.info(
+                f"Recovery calculation complete: {non_zero_count:,}/{len(recovery_time_100pct):,} "
+                f"events have non-zero recovery times"
+            )
+
+            # Ensure correct length
             if len(recovery_time_100pct) != len(hazard_event_list):
                 rootLogger.warning(
-                    f"Recovery time length ({len(recovery_time_100pct)}) does not match "
-                    f"hazard event list length ({len(hazard_event_list)}). Adjusting..."
+                    f"Recovery time length mismatch. Expected: {len(hazard_event_list)}, "
+                    f"Got: {len(recovery_time_100pct)}. Adjusting..."
                 )
-
                 if len(recovery_time_100pct) < len(hazard_event_list):
-                    # Add zeros to match length
                     recovery_time_100pct.extend([0] * (len(hazard_event_list) - len(recovery_time_100pct)))
                 else:
-                    # Truncate to match length
                     recovery_time_100pct = recovery_time_100pct[:len(hazard_event_list)]
-
-            # Now add to dataframe
-            df_sys_response[out_cols[5]] = recovery_time_100pct
+        else:
+            rootLogger.error("Recovery analysis returned None. Using zeros.")
+            recovery_time_100pct = [0] * len(hazard_event_list)
     else:
-        # Add zeros for recovery time if not calculated
-        df_sys_response[out_cols[5]] = [0] * len(hazard_event_list)
+        recovery_time_100pct = [0] * len(hazard_event_list)
 
     if (scenario.infrastructure_level).lower() == 'facility':
         if scenario.hazard_input_method in ['calculated_array', 'hazard_array']:

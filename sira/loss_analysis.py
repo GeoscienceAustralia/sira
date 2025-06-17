@@ -9,6 +9,7 @@ from collections import OrderedDict
 import matplotlib as mpl
 import matplotlib.patheffects as PathEffects
 import matplotlib.pyplot as plt
+from matplotlib import cm
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -219,31 +220,37 @@ def calc_restoration_schedule(
     # Assign priorities based on original order - by restoration time
     schedule_df['Priority'] = range(1, len(schedule_df) + 1)
 
-    # Assign repair streams and calculate start/end times
+    # Ensure correct dtypes for columns
+    schedule_df = schedule_df.astype({
+        'RstStart': 'float64',
+        'RstEnd': 'float64',
+        'RepairStream': 'Int64'
+    })
+
+    # Set index before assignment for easier .at usage
+    schedule_df.set_index('NodesToRepair', inplace=True)
+
     current_time = restoration_offset
     stream_end_times = [current_time] * num_rst_streams
-    component_end_times = {}  # Track when each component will be repaired
+    component_end_times = {}
 
-    for idx, row in schedule_df.iterrows():
+    for comp, row in schedule_df.iterrows():
         if row['FirstRepair']:
-            # This is the first repair of this component
             stream_idx = stream_end_times.index(min(stream_end_times))
             start_time = stream_end_times[stream_idx]
 
-            schedule_df.loc[idx, 'RstStart'] = start_time
-            schedule_df.loc[idx, 'RstEnd'] = start_time + row['RestorationTimes']
-            schedule_df.loc[idx, 'RepairStream'] = stream_idx
+            schedule_df.at[comp, 'RstStart'] = start_time
+            schedule_df.at[comp, 'RstEnd'] = start_time + row['RestorationTimes']
+            schedule_df.at[comp, 'RepairStream'] = stream_idx
 
-            component_end_times[row['NodesToRepair']] = schedule_df.loc[idx, 'RstEnd']
-            stream_end_times[stream_idx] = schedule_df.loc[idx, 'RstEnd']
+            component_end_times[comp] = schedule_df.at[comp, 'RstEnd']
+            stream_end_times[stream_idx] = schedule_df.at[comp, 'RstEnd']
 
         else:
             # This component is repaired as part of another line
-            schedule_df.loc[idx, 'RstStart'] = 0
-            schedule_df.loc[idx, 'RstEnd'] = component_end_times[row['NodesToRepair']]
-            schedule_df.loc[idx, 'RepairStream'] = 0  # or keep track of original stream
-
-    schedule_df.set_index('NodesToRepair', inplace=True)
+            schedule_df.at[comp, 'RstStart'] = 0
+            schedule_df.at[comp, 'RstEnd'] = component_end_times[comp]
+            schedule_df.at[comp, 'RepairStream'] = 0  # or keep track of original stream
 
     return schedule_df
 
@@ -370,11 +377,11 @@ def make_recovery_process_diagrams(
         color=linecolour1
     )
 
-    ax1.set_ylim([0.5, max(y_comps) + 0.5])
+    ax1.set_ylim((0.5, max(y_comps) + 0.5))
     ax1.set_yticks(y_comps)
     ax1.set_yticklabels(comps, size=ticklabelsize)
 
-    ax1.set_xlim([0, max(xtiks)])
+    ax1.set_xlim((0, max(xtiks)))
     ax1.set_xticks(xtiks)
     ax1.set_xticklabels([])
 
@@ -391,7 +398,9 @@ def make_recovery_process_diagrams(
     ax1.annotate(
         f"Restoration Timelines for: {hazard_type} {scenario_tag}\n"
         f"{str(num_rst_streams)} Repair Streams",
-        xy=(0, len(comps) + 1.8), xycoords=('axes fraction', 'data'),
+        xy=(0, len(comps) + 1.8),
+        # xycoords=('axes fraction', 'data'),
+        xycoords='data',
         ha='left', va='top', annotation_clip=False,
         color='k', size=14, weight='normal'
     )
@@ -404,12 +413,12 @@ def make_recovery_process_diagrams(
     sns.axes_style(style='ticks')
     sns.despine(ax=ax2, left=True)
 
-    ax2.set_ylim([0, 100])
+    ax2.set_ylim((0, 100))
     ax2.set_yticks(list(range(0, 101, 20)))
-    ax2.set_yticklabels(list(range(0, 101, 20)), size=ticklabelsize)
+    ax2.set_yticklabels([str(x) for x in range(0, 101, 20)], size=ticklabelsize)
     ax2.yaxis.grid(True, which="major", color=gainsboro)
 
-    ax2.set_xlim([0, max(xtiks)])
+    ax2.set_xlim((0, max(xtiks)))
     ax2.set_xticks(xtiks)
 
     xtik_labels = [str(x) for x in xtiks]
@@ -1120,8 +1129,8 @@ def component_criticality(
 
     nt_names = ctype_scenario_outcomes.index.tolist()
     nt_ids = list(range(1, len(nt_names) + 1))
+    autumn = cm.get_cmap("autumn")
 
-    autumn = mpl.cm.get_cmap("autumn")
     clrmap = [
         autumn(1.2 * x / float(len(ctype_scenario_outcomes.index)))
         for x in range(len(ctype_scenario_outcomes.index))]
@@ -1134,7 +1143,7 @@ def component_criticality(
 
     for cid, name, i, j in zip(nt_ids, nt_names, rt_norm, pctloss_sys):
         plt.annotate(
-            cid,
+            str(cid),
             xy=(i, j), xycoords='data',
             xytext=(-20, 20), textcoords='offset points',
             ha='center', va='bottom', rotation=0,
@@ -1155,7 +1164,7 @@ def component_criticality(
         plt.annotate(
             "{0:>2.0f}   {1:<s}".format(cid, name),
             xy=(1.05, 0.90 - 0.035 * cid),
-            xycoords=('axes fraction', 'axes fraction'),
+            xycoords='axes fraction',
             ha='left', va='top', rotation=0, size=9)
 
     txt_infra = "Infrastructure: " + infrastructure.system_class + "\n"
@@ -1168,15 +1177,15 @@ def component_criticality(
         fontsize=11, clip_on=False, transform=ax.transAxes
     )
 
-    ylim = [0, int(max(pctloss_sys) + 1)]
+    ylim = (0, int(max(pctloss_sys) + 1))
     ax.set_ylim(ylim)
     ax.set_yticks([0, max(ylim) * 0.5, max(ylim)])
     ax.set_yticklabels(
         ['%0.2f' % y for y in [0, max(ylim) * 0.5, max(ylim)]], size=12
     )
 
-    # xlim = [0, np.ceil(max(restore_times) / 10.0) * 10]
-    xlim = [0, max(rt_norm)]
+    # xlim = (0, np.ceil(max(restore_times) / 10.0) * 10.0)
+    xlim = (0, max(rt_norm))
     ax.set_xlim(xlim)
     ax.set_xticks([0, max(xlim) * 0.5, max(xlim)])
     ax.set_xticklabels([f"{x:.1f}" for x in [0, max(xlim) * 0.5, max(xlim)]], size=12)
@@ -1244,7 +1253,7 @@ def draw_component_loss_barchart_s1(
         axes.annotate(
             ('%0.1f' % float(cv)) + '%',
             xy=(cv + 0.7, p - bar_width / 2.0 - bar_offset),
-            xycoords=('data', 'data'),
+            xycoords='data',
             ha='left', va='center', size=8, color=bar_clr_1,
             annotation_clip=False)
 
@@ -1252,20 +1261,20 @@ def draw_component_loss_barchart_s1(
         axes.annotate(
             ('%0.1f' % float(cv)) + '%',
             xy=(cv + 0.7, p + bar_width / 2.0 + bar_offset * 2),
-            xycoords=('data', 'data'),
+            xycoords='data',
             ha='left', va='center', size=8, color=bar_clr_2,
             annotation_clip=False)
 
     axes.annotate(
         "ECONOMIC LOSS % by COMPONENT TYPE",
-        xy=(0.0, -1.65), xycoords=('axes fraction', 'data'),
+        xy=(0.0, -1.65), xycoords='data',
         ha='left', va='top',
         size=10, color='k', weight='bold',
         annotation_clip=False)
 
     axes.annotate(
         "Hazard: " + hazard_type + " " + scenario_tag,
-        xy=(0.0, -1.2), xycoords=('axes fraction', 'data'),
+        xy=(0.0, -1.2), xycoords='data',
         ha='left', va='top',
         size=10, color='slategrey', weight='bold',
         annotation_clip=False)
@@ -1295,7 +1304,7 @@ def draw_component_loss_barchart_s1(
     axes.set_xticklabels([' '] * 5)
     axes.xaxis.grid(False)
 
-    axes.set_ylim([pos.max() + bar_width * 1.5, pos.min() - bar_width * 1.5])
+    axes.set_ylim((pos.max() + bar_width * 1.5, pos.min() - bar_width * 1.5))
     axes.set_yticks(pos)
     axes.set_yticklabels(cpt, size=8, color='k')
     axes.yaxis.grid(False)
@@ -1373,21 +1382,21 @@ def draw_component_loss_barchart_s2(
         ax1.annotate(
             ('%0.1f' % float(cv)) + '%',
             xy=(cv + 0.7, p - bar_width * 0.8),
-            xycoords=('data', 'data'),
+            xycoords='data',
             ha='left', va='center',
             size=8, color=bar_clr_1,
             annotation_clip=False)
 
     ax1.annotate(
         "HAZARD: " + hazard_type + " " + scenario_tag,
-        xy=(0.0, -1.2), xycoords=('axes fraction', 'data'),
+        xy=(0.0, -1.2), xycoords='data',
         ha='left', va='top',
         size=header_size, color='slategrey', weight='bold',
         annotation_clip=False)
 
     ax1.annotate(
         "LOSS METRIC: % loss for each Component Type",
-        xy=(0.0, -0.8), xycoords=('axes fraction', 'data'),
+        xy=(0.0, -0.8), xycoords='data',
         ha='left', va='top',
         size=header_size, color='k', weight='bold',
         annotation_clip=False)
@@ -1408,7 +1417,7 @@ def draw_component_loss_barchart_s2(
     ax1.set_xticklabels([' '] * 5)
 
     ax1.yaxis.grid(False)
-    ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
+    ax1.set_ylim((barpos.max() + bar_width, barpos.min() - bar_width))
     ax1.set_yticks(barpos)
     ax1.set_yticklabels(comptypes_sorted, size=7, color='k')
 
@@ -1448,7 +1457,7 @@ def draw_component_loss_barchart_s2(
         ax2.barh(0.0, loss, stacked_bar_width, left=leftpos, color=COLR_SET[ind])
         leftpos += loss
         ax1.annotate(
-            u"$\u25FC$", xy=(-2.0, pos), xycoords=('data', 'data'),
+            u"$\u25FC$", xy=(-2.0, pos), xycoords='data',
             color=COLR_SET[ind], size=10,
             ha='right', va='center', annotation_clip=False)
 
@@ -1463,13 +1472,13 @@ def draw_component_loss_barchart_s2(
 
     ax2.yaxis.grid(False)
     ax2.set_yticklabels([])
-    ax2.set_ylim([-stacked_bar_width * 0.5, stacked_bar_width * 1.1])
+    ax2.set_ylim((-stacked_bar_width * 0.5, stacked_bar_width * 1.1))
 
     ax2.tick_params(top=False, bottom=False, left=False, right=False)
 
     ax2.annotate(
         "LOSS METRIC: relative contributions to system loss",
-        xy=(0.0, 0.7), xycoords=('axes fraction', 'data'),
+        xy=(0.0, 0.7), xycoords='data',
         ha='left', va='top',
         size=header_size, color='k', weight='bold',
         annotation_clip=False
@@ -1488,7 +1497,7 @@ def draw_component_loss_barchart_s2(
     ax2.annotate(
         '', xy=(0.0, -stacked_bar_width),
         xytext=(1.0, -stacked_bar_width),
-        xycoords=('axes fraction', 'data'),
+        xycoords='axes fraction',
         arrowprops=arrowprops
     )
 
@@ -1573,26 +1582,26 @@ def draw_component_loss_barchart_s3(
             ctype_loss_mean_by_type):
         ax1.annotate(
             ct,
-            xy=(3, p - bar_width), xycoords=('data', 'data'),
+            xy=(3, p - bar_width), xycoords='data',
             ha='left', va='center', size=7, color='k',
             annotation_clip=False)
 
         ax1.annotate(
             selective_rounding(loss_ct),
-            xy=(100, p - bar_width), xycoords=('data', 'data'),
+            xy=(100, p - bar_width), xycoords='data',
             ha='right', va='center', size=7, color=bar_clr_1,
             annotation_clip=False)
 
     ax1.annotate(
         "HAZARD: " + hazard_type + " " + scenario_tag,
-        xy=(0.0, -1.8), xycoords=('axes fraction', 'data'),
+        xy=(0.0, -1.8), xycoords='data',
         ha='left', va='top',
         size=9, color='slategrey', weight='bold',
         annotation_clip=False)
 
     ax1.annotate(
         "LOSS METRIC: % loss for each Component Type",
-        xy=(0.0, -1.25), xycoords=('axes fraction', 'data'),
+        xy=(0.0, -1.25), xycoords='data',
         ha='left', va='top',
         size=9, color='k', weight='bold',
         annotation_clip=False)
@@ -1614,7 +1623,7 @@ def draw_component_loss_barchart_s3(
     ax1.set_xticklabels([' '] * 5)
 
     ax1.yaxis.grid(False)
-    ax1.set_ylim([barpos.max() + bar_width, barpos.min() - bar_width])
+    ax1.set_ylim((barpos.max() + bar_width, barpos.min() - bar_width))
     ax1.set_yticks(barpos)
     ax1.set_yticklabels([])
 
@@ -1660,7 +1669,7 @@ def draw_component_loss_barchart_s3(
         leftpos += loss
         ax1.annotate(
             u"$\u25FC$",
-            xy=(-0.4, pos - bar_width), xycoords=('data', 'data'),
+            xy=(-0.4, pos - bar_width), xycoords='data',
             color=COLR_SET[ind], size=8,
             ha='left', va='center',
             annotation_clip=False)
@@ -1680,13 +1689,13 @@ def draw_component_loss_barchart_s3(
 
     ax2.yaxis.grid(False)
     ax2.set_yticklabels([])
-    ax2.set_ylim([-stacked_bar_width * 0.7, stacked_bar_width * 1.8])
+    ax2.set_ylim((-stacked_bar_width * 0.7, stacked_bar_width * 1.8))
 
     ax2.tick_params(top=False, bottom=False, left=False, right=False)
 
     ax2.annotate(
         "LOSS METRIC: % system loss attributed to Component Types",
-        xy=(0.0, stacked_bar_width * 1.5), xycoords=('axes fraction', 'data'),
+        xy=(0.0, stacked_bar_width * 1.5), xycoords='axes fraction',
         ha='left', va='bottom',
         size=9, color='k', weight='bold',
         annotation_clip=False)
@@ -1695,7 +1704,7 @@ def draw_component_loss_barchart_s3(
     ax2.annotate(
         '', xy=(0.0, arrow_ypos * 0.9),
         xytext=(1.0, arrow_ypos * 0.9),
-        xycoords=('axes fraction', 'data'),
+        xycoords='axes fraction',
         arrowprops=dict(
             arrowstyle="|-|, widthA=0.4, widthB=0.4",
             linewidth=0.7,
@@ -1757,7 +1766,7 @@ def draw_component_failure_barchart(
     ax.set_xticklabels([' '] * 5)
     ax.xaxis.grid(True, color=grid_clr, linewidth=0.5, linestyle='-')
 
-    ax.set_ylim([pos.max() + bar_width, pos.min() - bar_width])
+    ax.set_ylim((pos.max() + bar_width, pos.min() - bar_width))
     ax.set_yticks(pos)
     ax.set_yticklabels(cpt, size=8, color='k')
     ax.yaxis.grid(False)
@@ -1776,11 +1785,11 @@ def draw_component_failure_barchart(
             va='center', size=8, color="#CA1C1D", annotation_clip=False)
 
     ax.annotate('FAILURE RATE: % FAILED COMPONENTS by TYPE',
-                xy=(0.0, -1.45), xycoords=('axes fraction', 'data'),
+                xy=(0.0, -1.45), xycoords='data',
                 ha='left', va='top', annotation_clip=False,
                 size=10, weight='bold', color='k')
     ax.annotate('Hazard: ' + hazard_type + " " + scenario_tag,
-                xy=(0.0, -1.0), xycoords=('axes fraction', 'data'),
+                xy=(0.0, -1.0), xycoords='data',
                 ha='left', va='top', annotation_clip=False,
                 size=10, weight='bold',
                 color='slategrey')
@@ -1823,17 +1832,18 @@ def run_scenario_loss_analysis(
     comptype_resp_df = pd.read_csv(
         input_comptype_response_file, index_col=0, header=[0, 1]
     ).sort_index(axis=1)
+
     if scenario.hazard_input_method.lower() in ["calculated_array"]:
         hazard_events = [f"{i:.3f}" for i in comptype_resp_df.index.values.tolist()]
     else:
         hazard_events = [str(i) for i in comptype_resp_df.index.values.tolist()]
-    comptype_resp_df.index = hazard_events
+    comptype_resp_df.index = pd.Index(hazard_events)
 
     component_response = pd.read_csv(
         input_component_response_file, index_col=0, header=[0, 1])
     component_response.index.astype(str)
     # hazard_events = [str(i) for i in component_response.index.values.tolist()]
-    component_response.index = hazard_events
+    component_response.index = pd.Index(hazard_events)
 
     component_meanloss = component_response.xs(
         'loss_mean', axis=1, level=1, drop_level=True)
@@ -1953,7 +1963,7 @@ def run_scenario_loss_analysis(
                 for ct in ctype_resp_scenario.index.values.tolist()]
 
         ctype_resp_sorted = ctype_resp_scenario.sort_values(
-            by='loss_tot', ascending=False)
+            by=['loss_tot'], axis=0, ascending=[False])  # type: ignore
 
         fig_name = f'sc_{sc_idx + 1}_{sc_haz_str}_LOSS_vs_comptype_s1.png'
         draw_component_loss_barchart_s1(

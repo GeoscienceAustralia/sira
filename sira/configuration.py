@@ -40,6 +40,7 @@ class Configuration:
             str(config['HAZARD_INTENSITY_MEASURE_PARAM'])
         self.HAZARD_INTENSITY_MEASURE_UNIT = \
             str(config['HAZARD_INTENSITY_MEASURE_UNIT'])
+
         # Set of scenario(s) to investigate in detail
         #   - List of strings
         #   - Used in post processing stage
@@ -79,18 +80,32 @@ class Configuration:
             self.HAZARD_INPUT_HEADER = "hazard_intensity"
             self.HAZARD_SCALING_FACTOR = 1.0
 
-        self.INTENSITY_MEASURE_MIN = \
-            float(config['HAZARD_INTENSITY_MEASURE_MIN'])
-        self.INTENSITY_MEASURE_MAX = \
-            float(config['HAZARD_INTENSITY_MEASURE_MAX'])
-        self.INTENSITY_MEASURE_STEP = \
-            float(config['HAZARD_INTENSITY_MEASURE_STEP'])
+        self.INTENSITY_MEASURE_MIN = float(config['HAZARD_INTENSITY_MEASURE_MIN'])
+        self.INTENSITY_MEASURE_MAX = float(config['HAZARD_INTENSITY_MEASURE_MAX'])
+        self.INTENSITY_MEASURE_STEP = float(config['HAZARD_INTENSITY_MEASURE_STEP'])
+
+        # ------------------------------------------------------------------------------
 
         self.TIME_UNIT = str(config['RESTORATION_TIME_UNIT'])
         self.RESTORE_PCT_CHECKPOINTS = int(config['RESTORATION_PCT_CHECKPOINTS'])
         self.RESTORE_TIME_STEP = int(config['RESTORATION_TIME_STEP'])
         self.RESTORE_TIME_MAX = int(config['RESTORATION_TIME_MAX'])
         self.RESTORATION_STREAMS = config['RESTORATION_STREAMS']
+
+        try:
+            self.RECOVERY_METHOD = str(config['RECOVERY_METHOD'])
+        except KeyError:
+            self.RECOVERY_METHOD = 'max'
+
+        try:
+            self.NUM_REPAIR_STREAMS = int(config['NUM_REPAIR_STREAMS'])
+        except KeyError:
+            self.NUM_REPAIR_STREAMS = 100
+
+        self.RECOVERY_MAX_WORKERS = None  # None = use all available cores allocated to the job
+        self.RECOVERY_BATCH_SIZE = None   # None = auto-calculate based on data size
+
+        # ------------------------------------------------------------------------------
 
         self.INFRASTRUCTURE_LEVEL = str(config['SYSTEM_INFRASTRUCTURE_LEVEL'])
         self.SYSTEM_CLASSES = config['SYSTEM_CLASSES']
@@ -102,8 +117,7 @@ class Configuration:
         self.MULTIPROCESS = int(config['SWITCH_MULTIPROCESS'])
         self.RUN_CONTEXT = int(config['SWITCH_RUN_CONTEXT'])
 
-        self.SWITCH_FIT_RESTORATION_DATA = \
-            bool(config['SWITCH_FIT_RESTORATION_DATA'])
+        self.SWITCH_FIT_RESTORATION_DATA = bool(config['SWITCH_FIT_RESTORATION_DATA'])
         self.SWITCH_SAVE_VARS_NPY = bool(config['SWITCH_SAVE_VARS_NPY'])
 
         self.INPUT_MODEL_PATH = Path(model_path)
@@ -126,9 +140,7 @@ class Configuration:
             if not self.OUTPUT_DIR.exists():
                 self.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         except (FileNotFoundError, OSError):
-            raise IOError(
-                "Unable to create output folder " + str(output_path) + " ...")
-            sys.exit(2)
+            raise IOError(f"Unable to create output folder {str(output_path)} ...")
 
         self.RAW_OUTPUT_DIR = Path(self.OUTPUT_DIR, 'RAW_OUTPUT')
         if not self.RAW_OUTPUT_DIR.exists():

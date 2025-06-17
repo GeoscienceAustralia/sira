@@ -39,6 +39,14 @@ class Scenario:
             )
         self.num_time_steps = len(self.restoration_time_range)
 
+        # Recovery analysis configuration
+        self.recovery_method = configuration.get('RECOVERY_METHOD', 'max')
+        self.num_repair_streams = configuration.get('NUM_REPAIR_STREAMS', 100)
+
+        # Optional parameters - None means use all available/auto-calculate
+        self.recovery_max_workers = configuration.get('RECOVERY_MAX_WORKERS', None)
+        self.recovery_batch_size = configuration.get('RECOVERY_BATCH_SIZE', None)
+
         self.restoration_checkpoints, self.restoration_pct_steps \
             = np.linspace(
                 0.0, 1.0, num=configuration.RESTORE_PCT_CHECKPOINTS, retstep=True
