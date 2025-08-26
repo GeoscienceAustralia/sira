@@ -77,7 +77,6 @@ numpy
 scipy
 lmfit
 warnings
-brewer2mpl
 colorama
 datetime
 pickle

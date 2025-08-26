@@ -7,7 +7,7 @@ palettes, and functions for customising and improving plot aesthetics
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 import matplotlib as mpl
-import brewer2mpl
+import seaborn as sns
 import re
 
 mpl.rcParams['legend.numpoints'] = 1
@@ -126,18 +126,12 @@ class ColourPalettes(object):
         # ---------------------------------------------------------------------
         # Brewer qualitative colour palettes
 
-        self.__BrewerSet1 = \
-            brewer2mpl.get_map('Set1', 'Qualitative', 9).mpl_colors
-        self.__BrewerSet2 = \
-            brewer2mpl.get_map('Set2', 'Qualitative', 8).mpl_colors
-        self.__BrewerSet3 = \
-            brewer2mpl.get_map('Set3', 'Qualitative', 12).mpl_colors
-        self.__BrewerDark = \
-            brewer2mpl.get_map('Dark2', 'Qualitative', 8).mpl_colors
-        self.__BrewerPaired = \
-            brewer2mpl.get_map('Paired', 'Qualitative', 12).mpl_colors
-        self.__BrewerSpectral = \
-            brewer2mpl.get_map('Spectral', 'Diverging', 11).mpl_colors
+        self.__BrewerSet1 = sns.color_palette("Set1", 9)
+        self.__BrewerSet2 = sns.color_palette("Set2", 8)
+        self.__BrewerSet3 = sns.color_palette("Set3", 12)
+        self.__BrewerDark = sns.color_palette("Dark2", 8)
+        self.__BrewerPaired = sns.color_palette("Paired", 12)
+        self.__BrewerSpectral = sns.color_palette("Spectral", 11)
 
         self.__FiveLevels = [
             self.__BrewerPaired[9],

@@ -37,7 +37,7 @@ def assign_function_params(
     elif funcname_nocase in [
             "normal", "normalcdf", "normal_cdf"]:
         # stddev = scale, loc = mean
-        param_names = ['stddev', 'mean']
+        param_names = ['mean', 'stddev']
 
     elif funcname_nocase in [
             "rayleigh", "rayleighcdf", "rayleigh_cdf"]:
@@ -62,7 +62,7 @@ def assign_function_params(
     # lognorm_params = ['median', 'loc', 'beta']
     # damage_param_headers = ["ds_scale", "ds_location", "ds_shape"]
     damage_param_headers = ['median', 'location', 'beta']
-    recovery_param_headers = ["recovery_param1", "recovery_param2", "recovery_param3"]
+    recovery_param_headers = ["recovery_param1", "recovery_param2"]
     extra_fields = ["data_source", "lower_limit", "upper_limit"]
 
     if function_purpose == "damage_function":
@@ -385,7 +385,7 @@ def main():
             read_excel_to_json(excel_file_path),
             object_pairs_hook=OrderedDict)
         new_json_structure_obj = update_json_structure(json_obj)
-        json_file_path = Path(excel_file_path.parent, file_name + '.json')
+        json_file_path = Path(model_dir, file_name + '.json')
         with open(json_file_path, 'w+') as outfile:
             json.dump(new_json_structure_obj, outfile, indent=4)
 

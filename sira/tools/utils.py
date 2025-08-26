@@ -82,7 +82,17 @@ def pythonify(obj):
 
 
 def class_getter(mod_class):
-    return getattr(importlib.import_module(mod_class[0]), mod_class[1])
+    """
+    Given a sequence (list or tuple) with module and class name, import and return the class.
+    Raises ValueError if input is invalid.
+    """
+    if not isinstance(mod_class, (list, tuple)) or len(mod_class) < 2:
+        raise ValueError("mod_class must be a list or tuple with at least two elements: [module, class_name]")
+    try:
+        module = importlib.import_module(mod_class[0])
+        return getattr(module, mod_class[1])
+    except (ImportError, AttributeError) as e:
+        raise ImportError(f"Could not import {mod_class[1]} from {mod_class[0]}: {e}")
 
 
 def _make_diff(name, elements):
@@ -147,7 +157,7 @@ def find_changes(old, new):
         return Diff(new or None)
 
     new_keys = set(new.keys())
-    old_keys = set(old.keys())
+    old_keys = set(old.keys())  # type: ignore
     dropped_keys = old_keys - new_keys
 
     added = {k: new[k] for k in new_keys - old_keys}
@@ -175,7 +185,7 @@ def reconstitute(old, changes):
                 result.pop(k)
 
         if changes.added is not None:
-            result.update(changes.added)
+            result.update(changes.added)  # type: ignore
 
         if changes.changed is not None:
             for k, v in changes.changed.items():

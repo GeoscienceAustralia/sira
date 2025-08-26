@@ -11,6 +11,7 @@ from sira.tools.parallelisation import get_available_cores
 
 rootLogger = logging.getLogger(__name__)
 
+
 def calculate_response_for_single_hazard(hazard, scenario, infrastructure):
     """
     Exposes the components of the infrastructure to a hazard level
@@ -105,12 +106,16 @@ def process_hazard_chunk(chunk_data):
         Results, chunk ID, and number of hazards processed
     """
     hazard_chunk, scenario, infrastructure, chunk_id = chunk_data
+
+    # Create a worker copy of the scenario to ensure clean state
+    worker_scenario = scenario.create_worker_copy()
+
     chunk_response = {}
 
     # Process each hazard in the chunk
     for hazard in hazard_chunk:
         # Call the single hazard processing function
-        result = calculate_response_for_single_hazard(hazard, scenario, infrastructure)
+        result = calculate_response_for_single_hazard(hazard, worker_scenario, infrastructure)
         chunk_response.update(result)
 
     # Return chunk ID, results, and count of processed hazards

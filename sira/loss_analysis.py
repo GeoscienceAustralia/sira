@@ -43,7 +43,7 @@ def calc_component_recovery_time(
     damage_functions = [ds.response_function for ds in component.damage_states.values()]
     recovery_functions = [ds.recovery_function for ds in component.damage_states.values()]
 
-    comp_fn = component_response.loc[
+    comp_functionality = component_response.loc[
         scenario_header, (component.component_id, 'func_mean')
     ]
 
@@ -73,7 +73,7 @@ def calc_component_recovery_time(
             try:
                 # Calculate time difference for recovery
                 recovery_time = recovery_functions[d](threshold_recovery, inverse=True)\
-                    - recovery_functions[d](comp_fn, inverse=True)
+                    - recovery_functions[d](comp_functionality, inverse=True)
                 # Ensure we don't get negative or infinite times
                 reqtime[d] = max(0.0, recovery_time) if not np.isinf(recovery_time) else 0.0
             except (ValueError, TypeError, ZeroDivisionError, RuntimeError) as e:
@@ -118,6 +118,13 @@ def analyse_system_recovery(
             hazards.hazard_scenario_list.index(event_id)]
         loc_params = comp_obj.get_location()
         sc_haz_val = hazard_obj.get_hazard_intensity(*loc_params)
+
+        # # Test prints
+        # print("========================================")
+        # print(f"comp_name:  {comp_name}")
+        # print(f"loc_params: {loc_params}")
+        # print(f"event_id: {event_id}\n")
+
         comp_restoration_time = calc_component_recovery_time(
             comp_obj,
             component_response,
@@ -1867,7 +1874,6 @@ def run_scenario_loss_analysis(
     comptype_resp_df.drop(
         uncosted_comptypes,
         level=0, axis=1, inplace=True, errors='ignore')
-    # comptype_resp_df = comptype_resp_df.sort_index(axis=1)
 
     # Get list of only those components that are included in cost calculations:
     cpmap = {
@@ -1879,7 +1885,7 @@ def run_scenario_loss_analysis(
     nodes_all.sort()
     comps_uncosted = list(set(nodes_all).difference(comps_costed))
 
-    ctype_failure_mean = comptype_resp_df.xs('num_failures', level=1, axis=1)
+    ctype_failure_mean = comptype_resp_df.xs('failure_rate', level=1, axis=1)
 
     # ------------------------------------------------------------------------------
     # Value of component types relative to system value

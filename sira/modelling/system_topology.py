@@ -91,10 +91,11 @@ class SystemTopologyGenerator(object):
         'potablewaterpumpstation'
     ]
 
-    def __new__(self, infrastructure, output_dir):
+    def __new__(cls, infrastructure, output_dir):
         topoargs = [infrastructure, output_dir]
         system_class = infrastructure.system_class.lower()
-        target_cls = self._get_target_class(self, system_class)
+        temp_instance = object.__new__(cls)
+        target_cls = temp_instance._get_target_class(system_class)
         return target_cls(*topoargs)
 
     def _get_target_class(self, system_name):
@@ -137,7 +138,7 @@ class SystemTopology_Generic(object):
     - the unit for dimensions for nodes is inches
     - the unit for positioning of nodes is points (1/72 of an inch)
     - pre-defined node positions are only respected by specific rendering
-      engines - we use `neato`
+        engines - we use `neato`
     """
 
     out_file = "system_topology"
@@ -147,7 +148,6 @@ class SystemTopology_Generic(object):
         COMPONENT_LOCATION_CONF = 'SYSTEM_COMPONENT_LOCATION_CONF'
         self.loc_attr = COMPONENT_LOCATION_CONF.upper()
         self.graph_label = "System Component Topology"
-        self.AG = ""  # placeholder for the system's graph representation
 
         self.infrastructure = infrastructure
         self.component_attr = {}  # Dict for system comp attributes
@@ -348,10 +348,12 @@ class SystemTopology_Generic(object):
 
     # ================================================================================
 
-    def write_graphs_to_file(self, file_name,
-                             dpi=300,
-                             paper_size=None,
-                             engines=''):
+    def write_graphs_to_file(
+        self, file_name,
+        dpi=300,
+        paper_size='A4',
+        engines=['dot']
+    ):
 
         # ---------------------------------------------------------------------
         paper_size_dict = {
@@ -437,8 +439,8 @@ class SystemTopology_Generic(object):
         # Default drawing parameters
         self.clustering = False
         self.configure_sys_topology()
-        self.AG.graph_attr["rankdir"] = "LR"
-        self.AG.graph_attr["splines"] = self.edge_type
+        self.AG.graph_attr["rankdir"] = "LR"  # type: ignore
+        self.AG.graph_attr["splines"] = self.edge_type  # type: ignore
         self.write_graphs_to_file(fname)
 
     # ================================================================================
@@ -479,7 +481,7 @@ class SystemTopology_Generic(object):
         Draws the component configuration for a given infrastructure system.
 
         :output: generates and saves the system topology diagram in the
-        following formats: (graphviz) dot, png, pdf, ps2.
+        following formats: (graphviz) dot, png, ps2.
         """
 
         self.build_graph_structure()
@@ -580,7 +582,7 @@ class SystemTopology_SS(SystemTopology_Generic):
             # size='11.7,16.5',  # IMPORTANT: this sets the max canvas size (inches)
         )
         self.write_graphs_to_file(fname, dpi=300, engines=['dot'])
-        rootLogger.info("    Done!")
+        rootLogger.info("Done!")
 
         rootLogger.info(f"Drawing schematic of {self.graph_label} using `neato` ...")
         self.AG.graph_attr.update(
@@ -603,14 +605,14 @@ class SystemTopology_SS(SystemTopology_Generic):
         )
 
         self.write_graphs_to_file(fname, dpi=300, engines=['neato'])
-        rootLogger.info("    Done!")
+        rootLogger.info("Done!")
 
     def configure_sys_topology(self):
         """
         Draws the component configuration for a given infrastructure system.
 
         :output: generates and saves the system topology diagram in the
-        following formats: (graphviz) dot, png, pdf, ps2.
+        following formats: (graphviz) dot, png, ps2.
         """
 
         # max_x, max_y = self.calculate_graph_dimensions()
@@ -855,7 +857,7 @@ class SystemTopology_WTP(SystemTopology_Generic):
         Draws the component configuration for a given infrastructure system.
 
         :output: generates and saves the system topology diagram in the
-        following formats: (graphviz) dot, png, pdf, ps2.
+        following formats: (graphviz) dot, png, ps2.
         """
 
         # ----------------------------------------------------------------------------

@@ -5,7 +5,6 @@ awscli
 babel
 blockdiag
 botocore
-brewer2mpl
 cairocffi
 cartopy
 codecov

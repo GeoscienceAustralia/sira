@@ -8,6 +8,8 @@ import pandas as pd
 import dask.dataframe as dd   # type: ignore
 from pathlib import Path
 import logging
+
+from sympy import root
 rootLogger = logging.getLogger(__name__)
 
 

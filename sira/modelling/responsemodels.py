@@ -221,7 +221,7 @@ class StepFunc(Base):
         """
         Note that intervals are closed on the right.
         """
-        for x, y in self.xys:  # noqa: E1133
+        for x, y in self.xys:  # noqa: E1133 # type: ignore
             if hazard_intensity < x:
                 return y
         raise ValueError('value is greater than all xs!')
@@ -270,7 +270,7 @@ class PiecewiseFunction(object):
 
         self.functions = []
         self.validranges = []
-        for param_dict in self.piecewise_function_constructor:  # noqa: E1133
+        for param_dict in self.piecewise_function_constructor:  # type: ignore noqa: E1133
             lo = self.check_limit(param_dict['lower_limit'], which_lim='lower')
             hi = self.check_limit(param_dict['upper_limit'], which_lim='upper')
             self.functions.append(Algorithm.factory(param_dict))

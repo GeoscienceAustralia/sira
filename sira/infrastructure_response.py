@@ -1,7 +1,17 @@
+import os
+import sys
+
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
+os.environ['OMP_NUM_THREADS'] = '1'
+
+if sys.platform == 'win32':
+    os.environ['MKL_NUM_THREADS'] = '1'
+    os.environ['OPENBLAS_NUM_THREADS'] = '1'
+    os.environ['NUMEXPR_NUM_THREADS'] = '1'
+
 import logging
 import pickle
 import math
-import os
 import time
 from pathlib import Path
 from tqdm import tqdm
@@ -19,6 +29,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import pyarrow
 
 import threading
 import traceback
@@ -34,7 +45,7 @@ import sira.loss_analysis as loss_analysis
 from sira.tools import utils
 from sira.tools.parallelisation import get_available_cores
 from sira.modelling.responsemodels import Algorithm
-from sira.recovery_analysis_optimised import parallel_recovery_analysis_optimised  # type: ignore
+from sira.recovery_analysis import parallel_recovery_analysis  # type: ignore
 
 rootLogger = logging.getLogger(__name__)
 matplotlib.use('Agg')
@@ -50,6 +61,97 @@ dconfig.set({"dataframe.shuffle.method": "tasks"})
 
 # Maximum rows to process in each worker chunk:
 MAX_ROWS_PER_CHUNK = 5000
+
+# ****************************************************************************
+
+# Add this class to your infrastructure_response.py file
+
+class DaskClientManager:
+    """
+    Manages Dask client lifecycle for parallel processing.
+
+    This class handles the creation, configuration, and cleanup of Dask clients
+    for distributed computing tasks in SIRA.
+    """
+
+    def __init__(self, scheduler_address=None, n_workers=None, threads_per_worker=None, memory_limit=None):
+        """
+        Initialize Dask client manager.
+
+        Parameters
+        ----------
+        scheduler_address : str, optional
+            Address of Dask scheduler. If None, creates local cluster.
+        n_workers : int, optional
+            Number of workers for local cluster.
+        threads_per_worker : int, optional
+            Number of threads per worker.
+        memory_limit : str, optional
+            Memory limit per worker (e.g., '2GB').
+        """
+        self.client = None
+        self.cluster = None
+
+        try:
+            from dask.distributed import Client, LocalCluster
+
+            if scheduler_address:
+                # Connect to existing scheduler
+                self.client = Client(scheduler_address)
+                rootLogger.info(f"Connected to Dask scheduler at: {scheduler_address}")
+            else:
+                # Create local cluster
+                cluster_kwargs = {}
+
+                if n_workers:
+                    cluster_kwargs['n_workers'] = n_workers
+                if threads_per_worker:
+                    cluster_kwargs['threads_per_worker'] = threads_per_worker
+                if memory_limit:
+                    cluster_kwargs['memory_limit'] = memory_limit
+
+                # Set reasonable defaults
+                if not cluster_kwargs:
+                    import multiprocessing
+                    n_cores = multiprocessing.cpu_count()
+                    cluster_kwargs = {
+                        'n_workers': min(n_cores, 8),  # Cap at 8 workers
+                        'threads_per_worker': max(1, n_cores // min(n_cores, 8)),
+                        'memory_limit': '2GB'
+                    }
+
+                self.cluster = LocalCluster(**cluster_kwargs)
+                self.client = Client(self.cluster)
+                rootLogger.info(f"Created local Dask cluster with {cluster_kwargs}")
+
+        except ImportError:
+            rootLogger.warning("Dask not available. Falling back to sequential processing.")
+            self.client = None
+            self.cluster = None
+        except Exception as e:
+            rootLogger.error(f"Failed to initialize Dask client: {e}")
+            self.client = None
+            self.cluster = None
+
+    def close(self):
+        """Close Dask client and cluster."""
+        if self.client:
+            self.client.close()
+            rootLogger.info("Dask client closed")
+
+        if self.cluster:
+            self.cluster.close()
+            rootLogger.info("Dask cluster closed")
+
+    def is_available(self):
+        """Check if Dask client is available."""
+        return self.client is not None
+
+    def get_dashboard_link(self):
+        """Get Dask dashboard link if available."""
+        if self.client:
+            return self.client.dashboard_link
+        return None
 
 # ****************************************************************************
 # BEGIN POST-PROCESSING ...
@@ -937,6 +1039,7 @@ def calculate_loss_stats(df, progress_bar=True):
             'Q3': df.loss_mean.quantile(0.75).compute()
         }
 
+
 def calculate_output_stats(df, progress_bar=True):
     """Calculate summary statistics for output -- using dask dataframe"""
     print()
@@ -953,6 +1056,7 @@ def calculate_output_stats(df, progress_bar=True):
             'Q3': df.output_mean.quantile(0.75).compute()
         }
 
+
 def calculate_recovery_stats(df, progress_bar=True):
     """Calculate summary statistics for recovery time -- using dask dataframe"""
     print()
@@ -968,6 +1072,7 @@ def calculate_recovery_stats(df, progress_bar=True):
             'Q1': df.recovery_time_100pct.quantile(0.25).compute(),
             'Q3': df.recovery_time_100pct.quantile(0.75).compute()
         }
+
 
 def calculate_summary_statistics(df, calc_recovery=False):
     """Combine all summary statistics"""
@@ -1010,11 +1115,15 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     for comp_id, component in infrastructure.components.items():
         if component.component_class not in infrastructure.uncosted_classes:
             costed_component_ids.add(comp_id)
+    costed_component_ids = sorted(list(costed_component_ids))
 
     comp_response_list = response_list[2]
     component_resp_df = pd.DataFrame(comp_response_list)
     component_resp_df.columns = hazards.hazard_scenario_list
     component_resp_df.index.names = ['component_id', 'response']
+
+    component_ids = component_resp_df.index.get_level_values('component_id').unique()
+    component_ids = [str(x) for x in component_ids]
 
     # Filter for costed components
     component_resp_df = component_resp_df[
@@ -1025,20 +1134,69 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     component_resp_df = component_resp_df.transpose()
     component_resp_df.index.names = ['hazard_event']
 
-    # if scenario.hazard_input_method.lower() in ["calculated_array"]:
-    #     outfile_comp_resp = Path(scenario.output_path, 'component_response.csv')
-    #     outpath_wrapped = utils.wrap_file_path(str(outfile_comp_resp))
-    #     rootLogger.info(f"Writing component hazard response data to: \n"
-    #                     f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
-    #     component_resp_df.to_csv(outfile_comp_resp, sep=',')
-    #     rootLogger.info("Done.\n")
+    event_vs_dmg_indices = response_list[0]
+    dmgidx_medians = {
+        k: (np.round(np.median(v, axis=0) + 0.01)).astype(int)
+        for k, v in event_vs_dmg_indices.items()
+    }
 
+    comp_dmgidx_df = pd.DataFrame.from_dict(dmgidx_medians, orient='index')
+    comp_dmgidx_df.index.name = 'hazard_event'
+    comp_dmgidx_df.columns = component_ids
+    comp_dmgidx_df = comp_dmgidx_df[list(costed_component_ids)]
+
+    comp_dmgidx_df_multiindex = comp_dmgidx_df.copy()
+    comp_dmgidx_df_multiindex.columns = pd.MultiIndex.from_product(
+        [comp_dmgidx_df.columns, ['damage_index']],
+        names=['component_id', 'response']
+    )
+
+    component_resp_df = pd.concat([comp_dmgidx_df_multiindex, component_resp_df], axis=1)
+    component_resp_df = component_resp_df.sort_index(axis=1, level=0)
+
+    # ----------------------------------------------------------------------------
+    # Get hazard intensities for all components across all events
+    hazard_intensities = {}
+    component_locations = {
+        comp_id: comp.get_location()
+        for comp_id, comp in infrastructure.components.items()
+    }
+
+    for comp_id in costed_component_ids:
+        loc_params = component_locations[comp_id]
+        if scenario.hazard_input_method in ['calculated_array', 'hazard_array']:
+            site_id = '0'
+        else:
+            site_id = str(loc_params[0]) if isinstance(loc_params, tuple) else '0'
+
+        if site_id in hazards.hazard_data_df.columns:
+            hazard_intensities[comp_id] = hazards.hazard_data_df[site_id].values
+        else:
+            hazard_intensities[comp_id] = np.zeros(len(hazards.hazard_scenario_list))
+
+    # Create hazard intensity DataFrame with multiindex columns
+    hazard_df = pd.DataFrame(hazard_intensities, index=hazards.hazard_scenario_list)
+    hazard_df_multiindex = hazard_df.copy()
+    hazard_df_multiindex.columns = pd.MultiIndex.from_product(
+        [hazard_df.columns, ['hazard_intensity']],
+        names=['component_id', 'response']
+    )
+
+    # Concatenate with existing component_resp_df
+    component_resp_df = pd.concat([hazard_df_multiindex, component_resp_df], axis=1)
+    component_resp_df = component_resp_df.sort_index(
+        axis=1, level=0, sort_remaining=False)
+
+    # ----------------------------------------------------------------------------
     outfile_comp_resp = Path(scenario.output_path, 'component_response.csv')
     outpath_wrapped = utils.wrap_file_path(str(outfile_comp_resp))
     rootLogger.info(
         f"Writing component hazard response data to: \n"
         f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
+
     component_resp_df.to_csv(outfile_comp_resp, sep=',')
+    # component_resp_df.to_parquet(
+    #     outfile_comp_resp, engine='pyarrow', index=True, compression='snappy')
     rootLogger.info("Done.\n")
 
     # =================================================================================
@@ -1099,19 +1257,12 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     output_array_mean = np.mean(output_array, axis=0)
     output_array_std = np.std(output_array, axis=0)
 
-    # Create dataframe without recovery times first
-    df_sys_response = pd.DataFrame(columns=out_cols[:5])
     hazard_event_list = hazards.hazard_data_df.index.tolist()
     rootLogger.info("Done.\n")
 
-    # -----------------------------------------------
-    # Calculate recovery times for each hazard event
-
-    df_sys_response[out_cols[0]] = hazard_event_list
-    df_sys_response[out_cols[1]] = np.mean(sys_economic_loss_array, axis=0)
-    df_sys_response[out_cols[2]] = np.std(sys_economic_loss_array, axis=0)
-    df_sys_response[out_cols[3]] = output_array_mean
-    df_sys_response[out_cols[4]] = output_array_std
+    # -------------------------------------------------------------------------
+    # Calculate recovery times for each hazard event FIRST
+    # -------------------------------------------------------------------------
 
     if CALC_SYSTEM_RECOVERY:
         components_uncosted = [
@@ -1131,21 +1282,64 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
         if recovery_method == 'parallel_streams':
             rootLogger.info(f"Number of repair streams: {num_repair_streams}")
 
-        # Call the optimized recovery analysis
-        recovery_time_100pct = parallel_recovery_analysis_optimised(
-            hazard_event_list=hazard_event_list,
-            infrastructure=infrastructure,
-            scenario=scenario,
-            component_resp_df=component_resp_df,
-            components_costed=components_costed,
-            recovery_method=recovery_method,
-            num_repair_streams=num_repair_streams,
-            max_workers=getattr(scenario, 'recovery_max_workers', None),  # None = use all available
-            batch_size=getattr(scenario, 'recovery_batch_size', None)  # None = auto-calculate
-        )
+        rootLogger.info(f"Number of costed components: {len(components_costed)}")
+        rootLogger.info(f"Number of hazard events: {len(hazard_event_list)}")
+        rootLogger.info(f"Component response DataFrame shape: {component_resp_df.shape}")
+
+        try:
+            rootLogger.info("Attempting optimised parallel recovery analysis...")
+            recovery_time_100pct = parallel_recovery_analysis(
+                hazards=hazards,
+                components=infrastructure.components,
+                infrastructure=infrastructure,
+                scenario=scenario,
+                component_resp_df=component_resp_df,
+                components_costed=components_costed,
+                recovery_method=recovery_method,
+                num_repair_streams=num_repair_streams,
+                max_workers=getattr(scenario, 'recovery_max_workers', None),
+                batch_size=getattr(scenario, 'recovery_batch_size', None)
+            )
+            rootLogger.info(
+                f"{Fore.GREEN}optimised parallel recovery analysis completed "
+                f"successfully{Fore.RESET}")
+        except Exception as e:
+            rootLogger.warning(
+                f"{Fore.RED}optimised parallel recovery analysis failed: "
+                f"{e}{Fore.RESET}")
+            rootLogger.info("Falling back to sequential recovery analysis...")
+            try:
+                recovery_time_100pct = sequential_recovery_analysis(
+                    hazard_event_list,
+                    infrastructure,
+                    scenario,
+                    hazards,
+                    component_resp_df,
+                    components_costed,
+                    components_uncosted
+                )
+                rootLogger.info("Sequential recovery analysis completed successfully")
+            except Exception as e3:
+                rootLogger.error(f"Sequential recovery analysis also failed: {e3}")
+                rootLogger.info("Using zeros for all recovery times")
+                recovery_time_100pct = [0.0] * len(hazard_event_list)
+
+        # print("*" * 80)
+        # print(f"recovery_time_100pct:\n{recovery_time_100pct}")
+        # print("*" * 80)
 
         # Validate results
         if recovery_time_100pct is not None:
+            rootLogger.info(f"Recovery analysis returned: {type(recovery_time_100pct)}")
+            if isinstance(recovery_time_100pct, (list, np.ndarray)):
+                rootLogger.info(f"Length: {len(recovery_time_100pct)}")
+                if len(recovery_time_100pct) > 0:
+                    sample_values = recovery_time_100pct[:5] if len(recovery_time_100pct) >= 5 else recovery_time_100pct
+                    rootLogger.info(f"Sample values: {sample_values}")
+                    max_val = max(recovery_time_100pct)
+                    min_val = min(recovery_time_100pct)
+                    rootLogger.info(f"Min: {min_val}, Max: {max_val}")
+
             non_zero_count = sum(1 for t in recovery_time_100pct if t > 0)
             rootLogger.info(
                 f"Recovery calculation complete: {non_zero_count:,}/{len(recovery_time_100pct):,} "
@@ -1168,6 +1362,20 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     else:
         recovery_time_100pct = [0] * len(hazard_event_list)
 
+    # ---------------------------------------------------------------------------------
+    # Create the complete DataFrame with ALL columns including recovery times
+    # ---------------------------------------------------------------------------------
+
+    # Create dataframe with ALL columns at once
+    df_sys_response = pd.DataFrame(columns=out_cols)
+
+    df_sys_response[out_cols[0]] = hazard_event_list
+    df_sys_response[out_cols[1]] = np.mean(sys_economic_loss_array, axis=0)
+    df_sys_response[out_cols[2]] = np.std(sys_economic_loss_array, axis=0)
+    df_sys_response[out_cols[3]] = output_array_mean
+    df_sys_response[out_cols[4]] = output_array_std
+    df_sys_response[out_cols[5]] = recovery_time_100pct
+
     if (scenario.infrastructure_level).lower() == 'facility':
         if scenario.hazard_input_method in ['calculated_array', 'hazard_array']:
             site_id = '0'
@@ -1181,8 +1389,9 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
     outfile_sys_response = Path(scenario.output_path, 'system_response.csv')
     outpath_wrapped = utils.wrap_file_path(str(outfile_sys_response))
-    rootLogger.info(f"Writing {Fore.CYAN}system hazard response data{Fore.RESET} to:\n"
-                    f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
+    rootLogger.info(
+        f"Writing {Fore.CYAN}system hazard response data{Fore.RESET} to:\n"
+        f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}")
     df_sys_response.to_csv(outfile_sys_response, sep=',', index=False)
     rootLogger.info("Done.\n")
 
@@ -1190,7 +1399,6 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # Risk calculations
     # ---------------------------------------------------------------------------------
     # Calculating summary statistics using Dask - for speed on large datasets
-
     dask_df = to_dask_dataframe(df_sys_response)
 
     # Calculate summary statistics
@@ -1294,7 +1502,6 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
     # Calculate system fragility & exceedance probabilities
     # ---------------------------------------------------------------------------------
 
-    # Infrastructure econ loss for sample
     sys_economic_loss_array = response_list[5]
     sys_ds_bounds = np.array(infrastructure.get_system_damage_state_bounds())
 
@@ -1337,7 +1544,7 @@ def write_system_response(response_list, infrastructure, scenario, hazards):
 
 @njit
 def _pe2pb(pe):
-    """Numba-optimized version of pe2pb"""
+    """Numba-optimised version of pe2pb"""
     pex = np.sort(pe)[::-1]
     tmp = -1.0 * np.diff(pex)
     pb = np.zeros(len(pe) + 1)

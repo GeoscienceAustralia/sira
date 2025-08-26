@@ -14,10 +14,7 @@ import pandas as pd
 from scipy import stats
 from scipy.special import erf  # noqa:E0611
 import lmfit
-
-import brewer2mpl
 from colorama import Fore, init
-
 import sira.tools.siraplot as spl
 
 init()
@@ -28,7 +25,7 @@ pd.options.display.float_format = '{:,.4f}'.format
 # For plots: using the  brewer2 color maps by Cynthia Brewer
 # -----------------------------------------------------------------------------
 
-set2 = brewer2mpl.get_map('Set2', 'qualitative', 5).mpl_colors
+set2 = sns.color_palette("Set2", 5)
 markers = ['o', '^', 's', 'D', 'x', '+']
 
 class color:
@@ -162,7 +159,8 @@ def fit_cdf_model(x_sample, y_sample, dist, params_est="undefined", tag=None):
             model_params.add(
                 param,
                 value=params_est[param].value,
-                min=params_est[param].min, max=params_est[param].max)
+                min=params_est[param].min,
+                max=params_est[param].max)
             param = 'stddev'
             model_params.add(
                 param,

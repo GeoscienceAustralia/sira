@@ -101,12 +101,10 @@ class Infrastructure(Base):
         if_level_output = np.zeros(
             (scenario.num_samples, len(self.output_nodes)), dtype=float)
 
-        # ********************
-        # NOT YET IMPLEMENTED:
+        # ****************************************
+        # CONSIDERATION FOR FUTURE IMPLEMENTATION:
         # output available as recovery progresses
-        # if_output_given_recovery = \
-        #     np.zeros((scenario.num_samples, scenario.num_time_steps),
-        #              dtype=float)
+        # if_output_given_recovery = ...
 
         # iterate through the samples
         # rootLogger.info("Initiating calculation of loss of system output ...")
@@ -173,8 +171,7 @@ class Infrastructure(Base):
         # else:
         #     self._component_graph.update_capacity(
         #         self.components, comp_level_func)
-        self._component_graph.update_capacity(
-            self.components, comp_level_func)
+        self._component_graph.update_capacity(self.components, comp_level_func)
 
         # calculate the capacity
         system_outflows_sample = np.zeros(len(self.output_nodes))
@@ -182,13 +179,11 @@ class Infrastructure(Base):
                 enumerate(self.output_nodes.items()):   # noqa: E1101
             # track the outputs by source type (e.g. water or coal)
             total_supply_flow_by_source = {}
-            for (supply_comp_id, supply_comp) in \
-                    self.supply_nodes.items():   # noqa: E1101
+            for (supply_comp_id, supply_comp) in self.supply_nodes.items():   # noqa: E1101
                 if_flow_fraction = self._component_graph.maxflow(
                     supply_comp_id, output_comp_id
                 )
-                if_sample_flow = if_flow_fraction * \
-                    supply_comp['capacity_fraction']
+                if_sample_flow = if_flow_fraction * supply_comp['capacity_fraction']
 
                 if supply_comp['commodity_type'] not in \
                         total_supply_flow_by_source:
@@ -206,22 +201,6 @@ class Infrastructure(Base):
                 = estimated_capacity_fraction * self.get_nominal_output()
 
         return system_outflows_sample
-
-    # pylint: disable=fixme
-    # TODO: FIX `calc_recov_time_given_comp_ds`
-    # def calc_recov_time_given_comp_ds(self, component, damage_state, scenario):
-    #     '''
-    #     Calculates the recovery time of a component, given damage state index
-    #     '''
-    #     import scipy.stats as stats
-    #     recovery_parameters = component.get_recovery(damage_state)
-    #     damage_parameters = component.get_damage_state(damage_state)
-    #
-    #     m = recovery_parameters.recovery_param1  # loc = mean
-    #     s = recovery_parameters.recovery_param2  # scale = standard deviation
-    #     fn = damage_parameters.functionality
-    #     cdf = stats.norm.cdf(scenario.restoration_time_range, loc=m, scale=s)
-    #     return cdf + (1.0 - cdf) * fn
 
     def calc_response(
             self,
@@ -270,7 +249,7 @@ class Infrastructure(Base):
             comp_resp_dict[(comp_id, 'func_std')] \
                 = np.std(comp_sample_func[:, comp_index])
 
-            comp_resp_dict[(comp_id, 'num_failures')] \
+            comp_resp_dict[(comp_id, 'failure_rate')] \
                 = np.mean(
                     component_damage_state_ind[:, comp_index]\
                     >= (len(component.damage_states) - 1))  # noqa:W503
@@ -298,9 +277,10 @@ class Infrastructure(Base):
                 = np.std(comp_sample_func[:, ct_pos_index])
 
             acomponent = self.components[comps_of_a_type[0]]
-            comptype_resp_dict[(ct_id, 'num_failures')] \
-                = np.mean(component_damage_state_ind[:, ct_pos_index]
-                          >= (len(acomponent.damage_states) - 1))  # noqa:W503
+            comptype_resp_dict[(ct_id, 'failure_rate')] \
+                = np.mean(
+                    component_damage_state_ind[:, ct_pos_index] \
+                    >= (len(acomponent.damage_states) - 1))  # noqa:W503
         # ---------------------------------------------------------------
 
         # comp_dmg_state_array_exp = \
@@ -550,7 +530,6 @@ class Substation(Infrastructure):
         :param scenario: The values for the simulation scenarios
         :return:  Array of real numbers representing damage state boundaries
         """
-        # [0.1, 0.5, 0.8, 1.0]
         # return [0.01, 0.05, 0.40, 0.70, 1.00]
         return [0.05, 0.4, 0.7, 1.0]
 

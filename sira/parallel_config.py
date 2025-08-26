@@ -18,6 +18,57 @@ import multiprocessing as mp
 logger = logging.getLogger(__name__)
 
 
+def is_mpi_environment():
+    """
+    Detect if we're in a proper MPI environment.
+
+    Returns
+    -------
+    bool
+        True if in proper MPI environment, False otherwise
+    """
+    # Check for explicit disabling
+    if os.environ.get('SIRA_FORCE_NO_MPI', '0') == '1':
+        return False
+
+    # Check for SLURM (most common HPC scheduler)
+    slurm_vars = ['SLURM_JOB_ID', 'SLURM_NTASKS', 'SLURM_PROCID', 'SLURM_NODELIST']
+    if any(var in os.environ for var in slurm_vars):
+        return True
+
+    # Check for PBS/Torque (another common HPC scheduler)
+    pbs_vars = ['PBS_JOBID', 'PBS_NCPUS', 'PBS_NODEFILE']
+    if any(var in os.environ for var in pbs_vars):
+        return True
+
+    # Check for explicit MPI runtime variables
+    mpi_runtime_vars = [
+        'OMPI_COMM_WORLD_SIZE', 'OMPI_COMM_WORLD_RANK',  # OpenMPI
+        'PMI_SIZE', 'PMI_RANK',                          # MPICH
+        'MPI_LOCALRANKID', 'MPI_LOCALNRANKS'             # Intel MPI
+    ]
+    if any(var in os.environ for var in mpi_runtime_vars):
+        return True
+
+    # Check if we're being launched with mpirun/mpiexec
+    parent_process = os.environ.get('_', '')
+    if any(launcher in parent_process for launcher in ['mpirun', 'mpiexec', 'srun']):
+        return True
+
+    # Check for HPC-specific hostnames or environments
+    hostname = os.environ.get('HOSTNAME', '')
+    if any(pattern in hostname.lower() for pattern in ['hpc', 'cluster', 'node', 'compute']):
+        return True
+
+    # Check if we're in a container with MPI setup
+    if os.path.exists('/.dockerenv') or os.path.exists('/singularity'):
+        # In container - check for MPI setup
+        if any(var in os.environ for var in mpi_runtime_vars + slurm_vars + pbs_vars):
+            return True
+
+    return False
+
+
 class ParallelConfig:
     """
     Configuration manager for parallel computing in SIRA.
@@ -27,12 +78,12 @@ class ParallelConfig:
     - HPC environment (SLURM, PBS, etc.)
     - MPI configuration
     - Dask cluster settings
-    - Optimal parallelization parameters
+    - Optimal parallelisation parameters
     """
 
     def __init__(self, config_file: Optional[Path] = None):
         """
-        Initialize parallel configuration.
+        Initialise parallel configuration.
 
         Parameters
         ----------
@@ -64,9 +115,13 @@ class ParallelConfig:
             'is_hpc': False,
             'hpc_type': None,
             'mpi_available': False,
+            'mpi_environment': False,
             'gpu_available': False,
             'gpu_count': 0
         }
+
+        # Use the centralised MPI environment detection
+        env['mpi_environment'] = is_mpi_environment()
 
         # Detect HPC environment
         if any(var in os.environ for var in ['SLURM_JOB_ID', 'SLURM_NODELIST']):
@@ -87,15 +142,32 @@ class ParallelConfig:
             env['is_hpc'] = True
             env['hpc_type'] = 'lsf'
 
-        # Detect MPI
-        try:
-            from mpi4py import MPI
-            env['mpi_available'] = True
-            comm = MPI.COMM_WORLD
-            env['mpi_size'] = comm.Get_size()
-            env['mpi_rank'] = comm.Get_rank()
-        except ImportError:
-            pass
+        # Only try to detect MPI if we're in an MPI environment
+        if env['mpi_environment']:
+            try:
+                # Set environment variable to prevent auto-initialisation
+                os.environ['MPI4PY_RC_INITIALIZE'] = 'False'
+
+                from mpi4py import MPI
+                env['mpi_available'] = True
+
+                # Check if already initialised
+                if MPI.Is_initialized():
+                    comm = MPI.COMM_WORLD
+                    env['mpi_size'] = comm.Get_size()
+                    env['mpi_rank'] = comm.Get_rank()
+                else:
+                    # Don't initialise here - just note it's available
+                    env['mpi_size'] = 1
+                    env['mpi_rank'] = 0
+
+            except ImportError:
+                env['mpi_available'] = False
+            except Exception as e:
+                logger.warning(f"MPI detection failed: {e}")
+                env['mpi_available'] = False
+        else:
+            env['mpi_available'] = False
 
         # Detect GPUs
         try:
@@ -124,8 +196,8 @@ class ParallelConfig:
         """Automatically configure parallel computing settings."""
         env = self.environment
 
-        # Select backend
-        if env['is_hpc'] and env['mpi_available']:
+        # Select backend based on environment
+        if env['mpi_environment'] and env['mpi_available']:
             backend = 'mpi'
         elif env['is_hpc'] or env['cpu_count'] > 16:
             backend = 'dask'
@@ -252,8 +324,18 @@ class ParallelConfig:
 
     def save_config(self, output_file: Path):
         """Save configuration to file."""
+        # Create a copy for serialisation, excluding non-serialisable items
+        config_copy = {}
+        for key, value in self.config.items():
+            try:
+                json.dumps(value)  # Test if serialisable
+                config_copy[key] = value
+            except TypeError:
+                # Skip non-serialisable items
+                config_copy[key] = str(value)
+
         with open(output_file, 'w') as f:
-            json.dump(self.config, f, indent=2)
+            json.dump(config_copy, f, indent=2)
 
     def get_optimal_batch_size(self, total_items: int, item_size_mb: float = 1.0) -> int:
         """
@@ -296,9 +378,9 @@ class ParallelConfig:
             'gpu_count': self.environment['gpu_count']
         }
 
-    def optimize_for_scenario(self, scenario_type: str) -> Dict[str, Any]:
+    def optimise_for_scenario(self, scenario_type: str) -> Dict[str, Any]:
         """
-        Get optimized settings for specific scenario types.
+        Get optimised settings for specific scenario types.
 
         Parameters
         ----------
@@ -308,7 +390,7 @@ class ParallelConfig:
         Returns
         -------
         dict
-            Optimized configuration for scenario
+            Optimised configuration for scenario
         """
         base_config = self.config.copy()
 
@@ -343,6 +425,13 @@ class ParallelConfig:
         }
 
         if scenario_type in scenario_configs:
+            # Only use MPI backend if we're actually in an MPI environment
+            if (
+                scenario_configs[scenario_type].get('backend') == 'mpi' and\
+                not self.environment['mpi_environment']
+            ):
+                scenario_configs[scenario_type]['backend'] = 'dask'
+
             base_config.update(scenario_configs[scenario_type])
 
         return base_config
@@ -364,7 +453,8 @@ class ParallelConfig:
             print(f" ({env['hpc_type']})")
         else:
             print()
-        print(f"  MPI: {'Available' if env['mpi_available'] else 'Not available'}")
+        print(f"  MPI Environment: {'Yes' if env['mpi_environment'] else 'No'}")
+        print(f"  MPI Available: {'Yes' if env['mpi_available'] else 'No'}")
         print(f"  GPU: {'Available' if env['gpu_available'] else 'Not available'}", end='')
         if env['gpu_available']:
             print(f" ({env['gpu_count']} devices)")
@@ -410,10 +500,10 @@ def setup_parallel_environment(
     # Create configuration
     config = ParallelConfig(config_file)
 
-    # Optimize for scenario size
+    # Optimise for scenario size
     if scenario_size != 'auto':
-        optimized = config.optimize_for_scenario(scenario_size)
-        config.config.update(optimized)
+        optimised = config.optimise_for_scenario(scenario_size)
+        config.config.update(optimised)
 
     # Print summary if requested
     if verbose:
@@ -457,7 +547,7 @@ def get_batch_iterator(items, batch_size=None, config=None):
         yield items[i:i + batch_size]
 
 
-def parallelize_dataframe(df, func, config=None, **kwargs):
+def parallelise_dataframe(df, func, config=None, **kwargs):
     """
     Apply function to DataFrame in parallel.
 
