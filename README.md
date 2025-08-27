@@ -34,7 +34,7 @@ The current focus has been on studying responses of infrastructure facilities
 has been done in the code backend to extend the same methodology to modelling
 network vulnerability as well (e.g. electricity transmission networks).
 
-SIRA models are based on graph theory. All infrastructure systems are
+SIRA models are effectively directed graphs. All infrastructure systems are
 represented as networks. This allows an user to develop arbitrarily complex
 models of a infrastructure facility or a network to be used in
 impact simulation.
