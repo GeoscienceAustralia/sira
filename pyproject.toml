@@ -32,3 +32,18 @@ omit = [
 skip_empty = true
 show_missing = false
 ignore_errors = true
+
+[tool.flake8]
+max-line-length = 90
+inline-quotes = "double"
+exclude = [".git", ".venv", "__pycache__"]
+ignore = ["E211", "E266", "E302", "E305", "E402", "E502", "F401", "F841", "W503"]
+extend-ignore = [
+    # See https://github.com/PyCQA/pycodestyle/issues/373
+    "E203"
+]
+per-file-ignores = [
+    "sira/__main__.py:E402",  # module level import not at top of file
+    "__init__.py:F401",  # imported but unused
+    "sira/fit_model.py:E0611"  # scipy.special is a C lib and flake8 cannot see into it
+]
