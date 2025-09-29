@@ -1,0 +1,20 @@
+# Pin critical versions for reproducibility across workstations/HPC
+# Adjust deliberately when upgrading; keep list small.
+
+numba==0.60.0
+llvmlite==0.43.0
+dask==2024.8.0
+distributed==2024.8.0
+pyarrow>=15.0.0
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.4
+python-igraph>=0.11
+numba==0.60.0
+llvmlite==0.43.0
+dask==2024.8.0
+pyarrow>=15.0.0
+numpy>=1.26
+pandas>=2.2
+python-igraph>=0.11
+cairocffi>=1.4.0

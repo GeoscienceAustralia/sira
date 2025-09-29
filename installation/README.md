@@ -1,3 +1,48 @@
+Layered Python environment (HPC-friendly)
+-----------------------------------------
+
+We provide a minimal core requirements file suitable for headless HPC runs, and
+an optional visualization set for notebooks/plots. Critical pins live in a small
+constraints file to keep installs reproducible but flexible.
+
+Files:
+- `installation/constraints.txt` – version pins for key libraries (NumPy, pandas, Dask, Numba, etc.).
+- `installation/requirements-core.txt` – minimal runtime deps (includes python-igraph and scikit-learn).
+- `installation/requirements-viz.txt` – optional plotting/jupyter extras (includes yellowbrick).
+
+Create a venv on Gadi (HOME-based):
+
+1) Create and activate the venv
+    module load python3/3.11.7
+    python3 -m venv $HOME/venv/sira-env
+    source $HOME/venv/sira-env/bin/activate
+
+2) Install constraints, core, and and other essential packages
+    python -m pip install --upgrade pip
+    python -m pip install -r installation/constraints.txt
+    python -m pip install -r installation/requirements-core.txt
+    python -m pip install -r installation/requirements-viz.txt
+    python -m pip install -r installation/requirements-dev.txt
+    python -m pip install -v --no-binary mpi4py mpi4py
+
+3) Install mpi4py from source (for HPC environment)
+    python3 -m pip install -v --no-binary :all: --user --cache-dir=$TMPDIR mpi4py
+
+4) Optional extras
+    python -m pip install -r installation/requirements-docs.txt
+    python -m pip install -r installation/requirements-diagrams.txt
+    python -m pip install -r installation/requirements-notebook.txt
+    python -m pip install -r installation/requirements-geo.txt
+
+5) Install SIRA
+    python -m pip install -e .dea
+
+Sanity check
+    python - <<'EOF'
+    import igraph, numpy, pandas, dask, distributed, sklearn
+    print('Core imports OK')
+    EOF
+
 # Instructions for building a SIRA run environment in docker
 
 ## Building the docker image

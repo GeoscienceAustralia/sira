@@ -1,0 +1,8 @@
+shapely
+pyproj
+fiona
+geopandas
+cartopy
+contextily
+xyzservices
+rasterio
