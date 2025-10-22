@@ -9,21 +9,16 @@ rootLogger.setLevel(logging.INFO)
 
 
 class TestInputConfFile(unittest.TestCase):
-
     def setUp(self):
-
-        self.sim_dir_name = 'models'
+        self.sim_dir_name = "models"
         root_dir = Path(__file__).resolve().parent
         models_dir = Path(root_dir, self.sim_dir_name)
         # ------------------------------------------------------------
-        self.conf_file_paths = [
-            x for x in models_dir.rglob('input/*config*.json')]
-        self.model_file_paths = [
-            x for x in models_dir.rglob('input/*model*.json')]
+        self.conf_file_paths = [x for x in models_dir.rglob("input/*config*.json")]
+        self.model_file_paths = [x for x in models_dir.rglob("input/*model*.json")]
         # ------------------------------------------------------------
         self.confs = []
-        for conf_file_path, model_file_path in \
-                zip(self.conf_file_paths, self.model_file_paths):
+        for conf_file_path, model_file_path in zip(self.conf_file_paths, self.model_file_paths):
             conf = Configuration(conf_file_path, model_file_path)
             self.confs.append(conf)
 
@@ -77,15 +72,15 @@ class TestInputConfFile(unittest.TestCase):
 
     def test_datatype_of_RESTORE_PCT_CHKPOINTS(self):
         for conf in self.confs:
-            self.assertIsInstance(conf.RESTORE_PCT_CHECKPOINTS, int)
+            self.assertIsInstance(conf.RESTORATION_PCT_CHECKPOINTS, int)
 
     def test_datatype_of_RESTORE_TIME_STEP(self):
         for conf in self.confs:
-            self.assertIsInstance(conf.RESTORE_TIME_STEP, int)
+            self.assertIsInstance(conf.RESTORATION_TIME_STEP, int)
 
     def test_datatype_of_RESTORE_TIME_MAX(self):
         for conf in self.confs:
-            self.assertIsInstance(conf.RESTORE_TIME_MAX, int)
+            self.assertIsInstance(conf.RESTORATION_TIME_MAX, int)
 
     def test_datatype_of_RESTORATION_STREAMS(self):
         for conf in self.confs:

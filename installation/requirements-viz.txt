@@ -1,4 +1,4 @@
-# Visualization extras (optional)
+# Visualisation packages
 matplotlib
 seaborn
 colorcet

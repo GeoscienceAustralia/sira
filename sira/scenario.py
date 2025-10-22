@@ -8,7 +8,6 @@ class Scenario:
     """
 
     def __init__(self, configuration):
-
         self.infrastructure_level = configuration.INFRASTRUCTURE_LEVEL
         self.raw_output_dir = configuration.RAW_OUTPUT_DIR
         self.output_path = configuration.OUTPUT_DIR
@@ -32,17 +31,16 @@ class Scenario:
         self.restoration_streams = configuration.RESTORATION_STREAMS
 
         # Recovery analysis configuration
-        self.recovery_method = getattr(configuration, 'RECOVERY_METHOD', 'max')
-        self.num_repair_streams = getattr(configuration, 'NUM_REPAIR_STREAMS', 100)
+        self.recovery_method = getattr(configuration, "RECOVERY_METHOD", "max")
+        self.num_repair_streams = getattr(configuration, "NUM_REPAIR_STREAMS", 1000)
 
         # Optional parameters - None means use all available/auto-calculate
-        self.recovery_max_workers = getattr(configuration, 'RECOVERY_MAX_WORKERS', None)
-        self.recovery_batch_size = getattr(configuration, 'RECOVERY_BATCH_SIZE', None)
+        self.recovery_max_workers = getattr(configuration, "RECOVERY_MAX_WORKERS", None)
+        self.recovery_batch_size = getattr(configuration, "RECOVERY_BATCH_SIZE", None)
 
-        self.restoration_checkpoints, self.restoration_pct_steps \
-            = np.linspace(
-                0.0, 1.0, num=configuration.RESTORE_PCT_CHECKPOINTS, retstep=True
-            )
+        self.restoration_checkpoints, self.restoration_pct_steps = np.linspace(
+            0.0, 1.0, num=configuration.RESTORATION_PCT_CHECKPOINTS, retstep=True
+        )
 
         # Parallel computing attributes
         # These will be set by the main module when parallel processing is enabled
@@ -52,9 +50,9 @@ class Scenario:
 
         # List of attributes to exclude from pickling (non-serialisable objects)
         self._pickle_exclude = {
-            '_parallel_config',
-            '_parallel_backend_data',
-            'recovery_analysis_time'
+            "_parallel_config",
+            "_parallel_backend_data",
+            "recovery_analysis_time",
         }
 
         # Recovery analysis timing - set during recovery analysis
@@ -91,7 +89,7 @@ class Scenario:
     @property
     def parallel_config(self):
         """Access parallel config with safe fallback."""
-        return getattr(self, '_parallel_config', None)
+        return getattr(self, "_parallel_config", None)
 
     @parallel_config.setter
     def parallel_config(self, value):
@@ -101,7 +99,7 @@ class Scenario:
     @property
     def parallel_backend_data(self):
         """Access parallel backend data with safe fallback."""
-        return getattr(self, '_parallel_backend_data', None)
+        return getattr(self, "_parallel_backend_data", None)
 
     @parallel_backend_data.setter
     def parallel_backend_data(self, value):
@@ -132,10 +130,10 @@ class Scenario:
             Recovery configuration parameters
         """
         return {
-            'recovery_method': self.recovery_method,
-            'num_repair_streams': self.num_repair_streams,
-            'recovery_max_workers': self.recovery_max_workers,
-            'recovery_batch_size': self.recovery_batch_size
+            "recovery_method": self.recovery_method,
+            "num_repair_streams": self.num_repair_streams,
+            "recovery_max_workers": self.recovery_max_workers,
+            "recovery_batch_size": self.recovery_batch_size,
         }
 
     def set_recovery_analysis_time(self, analysis_time):
@@ -170,7 +168,7 @@ class Scenario:
             Backend name ('mpi', 'dask', 'multiprocessing') or None if not configured
         """
         if self.parallel_config:
-            return self.parallel_config.config.get('backend', None)
+            return self.parallel_config.config.get("backend", None)
         return None
 
     def create_worker_copy(self):

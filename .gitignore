@@ -2,7 +2,7 @@
 output/
 
 ### Python template
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimised / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -55,7 +55,8 @@ cov.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Logging stuff:
+logs/
 *.log
 
 # Sphinx documentation

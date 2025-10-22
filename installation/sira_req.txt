@@ -86,7 +86,7 @@ sphinxcontrib-htmlhelp
 sphinxcontrib-jsmath
 sphinxcontrib-qthelp
 sphinxcontrib-seqdiag
-sphinxcontrib-serializinghtml
+sphinxcontrib-serialisinghtml
 sphinxcontrib-websupport
 sphinx-rtd-theme
 sqlalchemy

@@ -1,34 +1,117 @@
-"""
-Optimised recovery analysis module using MPI4Py for HPC scaling and Dask for data processing.
-Fixes zero recovery time issues and provides significant performance improvements.
-"""
+import logging
+import math
+import os
+import pickle
+import time
+from collections import OrderedDict
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
-import scipy.stats as stats
 import pandas as pd
-import logging
-from typing import List, Optional, Any, Tuple, Dict, Union
-import os
-from pathlib import Path
 from colorama import Fore
-
-# Progress tracking
-from sympy import Li
-from torch import inverse
 from tqdm import tqdm
 
+from sira import loss_analysis
+from sira.configuration import Configuration
 from sira.modelling.component import Component
-from sira.modelling.hazard import HazardsContainer
+from sira.modelling.hazard import Hazard, HazardsContainer
 
 # Configure logging
-logger = logging.getLogger(__name__)
+rootLogger = logging.getLogger(__name__)
+rootLogger.setLevel(logging.INFO)
 
 # Constants for recovery calculation
-DEFAULT_RECOVERY_TIME_PER_DS = 168  # hours (1 week) per damage state
 RESTORATION_THRESHOLD = 0.95
-MIN_FUNCTIONALITY_FOR_DAMAGE = 0.98  # Below this, component is considered damaged
-MIN_FUNCTIONALITY_THRESHOLD = 0.03   # Lowest functionality threshold considered
-MIN_RECOVERY_TIME = 24               # Set the minimum recovery time for damaged components
+MAX_FUNCTIONALITY_THRESHOLD = 0.95  # Below this, component is considered damaged
+MIN_FUNCTIONALITY_THRESHOLD = 0.03  # Lowest functionality threshold considered
+MIN_RECOVERY_TIME = 1  # Set the minimum recovery time for damaged components
+
+# Performance monitoring
+ENABLE_PROFILING = os.environ.get("SIRA_ENABLE_PROFILING", "0") == "1"
+PROFILE_OUTPUT_DIR = os.environ.get("SIRA_PROFILE_DIR", ".")
+
+
+def profile_performance(func):
+    """Decorator to profile function performance when enabled."""
+    if not ENABLE_PROFILING:
+        return func
+
+    def wrapper(*args, **kwargs):
+        import cProfile
+        import pstats
+        from pathlib import Path
+
+        profiler = cProfile.Profile()
+        profiler.enable()
+
+        start_time = time.time()
+        try:
+            result = func(*args, **kwargs)
+            return result
+        finally:
+            profiler.disable()
+            elapsed_time = time.time() - start_time
+
+            # Save profile data
+            profile_dir = Path(PROFILE_OUTPUT_DIR)
+            profile_dir.mkdir(exist_ok=True)
+            profile_file = profile_dir / f"{func.__name__}_{int(time.time())}.prof"
+            profiler.dump_stats(str(profile_file))
+
+            # Generate readable stats
+            stats_file = profile_dir / f"{func.__name__}_{int(time.time())}.txt"
+            with open(stats_file, "w") as f:
+                stats = pstats.Stats(profiler, stream=f)
+                stats.sort_stats("cumulative")
+                stats.print_stats(50)  # Top 50 functions
+
+            rootLogger.info(f"Profile saved: {profile_file}")
+            rootLogger.info(f"Function {func.__name__} completed in {elapsed_time:.2f}s")
+
+    return wrapper
+
+
+def monitor_memory_usage():
+    """Monitor current memory usage."""
+    try:
+        import psutil
+
+        process = psutil.Process()
+        memory_info = process.memory_info()
+        memory_mb = memory_info.rss / 1024 / 1024
+        return memory_mb
+    except ImportError:
+        return None
+
+
+def log_system_resources():
+    """Log current system resource usage."""
+    try:
+        import psutil
+
+        # CPU usage
+        cpu_percent = psutil.cpu_percent(interval=1)
+        cpu_count = psutil.cpu_count()
+
+        # Memory usage
+        memory = psutil.virtual_memory()
+        memory_percent = memory.percent
+        memory_available_gb = memory.available / (1024**3)
+
+        # Disk usage
+        disk = psutil.disk_usage("/")
+        disk_percent = disk.percent
+
+        rootLogger.info(
+            f"System Resources - CPU: {cpu_percent}% ({cpu_count} cores), "
+            f"Memory: {memory_percent}% ({memory_available_gb:.1f}GB available), "
+            f"Disk: {disk_percent}%"
+        )
+
+    except ImportError:
+        rootLogger.warning("psutil not available for resource monitoring")
+
 
 def is_mpi_environment():
     """
@@ -40,36 +123,39 @@ def is_mpi_environment():
         True if in proper MPI environment, False otherwise
     """
     # Check for explicit disabling
-    if os.environ.get('SIRA_FORCE_NO_MPI', '0') == '1':
+    if os.environ.get("SIRA_FORCE_NO_MPI", "0") == "1":
         return False
 
     # Check for SLURM (most common HPC scheduler)
-    slurm_vars = ['SLURM_JOB_ID', 'SLURM_NTASKS', 'SLURM_PROCID', 'SLURM_NODELIST']
+    slurm_vars = ["SLURM_JOB_ID", "SLURM_NTASKS", "SLURM_PROCID", "SLURM_NODELIST"]
     if any(var in os.environ for var in slurm_vars):
         return True
 
     # Check for PBS/Torque (another common HPC scheduler)
-    pbs_vars = ['PBS_JOBID', 'PBS_NCPUS', 'PBS_NODEFILE']
+    pbs_vars = ["PBS_JOBID", "PBS_NCPUS", "PBS_NODEFILE"]
     if any(var in os.environ for var in pbs_vars):
         return True
 
     # Check for explicit MPI runtime variables
     mpi_runtime_vars = [
-        'OMPI_COMM_WORLD_SIZE', 'OMPI_COMM_WORLD_RANK',  # OpenMPI
-        'PMI_SIZE', 'PMI_RANK',                          # MPICH
-        'MPI_LOCALRANKID', 'MPI_LOCALNRANKS'             # Intel MPI
+        "OMPI_COMM_WORLD_SIZE",
+        "OMPI_COMM_WORLD_RANK",  # OpenMPI
+        "PMI_SIZE",
+        "PMI_RANK",  # MPICH
+        "MPI_LOCALRANKID",
+        "MPI_LOCALNRANKS",  # Intel MPI
     ]
     if any(var in os.environ for var in mpi_runtime_vars):
         return True
 
     # Check if we're being launched with mpirun/mpiexec
-    parent_process = os.environ.get('_', '')
-    if any(launcher in parent_process for launcher in ['mpirun', 'mpiexec', 'srun']):
+    parent_process = os.environ.get("_", "")
+    if any(launcher in parent_process for launcher in ["mpirun", "mpiexec", "srun"]):
         return True
 
     # Check for HPC-specific hostnames or environments
-    hostname = os.environ.get('HOSTNAME', '')
-    if any(pattern in hostname.lower() for pattern in ['hpc', 'cluster', 'node', 'compute']):
+    hostname = os.environ.get("HOSTNAME", "")
+    if any(pattern in hostname.lower() for pattern in ["hpc", "cluster", "node", "compute"]):
         return True
 
     return False
@@ -89,7 +175,7 @@ def safe_mpi_import():
 
     try:
         # Set environment variable to prevent automatic initialisation
-        os.environ['MPI4PY_RC_INITIALISE'] = 'False'
+        os.environ["MPI4PY_RC_INITIALISE"] = "False"
 
         from mpi4py import MPI
 
@@ -101,14 +187,14 @@ def safe_mpi_import():
         rank = comm.Get_rank()
         size = comm.Get_size()
 
-        logger.info(f"MPI successfully initialised: rank {rank} of {size}")
+        rootLogger.info(f"MPI successfully initialised: rank {rank} of {size}")
         return MPI, comm, rank, size
 
     except ImportError:
-        logger.warning("MPI4Py not available even in MPI environment")
+        rootLogger.warning("MPI4Py not available even in MPI environment")
         return None, None, 0, 1
     except Exception as e:
-        logger.warning(f"MPI initialisation failed: {e}")
+        rootLogger.warning(f"MPI initialisation failed: {e}")
         return None, None, 0, 1
 
 
@@ -120,7 +206,7 @@ class RecoveryAnalysisEngine:
     - Multiprocessing for single-node systems
     """
 
-    def __init__(self, backend='auto'):
+    def __init__(self, backend="auto"):
         """
         Initialise recovery analysis engine.
 
@@ -136,308 +222,352 @@ class RecoveryAnalysisEngine:
         self.dask_client = None
         self.MPI = None
 
-        if self.backend == 'mpi':
+        if self.backend == "mpi":
             self.MPI, self.comm, self.rank, self.size = safe_mpi_import()
             if self.MPI is None:
-                logger.warning("MPI backend requested but not available. Falling back to Dask.")
-                self.backend = 'dask'
+                rootLogger.warning("MPI backend requested but not available. Falling back to Dask.")
+                self.backend = "dask"
 
     def _select_backend(self, requested_backend):
         """Select the best available backend."""
-        if requested_backend == 'auto':
+        if requested_backend == "auto":
             # Check for MPI environment first
             if is_mpi_environment():
-                return 'mpi'
+                return "mpi"
             # Check for Dask scheduler
-            elif 'DASK_SCHEDULER_ADDRESS' in os.environ:
-                return 'dask'
+            elif "DASK_SCHEDULER_ADDRESS" in os.environ:
+                return "dask"
             else:
-                return 'multiprocessing'
+                return "multiprocessing"
         return requested_backend
 
-    def setup_dask_client(self, n_workers=None, threads_per_worker=1, memory_limit='4GB'):
-        """Setup Dask client for distributed computing."""
-        if self.backend == 'dask' and self.dask_client is None:
+    def setup_dask_client(self, n_workers=None, threads_per_worker=1, memory_limit="4GB"):
+        """Setup optimised Dask client for HPC environments."""
+        if self.backend == "dask" and self.dask_client is None:
             try:
                 # Try to connect to existing scheduler
-                scheduler_address = os.environ.get('DASK_SCHEDULER_ADDRESS')
+                scheduler_address = os.environ.get("DASK_SCHEDULER_ADDRESS")
                 if scheduler_address:
                     from dask.distributed import Client
+
                     self.dask_client = Client(scheduler_address)
+                    rootLogger.info(f"Connected to existing Dask scheduler: {scheduler_address}")
                 else:
-                    # Create local cluster
-                    from dask.distributed import LocalCluster, Client
+                    # Create optimised local cluster for HPC
+                    from dask.distributed import Client, LocalCluster
+
                     if n_workers is None:
                         cpu_count = os.cpu_count() if os.cpu_count() is not None else 1
-                        n_workers = min(cpu_count, 8)  # type: ignore
+                        # For HPC: use more workers with fewer threads each for better parallelism
+                        n_workers = min(cpu_count, 64)  # type: ignore # Cap at 64 workers for memory efficiency
+
+                    # Optimise for HPC environments
+                    threads_per_worker = max(1, (os.cpu_count() or 1) // n_workers)
+
+                    # Increase memory limit for large datasets
+                    if isinstance(memory_limit, str) and memory_limit == "4GB":
+                        total_memory_gb = 32  # Conservative estimate for typical HPC node
+                        worker_memory_gb = total_memory_gb // n_workers
+                        memory_limit = f"{max(2, worker_memory_gb)}GB"
+
                     cluster = LocalCluster(
                         n_workers=n_workers,
                         threads_per_worker=threads_per_worker,
-                        memory_limit=memory_limit
+                        memory_limit=memory_limit,
+                        dashboard_address=":8787",
+                        # Optimise for scientific computing
+                        processes=True,  # Use processes for better GIL avoidance
+                        silence_logs=logging.WARNING,  # Reduce log spam
                     )
                     self.dask_client = Client(cluster)
-                logger.info(f"Dask client initialised: {self.dask_client}")
-            except Exception as e:
-                logger.warning(f"Failed to setup Dask client: {e}. Falling back to multiprocessing.")
-                self.backend = 'multiprocessing'
 
-    def analyze(
+                rootLogger.info(f"Dask client initialised: {self.dask_client}")
+                rootLogger.info(f"Dashboard available at: {self.dask_client.dashboard_link}")
+
+                # Configure Dask for HPC performance
+                from dask import config as daskconfig
+
+                daskconfig.set(
+                    {
+                        "distributed.worker.memory.target": 0.80,
+                        "distributed.worker.memory.spill": 0.85,
+                        "distributed.worker.memory.pause": 0.90,
+                        "distributed.worker.memory.terminate": 0.95,
+                        "distributed.comm.compression": "lz4",  # Fast compression
+                        "distributed.scheduler.bandwidth": "1000MB/s",  # HPC network speed
+                    }
+                )
+
+            except Exception as e:
+                rootLogger.warning(
+                    f"Failed to setup Dask client: {e}. Falling back to multiprocessing."
+                )
+                self.backend = "multiprocessing"
+
+    @profile_performance
+    def analyse(
         self,
+        config: Configuration,
         hazards: HazardsContainer,
         infrastructure: Any,
         scenario: Any,
-        component_resp_df: pd.DataFrame,
         components_costed: List[str],
-        recovery_method: str = 'max',
-        num_repair_streams: int = 100
+        recovery_method: str = "max",
+        num_repair_streams: int = 100,
     ) -> List[float]:
         """
         Main analysis function that routes to appropriate backend.
         """
         hazard_event_list = hazards.hazard_scenario_list
-        logger.info(f"Starting recovery analysis with backend: {self.backend}")
-        logger.info(f"Processing {len(hazard_event_list)} events")
 
-        if self.backend == 'mpi':
-            return self._analyze_mpi(
-                hazards, hazard_event_list, infrastructure, scenario,
-                component_resp_df, components_costed,
-                recovery_method, num_repair_streams
+        # Log system resources at start
+        log_system_resources()
+
+        rootLogger.info(f"Starting recovery analysis with backend: {self.backend}")
+        rootLogger.info(f"Processing {len(hazard_event_list)} events")
+        rootLogger.info(f"Recovery method: {recovery_method}, Streams: {num_repair_streams}")
+
+        if self.backend == "mpi":
+            return self._analyse_mpi(
+                config,
+                hazards,
+                hazard_event_list,
+                infrastructure,
+                scenario,
+                components_costed,
+                recovery_method,
+                num_repair_streams,
             )
-        elif self.backend == 'dask':
-            return self._analyze_dask(
-                hazards, hazard_event_list, infrastructure, scenario,
-                component_resp_df, components_costed,
-                recovery_method, num_repair_streams
+        elif self.backend == "dask":
+            return self._analyse_dask(
+                config,
+                hazards,
+                hazard_event_list,
+                infrastructure,
+                scenario,
+                components_costed,
+                recovery_method,
+                num_repair_streams,
             )
         else:
-            return self._analyze_multiprocessing(
-                hazards, hazard_event_list, infrastructure, scenario,
-                component_resp_df, components_costed,
-                recovery_method, num_repair_streams
+            return self._analyse_multiprocessing(
+                config,
+                hazards,
+                hazard_event_list,
+                infrastructure,
+                components_costed,
+                recovery_method,
+                num_repair_streams,
             )
 
-    def _analyze_mpi(
+    def _analyse_dask(
         self,
+        config: Configuration,
         hazards: HazardsContainer,
         hazard_event_list: List[str],
         infrastructure: Any,
         scenario: Any,
-        component_resp_df: pd.DataFrame,
         components_costed: List[str],
         recovery_method: str,
-        num_repair_streams: int
+        num_repair_streams: int,
     ) -> List[float]:
-        """MPI4Py implementation for HPC environments."""
-        if self.MPI is None or self.comm is None:
-            logger.error("MPI not available. Falling back to multiprocessing.")
-            self.backend = 'multiprocessing'
-            return self._analyze_multiprocessing(
-                hazards, hazard_event_list, infrastructure, scenario,
-                component_resp_df, components_costed,
-                recovery_method, num_repair_streams
-            )
-
-        # Broadcast infrastructure data to all ranks
-        if self.rank == 0:
-            infra_data = extract_infrastructure_data(infrastructure)
-            # Convert DataFrame to dict for MPI broadcast
-            resp_data = component_resp_df.to_dict('index')
-        else:
-            infra_data = None
-            resp_data = None
-
-        infra_data = self.comm.bcast(infra_data, root=0)
-        resp_data = self.comm.bcast(resp_data, root=0)
-
-        # Scatter events across ranks
-        if self.rank == 0:
-            # Divide events into chunks for each rank
-            chunks = np.array_split(hazard_event_list, self.size)
-            chunks = [chunk.tolist() for chunk in chunks]
-        else:
-            chunks = None
-
-        local_events = self.comm.scatter(chunks, root=0)
-
-        # Process local events
-        local_results = []
-        for event_id in local_events:
-            try:
-                # Get event data from broadcasted dict
-                if event_id in resp_data:
-                    event_response_components = pd.Series(resp_data[event_id])
-                else:
-                    # Try string conversion
-                    event_id_str = str(event_id)
-                    if event_id_str in resp_data:
-                        event_response_components = pd.Series(resp_data[event_id_str])
-                    else:
-                        logger.warning(f"Event {event_id} not found in data")
-                        local_results.append(0.0)
-                        continue
-
-                recovery_time = calculate_event_recovery_robust(
-                    event_id, hazards, event_response_components, components_costed,
-                    infrastructure, infra_data,
-                    recovery_method, num_repair_streams
-                )
-                local_results.append(recovery_time)
-
-            except Exception as e:
-                logger.error(f"Error processing event {event_id}: {e}")
-                local_results.append(0.0)
-
-        # Gather results at rank 0
-        all_results = self.comm.gather(local_results, root=0)
-
-        if self.rank == 0:
-            # Flatten results maintaining order
-            if chunks is None:
-                return []
-            recovery_times = []
-            for i, chunk in enumerate(chunks):
-                for j, event_id in enumerate(chunk):
-                    recovery_times.append(all_results[i][j])  # type: ignore
-            return recovery_times
-        else:
-            return []
-
-    def _analyze_dask(
-        self,
-        hazards: HazardsContainer,
-        hazard_event_list: List[str],
-        infrastructure: Any,
-        scenario: Any,
-        component_resp_df: pd.DataFrame,
-        components_costed: List[str],
-        recovery_method: str,
-        num_repair_streams: int
-    ) -> List[float]:
-        """Dask implementation for distributed computing."""
+        """Optimised Dask implementation for distributed computing."""
         # Setup Dask client if not already done
         if self.dask_client is None:
             self.setup_dask_client()
 
         if self.dask_client is None:
-            logger.warning("Dask client not available. Falling back to multiprocessing.")
-            self.backend = 'multiprocessing'
-            return self._analyze_multiprocessing(
-                hazards, hazard_event_list, infrastructure, scenario,
-                component_resp_df, components_costed,
-                recovery_method, num_repair_streams
+            rootLogger.warning("Dask client not available. Falling back to multiprocessing.")
+            self.backend = "multiprocessing"
+            return self._analyse_multiprocessing(
+                config,
+                hazards,
+                hazard_event_list,
+                infrastructure,
+                components_costed,
+                recovery_method,
+                num_repair_streams,
             )
 
+        start_time = time.time()
+        rootLogger.info(f"Starting Dask analysis for {len(hazard_event_list)} events")
+
         # Convert to Dask DataFrame for efficient processing
-        logger.info("Converting to Dask DataFrame...")
+        rootLogger.info("Preparing data for distributed processing...")
 
-        # Ensure index is string type for consistent lookups
-        component_resp_df.index = component_resp_df.index.astype(str)
+        # Extract infrastructure data once for efficiency
+        infra_data = extract_infrastructure_data(infrastructure)
 
-        # Calculate optimal partitions based on data size
-        max_numcores = max(self.dask_client.ncores().values())
-        n_partitions = max(1, min(
-            len(component_resp_df) // 1000,  # ~1000 rows per partition
-            max_numcores * 4    # 4 partitions per core
-        ))
+        # Create hazard lookup for faster access
+        hazard_lookup = {event_id: i for i, event_id in enumerate(hazards.hazard_scenario_list)}
 
-        import dask.dataframe as dd
         from dask.delayed import delayed
         from dask.distributed import as_completed
 
-        ddf = dd.from_pandas(component_resp_df, npartitions=n_partitions)
-
-        # Extract infrastructure data once
-        infra_data = extract_infrastructure_data(infrastructure)
-
-        # Create delayed tasks for each event
-        logger.info("Creating Dask computation graph...")
+        # Optimise task batching for better performance
+        batch_size = max(1, len(hazard_event_list) // (len(self.dask_client.nthreads()) * 4))  # type: ignore
+        rootLogger.info(f"Using batch size: {batch_size}")
 
         @delayed
-        def process_event_delayed(event_id, infra_data):
-            try:
-                # Get event data from Dask DataFrame
-                event_df = ddf.loc[str(event_id)].compute()
-                if isinstance(event_df, pd.DataFrame):
-                    event_data = event_df.iloc[0]
-                else:
-                    event_data = event_df
+        def process_event_batch(event_ids_batch, infra_data_local, hazard_lookup_local):
+            """Process a batch of events for better load balancing."""
+            batch_results = []
+            for event_id in event_ids_batch:
+                try:
+                    if event_id not in hazard_lookup_local:
+                        rootLogger.warning(f"Event {event_id} not found in hazard lookup")
+                        batch_results.append(0.0)
+                        continue
 
-                return calculate_event_recovery_robust(
-                    event_id, hazards, event_data, components_costed,
-                    infrastructure, infra_data,
-                    recovery_method, num_repair_streams
+                    # hazard_idx = hazard_lookup_local[event_id]
+                    # hazard_obj = hazards.listOfhazards[hazard_idx]
+                    hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
+
+                    recovery_time = calculate_event_recovery(
+                        config,
+                        event_id,
+                        hazard_obj,
+                        components_costed,
+                        infrastructure,
+                        recovery_method,
+                        num_repair_streams,
+                    )
+                    batch_results.append(recovery_time)
+
+                except Exception as e:
+                    rootLogger.error(f"Error processing event {event_id}: {e}")
+                    batch_results.append(0.0)
+
+            return batch_results
+
+        # Create batched tasks for better parallelisation
+        tasks = []
+        batch_positions = []  # list of lists of positions covered by each task
+        for i in range(0, len(hazard_event_list), batch_size):
+            batch = hazard_event_list[i : i + batch_size]
+            task = process_event_batch(batch, infra_data, hazard_lookup)
+            tasks.append(task)
+            # positions are contiguous now, but store explicitly for robustness
+            positions = list(range(i, min(i + len(batch), len(hazard_event_list))))
+            batch_positions.append(positions)
+
+        # Compute with progress bar and better error handling
+        rootLogger.info(f"Computing recovery times with {len(tasks)} batches using Dask...")
+
+        # Use more efficient compute strategy and coerce to a list of futures
+        futures_obj = self.dask_client.compute(tasks)
+        if isinstance(futures_obj, (list, tuple)):
+            futures = list(futures_obj)
+        else:
+            futures = [futures_obj]
+
+        # Map futures to their exact positions
+        future_to_positions = {fut: batch_positions[idx] for idx, fut in enumerate(futures)}
+
+        # Process results as they complete with enhanced progress tracking
+        recovery_times: List[float] = [float("nan")] * len(hazard_event_list)
+        completed_events = 0
+
+        with tqdm(total=len(hazard_event_list), desc="Processing events") as pbar:
+            for future, batch_results in as_completed(futures, with_results=True):
+                positions = future_to_positions.get(future, [])
+                # Assign results using explicit positions
+                for j, result in enumerate(batch_results):
+                    if j < len(positions):
+                        pos = positions[j]
+                        if 0 <= pos < len(recovery_times):
+                            recovery_times[pos] = result
+                            completed_events += 1
+                            pbar.update(1)
+
+        # Final validation: fill any missing entries with error sentinel and log
+        missing_indices = [idx for idx, v in enumerate(recovery_times) if np.isnan(v)]
+        if missing_indices:
+            rootLogger.error(
+                ("Dask recovery assembly left %d missing results; marking these positions as -99.")
+                % len(missing_indices)
+            )
+            for idx in missing_indices:
+                recovery_times[idx] = -99.0
+
+        total_time = time.time() - start_time
+        rootLogger.info(f"Dask analysis completed in {total_time:.2f}s")
+        rootLogger.info(f"Average time per event: {total_time / len(hazard_event_list):.3f}s")
+
+        # Optional validation: compare a small sample with sequential computation
+        if os.environ.get("SIRA_VALIDATE_DASK", "0") == "1":
+            sample_n = min(100, len(hazard_event_list))
+            sample_ids = hazard_event_list[:sample_n]
+            seq_results: List[float] = []
+            for eid in sample_ids:
+                try:
+                    hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(eid)]
+                    rt = calculate_event_recovery(
+                        config,
+                        eid,
+                        hazard_obj,
+                        components_costed,
+                        infrastructure,
+                        recovery_method,
+                        num_repair_streams,
+                    )
+                except Exception as _e:
+                    rt = -99.0
+                seq_results.append(rt)
+
+            mismatches = []
+            for i, eid in enumerate(sample_ids):
+                pos = hazard_event_list.index(eid)
+                if pos < len(recovery_times):
+                    dask_val = recovery_times[pos]
+                    seq_val = seq_results[i]
+                    # Treat both NaN and -99.0 as mismatches; compare floats directly here
+                    close = dask_val == seq_val or (
+                        isinstance(dask_val, float)
+                        and isinstance(seq_val, float)
+                        and abs(dask_val - seq_val) < 1e-9
+                    )
+                    if not close:
+                        mismatches.append((pos, eid, dask_val, seq_val))
+            if mismatches:
+                rootLogger.error(
+                    "Dask vs sequential validation mismatches: %d (showing first 10): %s"
+                    % (len(mismatches), mismatches[:10])
                 )
-            except Exception as e:
-                logger.error(f"Error processing event {event_id}: {e}")
-                return 0.0
+            else:
+                rootLogger.info("Dask vs sequential validation: no mismatches on sample")
 
-        # Create delayed tasks
-        tasks = [
-            process_event_delayed(event_id, infra_data)
-            for event_id in hazard_event_list]
+        return recovery_times  # type: ignore
 
-        # Compute with progress bar
-        logger.info("Computing recovery times with Dask...")
-        futures = self.dask_client.compute(tasks)
-
-        # Create mapping for efficient lookup (ensuring futures is a list)
-        future_to_idx = {future: i for i, future in enumerate(futures)}  # type: ignore
-
-        # Process results as they complete
-        recovery_times = [None] * len(hazard_event_list)
-
-        with tqdm(total=len(futures), desc="Processing events") as pbar:  # type: ignore
-            for future, result in as_completed(futures, with_results=True):
-                idx = future_to_idx[future]  # O(1) lookup instead of O(n)
-                recovery_times[idx] = result
-                pbar.update(1)
-
-        return recovery_times   # type: ignore
-
-    def _analyze_multiprocessing(
+    def _analyse_multiprocessing(
         self,
+        config: Configuration,
         hazards: HazardsContainer,
         hazard_event_list: List[str],
         infrastructure: Any,
-        scenario: Any,
-        component_resp_df: pd.DataFrame,
         components_costed: List[str],
         recovery_method: str,
-        num_repair_streams: int
+        num_repair_streams: int,
     ) -> List[float]:
-
         """Multiprocessing implementation for single-node systems."""
         from concurrent.futures import ProcessPoolExecutor, as_completed
 
         hazard_event_list = hazards.hazard_scenario_list
 
         # Extract infrastructure data once
-        infra_data = extract_infrastructure_data(infrastructure)
-        components = infrastructure.components
-
-        # Ensure consistent index type
-        component_resp_df.index = component_resp_df.index.astype(str)
+        # infra_data = extract_infrastructure_data(infrastructure)
 
         # Determine number of workers
         n_workers = min(os.cpu_count() or 1, len(hazard_event_list))
 
-        logger.info(f"Using multiprocessing with {n_workers} workers")
+        rootLogger.info(f"Using multiprocessing with {n_workers} workers")
 
         # Create chunks of events
         chunk_size = max(1, len(hazard_event_list) // (n_workers * 4))
         event_chunks = [
-            hazard_event_list[i:i + chunk_size]
+            hazard_event_list[i : i + chunk_size]
             for i in range(0, len(hazard_event_list), chunk_size)
         ]
-
-        # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        # # DEBUG PRINT
-        # print("-" * 50, "\n")
-        # print(f"Event chunks created: {event_chunks}")
-        # print(f"component_resp_df:\n{component_resp_df}")
-        # print("x" * 50, "\n")
-        # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         # Process chunks in parallel
         recovery_times = []
@@ -448,13 +578,12 @@ class RecoveryAnalysisEngine:
                 executor.submit(
                     process_event_chunk,
                     chunk,
+                    config,
                     hazards,
-                    component_resp_df.to_dict('index'),
                     components_costed,
                     infrastructure,
-                    infra_data,
                     recovery_method,
-                    num_repair_streams
+                    num_repair_streams,
                 ): chunk
                 for chunk in event_chunks
             }
@@ -470,7 +599,7 @@ class RecoveryAnalysisEngine:
                         chunk_results[chunk_idx] = result
                         pbar.update(1)
                     except Exception as e:
-                        logger.error(f"Error processing chunk: {e}")
+                        rootLogger.error(f"Error processing chunk: {e}")
                         chunk_results[chunk_idx] = [0.0] * len(chunk)
                         pbar.update(1)
 
@@ -479,6 +608,136 @@ class RecoveryAnalysisEngine:
                 recovery_times.extend(chunk_results[i])
 
         return recovery_times
+
+    def _analyse_mpi(
+        self,
+        config: Configuration,
+        hazards: HazardsContainer,
+        hazard_event_list: List[str],
+        infrastructure: Any,
+        scenario: Any,
+        components_costed: List[str],
+        recovery_method: str,
+        num_repair_streams: int,
+    ) -> List[float]:
+        """Optimised MPI4Py implementation for HPC environments like NCI Gadi."""
+        if self.MPI is None or self.comm is None:
+            rootLogger.error("MPI not available. Falling back to multiprocessing.")
+            self.backend = "multiprocessing"
+            return self._analyse_multiprocessing(
+                config,
+                hazards,
+                hazard_event_list,
+                infrastructure,
+                components_costed,
+                recovery_method,
+                num_repair_streams,
+            )
+
+        start_time = time.time()
+
+        # Only rank 0 prepares data for broadcasting
+        if self.rank == 0:
+            rootLogger.info(
+                f"Starting MPI analysis with {self.size} ranks for {len(hazard_event_list)} events"
+            )
+
+            # Extract minimal infrastructure data for better broadcast performance
+            infra_data = extract_infrastructure_data(infrastructure)
+
+            # Prepare hazard data for efficient access
+            hazard_lookup = {event_id: i for i, event_id in enumerate(hazards.hazard_scenario_list)}
+
+            # Create optimised work distribution using cyclic assignment for better load balancing
+            work_assignment = [[] for _ in range(self.size)]
+            for i, event_id in enumerate(hazard_event_list):
+                rank_id = i % self.size
+                work_assignment[rank_id].append(event_id)
+
+            broadcast_time = time.time()
+        else:
+            infra_data = None
+            hazard_lookup = None
+            work_assignment = None
+            broadcast_time = time.time()
+
+        # Efficient broadcast of essential data only
+        infra_data = self.comm.bcast(infra_data, root=0)
+        hazard_lookup = self.comm.bcast(hazard_lookup, root=0)
+
+        if self.rank == 0:
+            rootLogger.info(f"Broadcast completed in {time.time() - broadcast_time:.2f}s")
+
+        # Scatter work assignments
+        local_events = self.comm.scatter(work_assignment if self.rank == 0 else None, root=0)
+
+        # Process local events with progress tracking
+        local_results = []
+        processed_count = 0
+        local_start = time.time()
+
+        for event_id in local_events:
+            try:
+                if event_id not in hazard_lookup:
+                    rootLogger.warning(
+                        f"Rank {self.rank}: Event {event_id} not found in hazard lookup"
+                    )
+                    local_results.append(0.0)
+                    continue
+
+                hazard_idx = hazard_lookup[event_id]
+                hazard_obj = hazards.listOfhazards[hazard_idx]
+
+                recovery_time = calculate_event_recovery(
+                    config,
+                    event_id,
+                    hazard_obj,
+                    components_costed,
+                    infrastructure,
+                    recovery_method,
+                    num_repair_streams,
+                )
+                local_results.append(recovery_time)
+                processed_count += 1
+
+                # Progress reporting every 100 events
+                if processed_count % 100 == 0:
+                    elapsed = time.time() - local_start
+                    rate = processed_count / elapsed if elapsed > 0 else 0
+                    rootLogger.info(
+                        f"Rank {self.rank}: Processed {processed_count}/"
+                        f"{len(local_events)} events, rate: {rate:.1f} events/s"
+                    )
+
+            except Exception as e:
+                rootLogger.error(f"Rank {self.rank}: Error processing event {event_id}: {e}")
+                local_results.append(0.0)
+
+        # Gather results with timing
+        gather_start = time.time()
+        all_results = self.comm.gather(local_results, root=0)
+
+        if self.rank == 0:
+            gather_time = time.time() - gather_start
+            total_time = time.time() - start_time
+
+            rootLogger.info(f"Gather completed in {gather_time:.2f}s")
+            rootLogger.info(f"Total MPI analysis time: {total_time:.2f}s")
+
+            # Reconstruct results maintaining original event order
+            recovery_times = [0.0] * len(hazard_event_list)
+            event_to_idx = {event_id: i for i, event_id in enumerate(hazard_event_list)}
+
+            if all_results is not None:
+                for rank_idx, rank_results in enumerate(all_results):
+                    rank_events = work_assignment[rank_idx]  # type: ignore
+                    for event_id, result in zip(rank_events, rank_results):
+                        original_idx = event_to_idx[event_id]
+                        recovery_times[original_idx] = result
+
+            return recovery_times
+        else:
+            return []
 
     def cleanup(self):
         """Cleanup resources."""
@@ -493,117 +752,122 @@ def extract_infrastructure_data(infrastructure: Any) -> Dict:
     Includes proper recovery function data.
     """
     data = {
-        'components': {},
-        'system_class': getattr(infrastructure, 'system_class', 'unknown'),
-        'output_capacity': getattr(infrastructure, 'system_output_capacity', 1.0)
+        "components": {},
+        "system_class": getattr(infrastructure, "system_class", "unknown"),
+        "output_capacity": getattr(infrastructure, "system_output_capacity", 1.0),
     }
 
     for comp_id, component_obj in infrastructure.components.items():
         comp_data = {
-            'component_type': component_obj.component_type,
-            'component_class': component_obj.component_class,
-            'cost_fraction': getattr(component_obj, 'cost_fraction'),
-            'damage_states': {}
+            "component_type": component_obj.component_type,
+            "component_class": component_obj.component_class,
+            "cost_fraction": getattr(component_obj, "cost_fraction"),
+            "damage_states": {},
         }
 
         # Extract damage state information
         for ds_idx, damage_state in component_obj.damage_states.items():
             ds_recovery_config = {
-                'damage_ratio': getattr(damage_state, 'damage_ratio'),
-                'functionality': getattr(damage_state, 'functionality'),
-                'recovery_function': getattr(damage_state, 'recovery_function')  # yields RecoveryFunction object
+                "damage_ratio": getattr(damage_state, "damage_ratio"),
+                "functionality": getattr(damage_state, "functionality"),
+                "recovery_function": getattr(damage_state, "recovery_function"),
             }
 
             # Check for recovery function
-            if hasattr(damage_state, 'recovery_function_constructor'):
-                ds_recovery_config['recovery_function_constructor'] = \
+            if hasattr(damage_state, "recovery_function_constructor"):
+                ds_recovery_config["recovery_function_constructor"] = (
                     damage_state.recovery_function_constructor
-                # ds_recovery_config['recovery_function_name'] = getattr(
-                #     damage_state, 'recovery_function_constructor').get('function_name')
-                # ds_recovery_config['recovery_mean'] = getattr(
-                #     damage_state, 'recovery_function_constructor').get('mean')
-                # ds_recovery_config['recovery_std'] = getattr(
-                #     damage_state, 'recovery_function_constructor').get('stddev')
+                )
 
-            comp_data['damage_states'][ds_idx] = ds_recovery_config
+            comp_data["damage_states"][ds_idx] = ds_recovery_config
 
-        data['components'][comp_id] = comp_data
+        data["components"][comp_id] = comp_data
 
     return data
 
 
-def calculate_event_recovery_robust(
+def calculate_event_recovery(
+    config: Configuration,
     event_id: str,
-    hazards: HazardsContainer,
-    event_response_components: pd.Series,
+    hazard_obj: Hazard,
     components_costed: List[str],
     infrastructure: Any,
-    infra_data: Dict,
-    recovery_method: str,
-    num_repair_streams: int
-) -> float:
+    recovery_method: str = "max",
+    num_repair_streams: int = 100,
+) -> int:
     """
     Calculate recovery time for a single event with robust error handling.
-    Fixes the zero recovery time issue.
     """
-    component_recovery_times = []
-    damaged_components = 0
+    # component_recovery_times = []
+    # damaged_components = 0
 
-    # comp_obj = infrastructure.components[comp_name]
-    # hazard_obj = hazards.listOfhazards[
-    #     hazards.hazard_scenario_list.index(event_id)]
-    # loc_params = comp_obj.get_location()
-    # sc_haz_val = hazard_obj.get_hazard_intensity(*loc_params)
+    recovery_times = OrderedDict()
+    nodes_with_recovery = set()
+    event_id = str(event_id)
 
+    # hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
     for comp_id in components_costed:
-        if comp_id not in infra_data['components']:
-            continue
-
-        # Extract component state
-        damage_state, functionality = extract_component_state_robust(
-            event_response_components, comp_id
-        )
-
-        if damage_state > 0 or functionality < MIN_FUNCTIONALITY_FOR_DAMAGE:
-            damaged_components += 1
-
-            # Calculate recovery time
-            # recovery_time = calculate_component_recovery_robust(
-            #     comp_id, damage_state, functionality, infra_data
-            # )
-
-            comp_obj = infrastructure.components[comp_id]
-
-            recovery_time = calculate_component_recovery_time(
-                comp_id, event_id, comp_obj, hazards, functionality
+        # if comp_id not in infra_data["components"]:
+        #     print(f"Component {comp_id} not found in infrastructure data")
+        #     continue
+        comp_obj = infrastructure.components[comp_id]
+        loc_params = comp_obj.get_location()
+        hazval = hazard_obj.get_hazard_intensity(*loc_params)
+        # print(f"\nComponent: {comp_id} | hazard intensity: {hazval} | event: {event_id}")
+        try:
+            comp_restoration_time = loss_analysis.calc_component_recovery_time(
+                config,
+                comp_obj,
+                event_id,
+                hazval,
+                threshold_recovery=RESTORATION_THRESHOLD,
             )
+            # print(f"  --> Restoration time A : {comp_restoration_time}")
+            if (
+                isinstance(comp_restoration_time, (int, float))
+                and comp_restoration_time is not None
+            ):
+                comp_restoration_time = int(round(comp_restoration_time))
+            else:
+                comp_restoration_time = 0
 
-            if recovery_time > 0:
-                component_recovery_times.append(recovery_time)
+            # print(f"  --> Restoration time B : {comp_restoration_time}")
+            if comp_restoration_time > 0:
+                nodes_with_recovery.add(comp_id)
+
+        except Exception as e:
+            rootLogger.error(f"*** Recovery time calculation failed for component {comp_id}: {e}")
+            comp_restoration_time = 0
+
+        recovery_times[comp_id] = comp_restoration_time
+        # print(f"  --> Restoration time C : {recovery_times[comp_id]}")
+
+    # Future: Apply specific recovery method
+    # if recovery_method == "parallel_streams":
+    #     sys_recovery_time = calculate_constrained_recovery(recovery_times, num_repair_streams)
+    # else:  # max method
+    #     sys_recovery_time = max(recovery_times.values())
+
+    sys_recovery_time = max(recovery_times.values())  # Default to max restoration time
+
+    if not sys_recovery_time:
+        sys_recovery_time = 0
 
     # Log if we found damaged components but no recovery times
-    if damaged_components > 0 and len(component_recovery_times) == 0:
-        logger.warning(
-            f"Found {damaged_components} damaged components but no recovery times calculated"
-        )
+    if nodes_with_recovery is not None:
+        if len(nodes_with_recovery) > 0 and sys_recovery_time == 0:
+            rootLogger.warning(
+                f"Found {len(nodes_with_recovery)}, but zero recovery time. Error in recovery."
+            )
 
-    if not component_recovery_times:
-        return 0.0
-
-    # Apply recovery method
-    if recovery_method == 'parallel_streams':
-        return calculate_parallel_recovery(component_recovery_times, num_repair_streams)
-    else:  # max method
-        return max(component_recovery_times)
+    return sys_recovery_time
 
 
-def extract_component_state_robust(
-    event_response_components: pd.Series,
-    comp_id: str
+def extract_component_state(
+    event_response_components: pd.Series, comp_id: str
 ) -> Tuple[int, float]:
     """
-    Robustly extract damage state and functionality from event data.
-    Handles various column naming conventions.
+    Extract damage state and functionality from event data.
     """
     damage_state = 0
     functionality = 1.0
@@ -612,43 +876,53 @@ def extract_component_state_robust(
     if isinstance(event_response_components.index, pd.MultiIndex):
         # Try standard MultiIndex access
         try:
-            damage_state = int(event_response_components.get((comp_id, 'damage_index')))  # type: ignore
-            functionality = float(event_response_components.get((comp_id, 'func_mean')))  # type: ignore
+            dmg_val = event_response_components.get((comp_id, "damage_index"))
+            func_val = event_response_components.get((comp_id, "func_mean"))
+            if dmg_val is not None:
+                damage_state = int(dmg_val)
+            if func_val is not None:
+                functionality = float(func_val)
         except (KeyError, ValueError):
             # Try alternative names
             for idx in event_response_components.index:
                 if idx[0] == comp_id:
-                    if 'damage' in str(idx[1]).lower():
+                    if "damage" in str(idx[1]).lower():
                         try:
-                            damage_state = int(event_response_components[idx])
+                            val = event_response_components[idx]
+                            if isinstance(val, pd.Series):
+                                val = val.iloc[0]
+                            damage_state = int(val)
                         except (ValueError, TypeError):
                             pass
-                    elif 'func' in str(idx[1]).lower():
+                    elif "func" in str(idx[1]).lower():
                         try:
-                            functionality = float(event_response_components[idx])
+                            val = event_response_components[idx]
+                            if isinstance(val, pd.Series):
+                                val = val.iloc[0]
+                            functionality = float(val)
                         except (ValueError, TypeError):
                             pass
     else:
         # Handle flat index with various naming patterns
         patterns = {
-            'damage': [
+            "damage": [
                 f"{comp_id}_damage_state",
                 f"{comp_id}.damage_state",
                 f"{comp_id}_dmg_state",
                 f"damage_state_{comp_id}",
-                f"{comp_id}_ds"
+                f"{comp_id}_ds",
             ],
-            'func': [
+            "func": [
                 f"{comp_id}_func_mean",
                 f"{comp_id}.func_mean",
                 f"{comp_id}_functionality",
                 f"func_mean_{comp_id}",
-                f"{comp_id}_func"
-            ]
+                f"{comp_id}_func",
+            ],
         }
 
         # Try damage state patterns
-        for pattern in patterns['damage']:
+        for pattern in patterns["damage"]:
             if pattern in event_response_components.index:
                 try:
                     val = event_response_components[pattern]
@@ -659,7 +933,7 @@ def extract_component_state_robust(
                     continue
 
         # Try functionality patterns
-        for pattern in patterns['func']:
+        for pattern in patterns["func"]:
             if pattern in event_response_components.index:
                 try:
                     val = event_response_components[pattern]
@@ -672,142 +946,224 @@ def extract_component_state_robust(
     return damage_state, functionality
 
 
-def calculate_component_recovery_time(
-    comp_id: str,
-    event_id: str,
-    comp_obj: Component,
-    hazards: HazardsContainer,
-    functionality: float,
-    threshold_recovery=RESTORATION_THRESHOLD,  # recovery_threshold: float = RESTORATION_THRESHOLD,
-    min_functionality_threshold: float = MIN_FUNCTIONALITY_THRESHOLD,
-) -> float:
+# def _calculate_probabilistic_recovery_fast(
+#     comp_id: str,
+#     event_id: str,
+#     comp_obj: Component,
+#     hazards: HazardsContainer,
+#     functionality: float,
+#     threshold_recovery: float,
+#     config: Optional[Any] = None,
+# ) -> float:
+#     """
+#     HAZUS-compliant probabilistic recovery using fast discrete restoration functions.
+
+#     This implements the HAZUS formula:
+#     Recovery Time = Sum(Recovery_Time_i x P[damage_state_i])
+
+#     But uses fast discrete lookups instead of inverse CDF calculations.
+#     """
+
+#     # Get hazard intensity for probability calculations
+#     hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
+#     loc_params = comp_obj.get_location()
+#     hazard_intensity = hazard_obj.get_hazard_intensity(*loc_params)
+
+#     # Calculate damage state probabilities (same as original HAZUS method)
+#     damage_functions = [ds.response_function for ds in comp_obj.damage_states.values()]
+#     num_dmg_states = len(comp_obj.damage_states.keys())
+
+#     # Calculate exceedance probabilities
+#     pe = np.array([damage_functions[d](hazard_intensity) for d in range(num_dmg_states)])
+#     pe = np.clip(pe, 0.0, 1.0)
+#     for i in range(1, len(pe)):
+#         pe[i] = min(pe[i], pe[i - 1])  # Enforce monotonicity
+
+#     # Calculate discrete probabilities
+#     pb = np.zeros(num_dmg_states)
+#     pb[0] = 1.0 - pe[1] if len(pe) > 1 else 1.0
+#     for d in range(1, num_dmg_states - 1):
+#         pb[d] = max(0.0, pe[d] - pe[d + 1])
+#     if num_dmg_states > 1:
+#         pb[-1] = max(0.0, pe[-1])
+
+#     # Normalise probabilities
+#     pb_sum = np.sum(pb)
+#     if pb_sum > 0:
+#         pb = pb / pb_sum
+#     else:
+#         pb[0] = 1.0
+
+#     # Calculate recovery times for each damage state using fast lookups
+#     recovery_times = np.zeros(num_dmg_states)
+
+#     for ds_index in range(num_dmg_states):
+#         if ds_index == 0:
+#             recovery_times[ds_index] = 0.0  # No recovery needed
+#         elif (
+#             ds_index in comp_obj.damage_states.keys()
+#             and getattr(comp_obj.damage_states[ds_index], "recovery_function_discrete", None)
+#             is not None
+#         ):
+#             try:
+#                 # Fast discrete lookup
+#                 restoration_func = comp_obj.damage_states[ds_index].recovery_function_discrete
+
+#                 # Get baseline functionality for this damage state
+#                 damage_state_obj = comp_obj.damage_states[ds_index]
+#                 baseline_functionality = getattr(damage_state_obj, "functionality", 0.0)
+
+#                 # Use minimum of current and expected functionality as baseline
+#                 effective_baseline = min(functionality, baseline_functionality)
+#                 effective_baseline = max(effective_baseline, MIN_FUNCTIONALITY_THRESHOLD)
+
+#                 # Calculate recovery time from baseline to threshold
+#                 target_time = restoration_func.get_recovery_time(threshold_recovery)
+#                 baseline_time = restoration_func.get_recovery_time(effective_baseline)
+
+#                 recovery_time = max(0.0, target_time - baseline_time)
+
+#                 # Enforce minimum for damaged states
+#                 if recovery_time < MIN_RECOVERY_TIME:
+#                     recovery_time = MIN_RECOVERY_TIME
+
+#                 recovery_times[ds_index] = recovery_time
+
+#             except Exception as e:
+#                 rootLogger.debug(f"Fast lookup failed for {comp_id} DS{ds_index}: {e}")
+#                 # Minimal fallback: small positive time for damaged states
+#                 recovery_times[ds_index] = max(MIN_RECOVERY_TIME, 0.0)
+#         else:
+#             # No restoration function available
+#             recovery_times[ds_index] = max(MIN_RECOVERY_TIME, 0.0)
+
+#     # HAZUS weighted combination
+#     total_recovery_time = np.sum(pb * recovery_times)
+
+#     # Validate result
+#     if np.isnan(total_recovery_time) or np.isinf(total_recovery_time) or total_recovery_time < 0:
+#         total_recovery_time = 0.0
+
+#     rootLogger.debug(
+#         f"[FAST PROBABILISTIC] {comp_id} func={functionality:.3f} "
+#         f"-> {total_recovery_time:.1f} days (prob weights: {pb})"
+#     )
+
+#     return round(total_recovery_time, 1)
+
+
+# def calculate_component_recovery_time_rand(
+#     comp_id: str,
+#     event_id: str,
+#     comp_obj: Component,
+#     hazards: HazardsContainer,
+#     functionality: float,
+#     threshold_recovery: float = RESTORATION_THRESHOLD,
+#     noise_scale: float = 0.5,
+# ) -> int:
+#     """
+#     Alternate (randomised) component recovery time calculation.
+
+#     Logic:
+#     1) Compute the most likely damage state (argmax P[DS=i|H]) and its typical functionality,
+#        using exceedance fragilities.
+#     2) Select the recovery algorithm for that damage state.
+#     3) Compute recovery time from baseline functionality to threshold, then add random noise
+#        (which can be positive or negative) to represent uncertainty.
+#     4) Enforce a minimum of 1 day if damage state > 0 or functionality < 1.0.
+#     5) Return the recovery time as an integer (days).
+#     """
+#     # Hazard intensity at this component for this event
+#     hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
+#     loc_params = comp_obj.get_location()
+#     H = hazard_obj.get_hazard_intensity(*loc_params)
+
+#     # Fragility (exceedance) and recovery functions
+#     damage_functions = [ds.response_function for ds in comp_obj.damage_states.values()]
+#     recovery_functions = [ds.recovery_function for ds in comp_obj.damage_states.values()]
+#     dmg_states = list(comp_obj.damage_states.keys())
+#     num_dmg_states = len(dmg_states)
+
+#     # Exceedance pe[i] = P(DS >= i | H), enforce bounds and monotonicity
+#     pe = np.array([damage_functions[d](H) for d in range(num_dmg_states)], dtype=float)
+#     pe = np.clip(pe, 0.0, 1.0)
+#     for d in range(1, len(pe)):
+#         pe[d] = min(pe[d], pe[d - 1])
+
+#     # Disjoint probabilities pb[i] = P(DS = i | H)
+#     pb = np.zeros(num_dmg_states, dtype=float)
+#     if num_dmg_states == 1:
+#         pb[0] = 1.0
+#     else:
+#         pb[0] = max(0.0, 1.0 - float(pe[1]))
+#         for d in range(1, num_dmg_states - 1):
+#             pb[d] = max(0.0, float(pe[d]) - float(pe[d + 1]))
+#         pb[-1] = max(0.0, float(pe[-1]))
+
+#     s = float(pb.sum())
+#     if s > 0.0:
+#         pb /= s
+#     else:
+#         pb[:] = 0.0
+#         pb[0] = 1.0
+
+#     # 1) Most likely damage state and its typical functionality
+#     ds_mle = int(np.argmax(pb))
+#     ds_func = float(getattr(dmg_states[ds_mle], "functionality", 1.0))
+
+#     # Baseline functionality: be conservative by using the lower of observed and typical
+#     baseline_func = min(float(functionality), ds_func)
+
+#     # 2) Select the recovery function for this damage state
+#     rf = recovery_functions[ds_mle]
+
+#     # 3) Compute recovery time from baseline to threshold, add random noise
+#     def _safe_inv(f, x: float) -> Optional[float]:
+#         try:
+#             val = f(x, inverse=True)
+#             if val is None or not np.isfinite(val):
+#                 return None
+#             return float(val)
+#         except Exception as e:
+#             rootLogger.debug(f"[RECOVERY DEBUG] Inverse failed for f({x}): {e}")
+#             return None
+
+#     t_thresh = _safe_inv(rf, threshold_recovery)
+#     t_base = _safe_inv(rf, max(0.0, min(1.0, baseline_func)))
+
+#     rootLogger.debug(
+#         f"[RECOVERY DEBUG] comp_id={comp_id} event_id={event_id} "
+#         f"DS={ds_mle} func={functionality:.3f} "
+#         f"baseline_func={baseline_func:.3f} t_thresh={t_thresh} t_base={t_base} "
+#         f"rf={getattr(rf, '__name__', str(rf))}"
+#     )
+
+#     if t_thresh is not None and t_base is not None:
+#         rec_time = max(0.0, t_thresh - t_base)
+#         rootLogger.debug(f"[RECOVERY DEBUG] Using recovery function: rec_time={rec_time}")
+#     else:
+#         # Fallback engineering estimate if inverse not available
+#         rec_time = max(1.0 if (ds_mle > 0 or baseline_func < 1.0) else 0.0, ds_mle * 7.0)
+#         rootLogger.debug(f"[RECOVERY DEBUG] Fallback used: rec_time={rec_time}")
+
+#     # Add random noise (can be positive or negative)
+#     noise = float(np.random.normal(0.0, noise_scale))
+#     rec_time += noise
+#     rootLogger.debug(f"[RECOVERY DEBUG] Added noise: noise={noise:.3f} rec_time+noise={rec_time}")
+
+#     # 4) Enforce minimum of 1 day if damaged or not fully functional
+#     needs_repair = (ds_mle > 0) or (baseline_func < 1.0)
+#     rec_time = max(1.0 if needs_repair else 0.0, rec_time)
+#     rootLogger.debug(f"[RECOVERY DEBUG] Final rec_time after min check: {rec_time}")
+
+#     # 5) Return integer days
+#     return int(round(rec_time))
+
+
+def calculate_constrained_recovery(recovery_times: List[float], num_streams: int) -> float:
     """
-    Calculates the time needed for a component to reach the recovery threshold
-    """
-
-    if functionality >= threshold_recovery:
-        return 0.0
-
-    # Component.damage_states is a dict of `DamageState` objects
-    damage_functions = [
-        ds.response_function for ds in comp_obj.damage_states.values()]  # type: ignore
-    recovery_functions = [
-        ds.recovery_function for ds in comp_obj.damage_states.values()]  # type: ignore
-
-    comp_functionality = functionality
-    comptype_dmg_states = comp_obj.damage_states
-    num_dmg_states = len(comp_obj.damage_states)  # type: ignore
-
-    hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
-    loc_params = comp_obj.get_location()
-    sc_haz_val = hazard_obj.get_hazard_intensity(*loc_params)
-
-    # Calculate damage exceedance probabilities
-    pe = np.array([damage_functions[d](sc_haz_val) for d in range(num_dmg_states)])
-
-    # Calculate probability of being in each damage state
-    pb = np.zeros(num_dmg_states)
-    pb[0] = 1.0 - pe[1]  # Probability of no damage
-    for d in range(1, num_dmg_states - 1):
-        pb[d] = pe[d] - pe[d + 1]
-    pb[-1] = pe[-1]  # Probability of being in worst damage state
-
-    reqtime = np.zeros(num_dmg_states)
-
-    for d, ds in enumerate(comptype_dmg_states):
-        if (
-            ds == 'DS0 None'
-            or d == 0
-            or pb[d] < min_functionality_threshold
-        ):
-            reqtime[d] = 0.00
-        else:
-            try:
-                # Calculate time difference for recovery
-                recovery_time = recovery_functions[d](threshold_recovery, inverse=True)\
-                    - recovery_functions[d](comp_functionality, inverse=True)
-                # Ensure we don't get negative or infinite times
-                reqtime[d] = max(0.0, recovery_time) if not np.isinf(recovery_time) else 0.0
-            except (ValueError, TypeError, ZeroDivisionError, RuntimeError) as e:
-                logger.warning(
-                    f"Error calculating recovery time for component {comp_obj.component_id} "
-                    f"in damage state {ds}: {str(e)}")
-                reqtime[d] = 0.00
-
-    restoration_time_agg = round(sum(pb * reqtime), 1)
-
-    if (
-        np.isnan(restoration_time_agg)
-        or np.isinf(restoration_time_agg)
-        or restoration_time_agg < 0
-    ):
-        restoration_time_agg = 0.0
-
-    return restoration_time_agg
-
-
-def calculate_component_recovery_robust(
-    comp_id: str,
-    damage_state: int,
-    functionality: float,
-    infra_data: Dict,
-    recovery_threshold: float = RESTORATION_THRESHOLD,
-    min_functionality: float = MIN_FUNCTIONALITY_THRESHOLD,
-    min_recovery_time: float = 1.0  # Minimum recovery time in days
-) -> float:
-    """
-    Calculate recovery time with proper handling of damage states.
-    Fixes zero recovery time issue.
-    """
-
-    if damage_state == 0 or functionality >= MIN_FUNCTIONALITY_FOR_DAMAGE:
-        return 0.0
-
-    # if functionality < min_functionality, set to min threshold
-    fn_lo = max(min_functionality, functionality)
-
-    comp_data = infra_data['components'].get(comp_id, {})
-    damage_states = comp_data.get('damage_states', {})
-
-    # Get recovery time from damage state data
-    recovery_time = 0.0
-    ds_data = damage_states[damage_state]
-
-    recovery_func = ds_data['recovery_function']
-    # ---------------------------------------------------------------
-    # Or explicitly construct the recovery function using the params
-    # ---------------------------------------------------------------
-    # from sira.modelling.responsemodels import Algorithm
-    # response_params = dict(
-    #     function_name=ds_data['recovery_function'],
-    #     mean=ds_data.get('recovery_mean'),
-    #     stddev=ds_data.get('recovery_std')
-    # )
-    # # recovery_time = mean + 2 * std
-    # recovery_func = Algorithm.factory(response_params)
-    # ---------------------------------------------------------------
-
-    recovery_time_th = recovery_func(recovery_threshold, inverse=True)
-    recovery_time_t0 = recovery_func(fn_lo, inverse=True)  # type: ignore
-    recovery_time = recovery_time_th - recovery_time_t0
-    logger.debug(f"Recovery time for {comp_id} (DS {damage_state}): {recovery_time} days")
-
-    # Checkpoint to allow minimum recovery time for damaged components
-    if damage_state > 0 and recovery_time < min_recovery_time:  # Minimum 24 hours
-        recovery_time = min_recovery_time
-
-    recovery_time = np.round(recovery_time, 1)
-
-    return max(recovery_time, 0.0)  # Ensures non-negative recovery time
-
-
-def calculate_parallel_recovery(
-    recovery_times: List[float],
-    num_streams: int
-) -> float:
-    """
-    Calculate recovery time with parallel repair streams.
-    Uses load balancing algorithm.
+    Calculate recovery time with simulated resource constraints.
+    Uses load balancing algorithm across parallel repair streams.
     """
     if not recovery_times:
         return 0.0
@@ -831,13 +1187,12 @@ def calculate_parallel_recovery(
 
 def process_event_chunk(
     event_ids: List[str],
+    config: Configuration,
     hazards: HazardsContainer,
-    component_response_dict: Dict,
     components_costed: List[str],
     infrastructure: Any,
-    infra_data: Dict,
     recovery_method: str,
-    num_repair_streams: int
+    num_repair_streams: int,
 ) -> List[float]:
     """
     Process a chunk of events for multiprocessing.
@@ -845,38 +1200,46 @@ def process_event_chunk(
     results = []
     for event_id in event_ids:
         try:
-            # Get event data
-            if event_id in component_response_dict:
-                event_response_components = pd.Series(component_response_dict[event_id])
-            elif str(event_id) in component_response_dict:
-                event_response_components = pd.Series(component_response_dict[str(event_id)])
+            # # Get event data
+            # if event_id in component_response_dict:
+            #     event_response_components = pd.Series(component_response_dict[event_id])
+            # elif str(event_id) in component_response_dict:
+            #     event_response_components = pd.Series(component_response_dict[str(event_id)])
+            # else:
+            #     rootLogger.warning(f"Event {event_id} not found in component response data")
+            #     results.append(0.0)
+            #     continue
 
-            recovery_time = calculate_event_recovery_robust(
-                event_id, hazards, event_response_components, components_costed,
-                infrastructure, infra_data,
-                recovery_method, num_repair_streams
+            hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
+            recovery_time = calculate_event_recovery(
+                config,
+                event_id,
+                hazard_obj,
+                components_costed,
+                infrastructure,
+                recovery_method,
+                num_repair_streams,
             )
             results.append(recovery_time)
 
         except Exception as e:
-            logger.error(f"Error processing event {event_id}: {e}")
+            rootLogger.error(f"Error processing event {event_id}: {e}")
             results.append(0.0)
 
     return results
 
 
-# Main entry point function for backward compatibility
 def parallel_recovery_analysis(
+    config: Configuration,
     hazards: HazardsContainer,
     components: List[Component],
     infrastructure: Any,
     scenario: Any,
-    component_resp_df: pd.DataFrame,
     components_costed: List[str],
-    recovery_method: str = 'max',
-    num_repair_streams: int = 100,
+    recovery_method: str = "max",
+    num_repair_streams: int = 1000,
     max_workers: Optional[int] = None,
-    batch_size: Optional[int] = None
+    batch_size: Optional[int] = None,
 ) -> List[float]:
     """
     Optimised parallel recovery analysis with automatic backend selection.
@@ -887,52 +1250,53 @@ def parallel_recovery_analysis(
     - Multiprocessing for single nodes
     """
     # Check if parallel config exists in scenario
-    backend = 'auto'
-    if hasattr(scenario, 'parallel_config'):
-        backend = scenario.parallel_config.config.get('backend', 'auto')
+    backend = "auto"
+    if hasattr(scenario, "parallel_config"):
+        backend = scenario.parallel_config.config.get("backend", "auto")
 
         # Override max_workers if specified in config
         if max_workers is None:
-            if backend == 'dask':
-                max_workers = scenario.parallel_config.config.get('dask_n_workers')
-            elif backend == 'multiprocessing':
-                max_workers = scenario.parallel_config.config.get('mp_n_processes')
+            if backend == "dask":
+                max_workers = scenario.parallel_config.config.get("dask_n_workers")
+            elif backend == "multiprocessing":
+                max_workers = scenario.parallel_config.config.get("mp_n_processes")
 
     # Create analysis engine
     engine = RecoveryAnalysisEngine(backend=backend)
 
     # Use existing Dask client if available
     if (
-        backend in ['auto', 'dask'] and\
-        hasattr(scenario, 'parallel_backend_data') and\
-        'dask_client' in scenario.parallel_backend_data
+        backend in ["auto", "dask"]
+        and hasattr(scenario, "parallel_backend_data")
+        and "dask_client" in scenario.parallel_backend_data
     ):
-        engine.dask_client = scenario.parallel_backend_data['dask_client']
-        logger.info("Using existing Dask client from scenario")
+        engine.dask_client = scenario.parallel_backend_data["dask_client"]
+        rootLogger.info("Using existing Dask client from scenario")
 
     try:
         # Run analysis
-        recovery_times = engine.analyze(
+        recovery_times = engine.analyse(
+            config,
             hazards,
             infrastructure,
             scenario,
-            component_resp_df,
             components_costed,
             recovery_method,
-            num_repair_streams
+            num_repair_streams,
         )
 
         # Validate results
         if recovery_times:
             non_zero = sum(1 for t in recovery_times if t > 0)
-            logger.info(
+            rootLogger.info(
                 f"Analysis complete: {non_zero}/{len(recovery_times)} "
                 f"events have non-zero recovery times"
             )
 
             if non_zero == 0:
-                logger.warning(
-                    f"{Fore.RED}*** All recovery times are zero. This may indicate a data issue. ***{Fore.RESET}\n"
+                rootLogger.warning(
+                    f"{Fore.RED}*** All recovery times are zero. "
+                    f"This may indicate a data issue. ***{Fore.RESET}\n"
                 )
 
         return recovery_times
@@ -940,81 +1304,149 @@ def parallel_recovery_analysis(
     finally:
         # Only cleanup if we created our own client
         if not (
-            hasattr(scenario, 'parallel_backend_data') and\
-            'dask_client' in scenario.parallel_backend_data
+            hasattr(scenario, "parallel_backend_data")
+            and "dask_client" in scenario.parallel_backend_data
         ):
             engine.cleanup()
 
 
-# Additional utility functions for debugging
-def validate_component_response_data(
-    component_resp_df: pd.DataFrame,
-    components_costed: List[str],
-    sample_size: int = 5
-) -> Dict[str, Any]:
+# =======================================================================================
+
+
+def sequential_recovery_analysis(
+    hazard_event_list,
+    infrastructure,
+    config,
+    hazards,
+    components_costed,
+):
     """
-    Validate component response DataFrame structure and content.
-    Useful for debugging zero recovery times.
+    Sequential processing fallback for recovery analysis
     """
-    validation_report = {
-        'shape': component_resp_df.shape,
-        'index_type': type(component_resp_df.index).__name__,
-        'columns_type': type(component_resp_df.columns).__name__,
-        'components_found': 0,
-        'damage_states_found': 0,
-        'functionality_found': 0,
-        'sample_damage_values': [],
-        'issues': []
-    }
+    rootLogger.info("Processing events sequentially...")
+    recovery_times = []
 
-    # Check column structure
-    if isinstance(component_resp_df.columns, pd.MultiIndex):
-        level0_values = component_resp_df.columns.get_level_values(0).unique()
-        level1_values = component_resp_df.columns.get_level_values(1).unique()
+    # Use smaller chunks even in sequential mode to minimize memory usage
+    chunk_size = 1000
+    num_chunks = math.ceil(len(hazard_event_list) / chunk_size)
 
-        validation_report['multiindex_levels'] = {
-            'level0_sample': list(level0_values)[:10],
-            'level1_values': list(level1_values)
-        }
+    restoration_df = pd.DataFrame(index=hazard_event_list, columns=components_costed)
+    restoration_df.index.name = "event_id"
 
-        # Check for components
-        for comp_id in components_costed[:sample_size]:
-            if comp_id in level0_values:
-                validation_report['components_found'] += 1
+    for chunk_idx in range(num_chunks):
+        start_idx = chunk_idx * chunk_size
+        end_idx = min(start_idx + chunk_size, len(hazard_event_list))
+        chunk_events = hazard_event_list[start_idx:end_idx]
 
-                # Check for damage state values
-                if (comp_id, 'damage_state') in component_resp_df.columns:
-                    sample_values = component_resp_df[(comp_id, 'damage_state')].dropna().head(5).tolist()
-                    validation_report['sample_damage_values'].extend(sample_values)
+        chunk_pbar = tqdm(
+            chunk_events,
+            desc=f"Processing chunk {chunk_idx + 1}/{num_chunks}",
+            leave=False,
+        )
 
-                    # Check for non-zero damage states
-                    non_zero = (component_resp_df[(comp_id, 'damage_state')] > 0).sum()
-                    if non_zero > 0:
-                        validation_report['damage_states_found'] += non_zero
-    else:
-        # Flat columns
-        validation_report['sample_columns'] = list(component_resp_df.columns)[:20]
+        chunk_results = []
+        for event_id in chunk_pbar:
+            try:
+                hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
+                result = calculate_event_recovery(
+                    config,
+                    str(event_id),
+                    hazard_obj,
+                    components_costed,
+                    infrastructure,
+                )
+                # Extract only the recovery time
+                if result is not None:
+                    recovery_time = result
+                else:
+                    recovery_time = 0
 
-        # Look for damage state columns
-        damage_cols = [col for col in component_resp_df.columns if 'damage' in str(col).lower()]
-        func_cols = [col for col in component_resp_df.columns if 'func' in str(col).lower()]
+                chunk_results.append(recovery_time)
 
-        validation_report['damage_columns_found'] = len(damage_cols)
-        validation_report['functionality_columns_found'] = len(func_cols)
+            except (
+                KeyError,
+                ValueError,
+                AttributeError,
+                RuntimeError,
+                IndexError,
+            ) as e:
+                rootLogger.warning(f"Error processing event {event_id}: {str(e)}")
+                chunk_results.append(0)  # Default recovery time
 
-        if damage_cols:
-            for col in damage_cols[:sample_size]:
-                sample_values = component_resp_df[col].dropna().head(5).tolist()
-                validation_report['sample_damage_values'].extend(sample_values)
+        # chunk_results = []
+        # for event_id in chunk_pbar:
+        #     try:
+        #         hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
+        #         result = loss_analysis.analyse_system_recovery(
+        #             infrastructure,
+        #             config,
+        #             hazard_obj,
+        #             str(event_id),
+        #             components_costed,
+        #             verbosity=False,
+        #         )
 
-    # Check for potential issues
-    if validation_report['components_found'] == 0:
-        validation_report['issues'].append("No costed components found in DataFrame columns")
+        #         # Extract only the recovery time
+        #         if result is not None and (
+        #             (isinstance(result, pd.DataFrame) and
+        #              "Full Restoration Time" in result.columns)
+        #             or ("Full Restoration Time" in result)
+        #         ):
+        #             recovery_time = result["Full Restoration Time"].max()
+        #         else:
+        #             recovery_time = 0
 
-    if validation_report['damage_states_found'] == 0:
-        validation_report['issues'].append("No non-zero damage states found")
+        #         chunk_results.append(recovery_time)
+        #         # print(result["Full Restoration Time"].values.tolist())
+        #         restoration_df.loc[event_id] = result["Full Restoration Time"].values.tolist()
+        #     except (
+        #         KeyError,
+        #         ValueError,
+        #         AttributeError,
+        #         RuntimeError,
+        #         IndexError,
+        #     ) as e:
+        #         rootLogger.warning(f"Error processing event {event_id}: {str(e)}")
+        #         chunk_results.append(0)  # Default recovery time
 
-    if not validation_report['sample_damage_values']:
-        validation_report['issues'].append("No damage values could be extracted")
+        # # DEBUG PRINTS
+        # print("############################################################")
+        # bad_rst_comps = sorted(check_non_monotonic_cols(restoration_df))
+        # bad_rst_comptypes = sorted(
+        #     list(set([infrastructure.components[n].component_type for n in bad_rst_comps]))
+        # )
+        # print(f"Problematic components:\n{bad_rst_comps}")
+        # print(f"Problematic component types:\n{bad_rst_comptypes}")
+        # print("############################################################")
+        # restoration_df.to_csv(Path(config.OUTPUT_DIR, "component_restoration_times.csv"))
 
-    return validation_report
+        # Extend recovery times with chunk results
+        recovery_times.extend(chunk_results)
+
+        # Save checkpoint after each chunk
+        checkpoint_file = Path(config.OUTPUT_DIR, "recovery_checkpoint_sequential.pkl")
+        with open(checkpoint_file, "wb") as f:
+            pickle.dump(recovery_times, f)
+        rootLogger.info(
+            f"Checkpoint saved: {len(recovery_times)}/{len(hazard_event_list)} events processed"
+        )
+
+    return recovery_times
+
+
+def check_non_monotonic_cols(df: pd.DataFrame) -> List[str]:
+    """
+    Check for non-monotonic columns in a DataFrame
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame to check
+
+    Returns
+    -------
+    list
+        List of column names that are non-monotonic
+    """
+    non_monotonic_cols = [col for col in df.columns if not df[col].is_monotonic_increasing]
+    return non_monotonic_cols

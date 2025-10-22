@@ -60,7 +60,7 @@ class color:
 # Unless data contain negative values, the location parameter is fixed at 0.
 # During curve fitting, this can be set by using floc=0.
 #
-# Note on the covariance matrix returned by scipy.optimize.curve_fit:
+# Note on the covariance matrix returned by scipy.optimise.curve_fit:
 # The square root of the diagonal values are the 1-sigma uncertainties of
 # the fit parameters.
 # -----------------------------------------------------------------------------

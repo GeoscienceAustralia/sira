@@ -18,7 +18,7 @@ except ImportError:
         # Each link is stored as a list of length three:  [PREV, NEXT, KEY].
     
         def __init__(self, *args, **kwds):
-            '''Initialize an ordered dictionary.  Signature is the same as for
+            '''Initialise an ordered dictionary.  Signature is the same as for
             regular dictionaries, but keyword arguments are not recommended
             because their insertion order is arbitrary.
     

@@ -13,6 +13,7 @@
     + [Required Directory Structure](#required-directory-structure)
   - [Running the Application](#running-the-application)
   - [Testing](#testing)
+    - [Dask Parallelism](#dask-parallelism)
 
 ## [Overview](#oveview)
 
@@ -139,3 +140,33 @@ If you want to explicitly ask `pytest` to run coverage reports, then run:
 
 If you are using docker as described above, you can do this from within the
 sira container.
+
+## [Dask Parallelism](#dask-parallelism)
+
+SIRA supports parallel execution using Dask for both workstation and HPC environments.
+
+- Local cluster (auto-managed):
+    - Use `--parallel-backend dask` and control workers/threads.
+    - Example (PowerShell):
+
+```powershell
+python -m sira -d .\scenario_dir\ci_model_x --simulation `
+    --parallel-backend dask --max-workers 8 --dask-threads-per-worker 2
+```
+
+- External scheduler (multi-node/HPC):
+    - Start a Dask scheduler/workers separately (via your HPC launcher).
+    - Point SIRA at it with one of these env vars: `SIRA_DASK_SCHEDULER`, `DASK_SCHEDULER_ADDRESS`, or `DASK_SCHEDULER`.
+    - Optional env overrides when creating a local cluster: `SIRA_DASK_WORKERS`, `SIRA_DASK_THREADS`, `SIRA_DASK_MEMORY_LIMIT` (set to `auto`/empty to use defaults).
+
+- Optional CLI flags:
+    - `--parallel-backend dask`: enable Dask backend.
+    - `--max-workers N`: number of Dask workers (local cluster) or processes (multiprocessing backend).
+    - `--dask-threads-per-worker M`: threads per Dask worker (local cluster).
+
+- HPC suggestions (PBS/SLURM):
+    - Set math library threads to 1 to avoid oversubscription: `OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1`, `NUMEXPR_NUM_THREADS=1`.
+    - Prefer one Dask worker per CPU core for CPU-bound workloads; adjust `--dask-threads-per-worker` based on task characteristics.
+    - For multi-node: run a scheduler on a head node and workers on compute nodes; export the scheduler address to SIRA as above.
+
+If Dask is not available or fails to initialise, SIRA falls back to the default multiprocessing path.

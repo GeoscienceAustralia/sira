@@ -69,12 +69,12 @@
     :Data Type:     Integer
     :Example:       21
 
-`RESTORE_TIME_STEP`
+`RESTORATION_TIME_STEP`
     :Description:   Time increment for restoration period
     :Data Type:     Integer
     :Example:       1
 
-`RESTORE_TIME_MAX`
+`RESTORATION_TIME_MAX`
     :Description:   Maximum value for restoration period assessment
     :Data Type:     Integer
     :Example:       300

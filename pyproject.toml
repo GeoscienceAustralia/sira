@@ -34,7 +34,7 @@ show_missing = false
 ignore_errors = true
 
 [tool.flake8]
-max-line-length = 90
+max-line-length = 100
 inline-quotes = "double"
 exclude = [".git", ".venv", "__pycache__"]
 ignore = ["E211", "E266", "E302", "E305", "E402", "E502", "F401", "F841", "W503"]
@@ -47,3 +47,10 @@ per-file-ignores = [
     "__init__.py:F401",  # imported but unused
     "sira/fit_model.py:E0611"  # scipy.special is a C lib and flake8 cannot see into it
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "Q", "I"]
+ignore = ["E203"]

@@ -204,7 +204,7 @@
   :Data Type:   Float.
 
 
-`recovery_95percentile`
+`recovery_99pct`
   :Description: [Optional paramter]
                 In the process of expert elicitation of recovery parameters,
                 it is often difficult to get the concept of standard
@@ -217,9 +217,9 @@
                 .. math::
 
                     \begin{align}
-                    &X_{0.95} = \mu + Z_{0.95} \sigma \\
-                    \Rightarrow &X_{0.95} = \mu + \Phi^{-1}(0.95) \sigma \\
-                    \Rightarrow &\sigma = \frac{X_{0.95} - \mu}{\Phi^{-1}(0.95)}
+                    &X_{0.99} = \mu + Z_{0.99} \sigma \\
+                    \Rightarrow &X_{0.99} = \mu + \Phi^{-1}(0.99) \sigma \\
+                    \Rightarrow &\sigma = \frac{X_{0.99} - \mu}{\Phi^{-1}(0.99)}
                     \end{align}
 
   :Data Type:   Float

@@ -1,15 +1,17 @@
+import logging
 import os
+import pickle
+import shutil
+import tempfile
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-import tempfile
-import shutil
 import psutil
-import pickle
-import logging
-from pathlib import Path
 
 # Set up logging
 logger = logging.getLogger(__name__)
+
 
 class MemoryTracker:
     """Track memory usage and provide warnings when approaching limits"""
@@ -18,20 +20,21 @@ class MemoryTracker:
     def get_memory_usage():
         """Get current process memory usage in GB"""
         process = psutil.Process(os.getpid())
-        memory_gb = process.memory_info().rss / (1024 ** 3)
+        memory_gb = process.memory_info().rss / (1024**3)
         return memory_gb
 
     @staticmethod
     def get_available_memory():
         """Get available system memory in GB"""
-        memory_gb = psutil.virtual_memory().available / (1024 ** 3)
+        memory_gb = psutil.virtual_memory().available / (1024**3)
         return memory_gb
 
     @staticmethod
     def get_total_memory():
         """Get total system physical memory in GB"""
         import psutil
-        memory_gb = psutil.virtual_memory().total / (1024 ** 3)
+
+        memory_gb = psutil.virtual_memory().total / (1024**3)
         return memory_gb
 
     @staticmethod
@@ -39,13 +42,14 @@ class MemoryTracker:
         """Log current memory usage"""
         used_gb = MemoryTracker.get_memory_usage()
         available_gb = MemoryTracker.get_available_memory()
-        total_gb = psutil.virtual_memory().total / (1024 ** 3)
+        total_gb = psutil.virtual_memory().total / (1024**3)
 
         logger.info(
             f"Memory Usage - {task_name}: "
             f"{used_gb:.2f} GB used, "
             f"{available_gb:.2f} GB available, "
-            f"{total_gb:.2f} GB total")
+            f"{total_gb:.2f} GB total"
+        )
 
         return used_gb, available_gb
 
@@ -56,7 +60,8 @@ class MemoryTracker:
         if used_gb > threshold_gb:
             logger.warning(
                 f"Memory usage warning: {used_gb:.2f} GB used "
-                f"exceeds threshold of {threshold_gb:.2f} GB")
+                f"exceeds threshold of {threshold_gb:.2f} GB"
+            )
             return False
         return True
 
@@ -67,7 +72,7 @@ class MemoryMappedData:
     """
 
     def __init__(self, temp_dir=None):
-        """Initialize with temporary directory for memory-mapped files"""
+        """Initialise with temporary directory for memory-mapped files"""
         if temp_dir is None:
             self.temp_dir = Path(tempfile.mkdtemp(prefix="sira_memmap_"))
         else:
@@ -98,38 +103,36 @@ class MemoryMappedData:
         # Convert DataFrame to numpy array and store values
         values_file = self.temp_dir / f"{name}_values.npy"
         mmap_values = np.memmap(
-            values_file, dtype=df.values.dtype,
-            mode='w+', shape=df.values.shape)
+            values_file, dtype=df.values.dtype, mode="w+", shape=df.values.shape
+        )
         mmap_values[:] = df.values[:]
         mmap_values.flush()
 
         # Store index
         index_file = self.temp_dir / f"{name}_index.pkl"
-        with open(index_file, 'wb') as f:
-            pickle.dump({
-                'index': df.index,
-                'columns': df.columns,
-                'shape': df.shape,
-                'dtypes': df.dtypes
-            }, f)
+        with open(index_file, "wb") as f:
+            pickle.dump(
+                {"index": df.index, "columns": df.columns, "shape": df.shape, "dtypes": df.dtypes},
+                f,
+            )
 
         # Record file information
         self.data_files[name] = {
-            'values_file': str(values_file),
-            'index_file': str(index_file),
-            'shape': df.shape,
-            'dtype': str(df.values.dtype)
+            "values_file": str(values_file),
+            "index_file": str(index_file),
+            "shape": df.shape,
+            "dtype": str(df.values.dtype),
         }
 
         # Update metadata
         self.metadata[name] = {
-            'type': 'dataframe',
-            'shape': df.shape,
-            'dtype': str(df.values.dtype)
+            "type": "dataframe",
+            "shape": df.shape,
+            "dtype": str(df.values.dtype),
         }
 
         # Save metadata
-        with open(self.metadata_file, 'wb') as f:
+        with open(self.metadata_file, "wb") as f:
             pickle.dump(self.metadata, f)
 
         MemoryTracker.log_memory_usage(f"After storing DataFrame {name}")
@@ -153,28 +156,22 @@ class MemoryMappedData:
             Metadata for accessing the memory-mapped data
         """
         array_file = self.temp_dir / f"{name}.npy"
-        mmap_array = np.memmap(
-            array_file, dtype=arr.dtype,
-            mode='w+', shape=arr.shape)
+        mmap_array = np.memmap(array_file, dtype=arr.dtype, mode="w+", shape=arr.shape)
         mmap_array[:] = arr[:]
         mmap_array.flush()
 
         # Record file information
         self.data_files[name] = {
-            'file': str(array_file),
-            'shape': arr.shape,
-            'dtype': str(arr.dtype)
+            "file": str(array_file),
+            "shape": arr.shape,
+            "dtype": str(arr.dtype),
         }
 
         # Update metadata
-        self.metadata[name] = {
-            'type': 'array',
-            'shape': arr.shape,
-            'dtype': str(arr.dtype)
-        }
+        self.metadata[name] = {"type": "array", "shape": arr.shape, "dtype": str(arr.dtype)}
 
         # Save metadata
-        with open(self.metadata_file, 'wb') as f:
+        with open(self.metadata_file, "wb") as f:
             pickle.dump(self.metadata, f)
 
         MemoryTracker.log_memory_usage(f"After storing array {name}")
@@ -184,21 +181,16 @@ class MemoryMappedData:
     def store_dict(self, dict_obj, name):
         """Store a dictionary object"""
         dict_file = self.temp_dir / f"{name}.pkl"
-        with open(dict_file, 'wb') as f:
+        with open(dict_file, "wb") as f:
             pickle.dump(dict_obj, f)
 
-        self.data_files[name] = {
-            'file': str(dict_file),
-            'type': 'dict'
-        }
+        self.data_files[name] = {"file": str(dict_file), "type": "dict"}
 
         # Update metadata
-        self.metadata[name] = {
-            'type': 'dict'
-        }
+        self.metadata[name] = {"type": "dict"}
 
         # Save metadata
-        with open(self.metadata_file, 'wb') as f:
+        with open(self.metadata_file, "wb") as f:
             pickle.dump(self.metadata, f)
 
         return self.data_files[name]
@@ -220,20 +212,18 @@ class MemoryMappedData:
         """
         # Load values from memory-mapped file (read-only)
         mmap_values = np.memmap(
-            data_info['values_file'],
-            dtype=np.dtype(data_info['dtype']),
-            mode='r',
-            shape=tuple(data_info['shape']))
+            data_info["values_file"],
+            dtype=np.dtype(data_info["dtype"]),
+            mode="r",
+            shape=tuple(data_info["shape"]),
+        )
 
         # Load index information
-        with open(data_info['index_file'], 'rb') as f:
+        with open(data_info["index_file"], "rb") as f:
             index_info = pickle.load(f)
 
         # Reconstruct DataFrame
-        df = pd.DataFrame(
-            mmap_values,
-            index=index_info['index'],
-            columns=index_info['columns'])
+        df = pd.DataFrame(mmap_values, index=index_info["index"], columns=index_info["columns"])
 
         return df
 
@@ -253,16 +243,17 @@ class MemoryMappedData:
             Memory-mapped array (read-only)
         """
         mmap_array = np.memmap(
-            data_info['file'],
-            dtype=np.dtype(data_info['dtype']),
-            mode='r',
-            shape=tuple(data_info['shape']))
+            data_info["file"],
+            dtype=np.dtype(data_info["dtype"]),
+            mode="r",
+            shape=tuple(data_info["shape"]),
+        )
         return mmap_array
 
     @staticmethod
     def load_dict(data_info):
         """Load a dictionary object"""
-        with open(data_info['file'], 'rb') as f:
+        with open(data_info["file"], "rb") as f:
             return pickle.load(f)
 
     def get_info(self):
@@ -294,28 +285,28 @@ class MemoryMappedData:
         # Load metadata
         metadata_file = mmap_data.temp_dir / "metadata.pkl"
         if os.path.exists(metadata_file):
-            with open(metadata_file, 'rb') as f:
+            with open(metadata_file, "rb") as f:
                 mmap_data.metadata = pickle.load(f)
 
             # Reconstruct data_files entries
             for name, info in mmap_data.metadata.items():
-                if info['type'] == 'dataframe':
+                if info["type"] == "dataframe":
                     mmap_data.data_files[name] = {
-                        'values_file': str(mmap_data.temp_dir / f"{name}_values.npy"),
-                        'index_file': str(mmap_data.temp_dir / f"{name}_index.pkl"),
-                        'shape': info['shape'],
-                        'dtype': info['dtype']
+                        "values_file": str(mmap_data.temp_dir / f"{name}_values.npy"),
+                        "index_file": str(mmap_data.temp_dir / f"{name}_index.pkl"),
+                        "shape": info["shape"],
+                        "dtype": info["dtype"],
                     }
-                elif info['type'] == 'array':
+                elif info["type"] == "array":
                     mmap_data.data_files[name] = {
-                        'file': str(mmap_data.temp_dir / f"{name}.npy"),
-                        'shape': info['shape'],
-                        'dtype': info['dtype']
+                        "file": str(mmap_data.temp_dir / f"{name}.npy"),
+                        "shape": info["shape"],
+                        "dtype": info["dtype"],
                     }
-                elif info['type'] == 'dict':
+                elif info["type"] == "dict":
                     mmap_data.data_files[name] = {
-                        'file': str(mmap_data.temp_dir / f"{name}.pkl"),
-                        'type': 'dict'
+                        "file": str(mmap_data.temp_dir / f"{name}.pkl"),
+                        "type": "dict",
                     }
 
         return mmap_data

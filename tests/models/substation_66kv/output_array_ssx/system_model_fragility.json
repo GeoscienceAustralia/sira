@@ -5,7 +5,7 @@
             "parameters": {
                 "median": 0.21207613378211243,
                 "beta": 0.3271571122250338,
-                "loc": 0
+                "loc": 0.0
             },
             "fit_statistics": {
                 "chisqr": 0.17053604594075547,
@@ -17,7 +17,7 @@
             "parameters": {
                 "median": 0.33138598091751903,
                 "beta": 0.3007086557361324,
-                "loc": 0
+                "loc": 0.0
             },
             "fit_statistics": {
                 "chisqr": 0.13805776550074628,
@@ -29,7 +29,7 @@
             "parameters": {
                 "median": 0.5675243799669883,
                 "beta": 0.3087181422669664,
-                "loc": 0
+                "loc": 0.0
             },
             "fit_statistics": {
                 "chisqr": 0.5740483762286748,

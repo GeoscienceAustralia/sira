@@ -1,0 +1,32 @@
+{
+  "mp_n_processes": 8,
+  "mp_chunk_size": "auto",
+  "mp_start_method": "spawn",
+  "mp_maxtasksperchild": 1000,
+  "use_shared_memory": true,
+  "backend": "multiprocessing",
+  "environment": {
+    "hostname": "GA-MR-ThinkPad2",
+    "platform": "win32",
+    "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:39:58) [MSC v.1943 64 bit (AMD64)]",
+    "cpu_count": 8,
+    "physical_cores": 4,
+    "memory_gb": 31.71001434326172,
+    "available_memory_gb": 14.27657699584961,
+    "is_hpc": false,
+    "hpc_type": null,
+    "mpi_available": false,
+    "mpi_environment": false,
+    "gpu_available": false,
+    "gpu_count": 0
+  },
+  "recovery_method": "max",
+  "num_repair_streams": 100,
+  "save_checkpoints": true,
+  "checkpoint_interval": 1000,
+  "use_compression": true,
+  "compression_type": "snappy",
+  "log_level": "INFO",
+  "dask_n_workers": 4,
+  "batch_size": 500
+}

@@ -1,0 +1,172 @@
+#!/bin/bash
+#PBS -N ramsey-EPN-multiprocessing-test
+#PBS -m be
+#PBS -P w84
+#PBS -q normalbw
+#PBS -l walltime=05:00:00
+#PBS -l ncpus=48
+#PBS -l mem=240GB
+#PBS -l jobfs=400GB
+#PBS -l storage=scratch/y57+scratch/n74+scratch/w84+gdata/w84
+#PBS -j oe
+#PBS -l wd
+
+set -euo pipefail
+
+# --- User configuration
+ASSET="EPN_Yilgarn_microcomps_L3"
+CODE_DIR="/scratch/y57/mr3457/code/sira"
+MODELS_DIR="/scratch/y57/mr3457/code/_SYSTEM_MODELS/epn"
+VENV="$HOME/venv/sira-v25"
+
+# --- Environment setup
+module load python3/3.11.7
+source "$VENV/bin/activate"
+
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export NUMEXPR_MAX_THREADS=1
+
+# Additional optimisations for large-scale HPC run
+export MALLOC_MMAP_THRESHOLD_=131072
+export MALLOC_TRIM_THRESHOLD_=131072
+export OMP_WAIT_POLICY=PASSIVE
+
+export SIRA_LOG_LEVEL=INFO
+export SIRA_QUIET_MODE=0
+export SIRA_STREAM_DIR="${PBS_JOBFS}/sira_stream"
+mkdir -p "$SIRA_STREAM_DIR"
+
+export SIRA_SAVE_COMPTYPE_RESPONSE=1
+export SIRA_SAVE_COMPONENT_RESPONSE=0
+
+# --- Performance tuning for multiprocessing
+# Fewer chunks for multiprocessing (reduce overhead):
+export SIRA_CHUNKS_PER_SLOT=2
+# Fast compression:
+export SIRA_STREAM_COMPRESSION=snappy
+# Optimised row groups:
+export SIRA_STREAM_ROW_GROUP=524288
+# Reproducible results:
+export PYTHONHASHSEED=0
+
+# --- HPC Optimisations
+export SIRA_HPC_MODE=1
+export SIRA_MAX_BATCH_SIZE=1000
+
+# --- Run simulation
+cd "$CODE_DIR"
+LOGS_DIR="$CODE_DIR/logs"
+mkdir -p "$LOGS_DIR"
+
+printf '\n=== SIRA Multiprocessing Test ===\n'
+printf 'Asset: %s\n' "$ASSET"
+printf 'Working directory: %s\n' "$CODE_DIR"
+printf 'Logs directory: %s\n' "$LOGS_DIR"
+printf 'Stream directory: %s\n' "$SIRA_STREAM_DIR"
+
+# --- Main SIRA run - Multiprocessing backend
+echo "Starting SIRA (Multiprocessing) for comparison test..."
+echo "Cores: $PBS_NCPUS"
+echo "Memory per core: ~5.0GB"
+
+# Diagnostic: Check key configuration values
+echo "=== Configuration Diagnostics ==="
+python -c "
+import sys
+sys.path.insert(0, '${CODE_DIR}')
+try:
+    from sira.configuration import Configuration
+    from sira.scenario import Scenario
+    config = Configuration('${MODELS_DIR}/${ASSET}/config.json', '${MODELS_DIR}/${ASSET}/model.json')
+    scenario = Scenario(config)
+    print(f'CONFIG NUM_SAMPLES: {getattr(config, \"NUM_SAMPLES\", \"Not set\")}')
+    print(f'SCENARIO num_samples: {getattr(scenario, \"num_samples\", \"Not set\")}')
+    print(f'HAZARD_SCALING_FACTOR: {getattr(config, \"HAZARD_SCALING_FACTOR\", \"Not set\")}')
+    print(f'INTENSITY_MEASURE_UNIT: {getattr(config, \"INTENSITY_MEASURE_UNIT\", \"Not set\")}')
+    print(f'INTENSITY_MEASURE_PARAM: {getattr(config, \"INTENSITY_MEASURE_PARAM\", \"Not set\")}')
+
+    # Check if scenario has the right num_samples
+    if hasattr(scenario, 'num_samples'):
+        if scenario.num_samples == 1:
+            print('✓ NUM_SAMPLES correctly set to 1')
+        else:
+            print(f'✗ NUM_SAMPLES is {scenario.num_samples}, should be 1')
+    else:
+        print('✗ scenario.num_samples not found')
+        
+except Exception as e:
+    print(f'Error reading config: {e}')
+"
+
+echo "Start time: $(date)"
+
+# Record start time for performance monitoring
+START_TIME=$(date +%s)
+
+# Use multiprocessing backend (no MPI, no streaming for simpler debugging)
+python -m sira \
+    -d "${MODELS_DIR}/${ASSET}/" -s \
+    --parallel-backend multiprocessing \
+    | tee "$LOGS_DIR/sira_multiprocessing.log"
+
+# Calculate and report execution time
+END_TIME=$(date +%s)
+DURATION=$((END_TIME - START_TIME))
+echo "End time: $(date)"
+echo "Total execution time: $((DURATION / 3600))h $((DURATION % 3600 / 60))m $((DURATION % 60))s"
+
+# --- Post-run summary
+CONFIG_FILE=$(find "${MODELS_DIR}/${ASSET}" -name "config*.json" | head -1)
+if [ -n "$CONFIG_FILE" ] && [ -f "$CONFIG_FILE" ]; then
+    OUTPUT_DIR_PATH=$(python -c '
+import json, sys
+try:
+    with open(sys.argv[1], "r") as f:
+        data = json.load(f)
+    path = data.get("OUTPUT_DIR", "./output")
+    if path.startswith("./"):
+        path = path[2:]
+    print(path)
+except Exception:
+    print("output") # Fallback
+' "$CONFIG_FILE")
+    OUTPUT_DIR="${MODELS_DIR}/${ASSET}/${OUTPUT_DIR_PATH}"
+else
+    OUTPUT_DIR="${MODELS_DIR}/${ASSET}/output"
+fi
+
+printf '\n=== Outputs ===\n'
+printf 'Output directory: %s\n' "$OUTPUT_DIR"
+if [ -d "$OUTPUT_DIR" ]; then
+    echo "Output files:"
+    ls -la "$OUTPUT_DIR"
+    echo ""
+    echo "File sizes:"
+    find "$OUTPUT_DIR" -type f -exec ls -lh {} \; | awk '{print $5, $9}'
+else
+    printf '[x] Output directory not found\n'
+fi
+
+printf '\nStream directory contents:\n'
+if [ -d "$SIRA_STREAM_DIR" ] && [ "$(ls -A "$SIRA_STREAM_DIR" 2>/dev/null)" ]; then
+    echo "Stream directory size: $(du -sh "$SIRA_STREAM_DIR" | cut -f1)"
+    echo "Number of files: $(find "$SIRA_STREAM_DIR" -type f | wc -l)"
+    echo "Manifest files:"
+    find "$SIRA_STREAM_DIR" -name "manifest*.jsonl" -exec wc -l {} \; 2>/dev/null || echo "No manifest files"
+    echo "Sample files (first 10):"
+    find "$SIRA_STREAM_DIR" -maxdepth 1 -type f -print | head -10
+else
+    printf '[x] No streaming files found\n'
+fi
+
+printf '\nLog tail:\n'
+if [ -f "$LOGS_DIR/sira_multiprocessing.log" ]; then
+    tail -n 30 "$LOGS_DIR/sira_multiprocessing.log"
+else
+    printf '[x] Log file not found\n'
+fi
+
+printf '\n=== Multiprocessing Test Finished ===\n'

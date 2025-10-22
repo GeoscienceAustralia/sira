@@ -6,7 +6,7 @@ pandas
 scipy
 numba
 llvmlite
-dask[distributed]
+dask[complete]
 pyarrow
 tqdm
 networkx

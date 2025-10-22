@@ -2,7 +2,7 @@ Layered Python environment (HPC-friendly)
 -----------------------------------------
 
 We provide a minimal core requirements file suitable for headless HPC runs, and
-an optional visualization set for notebooks/plots. Critical pins live in a small
+an optional visualisation set for notebooks/plots. Critical pins live in a small
 constraints file to keep installs reproducible but flexible.
 
 Files:
