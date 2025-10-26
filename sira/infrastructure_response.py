@@ -325,11 +325,16 @@ def consolidate_streamed_results(
             econ_path = rec.get("econ")
             out_paths = rec.get("sys_output", []) or []
 
-            # Economic loss: all streaming data now uses NPY format
+            # Economic loss: compressed NPZ format
             econ_vals: np.ndarray | None = None
             try:
                 if econ_path and _Path(econ_path).exists():
-                    econ_vals = np.load(econ_path, allow_pickle=False).reshape(-1)
+                    # Handle both .npz (compressed) and .npy (legacy) formats
+                    if econ_path.endswith(".npz"):
+                        with np.load(econ_path, allow_pickle=False) as data:
+                            econ_vals = data["data"].reshape(-1)
+                    else:
+                        econ_vals = np.load(econ_path, allow_pickle=False).reshape(-1)
             except Exception as e:
                 rootLogger.warning(f"Failed reading econ for event {event_id}: {e}")
 
@@ -555,19 +560,20 @@ def consolidate_streamed_results(
     try:
         sys_output_df = pd.DataFrame.from_dict(per_event_line_means, orient="index")
         sys_output_df.columns = output_line_ids
-        sys_output_df.index.name = "event_id"
-        outfile_sysoutput = _Path(config.OUTPUT_DIR, "system_output_vs_hazard_intensity.csv")
+        outfile_sysoutput = Path(config.OUTPUT_DIR, "system_output_vs_hazard_intensity.csv")
         outpath_wrapped = utils.wrap_file_path(str(outfile_sysoutput))
         rootLogger.info(
             f"Writing {Fore.CYAN}system line capacity data{Fore.RESET} to: \n"
             f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}"
         )
-        sys_output_df.to_csv(outfile_sysoutput, sep=",", index_label=[sys_output_df.index.name])
+        sys_output_df.to_csv(outfile_sysoutput, sep=",", index_label=["hazard_event"])
         rootLogger.info("Done.\n")
     except Exception as e:
-        rootLogger.warning(f"Failed writing system_output_vs_hazard_intensity.csv: {e}")
+        rootLogger.error(f"Failed to write system_output_vs_hazard_intensity.csv: {e}")
+        rootLogger.info("Continuing without system output vs hazard intensity file")
+        print("-" * 81)
 
-    # Risk summary statistics
+    # Risk summary statistics for streaming consolidation
     try:
         summary_stats = calculate_summary_statistics(
             df_sys_response, calc_recovery=CALC_SYSTEM_RECOVERY
@@ -700,8 +706,12 @@ def reconstruct_response_list_from_streaming(
                                     f"File may be corrupted."
                                 )
 
-                            # Read NPY directly (no pandas overhead)
-                            econ_values = np.load(econ_path, allow_pickle=False).flatten()
+                            # Read compressed or uncompressed format
+                            if str(econ_path).endswith(".npz"):
+                                with np.load(econ_path, allow_pickle=False) as data:
+                                    econ_values = data["data"].flatten()
+                            else:
+                                econ_values = np.load(econ_path, allow_pickle=False).flatten()
                         except Exception as exc:
                             rootLogger.warning(
                                 f"Failed to load economic loss for event {event_id}: {exc}"
@@ -735,8 +745,48 @@ def reconstruct_response_list_from_streaming(
                                         f"got {actual_size}. File may be corrupted."
                                     )
 
-                            # All streaming data now uses NPY format (faster and simpler)
-                            out_array = np.load(out_path, allow_pickle=False)
+                            # Support multiple formats for backward compatibility:
+                            # 1. Compressed NPZ with full samples (.npz with 'data' key)
+                            # 2. Statistics-only NPZ (.npz with 'mean', 'std', etc.)
+                            # 3. Legacy uncompressed NPY (.npy)
+                            if out_path.suffix == ".npz":
+                                loaded = np.load(out_path, allow_pickle=False)
+                                if "data" in loaded:
+                                    # Full samples stored with compression
+                                    out_array = loaded["data"]
+                                elif "mean" in loaded:
+                                    # Statistics-only mode: reconstruct approximate samples
+                                    # Use mean +/- std to create pseudo-samples
+                                    mean_val = loaded["mean"]
+                                    std_val = loaded["std"]
+                                    min_val = loaded["min"]
+                                    max_val = loaded["max"]
+
+                                    # Create synthetic samples that match the statistics
+                                    # Approximation for when full samples weren't stored
+                                    n_lines = len(mean_val)
+                                    synthetic_samples = np.zeros(
+                                        (num_samples, n_lines), dtype=float
+                                    )
+                                    for i in range(n_lines):
+                                        # Generate samples with correct mean/std,
+                                        # clipped to min/max
+                                        synthetic_samples[:, i] = np.clip(
+                                            np.random.normal(mean_val[i], std_val[i], num_samples),
+                                            min_val[i],
+                                            max_val[i],
+                                        )
+                                    out_array = synthetic_samples
+                                    rootLogger.debug(
+                                        f"Reconstructed samples from statistics "
+                                        f"for event {event_id}"
+                                    )
+                                else:
+                                    raise ValueError(f"Unrecognized NPZ format in {out_path}")
+                            else:
+                                # Legacy uncompressed NPY format
+                                out_array = np.load(out_path, allow_pickle=False)
+
                             output_parts.append(out_array)
                         except Exception as exc:
                             rootLogger.warning(
@@ -779,12 +829,19 @@ def reconstruct_response_list_from_streaming(
                     possible_paths = []
                     if damage_path_str:
                         possible_paths.append(_Path(damage_path_str))
+                    # Check both compressed (.npz) and legacy (.npy) formats
+                    possible_paths.append(chunk_dir / f"{safe_event_id}__damage.npz")
                     possible_paths.append(chunk_dir / f"{safe_event_id}__damage.npy")
 
                     for dmg_path in possible_paths:
                         if dmg_path and dmg_path.exists():
                             try:
-                                dmg = np.load(dmg_path, allow_pickle=False)
+                                # Load compressed or uncompressed format
+                                if str(dmg_path).endswith(".npz"):
+                                    with np.load(dmg_path, allow_pickle=False) as data:
+                                        dmg = data["data"]
+                                else:
+                                    dmg = np.load(dmg_path, allow_pickle=False)
                                 dmg = np.asarray(dmg)
                                 if dmg.shape[0] != num_samples:
                                     dmg = np.resize(dmg, (num_samples, dmg.shape[1]))
@@ -1007,21 +1064,89 @@ def write_system_response(
     save_comptype_response = os.environ.get("SIRA_SAVE_COMPTYPE_RESPONSE", "1") == "1"
 
     if save_comptype_response:
-        comptype_resp_dict = response_list[3]
-        comptype_resp_df = pd.DataFrame(comptype_resp_dict)
-        comptype_resp_df.index.names = ["component_type", "response"]
-        comptype_resp_df = comptype_resp_df.transpose()
-        comptype_resp_df.index.name = "hazard_event"
+        try:
+            comptype_resp_dict = response_list[3]
+        except Exception:
+            comptype_resp_dict = {}
 
-        outfile_comptype_resp = Path(config.OUTPUT_DIR, "comptype_response.csv")
-        print("-" * 81)
-        outpath_wrapped = utils.wrap_file_path(str(outfile_comptype_resp))
-        rootLogger.info(
-            f"Writing {Fore.CYAN}component type response{Fore.RESET} to: \n"
-            f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}"
-        )
-        comptype_resp_df.to_csv(outfile_comptype_resp, sep=",")
-        rootLogger.info("Done.\n")
+        if comptype_resp_dict:
+            comptype_resp_df = pd.DataFrame(comptype_resp_dict)
+            comptype_resp_df.index.names = ["component_type", "response"]
+            comptype_resp_df = comptype_resp_df.transpose()
+            comptype_resp_df.index.name = "hazard_event"
+
+            outfile_comptype_resp = Path(config.OUTPUT_DIR, "comptype_response.csv")
+            print("-" * 81)
+            outpath_wrapped = utils.wrap_file_path(str(outfile_comptype_resp))
+            rootLogger.info(
+                f"Writing {Fore.CYAN}component type response{Fore.RESET} to: \n"
+                f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}"
+            )
+            comptype_resp_df.to_csv(outfile_comptype_resp, sep=",")
+            rootLogger.info("Done.\n")
+            # Cleanup $OUTPUT_DIR/mpi_comptype_parts if present
+            try:
+                cleanup_dir = Path(config.OUTPUT_DIR, "mpi_comptype_parts")
+                if cleanup_dir.exists() and cleanup_dir.is_dir():
+                    import shutil as _shutil
+
+                    _shutil.rmtree(cleanup_dir, ignore_errors=True)
+                    rootLogger.info(f"Cleaned up comptype partials directory: {cleanup_dir}")
+            except Exception as _ce:
+                rootLogger.warning(f"Failed to clean up comptype partials directory: {_ce}")
+        else:
+            # Merge per-rank partials produced by MPI path if available
+            parts_dir_env = os.environ.get("SIRA_MPI_COMPTYPE_PARTS_DIR", "")
+            parts_dir = (
+                Path(parts_dir_env)
+                if parts_dir_env
+                else Path(config.OUTPUT_DIR) / "mpi_comptype_parts"
+            )
+            part_files = sorted(parts_dir.glob("comptype_rank_*.csv")) if parts_dir.exists() else []
+            if not part_files:
+                rootLogger.error(
+                    "comptype_response.csv is required but neither in-memory data "
+                    "nor partials were found."
+                )
+            else:
+                frames = []
+                for pf in part_files:
+                    try:
+                        df = pd.read_csv(pf, index_col=0)
+                        df.index.name = "hazard_event"
+                        frames.append(df)
+                    except Exception as e:
+                        rootLogger.warning(f"Failed to read comptype partial {pf}: {e}")
+                if frames:
+                    merged = pd.concat(frames, axis=0)
+                    try:
+                        merged = merged.sort_index(axis=0)
+                    except Exception:
+                        pass
+                    outfile_comptype_resp = Path(config.OUTPUT_DIR, "comptype_response.csv")
+                    outpath_wrapped = utils.wrap_file_path(str(outfile_comptype_resp))
+                    rootLogger.info(
+                        f"Writing {Fore.CYAN}component type response{Fore.RESET} to: \n"
+                        f"{Fore.YELLOW}{outpath_wrapped}{Fore.RESET}"
+                    )
+                    merged.to_csv(outfile_comptype_resp, sep=",")
+                    rootLogger.info("Done.\n")
+                    # Cleanup $OUTPUT_DIR/mpi_comptype_parts after success
+                    try:
+                        cleanup_dir = Path(config.OUTPUT_DIR, "mpi_comptype_parts")
+                        if cleanup_dir.exists() and cleanup_dir.is_dir():
+                            import shutil as _shutil
+
+                            _shutil.rmtree(cleanup_dir, ignore_errors=True)
+                            rootLogger.info(
+                                f"Cleaned up comptype partials directory: {cleanup_dir}"
+                            )
+                    except Exception as _ce:
+                        rootLogger.warning(f"Failed to clean up comptype partials directory: {_ce}")
+                else:
+                    rootLogger.error(
+                        "Unable to construct comptype_response.csv from partials; no valid frames."
+                    )
         # try:
         #     comptype_resp_dict = response_list[3]
         #     comptype_resp_df = pd.DataFrame(comptype_resp_dict)
@@ -1607,7 +1732,8 @@ def write_system_response(
             rootLogger.error(f"Failed to save probability of exceedance data: {e}")
             rootLogger.info("Continuing without probability of exceedance file")
 
-    return pe_sys_econloss
+    # return pe_sys_econloss
+    return
 
 
 # -------------------------------------------------------------------------------------
@@ -1674,15 +1800,83 @@ def exceedance_prob_by_component_class(response_list, infrastructure, scenario, 
     num_events = len(hazards.hazard_data_df)
     num_components = len(infrastructure.components)
 
+    # Normalise event id key shape to match response_list[0] keys
+    event_response_dict = response_list[0]
+
+    # If we don't have per-event component state data (e.g., MPI compact path), skip gracefully
+    if not event_response_dict:
+        rootLogger.info(
+            "Skipping component-class exceedance calculation: missing per-event component"
+            " state data (MPI compact path)."
+        )
+        return None
+
     # Pre-allocate the full response array
     response_array = np.zeros((num_samples, num_events, num_components))
 
+    def _coerce_event_key(raw_key):
+        """
+        Coerce a hazard index value into the key format used by event_response_dict.
+        Tries int->str fallbacks to handle mixed key types robustly.
+        """
+        # Unwrap tuple/list index commonly seen in MultiIndex
+        key = raw_key[0] if isinstance(raw_key, (tuple, list)) else raw_key
+
+        # Fast-path: numpy scalars to native int
+        try:
+            import numpy as _np  # local import to avoid polluting namespace
+
+            if isinstance(key, (_np.integer,)):
+                key = int(key)
+        except Exception:
+            # numpy may not be available here, ignore
+            pass
+
+        # If string looks like an int, coerce to int
+        if isinstance(key, str):
+            s = key.strip()
+            if s.isdigit() or (s.startswith("-") and s[1:].isdigit()):
+                try:
+                    key = int(s)
+                except Exception:
+                    # keep as original string if int conversion fails unexpectedly
+                    key = key
+
+        # Resolve against available dict keys with graceful fallbacks
+        if key in event_response_dict:
+            return key
+
+        # Try alternate representation if possible
+        if isinstance(key, int):
+            alt = str(key)
+            if alt in event_response_dict:
+                return alt
+        elif isinstance(key, str):
+            try:
+                alt_int = int(key)
+                if alt_int in event_response_dict:
+                    return alt_int
+            except Exception:
+                pass
+
+        # As a last resort, return the original key (will raise later with clearer context)
+        return key
+
     # Fill response array (do this once instead of repeatedly accessing dict)
     for j, scenario_index in enumerate(hazards.hazard_data_df.index):
-        event_id = (
-            scenario_index[0] if isinstance(scenario_index, (tuple, list)) else scenario_index
-        )
-        response_array[:, j, :] = response_list[0][event_id]
+        # print(f"Processing hazard event {j + 1}/{num_events} (Event ID: {scenario_index})")
+        ev_key = _coerce_event_key(scenario_index)
+        try:
+            response_array[:, j, :] = event_response_dict[ev_key]
+        except KeyError as e:
+            # Provide a more informative error including sample keys snapshot
+            sample_keys = list(event_response_dict.keys())
+            sample_preview = sample_keys[:5]
+            raise KeyError(
+                f"Event key {ev_key!r} not found in response_list[0]. "
+                f"Example keys: {sample_preview} (total {len(sample_keys)}). "
+                f"Original index value: {scenario_index!r}"
+            ) from e
 
     # --- System fragility - Based on Failure of Component Classes ---
     comp_class_failures = {}

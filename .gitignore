@@ -92,3 +92,6 @@ logs/*
 
 # vs code settings
 .vscode
+
+# stream consolidation files
+test/models/output_array/*

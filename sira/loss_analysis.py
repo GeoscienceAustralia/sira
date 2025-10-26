@@ -142,7 +142,7 @@ def analyse_system_recovery(
 
         # # Test prints
         # print("========================================")
-        # print(f"comp_id    :  {comp_id}")
+        # print(f"comp_id    : {comp_id}")
         # print(f"loc_params : {loc_params}")
         # print(f"event_id   : {event_id}\n")
 

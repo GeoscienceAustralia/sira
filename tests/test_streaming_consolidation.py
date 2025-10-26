@@ -82,19 +82,19 @@ def create_mock_streaming_files(stream_dir: Path, num_events: int = 5, num_sampl
         chunk_dir = stream_dir / f"chunk_{i:06d}"
         chunk_dir.mkdir(parents=True, exist_ok=True)
 
-        # Create economic loss data (1D array of samples)
+        # Create economic loss data (1D array of samples) - compressed format
         econ_data = np.random.uniform(0.1, 1.0, num_samples)
-        econ_path = chunk_dir / f"{event_id}_econ.npy"
-        np.save(econ_path, econ_data)
+        econ_path = chunk_dir / f"{event_id}_econ.npz"
+        np.savez_compressed(econ_path, data=econ_data)
 
         # Create system output data (samples x lines)
         # Simulate 3 output lines
         num_lines = 3
         output_data = np.random.uniform(50, 100, (num_samples, num_lines))
 
-        # Save as NPY (streaming format)
-        output_path = chunk_dir / f"{event_id}__sysout.npy"
-        np.save(output_path, output_data)
+        # Save as compressed NPZ (new streaming format)
+        output_path = chunk_dir / f"{event_id}__sysout.npz"
+        np.savez_compressed(output_path, data=output_data)
 
         # Add to manifest with file sizes
         manifest_entry = {

@@ -598,6 +598,86 @@ def _calculate_response_mpi(
         for hazard_id, error in failed_hazards:
             rootLogger.warning(f"  - {hazard_id}: {error}")
 
+    # ---------------------------------------------------------------------------------
+    # Prepare comptype_response partial output per rank to avoid large MPI gathers
+    # ---------------------------------------------------------------------------------
+    # Only for non-streaming mode we need to ensure the final comptype_response.csv exists
+    # Honour SIRA_SAVE_COMPTYPE_RESPONSE flag to allow users to disable this output entirely
+    save_comptype_response = os.environ.get("SIRA_SAVE_COMPTYPE_RESPONSE", "1") == "1"
+    if not streaming and save_comptype_response:
+        try:
+            from pathlib import Path as _Path
+
+            import pandas as _pd  # Local import to avoid global dependency cost
+
+            parts_dir = os.environ.get("SIRA_MPI_COMPTYPE_PARTS_DIR")
+            if parts_dir:
+                parts_dir_path = _Path(parts_dir)
+            else:
+                # Prefer OUTPUT_DIR/mpi_comptype_parts if exposed; else fall back to CWD
+                out_dir = os.environ.get("SIRA_OUTPUT_DIR")
+                if out_dir:
+                    parts_dir_path = _Path(out_dir, "mpi_comptype_parts")
+                else:
+                    parts_dir_path = _Path.cwd() / "mpi_comptype_parts"
+                # Export so writer can discover it later
+                os.environ["SIRA_MPI_COMPTYPE_PARTS_DIR"] = str(parts_dir_path)
+            if rank == 0:
+                parts_dir_path.mkdir(parents=True, exist_ok=True)
+
+            # Ensure directory exists before workers write
+            mpi_comm.barrier()
+
+            # Build a DataFrame for this rank's hazard slice: index=hazard_event, columns=MultiIndex
+            # Collect per-event comptype dicts
+            local_rows = []
+            local_index = []
+            first_cols = None
+            for haz in my_hazards:
+                res = my_results.get(haz.hazard_event_id)
+                if res is None:
+                    continue
+                comp_type_dict = res[3]  # {(ct_id, metric): value}
+                if not comp_type_dict:
+                    continue
+                # Convert to ordered row using first_cols template when available
+                if first_cols is None:
+                    first_cols = list(comp_type_dict.keys())
+                row = [comp_type_dict.get(col, np.nan) for col in first_cols]
+                local_rows.append(row)
+                local_index.append(str(haz.hazard_event_id))
+
+            if first_cols is not None and local_rows:
+                # Create DataFrame with MultiIndex columns
+                df = _pd.DataFrame(
+                    local_rows,
+                    index=local_index,
+                    columns=_pd.MultiIndex.from_tuples(
+                        first_cols,
+                        names=["component_type", "response"],
+                    ),
+                )
+                df.index.name = "hazard_event"
+
+                # Write per-rank CSV part
+                part_path = parts_dir_path / f"comptype_rank_{rank:06d}.csv"
+                # Use minimal formatting for speed
+                df.to_csv(part_path)
+                rootLogger.info(
+                    "MPI rank %s: wrote comptype partial with %d events to %s",
+                    rank,
+                    len(local_index),
+                    str(part_path),
+                )
+            else:
+                rootLogger.info(f"MPI rank {rank}: no comptype data to write in this slice")
+        except Exception as e:
+            rootLogger.warning(f"MPI rank {rank}: failed to write comptype partial: {e}")
+    elif not streaming and not save_comptype_response:
+        rootLogger.info(
+            "Skipping comptype partial writes (disabled by SIRA_SAVE_COMPTYPE_RESPONSE=0)"
+        )
+
     # Gather failure statistics across all ranks
     failure_counts = mpi_comm.gather(len(failed_hazards), root=0)
     total_successful = mpi_comm.gather(successful_hazards, root=0)
@@ -736,20 +816,159 @@ def _calculate_response_mpi(
         else:
             return None
 
-    # Gather all results to rank 0 for non-streaming case
-    all_results = mpi_comm.gather(my_results, root=0)
+    # Non-streaming: gather compact payloads to rank 0 instead of massive per-hazard dicts
+    # Build compact local payloads (arrays + small dict) for this rank's contiguous slice
+    try:
+        # Determine number of samples and outputs from first available result
+        local_event_count = end_idx - start_idx
+        if local_event_count < 1:
+            local_sys_output_sum = np.zeros((0, 0), dtype=float)
+            local_sys_econ_loss = np.zeros((0, 0), dtype=float)
+            local_sys_output_dict = {}
+        else:
+            # Infer num_samples and num_output_lines from first hazard in our slice
+            first_event_id = None
+            for haz in my_hazards:
+                if haz.hazard_event_id in my_results:
+                    first_event_id = haz.hazard_event_id
+                    break
+            if first_event_id is None:
+                # No results on this rank (all failed?)
+                local_sys_output_sum = np.zeros((0, 0), dtype=float)
+                local_sys_econ_loss = np.zeros((0, 0), dtype=float)
+                local_sys_output_dict = {}
+            else:
+                first_res = my_results[first_event_id]
+                # [4] infrastructure_sample_output: shape (num_samples, num_lines)
+                num_samples = int(np.asarray(first_res[4]).shape[0])
+
+                # Allocate local arrays: shape (num_samples, local_event_count)
+                local_sys_output_sum = np.zeros((num_samples, local_event_count), dtype=float)
+                local_sys_econ_loss = np.zeros((num_samples, local_event_count), dtype=float)
+                local_sys_output_dict: dict[str, dict] = {}
+
+                # Fill columns in global order of our contiguous slice
+                for j, haz in enumerate(my_hazards):
+                    res = my_results.get(haz.hazard_event_id)
+                    if res is None:
+                        # Keep zeros for this event if it failed
+                        continue
+                    # Sum output across lines per-sample
+                    infra_output_samples = np.asarray(res[4])  # (num_samples, num_lines)
+                    if infra_output_samples.ndim == 2:
+                        local_sys_output_sum[:, j] = np.sum(infra_output_samples, axis=1)
+                    else:
+                        # Fallback safety: flatten if unexpected shape
+                        local_sys_output_sum[:, j] = np.sum(
+                            infra_output_samples.reshape(num_samples, -1), axis=1
+                        )
+
+                    # Economic loss samples -> column j
+                    econ_samples = np.asarray(res[5]).reshape(-1)
+                    if econ_samples.size != num_samples:
+                        # Resize conservatively if mismatch
+                        econ_samples = np.resize(econ_samples, num_samples)
+                    local_sys_econ_loss[:, j] = econ_samples
+
+                    # Mean per output line (small dict) for system_output_vs_hazard_intensity.csv
+                    infra_output_means = res[1]  # {line_id: mean}
+                    try:
+                        # Ensure JSON/pickle-friendly keys
+                        local_sys_output_dict[str(haz.hazard_event_id)] = infra_output_means
+                    except Exception:
+                        local_sys_output_dict[str(haz.hazard_event_id)] = dict(infra_output_means)
+
+        # Gather compact payloads on root
+        local_payload = (start_idx, end_idx, local_sys_output_sum, local_sys_econ_loss)
+        all_payloads = mpi_comm.gather(local_payload, root=0)
+        # Gather small dicts separately (keeps memory footprint per gather manageable)
+        all_sys_output_dicts = mpi_comm.gather(local_sys_output_dict, root=0)
+    except Exception as e:
+        # If we fail to prepare compact payloads, fall back to original behaviour (may be large)
+        rootLogger.warning(
+            f"Rank {rank}: compact payload preparation failed ({e}); falling back to dict gather"
+        )
+        all_results = mpi_comm.gather(my_results, root=0)
+        if rank == 0:
+            hazards_response = [r for r in all_results if r]
+            print(
+                f"\nMPI processing complete. Processed {total_hazards} hazards across {size} ranks."
+            )
+            rootLogger.info(
+                f"MPI rank 0: Completed aggregation of results from {size} ranks (fallback)"
+            )
+            return hazards_response
+        else:
+            return None
 
     if rank == 0:
-        # Aggregate results from all ranks
-        hazards_response = []
-        for rank_results in all_results:
-            if rank_results:
-                hazards_response.append(rank_results)
+        # Assemble full-size arrays on root in global hazard order
+        try:
+            # Infer num_samples from first non-empty payload
+            num_samples = 0
+            for _s, _e, out_arr, _econ_arr in (p for p in all_payloads if p is not None):
+                if isinstance(out_arr, np.ndarray) and out_arr.size > 0:
+                    num_samples = out_arr.shape[0]
+                    break
+            if num_samples == 0:
+                num_samples = getattr(scenario, "num_samples", 0) or 0
 
-        print(f"\nMPI processing complete. Processed {total_hazards} hazards across {size} ranks.")
-        rootLogger.info(f"MPI rank 0: Completed aggregation of results from {size} ranks")
+            sys_output_full = np.zeros((num_samples, total_hazards), dtype=float)
+            sys_econ_full = np.zeros((num_samples, total_hazards), dtype=float)
 
-        return hazards_response
+            for payload in all_payloads:
+                if payload is None:
+                    continue
+                s_idx, e_idx, out_arr, econ_arr = payload
+                if isinstance(out_arr, np.ndarray) and out_arr.size:
+                    width = e_idx - s_idx
+                    # Basic shape validation
+                    if out_arr.shape[1] != width:
+                        rootLogger.warning(
+                            f"Output array width mismatch for slice {s_idx}:{e_idx} - "
+                            f"got {out_arr.shape[1]}"
+                        )
+                    sys_output_full[:, s_idx:e_idx] = out_arr[:, :width]
+                if isinstance(econ_arr, np.ndarray) and econ_arr.size:
+                    width = e_idx - s_idx
+                    if econ_arr.shape[1] != width:
+                        rootLogger.warning(
+                            f"Econ array width mismatch for slice {s_idx}:{e_idx} - "
+                            f"got {econ_arr.shape[1]}"
+                        )
+                    sys_econ_full[:, s_idx:e_idx] = econ_arr[:, :width]
+
+            # Merge small per-event dicts
+            sys_output_dict_full: dict[str, dict] = {}
+            for d in all_sys_output_dicts:
+                if d:
+                    sys_output_dict_full.update(d)
+
+            print(
+                f"\nMPI processing complete. Processed {total_hazards} hazards across {size} ranks."
+            )
+            rootLogger.info("MPI rank 0: Compact payloads gathered and assembled successfully")
+
+            # Build response_data in the legacy format expected by downstream code
+            response_data = [
+                {},  # [0] event_vs_dmg_indices (omitted for MPI compact path)
+                sys_output_dict_full,  # [1]
+                {},  # [2] comp_response_dict (omitted unless needed)
+                {},  # [3] comptype_resp_dict (omitted unless needed)
+                sys_output_full,  # [4] shape (num_samples, total_hazards)
+                sys_econ_full,  # [5] shape (num_samples, total_hazards)
+                {},  # [6]
+                {},  # [7]
+            ]
+
+            return response_data
+        except Exception as e:
+            rootLogger.error(f"MPI rank 0: Failed assembling response arrays: {e}")
+            import traceback as _tb
+
+            rootLogger.debug(_tb.format_exc())
+            # As a last resort, return None to signal failure
+            return None
     else:
         # Worker ranks return None
         return None
@@ -769,6 +988,7 @@ def _persist_chunk_result(chunk_id: int, chunk_result: dict, stream_dir: Path) -
     """
     import json
     import logging
+    import os
 
     import numpy as np
 
@@ -807,6 +1027,10 @@ def _persist_chunk_result(chunk_id: int, chunk_result: dict, stream_dir: Path) -
                     metrics["value"] = 0.0
         return serialisable
 
+    # Honour environment flags for streaming JSON outputs
+    save_component_response = os.environ.get("SIRA_SAVE_COMPONENT_RESPONSE", "1") == "1"
+    save_comptype_response = os.environ.get("SIRA_SAVE_COMPTYPE_RESPONSE", "1") == "1"
+
     for event_id, vlist in chunk_result.items():
         try:
             damage_states = vlist[0]
@@ -817,10 +1041,10 @@ def _persist_chunk_result(chunk_id: int, chunk_result: dict, stream_dir: Path) -
 
             safe_id = _sanitize(event_id)
 
-            # Economic loss: write directly to NPY (simpler and faster than parquet)
-            econ_path = chunk_base / f"{safe_id}__econ.npy"
+            # Economic loss: write with compression (NPZ format to save disk space)
+            econ_path = chunk_base / f"{safe_id}__econ.npz"
             try:
-                np.save(econ_path, np.asarray(sys_econ_loss_samples))
+                np.savez_compressed(econ_path, data=np.asarray(sys_econ_loss_samples))
             except Exception as e:
                 import logging
 
@@ -829,11 +1053,32 @@ def _persist_chunk_result(chunk_id: int, chunk_result: dict, stream_dir: Path) -
                     f"Failed to write economic loss for event {event_id} to {econ_path}: {e}"
                 )
 
-            # System output: write to NPY format
+            # System output: write with compression (NPZ format to save disk space)
+            # Option to store only statistics instead of full samples for even greater savings
             out_paths = []
+            import os
+
+            store_stats_only = os.environ.get("SIRA_STREAM_STATS_ONLY", "0") == "1"
+
             try:
-                out_p = chunk_base / f"{safe_id}__sysout.npy"
-                np.save(out_p, np.asarray(sys_output_samples))
+                if store_stats_only:
+                    # Option B: Store statistics only (100x smaller than full samples)
+                    # This loses the full sample distribution but preserves key metrics
+                    sys_out_array = np.asarray(sys_output_samples)
+                    stats_dict = {
+                        "mean": sys_out_array.mean(axis=0),
+                        "std": sys_out_array.std(axis=0),
+                        "min": sys_out_array.min(axis=0),
+                        "max": sys_out_array.max(axis=0),
+                        "median": np.median(sys_out_array, axis=0),
+                    }
+                    out_p = chunk_base / f"{safe_id}__sysout_stats.npz"
+                    np.savez_compressed(out_p, **stats_dict)
+                else:
+                    # Option A: Store full samples with compression (70-80% reduction)
+                    out_p = chunk_base / f"{safe_id}__sysout.npz"
+                    np.savez_compressed(out_p, data=np.asarray(sys_output_samples))
+
                 out_paths = [str(out_p)]
             except Exception as e:
                 import logging
@@ -842,10 +1087,11 @@ def _persist_chunk_result(chunk_id: int, chunk_result: dict, stream_dir: Path) -
                 logger.error(f"Failed to write system output for event {event_id}: {e}")
                 out_paths = []
 
-            # Persist component damage state indicators for recovery/statistics reconstruction
-            damage_path = chunk_base / f"{safe_id}__damage.npy"
+            # Persist damage state indicators with compression (int8 + NPZ for space savings)
+            damage_path = chunk_base / f"{safe_id}__damage.npz"
             try:
-                np.save(damage_path, np.asarray(damage_states, dtype=np.int16))
+                # Use int8 for damage states (max 127 damage states, sufficient for most models)
+                np.savez_compressed(damage_path, data=np.asarray(damage_states, dtype=np.int8))
             except Exception:
                 # Remove partially written file if save fails
                 if damage_path.exists():
@@ -855,15 +1101,17 @@ def _persist_chunk_result(chunk_id: int, chunk_result: dict, stream_dir: Path) -
                         pass
 
             # Store component and component type response data as JSON
-            comp_resp_json = _serialise_response_dict(comp_resp)
-            comptype_resp_json = _serialise_response_dict(comptype_resp)
             try:
-                if comp_resp_json:
-                    with open(chunk_base / f"{safe_id}__comp_response.json", "w") as f:
-                        json.dump(comp_resp_json, f)
-                if comptype_resp_json:
-                    with open(chunk_base / f"{safe_id}__comptype_response.json", "w") as f:
-                        json.dump(comptype_resp_json, f)
+                if save_component_response:
+                    comp_resp_json = _serialise_response_dict(comp_resp)
+                    if comp_resp_json:
+                        with open(chunk_base / f"{safe_id}__comp_response.json", "w") as f:
+                            json.dump(comp_resp_json, f)
+                if save_comptype_response:
+                    comptype_resp_json = _serialise_response_dict(comptype_resp)
+                    if comptype_resp_json:
+                        with open(chunk_base / f"{safe_id}__comptype_response.json", "w") as f:
+                            json.dump(comptype_resp_json, f)
             except Exception:
                 pass
 

@@ -6,7 +6,11 @@
 #PBS -l walltime=12:00:00
 #PBS -l ncpus=240
 #PBS -l mem=1280GB
-#PBS -l jobfs=400GB
+#PBS -l jobfs=50GB
+# Request iointensive NVMe-over-fabrics volumes (1 TiB each), divisible by node count.
+# For normalbw (28 cores/node), ncpus=240 typically implies 9 nodes → request 9 volumes (1 TiB/node).
+# Adjust if you change ncpus or queue/node type.
+#PBS -l iointensive=9
 #PBS -l storage=scratch/y57+scratch/n74+scratch/w84+gdata/w84
 #PBS -j oe
 #PBS -l wd
@@ -37,10 +41,12 @@ export OMP_WAIT_POLICY=PASSIVE
 
 export SIRA_LOG_LEVEL=INFO
 export SIRA_QUIET_MODE=0
-# Use shared /scratch instead of node-local JobFS for MPI streaming
-# JobFS is not shared across nodes - only one node's manifests would be visible
-export SIRA_STREAM_DIR="/scratch/${PROJECT}/${USER}/sira_stream_${PBS_JOBID}"
+
+# Stream to iointensive (per-node, ultra-low-latency). We'll stage-out later.
+export SIRA_STREAM_DIR="/iointensive/sira_${PBS_JOBID}"
 mkdir -p "$SIRA_STREAM_DIR"
+# Defer in-process consolidation so we can stage-out from per-node storage first
+export SIRA_DEFER_CONSOLIDATION=1
 
 export SIRA_SAVE_COMPTYPE_RESPONSE=1
 export SIRA_SAVE_COMPONENT_RESPONSE=0
@@ -96,6 +102,11 @@ echo "Start time: $(date)"
 # Record start time for performance monitoring
 START_TIME=$(date +%s)
 
+# Check initial storage quota
+echo "=== Initial Storage Status ==="
+nci_account -P "$PROJECT" 2>/dev/null || echo "nci_account not available"
+echo ""
+
 # Bind MPI processes to cores for better performance
 # Note: Detailed logs are written to <output_dir>/log.txt by the Python logger
 mpirun -np "$PBS_NCPUS" --bind-to core --map-by core \
@@ -107,7 +118,141 @@ mpirun -np "$PBS_NCPUS" --bind-to core --map-by core \
 END_TIME=$(date +%s)
 DURATION=$((END_TIME - START_TIME))
 echo "End time: $(date)"
-echo "Total execution time: $((DURATION / 3600))h $((DURATION % 3600 / 60))m $((DURATION % 60))s"
+echo "Total execution time (compute): $((DURATION / 3600))h $((DURATION % 3600 / 60))m $((DURATION % 60))s"
+
+# ------------------------------------------------------------------------------
+# Stage-out per-node streaming artifacts from iointensive to shared /scratch
+# ------------------------------------------------------------------------------
+
+SHARED_BASE="/scratch/${PROJECT}/${USER}/sira_stream_${PBS_JOBID}"
+SHARED_STAGE="${SHARED_BASE}/staged"
+SHARED_CHUNKS="${SHARED_BASE}/chunks"
+mkdir -p "$SHARED_STAGE" "$SHARED_CHUNKS"
+
+echo "Staging-out per-node streaming artifacts to: $SHARED_STAGE"
+
+# Run a tar+copy on each allocated node concurrently
+pbsdsh -v bash -lc '
+        set -euo pipefail
+        SRC="${SIRA_STREAM_DIR:-/iointensive/sira_${PBS_JOBID}}"
+        if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
+                HNAME=$(hostname -s)
+                TAR_PATH="/iointensive/sira_${PBS_JOBID}_${HNAME}.tar"
+                echo "Packing $SRC on $HNAME -> $TAR_PATH"
+                tar -C "$SRC" -cf "$TAR_PATH" .
+                echo "Copying $TAR_PATH -> $SHARED_STAGE/"
+                cp -f "$TAR_PATH" "$SHARED_STAGE/"
+        else
+                echo "No streaming files on $(hostname -s); skipping."
+        fi
+'
+
+echo "Verifying staged artifacts..."
+# Expected set of hosts from PBS_NODEFILE (short hostnames)
+EXPECTED_HOSTS=$(awk -F. '{print $1}' "$PBS_NODEFILE" | sort -u)
+EXPECTED_COUNT=$(echo "$EXPECTED_HOSTS" | wc -l | tr -d ' ')
+
+# Actual set of hosts from staged tar files
+ACTUAL_HOSTS=$(ls -1 "$SHARED_STAGE"/sira_${PBS_JOBID}_*.tar 2>/dev/null | \
+    sed -E "s|^.*/sira_${PBS_JOBID}_([^/]+)\.tar$|\1|" | sort -u)
+ACTUAL_COUNT=$(echo "$ACTUAL_HOSTS" | wc -l | tr -d ' ')
+
+echo "Expected node count: $EXPECTED_COUNT"
+echo "Actual staged tars : $ACTUAL_COUNT"
+
+if [ "$EXPECTED_COUNT" -eq 0 ]; then
+    echo "[x] Could not determine expected nodes from PBS_NODEFILE. Aborting."
+    exit 1
+fi
+
+if [ "$ACTUAL_COUNT" -ne "$EXPECTED_COUNT" ]; then
+    echo "[x] Verification failed: missing staged tarballs from some nodes."
+    echo "Expected hosts:"
+    echo "$EXPECTED_HOSTS"
+    echo "Actual hosts:"
+    echo "$ACTUAL_HOSTS"
+
+    MISSING=$(comm -23 <(echo "$EXPECTED_HOSTS") <(echo "$ACTUAL_HOSTS"))
+    if [ -n "$MISSING" ]; then
+        echo "Missing hosts:"
+        echo "$MISSING"
+    fi
+    exit 2
+fi
+
+echo "Unpacking staged tarballs to: $SHARED_CHUNKS"
+for f in "$SHARED_STAGE"/sira_${PBS_JOBID}_*.tar; do
+        [ -e "$f" ] || continue
+        base=$(basename "$f")
+        host=${base#sira_${PBS_JOBID}_}
+        host=${host%.tar}
+        mkdir -p "$SHARED_CHUNKS/$host"
+        tar -xf "$f" -C "$SHARED_CHUNKS/$host"
+done
+
+# ------------------------------------------------------------------------------
+# Consolidation-only step (now that all chunks are on shared filesystem)
+# ------------------------------------------------------------------------------
+
+echo "Starting streaming consolidation from $SHARED_CHUNKS ..."
+python - <<'PYCONSOL'
+import os, json
+from pathlib import Path
+from sira.configuration import Configuration
+from sira.model_ingest import ingest_model
+from sira.modelling.hazard import HazardsContainer
+from sira.infrastructure_response import consolidate_streamed_results
+
+asset = os.environ.get('ASSET')
+models_dir = os.environ.get('MODELS_DIR')
+input_dir = Path(models_dir) / asset / 'input'
+# Discover config/model files by pattern to match CLI behaviour
+config_file = None
+model_file = None
+for fname in os.listdir(input_dir):
+        if config_file is None and fname.lower().startswith('config') and fname.lower().endswith('.json'):
+                config_file = input_dir / fname
+        if model_file is None and fname.lower().startswith('model') and fname.lower().endswith('.json'):
+                model_file = input_dir / fname
+if config_file is None or model_file is None:
+        raise SystemExit('Could not find config/model JSON in ' + str(input_dir))
+
+config = Configuration(str(config_file), str(model_file))
+infrastructure = ingest_model(config)
+hazards_container = HazardsContainer(config, model_file)
+
+stream_dir = os.environ['SHARED_CHUNKS']
+scenario = type('ScenarioShim', (), {})()
+setattr(scenario, 'num_samples', config.NUM_SAMPLES)
+setattr(scenario, 'parallel_config', None)
+
+consolidate_streamed_results(
+                stream_dir,
+                infrastructure,
+                scenario,
+                config,
+                hazards_container,
+                CALC_SYSTEM_RECOVERY=False,
+)
+PYCONSOL
+
+CONS_END_TIME=$(date +%s)
+CONS_DURATION=$((CONS_END_TIME - END_TIME))
+echo "Consolidation duration: $((CONS_DURATION / 3600))h $((CONS_DURATION % 3600 / 60))m $((CONS_DURATION % 60))s"
+
+# ------------------------------------------------------------------------------
+# Cleanup tail
+# ------------------------------------------------------------------------------
+
+echo "Cleaning up staged tarballs..."
+rm -f "$SHARED_STAGE"/sira_${PBS_JOBID}_*.tar || true
+
+if [ "${SIRA_CLEANUP_CHUNKS:-0}" = "1" ]; then
+    echo "SIRA_CLEANUP_CHUNKS=1 set. Removing shared chunks directory: $SHARED_CHUNKS"
+    rm -rf "$SHARED_CHUNKS" || true
+else
+    echo "Keeping shared chunks at: $SHARED_CHUNKS (set SIRA_CLEANUP_CHUNKS=1 to remove)"
+fi
 
 # --- Fallback test with multiprocessing (optional)
 # echo "Using multiprocessing backend..."
@@ -144,16 +289,28 @@ else
     printf '[x] Output directory not found\n'
 fi
 
-printf '\nStream directory contents:\n'
-if [ -d "$SIRA_STREAM_DIR" ] && [ "$(ls -A "$SIRA_STREAM_DIR" 2>/dev/null)" ]; then
-    echo "Stream directory size: $(du -sh "$SIRA_STREAM_DIR" | cut -f1)"
-    echo "Number of files: $(find "$SIRA_STREAM_DIR" -type f | wc -l)"
+# Check final storage quota
+printf '\n=== Final Storage Status ===\n'
+nci_account -P "$PROJECT" 2>/dev/null || echo "nci_account not available"
+echo ""
+
+printf '\nStream directory contents (shared):\n'
+if [ -d "$SHARED_CHUNKS" ] && [ "$(ls -A "$SHARED_CHUNKS" 2>/dev/null)" ]; then
+    echo "Stream (shared) size: $(du -sh "$SHARED_CHUNKS" | cut -f1)"
+    echo "Detailed breakdown:"
+    du -sh "$SHARED_CHUNKS"/*/ 2>/dev/null | head -10 || echo "  No subdirectories"
+    echo "Number of files: $(find "$SHARED_CHUNKS" -type f | wc -l)"
     echo "Manifest files:"
-    find "$SIRA_STREAM_DIR" -name "manifest*.jsonl" -exec wc -l {} \;
-    echo "Sample files (first 20):"
-    find "$SIRA_STREAM_DIR" -maxdepth 1 -type f -print | head -20
-    echo "Chunk directories:"
-    find "$SIRA_STREAM_DIR" -type d -name "chunk_*" | head -10
+    find "$SHARED_CHUNKS" -name "manifest*.jsonl" -exec wc -l {} \; 2>/dev/null | head -20
+    echo "Sample chunk directories:"
+    find "$SHARED_CHUNKS" -type d -name "chunk_*" 2>/dev/null | head -10
+
+    # Report file type breakdown
+    echo "File type breakdown:"
+    echo "  Economic loss (NPZ): $(find "$SHARED_CHUNKS" -name "*__econ.npz" | wc -l) files"
+    echo "  System output (NPZ): $(find "$SHARED_CHUNKS" -name "*__sysout.npz" | wc -l) files"
+    echo "  System output stats (NPZ): $(find "$SHARED_CHUNKS" -name "*__sysout_stats.npz" | wc -l) files"
+    echo "  Damage states (NPZ): $(find "$SHARED_CHUNKS" -name "*__damage.npz" | wc -l) files"
 else
     printf '[x] No streaming files found\n'
 fi
@@ -164,5 +321,13 @@ if [ -f "${MODELS_DIR}/${ASSET}/output/log.txt" ]; then
 else
     printf '[x] Log file not found\n'
 fi
+
+# Storage usage summary
+printf '\n=== Storage Usage Summary ===\n'
+echo "Scratch storage usage:"
+du -sh "/scratch/${PROJECT}/${USER}" 2>/dev/null || echo "  Unable to check scratch usage"
+echo ""
+echo "Streaming directories:"
+du -sh "/scratch/${PROJECT}/${USER}"/sira_stream_* 2>/dev/null || echo "  No streaming directories found"
 
 printf '\n=== Job finished ===\n'

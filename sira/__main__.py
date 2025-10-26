@@ -632,6 +632,12 @@ def main(args=None):
     hazards_container = HazardsContainer(config, model_file_path)
     output_path = config.OUTPUT_DIR
 
+    # Expose OUTPUT_DIR to workers and helpers (e.g., MPI comptype partials directory resolution)
+    try:
+        os.environ["SIRA_OUTPUT_DIR"] = str(output_path)
+    except Exception:
+        pass
+
     # Configure streaming mode on scenario so downstream modules can react
     setattr(scenario, "stream_results", bool(getattr(args, "stream_results", False)))
     if getattr(scenario, "stream_results", False):
@@ -769,23 +775,31 @@ def main(args=None):
                 except Exception:
                     pass
 
-                # Immediately consolidate streamed artifacts into final CSVs
-                rootLogger.info("Starting streaming consolidation to generate output files...")
-                try:
-                    consolidate_streamed_results(
-                        stream_dir_msg,
-                        infrastructure,
-                        scenario,
-                        config,
-                        hazards_container,
-                        CALC_SYSTEM_RECOVERY=CALC_SYSTEM_RECOVERY_FLAG,
+                # Allow HPC workflows to defer consolidation (stage-out from per-node storage first)
+                defer_consolidation = os.environ.get("SIRA_DEFER_CONSOLIDATION", "0") == "1"
+                if defer_consolidation:
+                    rootLogger.info(
+                        "SIRA_DEFER_CONSOLIDATION=1 set. Skipping in-process consolidation. "
+                        "A separate post-stage step should call consolidate_streamed_results()."
                     )
-                    rootLogger.info("Streaming consolidation completed successfully")
-                except Exception as e:
-                    rootLogger.error(f"Streaming consolidation failed: {e}")
-                    import traceback
+                else:
+                    # Immediately consolidate streamed artifacts into final CSVs
+                    rootLogger.info("Starting streaming consolidation to generate output files...")
+                    try:
+                        consolidate_streamed_results(
+                            stream_dir_msg,
+                            infrastructure,
+                            scenario,
+                            config,
+                            hazards_container,
+                            CALC_SYSTEM_RECOVERY=CALC_SYSTEM_RECOVERY_FLAG,
+                        )
+                        rootLogger.info("Streaming consolidation completed successfully")
+                    except Exception as e:
+                        rootLogger.error(f"Streaming consolidation failed: {e}")
+                        import traceback
 
-                    rootLogger.debug(traceback.format_exc())
+                        rootLogger.debug(traceback.format_exc())
             else:
                 write_system_response(
                     response_list,

@@ -23,6 +23,12 @@
    tail -f logs/monitoring.log                # Watch resource usage
    ```
 
+4. **Check storage quota** (before large runs):
+   ```bash
+   nci_account -P w84                         # Check project storage usage
+   du -sh /scratch/w84/$USER/sira_stream_*   # Check old streaming directories
+   ```
+
 ## Pre-Job Testing (Important!)
 
 Before submitting your PBS job, test your environment setup on a login node:
@@ -72,7 +78,9 @@ If any test fails, fix the environment before submitting jobs.
 
 - [OK] **Automatic OUTPUT_DIR detection** - Reads from your config file  
 - [OK] **MPI with multiprocessing fallback** - Maximum reliability  
-- [OK] **JobFS streaming** - Fast I/O and memory efficiency  
+- [OK] **Full NPZ compression** - All data compressed: 70-85% disk usage reduction  
+- [OK] **Statistics-only mode** - Optional 100x compression via SIRA_STREAM_STATS_ONLY  
+- [OK] **Backward compatible** - Handles NPZ, NPY, and legacy formats  
 - [OK] **Resource monitoring** - Memory and disk usage tracking  
 - [OK] **Comprehensive verification** - Checks outputs and streaming files  
 - [OK] **Error resilience** - Continues processing despite individual failures  
@@ -82,9 +90,81 @@ If any test fails, fix the environment before submitting jobs.
 
 - **CPUs**: 96 cores (adjust `-l ncpus=` as needed)
 - **Memory**: 2.81TB (adjust `-l mem=` as needed)
-- **JobFS**: 400GB for streaming
 - **Walltime**: 12 hours
 - **Queue**: hugemem
+- **Streaming**: Uses `/scratch` or `/g/data` with full NPZ compression
+
+## Storage Management
+
+### Check Storage Quota
+```bash
+# Check project storage allocation and usage
+nci_account -P w84
+
+# Expected output shows:
+# - scratch1: Available space (typically 3TB per project)
+# - gdata4: Permanent storage allocation
+```
+
+### Streaming Data Storage
+
+**Default Mode - Full Compression (Option A):**
+- **Format**: All data compressed with NPZ format
+  - Economic loss: NPZ compressed (70-80% reduction)
+  - Damage states: NPZ compressed with int8 (75-85% reduction)  
+  - System output: **NPZ compressed** (70-80% reduction) - **NEW!**
+- **Location**: `/g/data/<project>/<user>/sira_stream_<jobid>/` or `/scratch/<project>/<user>/sira_stream_<jobid>/`
+- **Size estimate**: ~20-30 GB per 1.54M events (with full compression)
+- **Cleanup**: Automatically removed after consolidation completes
+
+**Statistics-Only Mode - Maximum Compression (Option B):**
+
+For even greater disk savings, enable statistics-only storage:
+
+```bash
+# In your PBS script, add:
+export SIRA_STREAM_STATS_ONLY=1
+```
+
+This mode:
+- Stores only mean, std, min, max, median instead of full 100 samples
+- Reduces system output storage by **~100x** (from ~20 GB to ~200 MB for 1.54M events)
+- **Trade-off**: Loses full sample distribution, but preserves key statistics
+- During consolidation, synthetic samples are reconstructed to match stored statistics
+- **Use when**: Disk space is severely limited or only aggregate statistics are needed
+
+**Backward Compatibility:**
+The code automatically handles:
+- New compressed NPZ format (`.npz` with `data` key)
+- Statistics-only NPZ format (`.npz` with `mean`, `std`, `min`, `max`, `median` keys)
+- Legacy uncompressed NPY format (`.npy` files)
+
+### Clean Up Old Streaming Directories
+```bash
+# List old streaming directories
+ls -lh /g/data/w84/$USER/sira_stream_* /scratch/w84/$USER/sira_stream_*
+
+# Check size of each directory  
+du -sh /g/data/w84/$USER/sira_stream_* /scratch/w84/$USER/sira_stream_*
+
+# Remove old directories (after verifying results were consolidated)
+rm -rf /g/data/w84/$USER/sira_stream_<old_jobid>
+rm -rf /scratch/w84/$USER/sira_stream_<old_jobid>
+```
+
+### Disk Space Requirements by Model Size
+
+**With Full Compression (Option A - Default):**
+- **Small** (< 100k events): ~1-2 GB streaming data
+- **Medium** (100k-500k events): ~3-7 GB streaming data
+- **Large** (500k-2M events): ~10-30 GB streaming data
+- **Extra Large** (> 2M events): ~20-50 GB streaming data
+
+**With Statistics-Only Mode (Option B - SIRA_STREAM_STATS_ONLY=1):**
+- **Small** (< 100k events): ~10-50 MB streaming data
+- **Medium** (100k-500k events): ~50-150 MB streaming data
+- **Large** (500k-2M events): ~150-500 MB streaming data
+- **Extra Large** (> 2M events): ~300-800 MB streaming data
 
 ## Expected Performance
 

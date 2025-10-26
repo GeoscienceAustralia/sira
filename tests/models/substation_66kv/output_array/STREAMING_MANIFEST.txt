@@ -1,0 +1,1 @@
+stream_dir=C:\code\sira\tests\models\substation_66kv\output_array_ssx\stream
