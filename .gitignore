@@ -94,4 +94,4 @@ logs/*
 .vscode
 
 # stream consolidation files
-test/models/output_array/*
+tests/models/output_array/*
