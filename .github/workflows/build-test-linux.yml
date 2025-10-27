@@ -2,9 +2,9 @@ name: CI-LINUX
 
 on:
   push:
-    branches: [master]
+    branches: [para-prod]
   pull_request:
-    branches: [master]
+    branches: [para-prod]
 
 jobs:
 
