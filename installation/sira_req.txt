@@ -14,7 +14,6 @@ configparser
 contextily
 coverage[toml]
 dash
-dask
 dask[dataframe]
 decorator
 docutils

@@ -1,22 +1,18 @@
-import pytest
-import numpy as np
-import numba as nb
-import pandas as pd
 from pathlib import Path
-import os
 from unittest.mock import patch
-import matplotlib.pyplot as plt
-import dask.dataframe as dd  # type: ignore
+
+import numpy as np
+import pandas as pd
+import pytest
 
 from sira.infrastructure_response import (
+    _pe2pb,
     calc_tick_vals,
-    plot_mean_econ_loss,
     calculate_loss_stats,
     calculate_output_stats,
     calculate_recovery_stats,
     calculate_summary_statistics,
-    _pe2pb,
-    parallel_recovery_analysis
+    plot_mean_econ_loss,
 )
 
 
@@ -27,31 +23,38 @@ class SimpleComponent:
         self.time_to_repair = 5
         self.recovery_function = lambda t: min(1.0, t / self.time_to_repair)
 
+
 class SimpleInfrastructure:
     def __init__(self):
-        self.components = {'comp1': SimpleComponent()}
+        self.components = {"comp1": SimpleComponent()}
         self.system_output_capacity = 100
+
 
 class SimpleScenario:
     def __init__(self):
         self.output_path = "test_path"
         self.num_samples = 10
 
+
 class SimpleHazard:
     def __init__(self):
-        self.hazard_scenario_list = ['event1']
+        self.hazard_scenario_list = ["event1"]
+
 
 @pytest.fixture
 def test_infrastructure():
     return SimpleInfrastructure()
 
+
 @pytest.fixture
 def test_scenario():
     return SimpleScenario()
 
+
 @pytest.fixture
 def test_hazard():
     return SimpleHazard()
+
 
 @pytest.fixture
 def test_output_dir():
@@ -59,14 +62,16 @@ def test_output_dir():
     test_dir.mkdir(exist_ok=True)
     yield test_dir
     # Cleanup
-    for f in test_dir.glob('*'):
+    for f in test_dir.glob("*"):
         try:
             f.unlink()
         except FileNotFoundError:
             pass
     test_dir.rmdir()
 
+
 # -------------------------------------------------------------------------------------
+
 
 def test_pe2pb_basic():
     """Test basic functionality with simple input"""
@@ -75,12 +80,14 @@ def test_pe2pb_basic():
     expected = np.array([0.1, 0.3, 0.3, 0.3])
     np.testing.assert_array_almost_equal(result, expected)
 
+
 def test_pe2pb_single_value():
     """Test with a single value"""
     pe = np.array([0.5])
     result = _pe2pb(pe)
     expected = np.array([0.5, 0.5])
     np.testing.assert_array_almost_equal(result, expected)
+
 
 def test_pe2pb_identical_values():
     """Test with array containing identical values"""
@@ -89,6 +96,7 @@ def test_pe2pb_identical_values():
     expected = np.array([0.7, 0.0, 0.0, 0.3])
     np.testing.assert_array_almost_equal(result, expected)
 
+
 def test_pe2pb_zero():
     """Test with zero probability"""
     pe = np.array([0.0, 0.0])
@@ -96,12 +104,14 @@ def test_pe2pb_zero():
     expected = np.array([1.0, 0.0, 0.0])
     np.testing.assert_array_almost_equal(result, expected)
 
+
 def test_pe2pb_one():
     """Test with probability of 1"""
     pe = np.array([1.0, 0.5])
     result = _pe2pb(pe)
     expected = np.array([0.0, 0.5, 0.5])
     np.testing.assert_array_almost_equal(result, expected)
+
 
 def test_pe2pb_properties():
     """Test mathematical properties that should hold for any valid input"""
@@ -120,6 +130,7 @@ def test_pe2pb_properties():
     # All probabilities should be <= 1
     assert np.all(result <= 1)
 
+
 def test_pe2pb_different_dtypes():
     """Test with different input data types"""
     inputs = [
@@ -133,7 +144,9 @@ def test_pe2pb_different_dtypes():
         result = _pe2pb(inp)
         np.testing.assert_array_almost_equal(result, expected)
 
+
 # -------------------------------------------------------------------------------------
+
 
 def test_calc_tick_vals():
     # Test normal case
@@ -147,50 +160,55 @@ def test_calc_tick_vals():
     result_long = calc_tick_vals(long_list)
     assert len(result_long) <= 11
 
-@patch('matplotlib.pyplot.savefig')
+
+@patch("matplotlib.pyplot.savefig")
 def test_plot_mean_econ_loss(mock_savefig, test_output_dir):
     hazard_data = np.array([0.1, 0.2, 0.3])
     loss_data = np.array([[0.1, 0.2], [0.3, 0.4], [0.5, 0.6]])
 
-    plot_mean_econ_loss(
-        hazard_data,
-        loss_data,
-        output_path=test_output_dir
-    )
+    plot_mean_econ_loss(hazard_data, loss_data, output_path=test_output_dir)
     mock_savefig.assert_called_once()
+
 
 # -------------------------------------------------------------------------------------
 
+
 # Statistics calculation tests
 @pytest.fixture
-def mock_dask_df():
-    df = pd.DataFrame({
-        'loss_mean': [0.1, 0.2, 0.3],
-        'output_mean': [0.5, 0.6, 0.7],
-        'recovery_time_100pct': [10, 20, 30]
-    })
-    return dd.from_pandas(df, npartitions=1)
+def mock_df():
+    return pd.DataFrame(
+        {
+            "loss_mean": [0.1, 0.2, 0.3],
+            "output_mean": [0.5, 0.6, 0.7],
+            "recovery_time_100pct": [10, 20, 30],
+        }
+    )
 
-def test_calculate_loss_stats(mock_dask_df):
-    stats = calculate_loss_stats(mock_dask_df, progress_bar=False)
+
+def test_calculate_loss_stats(mock_df):
+    stats = calculate_loss_stats(mock_df, progress_bar=False)
     assert isinstance(stats, dict)
-    assert all(k in stats for k in ['Mean', 'Std', 'Min', 'Max', 'Median'])
-    assert abs(stats['Mean'] - 0.2) < 0.001
+    assert all(k in stats for k in ["Mean", "Std", "Min", "Max", "Median"])
+    assert abs(stats["Mean"] - 0.2) < 0.001
 
-def test_calculate_output_stats(mock_dask_df):
-    stats = calculate_output_stats(mock_dask_df, progress_bar=False)
+
+def test_calculate_output_stats(mock_df):
+    stats = calculate_output_stats(mock_df, progress_bar=False)
     assert isinstance(stats, dict)
-    assert abs(stats['Mean'] - 0.6) < 0.001
+    assert abs(stats["Mean"] - 0.6) < 0.001
 
-def test_calculate_recovery_stats(mock_dask_df):
-    stats = calculate_recovery_stats(mock_dask_df, progress_bar=False)
+
+def test_calculate_recovery_stats(mock_df):
+    stats = calculate_recovery_stats(mock_df, progress_bar=False)
     assert isinstance(stats, dict)
-    assert abs(stats['Mean'] - 20) < 0.001
+    assert abs(stats["Mean"] - 20) < 0.001
 
-def test_calculate_summary_statistics(mock_dask_df):
-    summary = calculate_summary_statistics(mock_dask_df, calc_recovery=True)
+
+def test_calculate_summary_statistics(mock_df):
+    summary = calculate_summary_statistics(mock_df, calc_recovery=True)
     assert isinstance(summary, dict)
-    assert all(k in summary for k in ['Loss', 'Output', 'Recovery Time'])
+    assert all(k in summary for k in ["Loss", "Output", "Recovery Time"])
+
 
 # -------------------------------------------------------------------------------------
 
@@ -268,19 +286,21 @@ def test_calculate_summary_statistics(mock_dask_df):
 # -------------------------------------------------------------------------------------
 # Integration tests
 
+
 @pytest.mark.integration
-def test_stats_calculation_flow(mock_dask_df):
-    loss_stats = calculate_loss_stats(mock_dask_df, progress_bar=False)
-    output_stats = calculate_output_stats(mock_dask_df, progress_bar=False)
-    recovery_stats = calculate_recovery_stats(mock_dask_df, progress_bar=False)
+def test_stats_calculation_flow(mock_df):
+    loss_stats = calculate_loss_stats(mock_df, progress_bar=False)
+    output_stats = calculate_output_stats(mock_df, progress_bar=False)
+    recovery_stats = calculate_recovery_stats(mock_df, progress_bar=False)
 
     assert isinstance(loss_stats, dict)
     assert isinstance(output_stats, dict)
     assert isinstance(recovery_stats, dict)
 
-    summary_stats = calculate_summary_statistics(mock_dask_df, calc_recovery=True)
+    summary_stats = calculate_summary_statistics(mock_df, calc_recovery=True)
     assert isinstance(summary_stats, dict)
     assert len(summary_stats) == 3
 
-if __name__ == '__main__':
-    pytest.main(['-v'])
+
+if __name__ == "__main__":
+    pytest.main(["-v"])

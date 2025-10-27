@@ -18,7 +18,7 @@ usage:
                             level DEBUG, INFO, WARNING, ERROR, CRITICAL
 
     Parallel Computing Options:
-    --parallel-backend    Choose backend: auto, mpi, dask, multiprocessing
+    --parallel-backend    Choose backend: auto, mpi, multiprocessing
     --max-workers         Maximum number of workers/processes
     --scenario-size       Scenario size: auto, small, medium, large, xlarge
     --disable-parallel    Disable parallel processing
@@ -274,30 +274,17 @@ def detect_environment_and_setup_parallel(args, input_dir, scenario, hazards_con
     if args.parallel_backend != "auto":
         if args.parallel_backend == "mpi" and not in_mpi_env:
             rootLogger.warning(
-                "MPI backend forced but environment not suitable. Using Dask instead."
+                "MPI backend forced but environment not suitable. Using multiprocessing instead."
             )
-            pconfig.config["backend"] = "dask"
+            pconfig.config["backend"] = "multiprocessing"
         else:
             pconfig.config["backend"] = args.parallel_backend
             rootLogger.info(f"Overriding backend to: {args.parallel_backend}")
 
     if args.max_workers:
-        if pconfig.config["backend"] == "dask":
-            pconfig.config["dask_n_workers"] = args.max_workers
-        elif pconfig.config["backend"] == "multiprocessing":
+        if pconfig.config["backend"] == "multiprocessing":
             pconfig.config["mp_n_processes"] = args.max_workers
         rootLogger.info(f"Setting max workers to: {args.max_workers}")
-
-    # Optional Dask threads-per-worker override
-    if getattr(args, "dask_threads_per_worker", None) is not None:
-        if pconfig.config["backend"] == "dask":
-            if args.dask_threads_per_worker and args.dask_threads_per_worker > 0:
-                pconfig.config["dask_threads_per_worker"] = args.dask_threads_per_worker
-                rootLogger.info(
-                    f"Setting Dask threads per worker to: {args.dask_threads_per_worker}"
-                )
-            else:
-                rootLogger.warning("Ignoring --dask-threads-per-worker because value must be >= 1")
 
     # Apply scenario-specific settings
     if hasattr(scenario, "recovery_method"):
@@ -364,23 +351,6 @@ def initialise_parallel_backend(para_config):
     if para_config.config["backend"] == "multiprocessing":
         rootLogger.info("Using multiprocessing backend (no additional setup required)")
 
-    if para_config.config["backend"] == "dask":
-        from sira.tools.parallelisation import DaskClientManager
-
-        n_workers = para_config.config.get("dask_n_workers")
-        threads_per_worker = para_config.config.get("dask_threads_per_worker")
-        memory_limit = para_config.config.get("dask_memory_limit")
-
-        dask_manager = DaskClientManager(
-            n_workers=n_workers,
-            threads_per_worker=threads_per_worker,
-            memory_limit=memory_limit,
-        )
-        backend_data["dask_client"] = dask_manager.client
-        backend_data["dask_manager"] = dask_manager
-
-        rootLogger.info(f"Dask client initialised: {dask_manager.client}")
-
     return backend_data
 
 
@@ -434,20 +404,13 @@ def main(args=None):
     parser.add_argument(
         "--parallel-backend",
         type=str,
-        choices=["auto", "mpi", "dask", "multiprocessing"],
+        choices=["auto", "mpi", "multiprocessing"],
         default="auto",
         help="Choose parallel computing backend (default: auto)",
     )
 
     parser.add_argument(
         "--max-workers", type=int, default=None, help="Maximum number of parallel workers/processes"
-    )
-
-    parser.add_argument(
-        "--dask-threads-per-worker",
-        type=int,
-        default=None,
-        help="For Dask backend: number of threads per worker",
     )
 
     parser.add_argument(
@@ -675,7 +638,7 @@ def main(args=None):
     parallel_config = None
     backend_data = {}
 
-    # Note: -t/-f/-l operations always run sequentially to prevent Dask interference
+    # Note: -t/-f/-l operations always run sequentially
     has_sequential_operations = args.fit or args.draw_topology or args.loss_analysis
     only_sequential_operations = has_sequential_operations and not args.simulation
 
@@ -743,7 +706,6 @@ def main(args=None):
             hazards_container,
             scenario,
             infrastructure,
-            dask_client=backend_data.get("dask_client") if parallel_config else None,
             mpi_comm=backend_data.get("comm") if parallel_config else None,
         )
 
@@ -918,10 +880,6 @@ def main(args=None):
     # Cleanup parallel resources (only on rank 0)
     # ---------------------------------------------------------------------------------
     if rank == 0:
-        if backend_data.get("dask_manager"):
-            backend_data["dask_manager"].close()
-            rootLogger.info("Dask client closed")
-
         # MPI finalisation is handled automatically by mpi4py at exit
 
         # ---------------------------------------------------------------------------------
@@ -954,9 +912,7 @@ def main(args=None):
             if parallel_config.config["backend"] == "mpi":
                 size = backend_data.get("size", 1)
                 rootLogger.info(f"  MPI processes: {size}")
-            elif parallel_config.config["backend"] == "dask":
-                n_workers = parallel_config.config.get("dask_n_workers", "auto")
-                rootLogger.info(f"  Dask workers: {n_workers}")
+
             elif parallel_config.config["backend"] == "multiprocessing":
                 n_procs = parallel_config.config.get("mp_n_processes", "auto")
                 rootLogger.info(f"  Processes: {n_procs}")

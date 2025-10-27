@@ -165,7 +165,7 @@ class Scenario:
         Returns
         -------
         str or None
-            Backend name ('mpi', 'dask', 'multiprocessing') or None if not configured
+            Backend name ('mpi', 'multiprocessing') or None if not configured
         """
         if self.parallel_config:
             return self.parallel_config.config.get("backend", None)

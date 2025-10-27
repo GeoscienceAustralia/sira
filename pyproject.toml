@@ -45,7 +45,8 @@ extend-ignore = [
 per-file-ignores = [
     "sira/__main__.py:E402",  # module level import not at top of file
     "__init__.py:F401",  # imported but unused
-    "sira/fit_model.py:E0611"  # scipy.special is a C lib and flake8 cannot see into it
+    "sira/fit_model.py:E0611",  # scipy.special is a C lib and flake8 cannot see into it
+    "tests/*.py:Q000"  # allow single quotes in tests to avoid noisy diffs
 ]
 
 [tool.ruff]

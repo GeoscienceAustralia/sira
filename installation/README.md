@@ -6,7 +6,7 @@ an optional visualisation set for notebooks/plots. Critical pins live in a small
 constraints file to keep installs reproducible but flexible.
 
 Files:
-- `installation/constraints.txt` – version pins for key libraries (NumPy, pandas, Dask, Numba, etc.).
+- `installation/constraints.txt` – version pins for key libraries (NumPy, pandas, Numba, etc.).
 - `installation/requirements-core.txt` – minimal runtime deps (includes python-igraph and scikit-learn).
 - `installation/requirements-viz.txt` – optional plotting/jupyter extras (includes yellowbrick).
 
@@ -39,7 +39,7 @@ Create a venv on Gadi (HOME-based):
 
 Sanity check
     python - <<'EOF'
-    import igraph, numpy, pandas, dask, distributed, sklearn
+    import igraph, numpy, pandas, sklearn
     print('Core imports OK')
     EOF
 

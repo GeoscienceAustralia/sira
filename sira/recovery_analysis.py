@@ -7,7 +7,6 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import numpy as np
 import pandas as pd
 from colorama import Fore
 from tqdm import tqdm
@@ -202,7 +201,6 @@ class RecoveryAnalysisEngine:
     """
     Main engine for parallel recovery analysis supporting multiple backends:
     - MPI4Py for HPC environments
-    - Dask for distributed computing
     - Multiprocessing for single-node systems
     """
 
@@ -213,20 +211,21 @@ class RecoveryAnalysisEngine:
         Parameters
         ----------
         backend : str
-            'mpi', 'dask', 'multiprocessing', or 'auto' (detects best available)
+            'mpi', 'multiprocessing', or 'auto' (detects best available)
         """
         self.backend = self._select_backend(backend)
         self.comm = None
         self.rank = 0
         self.size = 1
-        self.dask_client = None
         self.MPI = None
 
         if self.backend == "mpi":
             self.MPI, self.comm, self.rank, self.size = safe_mpi_import()
             if self.MPI is None:
-                rootLogger.warning("MPI backend requested but not available. Falling back to Dask.")
-                self.backend = "dask"
+                rootLogger.warning(
+                    "MPI backend requested but not available. Falling back to multiprocessing."
+                )
+                self.backend = "multiprocessing"
 
     def _select_backend(self, requested_backend):
         """Select the best available backend."""
@@ -234,75 +233,9 @@ class RecoveryAnalysisEngine:
             # Check for MPI environment first
             if is_mpi_environment():
                 return "mpi"
-            # Check for Dask scheduler
-            elif "DASK_SCHEDULER_ADDRESS" in os.environ:
-                return "dask"
             else:
                 return "multiprocessing"
         return requested_backend
-
-    def setup_dask_client(self, n_workers=None, threads_per_worker=1, memory_limit="4GB"):
-        """Setup optimised Dask client for HPC environments."""
-        if self.backend == "dask" and self.dask_client is None:
-            try:
-                # Try to connect to existing scheduler
-                scheduler_address = os.environ.get("DASK_SCHEDULER_ADDRESS")
-                if scheduler_address:
-                    from dask.distributed import Client
-
-                    self.dask_client = Client(scheduler_address)
-                    rootLogger.info(f"Connected to existing Dask scheduler: {scheduler_address}")
-                else:
-                    # Create optimised local cluster for HPC
-                    from dask.distributed import Client, LocalCluster
-
-                    if n_workers is None:
-                        cpu_count = os.cpu_count() if os.cpu_count() is not None else 1
-                        # For HPC: use more workers with fewer threads each for better parallelism
-                        n_workers = min(cpu_count, 64)  # type: ignore # Cap at 64 workers for memory efficiency
-
-                    # Optimise for HPC environments
-                    threads_per_worker = max(1, (os.cpu_count() or 1) // n_workers)
-
-                    # Increase memory limit for large datasets
-                    if isinstance(memory_limit, str) and memory_limit == "4GB":
-                        total_memory_gb = 32  # Conservative estimate for typical HPC node
-                        worker_memory_gb = total_memory_gb // n_workers
-                        memory_limit = f"{max(2, worker_memory_gb)}GB"
-
-                    cluster = LocalCluster(
-                        n_workers=n_workers,
-                        threads_per_worker=threads_per_worker,
-                        memory_limit=memory_limit,
-                        dashboard_address=":8787",
-                        # Optimise for scientific computing
-                        processes=True,  # Use processes for better GIL avoidance
-                        silence_logs=logging.WARNING,  # Reduce log spam
-                    )
-                    self.dask_client = Client(cluster)
-
-                rootLogger.info(f"Dask client initialised: {self.dask_client}")
-                rootLogger.info(f"Dashboard available at: {self.dask_client.dashboard_link}")
-
-                # Configure Dask for HPC performance
-                from dask import config as daskconfig
-
-                daskconfig.set(
-                    {
-                        "distributed.worker.memory.target": 0.80,
-                        "distributed.worker.memory.spill": 0.85,
-                        "distributed.worker.memory.pause": 0.90,
-                        "distributed.worker.memory.terminate": 0.95,
-                        "distributed.comm.compression": "lz4",  # Fast compression
-                        "distributed.scheduler.bandwidth": "1000MB/s",  # HPC network speed
-                    }
-                )
-
-            except Exception as e:
-                rootLogger.warning(
-                    f"Failed to setup Dask client: {e}. Falling back to multiprocessing."
-                )
-                self.backend = "multiprocessing"
 
     @profile_performance
     def analyse(
@@ -338,17 +271,6 @@ class RecoveryAnalysisEngine:
                 recovery_method,
                 num_repair_streams,
             )
-        elif self.backend == "dask":
-            return self._analyse_dask(
-                config,
-                hazards,
-                hazard_event_list,
-                infrastructure,
-                scenario,
-                components_costed,
-                recovery_method,
-                num_repair_streams,
-            )
         else:
             return self._analyse_multiprocessing(
                 config,
@@ -359,185 +281,6 @@ class RecoveryAnalysisEngine:
                 recovery_method,
                 num_repair_streams,
             )
-
-    def _analyse_dask(
-        self,
-        config: Configuration,
-        hazards: HazardsContainer,
-        hazard_event_list: List[str],
-        infrastructure: Any,
-        scenario: Any,
-        components_costed: List[str],
-        recovery_method: str,
-        num_repair_streams: int,
-    ) -> List[float]:
-        """Optimised Dask implementation for distributed computing."""
-        # Setup Dask client if not already done
-        if self.dask_client is None:
-            self.setup_dask_client()
-
-        if self.dask_client is None:
-            rootLogger.warning("Dask client not available. Falling back to multiprocessing.")
-            self.backend = "multiprocessing"
-            return self._analyse_multiprocessing(
-                config,
-                hazards,
-                hazard_event_list,
-                infrastructure,
-                components_costed,
-                recovery_method,
-                num_repair_streams,
-            )
-
-        start_time = time.time()
-        rootLogger.info(f"Starting Dask analysis for {len(hazard_event_list)} events")
-
-        # Convert to Dask DataFrame for efficient processing
-        rootLogger.info("Preparing data for distributed processing...")
-
-        # Extract infrastructure data once for efficiency
-        infra_data = extract_infrastructure_data(infrastructure)
-
-        # Create hazard lookup for faster access
-        hazard_lookup = {event_id: i for i, event_id in enumerate(hazards.hazard_scenario_list)}
-
-        from dask.delayed import delayed
-        from dask.distributed import as_completed
-
-        # Optimise task batching for better performance
-        batch_size = max(1, len(hazard_event_list) // (len(self.dask_client.nthreads()) * 4))  # type: ignore
-        rootLogger.info(f"Using batch size: {batch_size}")
-
-        @delayed
-        def process_event_batch(event_ids_batch, infra_data_local, hazard_lookup_local):
-            """Process a batch of events for better load balancing."""
-            batch_results = []
-            for event_id in event_ids_batch:
-                try:
-                    if event_id not in hazard_lookup_local:
-                        rootLogger.warning(f"Event {event_id} not found in hazard lookup")
-                        batch_results.append(0.0)
-                        continue
-
-                    # hazard_idx = hazard_lookup_local[event_id]
-                    # hazard_obj = hazards.listOfhazards[hazard_idx]
-                    hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(event_id)]
-
-                    recovery_time = calculate_event_recovery(
-                        config,
-                        event_id,
-                        hazard_obj,
-                        components_costed,
-                        infrastructure,
-                        recovery_method,
-                        num_repair_streams,
-                    )
-                    batch_results.append(recovery_time)
-
-                except Exception as e:
-                    rootLogger.error(f"Error processing event {event_id}: {e}")
-                    batch_results.append(0.0)
-
-            return batch_results
-
-        # Create batched tasks for better parallelisation
-        tasks = []
-        batch_positions = []  # list of lists of positions covered by each task
-        for i in range(0, len(hazard_event_list), batch_size):
-            batch = hazard_event_list[i : i + batch_size]
-            task = process_event_batch(batch, infra_data, hazard_lookup)
-            tasks.append(task)
-            # positions are contiguous now, but store explicitly for robustness
-            positions = list(range(i, min(i + len(batch), len(hazard_event_list))))
-            batch_positions.append(positions)
-
-        # Compute with progress bar and better error handling
-        rootLogger.info(f"Computing recovery times with {len(tasks)} batches using Dask...")
-
-        # Use more efficient compute strategy and coerce to a list of futures
-        futures_obj = self.dask_client.compute(tasks)
-        if isinstance(futures_obj, (list, tuple)):
-            futures = list(futures_obj)
-        else:
-            futures = [futures_obj]
-
-        # Map futures to their exact positions
-        future_to_positions = {fut: batch_positions[idx] for idx, fut in enumerate(futures)}
-
-        # Process results as they complete with enhanced progress tracking
-        recovery_times: List[float] = [float("nan")] * len(hazard_event_list)
-        completed_events = 0
-
-        with tqdm(total=len(hazard_event_list), desc="Processing events") as pbar:
-            for future, batch_results in as_completed(futures, with_results=True):
-                positions = future_to_positions.get(future, [])
-                # Assign results using explicit positions
-                for j, result in enumerate(batch_results):
-                    if j < len(positions):
-                        pos = positions[j]
-                        if 0 <= pos < len(recovery_times):
-                            recovery_times[pos] = result
-                            completed_events += 1
-                            pbar.update(1)
-
-        # Final validation: fill any missing entries with error sentinel and log
-        missing_indices = [idx for idx, v in enumerate(recovery_times) if np.isnan(v)]
-        if missing_indices:
-            rootLogger.error(
-                ("Dask recovery assembly left %d missing results; marking these positions as -99.")
-                % len(missing_indices)
-            )
-            for idx in missing_indices:
-                recovery_times[idx] = -99.0
-
-        total_time = time.time() - start_time
-        rootLogger.info(f"Dask analysis completed in {total_time:.2f}s")
-        rootLogger.info(f"Average time per event: {total_time / len(hazard_event_list):.3f}s")
-
-        # Optional validation: compare a small sample with sequential computation
-        if os.environ.get("SIRA_VALIDATE_DASK", "0") == "1":
-            sample_n = min(100, len(hazard_event_list))
-            sample_ids = hazard_event_list[:sample_n]
-            seq_results: List[float] = []
-            for eid in sample_ids:
-                try:
-                    hazard_obj = hazards.listOfhazards[hazards.hazard_scenario_list.index(eid)]
-                    rt = calculate_event_recovery(
-                        config,
-                        eid,
-                        hazard_obj,
-                        components_costed,
-                        infrastructure,
-                        recovery_method,
-                        num_repair_streams,
-                    )
-                except Exception as _e:
-                    rt = -99.0
-                seq_results.append(rt)
-
-            mismatches = []
-            for i, eid in enumerate(sample_ids):
-                pos = hazard_event_list.index(eid)
-                if pos < len(recovery_times):
-                    dask_val = recovery_times[pos]
-                    seq_val = seq_results[i]
-                    # Treat both NaN and -99.0 as mismatches; compare floats directly here
-                    close = dask_val == seq_val or (
-                        isinstance(dask_val, float)
-                        and isinstance(seq_val, float)
-                        and abs(dask_val - seq_val) < 1e-9
-                    )
-                    if not close:
-                        mismatches.append((pos, eid, dask_val, seq_val))
-            if mismatches:
-                rootLogger.error(
-                    "Dask vs sequential validation mismatches: %d (showing first 10): %s"
-                    % (len(mismatches), mismatches[:10])
-                )
-            else:
-                rootLogger.info("Dask vs sequential validation: no mismatches on sample")
-
-        return recovery_times  # type: ignore
 
     def _analyse_multiprocessing(
         self,
@@ -741,9 +484,9 @@ class RecoveryAnalysisEngine:
 
     def cleanup(self):
         """Cleanup resources."""
-        if self.dask_client:
-            self.dask_client.close()
-        # MPI finalisation is handled automatically by mpi4py
+        # MPI finalisation is handled automatically by mpi4py.
+        # No-op for multiprocessing cleanup.
+        return None
 
 
 def extract_infrastructure_data(infrastructure: Any) -> Dict:
@@ -1246,32 +989,23 @@ def parallel_recovery_analysis(
 
     This function automatically selects the best available backend:
     - MPI4Py for HPC environments
-    - Dask for distributed computing
     - Multiprocessing for single nodes
     """
     # Check if parallel config exists in scenario
     backend = "auto"
     if hasattr(scenario, "parallel_config"):
         backend = scenario.parallel_config.config.get("backend", "auto")
+        # Coerce legacy 'dask' to 'multiprocessing'
+        if backend == "dask":
+            backend = "multiprocessing"
 
         # Override max_workers if specified in config
         if max_workers is None:
-            if backend == "dask":
-                max_workers = scenario.parallel_config.config.get("dask_n_workers")
-            elif backend == "multiprocessing":
+            if backend == "multiprocessing":
                 max_workers = scenario.parallel_config.config.get("mp_n_processes")
 
     # Create analysis engine
     engine = RecoveryAnalysisEngine(backend=backend)
-
-    # Use existing Dask client if available
-    if (
-        backend in ["auto", "dask"]
-        and hasattr(scenario, "parallel_backend_data")
-        and "dask_client" in scenario.parallel_backend_data
-    ):
-        engine.dask_client = scenario.parallel_backend_data["dask_client"]
-        rootLogger.info("Using existing Dask client from scenario")
 
     try:
         # Run analysis
@@ -1302,12 +1036,7 @@ def parallel_recovery_analysis(
         return recovery_times
 
     finally:
-        # Only cleanup if we created our own client
-        if not (
-            hasattr(scenario, "parallel_backend_data")
-            and "dask_client" in scenario.parallel_backend_data
-        ):
-            engine.cleanup()
+        engine.cleanup()
 
 
 # =======================================================================================

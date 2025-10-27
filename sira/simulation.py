@@ -231,7 +231,7 @@ def process_hazard_chunk(chunk_data):
     return chunk_id, chunk_response, len(hazard_chunk)
 
 
-def calculate_response(hazards, scenario, infrastructure, dask_client=None, mpi_comm=None):
+def calculate_response(hazards, scenario, infrastructure, mpi_comm=None):
     """
     The response will be calculated by creating the hazard_levels,
     iterating through the range of hazards and calling the infrastructure
@@ -246,7 +246,6 @@ def calculate_response(hazards, scenario, infrastructure, dask_client=None, mpi_
     scenario: Object for simulation parameters.
     infrastructure: Object of infrastructure model.
     hazards: `HazardsContainer` object.
-    dask_client: Dask distributed client (optional)
     mpi_comm: MPI communicator (optional)
 
     Returns:
@@ -291,7 +290,6 @@ def calculate_response(hazards, scenario, infrastructure, dask_client=None, mpi_
                 stream_dir,
             )
 
-        # Multiprocessing fallback (Dask removed due to memory issues on HPC)
         rootLogger.info("Using multiprocessing backend for parallel processing")
 
         # Determine optimal processing strategy based on problem size
@@ -818,6 +816,10 @@ def _calculate_response_mpi(
 
     # Non-streaming: gather compact payloads to rank 0 instead of massive per-hazard dicts
     # Build compact local payloads (arrays + small dict) for this rank's contiguous slice
+    compact_ok = True
+    local_sys_output_sum = None
+    local_sys_econ_loss = None
+    local_sys_output_dict: dict[str, dict] = {}
     try:
         # Determine number of samples and outputs from first available result
         local_event_count = end_idx - start_idx
@@ -845,7 +847,7 @@ def _calculate_response_mpi(
                 # Allocate local arrays: shape (num_samples, local_event_count)
                 local_sys_output_sum = np.zeros((num_samples, local_event_count), dtype=float)
                 local_sys_econ_loss = np.zeros((num_samples, local_event_count), dtype=float)
-                local_sys_output_dict: dict[str, dict] = {}
+                local_sys_output_dict = {}
 
                 # Fill columns in global order of our contiguous slice
                 for j, haz in enumerate(my_hazards):
@@ -877,31 +879,223 @@ def _calculate_response_mpi(
                         local_sys_output_dict[str(haz.hazard_event_id)] = infra_output_means
                     except Exception:
                         local_sys_output_dict[str(haz.hazard_event_id)] = dict(infra_output_means)
+    except Exception as e:
+        compact_ok = False
+        rootLogger.warning(
+            f"Rank {rank}: compact payload preparation failed ({e}); will use fallback gather"
+        )
 
+    # Decide collectively which gather path to use (avoid mismatched collectives deadlock)
+    try:
+        ok_flags = mpi_comm.allgather(True if compact_ok else False)
+        use_compact = all(ok_flags)
+    except Exception:
+        # Conservative fallback if allgather itself fails
+        use_compact = False
+
+    if use_compact:
         # Gather compact payloads on root
         local_payload = (start_idx, end_idx, local_sys_output_sum, local_sys_econ_loss)
         all_payloads = mpi_comm.gather(local_payload, root=0)
         # Gather small dicts separately (keeps memory footprint per gather manageable)
         all_sys_output_dicts = mpi_comm.gather(local_sys_output_dict, root=0)
-    except Exception as e:
-        # If we fail to prepare compact payloads, fall back to original behaviour (may be large)
-        rootLogger.warning(
-            f"Rank {rank}: compact payload preparation failed ({e}); falling back to dict gather"
-        )
-        all_results = mpi_comm.gather(my_results, root=0)
-        if rank == 0:
-            hazards_response = [r for r in all_results if r]
-            print(
-                f"\nMPI processing complete. Processed {total_hazards} hazards across {size} ranks."
-            )
-            rootLogger.info(
-                f"MPI rank 0: Completed aggregation of results from {size} ranks (fallback)"
-            )
-            return hazards_response
-        else:
+    else:
+        # Disk-based fallback to avoid massive in-memory dict gathers
+        # Each rank persists its local arrays and small dicts; rank 0 assembles
+        try:
+            import json as _json
+            from pathlib import Path as _Path
+
+            # Determine parts directory
+            parts_dir = os.environ.get("SIRA_MPI_PAYLOAD_PARTS_DIR")
+            if parts_dir:
+                parts_dir_path = _Path(parts_dir)
+            else:
+                out_dir = os.environ.get("SIRA_OUTPUT_DIR")
+                if out_dir:
+                    parts_dir_path = _Path(out_dir, "mpi_payload_parts")
+                else:
+                    parts_dir_path = _Path.cwd() / "mpi_payload_parts"
+                os.environ["SIRA_MPI_PAYLOAD_PARTS_DIR"] = str(parts_dir_path)
+
+            if rank == 0:
+                parts_dir_path.mkdir(parents=True, exist_ok=True)
+            # Ensure directory exists before workers write
+            mpi_comm.barrier()
+
+            # Ensure local arrays exist (recompute defensively if needed)
+            if local_sys_output_sum is None or local_sys_econ_loss is None:
+                try:
+                    # Fallback inference using scenario.num_samples
+                    num_samples = int(getattr(scenario, "num_samples", 0) or 0)
+                except Exception:
+                    num_samples = 0
+                local_event_count = max(0, end_idx - start_idx)
+                local_sys_output_sum = np.zeros((num_samples, local_event_count), dtype=float)
+                local_sys_econ_loss = np.zeros((num_samples, local_event_count), dtype=float)
+
+                # Best-effort fill from my_results
+                if num_samples > 0 and local_event_count > 0:
+                    for j, haz in enumerate(my_hazards):
+                        res = my_results.get(haz.hazard_event_id)
+                        if res is None:
+                            continue
+                        try:
+                            infra_output_samples = np.asarray(res[4])
+                            if infra_output_samples.ndim == 2:
+                                local_sys_output_sum[:, j] = np.sum(infra_output_samples, axis=1)
+                            else:
+                                local_sys_output_sum[:, j] = np.sum(
+                                    infra_output_samples.reshape(num_samples, -1), axis=1
+                                )
+                        except Exception:
+                            # Leave zeros on failure
+                            pass
+                        try:
+                            econ_samples = np.asarray(res[5]).reshape(-1)
+                            if econ_samples.size != num_samples:
+                                econ_samples = np.resize(econ_samples, num_samples)
+                            local_sys_econ_loss[:, j] = econ_samples
+                        except Exception:
+                            pass
+
+                # Rebuild small dict if missing
+                if not local_sys_output_dict:
+                    local_sys_output_dict = {}
+                    for haz in my_hazards:
+                        res = my_results.get(haz.hazard_event_id)
+                        if res is None:
+                            continue
+                        try:
+                            local_sys_output_dict[str(haz.hazard_event_id)] = res[1]
+                        except Exception:
+                            try:
+                                local_sys_output_dict[str(haz.hazard_event_id)] = dict(res[1])
+                            except Exception:
+                                pass
+
+            # Persist this rank's payload
+            npz_path = parts_dir_path / f"payload_rank_{rank:06d}.npz"
+            meta = {"start_idx": int(start_idx), "end_idx": int(end_idx)}
+            try:
+                # Save arrays and indices together
+                np.savez_compressed(
+                    npz_path,
+                    start_idx=meta["start_idx"],
+                    end_idx=meta["end_idx"],
+                    out=(
+                        local_sys_output_sum
+                        if local_sys_output_sum is not None
+                        else np.zeros((0, 0))
+                    ),
+                    econ=(
+                        local_sys_econ_loss if local_sys_econ_loss is not None else np.zeros((0, 0))
+                    ),
+                )
+            except Exception as e:
+                rootLogger.warning(f"MPI rank {rank}: failed to persist payload arrays: {e}")
+
+            # Persist small dict
+            dict_path = parts_dir_path / f"sysoutdict_rank_{rank:06d}.json"
+            try:
+                with open(dict_path, "w", encoding="utf-8") as f:
+                    _json.dump(local_sys_output_dict or {}, f)
+            except Exception as e:
+                rootLogger.warning(f"MPI rank {rank}: failed to persist sysout dict: {e}")
+
+            # Synchronise all ranks before assembly
+            mpi_comm.barrier()
+
+            if rank == 0:
+                # Assemble payloads from disk
+                try:
+                    # Infer num_samples from first non-empty npz or scenario
+                    num_samples = int(getattr(scenario, "num_samples", 0) or 0)
+                    # Pre-allocate full arrays
+                    sys_output_full = np.zeros((num_samples, total_hazards), dtype=float)
+                    sys_econ_full = np.zeros((num_samples, total_hazards), dtype=float)
+
+                    for r in range(size):
+                        r_npz = parts_dir_path / f"payload_rank_{r:06d}.npz"
+                        if not r_npz.exists():
+                            continue
+                        try:
+                            data = np.load(r_npz)
+                            s_idx = int(data.get("start_idx", 0))
+                            e_idx = int(data.get("end_idx", 0))
+                            out_arr = data.get("out")
+                            econ_arr = data.get("econ")
+                            width = max(0, e_idx - s_idx)
+                            if isinstance(out_arr, np.ndarray) and out_arr.size and width > 0:
+                                sys_output_full[:, s_idx:e_idx] = out_arr[:, :width]
+                            if isinstance(econ_arr, np.ndarray) and econ_arr.size and width > 0:
+                                sys_econ_full[:, s_idx:e_idx] = econ_arr[:, :width]
+                        except Exception as e:
+                            rootLogger.warning(
+                                f"MPI rank 0: failed to read/assemble payload from rank {r}: {e}"
+                            )
+
+                    # Merge small dicts
+                    sys_output_dict_full: dict[str, dict] = {}
+                    for r in range(size):
+                        r_json = parts_dir_path / f"sysoutdict_rank_{r:06d}.json"
+                        if not r_json.exists():
+                            continue
+                        try:
+                            with open(r_json, "r", encoding="utf-8") as f:
+                                d = _json.load(f)
+                                if d:
+                                    sys_output_dict_full.update(d)
+                        except Exception:
+                            pass
+
+                    print(
+                        (
+                            "\nMPI processing complete. Processed "
+                            f"{total_hazards} hazards across {size} ranks."
+                        )
+                    )
+                    rootLogger.info(
+                        "MPI rank 0: Assembled payloads from disk (fallback without dict gather)"
+                    )
+
+                    # Build response_data in legacy format expected downstream
+                    response_data = [
+                        {},
+                        sys_output_dict_full,
+                        {},
+                        {},
+                        sys_output_full,
+                        sys_econ_full,
+                        {},
+                        {},
+                    ]
+
+                    # Optional cleanup of parts (keep by default for diagnostics)
+                    try:
+                        if os.environ.get("SIRA_CLEAN_MPI_PARTS", "1") == "1":
+                            for p in parts_dir_path.glob("payload_rank_*.npz"):
+                                p.unlink(missing_ok=True)  # type: ignore[arg-type]
+                            for p in parts_dir_path.glob("sysoutdict_rank_*.json"):
+                                p.unlink(missing_ok=True)  # type: ignore[arg-type]
+                            # Do not remove the directory to allow later merges (e.g., comptype)
+                    except Exception:
+                        pass
+
+                    return response_data
+                except Exception as e:
+                    rootLogger.error(f"MPI rank 0: Disk-based fallback assembly failed: {e}")
+                    # As last resort, do not attempt dict gather; signal failure
+                    return None
+            else:
+                # Workers return None; root assembles and returns
+                return None
+        except Exception as e:
+            # If disk-based fallback itself fails catastrophically, avoid dict gather
+            rootLogger.error(f"MPI rank {rank}: Disk-based fallback failed early: {e}")
             return None
 
-    if rank == 0:
+    if rank == 0 and use_compact:
         # Assemble full-size arrays on root in global hazard order
         try:
             # Infer num_samples from first non-empty payload

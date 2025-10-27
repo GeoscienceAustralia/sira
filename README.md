@@ -13,7 +13,7 @@
     + [Required Directory Structure](#required-directory-structure)
   - [Running the Application](#running-the-application)
   - [Testing](#testing)
-    - [Dask Parallelism](#dask-parallelism)
+  - [Parallel Execution](#parallel-execution)
 
 ## [Overview](#oveview)
 
@@ -113,15 +113,15 @@ directory of the SIRA code, and the model of interest is in the location
 
 The following code runs the simulation and the post processing simultanrously:
 
-    python sira -d scenario_dir/ci_model_x -sfl
+    python -m sira -d scenario_dir/ci_model_x -sfl
 
 To run only the Monte Carlo simulation without post-processing:
 
-    python sira -d scenario_dir/ci_model_x -s
+    python -m sira -d scenario_dir/ci_model_x -s
 
 To run both the model fitting and the loss analysis code:
 
-    python sira -d scenario_dir/ci_model_x -fl
+    python -m sira -d scenario_dir/ci_model_x -fl
 
 Note that the model fitting and loss analysis steps require that the
 initial simulation be run first so that it has the initial output data
@@ -141,32 +141,30 @@ If you want to explicitly ask `pytest` to run coverage reports, then run:
 If you are using docker as described above, you can do this from within the
 sira container.
 
-## [Dask Parallelism](#dask-parallelism)
+## [Parallel Execution](#parallel-execution)
 
-SIRA supports parallel execution using Dask for both workstation and HPC environments.
+SIRA supports multiprocessing locally and MPI on HPC systems. The MPI backend is preferred when available; otherwise, SIRA uses efficient multiprocessing with sensible defaults.
 
-- Local cluster (auto-managed):
-    - Use `--parallel-backend dask` and control workers/threads.
-    - Example (PowerShell):
+Note on selecting the parallel backend:
 
-```powershell
-python -m sira -d .\scenario_dir\ci_model_x --simulation `
-    --parallel-backend dask --max-workers 8 --dask-threads-per-worker 2
-```
+- Default (auto-detect): if launched under an MPI environment (e.g., mpirun/mpiexec/srun or SLURM/PBS variables present), SIRA uses MPI; otherwise it uses multiprocessing.
 
-- External scheduler (multi-node/HPC):
-    - Start a Dask scheduler/workers separately (via your HPC launcher).
-    - Point SIRA at it with one of these env vars: `SIRA_DASK_SCHEDULER`, `DASK_SCHEDULER_ADDRESS`, or `DASK_SCHEDULER`.
-    - Optional env overrides when creating a local cluster: `SIRA_DASK_WORKERS`, `SIRA_DASK_THREADS`, `SIRA_DASK_MEMORY_LIMIT` (set to `auto`/empty to use defaults).
+    python -m sira -d scenario_dir/ci_model_x -s --parallel-backend auto
 
-- Optional CLI flags:
-    - `--parallel-backend dask`: enable Dask backend.
-    - `--max-workers N`: number of Dask workers (local cluster) or processes (multiprocessing backend).
-    - `--dask-threads-per-worker M`: threads per Dask worker (local cluster).
+- Force MPI: requires launching with an MPI launcher (and mpi4py installed). Example:
 
-- HPC suggestions (PBS/SLURM):
-    - Set math library threads to 1 to avoid oversubscription: `OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1`, `NUMEXPR_NUM_THREADS=1`.
-    - Prefer one Dask worker per CPU core for CPU-bound workloads; adjust `--dask-threads-per-worker` based on task characteristics.
-    - For multi-node: run a scheduler on a head node and workers on compute nodes; export the scheduler address to SIRA as above.
+    mpirun -n 8 python -m sira -d scenario_dir/ci_model_x -s --parallel-backend mpi
 
-If Dask is not available or fails to initialise, SIRA falls back to the default multiprocessing path.
+- Force multiprocessing: runs locally without MPI. You can cap workers with --max-workers:
+
+    python -m sira -d scenario_dir/ci_model_x -s --parallel-backend multiprocessing --max-workers 8
+
+- Disable parallel entirely (useful for debugging):
+
+    python -m sira -d scenario_dir/ci_model_x -s --disable-parallel
+
+Optional tuning:
+
+- `--scenario-size auto|small|medium|large|xlarge` lets SIRA tune defaults when no config file is provided (auto is recommended).
+
+- You can also provide a JSON config via `--parallel-config` to pin backend and worker counts.

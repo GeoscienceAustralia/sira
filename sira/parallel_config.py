@@ -81,7 +81,6 @@ class ParallelConfig:
     - Available computing resources (CPUs, memory, GPUs)
     - HPC environment (SLURM, PBS, etc.)
     - MPI configuration
-    - Dask cluster settings
     - Optimal parallelisation parameters
     """
 
@@ -203,16 +202,12 @@ class ParallelConfig:
         # Select backend based on environment
         if env["mpi_environment"] and env["mpi_available"]:
             backend = "mpi"
-        elif env["is_hpc"] or env["cpu_count"] > 16:
-            backend = "dask"
         else:
             backend = "multiprocessing"
 
         # Configure based on backend
         if backend == "mpi":
             self.config = self._configure_mpi()
-        elif backend == "dask":
-            self.config = self._configure_dask()
         else:
             self.config = self._configure_multiprocessing()
 
@@ -252,35 +247,6 @@ class ParallelConfig:
 
         return config
 
-    def _configure_dask(self) -> Dict[str, Any]:
-        """Configure Dask-specific settings."""
-        env = self.environment
-
-        # Calculate optimal worker configuration
-        available_memory = env["available_memory_gb"]
-        n_workers = min(env["cpu_count"], 8)
-
-        # Allocate 80% of available memory to workers
-        worker_memory = (available_memory * 0.8) / n_workers
-
-        config = {
-            "dask_scheduler": os.environ.get("DASK_SCHEDULER_ADDRESS", "local"),
-            "dask_n_workers": n_workers,
-            "dask_threads_per_worker": max(1, env["cpu_count"] // n_workers),
-            "dask_memory_limit": f"{int(worker_memory)}GB",
-            "dask_dashboard": True,
-            "dask_dashboard_port": 8787,
-            "dask_chunk_size": "128MB",
-            "dask_dataframe_partitions": n_workers * 2,
-        }
-
-        # HPC-specific configuration
-        if env["is_hpc"]:
-            config["dask_interface"] = "ib0"  # InfiniBand if available
-            config["dask_scheduler_file"] = "scheduler.json"
-
-        return config
-
     def _configure_multiprocessing(self) -> Dict[str, Any]:
         """Configure multiprocessing-specific settings."""
         env = self.environment
@@ -310,21 +276,10 @@ class ParallelConfig:
         backend = self.config["backend"]
 
         if backend == "mpi" and not self.environment["mpi_available"]:
-            logger.warning("MPI backend selected but MPI4Py not available. Falling back to Dask.")
-            self.config["backend"] = "dask"
-
-        # Validate memory settings
-        if "dask_memory_limit" in self.config:
-            mem_str = self.config["dask_memory_limit"]
-            mem_value = float(mem_str.replace("GB", "").replace("MB", ""))
-            if "GB" in mem_str and mem_value > self.environment["available_memory_gb"]:
-                logger.warning(
-                    f"Dask memory limit ({mem_value}GB) exceeds available memory "
-                    f"({self.environment['available_memory_gb']:.1f}GB). Adjusting..."
-                )
-                self.config["dask_memory_limit"] = (
-                    f"{int(self.environment['available_memory_gb'] * 0.8)}GB"
-                )
+            logger.warning(
+                "MPI backend selected but MPI4Py not available. Falling back to multiprocessing."
+            )
+            self.config["backend"] = "multiprocessing"
 
     def _load_config(self, config_file: Path):
         """Load configuration from file."""
@@ -379,7 +334,7 @@ class ParallelConfig:
     def get_resource_limits(self) -> Dict[str, Any]:
         """Get resource limits for current environment."""
         return {
-            "max_workers": self.config.get("dask_n_workers", self.config.get("mp_n_processes", 1)),
+            "max_workers": self.config.get("mp_n_processes", 1),
             "max_memory_gb": self.environment["available_memory_gb"] * 0.8,
             "max_threads": self.environment["cpu_count"],
             "gpu_available": self.environment["gpu_available"],
@@ -410,22 +365,21 @@ class ParallelConfig:
                 "use_compression": False,
             },
             "medium": {  # 1000-10000 events
-                "backend": "multiprocessing" if not self.environment["is_hpc"] else "dask",
+                "backend": "multiprocessing",
                 "mp_n_processes": min(8, self.environment["cpu_count"]),
-                "dask_n_workers": 4,
                 "batch_size": 500,
                 "use_compression": True,
             },
             "large": {  # 10000-100000 events
-                "backend": "dask",
-                "dask_n_workers": min(16, self.environment["cpu_count"]),
+                "backend": "multiprocessing",
+                "mp_n_processes": min(16, self.environment["cpu_count"]),
                 "batch_size": 1000,
                 "use_compression": True,
                 "checkpoint_interval": 5000,
             },
             "xlarge": {  # > 100000 events
-                "backend": "mpi" if self.environment["mpi_available"] else "dask",
-                "dask_n_workers": self.environment["cpu_count"],
+                "backend": "mpi" if self.environment["mpi_available"] else "multiprocessing",
+                "mp_n_processes": self.environment["cpu_count"],
                 "batch_size": 5000,
                 "use_compression": True,
                 "checkpoint_interval": 10000,
@@ -438,7 +392,7 @@ class ParallelConfig:
                 scenario_configs[scenario_type].get("backend") == "mpi"
                 and not self.environment["mpi_environment"]
             ):
-                scenario_configs[scenario_type]["backend"] = "dask"
+                scenario_configs[scenario_type]["backend"] = "multiprocessing"
 
             base_config.update(scenario_configs[scenario_type])
 
@@ -477,10 +431,7 @@ class ParallelConfig:
         print(f"  Recovery method: {self.config['recovery_method']}")
         print(f"  Repair streams: {self.config['num_repair_streams']}")
 
-        if self.config["backend"] == "dask":
-            print(f"  Dask workers: {self.config.get('dask_n_workers', 'auto')}")
-            print(f"  Worker memory: {self.config.get('dask_memory_limit', 'auto')}")
-        elif self.config["backend"] == "multiprocessing":
+        if self.config["backend"] == "multiprocessing":
             print(f"  Processes: {self.config.get('mp_n_processes', 'auto')}")
 
         print("=" * 60 + "\n")
@@ -517,11 +468,6 @@ def setup_parallel_environment(
     # Print summary if requested
     if verbose:
         config.print_config_summary()
-
-    # Set environment variables
-    if config.config["backend"] == "dask":
-        os.environ["DASK_DISTRIBUTED__SCHEDULER__WORK_STEALING"] = "True"
-        os.environ["DASK_DISTRIBUTED__SCHEDULER__BANDWIDTH"] = "100 MB/s"
 
     return config
 
@@ -580,34 +526,20 @@ def parallelise_dataframe(df, func, config=None, **kwargs):
     if config is None:
         config = ParallelConfig()
 
-    if config.config["backend"] == "dask":
-        import dask.dataframe as dd
+    # Use multiprocessing
+    from concurrent.futures import ProcessPoolExecutor
 
-        # Convert to Dask DataFrame
-        ddf = dd.from_pandas(  # type: ignore
-            df, npartitions=config.config.get("dask_dataframe_partitions", 4)
-        )
+    n_workers = config.config.get("mp_n_processes", 4)
 
-        # Apply function
-        result = ddf.apply(func, axis=1, **kwargs)
+    # Split DataFrame
+    chunks = np.array_split(df, n_workers)
 
-        # Compute result
-        return result.compute()
-    else:
-        # Use multiprocessing
-        from concurrent.futures import ProcessPoolExecutor
+    with ProcessPoolExecutor(max_workers=n_workers) as executor:
+        futures = [
+            executor.submit(pd.DataFrame(chunk).apply, func, axis=1, **kwargs)
+            for chunk in chunks
+        ]
 
-        n_workers = config.config.get("mp_n_processes", 4)
+        results = [future.result() for future in futures]
 
-        # Split DataFrame
-        chunks = np.array_split(df, n_workers)
-
-        with ProcessPoolExecutor(max_workers=n_workers) as executor:
-            futures = [
-                executor.submit(pd.DataFrame(chunk).apply, func, axis=1, **kwargs)
-                for chunk in chunks
-            ]
-
-            results = [future.result() for future in futures]
-
-        return pd.concat(results)
+    return pd.concat(results)

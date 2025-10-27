@@ -25,35 +25,44 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          environment-file: ./installation/sira_env.yml
-          environment-name: sira_env
-          create-args: >-
-            python=${{ matrix.python-version }}
-            libtiff
-            libpng
-          cache-environment: true
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+            installation/constraints.txt
+            installation/requirements-core.txt
+            installation/requirements-dev.txt
+            installation/requirements-viz.txt
+            installation/requirements-docs.txt
+            installation/requirements-diagrams.txt
 
-      - name: Install env requirements
-        shell: bash -l {0}
+      - name: Create and activate venv, install deps (uv)
+        shell: bash
         run: |
-          micromamba activate sira_env
+          python -m venv .venv
+          echo "VIRTUAL_ENV=$GITHUB_WORKSPACE/.venv" >> "$GITHUB_ENV"
+          echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+          python -m pip install --upgrade pip
           pip install uv
-          uv pip install -r ./installation/sira_req.txt
+          uv pip install -r ./installation/constraints.txt
+          uv pip install -r ./installation/requirements-core.txt
+          uv pip install -r ./installation/requirements-dev.txt
+          uv pip install -r ./installation/requirements-viz.txt
+          uv pip install -r ./installation/requirements-docs.txt
+          uv pip install -r ./installation/requirements-diagrams.txt
 
       - name: Run pytest
-        shell: bash -l {0}
+        shell: bash
         run: |
-          micromamba activate sira_env
           pytest --ignore=tests/test_simulated_user_run.py
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
         with:
           name: covdata-${{ matrix.python-version }}
-          path: .coverage.*
+          path: .coverage*
           overwrite: true
           include-hidden-files: true
           if-no-files-found: ignore
@@ -77,12 +86,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: covdata-*
+          merge-multiple: true
 
       - name: Generate coverage report
+        shell: bash
         run: |
           python -Im pip install --upgrade coverage[toml]
-          python -Im coverage html --skip-covered --skip-empty
-          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+          # Combine any downloaded coverage files into a single database
+          python -Im coverage combine || true
+          # Generate reports (will be empty if no data found)
+          python -Im coverage html --skip-covered --skip-empty || true
+          python -Im coverage report --format=markdown >> "$GITHUB_STEP_SUMMARY" || echo "No coverage data found."
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4

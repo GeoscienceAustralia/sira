@@ -209,7 +209,7 @@ def test_calculate_response_with_mpi():
         mock_mpi.return_value = [{"TEST_001": [None] * 8}]
 
         result = calculate_response(
-            mock_hazards, mock_scenario, mock_infrastructure, dask_client=None, mpi_comm=mock_comm
+            mock_hazards, mock_scenario, mock_infrastructure, mpi_comm=mock_comm
         )
 
         # Verify MPI function was called
@@ -240,7 +240,7 @@ def test_calculate_response_fallback_to_multiprocessing():
         }
 
         result = calculate_response(
-            mock_hazards, mock_scenario, mock_infrastructure, dask_client=None, mpi_comm=None
+            mock_hazards, mock_scenario, mock_infrastructure, mpi_comm=None
         )
 
         # Should return the standard post-processing list format

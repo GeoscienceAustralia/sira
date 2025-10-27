@@ -349,7 +349,7 @@ def consolidate_streamed_results(
                 "loss_std": float(np.std(econ_vals)),
             }
 
-            # System output: all streaming data now uses NPY format
+            # System output: handle both NPZ (compressed) and NPY formats
             sys_df: pd.DataFrame | None = None
             try:
                 if isinstance(out_paths, list) and len(out_paths) > 0:
@@ -358,11 +358,41 @@ def consolidate_streamed_results(
                     for p in out_paths:
                         p_path = _Path(p)
                         if p_path.exists():
-                            parts.append(pd.DataFrame(np.load(p_path, allow_pickle=False)))
+                            if str(p_path).endswith(".npz"):
+                                with np.load(p_path, allow_pickle=False) as data:
+                                    # Preferred: full samples stored under key 'data'
+                                    if "data" in data.files:
+                                        arr = data["data"]
+                                    # Stats-only mode: synthesise samples from per-line means
+                                    elif "mean" in data.files:
+                                        mean = np.asarray(data["mean"])
+                                        n = int(getattr(scenario, "num_samples", 1) or 1)
+                                        arr = np.tile(mean, (n, 1))
+                                    else:
+                                        # Unknown NPZ structure; skip gracefully
+                                        arr = None
+                                    if isinstance(arr, np.ndarray):
+                                        parts.append(pd.DataFrame(arr))
+                            else:
+                                parts.append(pd.DataFrame(np.load(p_path, allow_pickle=False)))
                     if parts:
                         sys_df = pd.concat(parts, axis=1, ignore_index=True)
                 elif isinstance(out_paths, str) and _Path(out_paths).exists():
-                    sys_df = pd.DataFrame(np.load(_Path(out_paths), allow_pickle=False))
+                    p_path = _Path(out_paths)
+                    if str(p_path).endswith(".npz"):
+                        with np.load(p_path, allow_pickle=False) as data:
+                            if "data" in data.files:
+                                arr = data["data"]
+                            elif "mean" in data.files:
+                                mean = np.asarray(data["mean"])
+                                n = int(getattr(scenario, "num_samples", 1) or 1)
+                                arr = np.tile(mean, (n, 1))
+                            else:
+                                arr = None
+                            if isinstance(arr, np.ndarray):
+                                sys_df = pd.DataFrame(arr)
+                    else:
+                        sys_df = pd.DataFrame(np.load(p_path, allow_pickle=False))
             except Exception as e:
                 rootLogger.warning(f"Failed reading sys_output for event {event_id}: {e}")
 
@@ -1535,13 +1565,50 @@ def write_system_response(
     df_sys_response[out_cols[5]] = recovery_time_100pct
 
     if (config.INFRASTRUCTURE_LEVEL).lower() == "facility":
-        if config.HAZARD_INPUT_METHOD in ["calculated_array", "hazard_array"]:
-            site_id = "0"
-        else:
-            component1 = list(infrastructure.components.values())[0]
-            site_id = str(component1.site_id)
-        haz_vals = hazards.hazard_data_df[site_id].values
-        df_sys_response.insert(1, hazard_col, haz_vals)
+        # Determine site_id selection for collocated components (facility-level)
+        # - For calculated/hazard_array, the site is always "0"
+        # - For scenario_file/hazard_file, select a non-negative site_id from components
+        #   (negative site_id components are ignored as per hazard logic)
+        try:
+            if config.HAZARD_INPUT_METHOD in ["calculated_array", "hazard_array"]:
+                site_id = "0"
+                haz_source_ok = True
+            else:
+                # Build a list of valid site_id's and pick a valid (non-negative) value.
+                # Collect non-negative site_ids from components
+                valid_sites = []
+                for comp in infrastructure.components.values():
+                    try:
+                        if float(comp.site_id) >= 0:
+                            valid_sites.append(str(comp.site_id))
+                    except Exception:
+                        # Non-numeric site ids are ignored
+                        continue
+
+                if valid_sites:
+                    # Prefer a stable choice (sorted first)
+                    site_id = sorted(set(valid_sites))[0]
+                    haz_source_ok = True
+                else:
+                    # No valid sites: hazard contribution is zero for all events
+                    site_id = None
+                    haz_source_ok = False
+
+            if haz_source_ok and site_id in hazards.hazard_data_df.columns:
+                haz_vals = hazards.hazard_data_df[site_id].values
+            elif haz_source_ok:
+                rootLogger.warning(
+                    "Facility site_id %s not found in hazard data; defaulting to zeros",
+                    site_id,
+                )
+                haz_vals = np.zeros(len(hazard_event_list), dtype=float)
+            else:
+                haz_vals = np.zeros(len(hazard_event_list), dtype=float)
+
+            df_sys_response.insert(1, hazard_col, haz_vals)
+        except Exception as e:
+            # Do not fail summary writing because of hazard column insertion
+            rootLogger.warning("Failed to insert facility hazard column (%s): %s", hazard_col, e)
 
     df_sys_response = df_sys_response.sort_values("loss_mean", ascending=True)
 

@@ -352,6 +352,5 @@ The PBS script implements a sophisticated parallel processing pipeline:
 4. **Consolidation**: Combines individual rank outputs into final results
 5. **Error Resilience**: Individual hazard failures don't crash entire job
 
-This approach has proven to achieve ~0.4 seconds per hazard on large models, representing a significant improvement over previous Dask-based approaches that suffered from serialisation overhead and worker management issues.
-
-The script handles all the complexity automatically - just edit the three path variables and submit!
+The script handles all the complexity automatically.
+User needs to only edit the three path variables and submit.
