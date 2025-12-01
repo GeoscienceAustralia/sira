@@ -25,6 +25,17 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
 
+      - name: Install system packages (apt)
+        shell: bash
+        run: |
+          sudo apt-get update
+          # Install required Linux packages from installation/packagelist_linux.txt
+          # - Strip comments/blank lines; don't run if list is empty (-r)
+          grep -vE '^\s*#|^\s*$' installation/packagelist_linux.txt | \
+            xargs -r sudo apt-get install -y --no-install-recommends
+          sudo apt-get clean
+          sudo rm -rf /var/lib/apt/lists/*
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:

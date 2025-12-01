@@ -293,7 +293,7 @@ def calculate_response(hazards, scenario, infrastructure, mpi_comm=None):
         rootLogger.info("Using multiprocessing backend for parallel processing")
 
         # Determine optimal processing strategy based on problem size
-        target_chunks_per_slot = int(os.environ.get("SIRA_CHUNKS_PER_SLOT", "2"))
+        target_chunks_per_slot = int(os.environ.get("SIRA_CHUNKS_PER_SLOT", "4"))
         num_slots = get_available_cores()
         rootLogger.info(f"Available local cores: {num_slots}")
 

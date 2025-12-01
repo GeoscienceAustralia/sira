@@ -2,13 +2,14 @@
 sira/tools/utils.py
 This module provides a collection of helper functions
 """
-from pathlib import Path
-from functools import reduce
+
 import importlib
-from copy import deepcopy
+import os
 from collections import namedtuple
 from collections.abc import Iterable
-import os
+from copy import deepcopy
+from functools import reduce
+from pathlib import Path
 
 
 def relpath(self, start=None):
@@ -18,8 +19,9 @@ def relpath(self, start=None):
 def get_all_subclasses(cls):
     clss = cls.__subclasses__()
     if clss:
-        return ['{}.{}'.format(c.__module__, c.__name__) for c in clss] + \
-            reduce(lambda x, y: x + get_all_subclasses(y), clss, [])
+        return ["{}.{}".format(c.__module__, c.__name__) for c in clss] + reduce(
+            lambda x, y: x + get_all_subclasses(y), clss, []
+        )
     else:
         return []
 
@@ -39,7 +41,7 @@ def jsonify(obj):
         with ``jsonify(v)``.
     """
 
-    if hasattr(obj, '__jsonify__'):
+    if hasattr(obj, "__jsonify__"):
         # should probably check the number of args, or change the name of the
         # two arg version
         return obj.__jsonify__()
@@ -62,11 +64,11 @@ def pythonify(obj):
     """
 
     if isinstance(obj, dict):
-        attrs = obj.pop('_attributes', None)
-        if 'class' in obj:
-            cls = obj.pop('class')
+        attrs = obj.pop("_attributes", None)
+        if "class" in obj:
+            cls = obj.pop("class")
             clazz = class_getter(cls)
-            if hasattr(clazz, '__pythonify__'):
+            if hasattr(clazz, "__pythonify__"):
                 res = clazz.__pythonify__(obj)
             else:
                 res = class_getter(cls)(**pythonify(obj))
@@ -74,7 +76,7 @@ def pythonify(obj):
             res = {str(k): pythonify(v) for k, v in obj.items()}
         # pylint: disable=protected-access
         if attrs is not None:
-            res._attributes = attrs
+            res._attributes = attrs  # type: ignore
         return res
     if isinstance(obj, list):
         return [pythonify(v) for v in obj]
@@ -87,7 +89,9 @@ def class_getter(mod_class):
     Raises ValueError if input is invalid.
     """
     if not isinstance(mod_class, (list, tuple)) or len(mod_class) < 2:
-        raise ValueError("mod_class must be a list or tuple with at least two elements: [module, class_name]")
+        raise ValueError(
+            "mod_class must be a list or tuple with at least two elements: [module, class_name]"
+        )
     try:
         module = importlib.import_module(mod_class[0])
         return getattr(module, mod_class[1])
@@ -98,28 +102,24 @@ def class_getter(mod_class):
 def _make_diff(name, elements):
     def __new__(cls, *args, **kwargs):
         if len(kwargs):
-            args += tuple((kwargs.get(e, None) for e in elements[len(args):]))
+            args += tuple((kwargs.get(e, None) for e in elements[len(args) :]))
         if all(map(lambda x: x is None, args)):
             return None
         return super(cls, cls).__new__(cls, *args)
 
     def __jsonify__(self):
-        res = {
-            e: jsonify(getattr(self, e))
-            for e in elements if getattr(self, e) is not None
-        }
-        res['class'] = [type(self).__module__, type(self).__name__]
+        res = {e: jsonify(getattr(self, e)) for e in elements if getattr(self, e) is not None}
+        res["class"] = [type(self).__module__, type(self).__name__]
         return res
 
     return type(
-        name,
-        (namedtuple(name, elements),),
-        {'__new__': __new__, '__jsonify__': __jsonify__})
+        name, (namedtuple(name, elements),), {"__new__": __new__, "__jsonify__": __jsonify__}
+    )
 
 
-Diff = _make_diff('Diff', ['changed'])
-DictDiff = _make_diff('DictDiff', ['changed', 'dropped', 'added'])
-ListDiff = _make_diff('ListDiff', ['changed', 'dropped', 'added'])
+Diff = _make_diff("Diff", ["changed"])
+DictDiff = _make_diff("DictDiff", ["changed", "dropped", "added"])
+ListDiff = _make_diff("ListDiff", ["changed", "dropped", "added"])
 
 
 def find_changes(old, new):
@@ -147,9 +147,9 @@ def find_changes(old, new):
         if len(new) < len(old):
             return ListDiff(all_changes or None, len(old) - len(new), None)
         if len(new) > len(old):
-            return ListDiff(all_changes or None, None, new[len(old):])
+            return ListDiff(all_changes or None, None, new[len(old) :])
         else:
-            assert all_changes, 'should not have got here'
+            assert all_changes, "should not have got here"
 
         return ListDiff(all_changes or None, None, None)
 
@@ -198,7 +198,7 @@ def reconstitute(old, changes):
 
         if changes.dropped is not None:
             for k in changes.dropped:
-                result = result[:-changes.dropped]
+                result = result[: -changes.dropped]
 
         if changes.added is not None:
             result += changes.added
@@ -210,14 +210,10 @@ def reconstitute(old, changes):
     return result
 
 
-def wrap_file_path(
-        file_path,
-        max_width=100,
-        first_line_indent=" " * 9,
-        subsequent_indent=" " * 9):
+def wrap_file_path(file_path, max_width=100, first_line_indent=" " * 9, subsequent_indent=" " * 9):
     # Replace backslashes with forward slashes for consistent splitting
-    file_path = file_path.replace('\\', '/')
-    path_components = file_path.split('/')
+    file_path = file_path.replace("\\", "/")
+    path_components = file_path.split("/")
 
     lines = []
     current_line = first_line_indent
@@ -228,10 +224,10 @@ def wrap_file_path(
             if len(current_line) + len(component) + 1 > max_width:
                 # If so, start a new line
                 lines.append(current_line)
-                current_line = subsequent_indent + '/' + component
+                current_line = subsequent_indent + "/" + component
             else:
                 # Otherwise, add slash and component to current line
-                current_line += '/' + component
+                current_line += "/" + component
         else:
             # For the first component, just add it
             # (it might be an empty string if path starts with '/')
@@ -241,8 +237,8 @@ def wrap_file_path(
     if current_line:
         lines.append(current_line)
 
-    txtblock = '\n'.join(lines)
-    if '\\' in file_path:
-        txtblock = txtblock.replace('/', '\\')
+    txtblock = "\n".join(lines)
+    if "\\" in file_path:
+        txtblock = txtblock.replace("/", "\\")
 
     return txtblock

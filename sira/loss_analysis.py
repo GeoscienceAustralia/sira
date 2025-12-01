@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from colorama import Fore, init
-from matplotlib import cm, gridspec
+from matplotlib import cm, gridspec, transforms
 
 import sira.tools.siraplot as spl
 
@@ -1260,7 +1260,7 @@ def draw_component_loss_barchart_s1(
     bar_offset = 0.02
     bar_clr_1 = spl.ColourPalettes().BrewerSet1[0]  # '#E41A1C'
     bar_clr_2 = spl.ColourPalettes().BrewerSet1[1]  # '#377EB8'
-    grid_clr = "#BBBBBB"
+    grid_clr = "#999999"
 
     cpt = [
         spl.split_long_label(x, delims=[" ", "_"], max_chars_per_line=23)
@@ -1285,7 +1285,7 @@ def draw_component_loss_barchart_s1(
         color=bar_clr_1,
         alpha=0.7,
         edgecolor=None,
-        label="% loss of total system value (for a component type)",
+        label="% loss of total system value (for a given component type)",
     )
 
     axes.barh(
@@ -1296,7 +1296,7 @@ def draw_component_loss_barchart_s1(
         color=bar_clr_2,
         alpha=0.7,
         edgecolor=None,
-        label="% loss for component type",
+        label="% loss for all components of specific type",
     )
 
     for p, cv in zip(pos, ctype_loss_tot_mean):
@@ -1323,6 +1323,8 @@ def draw_component_loss_barchart_s1(
             annotation_clip=False,
         )
 
+    # ------------------------------------------------------------------------
+    # Title at the top
     axes.annotate(
         "ECONOMIC LOSS % by COMPONENT TYPE",
         xy=(0.0, -1.65),
@@ -1335,9 +1337,10 @@ def draw_component_loss_barchart_s1(
         annotation_clip=False,
     )
 
+    # Hazard label above the axes
     axes.annotate(
         "Hazard: " + hazard_type + " " + scenario_tag,
-        xy=(0.0, -1.2),
+        xy=(0.0, -1.15),
         xycoords="data",
         ha="left",
         va="top",
@@ -1347,10 +1350,28 @@ def draw_component_loss_barchart_s1(
         annotation_clip=False,
     )
 
+    # ------------------------------------------------------------------------
+    # Legend
+    legend_offset_points = 20  # consistent 20 points below axes
+
+    # Create a blended transform
+    # x: use axes coordinates (0 = left edge of axes)
+    # y: use axes coordinates with fixed offset in points
+    trans = transforms.blended_transform_factory(
+        axes.transAxes,
+        transforms.offset_copy(
+            axes.transAxes,
+            y=-legend_offset_points,
+            units="points",
+            fig=axes.figure,  # type: ignore
+        ),
+    )
+
     lgnd = axes.legend(
         loc="upper left",
         ncol=1,
-        bbox_to_anchor=(-0.1, -0.12),
+        bbox_to_anchor=(-0.1, 0),
+        bbox_transform=trans,
         borderpad=0,
         frameon=0,
         prop={"size": 8, "weight": "medium"},
@@ -1359,17 +1380,19 @@ def draw_component_loss_barchart_s1(
     for text in lgnd.get_texts():
         text.set_color("#555555")
 
-    # axes.axhline(
-    #     y=pos.max() + bar_width * 2.4,
-    #     xmin=0,
-    #     xmax=0.3,
-    #     lw=0.6,
-    #     ls="-",
-    #     color="#BBBBBB",
-    #     clip_on=False,
-    # )
+    # Draw a separator line with legend below and hline above it
+    axes.axhline(
+        y=pos.max() + bar_width * 2.4,
+        xmin=0,
+        xmax=0.3,
+        lw=0.5,
+        ls="-",
+        color=grid_clr,
+        clip_on=False,
+    )
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # ------------------------------------------------------------------------
+    # Axes formatting
 
     spines_to_remove = ["top", "bottom", "right"]
     for spine in spines_to_remove:
@@ -1422,7 +1445,7 @@ def draw_component_loss_barchart_s2(
     )
 
     fig = plt.figure(figsize=(5.0, len(barpos) * 0.6), facecolor="white")
-    num_grids = 11 + len(comptypes_sorted)
+    num_grids = 10 + len(comptypes_sorted)
     gs = gridspec.GridSpec(num_grids, 1)
     ax1 = plt.subplot(gs[:-5])
     ax2 = plt.subplot(gs[-3:])
@@ -1492,15 +1515,15 @@ def draw_component_loss_barchart_s2(
         annotation_clip=False,
     )
 
-    # ax1.axhline(
-    #     y=barpos.max() + bar_width * (bar_space_index - 0.5),
-    #     xmin=0,
-    #     xmax=0.25,
-    #     lw=0.6,
-    #     ls="-",
-    #     color="grey",
-    #     clip_on=False,
-    # )
+    ax1.axhline(
+        y=barpos.max() + bar_width * 2.2,
+        xmin=0,
+        xmax=0.3,
+        lw=0.5,
+        ls="-",
+        color=grid_clr,
+        clip_on=False,
+    )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spines_to_remove = ["top", "bottom", "right", "left"]
@@ -1525,7 +1548,15 @@ def draw_component_loss_barchart_s2(
     # to the aggregated direct economic loss of the system.
     # ==========================================================================
 
-    stacked_bar_width = 0.5
+    desired_height_points = 15
+    fig2 = ax2.figure
+    height_pixels = fig2.dpi * desired_height_points / 72.0  # 1 point = 1/72 inch
+
+    # Get the height in data units
+    inv = ax2.transData.inverted()
+    y0 = ax2.transAxes.transform((0, 0))[1]
+    y1 = y0 + height_pixels
+    stacked_bar_width = inv.transform((0, y1))[1] - inv.transform((0, y0))[1]
 
     colours = spl.ColourPalettes()
     if len(comptypes_sorted) <= 11:
@@ -1560,21 +1591,21 @@ def draw_component_loss_barchart_s2(
     ax2.set_xticklabels([])
     ax2.set_xlim(0, 100)
     agg_sys_loss = sum(ctype_resp_sorted["loss_tot"].values)
-    ax2.set_xlabel(
-        "Aggregated loss as fraction of System Value: {:.1f}% ".format(round(agg_sys_loss * 100)),
-        size=8,
-        labelpad=10,
-    )
+    # ax2.set_xlabel(
+    #     "Aggregated loss as fraction of System Value: {:.1f}% ".format(round(agg_sys_loss * 100)),
+    #     size=8,
+    #     labelpad=2,
+    # )
 
     ax2.yaxis.grid(False)
     ax2.set_yticklabels([])
-    ax2.set_ylim((-stacked_bar_width * 0.5, stacked_bar_width * 1.1))
+    ax2.set_ylim((-stacked_bar_width, stacked_bar_width))
 
     ax2.tick_params(top=False, bottom=False, left=False, right=False)
 
     ax2.annotate(
-        "LOSS METRIC: relative contributions to system loss",
-        xy=(0.0, 0.8),
+        "LOSS METRIC: component loss as % of total system loss",
+        xy=(0.0, stacked_bar_width * 1.3),
         xycoords="data",
         ha="left",
         va="top",
@@ -1598,10 +1629,25 @@ def draw_component_loss_barchart_s2(
     )
     ax2.annotate(
         "",
+        # xy=(0.0, -0.025),
+        # xytext=(1.0, -0.025),
+        # xycoords="axes fraction",
         xy=(0.0, -stacked_bar_width),
-        xytext=(1.0, -stacked_bar_width),
-        xycoords="axes fraction",
+        xytext=(100, -stacked_bar_width),
+        xycoords="data",
         arrowprops=arrowprops,
+    )
+
+    ax2.annotate(
+        "Combined loss as fraction of System value: {:.1f}% ".format(round(agg_sys_loss * 100)),
+        xy=(50, stacked_bar_width * -1.35),
+        xycoords="data",
+        ha="center",
+        va="top",
+        size=9,
+        color="k",
+        weight="normal",
+        annotation_clip=False,
     )
 
     fig.savefig(os.path.join(output_path, fig_name), format="png", bbox_inches="tight", dpi=400)

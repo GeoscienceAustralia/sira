@@ -1,26 +1,28 @@
 #!/bin/bash
-#PBS -N ramsey-EPN-mpi-run
+#PBS -N EPN-mpi-run
 #PBS -m be
-#PBS -P w84
+#PBS -P w123
 #PBS -q normalbw
-#PBS -l walltime=12:00:00
+#PBS -l walltime=2:00:00
 #PBS -l ncpus=240
 #PBS -l mem=1280GB
 #PBS -l jobfs=50GB
-# Request iointensive NVMe-over-fabrics volumes (1 TiB each), divisible by node count.
-# For normalbw (28 cores/node), ncpus=240 typically implies 9 nodes → request 9 volumes (1 TiB/node).
-# Adjust if you change ncpus or queue/node type.
-#PBS -l iointensive=9
-#PBS -l storage=scratch/y57+scratch/n74+scratch/w84+gdata/w84
+#PBS -l storage=scratch/y456+scratch/n74+scratch/w123+gdata/w123
 #PBS -j oe
 #PBS -l wd
 
 set -euo pipefail
 
 # --- User configuration
-ASSET="EPN_Yilgarn_microcomps_L3"
-CODE_DIR="/scratch/y57/mr3457/code/sira"
-MODELS_DIR="/scratch/y57/mr3457/code/_SYSTEM_MODELS/epn"
+
+# Set your NCI project dir here
+PROJECT_DIR="y456"
+
+# Add the target asset dir name here
+ASSET="EPN_DIR_NAME"
+
+CODE_DIR="/scratch/$PROJECT_DIR/$USER/code/sira"
+MODELS_DIR="/scratch/$PROJECT_DIR/$USER/code/_SYSTEM_MODELS/epn"
 VENV="$HOME/venv/sira-v25"
 
 # --- Environment setup

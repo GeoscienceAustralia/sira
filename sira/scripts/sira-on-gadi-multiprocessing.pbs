@@ -1,22 +1,28 @@
 #!/bin/bash
-#PBS -N ramsey-EPN-multiprocessing-test
+#PBS -N EPN-multiprocessing-test
 #PBS -m be
-#PBS -P w84
+#PBS -P w123
 #PBS -q normalbw
-#PBS -l walltime=05:00:00
-#PBS -l ncpus=48
-#PBS -l mem=240GB
-#PBS -l jobfs=400GB
-#PBS -l storage=scratch/y57+scratch/n74+scratch/w84+gdata/w84
+#PBS -l walltime=24:00:00
+#PBS -l ncpus=240
+#PBS -l mem=1280GB
+#PBS -l jobfs=50GB
+#PBS -l storage=scratch/y456+scratch/n74+scratch/w123+gdata/w123
 #PBS -j oe
 #PBS -l wd
 
 set -euo pipefail
 
 # --- User configuration
-ASSET="EPN_Yilgarn_microcomps_L3"
-CODE_DIR="/scratch/y57/mr3457/code/sira"
-MODELS_DIR="/scratch/y57/mr3457/code/_SYSTEM_MODELS/epn"
+
+# Set your NCI project dir here
+PROJECT_DIR="y456"
+
+# Add the target asset dir name here
+ASSET="EPN_DIR_NAME"
+
+CODE_DIR="/scratch/$PROJECT_DIR/$USER/code/sira"
+MODELS_DIR="/scratch/$PROJECT_DIR/$USER/code/_SYSTEM_MODELS/epn"
 VENV="$HOME/venv/sira-v25"
 
 # --- Environment setup
