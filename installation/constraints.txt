@@ -1,5 +1,5 @@
-# Pin critical versions for reproducibility across workstations/HPC
-# Adjust deliberately when upgrading; keep list small.
+# Pinned critical versions for reproducibility across workstations/HPC
+# Adjust deliberately when upgrading; keep list minimal.
 
 numba==0.60.0
 llvmlite==0.43.0

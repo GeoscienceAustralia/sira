@@ -12,8 +12,10 @@
     + [Build Environment](#build-environment)
     + [Required Directory Structure](#required-directory-structure)
   - [Running the Application](#running-the-application)
+    + [Runtime Flags](#runtime-flags)
   - [Testing](#testing)
   - [Parallel Execution](#parallel-execution)
+    + [HPC / MPI Environment Flags](#hpc-mpi-env-flags)
 
 ## [Overview](#oveview)
 
@@ -50,16 +52,29 @@ dependency changes on software behaviour.
 
 ### [Build Environment](#build-environment)
 
+The dependency list is large. To assist in managing the list of required packages, they are sectioned into different files, based on the purpose they serve. For example, if documentation is not required to be generated, or experimental geospatial modules are not required, those files can be skipped.
+
 The recommended process to set up the environment is to use `mamba` and `uv`.
-This approach works equally well in Windows and Linux, and within Docker. Move
-into the `sira/installation` directory, and use the provided conda environment file
-(yaml) and `pip` requirements file (txt) to install the required packages:
+This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the `sira/installation` directory. For setups using a combination of `mamba` and `pip` or `uv`, a consolidated pip requirements list is also provided.
+
+Installation option #1 (necesary for Windows):
 
 ```
     mamba env create -f sira_env.yml
     mamba activate sira_env
     pip install uv
     uv pip install -r sira_req.txt
+```
+
+Installation option #2 (necessary for HPC env, should work in Linux workstations):
+
+```
+    pip install -r constraints.txt
+    pip install -r requirements-core.txt
+    pip install -r requirements-dev.txt
+    pip install -r requirements-viz.txt
+    pip install -r requirements-docs.txt
+    pip install -r requirements-diagrams.txt
 ```
 
 ### [Required Directory Structure](#required-directory-structure)
@@ -127,6 +142,31 @@ Note that the model fitting and loss analysis steps require that the
 initial simulation be run first so that it has the initial output data
 to perform the analysis on.
 
+### [Runtime Flags](#runtime-flags)
+
+SIRA recognises several environment flags to control behaviour related to detection and selection of the appropriate backend. Setting these flags is optional. These need to be set in the shell before running SIRA.
+
+- `SIRA_ENABLE_GPU_DETECT`
+    - Purpose: Enable optional GPU detection during environment setup.
+    - Default: `0` (disabled). When set to `1`, SIRA will attempt to detect CUDA GPUs via PyTorch (if installed) or TensorFlow (if installed). Detection is informational only; SIRA does not currently perform GPU-accelerated computation.
+    - Example (PowerShell):
+        ```powershell
+        $env:SIRA_ENABLE_GPU_DETECT = "1"
+        python -c "from sira.parallel_config import ParallelConfig; ParallelConfig().print_config_summary()"
+        ```
+
+- `SIRA_FORCE_NO_MPI`
+    - Purpose: Explicitly disable MPI detection and usage.
+    - Default: `0` (not forced). When set to `1`, SIRA treats the environment as non-MPI even if MPI-related variables are present, and falls back to multiprocessing.
+    - Example (PowerShell):
+        ```powershell
+        $env:SIRA_FORCE_NO_MPI = "1"
+        ```
+
+Notes:
+- These flags only affect detection and backend selection. Core computations remain CPU-based unless an MPI backend is explicitly selected and available.
+- Flags can be set per-session or integrated into CI/CD environment configuration.
+
 ## [Testing](#testing)
 
 To run the tests, user needs to be in the root directory of the code,
@@ -168,3 +208,57 @@ Optional tuning:
 - `--scenario-size auto|small|medium|large|xlarge` lets SIRA tune defaults when no config file is provided (auto is recommended).
 
 - You can also provide a JSON config via `--parallel-config` to pin backend and worker counts.
+
+### [HPC / MPI Environment Flags](#hpc-mpi-env-flags)
+
+When running large-scale simulations on HPC (e.g. Gadi with PBS + OpenMPI), SIRA recognises additional environment flags. These flags are used in job scripts. These tune streaming, logging, batching and consolidation behaviour. All are optional; unset flags fall back to internal defaults.
+
+- `SIRA_LOG_LEVEL`
+    - Sets Python logger verbosity (e.g. `INFO`, `DEBUG`, `WARNING`).
+    - Lower verbosity reduces I/O overhead in large parallel runs.
+- `SIRA_QUIET_MODE`
+    - `1` suppresses progress / non-essential console output; `0` shows normal progress.
+- `SIRA_STREAM_DIR`
+    - Directory for per-rank / per-process streamed intermediate artifacts (NPZ, manifests). Use fast local node storage (e.g. burst buffer) for performance; consolidate later.
+- `SIRA_DEFER_CONSOLIDATION`
+    - `1` skips in-process aggregation of streamed artifacts until a post-run consolidation step; improves runtime on large ranks.
+- `SIRA_SAVE_COMPTYPE_RESPONSE`
+    - `1` to persist component-type response arrays; `0` to skip. Saves aggregated loss metrics by type.
+- `SIRA_SAVE_COMPONENT_RESPONSE`
+    - `1` to persist per-component response arrays (larger footprint); `0` (default in scripts) to reduce storage.
+- `SIRA_CHUNKS_PER_SLOT`
+    - Controls how many streaming chunks each CPU slot (rank/worker) emits before rolling over to a new file. Lower values reduce memory overhead; higher values reduce file count.
+- `SIRA_STREAM_COMPRESSION`
+    - Compression codec for streamed artifacts (e.g. `snappy`, `zstd`). Choose fastest acceptable for your I/O profile.
+- `SIRA_STREAM_ROW_GROUP`
+    - Target row-group / block size (in rows) for streamed tabular data; balances read amplification vs memory. Large hazards benefit from larger values (e.g. `524288`).
+- `SIRA_MIN_HAZARDS_FOR_PARALLEL`
+    - Integer threshold; if total hazard events below this value, SIRA may avoid spawning full parallel workers to reduce overhead.
+- `SIRA_HPC_MODE`
+    - `1` enables HPC-oriented heuristics (larger batches, reduced chatter, defensive memory usage). When unset, defaults remain more general-purpose.
+- `SIRA_MAX_BATCH_SIZE`
+    - Caps batch size used in processing loops even if auto-tuning would choose larger; helps prevent memory spikes on dense component sets.
+- `SIRA_CLEANUP_CHUNKS`
+    - `1` removes staged per-node chunk directories after consolidation to reclaim scratch space; `0` keeps them for inspection.
+- `PYTHONHASHSEED`
+    - Standard Python reproducibility flag (e.g. set to `0`); ensures consistent hash-based ordering when determinism is required.
+
+Example (PBS + OpenMPI snippet):
+```bash
+export SIRA_LOG_LEVEL=INFO
+export SIRA_QUIET_MODE=1
+export SIRA_STREAM_DIR="/iointensive/sira_${PBS_JOBID}"
+export SIRA_DEFER_CONSOLIDATION=1
+export SIRA_SAVE_COMPTYPE_RESPONSE=1
+export SIRA_SAVE_COMPONENT_RESPONSE=0
+export SIRA_CHUNKS_PER_SLOT=1
+export SIRA_STREAM_COMPRESSION=snappy
+export SIRA_STREAM_ROW_GROUP=524288
+export SIRA_MIN_HAZARDS_FOR_PARALLEL=100000
+export SIRA_HPC_MODE=1
+export SIRA_MAX_BATCH_SIZE=1000
+export PYTHONHASHSEED=0
+```
+
+Recommendation:
+- Start with only `SIRA_HPC_MODE=1` and `SIRA_STREAM_DIR` for large jobs; layer additional flags as bottlenecks are identified through profiling.
