@@ -55,26 +55,39 @@ dependency changes on software behaviour.
 The dependency list is large. To assist in managing the list of required packages, they are sectioned into different files, based on the purpose they serve. For example, if documentation is not required to be generated, or experimental geospatial modules are not required, those files can be skipped.
 
 The recommended process to set up the environment is to use `mamba` and `uv`.
-This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the `sira/installation` directory. For setups using a combination of `mamba` and `pip` or `uv`, a consolidated pip requirements list is also provided.
+This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the `sira` root directory. For setups using a combination of `mamba` and `pip` or `uv`, a consolidated pip requirements list is also provided.
 
 Installation option #1 (necesary for Windows):
 
 ```
-    mamba env create -f sira_env.yml
+    mamba env create -f ./installation/sira_env.yml
     mamba activate sira_env
     pip install uv
-    uv pip install -r sira_req.txt
+    uv pip install -r ./installation/sira_req.txt
 ```
 
-Installation option #2 (necessary for HPC env, should work in Linux workstations):
+Installation option #2 (for Linux workstations, needs to be adapted for HPC env):
 
 ```
-    pip install -r constraints.txt
-    pip install -r requirements-core.txt
-    pip install -r requirements-dev.txt
-    pip install -r requirements-viz.txt
-    pip install -r requirements-docs.txt
-    pip install -r requirements-diagrams.txt
+    sudo apt-get update
+
+    grep -vE '^\s*#|^\s*$' ./installation/packagelist_linux.txt | \
+    xargs -r sudo apt-get install -y --no-install-recommends
+    sudo apt-get clean
+
+    sudo rm -rf /var/lib/apt/lists/*
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt install python3.11.7
+
+    python -m venv .venv
+    python -m pip install --upgrade pip
+
+    pip install -r ./installation/constraints.txt
+    pip install -r ./installation/requirements-core.txt
+    pip install -r ./installation/requirements-dev.txt
+    pip install -r ./installation/requirements-viz.txt
+    pip install -r ./installation/requirements-docs.txt
+    pip install -r ./installation/requirements-diagrams.txt
 ```
 
 ### [Required Directory Structure](#required-directory-structure)
@@ -99,10 +112,8 @@ Notes on the required directory structure:
 
 - **input directory**: must reside within the 'model directory'. The input dir must have two files, and their naming must follow a the specified format:
 
-    + **model file**: it must have the term 'model' at the beginning or
-      end of the file name
-    + **config file**: it must have the term 'config' at the beginning or
-      end of the file name
+    + **model file**: it must have the term 'model' at the beginning of the file name
+    + **config file**: it must have the term 'config' at the beginning of the file name
 
 - **output directory**: the outputs are saved in this dir.
 

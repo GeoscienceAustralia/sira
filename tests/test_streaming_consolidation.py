@@ -126,6 +126,7 @@ def create_mock_infrastructure(num_components: int = 10, num_output_lines: int =
             self.component_id = comp_id
             self.site_id = site_id
             self.component_class = "test_component"
+            self.component_type = "test_component"
 
     class MockInfrastructure:
         def __init__(self):
@@ -140,6 +141,10 @@ def create_mock_infrastructure(num_components: int = 10, num_output_lines: int =
             }
 
             self.system_output_capacity = 300.0  # Sum of all line capacities
+
+        def get_component_types(self):
+            """Return list of component types (excluding uncosted types)."""
+            return ["test_component"]
 
     return MockInfrastructure()
 
@@ -228,7 +233,7 @@ def test_consolidation_basic():
             import traceback
 
             traceback.print_exc()
-            return False
+            assert False, f"Consolidation failed: {e}"
 
         # Verify output files exist
         print("\nVerifying output files...")
@@ -258,7 +263,7 @@ def test_consolidation_basic():
             print("\n✓ All output files generated successfully")
         else:
             print("\n✗ Some output files missing or empty")
-            return False
+            assert False, "Some output files missing or empty"
 
         # Verify data integrity
         print("\nVerifying data integrity...")
@@ -271,16 +276,16 @@ def test_consolidation_basic():
         missing_cols = [col for col in expected_cols if col not in df_response.columns]
         if missing_cols:
             print(f"✗ Missing columns: {missing_cols}")
-            return False
+            assert False, f"Missing columns: {missing_cols}"
         print("✓ All expected columns present")
 
         # Check data ranges are reasonable
         if df_response["loss_mean"].min() < 0:
             print("✗ Negative loss values detected!")
-            return False
+            assert False, "Negative loss values detected!"
         if df_response["output_mean"].min() < 0 or df_response["output_mean"].max() > 1:
             print("✗ Output values out of range [0, 1]!")
-            return False
+            assert False, "Output values out of range [0, 1]!"
         print("✓ Data values in reasonable ranges")
 
         # Verify system output file
@@ -291,7 +296,6 @@ def test_consolidation_basic():
         print("\n" + "=" * 80)
         print("TEST 1: PASSED ✓")
         print("=" * 80)
-        return True
 
 
 def test_consolidation_missing_files():
@@ -341,7 +345,7 @@ def test_consolidation_missing_files():
             import traceback
 
             traceback.print_exc()
-            return False
+            assert False, f"Consolidation failed: {e}"
 
         # Verify outputs still generated
         filepath = output_dir / "system_response.csv"
@@ -352,15 +356,14 @@ def test_consolidation_missing_files():
                 print("✓ All events present (missing data filled with defaults)")
             else:
                 print(f"✗ Expected 5 events, got {len(df)}")
-                return False
+                assert False, f"Expected 5 events, got {len(df)}"
         else:
             print("✗ Output file not generated")
-            return False
+            assert False, "Output file not generated"
 
         print("\n" + "=" * 80)
         print("TEST 2: PASSED ✓")
         print("=" * 80)
-        return True
 
 
 def test_consolidation_no_manifest():
@@ -396,12 +399,11 @@ def test_consolidation_no_manifest():
             print("✓ Function handled missing manifest gracefully")
         except Exception as e:
             print(f"✗ Function raised exception: {e}")
-            return False
+            assert False, f"Function raised exception: {e}"
 
         print("\n" + "=" * 80)
         print("TEST 3: PASSED ✓")
         print("=" * 80)
-        return True
 
 
 def test_consolidation_large_dataset():
@@ -449,7 +451,7 @@ def test_consolidation_large_dataset():
             import traceback
 
             traceback.print_exc()
-            return False
+            assert False, f"Consolidation failed: {e}"
 
         # Verify output
         filepath = output_dir / "system_response.csv"
@@ -460,15 +462,14 @@ def test_consolidation_large_dataset():
                 print("✓ All 100 events present")
             else:
                 print(f"✗ Expected 100 events, got {len(df)}")
-                return False
+                assert False, f"Expected 100 events, got {len(df)}"
         else:
             print("✗ Output file not generated")
-            return False
+            assert False, "Output file not generated"
 
         print("\n" + "=" * 80)
         print("TEST 4: PASSED ✓")
         print("=" * 80)
-        return True
 
 
 if __name__ == "__main__":

@@ -72,9 +72,21 @@ class MockScenario:
         return self
 
 
+class MockComponent:
+    """Picklable mock component for multiprocessing tests"""
+
+    def __init__(self, component_id):
+        self.component_id = component_id
+        self.damage_states = {}
+
+    def get_location(self):
+        return (0.0, 0.0)
+
+
 class MockInfrastructure:
     def __init__(self, num_components=3):
-        self.components = {f"comp_{i}": mock.Mock() for i in range(num_components)}
+        # Use picklable MockComponent instead of mock.Mock
+        self.components = {f"comp_{i}": MockComponent(f"comp_{i}") for i in range(num_components)}
         self.output_nodes = {"node1": None}
 
     def calc_output_loss(self, scenario, damage_states):
@@ -239,9 +251,7 @@ def test_calculate_response_fallback_to_multiprocessing():
             ]
         }
 
-        result = calculate_response(
-            mock_hazards, mock_scenario, mock_infrastructure, mpi_comm=None
-        )
+        result = calculate_response(mock_hazards, mock_scenario, mock_infrastructure, mpi_comm=None)
 
         # Should return the standard post-processing list format
         assert isinstance(result, list)

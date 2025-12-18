@@ -19,8 +19,8 @@ The directory structure of the code is as follows::
     ├── sira                        <-- The core code reside here
     │   └── modelling
     ├── tests                       <-- Test scripts + data for sanity checks
-    │   ├── historical_data
-    │   ├── models
+    │   ├── historical_data
+    │   ├── models
     │   └── simulation_setup
     │
     ├── LICENSE                      <-- License file

@@ -13,9 +13,13 @@ class TestInputConfFile(unittest.TestCase):
         self.sim_dir_name = "models"
         root_dir = Path(__file__).resolve().parent
         models_dir = Path(root_dir, self.sim_dir_name)
+        model_input_dirs = []
+        for dir in models_dir.iterdir():
+            if dir.is_dir():
+                model_input_dirs.append(Path(dir, "input"))
         # ------------------------------------------------------------
-        self.conf_file_paths = [x for x in models_dir.rglob("input/*config*.json")]
-        self.model_file_paths = [x for x in models_dir.rglob("input/*model*.json")]
+        self.conf_file_paths = [x for dir in model_input_dirs for x in dir.rglob("config*.json")]
+        self.model_file_paths = [x for dir in model_input_dirs for x in dir.rglob("model*.json")]
         # ------------------------------------------------------------
         self.confs = []
         for conf_file_path, model_file_path in zip(self.conf_file_paths, self.model_file_paths):

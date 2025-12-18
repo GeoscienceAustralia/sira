@@ -64,7 +64,7 @@ class color:
 # Unless data contain negative values, the location parameter is fixed at 0.
 # During curve fitting, this can be set by using floc=0.
 #
-# Note on the covariance matrix returned by scipy.optimise.curve_fit:
+# Note on the covariance matrix returned by `scipy.optimize.curve_fit`:
 # The square root of the diagonal values are the 1-sigma uncertainties of
 # the fit parameters.
 # -----------------------------------------------------------------------------
@@ -78,10 +78,16 @@ def lognormal_cdf(x, median, beta, loc=0):
 
 
 def normal_cdf(x, mean, stddev):
+    """Normal CDF supporting list/array inputs.
+    Ensures x is a NumPy float array to avoid TypeErrors when lists are passed.
+    """
+    x = np.asarray(x, dtype=float)
     return 0.5 * (1 + erf((x - mean) / (stddev * np.sqrt(2))))
 
 
 def rayleigh_cdf(x, loc, scale):
+    """Rayleigh CDF with input coercion to NumPy array."""
+    x = np.asarray(x, dtype=float)
     return stats.rayleigh.cdf(x, loc=loc, scale=scale)
 
 
@@ -285,7 +291,7 @@ def fit_prob_exceed_model(
     xdata = np.array(xdata)
     ydata_2d = np.array(ydata_2d)
 
-    # Debug prints
+    # Debug output (consider gating under logger level for production use)
     print("\nDebug - Damage States:", system_limit_states)
     print("Debug - ydata_2d shape:", ydata_2d.shape)
     print("Debug - First few values of ydata_2d:\n", ydata_2d[:, :5])  # Show first 5 columns
@@ -310,9 +316,11 @@ def fit_prob_exceed_model(
         y_sample = ydata_2d[dx]
         ds_level = system_limit_states[dx]
 
-        print(f"\nDebug info - Processing DS{dx}: {ds_level}")
-        print(f"Debug info - y_sample mean: {np.mean(y_sample)}")
-        print(f"Debug info - y_sample min/max: {np.min(y_sample)}/{np.max(y_sample)}")
+        print(f"\nDebug info - Processing DS{dx}: {ds_level}")  # Debug information
+        print(f"Debug info - y_sample mean: {np.mean(y_sample)}")  # Debug information
+        print(
+            f"Debug info - y_sample min/max: {np.min(y_sample)}/{np.max(y_sample)}"
+        )  # Debug information
 
         params_odict = fit_cdf_model(
             x_sample, y_sample, dist=distribution, tag=f"Limit State: {ds_level}"

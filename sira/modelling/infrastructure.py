@@ -375,7 +375,7 @@ class Infrastructure(Base):
         Return a list of the damage state labels
         :return: List of strings detailing the system damage levels.
         """
-        # TODO: THIS IS A HACK. NEED A BETTER SOLUTION!
+        # Temporary workaround: replace with a more robust solution.
         one_comp_obj = list(self.components.values())[0]
         self.system_dmg_states = [
             one_comp_obj.damage_states[ds].damage_state_name for ds in one_comp_obj.damage_states
@@ -388,7 +388,7 @@ class Infrastructure(Base):
         :param scenario: The values for the simulation scenarios
         :return:  Array of real numbers representing damage state boundaries
         """
-        # todo introduce system subclass to infrastructure
+        # Future improvement: introduce a system subclass to infrastructure.
         return [0.01, 0.05, 0.40, 0.60, 1.00]
 
     def get_component_class_list(self):

@@ -3,7 +3,7 @@
     "SCENARIO_NAME": "substation_66kv_regional",
     "MODEL_NAME": "SSX 66-22kV Substation",
 
-	"OUTPUT_DIR": "./output_array",
+	"OUTPUT_DIR": "./output",
     "HAZARD_TYPE": "earthquake",
     "HAZARD_INPUT_METHOD": "calculated_array",
 	"HAZARD_INPUT_DIR": "../_project_hazard_portfolio/filtered",

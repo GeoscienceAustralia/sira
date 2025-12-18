@@ -173,25 +173,28 @@ class ParallelConfig:
         else:
             env["mpi_available"] = False
 
-        # Detect GPUs
-        try:
-            import torch
-
-            if torch.cuda.is_available():
-                env["gpu_available"] = True
-                env["gpu_count"] = torch.cuda.device_count()
-                env["gpu_names"] = [torch.cuda.get_device_name(i) for i in range(env["gpu_count"])]
-        except ImportError:
-            # Try with tensorflow
+        # Detect GPUs (disabled by default). Enable via env var SIRA_ENABLE_GPU_DETECT=1
+        if os.environ.get("SIRA_ENABLE_GPU_DETECT", "0") == "1":
             try:
-                import tensorflow as tf
+                import torch  # optional, used only for detection
 
-                gpus = tf.config.list_physical_devices("GPU")
-                if gpus:
+                if torch.cuda.is_available():
                     env["gpu_available"] = True
-                    env["gpu_count"] = len(gpus)
+                    env["gpu_count"] = torch.cuda.device_count()
+                    env["gpu_names"] = [
+                        torch.cuda.get_device_name(i) for i in range(env["gpu_count"])
+                    ]
             except ImportError:
-                pass
+                # Try with tensorflow (optional, detection only)
+                try:
+                    import tensorflow as tf  # type: ignore
+
+                    gpus = tf.config.list_physical_devices("GPU")
+                    if gpus:
+                        env["gpu_available"] = True
+                        env["gpu_count"] = len(gpus)
+                except ImportError:
+                    pass
 
         return env
 

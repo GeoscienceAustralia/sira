@@ -95,3 +95,11 @@ logs/*
 
 # stream consolidation files
 tests/models/output_array/*
+tests/models/*/input/parallel_config.json
+mpi_*parts/
+
+# tests/models/potable_water_treatment_plant_A/input/parallel_config.json
+# tests/models/powerstation_coal_A/input/parallel_config.json
+# tests/models/pumping_station_testbed/input/parallel_config.json
+# tests/models/substation_66kv/input/parallel_config.json
+# tests/models/substation_66kv/input/parallel_config.json

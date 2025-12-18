@@ -1807,14 +1807,44 @@ def write_system_response(
 
 
 @njit
-def _pe2pb(pe):
-    """Numba-optimised version of pe2pb"""
-    pex = np.sort(pe)[::-1]
-    tmp = -1.0 * np.diff(pex)
-    pb = np.zeros(len(pe) + 1)
-    pb[1:-1] = tmp
+def _pe2pb(pe: np.ndarray) -> np.ndarray:
+    """Numba-friendly probability-of-exceedance to probability-of-bin conversion.
+
+    Original implementation used ``np.diff`` which triggered a numba typing error
+    in nopython mode (reshape of non-contiguous array). This manual difference
+    loop preserves semantics while avoiding ``np.diff``.
+
+    Given descending sorted exceedance probabilities ``pex``:
+        tmp[i] = pex[i] - pex[i+1]  (for 0 <= i < n-1)
+        pb[0]      = 1 - pex[0]
+        pb[1..n-1] = tmp
+        pb[n]      = pex[-1]
+
+    Parameters
+    ----------
+    pe : np.ndarray
+        Probability of exceedance array (numba requires np.ndarray, not list)
+    """
+    n = len(pe)
+    if n == 0:
+        return np.zeros(1)
+    # Copy input into a contiguous array to ensure compatibility
+    pex = np.ascontiguousarray(pe)
+    # In-place descending selection sort (avoids np.sort which fails on tuples in numba)
+    for i in range(n - 1):
+        max_idx = i
+        for j in range(i + 1, n):
+            if pex[j] > pex[max_idx]:
+                max_idx = j
+        if max_idx != i:
+            tmp = pex[i]
+            pex[i] = pex[max_idx]
+            pex[max_idx] = tmp
+    pb = np.zeros(n + 1)
+    for i in range(1, n):
+        pb[i] = pex[i - 1] - pex[i]
+    pb[0] = 1.0 - pex[0]
     pb[-1] = pex[-1]
-    pb[0] = 1 - pex[0]
     return pb
 
 

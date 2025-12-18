@@ -7,6 +7,7 @@ class ComponentGraph(object):
     calculation of economic loss by using different Graph packages.
     This implementation uses igraph
     """
+
     def __init__(self, components, comp_sample_func=None):
         """
         Construct a graph from the igraph package using the component dict.
@@ -25,12 +26,11 @@ class ComponentGraph(object):
         if comp_sample_func is None:
             comp_sample_func = [1.0] * len(components)
 
-        # TODO make this part of components?  # noqa: W0511
-        # create a map that will convert 'stack_1' -> 17 for editing
-        # the functionality (comp_sample_func)
+        # Future improvement: consider making this part of components.  # noqa: W0511
         self.id_index_map = {
-            comp_id: comp_index for comp_index, comp_id
-            in list(enumerate(sorted(components.keys())))}
+            comp_id: comp_index
+            for comp_index, comp_id in list(enumerate(sorted(components.keys())))
+        }
 
         # iterate through the components to create the graph
         # (using a list of sorted keys as we're trying to match the old code)
@@ -38,38 +38,32 @@ class ComponentGraph(object):
             component = components[comp_id]
             comp_index = self.id_index_map[comp_id]
             # check that the component is not already in the graph
-            if len(self.digraph.vs) == 0 \
-                    or comp_id not in self.digraph.vs['name']:  # noqa: E1136
+            if len(self.digraph.vs) == 0 or comp_id not in self.digraph.vs["name"]:  # noqa: E1136
                 # add new component
                 self.digraph.add_vertex(name=comp_id)
 
             # iterate through this components connected components
-            for dest_comp_id, _ in \
-                    component.destination_components.items():
+            for dest_comp_id, _ in component.destination_components.items():
                 dest_index = self.id_index_map[dest_comp_id]
                 # check if the parent component is a dependent node type
-                if component.node_type == 'dependency':
+                if component.node_type == "dependency":
                     # combine the dependent nodes functionality
-                    # TODO investigate the correctness of the logic:  # noqa: W0511
-                    self.update_dependency(
-                        comp_sample_func, comp_index, dest_index)
+                    # Review the robustness of this logic.  # noqa: W0511
+                    self.update_dependency(comp_sample_func, comp_index, dest_index)
 
                 # Is the child node in the graph
-                if len(self.digraph.vs) == 0 \
-                        or dest_comp_id not in self.digraph.vs['name']:  # noqa: E1136
+                if len(self.digraph.vs) == 0 or dest_comp_id not in self.digraph.vs["name"]:  # noqa: E1136
                     # add new child component
                     self.digraph.add_vertex(name=dest_comp_id)
 
                 # connect the parent and child vertices with an edge.
                 # The functionality of the parent vertex is the value
                 # of the edge capacity.
-                self.digraph.add_edge(
-                    comp_id, dest_comp_id,
-                    capacity=comp_sample_func[comp_index])
+                self.digraph.add_edge(comp_id, dest_comp_id, capacity=comp_sample_func[comp_index])
 
         # Here digraph.vs is a `igraph.VertexSeq` object and
         # it can be used as an iterable
-        for v in self.digraph.vs:   # noqa:E1133
+        for v in self.digraph.vs:  # noqa:E1133
             v["component_object"] = components[v["name"]]
         self.estimate_betweenness()
 
@@ -87,24 +81,20 @@ class ComponentGraph(object):
             for dest_comp_id in component.destination_components.keys():
                 dest_index = self.id_index_map[dest_comp_id]
 
-                if component.node_type == 'dependency':
+                if component.node_type == "dependency":
                     # combine the dependent vertices functionality with the parents
                     # *** VERIFY *** the logic of the following
-                    self.update_dependency(
-                        comp_sample_func, comp_index, dest_index)
+                    self.update_dependency(comp_sample_func, comp_index, dest_index)
 
                 # Determine the edge id from the id's of the
                 # parent and child node
                 edge_id = self.digraph.get_eid(comp_id, dest_comp_id)
                 # update the edge dict with the functionality of the
                 # parent vertex
-                self.digraph.es[edge_id]['capacity'] = \
-                    comp_sample_func[comp_index]   # noqa:E1136
+                self.digraph.es[edge_id]["capacity"] = comp_sample_func[comp_index]  # noqa:E1136
 
     def update_dependency(self, comp_sample_func, parent, dependent):
-        min_capacity = min(
-            comp_sample_func[parent],
-            comp_sample_func[dependent])
+        min_capacity = min(comp_sample_func[parent], comp_sample_func[dependent])
         comp_sample_func[dependent] = min_capacity
 
     def dump_graph(self, external=None):
@@ -125,8 +115,9 @@ class ComponentGraph(object):
             edge_id = comp_graph.get_eid(edge[0], edge[1])
             # log the names of the vertices with the capacity of the edge
             edge_dict[edge_id] = {
-                'vertices': (edge[0], edge[1]),
-                'capacity': comp_graph.es[edge_id]['capacity']}  # noqa:E1136
+                "vertices": (edge[0], edge[1]),
+                "capacity": comp_graph.es[edge_id]["capacity"],
+            }  # noqa:E1136
         return edge_dict
 
     def maxflow(self, supply_comp_id, output_comp_id):
@@ -136,15 +127,13 @@ class ComponentGraph(object):
         sup_v = self.digraph.vs.find(supply_comp_id)  # noqa:E1101
         out_v = self.digraph.vs.find(output_comp_id)  # noqa:E1101
         # calculate the maximum flow value between the two id's
-        return self.digraph.maxflow_value(
-            sup_v.index, out_v.index,
-            self.digraph.es['capacity'])  # noqa:E1136
+        return self.digraph.maxflow_value(sup_v.index, out_v.index, self.digraph.es["capacity"])  # noqa:E1136
 
     def estimate_betweenness(self):
         centrality_estimate = self.digraph.betweenness()
         # Here digraph.vs is a `igraph.VertexSeq` object and
         # it can be used as an iterable
-        for v in self.digraph.vs:   # noqa:E1133
+        for v in self.digraph.vs:  # noqa:E1133
             v["betweenness"] = centrality_estimate[v.index]
         # for v in self.digraph.vs:
         #     print("{:40} : {}".format(v["name"], v["betweenness"]))

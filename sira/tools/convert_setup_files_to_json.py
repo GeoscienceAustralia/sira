@@ -6,6 +6,35 @@ import json
 import os
 
 
+def _load_conf_literals(conf_path):
+    """
+    Safely load a simple Python-style .conf file containing only literal
+    assignments (e.g., FOO = 1, BAR = [1, 2], BAZ = {"k": "v"}).
+
+    Returns a plain dict of names to values using ast.literal_eval on the RHS.
+    Any non-literal or unsafe statements are ignored.
+    """
+    with open(conf_path, "r", encoding="utf-8") as f:
+        src = f.read()
+
+    tree = ast.parse(src, filename=conf_path, mode="exec")
+    result = {}
+
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            key = node.targets[0].id
+            # Only accept literal-safe value nodes
+            try:
+                value = ast.literal_eval(node.value)
+            except Exception:
+                # Skip non-literal expressions to avoid code execution
+                continue
+            result[key] = value
+        # Ignore all other node types (imports, exec, calls, etc.)
+
+    return result
+
+
 def _read_file(setup_file):
     """
     Module for reading in scenario data file
@@ -17,13 +46,12 @@ def _read_file(setup_file):
     file_name, file_ext = os.path.splitext(os.path.basename(setup_file))
 
     if file_ext == ".conf":
-        discard = {}
-        setup = {}
-        exec(open(setup_file).read(), discard, setup)
+        # Load as a dict of literal assignments (no code execution)
+        setup = _load_conf_literals(setup_file)
     elif file_ext == ".ini":
         setup = configparser.ConfigParser()
         setup.optionxform = str
-        setup.read(setup_file.decode("utf-8"))
+        setup.read(setup_file, encoding="utf-8")
     return setup, file_ext
 
 
@@ -86,13 +114,13 @@ def convert_conf_object_to_json(setup):
     except KeyError:
         data["Hazard"]["NUM_SAMPLES"] = None
 
-    # TODO read value from configure file at later stage
+    # Future improvement: read this value from the configuration file.
     try:
+        data["Hazard"]["HAZARD_TYPE"] = setup.get("HAZARD_TYPE", "earthquake")
+    except Exception:
         data["Hazard"]["HAZARD_TYPE"] = "earthquake"
-    except KeyError:
-        data["Hazard"]["HAZARD_TYPE"] = None
 
-    # TODO read value from configure file at later stage
+    # Future improvement: read this value from the configuration file.
     try:
         data["Hazard"]["HAZARD_RASTER"] = None
     except KeyError:
@@ -195,6 +223,7 @@ def convert_to_json(conf_file_path):
     json_filename = os.path.join(parent_folder_name, file_name + ".json")
     setup, file_type = _read_file(conf_file_path)
     if file_type == ".conf":
+        # When loaded from .conf, `setup` is a dict of literal values
         json_data = convert_conf_object_to_json(setup)
     elif file_type == ".ini":
         json_data = convert_ini_object_to_json(setup)

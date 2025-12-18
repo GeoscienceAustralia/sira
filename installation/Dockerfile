@@ -31,9 +31,8 @@ RUN ~/miniforge/bin/conda init
 ENV PATH="~/miniforge/envs/sira_env/bin:$PATH"
 
 # install packages not available in /root/miniconda/bin/conda
-ADD installation/requirements.txt .
-RUN pip install -r installation/requirements.txt
+ADD installation/sira_req.txt .
+RUN pip install -r installation/sira_req.txt
 
 ARG CACHE_DATE
 RUN git clone --single-branch --branch master https://github.com/GeoscienceAustralia/sira.git
-

@@ -5,7 +5,7 @@ awscli
 babel
 blockdiag
 botocore
-cairocffi
+cairocffi>=1.4.0
 codecov
 colorama
 colorcet

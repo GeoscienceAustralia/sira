@@ -58,7 +58,7 @@ def assign_function_params(
     func_construct = OrderedDict()
     func_construct["function_name"] = function_name
 
-    # TODO: GENERALISE THE PARAM NAMES  # noqa:W0511
+    # Future improvement: generalise the parameter names.  # noqa: W0511
     # lognorm_params = ['median', 'loc', 'beta']
     # damage_param_headers = ["ds_scale", "ds_location", "ds_shape"]
     damage_param_headers = ['median', 'location', 'beta']

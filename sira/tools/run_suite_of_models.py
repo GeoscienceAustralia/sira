@@ -1,10 +1,10 @@
+import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
-import shutil
-import re
-import subprocess
 
-project_root_dir_str = "./simulation_setup/Multiple_Model_Test__WTP/"
+project_root_dir_str = "./simulation_setup/batch_model_run_test/"
 
 project_root_dir = Path(project_root_dir_str).resolve()
 if not project_root_dir.is_dir():
@@ -18,9 +18,9 @@ if not project_root_dir.is_dir():
 #     - one single config file in json
 #     - one or more model files in json
 
-config_file_path = [x for x in project_root_dir.glob('*config*.json')][0]
+config_file_path = [x for x in project_root_dir.glob("config*.json")][0]
 config_file_name = config_file_path.name
-model_file_path_list = [x for x in project_root_dir.rglob('*model*.json')]
+model_file_path_list = [x for x in project_root_dir.rglob("model*.json")]
 
 if not config_file_path.is_file():
     print("config file dose not exist.")
@@ -35,7 +35,6 @@ if not model_file_path_list:
 # required by SIRA
 
 for model_file_path in model_file_path_list:
-
     src_model_file = model_file_path
     model_file_name = model_file_path.name
     model_file_no_ext = model_file_path.stem
@@ -66,11 +65,11 @@ for model_file_path in model_file_path_list:
 # ------------------------------------------------------------------------------
 # Run each distinct model with the same scenario config setup
 
-model_dir_path_list = [x for x in Path(project_root_dir).glob('*')
-                       if not re.search(r'^[_.]', x.name)]
+model_dir_path_list = [
+    x for x in Path(project_root_dir).glob("*") if not re.search(r"^[_.]", x.name)
+]
 for model_dir_path in model_dir_path_list:
     if model_dir_path.is_dir():
-        subprocess.call(
-            ["python", "sira", "-d", model_dir_path, "-sfl"])
+        subprocess.call(["python", "sira", "-d", model_dir_path, "-sfl"])
 
 # ------------------------------------------------------------------------------

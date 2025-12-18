@@ -33,9 +33,26 @@ class Configuration:
         with open(config_path, "r") as f:
             config = json.load(f)
 
-        self.SCENARIO_NAME = str(config["SCENARIO_NAME"])
-        self.MODEL_NAME = str(config["MODEL_NAME"])
-        self.CONFIGURATION_ID = str(config["CONFIGURATION_ID"])
+        # Robust fallback for missing scenario name
+        try:
+            self.SCENARIO_NAME = str(config["SCENARIO_NAME"])
+        except KeyError:
+            # Derive a sensible default from the model file name if available,
+            # else fall back to configuration ID or a generic placeholder.
+            try:
+                self.SCENARIO_NAME = Path(model_path).stem
+            except Exception:
+                self.SCENARIO_NAME = str(config.get("CONFIGURATION_ID", "SCENARIO"))
+
+        try:
+            self.MODEL_NAME = str(config["MODEL_NAME"])
+        except KeyError:
+            self.MODEL_NAME = Path(model_path).stem
+
+        try:
+            self.CONFIGURATION_ID = str(config["CONFIGURATION_ID"])
+        except KeyError:
+            self.CONFIGURATION_ID = self.MODEL_NAME
 
         # reading in simulation scenario parameters
         self.HAZARD_INTENSITY_MEASURE_PARAM = str(config["HAZARD_INTENSITY_MEASURE_PARAM"])
@@ -44,8 +61,8 @@ class Configuration:
         # Set of scenario(s) to investigate in detail
         #   - List of strings
         #   - Used in post processing stage
-        self.FOCAL_HAZARD_SCENARIO_NAMES = config["SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES"]
-        self.FOCAL_HAZARD_SCENARIOS = config["SCENARIO_FOCAL_HAZARD_SCENARIOS"]
+        self.FOCAL_HAZARD_SCENARIO_NAMES = config.get("SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES", [])
+        self.FOCAL_HAZARD_SCENARIOS = config.get("SCENARIO_FOCAL_HAZARD_SCENARIOS", [])
 
         self.HAZARD_INPUT_METHOD = str(config["HAZARD_INPUT_METHOD"])
         self.HAZARD_TYPE = str(config["HAZARD_TYPE"])
@@ -77,9 +94,9 @@ class Configuration:
             self.HAZARD_INPUT_HEADER = "hazard_intensity"
             self.HAZARD_SCALING_FACTOR = 1.0
 
-        self.INTENSITY_MEASURE_MIN = float(config["HAZARD_INTENSITY_MEASURE_MIN"])
-        self.INTENSITY_MEASURE_MAX = float(config["HAZARD_INTENSITY_MEASURE_MAX"])
-        self.INTENSITY_MEASURE_STEP = float(config["HAZARD_INTENSITY_MEASURE_STEP"])
+        self.INTENSITY_MEASURE_MIN = float(config.get("HAZARD_INTENSITY_MEASURE_MIN", 0.0))
+        self.INTENSITY_MEASURE_MAX = float(config.get("HAZARD_INTENSITY_MEASURE_MAX", 1.0))
+        self.INTENSITY_MEASURE_STEP = float(config.get("HAZARD_INTENSITY_MEASURE_STEP", 0.1))
 
         # ------------------------------------------------------------------------------
 
@@ -129,18 +146,18 @@ class Configuration:
         self.INPUT_MODEL_PATH = Path(model_path)
 
         # Set up output directory
-        if output_path is None:
-            try:
-                # By default, get output dir name from config file
-                output_path = config["OUTPUT_DIR"]
-                self.OUTPUT_DIR = Path(self.root_dir, output_path).resolve()
-            except KeyError:
-                # if not key for OUTPUT_DIR in config file, use a default
-                output_path = "output"
-                self.OUTPUT_DIR = Path(self.root_dir, output_path).resolve()
+        # Accept None/empty as "missing" and default to ./output under the model root.
+        output_dir = config.get("OUTPUT_DIR") if output_path is None else output_path
+        if not output_dir:
+            output_dir = "output"
+            self.OUTPUT_DIR = Path(self.root_dir, output_dir).resolve()
         else:
-            self.OUTPUT_DIR = Path(output_path)
-
+            # Respect absolute paths as-is; otherwise treat as relative to the model root
+            raw_path = Path(output_dir)
+            if raw_path.is_absolute():
+                self.OUTPUT_DIR = raw_path.resolve()
+            else:
+                self.OUTPUT_DIR = Path(self.root_dir, output_dir).resolve()
         # Make the dir it it does not exist
         try:
             if not self.OUTPUT_DIR.exists():

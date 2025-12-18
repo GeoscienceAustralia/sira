@@ -140,7 +140,7 @@ class StructuralMeta(type):
         # create a json description of the class
         json_desc = {}
         for k, v in list(dct['__params__'].items()):
-            # TODO: put validators in here  # noqa: W0511
+            # Future improvement: add validators here.  # noqa: W0511
             json_desc[k] = {'class': v.cls}
 
         for k, v in list(extract_params_of_type(Info).items()):

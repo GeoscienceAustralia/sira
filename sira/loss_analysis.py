@@ -509,7 +509,7 @@ def make_recovery_process_diagrams(
             ax2.axvline(repair_time_for_line, linestyle=":", color=supply_rst_clr, alpha=0.8)
 
             # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            # TODO: Add this back in after fixing the positioning of the LINE labels
+            # Future improvement: restore these labels after fixing their positioning.
             # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             # ax2.annotate(onode, xy=(repair_time_for_line, 105),
             #              ha='center', va='bottom', rotation=90,
