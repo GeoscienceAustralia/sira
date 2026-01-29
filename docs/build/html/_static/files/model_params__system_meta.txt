@@ -1,0 +1,72 @@
+.. _system_meta:
+
+This module of the model defines core metadata relevant to the
+simulation of a given infrastructure model.
+There is a free text 'notes' field for each of the parameters.
+Users are encouraged to provide detailed information that may
+be relevant to the model configuration and post-simulation validation
+of results.
+
+`INFRASTRUCTURE_LEVEL`
+    :Description:   The scope of the infrastructure system.
+
+    :Values:        Valid values are 'facility' or 'network'
+
+
+`SYSTEM_CLASS`
+    :Description:   The name of the asset class. It must have a
+                    corresponding class definition in the module
+                    `sira.modelling.infrastructure`.
+
+    :Values:        The current set of valid system classes are as
+                    outlined in this list: 
+
+                    ['PowerStation',
+                    'Substation',
+                    'PotableWaterTreatmentPlant',
+                    'PWTP',
+                    'WasteWaterTreatmentPlant',
+                    'WWTP',
+                    'PotableWaterPumpStation']
+
+
+`SYSTEM_SUBCLASS`
+    :Description:   The subclass of the parent infrastructure system
+                    as specified in `SYSTEM_CLASS`. For example, for the
+                    SYSTEM_CLASS 'Substation', the logical system_subclass
+                    options can be 'transmission', 'distribution',
+                    'collector', etc.
+
+    :Values:        Presently this is not implemented in code, but used
+                    for informational purposes and for compatibility with
+                    planned future functionality expansion.
+
+
+`SYSTEM_COMPONENT_LOCATION_CONF`
+    :Description:   Specifies whether the location information for system
+                    components are specified in
+                    :ref:`component list definition <model_params__component_list>`.
+                    
+                    A value of 'undefined' indicates that the location 
+                    information for the components is not relevant to its
+                    vulnerability analysis, AND the graph-drawing methods
+                    are not constrained in placement of the components in
+                    the system topology diagram.
+
+                    A value of 'defined' indicates that the location
+                    information of the components *may* be relevant to
+                    the vulnerability analysis process, AND the graph-drawing
+                    methods should respect the provided positional data in
+                    placement of the components in the system topology
+                    diagram.
+
+    :Values:        Valid values must match: ['defined', 'undefined'].
+                    If INFRASTRUCTURE_LEVEL=='network', then the value must
+                    be defined.
+
+
+`RESTORATION_TIME_UNIT`
+    :Description:   The unit of time used for defining the component
+                    restoration algorithms.
+    
+    :Values:        ['days', 'weeks', 'months', 'years']
