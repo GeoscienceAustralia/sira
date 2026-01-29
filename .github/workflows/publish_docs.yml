@@ -1,0 +1,36 @@
+name: Deploy Sphinx documentation to Pages
+
+on:
+  push:
+    branches:
+      - master  # or master, the branch you push your source code to
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
+          pip install pybtex pybtex-docutils
+          pip install sphinxcontrib-bibtex
+          pip install actdiag sphinxcontrib-actdiag
+          pip install blockdiag sphinxcontrib-blockdiag
+          pip install seqdiag sphinxcontrib-seqdiag
+          # Add any other dependencies from your requirements.txt
+      - name: Build HTML documentation
+        run: |
+          cd docs
+          make html
+      - name: Add .nojekyll file
+        run: touch docs/_build/html/.nojekyll
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html # directory containing built HTML files
