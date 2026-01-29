@@ -15,18 +15,16 @@ It represents a methodology and supporting code for systematising
 natural hazards (i.e. infrastructure system response to environmental
 excitation).
 
-The impact assessment is incorporates the :term:`fragilities <fragility>`
+The impact assessment incorporates the :term:`fragilities <fragility>`
 of individual system components and their topological configuration
 within the infrastructure system under study. This analysis is supplemented
 by an assessment of the post-hazard system functionality through
 network flow analysis, and consequent restoration times and costs.
 
-The primary focus has been on studying responses of infrastructure facilities
-(e.g. power generation plants, high voltage substations). The data models,
-scenario specification options, and the codebase have been extended to allow
-the same methodology to be applied to modelling geospatially dispersed
-networks along with facilities (e.g. electricity transmission networks
-and substations).
+The primary focus has been on studying responses of infrastructure systems,
+both facilities (e.g. power generation plants, high voltage substations)
+and geospatially dispersed networks (electricity transmission networks), to earthquake hazards.
+The methodology is implemented in an open-source Python package.
 
 Limitations: At the time of writing this documentation, the software has
 been tested to work with earthquake hazards only. However, the methodology
@@ -50,6 +48,12 @@ platform agnostic.
 All infrastructure systems are represented as networks. This allows an user
 to develop arbitrarily complex custom facility models -- for a :term:`facility`
 or a network -- for impact simulation.
+
+**Scalability:** The code can detect and leverage the host system capabilities
+to enable parallel processing capabilities on high performace computing platforms
+for very large scale simulations (tens of millions of hazard scenarios and model
+with thousands of components), while being able to run on midrange laptops for
+smaller hazard sets.
 
 **Extensible Component Library:** User can define new instances of
 `component_type` (the building blocks of a facility or network) and link it

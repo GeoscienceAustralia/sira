@@ -1,4 +1,5 @@
 import collections
+import collections.abc
 import os
 import re
 
@@ -42,7 +43,7 @@ ROLES = [
 KEY, PREV, NEXT = range(3)
 
 
-class OrderedSet(collections.MutableSet):
+class OrderedSet(collections.abc.MutableSet):
     """
     From: http://code.activestate.com/recipes/576694/
     """
