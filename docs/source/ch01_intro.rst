@@ -4,32 +4,43 @@
 Introduction
 ************
 
-Critical infrastructure facilities typically comprise a number of 
+Critical infrastructure assets typically comprise a number of 
 interconnected components that work in concert to deliver a service. 
 In the context of natural hazard vulnerability, the components have differing 
 susceptibilities, require different resource levels and time to repair, and 
 have a range of criticalities to the overall service delivery. The 
-vulnerability of the facility, then, is a product of the components,
+vulnerability of the asset, then, is a product of their constituent components,
 their properties and interactions.
 
 SIRA stands for *Systemic Infrastructure Resilience Analysis*.
 It comprises a method and software tools that provide a framework for 
-simulating the fragility of infrastructure facilities to natural hazards, 
+simulating the fragility of infrastructure assets to natural hazards, 
 based on assessment of the fragilities and configuration of components that 
-comprises the facility. Currently the system is designed to work with 
+comprises the asset. To date system has been used to work with 
 earthquake hazards only. ``SIRA`` enables the vulnerabilities of each element
 to be within a facility or a network to be integrated into a holistic
 assessment of the direct system losses, service disruption and cost.
 
 SIRA is used to model the vulnerability of high-value infrastructure
-facilities to natural hazards. Earthquake ground motion is the present focus 
-and many uncertainties are captured through a Monte Carlo sampling process. 
+systems to natural hazards. The infrastructure types can be individual
+sites or facilities (e.g., an electrical substation, or a water treatment plant) 
+or networks (e.g., an electricity transmission network, water transmission
+ network. etc.).
+
+Earthquake ground motion has been the primary focus. 
+Uncertainties are captured through a Monte Carlo sampling process. 
 The tool facilitates quantification of infrastructure assets' vulnerability,
 and also enables the most vulnerable components to be identified in terms of
-repair cost, time to recovery, and service disruption implications. The 
-outcomes also support benefit-versus-cost studies of retrofit options.
-SIRA helps generate information that supports asset managers in regards
-to the most cost-effective utilisation of limited retrofit resources.
+repair cost, time to recovery, and implications for service continuity. The 
+tool has also been designed and tested to assess risk, but that functionality
+would typically require that the simulation be run in high performace computing
+environment.
+
+The outcomes of this tool can support identification of retrofit options,
+and their relative efficacy in reducing risk.
+SIRA can be used in generating information for cost-benefit analyses 
+of retrofit options, which can support asset managers in decisions around the 
+most cost-effective utilisation of limited retrofit resources.
 
 
 .. _intro-design-notes:
