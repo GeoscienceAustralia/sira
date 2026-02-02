@@ -1,0 +1,61 @@
+{
+	"CONFIGURATION_ID": "Test Ring Network EQ",
+    "SCENARIO_NAME": "Basic_Linear_Network",
+    "MODEL_NAME": "Basic Linear Network",
+
+    "HAZARD_TYPE": "earthquake",
+    "HAZARD_INPUT_METHOD": "scenario_file",
+	"HAZARD_INPUT_DIR": "./tests/models/test_network__basic/input",
+    "HAZARD_INPUT_FILE": "hazard_file_eq.csv",
+	"HAZARD_INPUT_HEADER": "PGA",
+	"HAZARD_SCALING_FACTOR": 1.0,
+	"OUTPUT_DIR": "./output",
+	
+    "HAZARD_NUM_SAMPLES": 10,
+    "HAZARD_INTENSITY_MEASURE_MAX": 1.0,
+    "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
+    "HAZARD_INTENSITY_MEASURE_STEP": 0.2,
+    "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
+    "HAZARD_INTENSITY_MEASURE_UNIT": "g",
+
+    "RESTORATION_STREAMS": [
+        5,
+        20
+    ],
+    "RESTORATION_PCT_CHECKPOINTS": 21,
+    "RESTORATION_TIME_MAX": 100.0,
+    "RESTORATION_TIME_STEP": 10,
+    "RESTORATION_TIME_UNIT": "days",
+
+    "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
+        "Synthetic_Extreme_Event"
+    ],
+    "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
+        "0.4"
+    ],
+
+    "SYSTEM_INFRASTRUCTURE_LEVEL" : "network",
+    "SYSTEM_COMMODITY_FLOW_TYPES": 1,
+    "SYSTEM_CLASS": "RailNetwork",
+    "SYSTEM_CLASSES": [
+        "PowerStation",
+        "Substation",
+        "PotableWaterTreatmentPlant",
+        "PWTP",
+        "WasteWaterTreatmentPlant",
+        "WWTP",
+        "PotableWaterPumpStation",
+        "ElectricPowerNetwork",
+        "ModelTestStructure",
+        "RailNetwork"
+    ],
+
+    "SYSTEM_SUBCLASS": "Regional Rail Network",
+    "SYSTEM_COMPONENT_LOCATION_CONF": "defined",
+
+    "SWITCH_MULTIPROCESS": 1,
+    "SWITCH_RUN_CONTEXT": 1,
+
+    "SWITCH_FIT_RESTORATION_DATA": 0,
+    "SWITCH_SAVE_VARS_NPY": 1
+}

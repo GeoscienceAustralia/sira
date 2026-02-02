@@ -1,0 +1,8 @@
+ipython>=8.30.0
+notebook
+jupyterlab
+ipywidgets
+ipympl
+widgetsnbextension
+jupyter-bokeh
+jupyter-dash

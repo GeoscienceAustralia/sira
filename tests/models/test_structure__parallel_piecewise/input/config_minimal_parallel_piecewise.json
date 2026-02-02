@@ -1,0 +1,59 @@
+{
+	"CONFIGURATION_ID": "EQ_test_config_parallel_structure",
+    "SCENARIO_NAME": "simple_parallel_test",
+    "MODEL_NAME": "Basic Parallel Test Structure",
+
+    "HAZARD_TYPE": "earthquake",
+    "HAZARD_INPUT_METHOD": "calculated_array",
+	"HAZARD_INPUT_DIR": "../NA",
+	"HAZARD_INPUT_FILE": "NA",
+	"HAZARD_INPUT_HEADER": "PGA",
+	"HAZARD_SCALING_FACTOR": 1.0,
+	"OUTPUT_DIR": "./output",
+
+    "HAZARD_NUM_SAMPLES": 10,
+    "HAZARD_INTENSITY_MEASURE_MAX": 1.0,
+    "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
+    "HAZARD_INTENSITY_MEASURE_STEP": 0.1,
+    "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
+    "HAZARD_INTENSITY_MEASURE_UNIT": "g",
+
+    "RESTORATION_TIME_MAX": 20.0,
+    "RESTORATION_TIME_STEP": 1,
+    "RESTORATION_TIME_UNIT": "days",
+    "RESTORATION_PCT_CHECKPOINTS": 21,
+    "RESTORATION_STREAMS": [
+        5,
+        20
+    ],
+
+    "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
+        "Sc_X"
+    ],
+    "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
+        "0.210"
+    ],
+
+    "SYSTEM_INFRASTRUCTURE_LEVEL" : "facility",
+    "SYSTEM_COMMODITY_FLOW_TYPES": 1,
+    "SYSTEM_CLASS": "ModelTestStructure",
+    "SYSTEM_SUBCLASS": "MinimalExampleWithParallelNodeLayout",
+    "SYSTEM_COMPONENT_LOCATION_CONF": "undefined",
+    "SYSTEM_CLASSES": [
+        "PowerStation",
+        "Substation",
+        "PotableWaterTreatmentPlant",
+        "PWTP",
+        "WasteWaterTreatmentPlant",
+        "WWTP",
+        "PotableWaterPumpStation",
+        "ElectricPowerNetwork",
+        "ModelTestStructure",
+        "RailNetwork"
+    ],
+
+    "SWITCH_MULTIPROCESS": 0,
+    "SWITCH_RUN_CONTEXT": 0,
+    "SWITCH_SAVE_VARS_NPY": 1,
+    "SWITCH_FIT_RESTORATION_DATA": 0
+}

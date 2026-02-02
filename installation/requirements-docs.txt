@@ -1,0 +1,8 @@
+Sphinx
+sphinx-rtd-theme
+pybtex
+pybtex-docutils
+mdit-py-plugins
+linkify-it-py
+katex
+jupyterlab-katex

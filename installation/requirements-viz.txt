@@ -1,0 +1,12 @@
+# Visualisation packages
+matplotlib
+seaborn
+colorcet
+brewer2mpl
+bokeh
+holoviews
+hvplot
+panel
+plotly
+folium
+yellowbrick
