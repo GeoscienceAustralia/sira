@@ -28,9 +28,9 @@ jobs:
           cd docs
           make html
       - name: Add .nojekyll file
-        run: touch docs/_build/html/.nojekyll
+        run: touch .nojekyll
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html # directory containing built HTML files
+          publish_dir: . # directory containing built HTML files

@@ -45,7 +45,7 @@ most cost-effective utilisation of limited retrofit resources.
 
 .. _intro-design-notes:
 
-:term:`Vulnerability <vulnerability>` of an asset is modelled by assigning 
+:term:`Vulnerability <vulnerability>` of a facility is modelled by assigning 
 fragilities to the individual components that make up a facility or a network.
 The program accounts for variability in component fragilities by sampling
 probability distributions for the each fragility curve median and beta values.
@@ -54,10 +54,10 @@ Once values have been selected for each curve it checks that
 median and beta probability distributions until non-overlapping fragility
 curves are produced.
 
-Damage scales for several asset types, along with the recovery time estimation
+Damage scales for most facility types, along with the recovery time estimation
 method, has been taken from HAZUS :cite:`FEMA2003`. Although, where deemed more
-appropriate, custom damage scales have been developed in consultation with
-asset operators.  
+appropriate, custom damage scales have been used, e.g. for electrical
+substations.
 Repair cost (and hence damage index) and recovery times for each component are
 customised for each asset type, based on consultation with assets operators.
 The threshold values of spectral acceleration for each of four damage states 
