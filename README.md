@@ -57,7 +57,7 @@ The dependency list is large. To assist in managing the list of required package
 The recommended process to set up the environment is to use `mamba` and `uv`.
 This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the `sira` root directory. For setups using a combination of `mamba` and `pip` or `uv`, a consolidated pip requirements list is also provided.
 
-Installation option #1 (necesary for Windows):
+Installation option #1 (for Windows):
 
 ```
     mamba env create -f ./installation/sira_env.yml

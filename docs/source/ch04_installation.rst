@@ -17,17 +17,18 @@ The directory structure of the code is as follows::
     ├── installation                <-- Installation scripts for dev envs
     ├── scripts
     ├── sira                        <-- The core code reside here
-    │   └── modelling
+    │   ├── __main__.py             <-- Entry point for running the code
+    │   ├── modelling
+    │   ├── scripts
+    │   └── tools
     ├── tests                       <-- Test scripts + data for sanity checks
     │   ├── historical_data
     │   ├── models
     │   └── simulation_setup
     │
     ├── LICENSE                      <-- License file
-    ├── README.md                    <-- Summary documentation
-    ├── __main__.py                  <-- Entry point for running the code
-    ├── LICENSE
-    └── README.adoc                  <-- Basic documentation and installation notes
+    ├── pyproject.toml               <-- Project configuration file
+    └── README.md                    <-- Summary documentation and usage notes
 
 
 Requirements
@@ -37,7 +38,7 @@ SIRA has been tested on the following operating systems:
 
     - OS X 10.11+
     - Ubuntu 14.04 (64 bit)
-    - Windows 10
+    - Windows 10 and 11 (64 bit)
 
 The code should work on other recent versions of these operating systems,
 though the environment setup process may have some differences.
@@ -204,59 +205,51 @@ You can tear the system down (destroying the containers) with::
 Setting Up a Development Environment with Anaconda
 ==================================================
 
-We recommend using ``conda`` for managing virtual environments and
-packages required for running ``sira``.
+The recommended process to set up the environment is to use ``mamba`` and ``uv``.
+This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the ``sira`` root directory.
 
-For the sake of simplicity, we recommend using `Anaconda`. It is a
-free Python distribution, and comes with the ``conda`` tool which is
-both a package manager and environment manager. Instructions for
-installing `Anaconda` are
+The dependency list is large. To assist in managing the list of required packages,
+they are sectioned into different files, based on the purpose they serve. For example,
+if documentation is not required to be generated, or experimental geospatial modules
+are not required, those files can be skipped. The dependency files are provided in the
+``installation`` directory. For setups using a combination of ``mamba`` and ``pip`` or
+``uv``, a consolidated pip requirements list is also provided.
+
+Instructions for installing `mamba` can be found
 `here <http://docs.continuum.io/anaconda/install>`_.
 
-Some packages we need are not hosted in the main ``conda`` package
-repository. In such cases we will host them in our own user channel.
-We suggest adding the following channels to the default::
+Installation option #1 (necesary for Windows):
 
-    $ conda config --add channels https://conda.anaconda.org/anaconda
-    $ conda config --add channels https://conda.anaconda.org/marufr
+```
+    mamba env create -f ./installation/sira_env.yml
+    mamba activate sira_env
+    pip install uv
+    uv pip install -r ./installation/sira_req.txt
+```
 
-Run the following command to confirm the additional channels have
-been added::
+Installation option #2 (for Linux workstations, needs to be adapted for HPC env):
 
-    $ conda config --get channels
+```
+    sudo apt-get update
 
-**For OS X and Linux-64 systems**: It should be possible to set up a full run
-environment solely through the \*.yml environment specification file. For OS X
-run the following commands::
+    grep -vE '^\s*#|^\s*$' ./installation/packagelist_linux.txt | \
+    xargs -r sudo apt-get install -y --no-install-recommends
+    sudo apt-get clean
 
-    $ conda env create -f environment_osx.yml
-    $ source activate sira_env
+    sudo rm -rf /var/lib/apt/lists/*
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt install python3.11.7
 
-For Linux-64 systems, the commands are identical, you will just need to use 
-the environment specification file for Linux.
+    python -m venv .venv
+    python -m pip install --upgrade pip
 
-**For Windows systems**, a similar process needs to be followed, with some 
-exceptions. First run::
-
-    $ conda env create -f environment_win64.yml
-    $ activate sira_env
-
-This will install *most* requirements except for ``igraph`` and ``pygraphviz``.
-Compiling these packages under windows can be very challenging. The simplest
-and most reliable option is to download the the appropriate binary
-distribution in the form of `wheels` from
-`Christoph Gohlke's unofficial page of Windows binaries
-<http://www.lfd.uci.edu/~gohlke/pythonlibs/>`_.
-
-Download the appropriate `wheels` (\*.whl files) of the following packages
-for your Windows platform (32 or 64 bit):
-
-- `python-igraph <http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph>`_
-- `pygraphviz <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz>`_.
-
-Install the downloaded `wheels` (\*.whl files) with pip::
-
-    $ pip install <pkg_name>.whl
+    pip install -r ./installation/constraints.txt
+    pip install -r ./installation/requirements-core.txt
+    pip install -r ./installation/requirements-dev.txt
+    pip install -r ./installation/requirements-viz.txt
+    pip install -r ./installation/requirements-docs.txt
+    pip install -r ./installation/requirements-diagrams.txt
+```
 
 
 .. _running-sira:
