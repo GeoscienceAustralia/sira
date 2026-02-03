@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = ../../sira-doc-build
+BUILDDIR      = build
 PDFBUILDDIR	  = /tmp
 PDF			  = ../manual.pdf
 
@@ -215,4 +215,3 @@ gh-pages:
 	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`"
 	git push origin gh-pages
 	cd $(CURDIR)
-
