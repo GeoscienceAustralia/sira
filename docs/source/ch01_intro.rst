@@ -21,20 +21,18 @@ earthquake hazards only. ``SIRA`` enables the vulnerabilities of each element
 to be within a facility or a network to be integrated into a holistic
 assessment of the direct system losses, service disruption and cost.
 
-SIRA is used to model the vulnerability of high-value infrastructure
-systems to natural hazards. The infrastructure types can be individual
-sites or facilities (e.g., an electrical substation, or a water treatment plant) 
-or networks (e.g., an electricity transmission network, water transmission
- network. etc.).
-
-Earthquake ground motion has been the primary focus. 
-Uncertainties are captured through a Monte Carlo sampling process. 
-The tool facilitates quantification of infrastructure assets' vulnerability,
-and also enables the most vulnerable components to be identified in terms of
-repair cost, time to recovery, and implications for service continuity. The 
-tool has also been designed and tested to assess risk, but that functionality
-would typically require that the simulation be run in high performace computing
-environment.
+SIRA is desgined to be used to simulate the vulnerability of high-value 
+infrastructure systems to natural hazards. The infrastructure types can be 
+individual sites or facilities (e.g., an electrical substation, or a 
+water treatment plant) or networks (e.g., an electricity transmission network, 
+water transmission network. etc.). Earthquake ground motion has been the 
+primary focus. Uncertainties are captured through a Monte Carlo sampling
+process. The tool facilitates quantification of infrastructure assets' 
+vulnerability, and also enables the most vulnerable components to be identified
+in terms of repair cost, time to recovery, and implications for service 
+continuity. The tool has also been designed and tested to assess risk, but 
+that functionality would typically require that the simulation be run in 
+high performance computing environment.
 
 The outcomes of this tool can support identification of retrofit options,
 and their relative efficacy in reducing risk.
