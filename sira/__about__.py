@@ -8,4 +8,4 @@ __author__ = "Geoscience Australia"
 __email__ = "maruf.rahman@ga.gov.au"
 
 __license__ = "Apache License, Version 2.0"
-__copyright__ = "2025 %s" % __author__
+__copyright__ = "2026 %s" % __author__
