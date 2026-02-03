@@ -220,18 +220,16 @@ Instructions for installing `mamba` can be found
 
 Installation option #1 (necesary for Windows):
 
-```
+
     mamba env create -f ./installation/sira_env.yml
     mamba activate sira_env
     pip install uv
     uv pip install -r ./installation/sira_req.txt
-```
+
 
 Installation option #2 (for Linux workstations, needs to be adapted for HPC env):
 
-```
     sudo apt-get update
-
     grep -vE '^\s*#|^\s*$' ./installation/packagelist_linux.txt | \
     xargs -r sudo apt-get install -y --no-install-recommends
     sudo apt-get clean
@@ -249,7 +247,6 @@ Installation option #2 (for Linux workstations, needs to be adapted for HPC env)
     pip install -r ./installation/requirements-viz.txt
     pip install -r ./installation/requirements-docs.txt
     pip install -r ./installation/requirements-diagrams.txt
-```
 
 
 .. _running-sira:

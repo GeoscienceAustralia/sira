@@ -308,18 +308,16 @@ are not required, those files can be skipped. The dependency files are provided 
 <p>Instructions for installing <cite>mamba</cite> can be found
 <a class="reference external" href="http://docs.continuum.io/anaconda/install">here</a>.</p>
 <p>Installation option #1 (necesary for Windows):</p>
-<dl class="simple">
-<dt><a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">`</span></a></dt><dd><p>mamba env create -f ./installation/sira_env.yml
+<blockquote>
+<div><p>mamba env create -f ./installation/sira_env.yml
 mamba activate sira_env
 pip install uv
 uv pip install -r ./installation/sira_req.txt</p>
-</dd>
-</dl>
-<p><a href="#id6"><span class="problematic" id="id7">``</span></a><a href="#id8"><span class="problematic" id="id9">`</span></a></p>
+</div></blockquote>
 <p>Installation option #2 (for Linux workstations, needs to be adapted for HPC env):</p>
-<dl>
-<dt><a href="#id10"><span class="problematic" id="id11">``</span></a><a href="#id12"><span class="problematic" id="id13">`</span></a></dt><dd><p>sudo apt-get update</p>
-<p>grep -vE ‘^s*#|^s*$’ ./installation/packagelist_linux.txt | xargs -r sudo apt-get install -y –no-install-recommends
+<blockquote>
+<div><p>sudo apt-get update
+grep -vE ‘^s*#|^s*$’ ./installation/packagelist_linux.txt | xargs -r sudo apt-get install -y –no-install-recommends
 sudo apt-get clean</p>
 <p>sudo rm -rf /var/lib/apt/lists/*
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -332,9 +330,7 @@ pip install -r ./installation/requirements-dev.txt
 pip install -r ./installation/requirements-viz.txt
 pip install -r ./installation/requirements-docs.txt
 pip install -r ./installation/requirements-diagrams.txt</p>
-</dd>
-</dl>
-<p><a href="#id14"><span class="problematic" id="id15">``</span></a><a href="#id16"><span class="problematic" id="id17">`</span></a></p>
+</div></blockquote>
 </section>
 <section id="running-a-simulation-with-sira">
 <span id="running-sira"></span><h2><span class="section-number">4.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
