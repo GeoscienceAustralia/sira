@@ -220,6 +220,7 @@ Instructions for installing `mamba` can be found
 
 Installation option #1 (necesary for Windows):
 
+.. code-block:: bash
 
     mamba env create -f ./installation/sira_env.yml
     mamba activate sira_env
@@ -228,6 +229,8 @@ Installation option #1 (necesary for Windows):
 
 
 Installation option #2 (for Linux workstations, needs to be adapted for HPC env):
+
+.. code-block:: bash
 
     sudo apt-get update
     grep -vE '^\s*#|^\s*$' ./installation/packagelist_linux.txt | \

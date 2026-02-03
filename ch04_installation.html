@@ -308,29 +308,33 @@ are not required, those files can be skipped. The dependency files are provided 
 <p>Instructions for installing <cite>mamba</cite> can be found
 <a class="reference external" href="http://docs.continuum.io/anaconda/install">here</a>.</p>
 <p>Installation option #1 (necesary for Windows):</p>
-<blockquote>
-<div><p>mamba env create -f ./installation/sira_env.yml
-mamba activate sira_env
-pip install uv
-uv pip install -r ./installation/sira_req.txt</p>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>./installation/sira_env.yml
+mamba<span class="w"> </span>activate<span class="w"> </span>sira_env
+pip<span class="w"> </span>install<span class="w"> </span>uv
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/sira_req.txt
+</pre></div>
+</div>
 <p>Installation option #2 (for Linux workstations, needs to be adapted for HPC env):</p>
-<blockquote>
-<div><p>sudo apt-get update
-grep -vE ‘^s*#|^s*$’ ./installation/packagelist_linux.txt | xargs -r sudo apt-get install -y –no-install-recommends
-sudo apt-get clean</p>
-<p>sudo rm -rf /var/lib/apt/lists/*
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt install python3.11.7</p>
-<p>python -m venv .venv
-python -m pip install –upgrade pip</p>
-<p>pip install -r ./installation/constraints.txt
-pip install -r ./installation/requirements-core.txt
-pip install -r ./installation/requirements-dev.txt
-pip install -r ./installation/requirements-viz.txt
-pip install -r ./installation/requirements-docs.txt
-pip install -r ./installation/requirements-diagrams.txt</p>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+grep<span class="w"> </span>-vE<span class="w"> </span><span class="s1">&#39;^\s*#|^\s*$&#39;</span><span class="w"> </span>./installation/packagelist_linux.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+xargs<span class="w"> </span>-r<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends
+sudo<span class="w"> </span>apt-get<span class="w"> </span>clean
+
+sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:deadsnakes/ppa
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3.11.7
+
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/constraints.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/requirements-core.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/requirements-dev.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/requirements-viz.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/requirements-docs.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./installation/requirements-diagrams.txt
+</pre></div>
+</div>
 </section>
 <section id="running-a-simulation-with-sira">
 <span id="running-sira"></span><h2><span class="section-number">4.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
