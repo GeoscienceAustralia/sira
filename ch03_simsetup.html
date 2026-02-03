@@ -1,0 +1,1320 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 Simulation and Model Setup &mdash; sira v1.0.1 docs</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=cfefa292" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=292eb321"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4 Installation and Usage" href="ch04_installation.html" />
+    <link rel="prev" title="2 Model Concepts" href="ch02_concept.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            sira
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-an-actual-infrastructure-system">2.1.1 Terminology Context: An Actual Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-loss-modelling">2.2 System Loss Modelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3 Simulation and Model Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-setup-file">3.1 Simulation Setup File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure-model-definition-file">3.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-system-metadata-system-meta">3.2.1 Basic System Metadata: system_meta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-components-component-list">3.2.2 List of Components: component_list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">3.2.3 Connections between Components: component_connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-supply-nodes-supply-setup">3.2.4 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-of-output-nodes-output-setup">3.2.5 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#component-type-damage-algorithms-comp-type-dmg-algo">3.2.6 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-of-damage-states-damage-state-def">3.2.7 Definition of Damage States: damage_state_def</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_installation.html">4 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#requirements">4.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.2 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#installation-of-sira-on-aws-with-docker">4.2.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#using-docker">4.2.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Back Matter</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sira</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3 </span>Simulation and Model Setup</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulation-and-model-setup">
+<span id="simulation-input-setup"></span><h1><span class="section-number">3 </span>Simulation and Model Setup<a class="headerlink" href="#simulation-and-model-setup" title="Link to this heading"></a></h1>
+<p>The simulation setup requires two different sets of inputs.
+These two sets of input data are contained in two separate files:</p>
+<ul class="simple">
+<li><p>The config file: this file sets up the simulation scenario parameters</p></li>
+<li><p>The model file: this defines the components, their connections, along
+with the fragility, loss, and recovery parameters for the infrastructure
+model.</p></li>
+</ul>
+<p>These files, their parameters, data layout, and sample input data are
+presented in the remainder of this Section.</p>
+<p><em>Naming Requirement of Input File</em>:
+The model file name must begin or end with the term ‘model’.
+Similarly, the config file must have the term ‘config’ at the beginning
+or end of its name.</p>
+<p><em>Location Requirement for Input Files</em>:
+The input files must reside within a directory named <cite>input</cite>. The parent
+directory is named after the infrastructure asset by convention, but it can
+have any name allowed by the local file system. This dir can be located in
+any storage location where the user has access. The code is informed of
+the location with a flag <cite>-d</cite> at execution time.</p>
+<p>The outputs generated from the simulation are stored in a directory called
+<cite>output</cite> within the same parent directory.</p>
+<p>For illustration purposed we assume a hypothetical project “PROJECT HAN”,
+with the project folder located in the root directory. We also assume
+that within the project, we are modelling two systems named GISKARD and
+DANEEL. For this given setup, input-output dir structure for the project
+will be as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+└── &lt;PROJECT_HAN&gt;
+    ├── &lt;SYSTEM_GISKARD&gt;
+    │   ├── input
+    │   │   ├── config_system_GR.json
+    │   │   └── model_system_GR.json
+    │   └── output
+    │       ├── ...
+    │       ├── ...
+    │       └── ...
+    │
+    └── &lt;SYSTEM_DANEEL&gt;
+        ├── input
+        │   ├── config_system_DO.json
+        │   └── model_system_DO.json
+        │
+        └── output
+            ├── ...
+            ├── ...
+            └── ...
+</pre></div>
+</div>
+<section id="simulation-setup-file">
+<span id="id1"></span><h2><span class="section-number">3.1 </span>Simulation Setup File<a class="headerlink" href="#simulation-setup-file" title="Link to this heading"></a></h2>
+<p>The code needs a setup file for configuring the simulation scenario.
+The expected file format is JSON. The code <em>can</em> support any of three formats:
+<cite>ini</cite>, <cite>conf</cite>, or <cite>json</cite>, though formats other than JSON are discouraged and
+details of their implementation will not be discussed here.</p>
+<p>The following table lists the parameters in the config file,
+with a brief description and representative values.</p>
+<p class="rubric">SCENARIO_PARAMS</p>
+<dl class="simple">
+<dt><cite>SCENARIO_NAME</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Name for identifying simulation scenario</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘Coal-fired Generation Plant 600W’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>INTENSITY_MEASURE_PARAM</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Engineering Demand Parameter</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘PGA’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>INTENSITY_MEASURE_UNIT</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Demand Parameter Unit</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘g’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">HAZARD_PARAMS</p>
+<dl class="simple">
+<dt><cite>HAZARD_INPUT_METHOD</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>How the hazard is supplied. Must be one of two options:
+‘calculated_array’ or ‘hazard_file’</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘calculated_array’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>HAZARD_TYPE</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of hazard for the impact simulation.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘earthquake’</p>
+</dd>
+<dt class="field-even">Valid values<span class="colon">:</span></dt>
+<dd class="field-even"><p>[‘earthquake’, ‘tropical cyclone’, ‘flood’]</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>INTENSITY_MEASURE_MIN</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Minimum value for internsity measurement (IM) parameter</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0.0</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>INTENSITY_MEASURE_MAX</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Maximum value for internsity measurement (IM) parameter</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1.5</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>INTENSITY_MEASURE_STEP</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Step size for incrementing the IM param</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0.01</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>NUM_SAMPLES</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterations for Monte Carlo process</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>500</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>FOCAL_HAZARD_SCENARIOS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The value(s) or scenario(s) at which to undertake
+detailed assessment of system response</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of strings</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[0.50, 0.55]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">RESTORATION_PARAMS</p>
+<dl class="simple">
+<dt><cite>TIME_UNIT</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Unit of time for restoration time calculations</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘week’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORE_PCT_CHKPOINTS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of steps to assess functionality</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>21</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_TIME_STEP</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Time increment for restoration period</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_TIME_MAX</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Maximum value for restoration period assessment</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>300</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_STREAMS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of simultaneous components to work on</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of integers</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[5, 10, 20]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">SYSTEM_METADATA</p>
+<dl class="simple">
+<dt><cite>INFRASTRUCTURE_LEVEL</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Define infrastructure as a <cite>facility</cite> or <cite>network</cite></p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>facility</cite></p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_CLASSES</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The allowed infrastructure system types</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of strings</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[‘PowerStation’, ‘Substation’]</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_CLASS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The infrastructure system type to be modelled</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘PowerStation’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_SUBCLASS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sub-category of system</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘Coal Fired’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>COMMODITY_FLOW_TYPES</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of input commodity types</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYS_CONF_FILE_NAME</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>File name for system config and fragility info</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘sys_config_ps.xlsx’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">SWITCHES</p>
+<dl class="simple">
+<dt><cite>FIT_PE_DATA</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Flag for fitting Prob of Exceedance data</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Boolean</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>FIT_RESTORATION_DATA</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fit model to simulated restoration data</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Boolean</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SAVE_VARS_NPY</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Switch to indicate whether to save simulated values in binary numpy format</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Boolean</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>MULTIPROCESS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Switch to indicate whether to use multi-core processing. 0 <span class="math notranslate nohighlight">\(\rightarrow\)</span> False, 1 <span class="math notranslate nohighlight">\(\rightarrow\)</span> True</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RUN_CONTEXT</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Switch to indicate whether to run a full simulation, or run test code. 0 <span class="math notranslate nohighlight">\(\rightarrow\)</span> run tests, 1 <span class="math notranslate nohighlight">\(\rightarrow\)</span> normal run.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="infrastructure-model-definition-file">
+<span id="model-definition-file"></span><h2><span class="section-number">3.2 </span>Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Link to this heading"></a></h2>
+<p>The system model is presently built using an MS Excel spreadsheet file.
+It contains seven required worksheets, each representing modules that define
+different aspect of the infrastructure model. The names of the worksheets
+are fixed. The Excel file must be converted to JSON format before it can be
+ingested by SIRA. There are scripts provided in the ‘scripts’ directory for
+this purpose.</p>
+<p>The format and function of the worksheets (i.e. model definition modules)
+are described in the following subsections:</p>
+<section id="basic-system-metadata-system-meta">
+<span id="inputdata-system-meta"></span><h3><span class="section-number">3.2.1 </span>Basic System Metadata: system_meta<a class="headerlink" href="#basic-system-metadata-system-meta" title="Link to this heading"></a></h3>
+<p id="system-meta">This module of the model defines core metadata relevant to the
+simulation of a given infrastructure model.
+There is a free text ‘notes’ field for each of the parameters.
+Users are encouraged to provide detailed information that may
+be relevant to the model configuration and post-simulation validation
+of results.</p>
+<dl>
+<dt><cite>INFRASTRUCTURE_LEVEL</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The scope of the infrastructure system.</p>
+</dd>
+<dt class="field-even">Values<span class="colon">:</span></dt>
+<dd class="field-even"><p>Valid values are ‘facility’ or ‘network’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_CLASS</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the asset class. It must have a
+corresponding class definition in the module
+<cite>sira.modelling.infrastructure</cite>.</p>
+</dd>
+<dt class="field-even">Values<span class="colon">:</span></dt>
+<dd class="field-even"><p>The current set of valid system classes are as
+outlined in this list:</p>
+<p>[‘PowerStation’,
+‘Substation’,
+‘PotableWaterTreatmentPlant’,
+‘PWTP’,
+‘WasteWaterTreatmentPlant’,
+‘WWTP’,
+‘PotableWaterPumpStation’]</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_SUBCLASS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The subclass of the parent infrastructure system
+as specified in <cite>SYSTEM_CLASS</cite>. For example, for the
+SYSTEM_CLASS ‘Substation’, the logical system_subclass
+options can be ‘transmission’, ‘distribution’,
+‘collector’, etc.</p>
+</dd>
+<dt class="field-even">Values<span class="colon">:</span></dt>
+<dd class="field-even"><p>Presently this is not implemented in code, but used
+for informational purposes and for compatibility with
+planned future functionality expansion.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_COMPONENT_LOCATION_CONF</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Specifies whether the location information for system
+components are specified in
+<span class="xref std std-ref">component list definition</span>.</p>
+<p>A value of ‘undefined’ indicates that the location
+information for the components is not relevant to its
+vulnerability analysis, AND the graph-drawing methods
+are not constrained in placement of the components in
+the system topology diagram.</p>
+<p>A value of ‘defined’ indicates that the location
+information of the components <em>may</em> be relevant to
+the vulnerability analysis process, AND the graph-drawing
+methods should respect the provided positional data in
+placement of the components in the system topology
+diagram.</p>
+</dd>
+<dt class="field-even">Values<span class="colon">:</span></dt>
+<dd class="field-even"><p>Valid values must match: [‘defined’, ‘undefined’].
+If INFRASTRUCTURE_LEVEL==’network’, then the value must
+be defined.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_TIME_UNIT</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The unit of time used for defining the component
+restoration algorithms.</p>
+</dd>
+<dt class="field-even">Values<span class="colon">:</span></dt>
+<dd class="field-even"><p>[‘days’, ‘weeks’, ‘months’, ‘years’]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="list-of-components-component-list">
+<span id="inputdata-component-list"></span><h3><span class="section-number">3.2.2 </span>List of Components: component_list<a class="headerlink" href="#list-of-components-component-list" title="Link to this heading"></a></h3>
+<p>The <em>component_list</em> has the following parameters:</p>
+<p class="rubric">model_params__component_list</p>
+<dl class="simple">
+<dt><cite>component_id</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Unique id for a component in the system. This is an instance
+of <cite>component_type</cite>.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+It is recommended to use alphanumeric characters,
+starting with a letter, and logically distinct parts
+of the name separated by underscores.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘transformer_tx1’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>component_type</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="reportglossary.html#term-typology"><span class="xref std std-term">typology</span></a> of a system component.
+Represents a general category of equipment.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String. It is recommended to use alphanumeric characters,
+starting with a letter, and logically distinct
+parts of the name separated by spaces.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘Stepup Transformer’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>component_class</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Represent a broad category of equipment performing
+a general task. A number of component types can be
+grouped under this, e.g.
+‘Power Transformer 100MVA 230/69’ and
+‘Power Transformer 50MVA 230/69’ are both under
+the same component_class of ‘Power Transformer’.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+It is recommended to use alphanumeric characters,
+starting with a letter, and logically distinct
+parts of the name separated by spaces.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘Emission Management’ – stacks and ash disposal systems
+belong to different typologies, but both contribute to
+the function of emission management.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>cost_fraction</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Normalised value of an instance of a component given as
+as a fraction of the total system cost, wih the total
+system cost being 1.0.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0 \le x \le 1\}}\)</span></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0.03</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>node_type</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This indicates the role of the node (component) within
+network representing the system. For details, see
+<a class="reference internal" href="ch02_concept.html#model-node-classification"><span class="std std-ref">Classification of Nodes</span></a>.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+Must be one of these four values in the set:
+(‘supply’, ‘transshipment’, ‘dependency’, ‘sink’)</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘supply’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>node_cluster</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This is an optional parameter to assist is drawing
+the system diagram. It indicates how the different
+components should be grouped together.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘Boiler System’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>operating_capacity</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Operational capacity of the component.
+One (1.0) indicates full functionality, and
+zero (0.0) indicates complete loss of functionality.
+Typically at the start of the simulation all components
+will have a value of 1.0.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0 \leq x \leq 1\}}\)</span></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1.0 (default value)</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>pos_x</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The x-position or longitude value of the component.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>pos_y</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The y-position or latitude value of the component.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="connections-between-components-component-connections">
+<span id="inputdata-component-connections"></span><h3><span class="section-number">3.2.3 </span>Connections between Components: component_connections<a class="headerlink" href="#connections-between-components-component-connections" title="Link to this heading"></a></h3>
+<dl>
+<dt><cite>origin</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The node (component) to which the tail of a directional
+edge is connected.</p>
+<p>For bidirectional connections, two edges must be defined
+within opposing directionality,
+e.g. A <span class="math notranslate nohighlight">\(\rightarrow\)</span> B, and B <span class="math notranslate nohighlight">\(\rightarrow\)</span> A.
+For undirected graphs the origin/destination designation
+is immaterial.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘stack_1’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>destination</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The node (component) on which the head of a directional
+edge terminates.
+For undirected graphs the origin/destination designation
+is immaterial.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘turbine_condenser_1’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>link_capacity</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Capacity of the edge.
+Its value can be more than the required flow of 1.0,
+which would represent excess capacity on the line.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R}\ \mid \ 0 \leq x \leq 1\}}\)</span></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1.0 (default value)</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>weight</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This parameter can be used to prioritise an edge or
+a series of edges (a path) over another edge or set
+of edges. This is intended to set preference for
+a particular path where path redundancies exist.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1 (default value)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="configuration-of-supply-nodes-supply-setup">
+<span id="inputdata-supply-setup"></span><h3><span class="section-number">3.2.4 </span>Configuration of Supply Nodes: supply_setup<a class="headerlink" href="#configuration-of-supply-nodes-supply-setup" title="Link to this heading"></a></h3>
+<dl>
+<dt><cite>input_node</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <cite>component_id</cite> of the input node.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+Must be one of the entries in the
+<cite>component_id</cite> columns in the <cite>component_list</cite> table,
+and its <cite>node_type</cite> must be <cite>supply</cite>.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘coal_supply’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>input_capacity</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The operational capacity of the node. It can be a real
+value if known, or be given as a fraction of total
+normalised value of 100%.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \lt x \leq 100.0\}}\)</span></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>100.0 (default value)</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>capacity_fraction</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The normalised value of the total required input commodity
+entering the system the given input node. The total quantity
+of required material is normalised to 1.0.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \lt x \leq 1.0\}}\)</span></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1.0</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>commodity_type</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of commodity entering into the system through
+the specified input node.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A thermal power station will have two primary input
+commodities: fuel (for example coal) and water. So, for
+a coal-fired power station, there will need to be two
+input nodes defined (at a minumum), with the two types
+of <cite>commodity_type</cite> being ‘coal’ and ‘water’.</p>
+<p>For an electric substation the <cite>commodity_type</cite> is
+electricity. For a water treatment plant, it will be
+untreated water.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="configuration-of-output-nodes-output-setup">
+<span id="inputdata-output-setup"></span><h3><span class="section-number">3.2.5 </span>Configuration of Output Nodes: output_setup<a class="headerlink" href="#configuration-of-output-nodes-output-setup" title="Link to this heading"></a></h3>
+<dl>
+<dt><cite>output_node</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>These are the ‘sink’ nodes representing the load or
+the aggregate consumer of the product(s) of the system.</p>
+<p>These are not real components, but a modelling construct.
+These nodes are not considered in the fragility
+calculations.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>,
+and must be of <cite>node_type</cite> sink.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘output_1’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>production_node</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>These are the real terminal nodes within the infrastructure
+system model. The completed product or output of a system
+exits the system boundary through this node.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String.
+Must be one of the entries in the list of components
+defined under <cite>component_id</cite> in the module <cite>component_list</cite>,
+and must be of <cite>node_type</cite> transshipment.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘gen_1’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>output_node_capacity</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The part of total production capacity of the system that
+a specific production node is responsible for.</p>
+<p>The unit depends on the type of product the system
+produces (e.g. MW for generator plant). The unit is defined
+as part of the system metadata.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>300</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>capacity_fraction</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The fraction of total production capacity of the
+output nodes. The sum of capacities of all nodes must
+equal 1.0.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float <span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0 &lt; x \leq 1\}}\)</span></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0.5</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>priority</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This parameter is used to assign relative sequential
+priority for output nodes for the purposes of post-disaster
+recovery prioritisation.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{Z} \mid 1 \leq x \leq n\}}\)</span>,
+where <span class="math notranslate nohighlight">\({n}\)</span> is the total number of output nodes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NA</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="component-type-damage-algorithms-comp-type-dmg-algo">
+<span id="inputdata-comp-type-dmg-algo"></span><h3><span class="section-number">3.2.6 </span>Component Type Damage Algorithms: comp_type_dmg_algo<a class="headerlink" href="#component-type-damage-algorithms-comp-type-dmg-algo" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt><cite>id</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sequential integer value assigned to each algorithm.
+It is used solely for internal programming logic.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl id="dmg-algo-component-type">
+<dt><cite>component_type</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of component, based on the typology definitions
+being used in the system model.</p>
+<p>Example: ‘Demineralisation Plant’</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Alphanumeric characters.
+May use dashes ‘-’ or underscores ‘_’.
+Avoid using special characters.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl id="dmg-algo-damage-state">
+<dt><cite>damage_state</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list of discrete damage states used in defining the
+damage scale being modelled within the system. The ‘None’
+damage state is not explicitly listed.</p>
+<p>Example: For a four-state sequential damage scale,
+the following damage states are used:</p>
+<ol class="arabic simple">
+<li><p>DS1 Slight</p></li>
+<li><p>DS2 Moderate</p></li>
+<li><p>DS3 Extensive</p></li>
+<li><p>DS4 Complete</p></li>
+</ol>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String. Fixed, pre-determined state names.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>is_piecewise</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Flag that states whether the function is piecewise
+defined, or defined by a single function.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String [‘yes’, ‘no’]</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>damage_function</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Name of the probability distribution representing the
+damage function. This should be a Cumulative Distribution
+Function (CDF).</p>
+<p>Log-normal curves are predominant in this discipline.
+However, any function can be supported by adding its
+definition to the module <cite>sira.modelling.responsemodels</cite>.</p>
+<p>Example: ‘lognormal’</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String. MUST match name of a function defined in
+<cite>sira.modelling.responsemodels</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>median</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Median of the damage function.
+This corresponds to the ‘scale’ parameter of the
+lognormal implementation in scipy.</p>
+<p>For scipy lognormal implementation,
+<span class="math notranslate nohighlight">\(\text{scale} = \text{median} = \mathrm{e}^{\mu}\)</span>,
+where μ is the mean of the log of the samples.</p>
+<p>A median will need to be defined for each damage state.
+It should typically be progressively higher for more
+severe damage states:</p>
+<p><span class="math notranslate nohighlight">\({\mu_{DS1} \leq \mu_{DS2} \leq \mu_{DS3} \leq \mu_{DS4}}\)</span></p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>beta</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The log-standard deviation, or put another way,
+the standard deviation of the log of the variate.
+This corresponds to the ‘shape’ parameter of the
+lognormal implementation in scipy.</p>
+<p>It will need to be defined for each damage state.
+The value of beta should be such that
+the curves for the defined damaged states do not overlap.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>location</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The location parameter for lognormal function, as
+implemented in scipy. In scipy it is used primarily for
+the purpose of having a common method for defining all
+functions. In practice, we always set it to zero.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>damage_ratio</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The fractional loss of a component’s value resulting from
+incurred damages resulting it being in a given damage state.
+This parameter links a damage state to expected direct loss,
+expressed as a fraction of total component value.</p>
+<p>Example:
+Damage ratio of 0.30 for damage state “DS2 Moderate”</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \leq x\}}\)</span>.
+A value of 0 indicates no loss of value, and
+a value of 1.0 indicates complete loss.
+In special cases the the value of loss ratio can be
+greater than 1.0, which indicates complete loss of
+component and additional cost of removal, disposal, or
+securing of destroyed component.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>functionality</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An unitless normalised value indicating the functional
+capacity of a component for a given damage state.
+This parameter links a damage state to expected
+post-impact residual functionality (or production capacity)
+of the component.</p>
+<p>Example:
+A stack of a thermal power station may be expected to
+remain fully functional (functionality==1), under ‘Slight’
+damage state, e.g. under conditions of minor damage to
+structure with deformation of holding down bolts and with
+some bracing connections.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+<span class="math notranslate nohighlight">\({\{x \in \mathbb{R} \mid 0.0 \leq x \leq 1.0\}}\)</span>.</p>
+<p>A value of 0 indicates no loss of value, and
+a value of 1.0 indicates complete loss.
+In special cases the the value of loss ratio can be
+greater than 1.0, which indicates complete loss of
+component and additional cost of removal, disposal, or
+securing or destroyed component.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>minimum</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Minimum value for which the damage algorithm is
+applicable.</p>
+<p>Example:
+The algorithms presented by Anagnos <span id="id2">[<a class="reference internal" href="bibliography.html#id2" title="T. Anagnos. Development of an electrical substation equipment performance database for evaluation of equipment fragilities. Technical Report, Department of Civil and Environmental Engineering, San Jose State University, San Jose, USA, 1999. Prepared for the Pacific Gas and Electric Company and for the Pacific Earthquake Engineering Research Center. URL: http://peer.berkeley.edu/publications/peer_reports/reports_2001/0106.pdf.">1</a>]</span>
+for 500kV circuit breakers are only applicable for
+PGA values of 0.15g and above, for the various noted
+failure modes.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>upper_limit</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The maximum value of hazard intensity for which
+the given algorithm may be applicable.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+If upper limit is not explicity defined for an
+algorithm, use ‘NA’.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>lower_limit</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The minimum value of hazard intensity for which
+the given algorithm may be applicable.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.
+If upper limit is not explicity defined for an
+algorithm, use ‘NA’.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>recovery_function</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Name of the probability distribution representing the
+damage function.</p>
+<p>Normal CDF, traingular function or a uniform distribution
+function are commmon examples for recovery functions.
+However, any function can be supported by adding its
+definition to the module <cite>sira.modelling.responsemodels</cite>.</p>
+<p>Example: ‘Normal’</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String. MUST match name of a function defined in
+<cite>sira.modelling.responsemodels</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>recovery_param1</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The first param of the recovery function. This is the ‘location’
+paramter. For a Normal distribution, it is the mean of the distribution.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>recovery_param2</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The second param of the recovery function. This is the ‘scale’
+paramter. For a Normal distribution, it is the standard deviation
+of the distribution.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>recovery_99pct</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[Optional paramter]
+In the process of expert elicitation of recovery parameters,
+it is often difficult to get the concept of standard
+deviation across to an audience of experts unpracticed
+in statistical concepts. In such cases it is easier to
+obtain a 95th percentile value for recovery time, and
+translate that to standard deviation for a normal
+distribution using the following equation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;X_{0.99} = \mu + Z_{0.99} \sigma \\
+\Rightarrow &amp;X_{0.99} = \mu + \Phi^{-1}(0.99) \sigma \\
+\Rightarrow &amp;\sigma = \frac{X_{0.99} - \mu}{\Phi^{-1}(0.99)}
+\end{align}\end{split}\]</div>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>data_source</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Source or reference from which the fragility algorithm
+was taken or adapted, how it was adapted, or how it
+was developed.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Free text</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="definition-of-damage-states-damage-state-def">
+<span id="inputdata-damage-state-def"></span><h3><span class="section-number">3.2.7 </span>Definition of Damage States: damage_state_def<a class="headerlink" href="#definition-of-damage-states-damage-state-def" title="Link to this heading"></a></h3>
+<p>This table documents the physical damage characteristics that are implied
+by the damage states used to model the fragility of the system components.</p>
+<dl>
+<dt><cite>component_type</cite></dt><dd><p>The entries here are the same as noted under
+<a class="reference internal" href="#dmg-algo-component-type"><span class="std std-ref">component_type</span></a> in the
+‘Component Type Damage Algorithms’ table.</p>
+</dd>
+<dt><cite>damage_state</cite></dt><dd><p>The entries here are the same as noted under
+<a class="reference internal" href="#dmg-algo-damage-state"><span class="std std-ref">damage_state</span></a> in the
+‘Component Type Damage Algorithms’ table.</p>
+</dd>
+<dt><cite>damage_state_definitions</cite></dt><dd><dl class="field-list">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The physical damage descriptors corresponding
+to the damage states.</p>
+<p>Example:
+A circuit breaker can be considered to be in an ‘Exensive’
+damage state for the following damage definition:
+“Cracking of interrupter casing.
+Interrupter head falling off in some instances.
+In other instances damage to conductor connections.”</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Free text.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025 Geoscience Australia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

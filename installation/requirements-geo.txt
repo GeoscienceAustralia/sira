@@ -1,9 +1,0 @@
-cartopy
-contextily
-fiona
-geopandas
-geoplot
-pyproj
-shapely
-xyzservices
-rasterio
