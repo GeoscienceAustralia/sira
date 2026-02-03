@@ -3,7 +3,7 @@
 Copyright Notice
 ================
 
-Copyright 2018, Geoscience Australia
+Copyright 2026, Geoscience Australia
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
