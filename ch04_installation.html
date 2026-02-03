@@ -130,17 +130,18 @@ run this software.</p>
 ├── installation                &lt;-- Installation scripts for dev envs
 ├── scripts
 ├── sira                        &lt;-- The core code reside here
-│   └── modelling
+│   ├── __main__.py             &lt;-- Entry point for running the code
+│   ├── modelling
+│   ├── scripts
+│   └── tools
 ├── tests                       &lt;-- Test scripts + data for sanity checks
 │   ├── historical_data
 │   ├── models
 │   └── simulation_setup
 │
 ├── LICENSE                      &lt;-- License file
-├── README.md                    &lt;-- Summary documentation
-├── __main__.py                  &lt;-- Entry point for running the code
-├── LICENSE
-└── README.adoc                  &lt;-- Basic documentation and installation notes
+├── pyproject.toml               &lt;-- Project configuration file
+└── README.md                    &lt;-- Summary documentation and usage notes
 </pre></div>
 </div>
 <section id="requirements">
@@ -150,7 +151,7 @@ run this software.</p>
 <div><ul class="simple">
 <li><p>OS X 10.11+</p></li>
 <li><p>Ubuntu 14.04 (64 bit)</p></li>
-<li><p>Windows 10</p></li>
+<li><p>Windows 10 and 11 (64 bit)</p></li>
 </ul>
 </div></blockquote>
 <p>The code should work on other recent versions of these operating systems,
@@ -296,55 +297,44 @@ port 4200, so to host it at port 80 one would start it with:</p>
 </section>
 <section id="setting-up-a-development-environment-with-anaconda">
 <h2><span class="section-number">4.3 </span>Setting Up a Development Environment with Anaconda<a class="headerlink" href="#setting-up-a-development-environment-with-anaconda" title="Link to this heading"></a></h2>
-<p>We recommend using <code class="docutils literal notranslate"><span class="pre">conda</span></code> for managing virtual environments and
-packages required for running <code class="docutils literal notranslate"><span class="pre">sira</span></code>.</p>
-<p>For the sake of simplicity, we recommend using <cite>Anaconda</cite>. It is a
-free Python distribution, and comes with the <code class="docutils literal notranslate"><span class="pre">conda</span></code> tool which is
-both a package manager and environment manager. Instructions for
-installing <cite>Anaconda</cite> are
+<p>The recommended process to set up the environment is to use <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code>.
+This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the <code class="docutils literal notranslate"><span class="pre">sira</span></code> root directory.</p>
+<p>The dependency list is large. To assist in managing the list of required packages,
+they are sectioned into different files, based on the purpose they serve. For example,
+if documentation is not required to be generated, or experimental geospatial modules
+are not required, those files can be skipped. The dependency files are provided in the
+<code class="docutils literal notranslate"><span class="pre">installation</span></code> directory. For setups using a combination of <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> or
+<code class="docutils literal notranslate"><span class="pre">uv</span></code>, a consolidated pip requirements list is also provided.</p>
+<p>Instructions for installing <cite>mamba</cite> can be found
 <a class="reference external" href="http://docs.continuum.io/anaconda/install">here</a>.</p>
-<p>Some packages we need are not hosted in the main <code class="docutils literal notranslate"><span class="pre">conda</span></code> package
-repository. In such cases we will host them in our own user channel.
-We suggest adding the following channels to the default:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --add channels https://conda.anaconda.org/anaconda
-$ conda config --add channels https://conda.anaconda.org/marufr
-</pre></div>
-</div>
-<p>Run the following command to confirm the additional channels have
-been added:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --get channels
-</pre></div>
-</div>
-<p><strong>For OS X and Linux-64 systems</strong>: It should be possible to set up a full run
-environment solely through the *.yml environment specification file. For OS X
-run the following commands:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda env create -f environment_osx.yml
-$ source activate sira_env
-</pre></div>
-</div>
-<p>For Linux-64 systems, the commands are identical, you will just need to use
-the environment specification file for Linux.</p>
-<p><strong>For Windows systems</strong>, a similar process needs to be followed, with some
-exceptions. First run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda env create -f environment_win64.yml
-$ activate sira_env
-</pre></div>
-</div>
-<p>This will install <em>most</em> requirements except for <code class="docutils literal notranslate"><span class="pre">igraph</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code>.
-Compiling these packages under windows can be very challenging. The simplest
-and most reliable option is to download the the appropriate binary
-distribution in the form of <cite>wheels</cite> from
-<a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">Christoph Gohlke’s unofficial page of Windows binaries</a>.</p>
-<p>Download the appropriate <cite>wheels</cite> (*.whl files) of the following packages
-for your Windows platform (32 or 64 bit):</p>
-<ul class="simple">
-<li><p><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#python-igraph">python-igraph</a></p></li>
-<li><p><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz">pygraphviz</a>.</p></li>
-</ul>
-<p>Install the downloaded <cite>wheels</cite> (*.whl files) with pip:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install &lt;pkg_name&gt;.whl
-</pre></div>
-</div>
+<p>Installation option #1 (necesary for Windows):</p>
+<dl class="simple">
+<dt><a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">`</span></a></dt><dd><p>mamba env create -f ./installation/sira_env.yml
+mamba activate sira_env
+pip install uv
+uv pip install -r ./installation/sira_req.txt</p>
+</dd>
+</dl>
+<p><a href="#id6"><span class="problematic" id="id7">``</span></a><a href="#id8"><span class="problematic" id="id9">`</span></a></p>
+<p>Installation option #2 (for Linux workstations, needs to be adapted for HPC env):</p>
+<dl>
+<dt><a href="#id10"><span class="problematic" id="id11">``</span></a><a href="#id12"><span class="problematic" id="id13">`</span></a></dt><dd><p>sudo apt-get update</p>
+<p>grep -vE ‘^s*#|^s*$’ ./installation/packagelist_linux.txt | xargs -r sudo apt-get install -y –no-install-recommends
+sudo apt-get clean</p>
+<p>sudo rm -rf /var/lib/apt/lists/*
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.11.7</p>
+<p>python -m venv .venv
+python -m pip install –upgrade pip</p>
+<p>pip install -r ./installation/constraints.txt
+pip install -r ./installation/requirements-core.txt
+pip install -r ./installation/requirements-dev.txt
+pip install -r ./installation/requirements-viz.txt
+pip install -r ./installation/requirements-docs.txt
+pip install -r ./installation/requirements-diagrams.txt</p>
+</dd>
+</dl>
+<p><a href="#id14"><span class="problematic" id="id15">``</span></a><a href="#id16"><span class="problematic" id="id17">`</span></a></p>
 </section>
 <section id="running-a-simulation-with-sira">
 <span id="running-sira"></span><h2><span class="section-number">4.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
