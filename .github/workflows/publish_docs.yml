@@ -17,14 +17,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install setuptools
-          pip install pkg_resources
           pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
           pip install pybtex pybtex-docutils
           pip install sphinxcontrib-bibtex
-          pip install actdiag sphinxcontrib-actdiag
-          pip install blockdiag sphinxcontrib-blockdiag
-          pip install seqdiag sphinxcontrib-seqdiag
-          # Add any other dependencies from your requirements.txt
+          pip install kroki sphinxcontrib-kroki
+          # Add any other required dependencies here
       - name: Build HTML documentation
         run: |
           cd docs
