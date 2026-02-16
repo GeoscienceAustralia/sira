@@ -16,11 +16,11 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: |
-          pip install setuptools
-          pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
-          pip install pybtex pybtex-docutils
-          pip install sphinxcontrib-bibtex
-          pip install kroki sphinxcontrib-kroki
+          python3 -m pip install -U setuptools
+          python3 -m pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
+          python3 -m pip install pybtex pybtex-docutils
+          python3 -m pip install sphinxcontrib-bibtex
+          python3 -m pip install kroki sphinxcontrib-kroki
           # Add any other required dependencies here
       - name: Build HTML documentation
         run: |
