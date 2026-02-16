@@ -17,6 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install setuptools
+          pip install pkg_resources
           pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
           pip install pybtex pybtex-docutils
           pip install sphinxcontrib-bibtex
