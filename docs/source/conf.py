@@ -46,9 +46,7 @@ extensions = [
     "sphinx.ext.graphviz",
     "sphinx.ext.inheritance_diagram",
     "sphinx.ext.autosectionlabel",
-    "sphinxcontrib.blockdiag",
-    "sphinxcontrib.actdiag",
-    "sphinxcontrib.seqdiag",
+    "sphinxcontrib.kroki",
 ]
 
 bibtex_bibfiles = ["_static/files/refs.bib"]
