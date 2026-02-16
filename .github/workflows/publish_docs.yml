@@ -16,6 +16,7 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: |
+          pip install setuptools
           pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
           pip install pybtex pybtex-docutils
           pip install sphinxcontrib-bibtex

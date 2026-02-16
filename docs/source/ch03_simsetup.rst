@@ -84,8 +84,8 @@ The system model is defined using an MS Excel spreadsheet file.
 It contains seven required worksheets, each representing modules that define
 different aspect of the infrastructure model. The names of the worksheets
 are fixed. The Excel file must be converted to JSON format before it can be
-ingested by SIRA. There are scripts provided in the 'scripts' directory for
-this purpose.
+ingested by SIRA. The required script is available in the 'sira/tools' directory for
+this purpose `convert_excel_files_to_json.py`_.
 
 The format and function of the worksheets (i.e. model definition modules)
 are described in the following subsections:
