@@ -17,6 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install -U setuptools
+          sudo apt install --reinstall python3-pkg-resources python3-setuptools
           python3 -m pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
           python3 -m pip install pybtex pybtex-docutils
           python3 -m pip install sphinxcontrib-bibtex
