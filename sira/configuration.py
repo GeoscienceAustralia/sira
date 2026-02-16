@@ -26,7 +26,8 @@ class Configuration:
 
         self._VALID_HAZARD_INPUT_METHODS = [
             "hazard_array",
-            "calculated_arrayscenario_file",
+            "calculated_array",
+            "scenario_file",
             "hazard_file",
         ]
 

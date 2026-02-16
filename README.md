@@ -139,15 +139,21 @@ directory of the SIRA code, and the model of interest is in the location
 
 The following code runs the simulation and the post processing simultanrously:
 
+    ```bash
     python -m sira -d scenario_dir/ci_model_x -sfl
+    ```
 
 To run only the Monte Carlo simulation without post-processing:
 
+    ```bash
     python -m sira -d scenario_dir/ci_model_x -s
+    ```
 
 To run both the model fitting and the loss analysis code:
 
+    ```bash
     python -m sira -d scenario_dir/ci_model_x -fl
+    ```
 
 Note that the model fitting and loss analysis steps require that the
 initial simulation be run first so that it has the initial output data
@@ -178,20 +184,6 @@ Notes:
 - These flags only affect detection and backend selection. Core computations remain CPU-based unless an MPI backend is explicitly selected and available.
 - Flags can be set per-session or integrated into CI/CD environment configuration.
 
-## [Testing](#testing)
-
-To run the tests, user needs to be in the root directory of the code,
-e.g. `~/code/sira`. Then simply run:
-
-    pytest
-
-If you want to explicitly ask `pytest` to run coverage reports, then run:
-
-    pytest --cov-report term --cov=sira tests/
-
-If you are using docker as described above, you can do this from within the
-sira container.
-
 ## [Parallel Execution](#parallel-execution)
 
 SIRA supports multiprocessing locally and MPI on HPC systems. The MPI backend is preferred when available; otherwise, SIRA uses efficient multiprocessing with sensible defaults.
@@ -200,19 +192,27 @@ Note on selecting the parallel backend:
 
 - Default (auto-detect): if launched under an MPI environment (e.g., mpirun/mpiexec/srun or SLURM/PBS variables present), SIRA uses MPI; otherwise it uses multiprocessing.
 
+    ```bash
     python -m sira -d scenario_dir/ci_model_x -s --parallel-backend auto
+    ```
 
 - Force MPI: requires launching with an MPI launcher (and mpi4py installed). Example:
 
+    ```bash
     mpirun -n 8 python -m sira -d scenario_dir/ci_model_x -s --parallel-backend mpi
+    ```
 
 - Force multiprocessing: runs locally without MPI. You can cap workers with --max-workers:
 
+    ```bash
     python -m sira -d scenario_dir/ci_model_x -s --parallel-backend multiprocessing --max-workers 8
+    ```
 
 - Disable parallel entirely (useful for debugging):
 
+    ```bash
     python -m sira -d scenario_dir/ci_model_x -s --disable-parallel
+    ```
 
 Optional tuning:
 
@@ -273,3 +273,22 @@ export PYTHONHASHSEED=0
 
 Recommendation:
 - Start with only `SIRA_HPC_MODE=1` and `SIRA_STREAM_DIR` for large jobs; layer additional flags as bottlenecks are identified through profiling.
+
+## [Testing](#testing)
+
+To run the tests, user needs to be in the root directory of the code,
+e.g. `~/code/sira`. Then simply run:
+
+    ```bash
+    pytest
+    ```
+
+If you want to explicitly ask `pytest` to run coverage reports, then run:
+
+    ```bash
+    pytest --cov-report term --cov=sira tests/
+    ```
+
+If you are using docker as described above, you can do this from within the
+sira container.
+
