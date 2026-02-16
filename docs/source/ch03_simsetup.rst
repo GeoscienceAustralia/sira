@@ -40,20 +40,20 @@ will be as follows::
     └── <PROJECT_HAN>
         ├── <SYSTEM_GISKARD>
         │   ├── input
-        │   │   ├── config_system_GR.json
+        │   │   ├── config_system_GR.json
         │   │   └── model_system_GR.json
         │   └── output
-        │       ├── ...
+        │       ├── ...
         │       ├── ...
         │       └── ...
         │
         └── <SYSTEM_DANEEL>
             ├── input
-            │   ├── config_system_DO.json
+            │   ├── config_system_DO.json
             │   └── model_system_DO.json
             │
             └── output
-                ├── ...
+                ├── ...
                 ├── ...
                 └── ...
 
@@ -80,7 +80,7 @@ with a brief description and representative values.
 Infrastructure Model Definition File
 ====================================
 
-The system model is presently built using an MS Excel spreadsheet file.
+The system model is defined using an MS Excel spreadsheet file.
 It contains seven required worksheets, each representing modules that define
 different aspect of the infrastructure model. The names of the worksheets
 are fixed. The Excel file must be converted to JSON format before it can be
@@ -155,3 +155,4 @@ by the damage states used to model the fragility of the system components.
 
 .. include::
    ./_static/files/model_params__damage_state_def.txt
+

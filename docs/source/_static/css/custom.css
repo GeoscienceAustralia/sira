@@ -64,24 +64,31 @@ h1 {
 }
 
 h2 {
+    font-size: 30px;
     padding: 10px 5px 10px 0px;
     margin: 5px 0 5px 0px;
-    font-size: 30px;
+}
+
+h3 {
+    font-size: 26px;
+    padding: 10px 10px 10px 0px;
+    margin: 10px 0 10px 0px;
 }
 
 h2:before {
     content: ' ';
     display: block;
-    width: 80px;
-    padding-top: 20px;
-    border-top: 10px solid #555555;
+    width: 70px;
+    padding-top: 22px;
+    border-top: 9px solid #555555;
 }
 
-h3 {
-    padding: 10px 10px 10px 0px;
-    margin: 10px 0 10px 0px;
-    font-size: 26px;
-    border-top: 1px solid #DDDDDD;
+h3:before {
+    content: ' ';
+    display: block;
+    width: 90px;
+    padding-top: 17px;
+    border-top: 5px solid #555555;
 }
 
 .rst-content table.docutils td,

@@ -2,9 +2,9 @@
    You can adapt this file completely to your liking,
    but it should at least contain the root `toctree` directive.
 
-######################################################################
-SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis
-######################################################################
+****
+SIRA
+****
 
 https://github.com/GeoscienceAustralia/sira |br|
 Release: |release|
@@ -69,12 +69,13 @@ hazard intensities and post-disaster resource allocation to gauge restoration
 times for system operations.
 
 
-.. _user-docs:
+User Documentation
+==================
 
 .. toctree::
+   :name: user-docs
    :numbered:
    :maxdepth: 2
-   :caption: User Documentation
 
    ch01_intro
    ch02_concept
@@ -83,11 +84,9 @@ times for system operations.
    ch05_fragility_attribution
 
 
-.. _back-matter:
-
 .. toctree::
+   :name: back-matter
    :maxdepth: 1
-   :caption: Back Matter
 
    copyrightnotice.rst
    bibliography.rst

@@ -162,7 +162,7 @@ html_theme_options = {
     "logo_only": False,
     "prev_next_buttons_location": None,
     # --- TOC options
-    "style_nav_tree": True,
+    # "style_nav_tree": True,
     "collapse_navigation": False,
     "sticky_navigation": True,
     "navigation_depth": 3,

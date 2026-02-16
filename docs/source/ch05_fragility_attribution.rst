@@ -31,7 +31,7 @@ hierarchy of approaches which is in order of increasing uncertainty:
 
 1. Direct consultation with industry asset managers to reach agreement on
    component fragilities by adjusting the most appropriate published models
-   and drawing upon construction specifications, manufacturer’s shake table
+   and drawing upon construction specifications, manufacturer's shake table
    proof testing (if available) and observed earthquake performance
    (if possible).
 
@@ -40,12 +40,12 @@ hierarchy of approaches which is in order of increasing uncertainty:
 
 3. Utilisation of heuristic engineering judgment in adapting damage models
    for other components assessed to have similar fragility. There are many
-   fragility models published in the literature.  The literature review and
-   model compilation produced by the Syner-G Project :cite:`Pitilakis-etal-2014`.
-   sponsored by the European Commission presents a wide range of electricity
-   sector component models.  Its key references included works by
-   Vanzi :cite:`Vanzi1996`, Anagnos :cite:`Anagnos1999` and
-   the HAZUS Technical Manual :cite:`FEMA2003`.
+   fragility models published in the literature. The literature review and
+   model compilation produced by the Syner-G Project
+   :cite:`Pitilakis-etal-2014`, sponsored by the European Commission
+   presents a wide range of electricity sector component models.
+   Some key references include works by Vanzi :cite:`Vanzi1996`,
+   Anagnos :cite:`Anagnos1999` and the HAZUS Technical Manual :cite:`FEMA2003`.
    HAZUS includes fragility functions for a wider range of facilities and
    subcomponents than those presented in the Syner-G Project.
 
