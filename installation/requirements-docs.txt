@@ -1,3 +1,4 @@
+setuptools
 Sphinx
 sphinx-rtd-theme
 pybtex

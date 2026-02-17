@@ -1,9 +1,7 @@
-actdiag
 alabaster
 adjustText
 awscli
 babel
-blockdiag
 botocore
 cairocffi>=1.4.0
 codecov
@@ -72,12 +70,7 @@ linkify-it-py
 katex
 
 # Diagrams
-blockdiag
-seqdiag
-actdiag
-sphinxcontrib-actdiag
-sphinxcontrib-blockdiag
-sphinxcontrib-seqdiag
+sphinxcontrib-mermaid
 
 # Development and QA
 pytest

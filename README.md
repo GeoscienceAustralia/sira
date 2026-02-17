@@ -139,21 +139,21 @@ directory of the SIRA code, and the model of interest is in the location
 
 The following code runs the simulation and the post processing simultanrously:
 
-    ```bash
-    python -m sira -d scenario_dir/ci_model_x -sfl
-    ```
+```bash
+python -m sira -d scenario_dir/ci_model_x -sfl
+```
 
 To run only the Monte Carlo simulation without post-processing:
 
-    ```bash
-    python -m sira -d scenario_dir/ci_model_x -s
-    ```
+```bash
+python -m sira -d scenario_dir/ci_model_x -s
+```
 
 To run both the model fitting and the loss analysis code:
 
-    ```bash
-    python -m sira -d scenario_dir/ci_model_x -fl
-    ```
+```bash
+python -m sira -d scenario_dir/ci_model_x -fl
+```
 
 Note that the model fitting and loss analysis steps require that the
 initial simulation be run first so that it has the initial output data
@@ -279,15 +279,15 @@ Recommendation:
 To run the tests, user needs to be in the root directory of the code,
 e.g. `~/code/sira`. Then simply run:
 
-    ```bash
-    pytest
-    ```
+```bash
+pytest
+```
 
 If you want to explicitly ask `pytest` to run coverage reports, then run:
 
-    ```bash
-    pytest --cov-report term --cov=sira tests/
-    ```
+```bash
+pytest --cov-report term --cov=sira tests/
+```
 
 If you are using docker as described above, you can do this from within the
 sira container.
