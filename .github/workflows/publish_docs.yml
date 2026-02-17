@@ -13,15 +13,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
       - name: Install dependencies
         run: |
-          python3 -m pip install -U setuptools
-          sudo apt install --reinstall python3-pkg-resources python3-setuptools
-          python3 -m pip install sphinx sphinx-rtd-theme # install Sphinx and a theme
-          python3 -m pip install pybtex pybtex-docutils
-          python3 -m pip install sphinxcontrib-bibtex
-          python3 -m pip install kroki sphinxcontrib-kroki
+          pip install setuptools
+          pip install sphinx sphinx-rtd-theme
+          pip install pybtex pybtex-docutils
+          pip install sphinxcontrib-bibtex
           # Add any other required dependencies here
       - name: Build HTML documentation
         run: |
