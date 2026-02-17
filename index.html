@@ -6,11 +6,11 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis &mdash; sira v1.0.1 docs</title>
+  <title>SIRA &mdash; sira v1.0.1 docs</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=cfefa292" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=edc23c89" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -43,13 +43,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-an-actual-infrastructure-system">2.1.1 Terminology Context: An Actual Infrastructure System</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-in-context-an-infrastructure-system">2.1.1 Terminology in Context: An Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-in-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology in Context: A Model of a Lifeline Infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
 </ul>
 </li>
@@ -79,14 +78,20 @@
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.4.1 Running Code Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#runtime-flags">4.4.2 Runtime Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#parallel-execution">4.5 Parallel Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#hpc-mpi-environment-flags">4.5.1 HPC / MPI Environment Flags</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Back Matter</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
@@ -107,7 +112,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis</li>
+      <li class="breadcrumb-item active">SIRA</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -116,8 +121,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sira-a-methodology-for-lifeline-infrastructure-vulnerability-analysis">
-<h1>SIRA: A Methodology for Lifeline Infrastructure Vulnerability Analysis<a class="headerlink" href="#sira-a-methodology-for-lifeline-infrastructure-vulnerability-analysis" title="Link to this heading"></a></h1>
+  <section id="sira">
+<h1>SIRA<a class="headerlink" href="#sira" title="Link to this heading"></a></h1>
 <p><a class="reference external" href="https://github.com/GeoscienceAustralia/sira">https://github.com/GeoscienceAustralia/sira</a> <br />
 Release: 1.0.1</p>
 <p>SIRA stands for <strong>Systemic Infrastructure Resilience Analysis</strong>.
@@ -166,8 +171,10 @@ improvements to system resilience.</p>
 <p><strong>Restoration Prognosis:</strong> Users can experiment with different levels of
 hazard intensities and post-disaster resource allocation to gauge restoration
 times for system operations.</p>
+</section>
+<section id="user-documentation">
+<h2>User Documentation<a class="headerlink" href="#user-documentation" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound" id="user-docs">
-<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
@@ -184,16 +191,15 @@ times for system operations.</p>
 <li class="toctree-l1"><a class="reference internal" href="ch04_installation.html">4 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#requirements">4.1 Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.2 AWS and Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#parallel-execution">4.5 Parallel Execution</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound" id="back-matter">
-<p class="caption" role="heading"><span class="caption-text">Back Matter</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>

@@ -2,12 +2,12 @@
 `input_node`
   :Description: The `component_id` of the input node.
 
-  :Data Type:   String. 
+  :Data Type:   String.
                 Must be one of the entries in the
                 `component_id` columns in the `component_list` table,
                 and its `node_type` must be `supply`.
 
-  :Example:     'coal_supply'
+  :Example:     'water_supply'
 
 
 `input_capacity`

@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=cfefa292" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=edc23c89" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -45,13 +45,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch02_concept.html">2 Model Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#the-system-model">2.1 The ‘System’ Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-an-actual-infrastructure-system">2.1.1 Terminology Context: An Actual Infrastructure System</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-in-context-an-infrastructure-system">2.1.1 Terminology in Context: An Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#terminology-in-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology in Context: A Model of a Lifeline Infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch02_concept.html#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
 </ul>
 </li>
@@ -81,14 +80,20 @@
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.4.1 Running Code Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#runtime-flags">4.4.2 Runtime Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#parallel-execution">4.5 Parallel Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#hpc-mpi-environment-flags">4.5.1 HPC / MPI Environment Flags</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Back Matter</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
@@ -151,20 +156,20 @@ will be as follows:</p>
 └── &lt;PROJECT_HAN&gt;
     ├── &lt;SYSTEM_GISKARD&gt;
     │   ├── input
-    │   │   ├── config_system_GR.json
+    │   │   ├── config_system_GR.json
     │   │   └── model_system_GR.json
     │   └── output
-    │       ├── ...
+    │       ├── ...
     │       ├── ...
     │       └── ...
     │
     └── &lt;SYSTEM_DANEEL&gt;
         ├── input
-        │   ├── config_system_DO.json
+        │   ├── config_system_DO.json
         │   └── model_system_DO.json
         │
         └── output
-            ├── ...
+            ├── ...
             ├── ...
             └── ...
 </pre></div>
@@ -179,6 +184,18 @@ details of their implementation will not be discussed here.</p>
 with a brief description and representative values.</p>
 <p class="rubric">SCENARIO_PARAMS</p>
 <dl class="simple">
+<dt><cite>CONFIGURATION_ID</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Unique ID for the scenario and model setup</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“Project X scenario config - SS East Perth”</p>
+</dd>
+</dl>
+</dd>
 <dt><cite>SCENARIO_NAME</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Name for identifying simulation scenario</p>
@@ -187,50 +204,37 @@ with a brief description and representative values.</p>
 <dd class="field-even"><p>String</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘Coal-fired Generation Plant 600W’</p>
+<dd class="field-odd"><p>“Historical earthquake Meckering equiv”</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>INTENSITY_MEASURE_PARAM</cite></dt><dd><dl class="field-list simple">
+<dt><cite>SCENARIO_NAME</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Engineering Demand Parameter</p>
+<dd class="field-odd"><p>Name for identifying simulation scenario</p>
 </dd>
 <dt class="field-even">Data Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>String</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘PGA’</p>
+<dd class="field-odd"><p>“Historical earthquake Meckering equiv”</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>INTENSITY_MEASURE_UNIT</cite></dt><dd><dl class="field-list simple">
+<dt><cite>OUTPUT_DIR</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Demand Parameter Unit</p>
+<dd class="field-odd"><p>Path where results should be stored</p>
 </dd>
 <dt class="field-even">Data Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>String</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘g’</p>
+<dd class="field-odd"><p>“./output_SS_WUN_array”</p>
 </dd>
 </dl>
 </dd>
 </dl>
-<p class="rubric">HAZARD_PARAMS</p>
+<p class="rubric">HAZARD_PARAMS_COMMON</p>
 <dl class="simple">
-<dt><cite>HAZARD_INPUT_METHOD</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>How the hazard is supplied. Must be one of two options:
-‘calculated_array’ or ‘hazard_file’</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>String</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘calculated_array’</p>
-</dd>
-</dl>
-</dd>
 <dt><cite>HAZARD_TYPE</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The type of hazard for the impact simulation.</p>
@@ -246,7 +250,53 @@ with a brief description and representative values.</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>INTENSITY_MEASURE_MIN</cite></dt><dd><dl class="field-list simple">
+<dt><cite>HAZARD_INTENSITY_MEASURE_PARAM</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Engineering Demand Parameter</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘PGA’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>HAZARD_INTENSITY_MEASURE_UNIT</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Demand Parameter Unit</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘g’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>HAZARD_INPUT_METHOD</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>How the hazard is supplied. Must be one of the following:
+[1] “calculated_array” or “hazard_array” – where an array of
+equally spaced values are calculated for generating the fragility
+or vulnerability of an asset. Can only be used for point assets.
+[2] “hazard_file” or “scenario_file” – where the system expects
+a file with predefined headers and structure an input for hazard
+data points. Can be used for point and geospatially distributed
+assets.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“calculated_array”</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">HAZARD_PARAMS_FOR_CALCULATED_ARRAY</p>
+<dl class="simple">
+<dt><cite>HAZARD_INTENSITY_MEASURE_MIN</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Minimum value for internsity measurement (IM) parameter</p>
 </dd>
@@ -258,7 +308,7 @@ with a brief description and representative values.</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>INTENSITY_MEASURE_MAX</cite></dt><dd><dl class="field-list simple">
+<dt><cite>HAZARD_INTENSITY_MEASURE_MAX</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Maximum value for internsity measurement (IM) parameter</p>
 </dd>
@@ -270,7 +320,7 @@ with a brief description and representative values.</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>INTENSITY_MEASURE_STEP</cite></dt><dd><dl class="field-list simple">
+<dt><cite>HAZARD_INTENSITY_MEASURE_STEP</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Step size for incrementing the IM param</p>
 </dd>
@@ -282,7 +332,7 @@ with a brief description and representative values.</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>NUM_SAMPLES</cite></dt><dd><dl class="field-list simple">
+<dt><cite>HAZARD_NUM_SAMPLES</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Iterations for Monte Carlo process</p>
 </dd>
@@ -294,70 +344,90 @@ with a brief description and representative values.</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>FOCAL_HAZARD_SCENARIOS</cite></dt><dd><dl class="field-list simple">
+</dl>
+<p class="rubric">HAZARD_PARAMS_FOR_HAZARD_FILE</p>
+<dl class="simple">
+<dt><cite>HAZARD_INPUT_DIR</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The value(s) or scenario(s) at which to undertake
+<dd class="field-odd"><p>Path for hazard file location</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“../_PROJECTX_hazard_portfolio/scenario_files”</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>HAZARD_INPUT_FILE</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Name of hazard input file</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“./output_SS_WUN_array”</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>HAZARD_INPUT_HEADER</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Columen name for the hazard values</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“gmv_PGA”</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>HAZARD_SCALING_FACTOR</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Multiplier factor for scaling the hazard values
+in the <cite>HAZARD_INPUT_HEADER</cite> column. Default is 1.0.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Float</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1.2</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">FOCUS_SCENARIOS_FOR_DETAILED_ANALYSIS</p>
+<dl class="simple">
+<dt><cite>SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name(s) of the focus scenarios for
 detailed assessment of system response</p>
 </dd>
 <dt class="field-even">Data Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of strings</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>[0.50, 0.55]</p>
+<dd class="field-odd"><p>[“Cunderdin RP1000”, “Cunderdin RP2500”]</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SCENARIO_FOCAL_HAZARD_SCENARIOS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The value(s) or scenario(s) at which to undertake
+detailed assessment of system response</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of floats or strings that can be interpreted as floats</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[0.121, 0.226]</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">RESTORATION_PARAMS</p>
 <dl class="simple">
-<dt><cite>TIME_UNIT</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Unit of time for restoration time calculations</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>String</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘week’</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>RESTORE_PCT_CHKPOINTS</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Number of steps to assess functionality</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Integer</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>21</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>RESTORATION_TIME_STEP</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Time increment for restoration period</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Integer</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>1</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>RESTORATION_TIME_MAX</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Maximum value for restoration period assessment</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Integer</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>300</p>
-</dd>
-</dl>
-</dd>
 <dt><cite>RESTORATION_STREAMS</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The number of simultaneous components to work on</p>
@@ -370,10 +440,73 @@ detailed assessment of system response</p>
 </dd>
 </dl>
 </dd>
+<dt><cite>RESTORATION_TIME_UNIT</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Unit of time for restoration time calculations</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘week’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_TIME_MIN</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Minimum value for restoration period assessment.
+Default is 1.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_TIME_MAX</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Maximum value for restoration period assessment.
+No default values.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>300</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_TIME_STEP</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Time increment for restoration period.
+Default is 1.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>RESTORATION_PCT_CHECKPOINTS</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[DEPRECATED] Number of steps to assess functionality at</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>21</p>
+</dd>
+</dl>
+</dd>
 </dl>
 <p class="rubric">SYSTEM_METADATA</p>
 <dl class="simple">
-<dt><cite>INFRASTRUCTURE_LEVEL</cite></dt><dd><dl class="field-list simple">
+<dt><cite>SYSTEM_INFRASTRUCTURE_LEVEL</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Define infrastructure as a <cite>facility</cite> or <cite>network</cite></p>
 </dd>
@@ -382,6 +515,18 @@ detailed assessment of system response</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
 <dd class="field-odd"><p><cite>facility</cite></p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYSTEM_COMMODITY_FLOW_TYPES</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of input commodity types</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2</p>
 </dd>
 </dl>
 </dd>
@@ -421,27 +566,35 @@ detailed assessment of system response</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>COMMODITY_FLOW_TYPES</cite></dt><dd><dl class="field-list simple">
+<dt><cite>SYSTEM_COMPONENT_LOCATION_CONF</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Number of input commodity types</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Integer</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>2</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>SYS_CONF_FILE_NAME</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>File name for system config and fragility info</p>
+<dd class="field-odd"><p>Defines whether the location data for each component is provided.
+Allowed values:
+[1] <cite>undefined</cite>: location data not given,
+[2] <cite>defined</cite>: location data given,
+[3] <cite>schematic</cite>: location data given for drawing in graphviz,
+[4] <cite>geospatial</cite>: actual geospatial location data given.</p>
 </dd>
 <dt class="field-even">Data Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>String</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘sys_config_ps.xlsx’</p>
+<dd class="field-odd"><p>‘schematic’</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SYS_CONF_FILE_NAME</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[OPTIONAL] Define file name for system config and fragility info.
+Maybe useful when there are multiple models for same asset to test.
+Generally auto-detected in code. The model name must begin or end
+with the term ‘model’.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘model_ps_xyz.json’</p>
 </dd>
 </dl>
 </dd>
@@ -450,7 +603,8 @@ detailed assessment of system response</p>
 <dl class="simple">
 <dt><cite>FIT_PE_DATA</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Flag for fitting Prob of Exceedance data</p>
+<dd class="field-odd"><p>[DEPRECATED] Flag for fitting Prob of Exceedance data.
+It is preferred to set this via the command line argument.</p>
 </dd>
 <dt class="field-even">Data Type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Boolean</p>
@@ -460,31 +614,7 @@ detailed assessment of system response</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>FIT_RESTORATION_DATA</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Fit model to simulated restoration data</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Boolean</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>SAVE_VARS_NPY</cite></dt><dd><dl class="field-list simple">
-<dt class="field-odd">Description<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Switch to indicate whether to save simulated values in binary numpy format</p>
-</dd>
-<dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Boolean</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True</p>
-</dd>
-</dl>
-</dd>
-<dt><cite>MULTIPROCESS</cite></dt><dd><dl class="field-list simple">
+<dt><cite>SWITCH_MULTIPROCESS</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Switch to indicate whether to use multi-core processing. 0 <span class="math notranslate nohighlight">\(\rightarrow\)</span> False, 1 <span class="math notranslate nohighlight">\(\rightarrow\)</span> True</p>
 </dd>
@@ -496,7 +626,7 @@ detailed assessment of system response</p>
 </dd>
 </dl>
 </dd>
-<dt><cite>RUN_CONTEXT</cite></dt><dd><dl class="field-list simple">
+<dt><cite>SWITCH_RUN_CONTEXT</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Switch to indicate whether to run a full simulation, or run test code. 0 <span class="math notranslate nohighlight">\(\rightarrow\)</span> run tests, 1 <span class="math notranslate nohighlight">\(\rightarrow\)</span> normal run.</p>
 </dd>
@@ -508,16 +638,40 @@ detailed assessment of system response</p>
 </dd>
 </dl>
 </dd>
+<dt><cite>SWITCH_FIT_RESTORATION_DATA</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fit model to simulated restoration data</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Boolean</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>SWITCH_SAVE_VARS_NPY</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Switch to indicate whether to save simulated values in binary numpy format</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Boolean</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd>
 </dl>
 </section>
 <section id="infrastructure-model-definition-file">
 <span id="model-definition-file"></span><h2><span class="section-number">3.2 </span>Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Link to this heading"></a></h2>
-<p>The system model is presently built using an MS Excel spreadsheet file.
+<p>The system model is defined using an MS Excel spreadsheet file.
 It contains seven required worksheets, each representing modules that define
 different aspect of the infrastructure model. The names of the worksheets
 are fixed. The Excel file must be converted to JSON format before it can be
-ingested by SIRA. There are scripts provided in the ‘scripts’ directory for
-this purpose.</p>
+ingested by SIRA. The required script is available in the ‘sira/tools’ directory for
+this purpose <a href="#id3"><span class="problematic" id="id4">`convert_excel_files_to_json.py`_</span></a>.</p>
 <p>The format and function of the worksheets (i.e. model definition modules)
 are described in the following subsections:</p>
 <section id="basic-system-metadata-system-meta">
@@ -576,7 +730,7 @@ planned future functionality expansion.</p>
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Specifies whether the location information for system
 components are specified in
-<span class="xref std std-ref">component list definition</span>.</p>
+<a class="reference internal" href="#model-params-component-list"><span class="std std-ref">component list definition</span></a>.</p>
 <p>A value of ‘undefined’ indicates that the location
 information for the components is not relevant to its
 vulnerability analysis, AND the graph-drawing methods
@@ -611,8 +765,7 @@ restoration algorithms.</p>
 <section id="list-of-components-component-list">
 <span id="inputdata-component-list"></span><h3><span class="section-number">3.2.2 </span>List of Components: component_list<a class="headerlink" href="#list-of-components-component-list" title="Link to this heading"></a></h3>
 <p>The <em>component_list</em> has the following parameters:</p>
-<p class="rubric">model_params__component_list</p>
-<dl class="simple">
+<dl class="simple" id="model-params-component-list">
 <dt><cite>component_id</cite></dt><dd><dl class="field-list simple">
 <dt class="field-odd">Description<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Unique id for a component in the system. This is an instance
@@ -746,6 +899,20 @@ will have a value of 1.0.</p>
 </dd>
 </dl>
 </dd>
+<dt><cite>site_id</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID for the hazard location matched to the component.
+This value must match one of the values in the hazard
+definition file under the column of the same header.
+A negative value indicates that the related component serves
+as a modelling artefact and not included hazard impact
+simulation.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Int.</p>
+</dd>
+</dl>
+</dd>
 </dl>
 </section>
 <section id="connections-between-components-component-connections">
@@ -834,7 +1001,7 @@ Must be one of the entries in the
 and its <cite>node_type</cite> must be <cite>supply</cite>.</p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p>‘coal_supply’</p>
+<dd class="field-odd"><p>‘water_supply’</p>
 </dd>
 </dl>
 </dd>
@@ -1022,7 +1189,7 @@ the following damage states are used:</p>
 </ol>
 </dd>
 <dt class="field-even">Data Type<span class="colon">:</span></dt>
-<dd class="field-even"><p>String. Fixed, pre-determined state names.</p>
+<dd class="field-even"><p>String. Must match set of pre-determined state names.</p>
 </dd>
 </dl>
 </dd>
@@ -1260,13 +1427,32 @@ was developed.</p>
 <p>This table documents the physical damage characteristics that are implied
 by the damage states used to model the fragility of the system components.</p>
 <dl>
-<dt><cite>component_type</cite></dt><dd><p>The entries here are the same as noted under
+<dt><cite>component_type</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of component, based on the typology definitions
+being used in the system model.
+The entries here are the same as noted under
 <a class="reference internal" href="#dmg-algo-component-type"><span class="std std-ref">component_type</span></a> in the
 ‘Component Type Damage Algorithms’ table.</p>
 </dd>
-<dt><cite>damage_state</cite></dt><dd><p>The entries here are the same as noted under
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Alphanumeric characters.</p>
+</dd>
+</dl>
+</dd>
+<dt><cite>damage_state</cite></dt><dd><dl class="field-list simple">
+<dt class="field-odd">Description<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list of discrete damage states used in defining the
+damage scale being modelled within the system. The ‘None’
+damage state is not explicitly listed.
+The entries here are the same as noted under
 <a class="reference internal" href="#dmg-algo-damage-state"><span class="std std-ref">damage_state</span></a> in the
 ‘Component Type Damage Algorithms’ table.</p>
+</dd>
+<dt class="field-even">Data Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>String. Must match set of pre-determined state names.</p>
+</dd>
+</dl>
 </dd>
 <dt><cite>damage_state_definitions</cite></dt><dd><dl class="field-list">
 <dt class="field-odd">Description<span class="colon">:</span></dt>

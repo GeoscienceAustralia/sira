@@ -3,14 +3,14 @@
 Acknowledgements
 =================
 
-Mark Edwards: for the vision behind this simulation tool.
+Mark Edwards originated the vision behind a simulation tool for infratructure systems.
 
-Martin Wehner: for initial planning and design of the predecessor to this code.
+Martin Wehner produced the initial plans and design of the FacSim software, the predecessor and initial foundation to this code.
 
-Ammar Ahmed: for identifying requirements for improving capabilities in the original software.
+Ammar Ahmed identified requirements for improving capabilities in the original software.
 
-Maruf Rahman: for revision of the 'facility model', input data preservation, and bug fixes.
+Hyeuk Ryu identified bugs, tested the software, and provided improvement suggestions through the life of this project.
 
-Hyeuk Ryu: for identifying bugs, testing, and improvement suggestions.
+Simon Knapp did the brilliant work of building the core classes and metaclasses that underpin the system models. Sheece Gardezi and Sudipta Basak helped transition of the SIRA concept to object-oriented design, added initial test suites, and added many of the early refinements to the codebase.
 
-Sudipta Basak: for help with code cleanup, setting up some tests, and the move to OOD.
+Maruf Rahman developed the generalised model concept based on graph theory, the related design of the model definition files, and managed the transformation of the software capability from modelling vulnerability of point assets to modelling risk for geospatially distributed infrastructure networks of arbitrary size and complexity.

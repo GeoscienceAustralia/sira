@@ -22,7 +22,7 @@ The 'System' Model
 
 A system, according to the
 `Merriam-Webster <https://www.merriam-webster.com/dictionary/system>`_
-dictionary, is
+dictionary, is:
 
     "a regularly interacting or interdependent group
     of items forming a unified whole."
@@ -50,21 +50,22 @@ scalability, making it possible accommodate diverse sectors and assets
 of varying scales and complexities.
 
 Furthermore, it allows the user to:
-(a) model the effect of impaired or destroyed components on the
-operational capacity of the overall system;
-(b) use graph theory to assess the graduated capacity degradation, and
-restoration, through modelling flow through the network; and
-(c) detect prioritised 'paths', or sets of components, within network
-that need to be repaired or restored in order to restore the flow through
-the network which represents the productive capacity of the system.
 
+(a) model the effect of impaired or destroyed components on the 
+    operational capacity of the overall system;
 
-Terminology Context: An Actual Infrastructure System
-----------------------------------------------------
+(b) use graph theory to assess the graduated capacity degradation, and 
+    restoration, through modelling flow through the network; and
 
-The elements in an infrastructure (or lifeline) system are conceptualised
+(c) detect prioritised 'paths', or sets of components, within network 
+    that need to be repaired or restored in order to restore the flow through 
+    the network which represents the productive capacity of the system.
+
+Terminology in Context: An Infrastructure System
+------------------------------------------------
+
+The elements in an infrastructure (or lifeline) system are conceptualised 
 as being structured in a three-level hierarchy:
-
 
 **Level 1 : Infrastructure Network --**  This is the top level of
 interconnected infrastructure systems where infrastructure facilities are
@@ -85,8 +86,8 @@ delivering some service. This also applies to classification of assets,
 and how information about those assets they are stored and referenced
 in a database.
 
-Terminology Context: A Model of a Lifeline Infrastructure
----------------------------------------------------------
+Terminology in Context: A Model of a Lifeline Infrastructure
+------------------------------------------------------------
 
 In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
@@ -167,7 +168,7 @@ illustrates this concept for a thermal power station.
    :alt: Power station schematic
    :align: center
    :width: 98%
-   
+
    Schematic representation of a coal-fired power station
 
 The 'edges', or inter-nodal connections, represent a link or a process for 
@@ -175,8 +176,8 @@ maintaining 'flow' of goods or services within the system, and thus their
 directionality is important. For the power station, the edges are 
 unidirectional, since the inputs flow in one direction starting from the 
 entry point into the system and are progressively transformed through the 
-system to generate energy – the end product. However, a substation is an 
-electrical network where electricity – the system 'commodity' – can flow in 
+system to generate energy - the end product. However, a substation is an 
+electrical network where electricity - the system 'commodity' - can flow in 
 either direction through an edge (electrical conductor) as dictated by load 
 demands and system constraints. Therefore, most of the edges in the 
 substation are bidirectional, unless specifically constrained.

@@ -1,4 +1,4 @@
-.. rubric:: model_params__component_list
+.. _model-params-component-list:
 
 `component_id`
   :Description: Unique id for a component in the system. This is an instance
@@ -96,3 +96,14 @@
   :Description: The y-position or latitude value of the component.
 
   :Data Type:   Float.
+
+
+`site_id`
+  :Description: The ID for the hazard location matched to the component.
+                This value must match one of the values in the hazard
+                definition file under the column of the same header.
+                A negative value indicates that the related component serves
+                as a modelling artefact and not included hazard impact
+                simulation.
+
+  :Data Type:   Int.

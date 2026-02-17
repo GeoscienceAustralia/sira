@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=cfefa292" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=edc23c89" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -45,13 +45,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2 Model Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-system-model">2.1 The ‘System’ Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#terminology-context-an-actual-infrastructure-system">2.1.1 Terminology Context: An Actual Infrastructure System</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#terminology-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminology-in-context-an-infrastructure-system">2.1.1 Terminology in Context: An Infrastructure System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminology-in-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology in Context: A Model of a Lifeline Infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
 </ul>
 </li>
@@ -81,14 +80,20 @@
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#setting-up-a-development-environment-with-anaconda">4.3 Setting Up a Development Environment with Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.5 Running Code Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.4.1 Running Code Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#runtime-flags">4.4.2 Runtime Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#parallel-execution">4.5 Parallel Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#hpc-mpi-environment-flags">4.5.1 HPC / MPI Environment Flags</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Back Matter</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
@@ -134,7 +139,7 @@ jurisdiction for that class of assets.</p>
 <span id="system-model-vocab"></span><h2><span class="section-number">2.1 </span>The ‘System’ Model<a class="headerlink" href="#the-system-model" title="Link to this heading"></a></h2>
 <p>A system, according to the
 <a class="reference external" href="https://www.merriam-webster.com/dictionary/system">Merriam-Webster</a>
-dictionary, is</p>
+dictionary, is:</p>
 <blockquote>
 <div><p>“a regularly interacting or interdependent group
 of items forming a unified whole.”</p>
@@ -157,16 +162,18 @@ on the level of abstraction, which is clarified in following subsections.</p>
 <p>This modelling approach affords a very high degree of flexibility and
 scalability, making it possible accommodate diverse sectors and assets
 of varying scales and complexities.</p>
-<p>Furthermore, it allows the user to:
-(a) model the effect of impaired or destroyed components on the
-operational capacity of the overall system;
-(b) use graph theory to assess the graduated capacity degradation, and
-restoration, through modelling flow through the network; and
-(c) detect prioritised ‘paths’, or sets of components, within network
+<p>Furthermore, it allows the user to:</p>
+<ol class="loweralpha simple">
+<li><p>model the effect of impaired or destroyed components on the
+operational capacity of the overall system;</p></li>
+<li><p>use graph theory to assess the graduated capacity degradation, and
+restoration, through modelling flow through the network; and</p></li>
+<li><p>detect prioritised ‘paths’, or sets of components, within network
 that need to be repaired or restored in order to restore the flow through
-the network which represents the productive capacity of the system.</p>
-<section id="terminology-context-an-actual-infrastructure-system">
-<h3><span class="section-number">2.1.1 </span>Terminology Context: An Actual Infrastructure System<a class="headerlink" href="#terminology-context-an-actual-infrastructure-system" title="Link to this heading"></a></h3>
+the network which represents the productive capacity of the system.</p></li>
+</ol>
+<section id="terminology-in-context-an-infrastructure-system">
+<h3><span class="section-number">2.1.1 </span>Terminology in Context: An Infrastructure System<a class="headerlink" href="#terminology-in-context-an-infrastructure-system" title="Link to this heading"></a></h3>
 <p>The elements in an infrastructure (or lifeline) system are conceptualised
 as being structured in a three-level hierarchy:</p>
 <p><strong>Level 1 : Infrastructure Network –</strong>  This is the top level of
@@ -185,8 +192,8 @@ delivering some service. This also applies to classification of assets,
 and how information about those assets they are stored and referenced
 in a database.</p>
 </section>
-<section id="terminology-context-a-model-of-a-lifeline-infrastructure">
-<h3><span class="section-number">2.1.2 </span>Terminology Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#terminology-context-a-model-of-a-lifeline-infrastructure" title="Link to this heading"></a></h3>
+<section id="terminology-in-context-a-model-of-a-lifeline-infrastructure">
+<h3><span class="section-number">2.1.2 </span>Terminology in Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#terminology-in-context-a-model-of-a-lifeline-infrastructure" title="Link to this heading"></a></h3>
 <p>In the context of a specific infrastructure model developed for hazard
 impact assessment, the following terms and ideas apply (and are implemented
 in the simulation code).</p>
@@ -257,8 +264,8 @@ maintaining ‘flow’ of goods or services within the system, and thus their
 directionality is important. For the power station, the edges are
 unidirectional, since the inputs flow in one direction starting from the
 entry point into the system and are progressively transformed through the
-system to generate energy – the end product. However, a substation is an
-electrical network where electricity – the system ‘commodity’ – can flow in
+system to generate energy - the end product. However, a substation is an
+electrical network where electricity - the system ‘commodity’ - can flow in
 either direction through an edge (electrical conductor) as dictated by load
 demands and system constraints. Therefore, most of the edges in the
 substation are bidirectional, unless specifically constrained.</p>

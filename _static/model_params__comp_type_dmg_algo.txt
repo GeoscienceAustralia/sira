@@ -34,7 +34,7 @@
                 3. DS3 Extensive
                 4. DS4 Complete
 
-  :Data Type:   String. Fixed, pre-determined state names.
+  :Data Type:   String. Must match set of pre-determined state names.
 
 
 `is_piecewise`
@@ -200,7 +200,7 @@
   :Description: The second param of the recovery function. This is the 'scale'
                 paramter. For a Normal distribution, it is the standard deviation
                 of the distribution.
-                
+
   :Data Type:   Float.
 
 

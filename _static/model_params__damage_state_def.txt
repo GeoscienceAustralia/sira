@@ -1,15 +1,22 @@
 
 `component_type`
-  The entries here are the same as noted under
-  :ref:`component_type <dmg_algo_component_type>` in the
-  'Component Type Damage Algorithms' table.
+  :Description: The type of component, based on the typology definitions
+                being used in the system model.
+                The entries here are the same as noted under
+                :ref:`component_type <dmg_algo_component_type>` in the
+                'Component Type Damage Algorithms' table.
 
+  :Data Type:   Alphanumeric characters.
 
 `damage_state`
-  The entries here are the same as noted under
-  :ref:`damage_state <dmg_algo_damage_state>` in the
-  'Component Type Damage Algorithms' table.
+  :Description: The list of discrete damage states used in defining the
+                damage scale being modelled within the system. The 'None'
+                damage state is not explicitly listed.
+                The entries here are the same as noted under
+                :ref:`damage_state <dmg_algo_damage_state>` in the
+                'Component Type Damage Algorithms' table.
 
+  :Data Type:   String. Must match set of pre-determined state names.
 
 `damage_state_definitions`
   :Description: The physical damage descriptors corresponding

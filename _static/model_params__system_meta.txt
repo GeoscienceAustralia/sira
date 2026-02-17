@@ -45,7 +45,7 @@ of results.
 `SYSTEM_COMPONENT_LOCATION_CONF`
     :Description:   Specifies whether the location information for system
                     components are specified in
-                    :ref:`component list definition <model_params__component_list>`.
+                    :ref:`component list definition <model-params-component-list>`.
 
                     A value of 'undefined' indicates that the location
                     information for the components is not relevant to its
