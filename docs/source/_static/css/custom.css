@@ -24,7 +24,7 @@ body {
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     color: #333333;
     font-weight: 500;
-    font-family: 'Arbutus Slab', 'Roboto Slab', 'Lora', serif;
+    font-family: 'Roboto Slab', 'Arbutus Slab', 'Lora', serif;
     line-height: 115%;
 }
 
@@ -73,7 +73,7 @@ h2 {
 }
 
 h3 {
-    font-size: 26px;
+    font-size: 22px;
     padding: 10px 10px 10px 0px;
     margin: 10px 0 10px 0px;
 }
@@ -89,9 +89,9 @@ h2:before {
 h3:before {
     content: ' ';
     display: block;
-    width: 70px;
+    width: 65px;
     padding-top: 20px;
-    border-top: 4px solid #6d6d6d;
+    border-top: 4px solid #797878;
 }
 
 .rst-content table.docutils td,

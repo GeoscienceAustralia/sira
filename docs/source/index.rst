@@ -80,8 +80,9 @@ User Documentation
    ch01_intro
    ch02_concept
    ch03_simsetup
-   ch04_installation
-   ch05_fragility_attribution
+   ch04_modelsetup
+   ch05_install_use
+   ch06_fragility_attribution
 
 
 .. toctree::
