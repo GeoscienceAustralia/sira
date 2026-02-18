@@ -7,10 +7,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3 Simulation and Model Setup &mdash; sira v1.0.1 docs</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=edc23c89" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=fa3a5556" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -60,7 +60,7 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3 Simulation and Model Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#simulation-setup-file">3.1 Simulation Setup File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#infrastructure-model-definition-file">3.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure-model-definition">3.2 Infrastructure Model Definition</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basic-system-metadata-system-meta">3.2.1 Basic System Metadata: system_meta</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#list-of-components-component-list">3.2.2 List of Components: component_list</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#connections-between-components-component-connections">3.2.3 Connections between Components: component_connections</a></li>
@@ -74,13 +74,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch04_installation.html">4 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#requirements">4.1 Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.2 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#installation-of-sira-on-aws-with-docker">4.2.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#using-docker">4.2.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.2 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.3 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#installation-of-sira-on-aws-with-docker">4.3.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#using-docker">4.3.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.3.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.4.1 Running Code Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#runtime-flags">4.4.2 Runtime Flags</a></li>
@@ -664,14 +664,14 @@ It is preferred to set this via the command line argument.</p>
 </dd>
 </dl>
 </section>
-<section id="infrastructure-model-definition-file">
-<span id="model-definition-file"></span><h2><span class="section-number">3.2 </span>Infrastructure Model Definition File<a class="headerlink" href="#infrastructure-model-definition-file" title="Link to this heading"></a></h2>
+<section id="infrastructure-model-definition">
+<span id="model-definition-file"></span><h2><span class="section-number">3.2 </span>Infrastructure Model Definition<a class="headerlink" href="#infrastructure-model-definition" title="Link to this heading"></a></h2>
 <p>The system model is defined using an MS Excel spreadsheet file.
 It contains seven required worksheets, each representing modules that define
 different aspect of the infrastructure model. The names of the worksheets
 are fixed. The Excel file must be converted to JSON format before it can be
-ingested by SIRA. The required script is available in the ‘sira/tools’ directory for
-this purpose <a href="#id3"><span class="problematic" id="id4">`convert_excel_files_to_json.py`_</span></a>.</p>
+ingested by SIRA. The required script <cite>convert_excel_files_to_json.py</cite> is available in the <a class="reference external" href="https://github.com/GeoscienceAustralia/sira/tree/master/sira/tools">sira/tools</a> directory for
+this purpose.</p>
 <p>The format and function of the worksheets (i.e. model definition modules)
 are described in the following subsections:</p>
 <section id="basic-system-metadata-system-meta">

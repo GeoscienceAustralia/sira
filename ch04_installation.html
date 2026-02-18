@@ -7,10 +7,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>4 Installation and Usage &mdash; sira v1.0.1 docs</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=edc23c89" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=fa3a5556" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -59,7 +59,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_simsetup.html">3 Simulation and Model Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#simulation-setup-file">3.1 Simulation Setup File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#infrastructure-model-definition-file">3.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#infrastructure-model-definition">3.2 Infrastructure Model Definition</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#basic-system-metadata-system-meta">3.2.1 Basic System Metadata: system_meta</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#list-of-components-component-list">3.2.2 List of Components: component_list</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#connections-between-components-component-connections">3.2.3 Connections between Components: component_connections</a></li>
@@ -73,13 +73,13 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">4.1 Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#aws-and-docker">4.2 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installation-of-sira-on-aws-with-docker">4.2.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-docker">4.2.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-compose">4.2.3 Docker Compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recommended-process-for-building-a-sira-environment">4.2 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aws-and-docker">4.3 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-of-sira-on-aws-with-docker">4.3.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-docker">4.3.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-compose">4.3.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-code-tests">4.4.1 Running Code Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runtime-flags">4.4.2 Runtime Flags</a></li>
@@ -174,134 +174,8 @@ with the location of the Graphviz binaries.</p>
 option for Python 3.5+ is the free full-featured community edition of
 <a class="reference external" href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">Visual Studio 2015</a>.</p>
 </section>
-<section id="aws-and-docker">
-<span id="dev-env-setup"></span><h2><span class="section-number">4.2 </span>AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Link to this heading"></a></h2>
-<p>The development of the Web interface to provide the ability to create
-component types and models led to the usage of Docker and AWS. Docker
-creates containers that provide independence of platforms when developing
-applications and services. So Docker removes the requirement for Conda
-to organise the Python libraries. The downside of using docker in our
-environment (GA Sysmonston) is that network security makes running Docker
-difficult. So development environments are easier to create and use on AWS.
-Use of AWS for Web applications is the current direction for GA.</p>
-<section id="installation-of-sira-on-aws-with-docker">
-<h3><span class="section-number">4.2.1 </span>Installation of SIRA on AWS with Docker<a class="headerlink" href="#installation-of-sira-on-aws-with-docker" title="Link to this heading"></a></h3>
-<p>This requires building an AWS instance and then building the environments
-using Docker.</p>
-<p><strong>Create AWS Instance using Packer:</strong> <br />
-We’re we come from, if we don’t have a laptop handy, we like to use AWS for
-provisioning dev machines. A basic dev box can be setup using
-<a class="reference external" href="https://www.packer.io/intro/">Packer</a>, by running:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ packer build build.json
-</pre></div>
-</div>
-<p>in the current directory.</p>
-<p><strong>Create AWS Instance using bash script:</strong> <br />
-The top level directory of SIRA has the script <code class="docutils literal notranslate"><span class="pre">create-aws-instance.sh</span></code>
-The script requires the <a class="reference external" href="https://aws.amazon.com/cli/">aws command line interface</a>
-to be installed on the machine. It also requires access to AWS account
-credentials.</p>
-<p>The script is run as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ create-aws-instance.sh
-</pre></div>
-</div>
-<p>Both of these commands will use the build_sira_box.sh to install Linux updates
-and the docker components that will be required.</p>
-<p>It then clones the SIRA github repository, from the master branch. Docker is
-then used to build the SIRA environment.</p>
-</section>
-<section id="using-docker">
-<h3><span class="section-number">4.2.2 </span>Using Docker<a class="headerlink" href="#using-docker" title="Link to this heading"></a></h3>
-<p>If you have Docker installed, you can build a container for working with
-sira by running the command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker build -t sira .
-</pre></div>
-</div>
-<p>The primary advantage of working with docker is that you do not have to worry
-about setting up the python environment, which is done when building the
-container and isolated from your own environment.</p>
-<p>To run an interactive container you can use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -it -v &quot;$(pwd):/sira&quot; --name sira s
-</pre></div>
-</div>
-<p>This will give you a terminal inside the container in which you can execute
-commands. Inside the container you can find the current directory mapped at
-<cite>/sira</cite>. You can modify files either within the container or the host and the
-changes will be available in both.</p>
-<p>Alternatively, you might want a container running in the background which you
-can execute commands at using
-<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">docker exec</a>. In
-this case you would start the container with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -id -v &quot;$(pwd):/sira&quot; --name sira sira
-</pre></div>
-</div>
-<p>One could then, for example, run the unit tests for the modelling package with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd sira/tests
-$ python -m unittest discover .
-</pre></div>
-</div>
-<p>In any case, once you are done you should destroy the container with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker kill sira
-$ docker rm sira
-</pre></div>
-</div>
-<p>or, if your too lazy to type two lines, use this command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker rm -f sira
-</pre></div>
-</div>
-<p>Several other containers are provided to help with development. These are
-defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-api</span></code>: <br />
-Provides a web API which is used for parameterising model components
-(at this stage just response functions) and serialising them.
-This is presently (at Feb 2018) a prototype and provides only a
-small subset of what we hope for.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-dev</span></code>: <br />
-Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
-defining model components built on top of the API mentioned above.
-The application is hosted using Angular’s development server and can
-be accessed on <em>localhost:4200</em>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-prod</span></code>: <br />
-For deploying the web application in production. This
-does a production build of the Angular project and hosts it using
-<a class="reference external" href="https://www.busybox.net/">busybox</a>. The app is still exposed on
-port 4200, so to host it at port 80 one would start it with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker build -t sira-gui -f Dockerfile-gui-prod .
-</pre></div>
-</div>
-</li>
-</ul>
-<p>and start it with (for example):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -d -p 80:4200 --restart always sira-gui-prod
-</pre></div>
-</div>
-</section>
-<section id="docker-compose">
-<h3><span class="section-number">4.2.3 </span>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading"></a></h3>
-<p>By far the easiest way to run the system for development is with
-<a class="reference external" href="https://docs.docker.com/compose/">docker-compose</a>, which can be done with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose up
-</pre></div>
-</div>
-<p>Assuming that you start the system this way in the current folder, you can:</p>
-<ul class="simple">
-<li><p>attach to the sifa image to run models and tests with: <br />
-<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">sira_sira_1</span></code></p></li>
-<li><p>access the GUI for defining fragility functions at: <br />
-<code class="docutils literal notranslate"><span class="pre">http://localhost:4200</span></code>, and</p></li>
-<li><p>access the web API at: <br />
-<code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code>.</p></li>
-</ul>
-<p>This method will allow both the API and GUI to stay in sync with your code.</p>
-<p>You can tear the system down (destroying the containers) with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker-compose down
-</pre></div>
-</div>
-</section>
-</section>
 <section id="recommended-process-for-building-a-sira-environment">
-<span id="recommended-installation"></span><h2><span class="section-number">4.3 </span>Recommended Process for Building a SIRA Environment<a class="headerlink" href="#recommended-process-for-building-a-sira-environment" title="Link to this heading"></a></h2>
+<span id="recommended-installation"></span><h2><span class="section-number">4.2 </span>Recommended Process for Building a SIRA Environment<a class="headerlink" href="#recommended-process-for-building-a-sira-environment" title="Link to this heading"></a></h2>
 <p>The recommended process to set up the environment is to use <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code>.
 This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the <code class="docutils literal notranslate"><span class="pre">sira</span></code> root directory.</p>
 <p>The dependency list is large. To assist in managing the list of required packages,
@@ -341,6 +215,132 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 </pre></div>
 </div>
 </section>
+<section id="aws-and-docker">
+<span id="dev-env-setup"></span><h2><span class="section-number">4.3 </span>AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Link to this heading"></a></h2>
+<p>The development of the Web interface to provide the ability to create
+component types and models led to the usage of Docker and AWS. Docker
+creates containers that provide independence of platforms when developing
+applications and services. So Docker removes the requirement for Conda
+to organise the Python libraries. The downside of using docker in our
+environment (GA Sysmonston) is that network security makes running Docker
+difficult. So development environments are easier to create and use on AWS.
+Use of AWS for Web applications is the current direction for GA.</p>
+<section id="installation-of-sira-on-aws-with-docker">
+<h3><span class="section-number">4.3.1 </span>Installation of SIRA on AWS with Docker<a class="headerlink" href="#installation-of-sira-on-aws-with-docker" title="Link to this heading"></a></h3>
+<p>This requires building an AWS instance and then building the environments
+using Docker.</p>
+<p><strong>Create AWS Instance using Packer:</strong> <br />
+We’re we come from, if we don’t have a laptop handy, we like to use AWS for
+provisioning dev machines. A basic dev box can be setup using
+<a class="reference external" href="https://www.packer.io/intro/">Packer</a>, by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">packer</span> <span class="n">build</span> <span class="n">build</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>in the current directory.</p>
+<p><strong>Create AWS Instance using bash script:</strong> <br />
+The top level directory of SIRA has the script <code class="docutils literal notranslate"><span class="pre">create-aws-instance.sh</span></code>
+The script requires the <a class="reference external" href="https://aws.amazon.com/cli/">aws command line interface</a>
+to be installed on the machine. It also requires access to AWS account
+credentials.</p>
+<p>The script is run as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create</span><span class="o">-</span><span class="n">aws</span><span class="o">-</span><span class="n">instance</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Both of these commands will use the build_sira_box.sh to install Linux updates
+and the docker components that will be required.</p>
+<p>It then clones the SIRA github repository, from the master branch. Docker is
+then used to build the SIRA environment.</p>
+</section>
+<section id="using-docker">
+<h3><span class="section-number">4.3.2 </span>Using Docker<a class="headerlink" href="#using-docker" title="Link to this heading"></a></h3>
+<p>If you have Docker installed, you can build a container for working with
+sira by running the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">sira</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>The primary advantage of working with docker is that you do not have to worry
+about setting up the python environment, which is done when building the
+container and isolated from your own environment.</p>
+<p>To run an interactive container you can use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;$(pwd):/sira&quot;</span> <span class="o">--</span><span class="n">name</span> <span class="n">sira</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>This will give you a terminal inside the container in which you can execute
+commands. Inside the container you can find the current directory mapped at
+<cite>/sira</cite>. You can modify files either within the container or the host and the
+changes will be available in both.</p>
+<p>Alternatively, you might want a container running in the background which you
+can execute commands at using
+<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">docker exec</a>. In
+this case you would start the container with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="nb">id</span> <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;$(pwd):/sira&quot;</span> <span class="o">--</span><span class="n">name</span> <span class="n">sira</span> <span class="n">sira</span>
+</pre></div>
+</div>
+<p>One could then, for example, run the unit tests for the modelling package with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">sira</span><span class="o">/</span><span class="n">tests</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>In any case, once you are done you should destroy the container with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">kill</span> <span class="n">sira</span>
+<span class="n">docker</span> <span class="n">rm</span> <span class="n">sira</span>
+</pre></div>
+</div>
+<p>or, if your too lazy to type two lines, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="n">sira</span>
+</pre></div>
+</div>
+<p>Several other containers are provided to help with development. These are
+defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-api</span></code>: <br />
+Provides a web API which is used for parameterising model components
+(at this stage just response functions) and serialising them.
+This is presently (at Feb 2018) a prototype and provides only a
+small subset of what we hope for.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-dev</span></code>: <br />
+Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
+defining model components built on top of the API mentioned above.
+The application is hosted using Angular’s development server and can
+be accessed on <em>localhost:4200</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-prod</span></code>: <br />
+For deploying the web application in production. This
+does a production build of the Angular project and hosts it using
+<a class="reference external" href="https://www.busybox.net/">busybox</a>. The app is still exposed on
+port 4200, so to host it at port 80 one would start it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">sira</span><span class="o">-</span><span class="n">gui</span> <span class="o">-</span><span class="n">f</span> <span class="n">Dockerfile</span><span class="o">-</span><span class="n">gui</span><span class="o">-</span><span class="n">prod</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>and start it with (for example):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">80</span><span class="p">:</span><span class="mi">4200</span> <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> <span class="n">sira</span><span class="o">-</span><span class="n">gui</span><span class="o">-</span><span class="n">prod</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="docker-compose">
+<h3><span class="section-number">4.3.3 </span>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading"></a></h3>
+<p>By far the easiest way to run the system for development is with
+<a class="reference external" href="https://docs.docker.com/compose/">docker-compose</a>, which can be done with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span>
+</pre></div>
+</div>
+<p>Assuming that you start the system this way in the current folder, you can:</p>
+<ul class="simple">
+<li><p>attach to the <cite>sira</cite> image to run models and tests with: <br />
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">sira_sira_1</span></code></p></li>
+<li><p>access the GUI for defining fragility functions at: <br />
+<code class="docutils literal notranslate"><span class="pre">http://localhost:4200</span></code>, and</p></li>
+<li><p>access the web API at: <br />
+<code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code>.</p></li>
+</ul>
+<p>This method will allow both the API and GUI to stay in sync with your code.</p>
+<p>You can tear the system down (destroying the containers) with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">down</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="running-a-simulation-with-sira">
 <span id="running-sira"></span><h2><span class="section-number">4.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
 <p>The code needs a simulation setup file and an infrastructure model file
@@ -353,13 +353,13 @@ The system name assumed is ‘SYSTEM_GISKARD’.</p>
 <li><p>Open a command terminal</p></li>
 <li><p>Change to the directory that has the <code class="docutils literal notranslate"><span class="pre">sira</span></code> code. Assuming the code is
 in the directorty <code class="docutils literal notranslate"><span class="pre">/Users/user_x/sira</span></code>, run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ~/sira/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">sira</span><span class="o">/</span>
 </pre></div>
 </div>
 </li>
 <li><p>Run the primary system fragility characterisation module from the
 command line using the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -d ./PROJECT_HAN/SYSTEM_GISKARD/ -s
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="o">./</span><span class="n">PROJECT_DIR</span><span class="o">/</span><span class="n">MODEL_DIR</span><span class="o">/</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
 </li>
@@ -377,21 +377,17 @@ supply the flaf <cite>-f</cite> for model fitting, and the flag <cite>-l</cite> 
 The flags can be combined.</p>
 <p>To run the characterisation simulation, followed by model fitting, and
 loss and recovery analysis, the command is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python sira -d ./PROJECT_HAN/SYSTEM_DANEEL/ -sfl
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="o">./</span><span class="n">PROJECT_DIR</span><span class="o">/</span><span class="n">MODEL_DIR</span><span class="o">/</span> <span class="o">-</span><span class="n">sfl</span>
 </pre></div>
 </div>
 <section id="running-code-tests">
 <span id="running-tests"></span><h3><span class="section-number">4.4.1 </span>Running Code Tests<a class="headerlink" href="#running-code-tests" title="Link to this heading"></a></h3>
 <p>After installation, it would be prudent to run the suite of tests to ensure everything is working correctly. To run the tests, users need to be in the root directory of the code, e.g. <cite>~/code/sira</cite>. Then simply run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```bash
-pytest
-```
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest
 </pre></div>
 </div>
 <p>If you want to explicitly ask <cite>pytest</cite> to run coverage reports, then run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```bash
-pytest --cov-report term --cov=sira tests/
-```
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>--cov-report<span class="w"> </span>term<span class="w"> </span>--cov<span class="o">=</span>sira<span class="w"> </span>tests/
 </pre></div>
 </div>
 <p>If you are using docker as described above, you can do this from within the
@@ -400,204 +396,161 @@ sira container.</p>
 <section id="runtime-flags">
 <span id="id2"></span><h3><span class="section-number">4.4.2 </span>Runtime Flags<a class="headerlink" href="#runtime-flags" title="Link to this heading"></a></h3>
 <p>SIRA recognises several environment flags to control behaviour related to detection and selection of the appropriate backend. Setting these flags is optional. These need to be set in the shell before running SIRA.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><cite>SIRA_ENABLE_GPU_DETECT</cite></dt><dd><ul>
+<dl>
+<dt><cite>SIRA_ENABLE_GPU_DETECT</cite></dt><dd><ul class="simple">
 <li><p>Purpose: Enable optional GPU detection during environment setup.</p></li>
 <li><p>Default: <cite>0</cite> (disabled). When set to <cite>1</cite>, SIRA will attempt to detect CUDA GPUs via PyTorch (if installed) or TensorFlow (if installed). Detection is informational only; SIRA does not currently perform GPU-accelerated computation.</p></li>
-<li><dl class="simple">
-<dt>Example (PowerShell):</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`powershell</span>
-<span class="pre">$env:SIRA_ENABLE_GPU_DETECT</span> <span class="pre">=</span> <span class="pre">&quot;1&quot;</span>
-<span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;from</span> <span class="pre">sira.parallel_config</span> <span class="pre">import</span> <span class="pre">ParallelConfig;</span> <span class="pre">ParallelConfig().print_config_summary()&quot;</span>
-<span class="pre">`</span></code></p>
-</dd>
-</dl>
-</li>
+<li><p>Example (PowerShell):</p></li>
 </ul>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_ENABLE_GPU_DETECT</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from sira.parallel_config import ParallelConfig; ParallelConfig().print_config_summary()&quot;</span>
+</pre></div>
+</div>
 </dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_FORCE_NO_MPI</cite></dt><dd><ul>
+<dt><cite>SIRA_FORCE_NO_MPI</cite></dt><dd><ul class="simple">
 <li><p>Purpose: Explicitly disable MPI detection and usage.</p></li>
 <li><p>Default: <cite>0</cite> (not forced). When set to <cite>1</cite>, SIRA treats the environment as non-MPI even if MPI-related variables are present, and falls back to multiprocessing.</p></li>
-<li><dl class="simple">
-<dt>Example (PowerShell):</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`powershell</span>
-<span class="pre">$env:SIRA_FORCE_NO_MPI</span> <span class="pre">=</span> <span class="pre">&quot;1&quot;</span>
-<span class="pre">`</span></code></p>
+<li><p>Example (PowerShell):</p></li>
+</ul>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_FORCE_NO_MPI</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
+</pre></div>
+</div>
 </dd>
 </dl>
-</li>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>These flags only affect detection and backend selection.
+Core computations remain CPU-based unless an MPI backend is
+explicitly selected and available.</p></li>
+<li><p>Flags can be set per-session or integrated into CI/CD environment configuration.</p></li>
 </ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>Notes:
-- These flags only affect detection and backend selection. Core computations remain CPU-based unless an MPI backend is explicitly selected and available.
-- Flags can be set per-session or integrated into CI/CD environment configuration.</p>
+</div>
 </section>
 </section>
 <section id="parallel-execution">
 <span id="id3"></span><h2><span class="section-number">4.5 </span>Parallel Execution<a class="headerlink" href="#parallel-execution" title="Link to this heading"></a></h2>
 <p>SIRA supports multiprocessing locally and MPI on HPC systems. The MPI backend is preferred when available; otherwise, SIRA uses efficient multiprocessing with sensible defaults.</p>
-<p>Note on selecting the parallel backend:</p>
+<p>Notes on selecting the parallel backend:</p>
 <ul>
-<li><p>Default (auto-detect): if launched under an MPI environment (e.g., mpirun/mpiexec/srun or SLURM/PBS variables present), SIRA uses MPI; otherwise it uses multiprocessing.</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sira</span> <span class="pre">-d</span> <span class="pre">scenario_dir/ci_model_x</span> <span class="pre">-s</span> <span class="pre">--parallel-backend</span> <span class="pre">auto</span>
-<span class="pre">`</span></code></p>
-</div></blockquote>
+<li><p>Default (auto-detect): if launched under an MPI environment (e.g., mpirun/mpiexec/srun or SLURM/PBS variables present), SIRA uses MPI; otherwise it uses multiprocessing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="n">scenario_dir</span><span class="o">/</span><span class="n">ci_model_x</span> <span class="o">-</span><span class="n">s</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">backend</span> <span class="n">auto</span>
+</pre></div>
+</div>
 </li>
 <li><p>Force MPI: requires launching with an MPI launcher (and mpi4py installed). Example:</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">mpirun</span> <span class="pre">-n</span> <span class="pre">8</span> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sira</span> <span class="pre">-d</span> <span class="pre">scenario_dir/ci_model_x</span> <span class="pre">-s</span> <span class="pre">--parallel-backend</span> <span class="pre">mpi</span>
-<span class="pre">`</span></code></p>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">n</span> <span class="mi">8</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="n">scenario_dir</span><span class="o">/</span><span class="n">ci_model_x</span> <span class="o">-</span><span class="n">s</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">backend</span> <span class="n">mpi</span>
+</pre></div>
+</div>
 </li>
 <li><p>Force multiprocessing: runs locally without MPI. You can cap workers with –max-workers:</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sira</span> <span class="pre">-d</span> <span class="pre">scenario_dir/ci_model_x</span> <span class="pre">-s</span> <span class="pre">--parallel-backend</span> <span class="pre">multiprocessing</span> <span class="pre">--max-workers</span> <span class="pre">8</span>
-<span class="pre">`</span></code></p>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="n">scenario_dir</span><span class="o">/</span><span class="n">ci_model_x</span> <span class="o">-</span><span class="n">s</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">backend</span> <span class="n">multiprocessing</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">workers</span> <span class="mi">8</span>
+</pre></div>
+</div>
 </li>
 <li><p>Disable parallel entirely (useful for debugging):</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">python</span> <span class="pre">-m</span> <span class="pre">sira</span> <span class="pre">-d</span> <span class="pre">scenario_dir/ci_model_x</span> <span class="pre">-s</span> <span class="pre">--disable-parallel</span>
-<span class="pre">`</span></code></p>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="n">scenario_dir</span><span class="o">/</span><span class="n">ci_model_x</span> <span class="o">-</span><span class="n">s</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">parallel</span>
+</pre></div>
+</div>
 </li>
 </ul>
 <p>Optional tuning:</p>
 <ul class="simple">
-<li><p><cite>–scenario-size auto|small|medium|large|xlarge</cite> lets SIRA tune defaults when no config file is provided (auto is recommended).</p></li>
-<li><p>You can also provide a JSON config via <cite>–parallel-config</cite> to pin backend and worker counts.</p></li>
+<li><p>Tune SIRA defaults using <cite>–scenario-size auto|small|medium|large|xlarge</cite> when no config file is provided (auto is recommended).</p></li>
+<li><p>There is an option to explicitly provide a JSON config via <cite>–parallel-config</cite> to pin backend and worker counts.</p></li>
 </ul>
 <section id="hpc-mpi-environment-flags">
 <span id="hpc-mpi-flags"></span><h3><span class="section-number">4.5.1 </span>HPC / MPI Environment Flags<a class="headerlink" href="#hpc-mpi-environment-flags" title="Link to this heading"></a></h3>
 <p>When running large-scale simulations on HPC (e.g. Gadi with PBS + OpenMPI), SIRA recognises additional environment flags. These flags are used in job scripts. These tune streaming, logging, batching and consolidation behaviour. All are optional; unset flags fall back to internal defaults.</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><cite>SIRA_LOG_LEVEL</cite></dt><dd><ul>
+<dl class="simple">
+<dt><cite>SIRA_LOG_LEVEL</cite></dt><dd><ul class="simple">
 <li><p>Sets Python logger verbosity (e.g. <cite>INFO</cite>, <cite>DEBUG</cite>, <cite>WARNING</cite>).</p></li>
 <li><p>Lower verbosity reduces I/O overhead in large parallel runs.</p></li>
 </ul>
 </dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_QUIET_MODE</cite></dt><dd><ul>
-<li><p><cite>1</cite> suppresses progress / non-essential console output; <cite>0</cite> shows normal progress.</p></li>
+<dt><cite>SIRA_QUIET_MODE</cite></dt><dd><ul class="simple">
+<li><p><cite>1</cite> suppresses progress / non-essential console output.</p></li>
+<li><p><cite>0</cite> shows normal progress.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_STREAM_DIR</cite></dt><dd><ul class="simple">
+<li><p>Directory for per-rank / per-process streamed intermediate artifacts (NPZ, manifests).</p></li>
+<li><p>Use fast local node storage (e.g. burst buffer) for performance; consolidate later.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_DEFER_CONSOLIDATION</cite></dt><dd><ul class="simple">
+<li><p><cite>1</cite> skips in-process aggregation of streamed artifacts until a post-run consolidation step.</p></li>
+<li><p>Improves runtime on large ranks.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_SAVE_COMPTYPE_RESPONSE</cite></dt><dd><ul class="simple">
+<li><p><cite>1</cite> to persist component-type response arrays; <cite>0</cite> to skip.</p></li>
+<li><p>Saves aggregated loss metrics by type.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_SAVE_COMPONENT_RESPONSE</cite></dt><dd><ul class="simple">
+<li><p><cite>1</cite> to persist per-component response arrays (larger footprint).</p></li>
+<li><p><cite>0</cite> to reduce storage (default in scripts).</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_CHUNKS_PER_SLOT</cite></dt><dd><ul class="simple">
+<li><p>Controls how many streaming chunks each CPU slot (rank/worker) emits before rolling over to a new file.</p></li>
+<li><p>Lower values reduce memory overhead; higher values reduce file count.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_STREAM_COMPRESSION</cite></dt><dd><ul class="simple">
+<li><p>Compression codec for streamed artifacts (e.g. <cite>snappy</cite>, <cite>zstd</cite>).</p></li>
+<li><p>Choose fastest acceptable for your I/O profile.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_STREAM_ROW_GROUP</cite></dt><dd><ul class="simple">
+<li><p>Target row-group / block size (in rows) for streamed tabular data; balances read amplification vs memory.</p></li>
+<li><p>Large hazards benefit from larger values (e.g. <cite>524288</cite>).</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_MIN_HAZARDS_FOR_PARALLEL</cite></dt><dd><ul class="simple">
+<li><p>Integer threshold for number of hazard events to enalble parallel processing.</p></li>
+<li><p>If total hazard events below this value, SIRA may avoid spawning full parallel workers to reduce overhead.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_HPC_MODE</cite></dt><dd><ul class="simple">
+<li><p><cite>1</cite> enables HPC-oriented heuristics (larger batches, reduced chatter, defensive memory usage).</p></li>
+<li><p>When unset, defaults remain more general-purpose.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_MAX_BATCH_SIZE</cite></dt><dd><ul class="simple">
+<li><p>Caps batch size used in processing loops even if auto-tuning would choose larger</p></li>
+<li><p>Helps prevent memory spikes on dense component sets.</p></li>
+</ul>
+</dd>
+<dt><cite>SIRA_CLEANUP_CHUNKS</cite></dt><dd><ul class="simple">
+<li><p><cite>1</cite> removes staged per-node chunk directories after consolidation to reclaim scratch space.</p></li>
+<li><p><cite>0</cite> keeps them for inspection.</p></li>
+</ul>
+</dd>
+<dt><cite>PYTHONHASHSEED</cite></dt><dd><ul class="simple">
+<li><p>Standard Python reproducibility flag (e.g. set to <cite>0</cite>).</p></li>
+<li><p>Ensures consistent hash-based ordering when determinism is required.</p></li>
 </ul>
 </dd>
 </dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_STREAM_DIR</cite></dt><dd><ul>
-<li><p>Directory for per-rank / per-process streamed intermediate artifacts (NPZ, manifests). Use fast local node storage (e.g. burst buffer) for performance; consolidate later.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_DEFER_CONSOLIDATION</cite></dt><dd><ul>
-<li><p><cite>1</cite> skips in-process aggregation of streamed artifacts until a post-run consolidation step; improves runtime on large ranks.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_SAVE_COMPTYPE_RESPONSE</cite></dt><dd><ul>
-<li><p><cite>1</cite> to persist component-type response arrays; <cite>0</cite> to skip. Saves aggregated loss metrics by type.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_SAVE_COMPONENT_RESPONSE</cite></dt><dd><ul>
-<li><p><cite>1</cite> to persist per-component response arrays (larger footprint); <cite>0</cite> (default in scripts) to reduce storage.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_CHUNKS_PER_SLOT</cite></dt><dd><ul>
-<li><p>Controls how many streaming chunks each CPU slot (rank/worker) emits before rolling over to a new file. Lower values reduce memory overhead; higher values reduce file count.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_STREAM_COMPRESSION</cite></dt><dd><ul>
-<li><p>Compression codec for streamed artifacts (e.g. <cite>snappy</cite>, <cite>zstd</cite>). Choose fastest acceptable for your I/O profile.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_STREAM_ROW_GROUP</cite></dt><dd><ul>
-<li><p>Target row-group / block size (in rows) for streamed tabular data; balances read amplification vs memory. Large hazards benefit from larger values (e.g. <cite>524288</cite>).</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_MIN_HAZARDS_FOR_PARALLEL</cite></dt><dd><ul>
-<li><p>Integer threshold; if total hazard events below this value, SIRA may avoid spawning full parallel workers to reduce overhead.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_HPC_MODE</cite></dt><dd><ul>
-<li><p><cite>1</cite> enables HPC-oriented heuristics (larger batches, reduced chatter, defensive memory usage). When unset, defaults remain more general-purpose.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_MAX_BATCH_SIZE</cite></dt><dd><ul>
-<li><p>Caps batch size used in processing loops even if auto-tuning would choose larger; helps prevent memory spikes on dense component sets.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>SIRA_CLEANUP_CHUNKS</cite></dt><dd><ul>
-<li><p><cite>1</cite> removes staged per-node chunk directories after consolidation to reclaim scratch space; <cite>0</cite> keeps them for inspection.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><cite>PYTHONHASHSEED</cite></dt><dd><ul>
-<li><p>Standard Python reproducibility flag (e.g. set to <cite>0</cite>); ensures consistent hash-based ordering when determinism is required.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>Example (PBS + OpenMPI snippet):
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">export</span> <span class="pre">SIRA_LOG_LEVEL=INFO</span>
-<span class="pre">export</span> <span class="pre">SIRA_QUIET_MODE=1</span>
-<span class="pre">export</span> <span class="pre">SIRA_STREAM_DIR=&quot;/iointensive/sira_${PBS_JOBID}&quot;</span>
-<span class="pre">export</span> <span class="pre">SIRA_DEFER_CONSOLIDATION=1</span>
-<span class="pre">export</span> <span class="pre">SIRA_SAVE_COMPTYPE_RESPONSE=1</span>
-<span class="pre">export</span> <span class="pre">SIRA_SAVE_COMPONENT_RESPONSE=0</span>
-<span class="pre">export</span> <span class="pre">SIRA_CHUNKS_PER_SLOT=1</span>
-<span class="pre">export</span> <span class="pre">SIRA_STREAM_COMPRESSION=snappy</span>
-<span class="pre">export</span> <span class="pre">SIRA_STREAM_ROW_GROUP=524288</span>
-<span class="pre">export</span> <span class="pre">SIRA_MIN_HAZARDS_FOR_PARALLEL=100000</span>
-<span class="pre">export</span> <span class="pre">SIRA_HPC_MODE=1</span>
-<span class="pre">export</span> <span class="pre">SIRA_MAX_BATCH_SIZE=1000</span>
-<span class="pre">export</span> <span class="pre">PYTHONHASHSEED=0</span>
-<span class="pre">`</span></code></p>
-<p>It is recommended to start only with <cite>SIRA_HPC_MODE=1</cite> and <cite>SIRA_STREAM_DIR</cite> for large jobs; additional flags can be layered as bottlenecks are identified through profiling.</p>
+<p>Example (PBS + OpenMPI snippet):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_LOG_LEVEL</span><span class="o">=</span>INFO
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_QUIET_MODE</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_STREAM_DIR</span><span class="o">=</span><span class="s2">&quot;/iointensive/sira_</span><span class="si">${</span><span class="nv">PBS_JOBID</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_DEFER_CONSOLIDATION</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_SAVE_COMPTYPE_RESPONSE</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_SAVE_COMPONENT_RESPONSE</span><span class="o">=</span><span class="m">0</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_CHUNKS_PER_SLOT</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_STREAM_COMPRESSION</span><span class="o">=</span>snappy
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_STREAM_ROW_GROUP</span><span class="o">=</span><span class="m">524288</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_MIN_HAZARDS_FOR_PARALLEL</span><span class="o">=</span><span class="m">100000</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_HPC_MODE</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_MAX_BATCH_SIZE</span><span class="o">=</span><span class="m">1000</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+<p>The recommendation is to start only with <cite>SIRA_HPC_MODE=1</cite> and <cite>SIRA_STREAM_DIR</cite> for large jobs, identify bottlenecks through profiling or HPC logs, and then layer additional flags as needed.</p>
 </section>
 </section>
 </section>

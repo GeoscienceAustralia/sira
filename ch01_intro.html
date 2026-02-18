@@ -7,10 +7,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1 Introduction &mdash; sira v1.0.1 docs</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3ba690ee" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=edc23c89" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=fa3a5556" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -59,7 +59,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch03_simsetup.html">3 Simulation and Model Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#simulation-setup-file">3.1 Simulation Setup File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#infrastructure-model-definition-file">3.2 Infrastructure Model Definition File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#infrastructure-model-definition">3.2 Infrastructure Model Definition</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#basic-system-metadata-system-meta">3.2.1 Basic System Metadata: system_meta</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#list-of-components-component-list">3.2.2 List of Components: component_list</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#connections-between-components-component-connections">3.2.3 Connections between Components: component_connections</a></li>
@@ -73,13 +73,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ch04_installation.html">4 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#requirements">4.1 Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.2 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#installation-of-sira-on-aws-with-docker">4.2.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#using-docker">4.2.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.2.3 Docker Compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.2 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#aws-and-docker">4.3 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#installation-of-sira-on-aws-with-docker">4.3.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#using-docker">4.3.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#docker-compose">4.3.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#recommended-process-for-building-a-sira-environment">4.3 Recommended Process for Building a SIRA Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch04_installation.html#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#running-code-tests">4.4.1 Running Code Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch04_installation.html#runtime-flags">4.4.2 Runtime Flags</a></li>
@@ -136,10 +136,10 @@ It comprises a method and software tools that provide a framework for
 simulating the fragility of infrastructure assets to natural hazards,
 based on assessment of the fragilities and configuration of components that
 comprises the asset. To date system has been used to work with
-earthquake hazards only. <code class="docutils literal notranslate"><span class="pre">SIRA</span></code> enables the vulnerabilities of each element
+earthquake hazards only. SIRA enables the vulnerabilities of each element
 to be within a facility or a network to be integrated into a holistic
 assessment of the direct system losses, service disruption and cost.</p>
-<p>SIRA is desgined to be used to simulate the vulnerability of high-value
+<p>SIRA is designed for simulating vulnerability of high-value
 infrastructure systems to natural hazards. The infrastructure types can be
 individual sites or facilities (e.g., an electrical substation, or a
 water treatment plant) or networks (e.g., an electricity transmission network,

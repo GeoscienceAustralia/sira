@@ -17,11 +17,11 @@ It comprises a method and software tools that provide a framework for
 simulating the fragility of infrastructure assets to natural hazards, 
 based on assessment of the fragilities and configuration of components that 
 comprises the asset. To date system has been used to work with 
-earthquake hazards only. ``SIRA`` enables the vulnerabilities of each element
+earthquake hazards only. SIRA enables the vulnerabilities of each element
 to be within a facility or a network to be integrated into a holistic
 assessment of the direct system losses, service disruption and cost.
 
-SIRA is desgined to be used to simulate the vulnerability of high-value 
+SIRA is designed for simulating vulnerability of high-value 
 infrastructure systems to natural hazards. The infrastructure types can be 
 individual sites or facilities (e.g., an electrical substation, or a 
 water treatment plant) or networks (e.g., an electricity transmission network, 
