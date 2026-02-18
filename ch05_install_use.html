@@ -6,11 +6,11 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4 Installation and Usage &mdash; sira v1.0.1 docs</title>
+  <title>5 Installation and Usage &mdash; sira v1.0.1 docs</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=fa3a5556" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=a5d6f15a" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="5 Component Fragility Attribution" href="ch05_fragility_attribution.html" />
-    <link rel="prev" title="3 Simulation and Model Setup" href="ch03_simsetup.html" /> 
+    <link rel="next" title="6 Component Fragility Attribution" href="ch06_fragility_attribution.html" />
+    <link rel="prev" title="4 Infrastructure Model Setup" href="ch04_modelsetup.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -57,41 +57,48 @@
 <li class="toctree-l2"><a class="reference internal" href="ch02_concept.html#system-restoration-model">2.3 System Restoration Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch03_simsetup.html">3 Simulation and Model Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#simulation-setup-file">3.1 Simulation Setup File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#infrastructure-model-definition">3.2 Infrastructure Model Definition</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#basic-system-metadata-system-meta">3.2.1 Basic System Metadata: system_meta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#list-of-components-component-list">3.2.2 List of Components: component_list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#connections-between-components-component-connections">3.2.3 Connections between Components: component_connections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#configuration-of-supply-nodes-supply-setup">3.2.4 Configuration of Supply Nodes: supply_setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#configuration-of-output-nodes-output-setup">3.2.5 Configuration of Output Nodes: output_setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">3.2.6 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#definition-of-damage-states-damage-state-def">3.2.7 Definition of Damage States: damage_state_def</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_simsetup.html">3 Simulation Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch03_simsetup.html#simulation-configuration-file">3.1 Simulation Configuration File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#scenario-parameters">3.1.1 Scenario Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#hazard-parameters">3.1.2 Hazard Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#restoration-parameters">3.1.3 Restoration Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#system-category-metadata-parameters">3.1.4 System Category Metadata Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ch03_simsetup.html#simulation-configuration-flags">3.1.5 Simulation Configuration Flags</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4 Installation and Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">4.1 Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#recommended-process-for-building-a-sira-environment">4.2 Recommended Process for Building a SIRA Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#aws-and-docker">4.3 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installation-of-sira-on-aws-with-docker">4.3.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-docker">4.3.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-compose">4.3.3 Docker Compose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_modelsetup.html">4 Infrastructure Model Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#basic-system-metadata-system-meta">4.1 Basic System Metadata: system_meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#list-of-components-component-list">4.2 List of Components: component_list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#connections-between-components-component-connections">4.3 Connections between Components: component_connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#configuration-of-supply-nodes-supply-setup">4.4 Configuration of Supply Nodes: supply_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#configuration-of-output-nodes-output-setup">4.5 Configuration of Output Nodes: output_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#component-type-damage-algorithms-comp-type-dmg-algo">4.6 Component Type Damage Algorithms: comp_type_dmg_algo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_modelsetup.html#definition-of-damage-states-damage-state-def">4.7 Definition of Damage States: damage_state_def</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#running-a-simulation-with-sira">4.4 Running a Simulation with SIRA</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#running-code-tests">4.4.1 Running Code Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#runtime-flags">4.4.2 Runtime Flags</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5 Installation and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">5.1 Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recommended-process-for-building-a-sira-environment">5.2 Recommended Process for Building a SIRA Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aws-and-docker">5.3 AWS and Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-of-sira-on-aws-with-docker">5.3.1 Installation of SIRA on AWS with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-docker">5.3.2 Using Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-compose">5.3.3 Docker Compose</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#parallel-execution">4.5 Parallel Execution</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#hpc-mpi-environment-flags">4.5.1 HPC / MPI Environment Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-simulation-with-sira">5.4 Running a Simulation with SIRA</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-code-tests">5.4.1 Running Code Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runtime-flags">5.4.2 Runtime Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parallel-execution">5.5 Parallel Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hpc-mpi-environment-flags">5.5.1 HPC / MPI Environment Flags</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ch05_fragility_attribution.html">5 Component Fragility Attribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_fragility_attribution.html">6 Component Fragility Attribution</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
@@ -113,7 +120,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active"><span class="section-number">4 </span>Installation and Usage</li>
+      <li class="breadcrumb-item active"><span class="section-number">5 </span>Installation and Usage</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -123,7 +130,7 @@
            <div itemprop="articleBody">
              
   <section id="installation-and-usage">
-<span id="installation-usage"></span><h1><span class="section-number">4 </span>Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Link to this heading"></a></h1>
+<span id="installation-usage"></span><h1><span class="section-number">5 </span>Installation and Usage<a class="headerlink" href="#installation-and-usage" title="Link to this heading"></a></h1>
 <p><strong>SIRA</strong> is built on Python 3.x. Python hardware requirements are fairly
 minimal. Most modern systems based on x86 architecture should be able to
 run this software.</p>
@@ -150,7 +157,7 @@ run this software.</p>
 </pre></div>
 </div>
 <section id="requirements">
-<h2><span class="section-number">4.1 </span>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<h2><span class="section-number">5.1 </span>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
 <p>SIRA has been tested on the following operating systems:</p>
 <blockquote>
 <div><ul class="simple">
@@ -175,7 +182,7 @@ option for Python 3.5+ is the free full-featured community edition of
 <a class="reference external" href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">Visual Studio 2015</a>.</p>
 </section>
 <section id="recommended-process-for-building-a-sira-environment">
-<span id="recommended-installation"></span><h2><span class="section-number">4.2 </span>Recommended Process for Building a SIRA Environment<a class="headerlink" href="#recommended-process-for-building-a-sira-environment" title="Link to this heading"></a></h2>
+<span id="recommended-installation"></span><h2><span class="section-number">5.2 </span>Recommended Process for Building a SIRA Environment<a class="headerlink" href="#recommended-process-for-building-a-sira-environment" title="Link to this heading"></a></h2>
 <p>The recommended process to set up the environment is to use <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code>.
 This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the <code class="docutils literal notranslate"><span class="pre">sira</span></code> root directory.</p>
 <p>The dependency list is large. To assist in managing the list of required packages,
@@ -216,7 +223,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 </div>
 </section>
 <section id="aws-and-docker">
-<span id="dev-env-setup"></span><h2><span class="section-number">4.3 </span>AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Link to this heading"></a></h2>
+<span id="dev-env-setup"></span><h2><span class="section-number">5.3 </span>AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Link to this heading"></a></h2>
 <p>The development of the Web interface to provide the ability to create
 component types and models led to the usage of Docker and AWS. Docker
 creates containers that provide independence of platforms when developing
@@ -226,7 +233,7 @@ environment (GA Sysmonston) is that network security makes running Docker
 difficult. So development environments are easier to create and use on AWS.
 Use of AWS for Web applications is the current direction for GA.</p>
 <section id="installation-of-sira-on-aws-with-docker">
-<h3><span class="section-number">4.3.1 </span>Installation of SIRA on AWS with Docker<a class="headerlink" href="#installation-of-sira-on-aws-with-docker" title="Link to this heading"></a></h3>
+<h3><span class="section-number">5.3.1 </span>Installation of SIRA on AWS with Docker<a class="headerlink" href="#installation-of-sira-on-aws-with-docker" title="Link to this heading"></a></h3>
 <p>This requires building an AWS instance and then building the environments
 using Docker.</p>
 <p><strong>Create AWS Instance using Packer:</strong> <br />
@@ -252,7 +259,7 @@ and the docker components that will be required.</p>
 then used to build the SIRA environment.</p>
 </section>
 <section id="using-docker">
-<h3><span class="section-number">4.3.2 </span>Using Docker<a class="headerlink" href="#using-docker" title="Link to this heading"></a></h3>
+<h3><span class="section-number">5.3.2 </span>Using Docker<a class="headerlink" href="#using-docker" title="Link to this heading"></a></h3>
 <p>If you have Docker installed, you can build a container for working with
 sira by running the command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">sira</span> <span class="o">.</span>
@@ -319,7 +326,7 @@ port 4200, so to host it at port 80 one would start it with:</p>
 </ul>
 </section>
 <section id="docker-compose">
-<h3><span class="section-number">4.3.3 </span>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading"></a></h3>
+<h3><span class="section-number">5.3.3 </span>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading"></a></h3>
 <p>By far the easiest way to run the system for development is with
 <a class="reference external" href="https://docs.docker.com/compose/">docker-compose</a>, which can be done with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span>
@@ -342,9 +349,9 @@ port 4200, so to host it at port 80 one would start it with:</p>
 </section>
 </section>
 <section id="running-a-simulation-with-sira">
-<span id="running-sira"></span><h2><span class="section-number">4.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
+<span id="running-sira"></span><h2><span class="section-number">5.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
 <p>The code needs a simulation setup file and an infrastructure model file
-to run a simulation, as discussed in <a class="reference internal" href="ch03_simsetup.html#simulation-input-setup"><span class="std std-ref">Simulation and Model Setup</span></a>.</p>
+to run a simulation, as discussed in <a class="reference internal" href="ch03_simsetup.html#simulation-input-setup"><span class="std std-ref">Simulation Setup</span></a>.</p>
 <p>For the purposes of discussion, it is assumed that the name of the project
 simulation directory is ‘PROJECT_HAN’, located in the root directory.
 The system name assumed is ‘SYSTEM_GISKARD’.</p>
@@ -381,7 +388,7 @@ loss and recovery analysis, the command is:</p>
 </pre></div>
 </div>
 <section id="running-code-tests">
-<span id="running-tests"></span><h3><span class="section-number">4.4.1 </span>Running Code Tests<a class="headerlink" href="#running-code-tests" title="Link to this heading"></a></h3>
+<span id="running-tests"></span><h3><span class="section-number">5.4.1 </span>Running Code Tests<a class="headerlink" href="#running-code-tests" title="Link to this heading"></a></h3>
 <p>After installation, it would be prudent to run the suite of tests to ensure everything is working correctly. To run the tests, users need to be in the root directory of the code, e.g. <cite>~/code/sira</cite>. Then simply run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest
 </pre></div>
@@ -394,7 +401,7 @@ loss and recovery analysis, the command is:</p>
 sira container.</p>
 </section>
 <section id="runtime-flags">
-<span id="id2"></span><h3><span class="section-number">4.4.2 </span>Runtime Flags<a class="headerlink" href="#runtime-flags" title="Link to this heading"></a></h3>
+<span id="id2"></span><h3><span class="section-number">5.4.2 </span>Runtime Flags<a class="headerlink" href="#runtime-flags" title="Link to this heading"></a></h3>
 <p>SIRA recognises several environment flags to control behaviour related to detection and selection of the appropriate backend. Setting these flags is optional. These need to be set in the shell before running SIRA.</p>
 <dl>
 <dt><cite>SIRA_ENABLE_GPU_DETECT</cite></dt><dd><ul class="simple">
@@ -429,7 +436,7 @@ explicitly selected and available.</p></li>
 </section>
 </section>
 <section id="parallel-execution">
-<span id="id3"></span><h2><span class="section-number">4.5 </span>Parallel Execution<a class="headerlink" href="#parallel-execution" title="Link to this heading"></a></h2>
+<span id="id3"></span><h2><span class="section-number">5.5 </span>Parallel Execution<a class="headerlink" href="#parallel-execution" title="Link to this heading"></a></h2>
 <p>SIRA supports multiprocessing locally and MPI on HPC systems. The MPI backend is preferred when available; otherwise, SIRA uses efficient multiprocessing with sensible defaults.</p>
 <p>Notes on selecting the parallel backend:</p>
 <ul>
@@ -460,7 +467,7 @@ explicitly selected and available.</p></li>
 <li><p>There is an option to explicitly provide a JSON config via <cite>–parallel-config</cite> to pin backend and worker counts.</p></li>
 </ul>
 <section id="hpc-mpi-environment-flags">
-<span id="hpc-mpi-flags"></span><h3><span class="section-number">4.5.1 </span>HPC / MPI Environment Flags<a class="headerlink" href="#hpc-mpi-environment-flags" title="Link to this heading"></a></h3>
+<span id="hpc-mpi-flags"></span><h3><span class="section-number">5.5.1 </span>HPC / MPI Environment Flags<a class="headerlink" href="#hpc-mpi-environment-flags" title="Link to this heading"></a></h3>
 <p>When running large-scale simulations on HPC (e.g. Gadi with PBS + OpenMPI), SIRA recognises additional environment flags. These flags are used in job scripts. These tune streaming, logging, batching and consolidation behaviour. All are optional; unset flags fall back to internal defaults.</p>
 <dl class="simple">
 <dt><cite>SIRA_LOG_LEVEL</cite></dt><dd><ul class="simple">

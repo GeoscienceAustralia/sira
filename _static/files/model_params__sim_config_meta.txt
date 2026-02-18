@@ -1,0 +1,45 @@
+.. rubric:: SYSTEM_METADATA
+
+`SYSTEM_INFRASTRUCTURE_LEVEL`
+    :Description:   Define infrastructure as a `facility` or `network`
+    :Data Type:     String
+    :Example:       `facility`
+
+`SYSTEM_COMMODITY_FLOW_TYPES`
+    :Description:   Number of input commodity types
+    :Data Type:     Integer
+    :Example:       2
+
+`SYSTEM_CLASSES`
+    :Description:   The allowed infrastructure system types
+    :Data Type:     List of strings
+    :Example:       ['PowerStation', 'Substation']
+
+`SYSTEM_CLASS`
+    :Description:   The infrastructure system type to be modelled
+    :Data Type:     String
+    :Example:       'PowerStation'
+
+`SYSTEM_SUBCLASS`
+    :Description:   Sub-category of system
+    :Data Type:     String
+    :Example:       'Coal Fired'
+
+`SYSTEM_COMPONENT_LOCATION_CONF`
+    :Description:   Defines whether the location data for each component is provided.
+                    Allowed values:
+                    [1] `undefined`: location data not given,
+                    [2] `defined`: location data given,
+                    [3] `schematic`: location data given for drawing in graphviz,
+                    [4] `geospatial`: actual geospatial location data given.
+    :Data Type:     String
+    :Example:       'schematic'
+
+`SYS_CONF_FILE_NAME`
+    :Description:   [OPTIONAL] Define file name for system config and fragility info.
+                    Maybe useful when there are multiple models for same asset to test.
+                    Generally auto-detected in code. The model name must begin or end
+                    with the term 'model'.
+    :Data Type:     String
+    :Example:       'model_ps_xyz.json'
+

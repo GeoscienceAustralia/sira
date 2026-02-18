@@ -1,0 +1,35 @@
+.. rubric:: RESTORATION_PARAMS
+
+`RESTORATION_STREAMS`
+    :Description:   The number of simultaneous components to work on
+    :Data Type:     List of integers
+    :Example:       [5, 10, 20]
+
+`RESTORATION_TIME_UNIT`
+    :Description:   Unit of time for restoration time calculations
+    :Data Type:     String
+    :Example:       'week'
+
+`RESTORATION_TIME_MIN`
+    :Description:   Minimum value for restoration period assessment.
+                    Default is 1.
+    :Data Type:     Integer
+    :Example:       1
+
+`RESTORATION_TIME_MAX`
+    :Description:   Maximum value for restoration period assessment.
+                    No default values.
+    :Data Type:     Integer
+    :Example:       300
+
+`RESTORATION_TIME_STEP`
+    :Description:   Time increment for restoration period.
+                    Default is 1.
+    :Data Type:     Integer
+    :Example:       1
+
+`RESTORATION_PCT_CHECKPOINTS`
+    :Description:   [DEPRECATED] Number of steps to assess functionality at
+    :Data Type:     Integer
+    :Example:       21
+

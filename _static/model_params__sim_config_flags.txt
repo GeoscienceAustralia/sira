@@ -1,0 +1,27 @@
+.. rubric:: FLAGS
+
+`FIT_PE_DATA`
+    :Description:   [DEPRECATED] Flag for fitting Prob of Exceedance data.
+                    It is preferred to set this via the command line argument.
+    :Data Type:     Boolean
+    :Example:       True
+
+`SWITCH_MULTIPROCESS`
+    :Description:   Switch to indicate whether to use multi-core processing. 0 |rightarrow| False, 1 |rightarrow| True
+    :Data Type:     Integer
+    :Example:       1
+
+`SWITCH_RUN_CONTEXT`
+    :Description:   Switch to indicate whether to run a full simulation, or run test code. 0 |rightarrow| run tests, 1 |rightarrow| normal run.
+    :Data Type:     Integer
+    :Example:       1
+
+`SWITCH_FIT_RESTORATION_DATA`
+    :Description:   Fit model to simulated restoration data
+    :Data Type:     Boolean
+    :Example:       True
+
+`SWITCH_SAVE_VARS_NPY`
+    :Description:   Switch to indicate whether to save simulated values in binary numpy format
+    :Data Type:     Boolean
+    :Example:       True

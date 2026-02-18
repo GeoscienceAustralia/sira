@@ -1,0 +1,89 @@
+.. rubric:: HAZARD_PARAMS_COMMON
+
+`HAZARD_TYPE`
+    :Description:   The type of hazard for the impact simulation.
+    :Data Type:     String
+    :Example:       'earthquake'
+    :Valid values:  ['earthquake', 'tropical cyclone', 'flood']
+
+`HAZARD_INTENSITY_MEASURE_PARAM`
+    :Description:   Engineering Demand Parameter
+    :Data Type:     String
+    :Example:       'PGA'
+
+`HAZARD_INTENSITY_MEASURE_UNIT`
+    :Description:   Demand Parameter Unit
+    :Data Type:     String
+    :Example:       'g'
+
+`HAZARD_INPUT_METHOD`
+    :Description:   How the hazard is supplied. Must be one of the following:
+                    [1] "calculated_array" or "hazard_array" -- where an array of 
+                    equally spaced values are calculated for generating the fragility
+                    or vulnerability of an asset. Can only be used for point assets.
+                    [2] "hazard_file" or "scenario_file" -- where the system expects
+                    a file with predefined headers and structure an input for hazard
+                    data points. Can be used for point and geospatially distributed 
+                    assets.
+    :Data Type:     String
+    :Example:       "calculated_array"
+
+.. rubric:: HAZARD_PARAMS_FOR_CALCULATED_ARRAY
+
+`HAZARD_INTENSITY_MEASURE_MIN`
+    :Description:   Minimum value for internsity measurement (IM) parameter
+    :Data Type:     Float
+    :Example:       0.0
+
+`HAZARD_INTENSITY_MEASURE_MAX`
+    :Description:   Maximum value for internsity measurement (IM) parameter
+    :Data Type:     Float
+    :Example:       1.5
+
+`HAZARD_INTENSITY_MEASURE_STEP`
+    :Description:   Step size for incrementing the IM param
+    :Data Type:     Float
+    :Example:       0.01
+
+`HAZARD_NUM_SAMPLES`
+    :Description:   Iterations for Monte Carlo process
+    :Data Type:     Integer
+    :Example:       500
+
+.. rubric:: HAZARD_PARAMS_FOR_HAZARD_FILE
+
+`HAZARD_INPUT_DIR`
+    :Description:   Path for hazard file location
+    :Data Type:     String
+    :Example:       "../_PROJECTX_hazard_portfolio/scenario_files"
+
+`HAZARD_INPUT_FILE`
+    :Description:   Name of hazard input file
+    :Data Type:     String
+    :Example:       "./output_SS_WUN_array"
+
+`HAZARD_INPUT_HEADER`
+    :Description:   Columen name for the hazard values
+    :Data Type:     String
+    :Example:       "gmv_PGA"
+
+`HAZARD_SCALING_FACTOR`
+    :Description:   Multiplier factor for scaling the hazard values
+                    in the `HAZARD_INPUT_HEADER` column. Default is 1.0.
+    :Data Type:     Float
+    :Example:       1.2
+
+
+.. rubric:: FOCUS_SCENARIOS_FOR_DETAILED_VULNERABILITY_ANALYSIS
+
+`SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES`
+    :Description:   The name(s) of the focus scenarios for
+                    detailed assessment of system response
+    :Data Type:     List of strings
+    :Example:       ["Cunderdin RP1000", "Cunderdin RP2500"]
+
+`SCENARIO_FOCAL_HAZARD_SCENARIOS`
+    :Description:   The value(s) or scenario(s) at which to undertake
+                    detailed assessment of system response
+    :Data Type:     List of floats or strings that can be interpreted as floats
+    :Example:       [0.121, 0.226]

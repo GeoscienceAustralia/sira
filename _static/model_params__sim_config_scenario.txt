@@ -1,0 +1,22 @@
+.. rubric:: SCENARIO_PARAMS
+
+`CONFIGURATION_ID`
+    :Description:   Unique ID for the scenario and model setup
+    :Data Type:     String
+    :Example:       "Project X scenario config - SS East Perth"
+
+`SCENARIO_NAME`
+    :Description:   Name for identifying simulation scenario
+    :Data Type:     String
+    :Example:       "Historical earthquake Meckering equiv"
+
+`SCENARIO_NAME`
+    :Description:   Name for identifying simulation scenario
+    :Data Type:     String
+    :Example:       "Historical earthquake Meckering equiv"
+
+`OUTPUT_DIR`
+    :Description:   Path where results should be stored
+    :Data Type:     String
+    :Example:       "./output_SS_WUN_array"
+
