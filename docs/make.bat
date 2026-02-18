@@ -6,7 +6,12 @@ if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
 set BUILDDIR=build
-set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% source
+
+REM -a: Forces Sphinx to write all output files ignoring cache.
+REM -E: Ignores the saved environment, forcing a complete rebuild.
+REM For faster development, temporarily remove -a -E
+set ALLSPHINXOPTS=-a -E -d %BUILDDIR%/doctrees %SPHINXOPTS% source
+
 set I18NSPHINXOPTS=%SPHINXOPTS% source
 if NOT "%PAPER%" == "" (
 	set ALLSPHINXOPTS=-D latex_paper_size=%PAPER% %ALLSPHINXOPTS%

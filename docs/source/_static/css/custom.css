@@ -4,15 +4,18 @@ Sphinx theme customisation
 -------------------------------
 */
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Zilla+Slab:500');
+@import url('https://fonts.googleapis.com/css?family=Fira+Code');
 @import url('https://fonts.googleapis.com/css?family=Lora:400');
 
+@import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 body {
     background-color: #edf0f2;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', 'Lato', 'Helvetica', sans-serif;
+    font-family: 'Lato', 'Helvetica', sans-serif;
     font-size: 16px;
     color: #333333;
     line-height: 1.5;
@@ -21,7 +24,7 @@ body {
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     color: #333333;
     font-weight: 500;
-    font-family: 'Zilla Slab', 'Roboto Slab', 'Lora', serif;
+    font-family: 'Arbutus Slab', 'Roboto Slab', 'Lora', serif;
     line-height: 115%;
 }
 
@@ -50,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #333333;
     padding: 0;
     font-weight: 500;
-    font-family: 'Zilla Slab', 'Lora', serif;
+    font-family: 'Roboto Slab', 'Lora', serif;
     line-height: 115%;
 }
 */
@@ -78,17 +81,17 @@ h3 {
 h2:before {
     content: ' ';
     display: block;
-    width: 70px;
-    padding-top: 22px;
-    border-top: 9px solid #555555;
+    width: 65px;
+    padding-top: 25px;
+    border-top: 9px solid #6d6d6d;
 }
 
 h3:before {
     content: ' ';
     display: block;
-    width: 90px;
-    padding-top: 17px;
-    border-top: 5px solid #555555;
+    width: 70px;
+    padding-top: 20px;
+    border-top: 4px solid #6d6d6d;
 }
 
 .rst-content table.docutils td,
@@ -130,16 +133,8 @@ table td {
     margin-bottom: 0;
 }
 
-.rst-content cite {
-    font-family: Consolas, "Andale Mono", "Lucida Console", monospace;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 100%;
-    color: #E74C3C; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
-}
-
 a {
-    color: #044CFF;
+    color: #4d5df3;
     cursor: pointer;
     text-decoration: none;
 }
@@ -222,6 +217,53 @@ a:hover {
     font-size: 115%;
 }
 
+/* Customize admonition directives */
+
+.rst-content .note .admonition-title {
+    font-size: 95%;
+    font-weight: bold;
+}
+.rst-content .note p { font-size: 95%; }
+
+.rst-content .warning p { font-size: 95%; }
+.rst-content .tip p { font-size: 95%; }
+.rst-content .important p { font-size: 100%; }
+
+/* Ensure code blocks display syntax highlighting properly */
+.rst-content pre.literal-block,
+.rst-content div[class^='highlight'] {
+    margin: 1em 0;
+}
+
+.rst-content div[class^='highlight'] pre {
+    color: inherit;  /* Let Pygments handle colors */
+}
+
+/* Apply custom font to all code & cite elements */
+
+@font-face {
+    font-family: "Fira Code";
+    src: url('source/_static/fonts/FiraCode/FiraCode-VF.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.rst-content cite {
+    font-family: "Fira Code", Consolas, monospace;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 100%;
+    color: #cf493a; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
+}
+
+.rst-content code,
+.rst-content pre,
+.rst-content tt,
+.rst-content div[class^='highlight'] pre,
+.rst-content pre.literal-block {
+    font-family: "Fira Code", Consolas, monospace;
+    font-variant-ligatures: none; /* Disable ligatures if preferred */
+}
 
 /* override table width restrictions */
 @media screen and (min-width: 767px) {

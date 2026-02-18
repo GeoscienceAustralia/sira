@@ -60,34 +60,34 @@ This approach works equally well in Windows and Linux, and within Docker. The fo
 Installation option #1 (for Windows):
 
 ```
-    mamba env create -f ./installation/sira_env.yml
-    mamba activate sira_env
-    pip install uv
-    uv pip install -r ./installation/sira_req.txt
+mamba env create -f ./installation/sira_env.yml
+mamba activate sira_env
+pip install uv
+uv pip install -r ./installation/sira_req.txt
 ```
 
 Installation option #2 (for Linux workstations, needs to be adapted for HPC env):
 
 ```
-    sudo apt-get update
+sudo apt-get update
 
-    grep -vE '^\s*#|^\s*$' ./installation/packagelist_linux.txt | \
-    xargs -r sudo apt-get install -y --no-install-recommends
-    sudo apt-get clean
+grep -vE '^\s*#|^\s*$' ./installation/packagelist_linux.txt | \
+xargs -r sudo apt-get install -y --no-install-recommends
+sudo apt-get clean
 
-    sudo rm -rf /var/lib/apt/lists/*
-    sudo add-apt-repository ppa:deadsnakes/ppa
-    sudo apt install python3.11.7
+sudo rm -rf /var/lib/apt/lists/*
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.11.7
 
-    python -m venv .venv
-    python -m pip install --upgrade pip
+python -m venv .venv
+python -m pip install --upgrade pip
 
-    pip install -r ./installation/constraints.txt
-    pip install -r ./installation/requirements-core.txt
-    pip install -r ./installation/requirements-dev.txt
-    pip install -r ./installation/requirements-viz.txt
-    pip install -r ./installation/requirements-docs.txt
-    pip install -r ./installation/requirements-diagrams.txt
+pip install -r ./installation/constraints.txt
+pip install -r ./installation/requirements-core.txt
+pip install -r ./installation/requirements-dev.txt
+pip install -r ./installation/requirements-viz.txt
+pip install -r ./installation/requirements-docs.txt
+pip install -r ./installation/requirements-diagrams.txt
 ```
 
 ### [Required Directory Structure](#required-directory-structure)
@@ -228,33 +228,47 @@ When running large-scale simulations on HPC (e.g. Gadi with PBS + OpenMPI), SIRA
     - Sets Python logger verbosity (e.g. `INFO`, `DEBUG`, `WARNING`).
     - Lower verbosity reduces I/O overhead in large parallel runs.
 - `SIRA_QUIET_MODE`
-    - `1` suppresses progress / non-essential console output; `0` shows normal progress.
+    - `1` suppresses progress / non-essential console output.
+    - `0` shows normal progress.
 - `SIRA_STREAM_DIR`
-    - Directory for per-rank / per-process streamed intermediate artifacts (NPZ, manifests). Use fast local node storage (e.g. burst buffer) for performance; consolidate later.
+    - Directory for per-rank / per-process streamed intermediate artifacts (NPZ, manifests).
+    - Use fast local node storage (e.g. burst buffer) for performance; consolidate later.
 - `SIRA_DEFER_CONSOLIDATION`
-    - `1` skips in-process aggregation of streamed artifacts until a post-run consolidation step; improves runtime on large ranks.
+    - `1` skips in-process aggregation of streamed artifacts until a post-run consolidation step.
+    - Improves runtime on large ranks.
 - `SIRA_SAVE_COMPTYPE_RESPONSE`
-    - `1` to persist component-type response arrays; `0` to skip. Saves aggregated loss metrics by type.
+    - `1` to persist component-type response arrays; `0` to skip.
+    - Saves aggregated loss metrics by type.
 - `SIRA_SAVE_COMPONENT_RESPONSE`
-    - `1` to persist per-component response arrays (larger footprint); `0` (default in scripts) to reduce storage.
+    - `1` to persist per-component response arrays (larger footprint).
+    - `0` to reduce storage (default in scripts).
 - `SIRA_CHUNKS_PER_SLOT`
-    - Controls how many streaming chunks each CPU slot (rank/worker) emits before rolling over to a new file. Lower values reduce memory overhead; higher values reduce file count.
+    - Controls how many streaming chunks each CPU slot (rank/worker) emits before rolling over to a new file.
+    - Lower values reduce memory overhead; higher values reduce file count.
 - `SIRA_STREAM_COMPRESSION`
-    - Compression codec for streamed artifacts (e.g. `snappy`, `zstd`). Choose fastest acceptable for your I/O profile.
+    - Compression codec for streamed artifacts (e.g. `snappy`, `zstd`).
+    - Choose fastest acceptable for your I/O profile.
 - `SIRA_STREAM_ROW_GROUP`
-    - Target row-group / block size (in rows) for streamed tabular data; balances read amplification vs memory. Large hazards benefit from larger values (e.g. `524288`).
+    - Target row-group / block size (in rows) for streamed tabular data; balances read amplification vs memory.
+    - Large hazards benefit from larger values (e.g. `524288`).
 - `SIRA_MIN_HAZARDS_FOR_PARALLEL`
-    - Integer threshold; if total hazard events below this value, SIRA may avoid spawning full parallel workers to reduce overhead.
+    - Integer threshold for number of hazard events to enalble parallel processing.
+    - If total hazard events below this value, SIRA may avoid spawning full parallel workers to reduce overhead.
 - `SIRA_HPC_MODE`
-    - `1` enables HPC-oriented heuristics (larger batches, reduced chatter, defensive memory usage). When unset, defaults remain more general-purpose.
+    - `1` enables HPC-oriented heuristics (larger batches, reduced chatter, defensive memory usage).
+    - When unset, defaults remain more general-purpose.
 - `SIRA_MAX_BATCH_SIZE`
-    - Caps batch size used in processing loops even if auto-tuning would choose larger; helps prevent memory spikes on dense component sets.
+    - Caps batch size used in processing loops even if auto-tuning would choose larger
+    - Helps prevent memory spikes on dense component sets.
 - `SIRA_CLEANUP_CHUNKS`
-    - `1` removes staged per-node chunk directories after consolidation to reclaim scratch space; `0` keeps them for inspection.
+    - `1` removes staged per-node chunk directories after consolidation to reclaim scratch space.
+    - `0` keeps them for inspection.
 - `PYTHONHASHSEED`
-    - Standard Python reproducibility flag (e.g. set to `0`); ensures consistent hash-based ordering when determinism is required.
+    - Standard Python reproducibility flag (e.g. set to `0`).
+    - Ensures consistent hash-based ordering when determinism is required.
 
 Example (PBS + OpenMPI snippet):
+
 ```bash
 export SIRA_LOG_LEVEL=INFO
 export SIRA_QUIET_MODE=1

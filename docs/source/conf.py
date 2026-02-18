@@ -125,7 +125,7 @@ rst_epilog = open(os.path.join(CURDIR, "epilog.rst"), "r").read()
 
 # The name of the Pygments (syntax highlighting) style to use.
 # pygments_style = 'sphinx'
-pygments_style = "pastie"
+pygments_style = "xcode"
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -154,7 +154,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 html_theme_options = {
     # "inherit": basic,
     # "stylesheet": "css/theme.css",
-    # "pygments_style": "default",
+    "style_external_links": False,
     "canonical_url": "",
     "logo_only": False,
     "prev_next_buttons_location": None,
@@ -221,6 +221,7 @@ html_secnumber_suffix = " "
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static", "_static/files"]
+# html_css_files = ["css/custom.css"]
 
 
 def setup(app):
