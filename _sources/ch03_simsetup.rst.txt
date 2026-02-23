@@ -30,27 +30,29 @@ the location with a flag `-d` at execution time.
 The outputs generated from the simulation are stored in a directory called
 `output` within the same parent directory.
 
-For illustration purposed we assume a hypothetical project "PROJECT HAN",
+For illustration purposed we assume a hypothetical project "PROJECTX",
 with the project folder located in the root directory. We also assume
-that within the project, we are modelling two systems named GISKARD and
-DANEEL. For this given setup, input-output dir structure for the project
-will be as follows::
+that within the project, we are modelling two systems named SYSTEM_D and
+SYSTEM_G. For this given setup, input-output dir structure for the project
+will be as follows:
+
+::
 
     .
-    └── <PROJECT_HAN>
-        ├── <SYSTEM_GISKARD>
+    └── <PROJECTX>
+        ├── <SYSTEM_D>
         │   ├── input
-        │   │   ├── config_system_GR.json
-        │   │   └── model_system_GR.json
+        │   │   ├── config_system_D.json
+        │   │   └── model_system_D.json
         │   └── output
         │       ├── ...
         │       ├── ...
         │       └── ...
         │
-        └── <SYSTEM_DANEEL>
+        └── <SYSTEM_G>
             ├── input
-            │   ├── config_system_DO.json
-            │   └── model_system_DO.json
+            │   ├── config_system_G.json
+            │   └── model_system_G.json
             │
             └── output
                 ├── ...

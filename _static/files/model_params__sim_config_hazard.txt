@@ -55,7 +55,7 @@
 `HAZARD_INPUT_DIR`
     :Description:   Path for hazard file location
     :Data Type:     String
-    :Example:       "../_PROJECTX_hazard_portfolio/scenario_files"
+    :Example:       "../PROJECTX_hazard_portfolio/scenario_files"
 
 `HAZARD_INPUT_FILE`
     :Description:   Name of hazard input file

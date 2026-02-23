@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=a5d6f15a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=71efd754" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -49,8 +49,8 @@
 <li class="toctree-l1"><a class="reference internal" href="ch01_intro.html">1 Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2 Model Concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-system-model">2.1 The ‘System’ Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#terminology-in-context-an-infrastructure-system">2.1.1 Terminology in Context: An Infrastructure System</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#terminology-in-context-a-model-of-a-lifeline-infrastructure">2.1.2 Terminology in Context: A Model of a Lifeline Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#infrastructure-system-hierarchy">2.1.1 Infrastructure System Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structure-of-a-sira-model-of-a-lifeline-infrastructure">2.1.2 Structure of a SIRA Model of a Lifeline Infrastructure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#classification-of-nodes-within-a-model-of-an-infrastructure-system">2.1.3 Classification of Nodes within a Model of an Infrastructure System</a></li>
 </ul>
 </li>
@@ -102,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ch06_fragility_attribution.html">6 Component Fragility Attribution</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright Notice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyrightnotice.html">Copyright</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bibliography.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reportglossary.html">Glossary</a></li>
 </ul>
@@ -151,59 +151,80 @@ dictionary, is:</p>
 <div><p>“a regularly interacting or interdependent group
 of items forming a unified whole.”</p>
 </div></blockquote>
-<p>The International Council on Systems Engineering (INCOSE)
-<a class="reference external" href="https://www.incose.org/about-systems-engineering">defines a system thus</a>:</p>
+<p>The International Council on Systems Engineering (INCOSE) has the following
+<a class="reference external" href="https://www.incose.org/about-systems-engineering">simple definition</a>
+for a system on its website:</p>
 <blockquote>
-<div><p>“A system is a construct or collection of different
-elements that together produce results not obtainable
-by the elements alone.”</p>
+<div><p>“A system is a set of elements that work together to produce
+results that the individual elements couldn’t achieve alone.”</p>
 </div></blockquote>
+<p>INCOSE also provides a more specific definition of a ‘complex system’
+that emphasises the non-trivial relationships between cause and effect,
+associated its ‘emergent’ properties <span id="id2">[<a class="reference internal" href="bibliography.html#id15" title="International Council on Systems Engineering (INCOSE). Systems engineering definitions. Technical Report, INCOSE, 2020. URL: https://www.incose.org/wp-content/uploads/legacy/default-document-library/incose-se-definitions-tp-2020-002-06.pdf.">6</a>]</span>:</p>
+<blockquote>
+<div><p>“A complex system is a system in which there are non-trivial
+relationships between cause and effect: each effect may be due
+to multiple causes; each cause may contribute to multiple
+effects; causes and effects may be related as feedback loops,
+both positive and negative; and cause-effect chains are cyclic
+and highly entangled rather than linear and separable.”</p>
+</div></blockquote>
+<p>This definition of a complex system is particularly relevant to the SIRA modelling framework, as it captures the essence of the interdependencies and interactions that characterise infrastructure systems. The SIRA simulation approach is designed to account for these complexities and provide insights
+into how disruptions from hazards can lead to potentially unpredictable behaviours and propagate through the system, affecting its overall
+functionality.</p>
 <p>The specific meaning of a system and its boundaries depend on the context,
 and it is important to understand how this term is used within the SIRA
 modelling methodology. This is clarified in subsequent subsections.</p>
 <p>The central idea in the SIRA modelling construct is this:
 All lifeline infrastructure ‘systems’ within the modelling framework are
 conceptualised as a network of interconnected nodes.</p>
-<p>The ‘nodes’ or vertices and connecting edges have different meaning based
-on the level of abstraction, which is clarified in following subsections.</p>
-<p>This modelling approach affords a very high degree of flexibility and
-scalability, making it possible accommodate diverse sectors and assets
-of varying scales and complexities.</p>
+<p>The nodes or vertices, and connecting edges, have different meaning based
+on the level of abstraction, which is explained in following subsections.</p>
+<p>This modelling approach affords a high degree of flexibility and
+scalability, making it possible to accommodate multiple sectors and assets
+of varying scale and complexity.</p>
 <p>Furthermore, it allows the user to:</p>
 <ol class="loweralpha simple">
 <li><p>model the effect of impaired or destroyed components on the
 operational capacity of the overall system;</p></li>
 <li><p>use graph theory to assess the graduated capacity degradation, and
 restoration, through modelling flow through the network; and</p></li>
-<li><p>detect prioritised ‘paths’, or sets of components, within network
-that need to be repaired or restored in order to restore the flow through
-the network which represents the productive capacity of the system.</p></li>
+<li><p>detect prioritised ‘paths’, or sets of connected components, within
+the network that need to be repaired or recovered in order to restore
+the flow through the network which represents the productive capacity
+of the system.</p></li>
 </ol>
-<section id="terminology-in-context-an-infrastructure-system">
-<h3><span class="section-number">2.1.1 </span>Terminology in Context: An Infrastructure System<a class="headerlink" href="#terminology-in-context-an-infrastructure-system" title="Link to this heading"></a></h3>
-<p>The elements in an infrastructure (or lifeline) system are conceptualised
+<section id="infrastructure-system-hierarchy">
+<h3><span class="section-number">2.1.1 </span>Infrastructure System Hierarchy<a class="headerlink" href="#infrastructure-system-hierarchy" title="Link to this heading"></a></h3>
+<p>The elements in an infrastructure (or lifeline) system can be conceptualised
 as being structured in a three-level hierarchy:</p>
 <p><strong>Level 1 : Infrastructure Network –</strong>  This is the top level of
 interconnected infrastructure systems where infrastructure facilities are
-connected to form a network or networks.</p>
-<p><strong>Level 2 : Infrastructure Facility –</strong> The concept of facilities used in this
-framework map closely to the typology of macro-components as defined in the
-Synerg-G program <span id="id2">[<a class="reference internal" href="bibliography.html#id9" title="K. Pitilakis. D3.3 - fragility functions for electric power system elements. Technical Report, Syner-G, European Community, October 2010. URL: http://www.vce.at/SYNER-G/pdf/deliverables/D3.03_SYNER-G_Fragility functions for electric power system elements.pdf.">6</a>, <a class="reference internal" href="bibliography.html#id7" title="K. Pitilakis, H. Crowley, and A.M. Kaynia. Syner-G: Typology Definition and Fragility Functions for Physical Elements at Seismic Risk, chapter 6, pages 157-186. Springer, Netherlands, 2014.">7</a>]</span>, and align with the
-definition systems as defined in <span id="id3">[<a class="reference internal" href="bibliography.html#id8" title="S.M. Rinaldi, J.P. Peerenboom, and T.K. Kelly. Identifying, understanding, and analyzing critical infrastructure interdependencies. IEEE Control Systems Magazine, 0272-1780/01:11-25, 2001.">8</a>]</span>.</p>
-<p><strong>Level 3 : Infrastructure Microcomponent –</strong> This concept of components map
-closely to the typology of micro-components as defined in the Synerg-G program
-<span id="id4">[<a class="reference internal" href="bibliography.html#id9" title="K. Pitilakis. D3.3 - fragility functions for electric power system elements. Technical Report, Syner-G, European Community, October 2010. URL: http://www.vce.at/SYNER-G/pdf/deliverables/D3.03_SYNER-G_Fragility functions for electric power system elements.pdf.">6</a>, <a class="reference internal" href="bibliography.html#id7" title="K. Pitilakis, H. Crowley, and A.M. Kaynia. Syner-G: Typology Definition and Fragility Functions for Physical Elements at Seismic Risk, chapter 6, pages 157-186. Springer, Netherlands, 2014.">7</a>]</span>, and align with the definition of
-subsystems as defined in <span id="id5">[<a class="reference internal" href="bibliography.html#id8" title="S.M. Rinaldi, J.P. Peerenboom, and T.K. Kelly. Identifying, understanding, and analyzing critical infrastructure interdependencies. IEEE Control Systems Magazine, 0272-1780/01:11-25, 2001.">8</a>]</span>.</p>
-<p>This applies to discussions on a <em>complete</em> that is responsible for
+connected to form a network or connect to other networks.</p>
+<p><strong>Level 2 : Infrastructure Facility –</strong> Facilities are geospatially discrete
+assets that can be linked to a specific physical location and provide a
+specific service, e.g. a power station or a substation.
+The concept of facilities used in this framework map closely to the typology
+of macro-components as defined in the Synerg-G program
+<span id="id3">[<a class="reference internal" href="bibliography.html#id9" title="K. Pitilakis. D3.3 - fragility functions for electric power system elements. Technical Report, Syner-G, European Community, October 2010. URL: http://www.vce.at/SYNER-G/pdf/deliverables/D3.03_SYNER-G_Fragility functions for electric power system elements.pdf.">7</a>, <a class="reference internal" href="bibliography.html#id7" title="K. Pitilakis, H. Crowley, and A.M. Kaynia. Syner-G: Typology Definition and Fragility Functions for Physical Elements at Seismic Risk, chapter 6, pages 157-186. Springer, Netherlands, 2014.">8</a>]</span>, and align with the definition of
+systems as defined in <span id="id4">[<a class="reference internal" href="bibliography.html#id8" title="S.M. Rinaldi, J.P. Peerenboom, and T.K. Kelly. Identifying, understanding, and analyzing critical infrastructure interdependencies. IEEE Control Systems Magazine, 0272-1780/01:11-25, 2001.">9</a>]</span>.</p>
+<p><strong>Level 3 : Infrastructure Microcomponent –</strong> These are the physical elements
+that constitute the infrastructure facility, e.g. a transformer or circuit
+breaker within an electrical substation.
+This concept of components map closely to the typology of micro-components as
+defined in the Synerg-G program <span id="id5">[<a class="reference internal" href="bibliography.html#id9" title="K. Pitilakis. D3.3 - fragility functions for electric power system elements. Technical Report, Syner-G, European Community, October 2010. URL: http://www.vce.at/SYNER-G/pdf/deliverables/D3.03_SYNER-G_Fragility functions for electric power system elements.pdf.">7</a>, <a class="reference internal" href="bibliography.html#id7" title="K. Pitilakis, H. Crowley, and A.M. Kaynia. Syner-G: Typology Definition and Fragility Functions for Physical Elements at Seismic Risk, chapter 6, pages 157-186. Springer, Netherlands, 2014.">8</a>]</span>, and
+align with the definition of subsystems as defined in <span id="id6">[<a class="reference internal" href="bibliography.html#id8" title="S.M. Rinaldi, J.P. Peerenboom, and T.K. Kelly. Identifying, understanding, and analyzing critical infrastructure interdependencies. IEEE Control Systems Magazine, 0272-1780/01:11-25, 2001.">9</a>]</span>.</p>
+<p>This applies to discussions on a complete system that is responsible for
 delivering some service. This also applies to classification of assets,
-and how information about those assets they are stored and referenced
+and how information about those assets are stored and referenced
 in a database.</p>
 </section>
-<section id="terminology-in-context-a-model-of-a-lifeline-infrastructure">
-<h3><span class="section-number">2.1.2 </span>Terminology in Context: A Model of a Lifeline Infrastructure<a class="headerlink" href="#terminology-in-context-a-model-of-a-lifeline-infrastructure" title="Link to this heading"></a></h3>
-<p>In the context of a specific infrastructure model developed for hazard
-impact assessment, the following terms and ideas apply (and are implemented
-in the simulation code).</p>
+<section id="structure-of-a-sira-model-of-a-lifeline-infrastructure">
+<h3><span class="section-number">2.1.2 </span>Structure of a SIRA Model of a Lifeline Infrastructure<a class="headerlink" href="#structure-of-a-sira-model-of-a-lifeline-infrastructure" title="Link to this heading"></a></h3>
+<p>In the context of a specific infrastructure model, developed for hazard
+impact assessment, the following terms and ideas apply. These are the
+building blocks of of SIRA model and map to the objects implemented in
+the simulation code.</p>
 <p><strong>The System Model:</strong> This defines a logical set of assets that is an
 abstraction of a real equivalent asset. The usage of the term system in this
 context is closer to its application in System Engineering, rather than
@@ -214,16 +235,16 @@ a service or generates a type of product. This term can be used to refer
 to a network or a facility. The context of the simulation will
 disambiguate its meaning.</p>
 <p><strong>Component:</strong> It is the high-level element within the network (or graph) that
-represents the <strong>System Model</strong>. A collection of interconnected
+represents the <em>System Model</em>. A collection of interconnected
 components with specific attributes and roles comprise the System
 in the context of the simulation model.</p>
 <p>The asset being studied will determine what is considered a system or what
 is considered a component within the context of the simulation.</p>
-<p><strong>If the system under study is a NETWORK</strong>, then the System Model is a
-Level 1 element, i.e. an <em>Infrastructure Network</em>, and the Components are
+<p><strong>If the physical system under study is a NETWORK</strong>, then the System Model is
+a Level 1 element, i.e. an <em>Infrastructure Network</em>, and the Components are
 Level 2 elements, i.e. <em>Infrastructure Facilities</em>.</p>
-<p><strong>If the system under study is a FACILITY</strong>, then the System Model is a
-Level 2 element, i.e. an <em>Infrastructure Facility</em>, and the Components are
+<p><strong>If the physical system under study is a FACILITY</strong>, then the System Model is
+a Level 2 element, i.e. an <em>Infrastructure Facility</em>, and the Components are
 Level 3 elements, i.e. <em>Infrastructure Microcomponents</em>.</p>
 </section>
 <section id="classification-of-nodes-within-a-model-of-an-infrastructure-system">
@@ -257,13 +278,14 @@ this category.</p></li>
 </ol>
 <p>The component configuration and redundancies are captured as edges connecting
 the nodes. Constraints on flow through specific paths, or sets of nodes, can
-be represented as capacities of edges connecting those nodes. Figure 2.1
-illustrates this concept for a thermal power station.</p>
-<figure class="align-center" id="id6">
+be represented as capacities of edges connecting those nodes.
+<a class="reference internal" href="#pwrstn-schematic-diagram"><span class="std std-numref">Fig. 2.1</span></a> illustrates this concept for
+a thermal power station.</p>
+<figure class="align-center" id="id7">
 <span id="pwrstn-schematic-diagram"></span><a class="reference internal image-reference" href="_images/pwrstn_schematic_diagram.png"><img alt="Power station schematic" src="_images/pwrstn_schematic_diagram.png" style="width: 98%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Schematic representation of a coal-fired power station</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Schematic representation of a coal-fired power station</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The ‘edges’, or inter-nodal connections, represent a link or a process for
@@ -285,7 +307,7 @@ damaged system model.</p>
 </section>
 <section id="system-loss-modelling">
 <h2><span class="section-number">2.2 </span>System Loss Modelling<a class="headerlink" href="#system-loss-modelling" title="Link to this heading"></a></h2>
-<p>For a given value of level of ground shaking, a set of random samples is
+<p>For a given level of ground shaking, a set of random samples is
 generated, and the damage state of each component is calculated for each
 random sample based on the fragility function of the given component.
 Given the assessed damage state of all the system components, the system
@@ -294,13 +316,13 @@ is run through a Monte Carlo process for the set of random samples to
 assess the system response at the selected ground shaking intensity. To
 obtain a characterisation of the system and develop fragility algorithms
 for the system (e.g. the power station) the process is repeated for a
-range of PGA values. This Process is shown in Figure 2.2.</p>
-<figure class="align-center" id="id7">
+range of PGA values. This Process is shown in <a class="reference internal" href="#fig-hazard-loss-link"><span class="std std-numref">Fig. 2.2</span></a>.</p>
+<figure class="align-center" id="id8">
 <span id="fig-hazard-loss-link"></span><a class="reference internal image-reference" href="_images/hazard_loss_link.png"><img alt="Linking hazard to damage and loss" src="_images/hazard_loss_link.png" style="width: 98%;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Schematic of process linking component damage assessment to
-loss projection</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+loss projection</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Four discrete sequential damage states are used for assessing system
