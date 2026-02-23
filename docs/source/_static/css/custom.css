@@ -3,19 +3,24 @@
 Sphinx theme customisation
 -------------------------------
 */
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Fira+Code');
-@import url('https://fonts.googleapis.com/css?family=Lora:400');
-
-@import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
+
+/*
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap');
+*/
 
 body {
     background-color: #edf0f2;
     margin: 0;
     padding: 0;
-    font-family: 'Lato', 'Helvetica', sans-serif;
+    font-family: 'Lato', 'Roboto', 'Helvetica', sans-serif;
     font-size: 16px;
     color: #333333;
     line-height: 1.5;
@@ -23,8 +28,8 @@ body {
 
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     color: #333333;
-    font-weight: 500;
-    font-family: 'Roboto Slab', 'Arbutus Slab', 'Lora', serif;
+    font-weight: 600;
+    font-family: 'Lora', 'Roboto Slab', 'Arbutus Slab', serif;
     line-height: 115%;
 }
 
@@ -59,7 +64,7 @@ h1, h2, h3, h4, h5, h6 {
 */
 
 h1 {
-    font-size: 39px;
+    font-size: 38px;
     padding: 10px 0px 10px 0px;
     margin: 20px 0px 20px 0px;
     background-color: none;
@@ -67,7 +72,7 @@ h1 {
 }
 
 h2 {
-    font-size: 30px;
+    font-size: 28px;
     padding: 10px 5px 10px 0px;
     margin: 5px 0 5px 0px;
 }
@@ -81,17 +86,17 @@ h3 {
 h2:before {
     content: ' ';
     display: block;
-    width: 65px;
+    width: 60px;
     padding-top: 25px;
-    border-top: 9px solid #6d6d6d;
+    border-top: 8px solid #444444;
 }
 
 h3:before {
     content: ' ';
     display: block;
-    width: 65px;
+    width: 67px;
     padding-top: 20px;
-    border-top: 4px solid #797878;
+    border-top: 4px solid #444444;  /* #797878 */
 }
 
 .rst-content table.docutils td,
@@ -172,14 +177,14 @@ a:hover {
 /* Customise Definition List */
 .rst-content dl:not(.docutils) dt {
     display: table;
-    margin: 12px 0 10px 0;
+    margin: 10px 0 10px 0;
     font-size: 95%;
     line-height: normal;
-    background: #e7f2fa;
+    background: #FFFFFF;  /* #e7f2fa */
     color: #2980B9;
-    border-left: solid 4px #6ab0de;
+    border-left: solid 5px #aaa; /* #79bae6; #6ab0de; */
     border-top: none;
-    padding: 6px;
+    padding: 1px 4px 2px 8px;
     position: relative;
 }
 
@@ -200,7 +205,7 @@ a:hover {
 
 .rst-content dl dt {
     font-weight: bold;
-    margin-bottom: 3px;
+    margin-bottom: 0.5em;
     margin-top: 0.5em;
     margin-left: 14px;
 }
@@ -213,8 +218,8 @@ a:hover {
 .rst-content p.rubric {
     margin-bottom: 6px;
     margin-top: 20px;
-    font-weight: bolder;
-    font-size: 115%;
+    font-weight: 600;
+    font-size: 100%;
 }
 
 /* Customize admonition directives */
@@ -243,7 +248,7 @@ a:hover {
 
 @font-face {
     font-family: "Fira Code";
-    src: url('source/_static/fonts/FiraCode/FiraCode-VF.ttf') format('truetype');
+    src: url('../fonts/FiraCode/FiraCode-VF.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -252,7 +257,7 @@ a:hover {
     font-family: "Fira Code", Consolas, monospace;
     font-weight: 500;
     font-style: normal;
-    font-size: 100%;
+    font-size: 95%;
     color: #cf493a; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
 }
 
@@ -262,7 +267,8 @@ a:hover {
 .rst-content div[class^='highlight'] pre,
 .rst-content pre.literal-block {
     font-family: "Fira Code", Consolas, monospace;
-    font-variant-ligatures: none; /* Disable ligatures if preferred */
+    font-size: 85%;
+    font-variant-ligatures: common-ligatures; /* Enable ligatures */
 }
 
 /* override table width restrictions */

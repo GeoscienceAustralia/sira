@@ -27,12 +27,27 @@ dictionary, is:
     "a regularly interacting or interdependent group
     of items forming a unified whole."
 
-The International Council on Systems Engineering (INCOSE)
-`defines a system thus <https://www.incose.org/about-systems-engineering>`_:
+The International Council on Systems Engineering (INCOSE) has the following
+`simple definition <https://www.incose.org/about-systems-engineering>`_
+for a system on its website:
 
-    "A system is a construct or collection of different
-    elements that together produce results not obtainable
-    by the elements alone."
+    "A system is a set of elements that work together to produce
+    results that the individual elements couldn't achieve alone."
+
+INCOSE also provides a more specific definition of a 'complex system'
+that emphasises the non-trivial relationships between cause and effect,
+associated its 'emergent' properties :cite:`INCOSE2020`:
+
+   "A complex system is a system in which there are non-trivial 
+   relationships between cause and effect: each effect may be due 
+   to multiple causes; each cause may contribute to multiple 
+   effects; causes and effects may be related as feedback loops, 
+   both positive and negative; and cause-effect chains are cyclic 
+   and highly entangled rather than linear and separable."
+
+This definition of a complex system is particularly relevant to the SIRA modelling framework, as it captures the essence of the interdependencies and interactions that characterise infrastructure systems. The SIRA simulation approach is designed to account for these complexities and provide insights
+into how disruptions from hazards can lead to potentially unpredictable behaviours and propagate through the system, affecting its overall
+functionality.
 
 The specific meaning of a system and its boundaries depend on the context,
 and it is important to understand how this term is used within the SIRA
@@ -42,56 +57,65 @@ The central idea in the SIRA modelling construct is this:
 All lifeline infrastructure 'systems' within the modelling framework are
 conceptualised as a network of interconnected nodes.
 
-The 'nodes' or vertices and connecting edges have different meaning based
-on the level of abstraction, which is clarified in following subsections.
+The nodes or vertices, and connecting edges, have different meaning based
+on the level of abstraction, which is explained in following subsections.
 
-This modelling approach affords a very high degree of flexibility and
-scalability, making it possible accommodate diverse sectors and assets
-of varying scales and complexities.
+This modelling approach affords a high degree of flexibility and
+scalability, making it possible to accommodate multiple sectors and assets
+of varying scale and complexity.
 
 Furthermore, it allows the user to:
 
-(a) model the effect of impaired or destroyed components on the 
+(a) model the effect of impaired or destroyed components on the
     operational capacity of the overall system;
 
-(b) use graph theory to assess the graduated capacity degradation, and 
+(b) use graph theory to assess the graduated capacity degradation, and
     restoration, through modelling flow through the network; and
 
-(c) detect prioritised 'paths', or sets of components, within network 
-    that need to be repaired or restored in order to restore the flow through 
-    the network which represents the productive capacity of the system.
+(c) detect prioritised 'paths', or sets of connected components, within
+    the network that need to be repaired or recovered in order to restore
+    the flow through the network which represents the productive capacity
+    of the system.
 
-Terminology in Context: An Infrastructure System
-------------------------------------------------
 
-The elements in an infrastructure (or lifeline) system are conceptualised 
+Infrastructure System Hierarchy
+-------------------------------
+
+The elements in an infrastructure (or lifeline) system can be conceptualised
 as being structured in a three-level hierarchy:
 
 **Level 1 : Infrastructure Network --**  This is the top level of
 interconnected infrastructure systems where infrastructure facilities are
-connected to form a network or networks.
+connected to form a network or connect to other networks.
 
-**Level 2 : Infrastructure Facility --** The concept of facilities used in this
-framework map closely to the typology of macro-components as defined in the
-Synerg-G program :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the
-definition systems as defined in :cite:`Rinaldi-etal-2001`.
-
-**Level 3 : Infrastructure Microcomponent --** This concept of components map
-closely to the typology of micro-components as defined in the Synerg-G program
+**Level 2 : Infrastructure Facility --** Facilities are geospatially discrete
+assets that can be linked to a specific physical location and provide a
+specific service, e.g. a power station or a substation.
+The concept of facilities used in this framework map closely to the typology
+of macro-components as defined in the Synerg-G program
 :cite:`SynerG2010,Pitilakis-etal-2014`, and align with the definition of
-subsystems as defined in :cite:`Rinaldi-etal-2001`.
+systems as defined in :cite:`Rinaldi-etal-2001`.
 
-This applies to discussions on a *complete* that is responsible for
+**Level 3 : Infrastructure Microcomponent --** These are the physical elements
+that constitute the infrastructure facility, e.g. a transformer or circuit
+breaker within an electrical substation.
+This concept of components map closely to the typology of micro-components as
+defined in the Synerg-G program :cite:`SynerG2010,Pitilakis-etal-2014`, and
+align with the definition of subsystems as defined in :cite:`Rinaldi-etal-2001`.
+
+This applies to discussions on a complete system that is responsible for
 delivering some service. This also applies to classification of assets,
-and how information about those assets they are stored and referenced
+and how information about those assets are stored and referenced
 in a database.
 
-Terminology in Context: A Model of a Lifeline Infrastructure
-------------------------------------------------------------
 
-In the context of a specific infrastructure model developed for hazard
-impact assessment, the following terms and ideas apply (and are implemented
-in the simulation code).
+Structure of a SIRA Model of a Lifeline Infrastructure
+------------------------------------------------------
+
+In the context of a specific infrastructure model, developed for hazard
+impact assessment, the following terms and ideas apply. These are the
+building blocks of of SIRA model and map to the objects implemented in
+the simulation code.
 
 **The System Model:** This defines a logical set of assets that is an
 abstraction of a real equivalent asset. The usage of the term system in this
@@ -104,20 +128,21 @@ to a network or a facility. The context of the simulation will
 disambiguate its meaning.
 
 **Component:** It is the high-level element within the network (or graph) that
-represents the **System Model**. A collection of interconnected
+represents the *System Model*. A collection of interconnected
 components with specific attributes and roles comprise the System
 in the context of the simulation model.
 
 The asset being studied will determine what is considered a system or what
 is considered a component within the context of the simulation.
 
-**If the system under study is a NETWORK**, then the System Model is a
-Level 1 element, i.e. an *Infrastructure Network*, and the Components are
+**If the physical system under study is a NETWORK**, then the System Model is
+a Level 1 element, i.e. an *Infrastructure Network*, and the Components are
 Level 2 elements, i.e. *Infrastructure Facilities*.
 
-**If the system under study is a FACILITY**, then the System Model is a
-Level 2 element, i.e. an *Infrastructure Facility*, and the Components are
+**If the physical system under study is a FACILITY**, then the System Model is
+a Level 2 element, i.e. an *Infrastructure Facility*, and the Components are
 Level 3 elements, i.e. *Infrastructure Microcomponents*.
+
 
 .. _model-node-classification:
 
@@ -131,7 +156,7 @@ four categories:
 
 1. **Supply nodes**: These nodes represent the entry points into the system
    for required inputs or commodities. As for example, coal and water can
-   be the required ‘commodities’ into a thermal power station. In the case
+   be the required 'commodities' into a thermal power station. In the case
    of the substation, required input is electricity from power stations or
    other substations.
 
@@ -154,13 +179,14 @@ four categories:
 
 4. **Transhipment nodes**: These are nodes that transform, transport, or
    store system inputs to give effect to processes that produces the outputs
-   required of the system. Majority of the nodes within a system fall into 
+   required of the system. Majority of the nodes within a system fall into
    this category.
 
 The component configuration and redundancies are captured as edges connecting
-the nodes. Constraints on flow through specific paths, or sets of nodes, can 
-be represented as capacities of edges connecting those nodes. Figure 2.1 
-illustrates this concept for a thermal power station.
+the nodes. Constraints on flow through specific paths, or sets of nodes, can
+be represented as capacities of edges connecting those nodes.
+:numref:`pwrstn_schematic_diagram` illustrates this concept for
+a thermal power station.
 
 .. _pwrstn_schematic_diagram:
 
@@ -186,13 +212,13 @@ Connection paths and 'production capacities' along those paths within a
 system are calculated as the maximum flow through those paths.
 The `igraph <http://igraph.org/python/>`_ Python package was used as the 
 network modelling platform to calculate graph metrics for a post-hazard 
-damaged system model. 
+damaged system model.
 
 
 System Loss Modelling
 =====================
 
-For a given value of level of ground shaking, a set of random samples is 
+For a given level of ground shaking, a set of random samples is 
 generated, and the damage state of each component is calculated for each 
 random sample based on the fragility function of the given component.
 Given the assessed damage state of all the system components, the system
@@ -201,7 +227,7 @@ is run through a Monte Carlo process for the set of random samples to
 assess the system response at the selected ground shaking intensity. To
 obtain a characterisation of the system and develop fragility algorithms
 for the system (e.g. the power station) the process is repeated for a
-range of PGA values. This Process is shown in Figure 2.2.
+range of PGA values. This Process is shown in :numref:`fig_hazard_loss_link`.
 
 .. _fig_hazard_loss_link:
 
@@ -337,7 +363,7 @@ high priority line. This exercise may allow the operator to eliminate
 the potentially long procurement or transportation time for a replacement
 unit, and thereby expedite the restoration of the high priority lines.
 
-The outputs from the restoration model are: 
+The outputs from the restoration model are:
 
 1) a simple Gantt chart with each component needing repair,
 

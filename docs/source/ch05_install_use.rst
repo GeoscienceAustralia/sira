@@ -239,7 +239,7 @@ By far the easiest way to run the system for development is with
 Assuming that you start the system this way in the current folder, you can:
 
 - attach to the `sira` image to run models and tests with: |br|
-  ``docker attach sira_sira_1``
+  `docker attach sira_sira_1`
 
 
 - access the GUI for defining fragility functions at: |br|
@@ -266,8 +266,8 @@ The code needs a simulation setup file and an infrastructure model file
 to run a simulation, as discussed in :ref:`simulation-input-setup`.
 
 For the purposes of discussion, it is assumed that the name of the project
-simulation directory is 'PROJECT_HAN', located in the root directory. 
-The system name assumed is 'SYSTEM_GISKARD'.
+simulation directory is 'PROJECTX', located in the root directory. 
+The system name assumed is 'SYSTEM_D'.
 
 The software can be run from the command line using these simple steps:
 
@@ -281,7 +281,7 @@ The software can be run from the command line using these simple steps:
 3.  Run the primary system fragility characterisation module from the
     command line using the following command::
 
-        python sira -d ./PROJECT_DIR/MODEL_DIR/ -s
+        python sira -d ./PROJECTX/SYSTEM_D/ -s
 
 The code must be provided the full or relative path to the project
 directorty that holds the input dir with the required config and model files.
@@ -300,7 +300,7 @@ The flags can be combined.
 To run the characterisation simulation, followed by model fitting, and
 loss and recovery analysis, the command is::
 
-        python sira -d ./PROJECT_DIR/MODEL_DIR/ -sfl
+        python sira -d ./PROJECTX/SYSTEM_D/ -sfl
 
 .. _running-tests:
 
