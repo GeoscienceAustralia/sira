@@ -14,15 +14,17 @@ Glossary
 
 
     critical infrastructure
-        Critical Infrastructure are "those physical facilities, supply chains,
-        information technologies and communication networks which,
-        if destroyed, degraded or rendered unavailable for an extended period,
-        would significantly impact on the social or economic wellbeing of the
-        nation or affect Australia's ability to conduct national defence and
+        Critical Infrastructure are 
+        "those physical facilities, systems, assets, supply chains, information 
+        technologies and communication networks which, if destroyed, 
+        degraded, compromised or rendered unavailable for an extended period, 
+        would significantly impact the social or economic wellbeing of 
+        Australia as a nation or its states or territories, or affect 
+        Australia's ability to conduct national defence and 
         ensure national security." |br|
-        Attorney General's Department, Commonwealth of Australia (2015).
-        *Critical Infrastructure Resilience Strategy: Policy Statement*, pg 3.
-        Source: http://www.tisn.gov.au/Pages/default.aspx
+        Department of Home Affairs, Commonwealth of Australia (2023).
+        *Critical Infrastructure Resilience Strategy: February 2023*, pg 4.
+        Source: https://www.cisc.gov.au/about-us/our-strategy
 
 
     facility
