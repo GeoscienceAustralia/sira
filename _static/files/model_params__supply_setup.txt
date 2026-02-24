@@ -45,5 +45,5 @@
                 of `commodity_type` being 'coal' and 'water'.
 
                 For an electric substation the `commodity_type` is
-                electricity. For a water treatment plant, it will be 
+                electricity. For a water treatment plant, it will be
                 untreated water.

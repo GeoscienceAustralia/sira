@@ -19,7 +19,7 @@ of results.
                     `sira.modelling.infrastructure`.
 
     :Values:        The current set of valid system classes are as
-                    outlined in this list: 
+                    outlined in this list:
 
                     ['PowerStation',
                     'Substation',

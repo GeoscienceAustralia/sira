@@ -1,4 +1,4 @@
-.. rubric:: RESTORATION_PARAMS
+.. rubric:: Restoration Params
 
 `RESTORATION_STREAMS`
     :Description:   The number of simultaneous components to work on

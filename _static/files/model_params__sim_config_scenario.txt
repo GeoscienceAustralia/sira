@@ -1,4 +1,4 @@
-.. rubric:: SCENARIO_PARAMS
+.. rubric:: Simulation Scenario Params
 
 `CONFIGURATION_ID`
     :Description:   Unique ID for the scenario and model setup

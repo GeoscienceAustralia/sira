@@ -22,7 +22,7 @@ body {
     padding: 0;
     font-family: 'Lato', 'Roboto', 'Helvetica', sans-serif;
     font-size: 16px;
-    color: #333333;
+    color: #222222;
     line-height: 1.5;
 }
 
@@ -139,17 +139,20 @@ table td {
 }
 
 a {
-    color: #4d5df3;
+    color: #3348ff;
     cursor: pointer;
     text-decoration: none;
 }
 
-a:visited {
+.rst-content a:visited {
+    color: #5a6aff;
     text-decoration: none;
 }
 
-a:hover {
-    border-bottom: 1px solid;
+/* Content area links only - not sidebar menu */
+.rst-content a:hover {
+    color: #5a6aff;
+    border-bottom: 2px solid;
 }
 
 .wy-menu-vertical a:hover {
@@ -182,7 +185,7 @@ a:hover {
     line-height: normal;
     background: #FFFFFF;  /* #e7f2fa */
     color: #2980B9;
-    border-left: solid 5px #aaa; /* #79bae6; #6ab0de; */
+    border-left: solid 5px #78bbeb; /* #79bae6; #6ab0de; */
     border-top: none;
     padding: 1px 4px 2px 8px;
     position: relative;
@@ -216,10 +219,11 @@ a:hover {
 }
 
 .rst-content p.rubric {
-    margin-bottom: 6px;
+    color: #555555;
+    margin-bottom: 18px;
     margin-top: 20px;
     font-weight: 600;
-    font-size: 100%;
+    font-size: 110%;
 }
 
 /* Customize admonition directives */

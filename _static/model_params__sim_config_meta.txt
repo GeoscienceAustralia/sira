@@ -1,4 +1,4 @@
-.. rubric:: SYSTEM_METADATA
+.. rubric:: System Metadata
 
 `SYSTEM_INFRASTRUCTURE_LEVEL`
     :Description:   Define infrastructure as a `facility` or `network`
