@@ -1,4 +1,4 @@
-.. rubric:: HAZARD_PARAMS_COMMON
+.. rubric:: Common Hazard Params
 
 `HAZARD_TYPE`
     :Description:   The type of hazard for the impact simulation.
@@ -28,7 +28,7 @@
     :Data Type:     String
     :Example:       "calculated_array"
 
-.. rubric:: HAZARD_PARAMS_FOR_CALCULATED_ARRAY
+.. rubric:: Hazard Params for Calculated Array
 
 `HAZARD_INTENSITY_MEASURE_MIN`
     :Description:   Minimum value for internsity measurement (IM) parameter
@@ -48,9 +48,9 @@
 `HAZARD_NUM_SAMPLES`
     :Description:   Iterations for Monte Carlo process
     :Data Type:     Integer
-    :Example:       500
+    :Example:       5000
 
-.. rubric:: HAZARD_PARAMS_FOR_HAZARD_FILE
+.. rubric:: Hazard Params for Hazard Input Files
 
 `HAZARD_INPUT_DIR`
     :Description:   Path for hazard file location
@@ -74,7 +74,7 @@
     :Example:       1.2
 
 
-.. rubric:: FOCUS_SCENARIOS_FOR_DETAILED_VULNERABILITY_ANALYSIS
+.. rubric:: Focus Scenarios for Detailed Vulnerability Analysis
 
 `SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES`
     :Description:   The name(s) of the focus scenarios for
