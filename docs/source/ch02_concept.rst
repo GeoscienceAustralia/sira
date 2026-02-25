@@ -210,7 +210,7 @@ substation are bidirectional, unless specifically constrained.
 
 Connection paths and 'production capacities' along those paths within a
 system are calculated as the maximum flow through those paths.
-The `igraph <http://igraph.org/python/>`_ Python package was used as the 
+The `igraph <https://python.igraph.org/>`_ Python package was used as the 
 network modelling platform to calculate graph metrics for a post-hazard 
 damaged system model.
 

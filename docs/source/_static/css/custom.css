@@ -229,7 +229,7 @@ table td {
 }
 
 .rst-content p.rubric {
-    color: #555555;
+    color: #3a3a3a;
     margin-bottom: 18px;
     margin-top: 20px;
     font-weight: 600;
@@ -272,15 +272,14 @@ table td {
     font-weight: 500;
     font-style: normal;
     font-size: 90%;
-    color: #cf493a; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
+    color: #cf493a;
 }
 
 .rst-content pre,
 .rst-content div[class^='highlight'] pre,
 .rst-content pre.literal-block {
-    color: #cf493a;
     font-family: "Fira Code", Consolas, monospace;
-    font-size: 85%;
+    font-size: 80%;
     font-variant-ligatures: common-ligatures; /* Enable ligatures */
 }
 
