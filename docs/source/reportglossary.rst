@@ -82,3 +82,14 @@ Glossary
     amplitude
         The maximum value of a time-varying quantity.
 
+    risk
+        `ISO 31000 risk management vocabulary <https://www.iso.org/standard/79637.html>`_
+        defines risk as the "effect of uncertainty on objectives". It posits that 
+        the effect can be positive or negative deviation from expectations. In 
+        case of risk from natural hazards, the effect is almost always expected to 
+        be negative. |br|
+
+        `The Society for Risk Analysis Glossary <https://www.sra.org/risk-analysis-introduction/risk-analysis-glossary/>`_ offers a range of
+        definitions of risk, based on the domain and use case. The one that is most
+        relevant to natural hazard risk is "The combination of the probability of a
+        hazard occurring and a vulnerability metric given the occurrence of the hazard."

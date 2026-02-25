@@ -42,11 +42,11 @@ SIRA has been tested on the following operating systems:
     - Ubuntu 14.04 (64 bit)
     - Windows 10 and 11 (64 bit)
 
-The code should work on other recent versions of these operating systems,
+The code should work on more recent versions of these operating systems,
 though the environment setup process may have some differences.
 Windows systems that are not based on the NT-platform are not supported.
 This restriction is due to the fact that from version 2.6 onwards Python
-has not supported non-NT Windows platforms. 
+has not supported non-NT Windows platforms.
 
 You will need to install ``Graphviz``, which is used by
 ``networkx`` and ``pygraphviz`` packages to draw the system diagram.
@@ -55,26 +55,24 @@ version for your operating system. Follow the posted download instructions
 carefully. After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.
 
-For windows systems you will need to have a C++ Compiler. The recommended
-option for Python 3.5+ is the free full-featured community edition of 
-`Visual Studio 2015
-<https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx>`_.
-
 
 .. _recommended-installation:
 
 Recommended Process for Building a SIRA Environment
 ===================================================
 
-The recommended process to set up the environment is to use ``mamba`` and ``uv``.
-This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the ``sira`` root directory.
+The recommended process to set up the environment is to use ``mamba`` 
+and ``uv``. This approach works equally well in Windows and Linux, and 
+within Docker. The following script snippets assume the user is in the 
+``sira`` root directory.
 
-The dependency list is large. To assist in managing the list of required packages,
-they are sectioned into different files, based on the purpose they serve. For example,
-if documentation is not required to be generated, or experimental geospatial modules
-are not required, those files can be skipped. The dependency files are provided in the
-``installation`` directory. For setups using a combination of ``mamba`` and ``pip`` or
-``uv``, a consolidated pip requirements list is also provided.
+The dependency list is large. To assist in managing the list of required 
+packages, they are sectioned into different files, based on the purpose they 
+serve. For example, if documentation is not required to be generated, or 
+experimental geospatial modules are not required, those files can be skipped. 
+The dependency files are provided in the ``installation`` directory. For 
+setups using a combination of ``mamba`` and ``pip`` or ``uv``, a consolidated 
+pip requirements list is also provided.
 
 Instructions for installing `mamba` can be found
 `here <http://docs.continuum.io/anaconda/install>`_.
@@ -196,27 +194,26 @@ In any case, once you are done you should destroy the container with::
     docker kill sira
     docker rm sira
 
-
-or, if your too lazy to type two lines, use this command::
+or, simply run::
 
     docker rm -f sira
 
 Several other containers are provided to help with development. These are
 defined in the other `Dockerfiles` in the present directory, and are:
 
-- ``Dockerfile-api``: |br|
+`Dockerfile-api`
   Provides a web API which is used for parameterising model components
   (at this stage just response functions) and serialising them.
   This is presently (at Feb 2018) a prototype and provides only a
   small subset of what we hope for.
 
-- ``Dockerfile-gui-dev``: |br|
+`Dockerfile-gui-dev`
   Provides an `Angular2 <https://angular.io/>`_ application for
   defining model components built on top of the API mentioned above.
   The application is hosted using Angular's development server and can
   be accessed on *localhost:4200*.
 
-- ``Dockerfile-gui-prod``: |br|
+`Dockerfile-gui-prod`
   For deploying the web application in production. This
   does a production build of the Angular project and hosts it using
   `busybox <https://www.busybox.net/>`_. The app is still exposed on
@@ -238,16 +235,14 @@ By far the easiest way to run the system for development is with
 
 Assuming that you start the system this way in the current folder, you can:
 
-- attach to the `sira` image to run models and tests with: |br|
-  `docker attach sira_sira_1`
+- attach to the `sira` image to run models and tests with: 
+  ``docker attach sira``
 
+- access the GUI for defining fragility functions at: 
+  ``http://localhost:4200``
 
-- access the GUI for defining fragility functions at: |br|
-  ``http://localhost:4200``, and
-
-
-- access the web API at: |br|
-  ``http://localhost:5000``.
+- access the web API at: 
+  ``http://localhost:5000``
 
 
 This method will allow both the API and GUI to stay in sync with your code.
