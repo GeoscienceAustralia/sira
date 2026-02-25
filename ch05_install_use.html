@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=9a0014df" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=36aba288" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -166,7 +166,7 @@ run this software.</p>
 <li><p>Windows 10 and 11 (64 bit)</p></li>
 </ul>
 </div></blockquote>
-<p>The code should work on other recent versions of these operating systems,
+<p>The code should work on more recent versions of these operating systems,
 though the environment setup process may have some differences.
 Windows systems that are not based on the NT-platform are not supported.
 This restriction is due to the fact that from version 2.6 onwards Python
@@ -177,20 +177,20 @@ Please visit: <a class="reference external" href="https://www.graphviz.org/">htt
 version for your operating system. Follow the posted download instructions
 carefully. After installation you may need to update the PATH variable
 with the location of the Graphviz binaries.</p>
-<p>For windows systems you will need to have a C++ Compiler. The recommended
-option for Python 3.5+ is the free full-featured community edition of
-<a class="reference external" href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">Visual Studio 2015</a>.</p>
 </section>
 <section id="recommended-process-for-building-a-sira-environment">
 <span id="recommended-installation"></span><h2><span class="section-number">5.2 </span>Recommended Process for Building a SIRA Environment<a class="headerlink" href="#recommended-process-for-building-a-sira-environment" title="Link to this heading"></a></h2>
-<p>The recommended process to set up the environment is to use <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">uv</span></code>.
-This approach works equally well in Windows and Linux, and within Docker. The following script snippets assume the user is in the <code class="docutils literal notranslate"><span class="pre">sira</span></code> root directory.</p>
-<p>The dependency list is large. To assist in managing the list of required packages,
-they are sectioned into different files, based on the purpose they serve. For example,
-if documentation is not required to be generated, or experimental geospatial modules
-are not required, those files can be skipped. The dependency files are provided in the
-<code class="docutils literal notranslate"><span class="pre">installation</span></code> directory. For setups using a combination of <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> or
-<code class="docutils literal notranslate"><span class="pre">uv</span></code>, a consolidated pip requirements list is also provided.</p>
+<p>The recommended process to set up the environment is to use <code class="docutils literal notranslate"><span class="pre">mamba</span></code>
+and <code class="docutils literal notranslate"><span class="pre">uv</span></code>. This approach works equally well in Windows and Linux, and
+within Docker. The following script snippets assume the user is in the
+<code class="docutils literal notranslate"><span class="pre">sira</span></code> root directory.</p>
+<p>The dependency list is large. To assist in managing the list of required
+packages, they are sectioned into different files, based on the purpose they
+serve. For example, if documentation is not required to be generated, or
+experimental geospatial modules are not required, those files can be skipped.
+The dependency files are provided in the <code class="docutils literal notranslate"><span class="pre">installation</span></code> directory. For
+setups using a combination of <code class="docutils literal notranslate"><span class="pre">mamba</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">uv</span></code>, a consolidated
+pip requirements list is also provided.</p>
 <p>Instructions for installing <cite>mamba</cite> can be found
 <a class="reference external" href="http://docs.continuum.io/anaconda/install">here</a>.</p>
 <p>Installation option #1 (necesary for Windows):</p>
@@ -293,25 +293,24 @@ this case you would start the container with:</p>
 <span class="n">docker</span> <span class="n">rm</span> <span class="n">sira</span>
 </pre></div>
 </div>
-<p>or, if your too lazy to type two lines, use this command:</p>
+<p>or, simply run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="n">sira</span>
 </pre></div>
 </div>
 <p>Several other containers are provided to help with development. These are
 defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-api</span></code>: <br />
-Provides a web API which is used for parameterising model components
+<dl>
+<dt><cite>Dockerfile-api</cite></dt><dd><p>Provides a web API which is used for parameterising model components
 (at this stage just response functions) and serialising them.
 This is presently (at Feb 2018) a prototype and provides only a
-small subset of what we hope for.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-dev</span></code>: <br />
-Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
+small subset of what we hope for.</p>
+</dd>
+<dt><cite>Dockerfile-gui-dev</cite></dt><dd><p>Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
 defining model components built on top of the API mentioned above.
 The application is hosted using Angular’s development server and can
-be accessed on <em>localhost:4200</em>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Dockerfile-gui-prod</span></code>: <br />
-For deploying the web application in production. This
+be accessed on <em>localhost:4200</em>.</p>
+</dd>
+<dt><cite>Dockerfile-gui-prod</cite></dt><dd><p>For deploying the web application in production. This
 does a production build of the Angular project and hosts it using
 <a class="reference external" href="https://www.busybox.net/">busybox</a>. The app is still exposed on
 port 4200, so to host it at port 80 one would start it with:</p>
@@ -322,8 +321,8 @@ port 4200, so to host it at port 80 one would start it with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">80</span><span class="p">:</span><span class="mi">4200</span> <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> <span class="n">sira</span><span class="o">-</span><span class="n">gui</span><span class="o">-</span><span class="n">prod</span>
 </pre></div>
 </div>
-</li>
-</ul>
+</dd>
+</dl>
 </section>
 <section id="docker-compose">
 <h3><span class="section-number">5.3.3 </span>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading"></a></h3>
@@ -334,12 +333,12 @@ port 4200, so to host it at port 80 one would start it with:</p>
 </div>
 <p>Assuming that you start the system this way in the current folder, you can:</p>
 <ul class="simple">
-<li><p>attach to the <cite>sira</cite> image to run models and tests with: <br />
-<cite>docker attach sira_sira_1</cite></p></li>
-<li><p>access the GUI for defining fragility functions at: <br />
-<code class="docutils literal notranslate"><span class="pre">http://localhost:4200</span></code>, and</p></li>
-<li><p>access the web API at: <br />
-<code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code>.</p></li>
+<li><p>attach to the <cite>sira</cite> image to run models and tests with:
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">sira</span></code></p></li>
+<li><p>access the GUI for defining fragility functions at:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:4200</span></code></p></li>
+<li><p>access the web API at:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code></p></li>
 </ul>
 <p>This method will allow both the API and GUI to stay in sync with your code.</p>
 <p>You can tear the system down (destroying the containers) with:</p>

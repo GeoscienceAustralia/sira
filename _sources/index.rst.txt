@@ -11,9 +11,9 @@ Release: |release|
 
 SIRA stands for **Systemic Infrastructure Resilience Analysis**.
 It represents a methodology and supporting code for systematising
-:term:`vulnerability` analysis of lifeline infrastructure assets to
-natural hazards (i.e. infrastructure system response to environmental
-excitation).
+:term:`vulnerability` and :term:`risk` analysis of lifeline infrastructure
+assets to natural hazards (i.e. infrastructure system response to
+environmental excitation).
 
 The impact assessment incorporates the :term:`fragilities <fragility>`
 of individual system components and their topological configuration

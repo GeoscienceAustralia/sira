@@ -354,7 +354,7 @@ in bringing in 100MW of electricity from power plants. In this case, the
 designated output node must be linked to at least three of the input/supply 
 nodes to meet its demand.
 
-In addition to the core process of approximating restoration time, a 
+In addition to the core process of approximating restoration time, a
 routine for simulating component cannibalisation within a facility or
 system has also been incorporated. Here we use cannibalisation to refer
 to an exercise whereby an operator may move an undamaged component from
@@ -365,10 +365,10 @@ unit, and thereby expedite the restoration of the high priority lines.
 
 The outputs from the restoration model are:
 
-1) a simple Gantt chart with each component needing repair,
+1. A simple Gantt chart with each component needing repair,
 
-2) restoration plot for each output line over time and the associated
+2. Restoration plot for each output line over time and the associated
    percentage of total system capacity rehabilitated, and
 
-3) total restoration time for each output line for a given restoration
+3. Total restoration time for each output line for a given restoration
    scheme.

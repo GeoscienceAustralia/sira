@@ -12,9 +12,6 @@ Sphinx theme customisation
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
 
-/*
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap');
-*/
 
 body {
     background-color: #edf0f2;
@@ -33,11 +30,10 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     line-height: 115%;
 }
 
-h2, .rst-content .toctree-wrapper p.caption {
-    padding: 10px 10px 10px 0px;
+.rst-content .toctree-wrapper p.caption {
+    padding: 15px 10px 10px 0px;
     margin: 10px 0 5px 0px;
-    padding-top: 15px;
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .wy-menu-vertical header, .wy-menu-vertical p.caption {
@@ -138,21 +134,35 @@ table td {
     margin-bottom: 0;
 }
 
-a {
-    color: #3348ff;
+.rst-content a {
+    color: #2453ec;  /* #3348ff; */
     cursor: pointer;
     text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid;
+    font-weight: 500;
 }
 
 .rst-content a:visited {
-    color: #5a6aff;
+    color: #c70dc7; /* #5a6aff; */
     text-decoration: none;
+}
+
+/* Remove border from toctree links */
+.rst-content .toctree-wrapper a {
+    border-bottom: none;
 }
 
 /* Content area links only - not sidebar menu */
 .rst-content a:hover {
-    color: #5a6aff;
+    /* color: orangered; */
     border-bottom: 2px solid;
+}
+
+/* Remove border from breadcrumbs */
+.wy-breadcrumbs a,
+.wy-breadcrumbs-aside a {
+    border-bottom: none;
 }
 
 .wy-menu-vertical a:hover {
@@ -172,7 +182,7 @@ a {
 
 .wy-side-nav-search input[type=text] {
     width: 100%;
-    border-radius: 5px;
+    border-radius: 7px;
     padding: 8px 12px;
     border-color: #2472a4;
 }
@@ -261,18 +271,34 @@ a {
     font-family: "Fira Code", Consolas, monospace;
     font-weight: 500;
     font-style: normal;
-    font-size: 95%;
+    font-size: 90%;
     color: #cf493a; /*#CD0C19;#FF5052;#CC4851;#0070C0;*/
 }
 
-.rst-content code,
 .rst-content pre,
-.rst-content tt,
 .rst-content div[class^='highlight'] pre,
 .rst-content pre.literal-block {
+    color: #cf493a;
     font-family: "Fira Code", Consolas, monospace;
     font-size: 85%;
     font-variant-ligatures: common-ligatures; /* Enable ligatures */
+}
+
+.rst-content code.literal,.rst-content tt.literal {
+    color: #c41a16;
+    white-space: normal
+}
+
+.rst-content code,.rst-content tt,code {
+    white-space: nowrap;
+    max-width: 100%;
+    background: #fff;
+    border: 1px solid #e1e4e5;
+    font-size: 85%;
+    padding: 0 5px;
+    font-family: "Fira Code",Consolas,SFMono-Regular,Menlo,monospace;
+    color: #c41a16;
+    overflow-x: auto
 }
 
 /* override table width restrictions */
