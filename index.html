@@ -135,24 +135,24 @@ Release: 1.0.1</p>
 <p>SIRA stands for <strong>Systemic Infrastructure Resilience Analysis</strong>.
 It represents a methodology and supporting code for systematising
 <a class="reference internal" href="reportglossary.html#term-vulnerability"><span class="xref std std-term">vulnerability</span></a> and <a class="reference internal" href="reportglossary.html#term-risk"><span class="xref std std-term">risk</span></a> analysis of lifeline infrastructure
-assets to natural hazards (i.e. infrastructure system response to
-environmental excitation).</p>
+assets to natural hazards.</p>
 <p>The impact assessment incorporates the <a class="reference internal" href="reportglossary.html#term-fragility"><span class="xref std std-term">fragilities</span></a>
 of individual system components and their topological configuration
 within the infrastructure system under study. This analysis is supplemented
 by an assessment of the post-hazard system functionality through
 network flow analysis, and consequent restoration times and costs.</p>
-<p>The primary focus has been on studying responses of infrastructure systems,
+<p>SIRA has been used to study responses of infrastructure systems,
 both facilities (e.g. power generation plants, high voltage substations)
-and geospatially dispersed networks (electricity transmission networks), to earthquake hazards.
-The methodology is implemented in an open-source Python package.</p>
-<p>Limitations: At the time of writing this documentation, the software has
+and geospatially dispersed networks (e.g. electricity transmission networks),
+to earthquake hazards. The methodology is implemented in an open-source
+Python package.</p>
+<p>At the time of writing this documentation, the software has
 been tested to work with earthquake hazards only. However, the methodology
 and class structure have been developed to make the modelling process
 hazard agnostic. The hazard specification process and infrastructure models
-are designed to allow for expansion to different hazards and arbitrary
+are designed to allow for incorporating different hazards and arbitrary
 infrastructure sectors/assets.</p>
-<p>SIRA is being developed in <a class="reference external" href="https://www.ga.gov.au/">Geoscience Australia (GA)</a> in support of
+<p>SIRA has been developed in <a class="reference external" href="https://www.ga.gov.au/">Geoscience Australia (GA)</a> in support of
 the agency’s strategic priority to contribute to enhancing the hazard
 resilience of communities in Australia and its region.</p>
 <section id="features">
@@ -171,13 +171,17 @@ smaller hazard sets.</p>
 <p><strong>Extensible Component Library:</strong> User can define new instances of
 <cite>component_type</cite> (the building blocks of a facility or network) and link it
 to existing or custom fragility algorithms.</p>
-<p><strong>Component Criticality Analysis:</strong> Scenario Analysis tools allow users to
+<p><strong>Component Criticality Analysis:</strong> Scenario analysis tools allow users to
 identify the cost of restoration for chosen scenarios, expected restoration
 times, and options for targeted component upgrades that yield greatest
 improvements to system resilience.</p>
-<p><strong>Restoration Prognosis:</strong> Users can experiment with different levels of
-hazard intensities and post-disaster resource allocation to gauge restoration
-times for system operations.</p>
+<p><strong>Restoration Prognosis:</strong> SIRA can assess restoration times for a system
+based on assigned priority levels for specific functions (or outputs) of
+the system, the recovery functions of components, and repair streams.
+The restoration curves used are taken from literature or developed with
+support from industry. ‘Repair streams’ indicate how many repair task can be
+undertaken in parallel, which is a proxy for the resources available for
+repair tasks.</p>
 </section>
 <section id="user-documentation">
 <h2>User Documentation<a class="headerlink" href="#user-documentation" title="Link to this heading"></a></h2>
