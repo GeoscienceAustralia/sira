@@ -9,8 +9,9 @@
 - [SIRA](#sira)
   - [Overview](#overview)
   - [Setup Instructions](#setup-instructions)
-    + [Build Environment](#build-environment)
     + [Required Directory Structure](#required-directory-structure)
+    + [Build the Run Environment](#build-environment)
+    + [Docker Setup](#docker-setup)
   - [Running the Application](#running-the-application)
     + [Runtime Flags](#runtime-flags)
   - [Testing](#testing)
@@ -50,7 +51,42 @@ developing code. This gives us the tools to manage the package
 dependencies and requirements in a transparent manner, and impact of
 dependency changes on software behaviour.
 
-### [Build Environment](#build-environment)
+
+### [Required Directory Structure](#required-directory-structure)
+
+To set up a scenario or impact simulation project, SIRA expects the following
+directory structure for the model to be run.
+
+```
+    model_dir/
+    │
+    ├── input/
+    │   ├── config_assetx_simulation.json
+    │   └── model_assetx.json
+    └── output/
+        ├── ...
+        └── ...
+```
+
+Notes on the required directory structure:
+
+- **model directory**: it can be named anything.
+
+- **input directory**: must reside within the 'model directory'. The input dir must have two files, and their naming must follow a the specified format:
+
+    + **model file**: it must have the term 'model' at the beginning of the file name
+    + **config file**: it must have the term 'config' at the beginning of the file name
+
+- **output directory**: the outputs are saved in this dir.
+
+    + If it does not exist, it will be created at the beginning of the simulation.
+    + The default name is 'output' and default location is within the 'model directory'.
+    + The user can define a custom name and relative location within the config file.
+
+- **scenario file location**: If an event set is being used for the simulation, the location and name of the relevant file need to be specified in the parameters "HAZARD_INPUT_DIR" and "HAZARD_INPUT_FILE", respectively.
+
+
+### [Build the Run Environment](#build-environment)
 
 The dependency list is large. To assist in managing the list of required packages, they are sectioned into different files, based on the purpose they serve. For example, if documentation is not required to be generated, or experimental geospatial modules are not required, those files can be skipped.
 
@@ -90,39 +126,60 @@ pip install -r ./installation/requirements-docs.txt
 pip install -r ./installation/requirements-diagrams.txt
 ```
 
-### [Required Directory Structure](#required-directory-structure)
+### [Docker Setup](#docker-setup)
 
-To set up a scenario or impact simulation project, SIRA expects the following
-directory structure for the model to be run.
+SIRA can be run in a Docker container, providing platform independence and simplified dependency management. Docker configuration files are provided in the `installation/` directory.
 
+**Quick Setup:**
+
+1. Create data directories **outside** the SIRA repository (recommended structure).
+   ```bash
+   # From parent directory of sira code
+   mkdir -p sira_inputs sira_outputs
+   ```
+
+2. Place your model and config files in `sira_inputs/`, within the structure
+   noted in [Required Directory Structure](#required-directory-structure).
+
+3. Build and run with Docker Compose:
+   ```bash
+   cd sira/installation
+   docker compose build
+   docker compose up sira
+   ```
+
+**Docker Run Modes:**
+
+- **Simulation mode** (default): Runs a configured simulation
+  ```bash
+  docker compose up sira
+  ```
+
+- **Interactive mode**: Opens a bash shell for manual commands
+  ```bash
+  docker compose run --rm sira-interactive
+  ```
+
+- **Test mode**: Runs the test suite
+  ```bash
+  docker compose run --rm sira-test
+  ```
+
+**Direct Docker Usage** (without Compose):
+
+Build the image:
+```bash
+docker build -f installation/Dockerfile -t sira:latest .
 ```
-    model_dir
-    │
-    ├── input
-    │   ├── config_assetx.json
-    │   └── model_assetx.json
-    └── output
-        ├── ...
-        └── ...
+
+Run a simulation:
+```bash
+docker run -v /path/to/sira_inputs:/scenarios \
+           -v /path/to/sira_outputs:/outputs \
+           sira:latest python -m sira -d /scenarios/my_project -sfl
 ```
 
-Notes on the required directory structure:
-
-- **model directory**: it can be named anything.
-
-- **input directory**: must reside within the 'model directory'. The input dir must have two files, and their naming must follow a the specified format:
-
-    + **model file**: it must have the term 'model' at the beginning of the file name
-    + **config file**: it must have the term 'config' at the beginning of the file name
-
-- **output directory**: the outputs are saved in this dir.
-
-    + If it does not exist, it will be created at the beginning of the simulation.
-    + The default name is 'output' and default location is within the 'model directory'.
-    + The user can define a custom name and relative location within the config file.
-
-- **scenario file location**: If an event set is being used for the simulation, the location and name of the relevant file need to be specified in the parameters "HAZARD_INPUT_DIR" and "HAZARD_INPUT_FILE", respectively.
-
+**Note**: The Docker setup uses volume bindings to keep model/config data and outputs separate from the code repository. Update paths in `installation/docker-compose.yml` to match your directory structure. See `installation/README_DOCKER.md` for detailed instructions.
 
 ## [Running the Application](#running-the-application)
 

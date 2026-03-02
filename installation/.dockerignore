@@ -1,0 +1,15 @@
+# Directory structure for Docker Compose setup
+# Create these directories OUTSIDE the SIRA code repository:
+#
+# Recommended structure (at same level as sira/ code directory):
+#
+# your_workspace/
+# ├── sira/                    # SIRA code repository
+# ├── sira_inputs/          # Your scenario data (outside repo)
+# │   ├── scenario_1/
+# │   │   ├── input/
+# │   │   │   ├── config_*.json
+# │   │   │   └── model_*.json
+# │   │   └── output/          # SIRA writes outputs here
+# │   └── scenario_2/
+# └── sira_outputs/            # Additional consolidated outputs

@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  sira:
+    build:
+      context: ..
+      dockerfile: installation/Dockerfile
+    image: sira:latest
+    container_name: sira_simulation
+
+    # Volume bindings for local directories
+    # Note: Adjust paths to point to your data directories outside the code repo
+    volumes:
+      # Bind local scenario directory to /scenarios in container
+      # Default assumes target input dirs are at same level as 'sira' code directory
+      - ../../sira_inputs:/scenarios
+
+      # Bind local output dirs to /outputs in container
+      - ../../sira_outputs:/outputs
+      
+      # Optional: bind hazard data directory (from repo)
+      - ../hazard:/hazard:ro
+      
+      # Optional: bind tests directory for validation (from repo)
+      - ../tests:/tests:ro
+    
+    # Environment variables (customize as needed)
+    environment:
+      - SIRA_LOG_LEVEL=INFO
+      - SIRA_QUIET_MODE=0
+      - PYTHONUNBUFFERED=1
+    
+    # Override default command to run a simulation
+    # Modify this to point to your specific scenario directory
+    command: >
+      python -m sira 
+      -d /scenarios/your_scenario_name 
+      -sfl
+    
+    # For interactive debugging, uncomment below and comment out command above
+    # stdin_open: true
+    # tty: true
+    # command: /bin/bash
+
+  # Alternative service for interactive mode
+  sira-interactive:
+    build:
+      context: ..
+      dockerfile: installation/Dockerfile
+    image: sira:latest
+    container_name: sira_interactive
+    
+    volumes:
+      - ../../sira_inputs:/scenarios
+      - ../../sira_outputs:/outputs
+      - ../hazard:/hazard:ro
+      - ../tests:/tests:ro
+    
+    environment:
+      - SIRA_LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    
+    # Set profile so this service doesn't start by default
+    profiles:
+      - interactive
+
+  # Service for running tests
+  sira-test:
+    build:
+      context: ..
+      dockerfile: installation/Dockerfile
+    image: sira:latest
+    container_name: sira_test
+    
+    volumes:
+      - ../tests:/app/tests:ro
+      - ../../sira_outputs:/outputs
+    
+    environment:
+      - PYTHONUNBUFFERED=1
+    
+    command: pytest --cov-report term --cov=sira tests/
+    
+    profiles:
+      - test
