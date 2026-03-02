@@ -59,7 +59,7 @@ RUN pip install --no-cache-dir -r ./installation/requirements-diagrams.txt
 COPY . .
 
 # Set Python path to include SIRA module
-ENV PYTHONPATH=${PYTHONPATH:+${PYTHONPATH}:}/app
+ENV PYTHONPATH=/app
 
 # Default command - show SIRA help
 CMD ["python", "-m", "sira", "--help"]
