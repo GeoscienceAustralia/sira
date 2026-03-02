@@ -82,12 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ch05_install_use.html">5 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ch05_install_use.html#requirements">5.1 Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch05_install_use.html#recommended-process-for-building-a-sira-environment">5.2 Recommended Process for Building a SIRA Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch05_install_use.html#aws-and-docker">5.3 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ch05_install_use.html#installation-of-sira-on-aws-with-docker">5.3.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch05_install_use.html#using-docker">5.3.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ch05_install_use.html#docker-compose">5.3.3 Docker Compose</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_install_use.html#running-sira-in-docker">5.3 Running SIRA in Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ch05_install_use.html#running-a-simulation-with-sira">5.4 Running a Simulation with SIRA</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ch05_install_use.html#running-code-tests">5.4.1 Running Code Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ch05_install_use.html#runtime-flags">5.4.2 Runtime Flags</a></li>
@@ -321,15 +316,14 @@ range of PGA values. This Process is shown in <a class="reference internal" href
 <span id="fig-hazard-loss-link"></span><a class="reference internal image-reference" href="_images/hazard_loss_link.png"><img alt="Linking hazard to damage and loss" src="_images/hazard_loss_link.png" style="width: 98%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Schematic of process linking component damage assessment to
-loss projection</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Schematic of process for fragility attribution and loss estimation</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Four discrete sequential damage states are used for assessing system
 fragility, similar to those used in HAZUS (FEMA 2003): DS1 Slight,
-DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for a power
-station is based on ranges of economic loss as a percentage of total system
-value.</p>
+DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for
+a power station is based on ranges of economic loss as a percentage of
+total system value.</p>
 <p>The probability of a component exceeding damage state <span class="math notranslate nohighlight">\(ds\)</span> is calculated
 using the log-normal cumulative distribution function (CDF) as shown in
 equation below, for a PGA value of <span class="math notranslate nohighlight">\(x\)</span> g:</p>
@@ -341,8 +335,8 @@ equation below, for a PGA value of <span class="math notranslate nohighlight">\(
 calculated as:</p>
 <div class="math notranslate nohighlight">
 \[L_{C, ds_i} = R_{C, ds_i} \times CF_C\]</div>
-<p>where, <br />
-<span class="math notranslate nohighlight">\(R_{C, ds_i}\)</span> = <cite>d</cite> is the damage ratio for component <cite>C</cite>
+<p>where,</p>
+<p><span class="math notranslate nohighlight">\(R_{C, ds_i}\)</span> = <cite>d</cite> is the damage ratio for component <cite>C</cite>
 at damage state <span class="math notranslate nohighlight">\(ds_i\)</span>, and <br />
 <span class="math notranslate nohighlight">\(CF_C\)</span> = cost of component <cite>C</cite> as a proportional of total system cost.</p>
 </section>

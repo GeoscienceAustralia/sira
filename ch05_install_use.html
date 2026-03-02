@@ -81,12 +81,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">5 Installation and Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">5.1 Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#recommended-process-for-building-a-sira-environment">5.2 Recommended Process for Building a SIRA Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#aws-and-docker">5.3 AWS and Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installation-of-sira-on-aws-with-docker">5.3.1 Installation of SIRA on AWS with Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-docker">5.3.2 Using Docker</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-compose">5.3.3 Docker Compose</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-sira-in-docker">5.3 Running SIRA in Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-a-simulation-with-sira">5.4 Running a Simulation with SIRA</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-code-tests">5.4.1 Running Code Tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runtime-flags">5.4.2 Runtime Flags</a></li>
@@ -222,130 +217,69 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 </pre></div>
 </div>
 </section>
-<section id="aws-and-docker">
-<span id="dev-env-setup"></span><h2><span class="section-number">5.3 </span>AWS and Docker<a class="headerlink" href="#aws-and-docker" title="Link to this heading"></a></h2>
-<p>The development of the Web interface to provide the ability to create
-component types and models led to the usage of Docker and AWS. Docker
-creates containers that provide independence of platforms when developing
+<section id="running-sira-in-docker">
+<span id="docker-setup"></span><h2><span class="section-number">5.3 </span>Running SIRA in Docker<a class="headerlink" href="#running-sira-in-docker" title="Link to this heading"></a></h2>
+<p>Docker creates containers that provide independence of platforms when developing
 applications and services. So Docker removes the requirement for Conda
-to organise the Python libraries. The downside of using docker in our
-environment (GA Sysmonston) is that network security makes running Docker
-difficult. So development environments are easier to create and use on AWS.
-Use of AWS for Web applications is the current direction for GA.</p>
-<section id="installation-of-sira-on-aws-with-docker">
-<h3><span class="section-number">5.3.1 </span>Installation of SIRA on AWS with Docker<a class="headerlink" href="#installation-of-sira-on-aws-with-docker" title="Link to this heading"></a></h3>
-<p>This requires building an AWS instance and then building the environments
-using Docker.</p>
-<p><strong>Create AWS Instance using Packer:</strong> <br />
-We’re we come from, if we don’t have a laptop handy, we like to use AWS for
-provisioning dev machines. A basic dev box can be setup using
-<a class="reference external" href="https://www.packer.io/intro/">Packer</a>, by running:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">packer</span> <span class="n">build</span> <span class="n">build</span><span class="o">.</span><span class="n">json</span>
+to organise the Python libraries. The Docker image is built on top of the
+official Python 3.11 image, and the required Python packages are installed
+using pip. The Docker image is built using the provided Dockerfile in the
+<cite>installation</cite> directory.</p>
+<p>SIRA can be run in a Docker container, providing platform independence and
+simplified dependency management. Docker configuration files are provided in
+the <cite>installation/</cite> directory.</p>
+<p><strong>Quick Setup:</strong></p>
+<ol class="arabic">
+<li><p>Create data directories <strong>outside</strong> the SIRA repository (recommended structure).</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From parent directory of sira code</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>sira_inputs<span class="w"> </span>sira_outputs
 </pre></div>
 </div>
-<p>in the current directory.</p>
-<p><strong>Create AWS Instance using bash script:</strong> <br />
-The top level directory of SIRA has the script <code class="docutils literal notranslate"><span class="pre">create-aws-instance.sh</span></code>
-The script requires the <a class="reference external" href="https://aws.amazon.com/cli/">aws command line interface</a>
-to be installed on the machine. It also requires access to AWS account
-credentials.</p>
-<p>The script is run as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create</span><span class="o">-</span><span class="n">aws</span><span class="o">-</span><span class="n">instance</span><span class="o">.</span><span class="n">sh</span>
+</div></blockquote>
+</li>
+<li><p>Place your model and config files in <cite>sira_inputs/</cite>, within the structure
+noted in [Required Directory Structure](#required-directory-structure).</p></li>
+<li><p>Build and run with Docker Compose:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>sira/installation
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>sira
 </pre></div>
 </div>
-<p>Both of these commands will use the build_sira_box.sh to install Linux updates
-and the docker components that will be required.</p>
-<p>It then clones the SIRA github repository, from the master branch. Docker is
-then used to build the SIRA environment.</p>
-</section>
-<section id="using-docker">
-<h3><span class="section-number">5.3.2 </span>Using Docker<a class="headerlink" href="#using-docker" title="Link to this heading"></a></h3>
-<p>If you have Docker installed, you can build a container for working with
-sira by running the command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">sira</span> <span class="o">.</span>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>Docker Run Modes:</strong></p>
+<ul>
+<li><p><strong>Simulation mode</strong> (default): Runs a configured simulation</p>
+<blockquote>
+<div><p>docker compose up sira</p>
+</div></blockquote>
+</li>
+<li><p><strong>Interactive mode</strong>: Opens a bash shell for manual commands</p>
+<blockquote>
+<div><p>docker compose run –rm sira-interactive</p>
+</div></blockquote>
+</li>
+<li><p><strong>Test mode</strong>: Runs the test suite:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="n">sira</span><span class="o">-</span><span class="n">test</span>
 </pre></div>
 </div>
-<p>The primary advantage of working with docker is that you do not have to worry
-about setting up the python environment, which is done when building the
-container and isolated from your own environment.</p>
-<p>To run an interactive container you can use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;$(pwd):/sira&quot;</span> <span class="o">--</span><span class="n">name</span> <span class="n">sira</span> <span class="n">s</span>
-</pre></div>
-</div>
-<p>This will give you a terminal inside the container in which you can execute
-commands. Inside the container you can find the current directory mapped at
-<cite>/sira</cite>. You can modify files either within the container or the host and the
-changes will be available in both.</p>
-<p>Alternatively, you might want a container running in the background which you
-can execute commands at using
-<a class="reference external" href="https://docs.docker.com/engine/reference/commandline/exec/">docker exec</a>. In
-this case you would start the container with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="nb">id</span> <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;$(pwd):/sira&quot;</span> <span class="o">--</span><span class="n">name</span> <span class="n">sira</span> <span class="n">sira</span>
-</pre></div>
-</div>
-<p>One could then, for example, run the unit tests for the modelling package with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">sira</span><span class="o">/</span><span class="n">tests</span>
-<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p>In any case, once you are done you should destroy the container with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">kill</span> <span class="n">sira</span>
-<span class="n">docker</span> <span class="n">rm</span> <span class="n">sira</span>
-</pre></div>
-</div>
-<p>or, simply run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="n">sira</span>
-</pre></div>
-</div>
-<p>Several other containers are provided to help with development. These are
-defined in the other <cite>Dockerfiles</cite> in the present directory, and are:</p>
-<dl>
-<dt><cite>Dockerfile-api</cite></dt><dd><p>Provides a web API which is used for parameterising model components
-(at this stage just response functions) and serialising them.
-This is presently (at Feb 2018) a prototype and provides only a
-small subset of what we hope for.</p>
-</dd>
-<dt><cite>Dockerfile-gui-dev</cite></dt><dd><p>Provides an <a class="reference external" href="https://angular.io/">Angular2</a> application for
-defining model components built on top of the API mentioned above.
-The application is hosted using Angular’s development server and can
-be accessed on <em>localhost:4200</em>.</p>
-</dd>
-<dt><cite>Dockerfile-gui-prod</cite></dt><dd><p>For deploying the web application in production. This
-does a production build of the Angular project and hosts it using
-<a class="reference external" href="https://www.busybox.net/">busybox</a>. The app is still exposed on
-port 4200, so to host it at port 80 one would start it with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">sira</span><span class="o">-</span><span class="n">gui</span> <span class="o">-</span><span class="n">f</span> <span class="n">Dockerfile</span><span class="o">-</span><span class="n">gui</span><span class="o">-</span><span class="n">prod</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p>and start it with (for example):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">80</span><span class="p">:</span><span class="mi">4200</span> <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> <span class="n">sira</span><span class="o">-</span><span class="n">gui</span><span class="o">-</span><span class="n">prod</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-</section>
-<section id="docker-compose">
-<h3><span class="section-number">5.3.3 </span>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading"></a></h3>
-<p>By far the easiest way to run the system for development is with
-<a class="reference external" href="https://docs.docker.com/compose/">docker-compose</a>, which can be done with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span>
-</pre></div>
-</div>
-<p>Assuming that you start the system this way in the current folder, you can:</p>
-<ul class="simple">
-<li><p>attach to the <cite>sira</cite> image to run models and tests with:
-<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">sira</span></code></p></li>
-<li><p>access the GUI for defining fragility functions at:
-<code class="docutils literal notranslate"><span class="pre">http://localhost:4200</span></code></p></li>
-<li><p>access the web API at:
-<code class="docutils literal notranslate"><span class="pre">http://localhost:5000</span></code></p></li>
+</li>
 </ul>
-<p>This method will allow both the API and GUI to stay in sync with your code.</p>
-<p>You can tear the system down (destroying the containers) with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">down</span>
+<p><strong>Direct Docker Usage</strong> (without Compose):</p>
+<p>Build the image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">f</span> <span class="n">installation</span><span class="o">/</span><span class="n">Dockerfile</span> <span class="o">-</span><span class="n">t</span> <span class="n">sira</span><span class="p">:</span><span class="n">latest</span> <span class="o">.</span>
 </pre></div>
 </div>
-</section>
+<p>Run a simulation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">sira_inputs</span><span class="p">:</span><span class="o">/</span><span class="n">scenarios</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">sira_outputs</span><span class="p">:</span><span class="o">/</span><span class="n">outputs</span> \
+    <span class="n">sira</span><span class="p">:</span><span class="n">latest</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">scenarios</span><span class="o">/</span><span class="n">my_project</span> <span class="o">-</span><span class="n">sfl</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: The Docker setup uses volume bindings to keep model/config data and outputs separate from the code repository. Update paths in <cite>installation/docker-compose.yml</cite> to match your directory structure. See <cite>installation/README_DOCKER.md</cite> for detailed instructions.</p>
 </section>
 <section id="running-a-simulation-with-sira">
 <span id="running-sira"></span><h2><span class="section-number">5.4 </span>Running a Simulation with SIRA<a class="headerlink" href="#running-a-simulation-with-sira" title="Link to this heading"></a></h2>
@@ -400,7 +334,7 @@ loss and recovery analysis, the command is:</p>
 sira container.</p>
 </section>
 <section id="runtime-flags">
-<span id="id2"></span><h3><span class="section-number">5.4.2 </span>Runtime Flags<a class="headerlink" href="#runtime-flags" title="Link to this heading"></a></h3>
+<span id="id1"></span><h3><span class="section-number">5.4.2 </span>Runtime Flags<a class="headerlink" href="#runtime-flags" title="Link to this heading"></a></h3>
 <p>SIRA recognises several environment flags to control behaviour related to detection and selection of the appropriate backend. Setting these flags is optional. These need to be set in the shell before running SIRA.</p>
 <dl>
 <dt><cite>SIRA_ENABLE_GPU_DETECT</cite></dt><dd><ul class="simple">
@@ -435,7 +369,7 @@ explicitly selected and available.</p></li>
 </section>
 </section>
 <section id="parallel-execution">
-<span id="id3"></span><h2><span class="section-number">5.5 </span>Parallel Execution<a class="headerlink" href="#parallel-execution" title="Link to this heading"></a></h2>
+<span id="id2"></span><h2><span class="section-number">5.5 </span>Parallel Execution<a class="headerlink" href="#parallel-execution" title="Link to this heading"></a></h2>
 <p>SIRA supports multiprocessing locally and MPI on HPC systems. The MPI backend is preferred when available; otherwise, SIRA uses efficient multiprocessing with sensible defaults.</p>
 <p>Notes on selecting the parallel backend:</p>
 <ul>

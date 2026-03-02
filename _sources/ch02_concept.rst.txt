@@ -236,14 +236,13 @@ range of PGA values. This Process is shown in :numref:`fig_hazard_loss_link`.
    :align: center
    :width: 98%
 
-   Schematic of process linking component damage assessment to
-   loss projection
+   Schematic of process for fragility attribution and loss estimation
 
 Four discrete sequential damage states are used for assessing system 
 fragility, similar to those used in HAZUS (FEMA 2003): DS1 Slight, 
-DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for a power 
-station is based on ranges of economic loss as a percentage of total system 
-value.
+DS2 Moderate, DS3 Extensive, DS4 Complete. The damage scale used for 
+a power station is based on ranges of economic loss as a percentage of 
+total system value.
 
 The probability of a component exceeding damage state :math:`ds` is calculated
 using the log-normal cumulative distribution function (CDF) as shown in
@@ -263,7 +262,8 @@ calculated as:
 
    L_{C, ds_i} = R_{C, ds_i} \times CF_C
 
-where, |br|
+where,
+
 :math:`R_{C, ds_i}` = `d` is the damage ratio for component `C`
 at damage state :math:`ds_i`, and |br|
 :math:`CF_C` = cost of component `C` as a proportional of total system cost.
