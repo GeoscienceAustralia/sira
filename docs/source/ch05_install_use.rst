@@ -111,145 +111,76 @@ Installation option #2 (for Linux workstations, needs to be adapted for HPC env)
     pip install -r ./installation/requirements-diagrams.txt
 
 
-.. _dev-env-setup:
+.. _docker-setup:
 
-AWS and Docker
-==============
+Running SIRA in Docker
+======================
 
-The development of the Web interface to provide the ability to create
-component types and models led to the usage of Docker and AWS. Docker
-creates containers that provide independence of platforms when developing
+Docker creates containers that provide independence of platforms when developing
 applications and services. So Docker removes the requirement for Conda
-to organise the Python libraries. The downside of using docker in our
-environment (GA Sysmonston) is that network security makes running Docker
-difficult. So development environments are easier to create and use on AWS.
-Use of AWS for Web applications is the current direction for GA.
+to organise the Python libraries. The Docker image is built on top of the
+official Python 3.11 image, and the required Python packages are installed
+using pip. The Docker image is built using the provided Dockerfile in the
+`installation` directory.
 
-Installation of SIRA on AWS with Docker
----------------------------------------
+SIRA can be run in a Docker container, providing platform independence and
+simplified dependency management. Docker configuration files are provided in
+the `installation/` directory.
 
-This requires building an AWS instance and then building the environments
-using Docker.
+**Quick Setup:**
 
-**Create AWS Instance using Packer:** |br|
-We're we come from, if we don't have a laptop handy, we like to use AWS for
-provisioning dev machines. A basic dev box can be setup using
-`Packer <https://www.packer.io/intro/>`_, by running::
+1. Create data directories **outside** the SIRA repository (recommended structure).
 
-    packer build build.json
+    .. code-block:: bash
 
-in the current directory.
-
-**Create AWS Instance using bash script:** |br|
-The top level directory of SIRA has the script ``create-aws-instance.sh``
-The script requires the `aws command line interface <https://aws.amazon.com/cli/>`_
-to be installed on the machine. It also requires access to AWS account
-credentials.
-
-The script is run as::
-
-    create-aws-instance.sh
-
-Both of these commands will use the build_sira_box.sh to install Linux updates
-and the docker components that will be required.
-
-It then clones the SIRA github repository, from the master branch. Docker is
-then used to build the SIRA environment.
-
-Using Docker
-------------
-
-If you have Docker installed, you can build a container for working with
-sira by running the command::
-
-    docker build -t sira .
-
-The primary advantage of working with docker is that you do not have to worry
-about setting up the python environment, which is done when building the
-container and isolated from your own environment.
-
-To run an interactive container you can use::
-
-    docker run -it -v "$(pwd):/sira" --name sira s
-
-This will give you a terminal inside the container in which you can execute
-commands. Inside the container you can find the current directory mapped at
-`/sira`. You can modify files either within the container or the host and the
-changes will be available in both.
-
-Alternatively, you might want a container running in the background which you
-can execute commands at using
-`docker exec <https://docs.docker.com/engine/reference/commandline/exec/>`_. In
-this case you would start the container with::
-
-    docker run -id -v "$(pwd):/sira" --name sira sira
-
-One could then, for example, run the unit tests for the modelling package with::
-
-    cd sira/tests
-    python -m unittest discover .
-
-In any case, once you are done you should destroy the container with::
-
-    docker kill sira
-    docker rm sira
-
-or, simply run::
-
-    docker rm -f sira
-
-Several other containers are provided to help with development. These are
-defined in the other `Dockerfiles` in the present directory, and are:
-
-`Dockerfile-api`
-  Provides a web API which is used for parameterising model components
-  (at this stage just response functions) and serialising them.
-  This is presently (at Feb 2018) a prototype and provides only a
-  small subset of what we hope for.
-
-`Dockerfile-gui-dev`
-  Provides an `Angular2 <https://angular.io/>`_ application for
-  defining model components built on top of the API mentioned above.
-  The application is hosted using Angular's development server and can
-  be accessed on *localhost:4200*.
-
-`Dockerfile-gui-prod`
-  For deploying the web application in production. This
-  does a production build of the Angular project and hosts it using
-  `busybox <https://www.busybox.net/>`_. The app is still exposed on
-  port 4200, so to host it at port 80 one would start it with::
-
-    docker build -t sira-gui -f Dockerfile-gui-prod .
-
-  and start it with (for example)::
-
-    docker run -d -p 80:4200 --restart always sira-gui-prod
-
-Docker Compose
---------------
-
-By far the easiest way to run the system for development is with
-`docker-compose <https://docs.docker.com/compose/>`_, which can be done with::
-
-    docker-compose up
-
-Assuming that you start the system this way in the current folder, you can:
-
-- attach to the `sira` image to run models and tests with: 
-  ``docker attach sira``
-
-- access the GUI for defining fragility functions at: 
-  ``http://localhost:4200``
-
-- access the web API at: 
-  ``http://localhost:5000``
+        # From parent directory of sira code
+        mkdir -p sira_inputs sira_outputs
 
 
-This method will allow both the API and GUI to stay in sync with your code.
+2. Place your model and config files in `sira_inputs/`, within the structure
+   noted in [Required Directory Structure](#required-directory-structure).
 
-You can tear the system down (destroying the containers) with::
+3. Build and run with Docker Compose:
 
-    docker-compose down
+    .. code-block:: bash
+
+        cd sira/installation
+        docker compose build
+        docker compose up sira
+
+
+**Docker Run Modes:**
+
+- **Simulation mode** (default): Runs a configured simulation
+
+    docker compose up sira
+
+
+- **Interactive mode**: Opens a bash shell for manual commands
+
+    docker compose run --rm sira-interactive
+
+
+- **Test mode**: Runs the test suite::
+
+    docker compose run --rm sira-test
+
+
+**Direct Docker Usage** (without Compose):
+
+Build the image::
+
+    docker build -f installation/Dockerfile -t sira:latest .
+
+Run a simulation::
+
+    docker run -v /path/to/sira_inputs:/scenarios \
+        -v /path/to/sira_outputs:/outputs \
+        sira:latest python -m sira -d /scenarios/my_project -sfl
+
+
+**Note**: The Docker setup uses volume bindings to keep model/config data and outputs separate from the code repository. Update paths in `installation/docker-compose.yml` to match your directory structure. See `installation/README_DOCKER.md` for detailed instructions.
+
 
 
 .. _running-sira:
