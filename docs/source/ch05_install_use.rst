@@ -13,20 +13,20 @@ The directory structure of the code is as follows:
 ::
 
     .
-    ├── docs                        <-- Sphinx documentation files
-    │   └── source
-    ├── hazard                      <-- Hazard scenario files (for networks)
-    ├── installation                <-- Installation scripts for dev envs
-    ├── scripts
-    ├── sira                        <-- The core code reside here
-    │   ├── __main__.py             <-- Entry point for running the code
-    │   ├── modelling
-    │   ├── scripts
-    │   └── tools
-    ├── tests                       <-- Test scripts + data for sanity checks
-    │   ├── historical_data
-    │   ├── models
-    │   └── simulation_setup
+    ├── docs/                        <-- Sphinx documentation files
+    │   └── source/
+    ├── hazard/                      <-- Hazard scenario files (for networks)
+    ├── installation/                <-- Installation scripts for dev envs
+    ├── sira/                        <-- The core codebase resides here
+    │   ├── __init__.py
+    │   ├── __main__.py              <-- Entry point for running the code
+    │   ├── modelling/
+    │   ├── scripts/
+    │   └── tools/
+    ├── tests/                       <-- Test scripts + data for sanity checks
+    │   ├── historical_data/
+    │   ├── models/
+    │   └── simulation_setup/
     │
     ├── LICENSE                      <-- License file
     ├── pyproject.toml               <-- Project configuration file
@@ -38,9 +38,9 @@ Requirements
 
 SIRA has been tested on the following operating systems:
 
-    - OS X 10.11+
-    - Ubuntu 14.04 (64 bit)
     - Windows 10 and 11 (64 bit)
+    - Ubuntu 14.04 (64 bit)
+    - OS X 10.11+
 
 The code should work on more recent versions of these operating systems,
 though the environment setup process may have some differences.
@@ -49,11 +49,14 @@ This restriction is due to the fact that from version 2.6 onwards Python
 has not supported non-NT Windows platforms.
 
 You will need to install ``Graphviz``, which is used by
-``networkx`` and ``pygraphviz`` packages to draw the system diagram.
-Please visit: `<https://www.graphviz.org/>`_ and download the appropriate
-version for your operating system. Follow the posted download instructions
-carefully. After installation you may need to update the PATH variable
-with the location of the Graphviz binaries.
+``networkx`` and ``pygraphviz`` packages to draw the system diagrams.
+On Windows platforms, the simplest way to install Graphviz is to use ``mamba``.
+Alternatively, please visit: `<https://www.graphviz.org/>`_ and download the
+appropriate version for your operating system. Follow the posted download
+instructions carefully. After installation you may need to update the PATH
+variable with the location of the Graphviz binaries.
+On Linux platforms, Graphviz can be installed using the package manager,
+e.g., ``sudo apt-get install graphviz`` on Debian-based systems.
 
 
 .. _recommended-installation:
@@ -129,18 +132,37 @@ the `installation/` directory.
 
 **Quick Setup:**
 
-1. Create data directories **outside** the SIRA repository (recommended structure).
+1.  Create data directories for model and simulation data **outside** the SIRA
+    repository.
 
     .. code-block:: bash
 
         # From parent directory of sira code
-        mkdir -p sira_inputs sira_outputs
+        mkdir -p sira_simulation_data sira_outputs
+
+    The recommended directory structure is illustrated below:
+
+    ::
+
+        .                                          # workspace root
+        ├── sira/                                  # SIRA code repository
+        │   └── installation/
+        │       ├── Dockerfile
+        │       └── docker-compose.yml
+        │
+        ├── sira_simulation_data/                  # simulation scenario data
+        │   └── asset_1/
+        │       ├── input/
+        │       │   ├── config_simulation.json
+        │       │   └── model_infrastructure.json
+        │       └── output/                        # SIRA creates this
+        │
+        └── sira_outputs/      # alternate output loc can be configured
 
 
-2. Place your model and config files in `sira_inputs/`, within the structure
-   noted in [Required Directory Structure](#required-directory-structure).
+2.  Place your model and config files in `sira_simulation_data/`.
 
-3. Build and run with Docker Compose:
+3.  Build and run with Docker Compose:
 
     .. code-block:: bash
 
@@ -151,17 +173,17 @@ the `installation/` directory.
 
 **Docker Run Modes:**
 
-- **Simulation mode** (default): Runs a configured simulation
+-  **Simulation mode** (default): Runs a configured simulation::
 
     docker compose up sira
 
 
-- **Interactive mode**: Opens a bash shell for manual commands
+-  **Interactive mode**: Opens a bash shell for manual commands::
 
     docker compose run --rm sira-interactive
 
 
-- **Test mode**: Runs the test suite::
+-  **Test mode**: Runs the test suite::
 
     docker compose run --rm sira-test
 
@@ -174,13 +196,12 @@ Build the image::
 
 Run a simulation::
 
-    docker run -v /path/to/sira_inputs:/scenarios \
+    docker run -v /path/to/sira_simulation_data:/scenarios \
         -v /path/to/sira_outputs:/outputs \
         sira:latest python -m sira -d /scenarios/my_project -sfl
 
 
 **Note**: The Docker setup uses volume bindings to keep model/config data and outputs separate from the code repository. Update paths in `installation/docker-compose.yml` to match your directory structure. See `installation/README_DOCKER.md` for detailed instructions.
-
 
 
 .. _running-sira:
@@ -226,7 +247,7 @@ The flags can be combined.
 To run the characterisation simulation, followed by model fitting, and
 loss and recovery analysis, the command is::
 
-        python sira -d ./PROJECTX/SYSTEM_D/ -sfl
+    python sira -d ./PROJECTX/SYSTEM_D/ -sfl
 
 .. _running-tests:
 
@@ -261,25 +282,26 @@ SIRA recognises several environment flags to control behaviour related to detect
     - Default: `0` (disabled). When set to `1`, SIRA will attempt to detect CUDA GPUs via PyTorch (if installed) or TensorFlow (if installed). Detection is informational only; SIRA does not currently perform GPU-accelerated computation.
     - Example (PowerShell):
 
-    .. code-block:: powershell
+        .. code-block:: powershell
 
-        $env:SIRA_ENABLE_GPU_DETECT = "1"
-        python -c "from sira.parallel_config import ParallelConfig; ParallelConfig().print_config_summary()"
+            $env:SIRA_ENABLE_GPU_DETECT = "1"
+            python -c "from sira.parallel_config import ParallelConfig; 
+                ParallelConfig().print_config_summary()"
 
 `SIRA_FORCE_NO_MPI`
     - Purpose: Explicitly disable MPI detection and usage.
     - Default: `0` (not forced). When set to `1`, SIRA treats the environment as non-MPI even if MPI-related variables are present, and falls back to multiprocessing.
     - Example (PowerShell):
 
-    .. code-block:: powershell
+        .. code-block:: powershell
 
-        $env:SIRA_FORCE_NO_MPI = "1"
+            $env:SIRA_FORCE_NO_MPI = "1"
 
 
 .. note::
 
     - These flags only affect detection and backend selection.
-      Core computations remain CPU-based unless an MPI backend is 
+      Core computations remain CPU-based unless an MPI backend is
       explicitly selected and available.
 
     - Flags can be set per-session or integrated into CI/CD environment configuration.
@@ -312,7 +334,7 @@ Notes on selecting the parallel backend:
     python -m sira -d scenario_dir/ci_model_x -s --disable-parallel
 
 
-Optional tuning:
+**Optional tuning:**
 
 - Tune SIRA defaults using `--scenario-size auto|small|medium|large|xlarge` when no config file is provided (auto is recommended).
 
@@ -401,4 +423,8 @@ Example (PBS + OpenMPI snippet):
     export PYTHONHASHSEED=0
 
 
-The recommendation is to start only with `SIRA_HPC_MODE=1` and `SIRA_STREAM_DIR` for large jobs, identify bottlenecks through profiling or HPC logs, and then layer additional flags as needed.
+The recommendation for large jobs is to:
+
+- start only with `SIRA_HPC_MODE=1` and `SIRA_STREAM_DIR`, 
+- identify bottlenecks through profiling or HPC logs, and 
+- then layer additional flags as needed.

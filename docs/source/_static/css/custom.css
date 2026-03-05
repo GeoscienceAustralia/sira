@@ -23,6 +23,34 @@ body {
     line-height: 1.5;
 }
 
+/* ------------------------------------------------------------------- */
+/* Adjust bottom margins in body text, including lists */
+
+.rst-content p {
+    margin-bottom: 0.9em;
+}
+
+.rst-content .citation p {
+    margin-bottom: revert;
+}
+
+/* Increase gap between list marker and list item text;
+add spacing between items */
+.rst-content ul li,
+.rst-content ol li {
+    padding-inline-start: 0.5em;
+    margin-bottom: 0.4em;
+}
+
+/* Reduce bottom margin of the list block itself */
+.rst-content .section ul, .rst-content section ul,
+.rst-content .section ol, .rst-content section ol,
+.rst-content .section ol.arabic, .rst-content section ol.arabic {
+    margin-bottom: 0.9em;
+}
+
+/* ------------------------------------------------------------------- */
+
 h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     color: #333333;
     font-weight: 600;
