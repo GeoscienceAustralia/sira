@@ -11,32 +11,35 @@ Create data directories **outside** the SIRA code repository. The default config
 ```bash
 # From the parent directory of your sira code (e.g., c:\code\)
 cd ..
-mkdir -p sira_inputs sira_outputs
+mkdir -p sira_simulation_data sira_outputs
 ```
 
 Your directory structure should look like:
 
 ```
-c:\code\                   # or your workspace root
-├── sira/                  # SIRA code repository
+.                                     # workspace root
+├── sira/                             # SIRA code repository
 │   └── installation/
+│       ├── Dockerfile
 │       └── docker-compose.yml
-├── sira_inputs/        # Your scenario data (outside repo)
-│   └── my_project/
+│
+├── sira_simulation_data/             # simulation scenario data
+│   └── asset_1/
 │       ├── input/
 │       │   ├── config_simulation.json
 │       │   └── model_infrastructure.json
-│       └── output/        # SIRA creates this
-└── sira_outputs/          # Additional outputs (outside repo)
+│       └── output/                   # SIRA creates this
+│
+└── sira_outputs/      # alternate output loc can be configured
 ```
 
 ### 2. Add Your Scenario
 
-Place your scenario directory in `sira_inputs/`:
+Place your scenario directory in `sira_simulation_data/`:
 
 ```bash
 # Example structure
-sira_inputs/
+sira_simulation_data/
 └── my_project/
     ├── input/
     │   ├── config_simulation.json
@@ -97,7 +100,7 @@ docker compose run --rm sira-test
 
 The compose file binds these directories:
 
-- `../../sira_inputs` → `/scenarios` (read-write: scenario inputs and outputs)
+- `../../sira_simulation_data` → `/scenarios` (read-write: scenario inputs and outputs)
 - `../../sira_outputs` → `/outputs` (read-write: additional outputs)
 - `../hazard` → `/hazard` (read-only: shared hazard data from repo)
 - `../tests` → `/tests` (read-only: test data from repo)
@@ -149,21 +152,25 @@ docker build -f installation/Dockerfile -t sira:latest .
 Run simulation:
 ```bash
 # Linux/Mac - from repository root
-docker run -v /path/to/sira_inputs:/scenarios -v /path/to/sira_outputs:/outputs \
-  sira:latest python -m sira -d /scenarios/my_project -sfl
+docker run -v /path/to/sira_simulation_data:/scenarios \
+    -v /path/to/sira_outputs:/outputs \
+    sira:latest python -m sira -d /scenarios/my_project -sfl
 
 # Windows PowerShell - from repository root
-docker run -v C:\path\to\sira_inputs:/scenarios -v C:\path\to\sira_outputs:/outputs `
+docker run -v C:\path\to\sira_simulation_data:/scenarios 
+  -v C:\path\to\sira_outputs:/outputs `
   sira:latest python -m sira -d /scenarios/my_project -sfl
 ```
 
 Interactive shell:
 ```bash
 # Linux/Mac
-docker run -it -v /path/to/sira_inputs:/scenarios -v /path/to/sira_outputs:/outputs sira:latest /bin/bash
+docker run -it -v /path/to/sira_simulation_data:/scenarios 
+    -v /path/to/sira_outputs:/outputs sira:latest /bin/bash
 
 # Windows PowerShell
-docker run -it -v C:\path\to\sira_inputs:/scenarios -v C:\path\to\sira_outputs:/outputs sira:latest /bin/bash
+docker run -it -v C:\path\to\sira_simulation_data:/scenarios 
+    -v C:\path\to\sira_outputs:/outputs sira:latest /bin/bash
 ```
 
 ## Troubleshooting
@@ -172,7 +179,7 @@ docker run -it -v C:\path\to\sira_inputs:/scenarios -v C:\path\to\sira_outputs:/
 If you encounter permission errors with output files, ensure the container user has write access to mounted volumes. On Linux, you may need to adjust ownership:
 
 ```bash
-sudo chown -R $USER:$USER /path/to/sira_inputs /path/to/sira_outputs
+sudo chown -R $USER:$USER /path/to/sira_simulation_data /path/to/sira_outputs
 ```
 
 **Path Issues:**
@@ -182,10 +189,9 @@ If volumes are not mounting correctly, verify:
 3. The directories exist before running `docker compose up`
 
 **Build Failures:**
-Ensure you're building from the repository root context via the compose file, or use:
+Ensure you are building from the repository root context via the compose file, or
+cd into to the repository root and use:
 
 ```bash
 docker build -f installation/Dockerfile -t sira:latest .
 ```
-
-from the repository root.
