@@ -5,11 +5,13 @@ Infrastructure Model Setup
 **************************
 
 The system model is defined using an MS Excel spreadsheet file.
-It contains seven required worksheets, each representing modules that define
-different aspect of the infrastructure model. The names of the worksheets
-are fixed. The Excel file must be converted to JSON format before it can be
-ingested by SIRA. The required script `convert_excel_files_to_json.py` is available in the `sira/tools <https://github.com/GeoscienceAustralia/sira/tree/master/sira/tools>`_ directory for
-this purpose.
+It contains seven required worksheets, each representing modules that
+define different aspect of the infrastructure model. The names of the
+worksheets are fixed. The Excel file must be converted to JSON format
+before it can be ingested by SIRA.
+The required script `convert_excel_files_to_json.py` is available in the
+`sira/tools <https://github.com/GeoscienceAustralia/sira/tree/master/sira/tools>`_
+directory for this purpose.
 
 The format and function of the worksheets (i.e. model definition modules)
 are described in the following subsections:

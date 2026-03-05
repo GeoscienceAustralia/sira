@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=6a95f251" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=f0060cdc" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -131,20 +131,20 @@ minimal. Most modern systems based on x86 architecture should be able to
 run this software.</p>
 <p>The directory structure of the code is as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
-├── docs                        &lt;-- Sphinx documentation files
-│   └── source
-├── hazard                      &lt;-- Hazard scenario files (for networks)
-├── installation                &lt;-- Installation scripts for dev envs
-├── scripts
-├── sira                        &lt;-- The core code reside here
-│   ├── __main__.py             &lt;-- Entry point for running the code
-│   ├── modelling
-│   ├── scripts
-│   └── tools
-├── tests                       &lt;-- Test scripts + data for sanity checks
-│   ├── historical_data
-│   ├── models
-│   └── simulation_setup
+├── docs/                        &lt;-- Sphinx documentation files
+│   └── source/
+├── hazard/                      &lt;-- Hazard scenario files (for networks)
+├── installation/                &lt;-- Installation scripts for dev envs
+├── sira/                        &lt;-- The core codebase resides here
+│   ├── __init__.py
+│   ├── __main__.py              &lt;-- Entry point for running the code
+│   ├── modelling/
+│   ├── scripts/
+│   └── tools/
+├── tests/                       &lt;-- Test scripts + data for sanity checks
+│   ├── historical_data/
+│   ├── models/
+│   └── simulation_setup/
 │
 ├── LICENSE                      &lt;-- License file
 ├── pyproject.toml               &lt;-- Project configuration file
@@ -156,9 +156,9 @@ run this software.</p>
 <p>SIRA has been tested on the following operating systems:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>OS X 10.11+</p></li>
-<li><p>Ubuntu 14.04 (64 bit)</p></li>
 <li><p>Windows 10 and 11 (64 bit)</p></li>
+<li><p>Ubuntu 14.04 (64 bit)</p></li>
+<li><p>OS X 10.11+</p></li>
 </ul>
 </div></blockquote>
 <p>The code should work on more recent versions of these operating systems,
@@ -167,11 +167,14 @@ Windows systems that are not based on the NT-platform are not supported.
 This restriction is due to the fact that from version 2.6 onwards Python
 has not supported non-NT Windows platforms.</p>
 <p>You will need to install <code class="docutils literal notranslate"><span class="pre">Graphviz</span></code>, which is used by
-<code class="docutils literal notranslate"><span class="pre">networkx</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code> packages to draw the system diagram.
-Please visit: <a class="reference external" href="https://www.graphviz.org/">https://www.graphviz.org/</a> and download the appropriate
-version for your operating system. Follow the posted download instructions
-carefully. After installation you may need to update the PATH variable
-with the location of the Graphviz binaries.</p>
+<code class="docutils literal notranslate"><span class="pre">networkx</span></code> and <code class="docutils literal notranslate"><span class="pre">pygraphviz</span></code> packages to draw the system diagrams.
+On Windows platforms, the simplest way to install Graphviz is to use <code class="docutils literal notranslate"><span class="pre">mamba</span></code>.
+Alternatively, please visit: <a class="reference external" href="https://www.graphviz.org/">https://www.graphviz.org/</a> and download the
+appropriate version for your operating system. Follow the posted download
+instructions carefully. After installation you may need to update the PATH
+variable with the location of the Graphviz binaries.
+On Linux platforms, Graphviz can be installed using the package manager,
+e.g., <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">graphviz</span></code> on Debian-based systems.</p>
 </section>
 <section id="recommended-process-for-building-a-sira-environment">
 <span id="recommended-installation"></span><h2><span class="section-number">5.2 </span>Recommended Process for Building a SIRA Environment<a class="headerlink" href="#recommended-process-for-building-a-sira-environment" title="Link to this heading"></a></h2>
@@ -230,37 +233,50 @@ simplified dependency management. Docker configuration files are provided in
 the <cite>installation/</cite> directory.</p>
 <p><strong>Quick Setup:</strong></p>
 <ol class="arabic">
-<li><p>Create data directories <strong>outside</strong> the SIRA repository (recommended structure).</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From parent directory of sira code</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span>sira_inputs<span class="w"> </span>sira_outputs
+<li><p>Create data directories for model and simulation data <strong>outside</strong> the SIRA
+repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From parent directory of sira code</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>sira_simulation_data<span class="w"> </span>sira_outputs
 </pre></div>
 </div>
-</div></blockquote>
+<p>The recommended directory structure is illustrated below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.                                          # workspace root
+├── sira/                                  # SIRA code repository
+│   └── installation/
+│       ├── Dockerfile
+│       └── docker-compose.yml
+│
+├── sira_simulation_data/                  # simulation scenario data
+│   └── asset_1/
+│       ├── input/
+│       │   ├── config_simulation.json
+│       │   └── model_infrastructure.json
+│       └── output/                        # SIRA creates this
+│
+└── sira_outputs/      # alternate output loc can be configured
+</pre></div>
+</div>
 </li>
-<li><p>Place your model and config files in <cite>sira_inputs/</cite>, within the structure
-noted in [Required Directory Structure](#required-directory-structure).</p></li>
+<li><p>Place your model and config files in <cite>sira_simulation_data/</cite>.</p></li>
 <li><p>Build and run with Docker Compose:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>sira/installation
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>sira/installation
 docker<span class="w"> </span>compose<span class="w"> </span>build
 docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>sira
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 </ol>
 <p><strong>Docker Run Modes:</strong></p>
 <ul>
-<li><p><strong>Simulation mode</strong> (default): Runs a configured simulation</p>
-<blockquote>
-<div><p>docker compose up sira</p>
-</div></blockquote>
+<li><p><strong>Simulation mode</strong> (default): Runs a configured simulation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="n">sira</span>
+</pre></div>
+</div>
 </li>
-<li><p><strong>Interactive mode</strong>: Opens a bash shell for manual commands</p>
-<blockquote>
-<div><p>docker compose run –rm sira-interactive</p>
-</div></blockquote>
+<li><p><strong>Interactive mode</strong>: Opens a bash shell for manual commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="n">sira</span><span class="o">-</span><span class="n">interactive</span>
+</pre></div>
+</div>
 </li>
 <li><p><strong>Test mode</strong>: Runs the test suite:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="n">sira</span><span class="o">-</span><span class="n">test</span>
@@ -274,7 +290,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 </pre></div>
 </div>
 <p>Run a simulation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">sira_inputs</span><span class="p">:</span><span class="o">/</span><span class="n">scenarios</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">sira_simulation_data</span><span class="p">:</span><span class="o">/</span><span class="n">scenarios</span> \
     <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">sira_outputs</span><span class="p">:</span><span class="o">/</span><span class="n">outputs</span> \
     <span class="n">sira</span><span class="p">:</span><span class="n">latest</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">sira</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">scenarios</span><span class="o">/</span><span class="n">my_project</span> <span class="o">-</span><span class="n">sfl</span>
 </pre></div>
@@ -337,24 +353,31 @@ sira container.</p>
 <span id="id1"></span><h3><span class="section-number">5.4.2 </span>Runtime Flags<a class="headerlink" href="#runtime-flags" title="Link to this heading"></a></h3>
 <p>SIRA recognises several environment flags to control behaviour related to detection and selection of the appropriate backend. Setting these flags is optional. These need to be set in the shell before running SIRA.</p>
 <dl>
-<dt><cite>SIRA_ENABLE_GPU_DETECT</cite></dt><dd><ul class="simple">
+<dt><cite>SIRA_ENABLE_GPU_DETECT</cite></dt><dd><ul>
 <li><p>Purpose: Enable optional GPU detection during environment setup.</p></li>
 <li><p>Default: <cite>0</cite> (disabled). When set to <cite>1</cite>, SIRA will attempt to detect CUDA GPUs via PyTorch (if installed) or TensorFlow (if installed). Detection is informational only; SIRA does not currently perform GPU-accelerated computation.</p></li>
-<li><p>Example (PowerShell):</p></li>
-</ul>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_ENABLE_GPU_DETECT</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
-<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from sira.parallel_config import ParallelConfig; ParallelConfig().print_config_summary()&quot;</span>
+<li><p>Example (PowerShell):</p>
+<blockquote>
+<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_ENABLE_GPU_DETECT</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from sira.parallel_config import ParallelConfig;</span>
+<span class="s2">    ParallelConfig().print_config_summary()&quot;</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+</ul>
 </dd>
-<dt><cite>SIRA_FORCE_NO_MPI</cite></dt><dd><ul class="simple">
+<dt><cite>SIRA_FORCE_NO_MPI</cite></dt><dd><ul>
 <li><p>Purpose: Explicitly disable MPI detection and usage.</p></li>
 <li><p>Default: <cite>0</cite> (not forced). When set to <cite>1</cite>, SIRA treats the environment as non-MPI even if MPI-related variables are present, and falls back to multiprocessing.</p></li>
-<li><p>Example (PowerShell):</p></li>
-</ul>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_FORCE_NO_MPI</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
+<li><p>Example (PowerShell):</p>
+<blockquote>
+<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_FORCE_NO_MPI</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+</ul>
 </dd>
 </dl>
 <div class="admonition note">
@@ -394,7 +417,7 @@ explicitly selected and available.</p></li>
 </div>
 </li>
 </ul>
-<p>Optional tuning:</p>
+<p><strong>Optional tuning:</strong></p>
 <ul class="simple">
 <li><p>Tune SIRA defaults using <cite>–scenario-size auto|small|medium|large|xlarge</cite> when no config file is provided (auto is recommended).</p></li>
 <li><p>There is an option to explicitly provide a JSON config via <cite>–parallel-config</cite> to pin backend and worker counts.</p></li>
@@ -490,7 +513,12 @@ explicitly selected and available.</p></li>
 <span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="m">0</span>
 </pre></div>
 </div>
-<p>The recommendation is to start only with <cite>SIRA_HPC_MODE=1</cite> and <cite>SIRA_STREAM_DIR</cite> for large jobs, identify bottlenecks through profiling or HPC logs, and then layer additional flags as needed.</p>
+<p>The recommendation for large jobs is to:</p>
+<ul class="simple">
+<li><p>start only with <cite>SIRA_HPC_MODE=1</cite> and <cite>SIRA_STREAM_DIR</cite>,</p></li>
+<li><p>identify bottlenecks through profiling or HPC logs, and</p></li>
+<li><p>then layer additional flags as needed.</p></li>
+</ul>
 </section>
 </section>
 </section>
