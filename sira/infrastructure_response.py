@@ -1992,18 +1992,34 @@ def exceedance_prob_by_component_class(response_list, infrastructure, scenario, 
         ds_lims = np.array(infrastructure.get_ds_lims_for_compclass(compclass))
         comp_class_frag[compclass] = (failures[:, :, np.newaxis] > ds_lims).sum(axis=2)
 
-    # Probability of Exceedance -- Based on Failure of Component Classes
-    pe_sys_cpfailrate = np.zeros((len(infrastructure.system_dmg_states), hazards.num_hazard_pts))
+    # Probability of Exceedance -- HAZUS OR-logic across component classes.
+    #
+    # HAZUS defines a substation's damage state by whether ANY component class has
+    # crossed the corresponding failure-fraction threshold (e.g. moderate = 40% of
+    # disconnect switches OR 40% of circuit breakers OR ...). The substation damage
+    # index for a given realisation is therefore the worst-affected class (the
+    # maximum across classes), and the system exceedance probability is the
+    # fraction of realisations reaching at least each damage state.
+    #
+    # NOTE: classes are combined PER REALISATION (max of the integer class indices)
+    # and only then averaged over realisations. Combining in probability space
+    # instead (e.g. median/max of per-class exceedance probabilities) misrepresents
+    # the OR across classes -- in particular a median can mask a single critical
+    # class that drives the whole substation down even though every other class is
+    # intact. See reports/substation_fragility_aggregation_issue.md.
+    num_states = len(infrastructure.system_dmg_states)
+    pe_sys_cpfailrate = np.zeros((num_states, hazards.num_hazard_pts))
 
-    for d in range(len(infrastructure.system_dmg_states)):
-        exceedance_probs = []
-        for compclass in cp_classes_costed:
-            if compclass in comp_class_frag:
-                class_exceed = (comp_class_frag[compclass] >= d).mean(axis=0)
-                exceedance_probs.append(class_exceed)
-
-        if exceedance_probs:
-            pe_sys_cpfailrate[d, :] = np.median(exceedance_probs, axis=0)
+    class_frag_arrays = [
+        comp_class_frag[compclass]
+        for compclass in cp_classes_costed
+        if compclass in comp_class_frag
+    ]
+    if class_frag_arrays:
+        # Per realisation, the substation damage index is the worst-affected class.
+        sys_frag = np.maximum.reduce(class_frag_arrays)
+        for d in range(num_states):
+            pe_sys_cpfailrate[d, :] = (sys_frag >= d).mean(axis=0)
 
     # Vectorised damage ratio calculations
     exp_damage_ratio = np.zeros((len(infrastructure.components), hazards.num_hazard_pts))
