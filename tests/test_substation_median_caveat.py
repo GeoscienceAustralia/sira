@@ -1,30 +1,33 @@
 """
-Demonstration / characterisation of a caveat in the substation system-fragility
-aggregation (``exceedance_prob_by_component_class``, infrastructure_response.py).
+Regression test for the substation system-fragility aggregation
+(``exceedance_prob_by_component_class``, infrastructure_response.py).
 
-A substation does NOT assign a system damage state per realisation. Instead it
-computes, per component *class*, an exceedance probability from that class's
-failure rate (``#components at DS>=2 / #components in class``), then takes the
-**median across classes** as the system curve (``pe_sys_cpfailrate``). This is the
-curve a substation actually fits and reports.
+Background (the bug this guards against):
+    The substation system fragility (``pe_sys_cpfailrate``) is built from the
+    failure rates of its component *classes*. The original implementation combined
+    the per-class signals with a **median across classes**, which could be
+    outvoted: a single critical class (e.g. the only power transformer) failing
+    while a majority of robust classes (disconnect switches, circuit breakers)
+    stayed intact would be ignored by the median -- so the reported fragility said
+    "undamaged" while the substation was physically dead.
 
-The caveat: the median across classes can be outvoted. If a single critical class
-(here one Power Transformer, in series) drives the whole substation down, but it is
-outnumbered by robust classes (disconnect switches, circuit breakers that rarely
-fail), the median ignores the failing class — so the reported substation fragility
-says "undamaged" while the substation is physically dead.
+Fix (HAZUS OR-logic):
+    The substation damage index is now the worst-affected class (max across
+    classes), assigned per realisation and then averaged. This matches the HAZUS
+    "40% of switches OR 40% of breakers OR ..." definition and no longer masks a
+    critical class. See reports/substation_fragility_aggregation_issue.md.
 
 Model ``substation__median_caveat`` (series chain):
     SUPPLY -> SW_1 -> SW_2 -> SW_3 -> TX -> CB_1 -> CB_2 -> CB_3 -> OUT
   * TX (Power Transformer): fragile, fails early, and is the series bottleneck.
   * SW_* (Disconnect Switch) and CB_* (Circuit Breaker): robust, ~never fail.
-  Three component classes total, so the single failing class is the minority.
+  Three component classes total, so the single failing class is the minority --
+  exactly the configuration the old median combiner mishandled.
 
-This test contrasts three views of the same run at a hazard level where the
-transformer is destroyed:
-  * actual system output      -> ~0  (substation is down)
-  * econloss-based fragility   -> ~1  (correctly flags near-certain damage)
-  * cpfailrate (median) curve  -> ~0  (masks it — the caveat)
+At a hazard level where the transformer is destroyed, all three views now agree:
+  * actual system output       -> ~0  (substation is down)
+  * econloss-based fragility    -> ~1  (correctly flags near-certain damage)
+  * cpfailrate (OR-logic) curve -> ~1  (now flags it too; the masking is gone)
 """
 
 import os
@@ -98,19 +101,19 @@ def test_econloss_fragility_flags_the_failure(caveat_run):
     assert caveat_run["pe_econloss"][1][j] > 0.95
 
 
-def test_median_across_classes_masks_the_critical_failure(caveat_run):
-    """THE CAVEAT: the median-across-classes substation curve reports the
-    substation as essentially undamaged at the same hazard level, because the one
-    failing class (Power Transformer) is outvoted by the two robust classes."""
+def test_class_failure_curve_flags_the_critical_failure(caveat_run):
+    """REGRESSION: with HAZUS OR-logic (max across classes) the substation curve
+    now reports near-certain damage where the transformer is destroyed, instead of
+    masking it. (Under the old median combiner this value was ~0.)"""
     j = _at(caveat_run["pga"], 0.8)
-    assert caveat_run["pe_cpfailrate"][1][j] < 0.05
+    assert caveat_run["pe_cpfailrate"][1][j] > 0.95
 
 
-def test_the_two_fragility_curves_diverge_grossly(caveat_run):
-    """Direct contrast: across the band where the transformer fails, the econloss
-    curve rises to ~1 while the median-across-classes curve stays ~0."""
+def test_class_failure_curve_tracks_econloss(caveat_run):
+    """The class-failure and economic-loss fragilities now agree across the band
+    where the transformer fails (here one component drives both signals); the gross
+    divergence produced by the old median combiner is gone."""
     econ = caveat_run["pe_econloss"][1]
     cp = caveat_run["pe_cpfailrate"][1]
     j_hi = _at(caveat_run["pga"], 1.0)
-    # Econloss recognises the loss; the class-median does not.
-    assert econ[j_hi] - cp[j_hi] > 0.9
+    assert abs(econ[j_hi] - cp[j_hi]) < 0.1
