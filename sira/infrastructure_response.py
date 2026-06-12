@@ -1873,7 +1873,7 @@ def exceedance_prob_by_component_class(response_list, infrastructure, scenario, 
         return None
 
     # Pre-calculate all indices and mappings once
-    component_keys = list(infrastructure.components.keys())
+    component_keys = sorted(infrastructure.components.keys())
     cp_classes_in_system = np.unique(list(infrastructure.get_component_class_list()))
 
     # Create mapping of class -> array of component indices
