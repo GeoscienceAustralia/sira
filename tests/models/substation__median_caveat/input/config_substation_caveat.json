@@ -1,0 +1,48 @@
+{
+  "CONFIGURATION_ID": "Substation Median Caveat",
+  "SCENARIO_NAME": "substation_median_caveat",
+  "MODEL_NAME": "Substation Median Caveat",
+  "OUTPUT_DIR": "./output",
+  "HAZARD_TYPE": "earthquake",
+  "HAZARD_INPUT_METHOD": "calculated_array",
+  "HAZARD_INPUT_DIR": "./input",
+  "HAZARD_INPUT_FILE": "unused.csv",
+  "HAZARD_INPUT_HEADER": "PGA",
+  "HAZARD_SCALING_FACTOR": 1.0,
+  "HAZARD_NUM_SAMPLES": 10,
+  "HAZARD_INTENSITY_MEASURE_MAX": 1.2,
+  "HAZARD_INTENSITY_MEASURE_MIN": 0.0,
+  "HAZARD_INTENSITY_MEASURE_STEP": 0.05,
+  "HAZARD_INTENSITY_MEASURE_PARAM": "PGA",
+  "HAZARD_INTENSITY_MEASURE_UNIT": "g",
+  "RESTORATION_STREAMS": [
+    5,
+    20
+  ],
+  "RESTORATION_PCT_CHECKPOINTS": 21,
+  "RESTORATION_TIME_MAX": 90.0,
+  "RESTORATION_TIME_STEP": 1,
+  "RESTORATION_TIME_UNIT": "days",
+  "SCENARIO_FOCAL_HAZARD_SCENARIO_NAMES": [
+    "EVT_LOW",
+    "EVT_HIGH"
+  ],
+  "SCENARIO_FOCAL_HAZARD_SCENARIOS": [
+    "0.200",
+    "0.600"
+  ],
+  "SYSTEM_INFRASTRUCTURE_LEVEL": "facility",
+  "SYSTEM_COMMODITY_FLOW_TYPES": 1,
+  "SYSTEM_CLASS": "Substation",
+  "SYSTEM_CLASSES": [
+    "Substation",
+    "PowerStation",
+    "RailNetwork"
+  ],
+  "SYSTEM_SUBCLASS": "Caveat Demo",
+  "SYSTEM_COMPONENT_LOCATION_CONF": "defined",
+  "SWITCH_MULTIPROCESS": 0,
+  "SWITCH_RUN_CONTEXT": 1,
+  "SWITCH_FIT_RESTORATION_DATA": 0,
+  "SWITCH_SAVE_VARS_NPY": 0
+}
