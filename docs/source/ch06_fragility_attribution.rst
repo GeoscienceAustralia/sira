@@ -36,12 +36,8 @@ hierarchy of approaches which is in order of increasing uncertainty:
    (if possible).
 
 2. Selection of the most applicable model from published models in the
-   literature.
-
-3. Utilisation of heuristic engineering judgment in adapting damage models
-   for other components assessed to have similar fragility. There are many
-   fragility models published in the literature. The literature review and
-   model compilation produced by the Syner-G Project
+   literature. There are many fragility models published in the literature.
+   The literature review and model compilation produced by the Syner-G Project
    :cite:`Pitilakis-etal-2014`, sponsored by the European Commission
    presents a wide range of electricity sector component models.
    Some key references include works by Vanzi :cite:`Vanzi1996`,
@@ -49,10 +45,13 @@ hierarchy of approaches which is in order of increasing uncertainty:
    HAZUS includes fragility functions for a wider range of facilities and
    subcomponents than those presented in the Syner-G Project.
 
-Each damage state has a description of the typical severity of physical
-component damage which has implications for the use of the component.
-Hence, each damage state also has an operational level for the damaged
-component, a cost to repair (as a proportion of the replacement cost) and
-a resource requirement in terms of number of technicians and time. This
-is used to assess the utility of the system immediately after an extreme
-event and to assess the restoration prognosis.
+3. Utilisation of heuristic engineering judgment in adapting damage models
+   for components assessed to have similar fragility.
+
+Each component damage state has a description of the typical severity of
+physical damage, with implications for its functionality.
+Each damage state also has an associated operational level for the damaged
+component, repair cost (as a proportion of the replacement cost), and a
+function for restoration time. This collection of information is used to
+assess the utility of the system immediately after a damaging event
+and to assess the restoration prognosis.

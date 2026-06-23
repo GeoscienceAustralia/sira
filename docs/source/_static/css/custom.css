@@ -51,7 +51,7 @@ add spacing between items */
 
 /* ------------------------------------------------------------------- */
 
-h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+.rst-content .toctree-wrapper p.caption, h1, h2, h3, h4, h5, h6, legend {
     color: #333333;
     font-weight: 600;
     font-family: 'Lora', 'Roboto Slab', 'Arbutus Slab', serif;
@@ -62,6 +62,14 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     padding: 15px 10px 10px 0px;
     margin: 10px 0 5px 0px;
     font-size: 40px;
+}
+
+.rst-content h1 {
+    margin-bottom: 24px;
+}
+
+.rst-content h2, .rst-content h3, .rst-content h4 {
+    margin-bottom: 12px;
 }
 
 .wy-menu-vertical header, .wy-menu-vertical p.caption {
@@ -112,6 +120,7 @@ h2:before {
     display: block;
     width: 60px;
     padding-top: 25px;
+    margin-top: 10px;
     border-top: 8px solid #444444;
 }
 
@@ -120,6 +129,7 @@ h3:before {
     display: block;
     width: 67px;
     padding-top: 20px;
+    margin-top: 10px;
     border-top: 4px solid #444444;  /* #797878 */
 }
 
@@ -184,7 +194,8 @@ table td {
 /* Content area links only - not sidebar menu */
 .rst-content a:hover {
     /* color: orangered; */
-    border-bottom: 2px solid;
+    color: #2453ec;
+    border-bottom: 3px solid #5479f5;
 }
 
 /* Remove border from breadcrumbs */
