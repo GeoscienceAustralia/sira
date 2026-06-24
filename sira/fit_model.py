@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from colorama import Fore, init
+from matplotlib import style as mpl_style
 from scipy import stats
 from scipy.special import erf  # noqa:E0611
 
@@ -413,6 +414,102 @@ def get_distribution_func(function_name):
         raise ValueError(f"The distribution {function_name} is not supported.")
 
 
+# ====================================================================================
+
+
+def get_optimal_ticks(x_max, x_unit, x_param):
+
+    x_unit = str(x_unit)
+    x_param = str(x_param)
+
+    if x_max is not None:
+        x_max = float(x_max)
+        if x_max <= 0.1:
+            XTICK_GAP = 0.02
+        elif x_max <= 1.0:
+            XTICK_GAP = 0.1
+        elif x_max <= 2.0:
+            XTICK_GAP = 0.2
+        elif x_max <= 3.0:
+            XTICK_GAP = 0.25
+        elif x_max <= 5.0:
+            XTICK_GAP = 0.5
+        elif x_max <= 10:
+            XTICK_GAP = 1
+        elif x_max <= 20:
+            XTICK_GAP = 2
+        elif x_max <= 50:
+            XTICK_GAP = 5
+        elif x_max <= 100:
+            XTICK_GAP = 10
+        else:
+            XTICK_GAP = int(x_max / 10)
+
+        if x_max <= 0.5:
+            precision_digits = 3
+        elif x_max <= 1.0:
+            precision_digits = 2
+        else:
+            precision_digits = 1
+
+    if x_max is None or x_max in ["", "nan", "na"]:
+        if x_unit.lower() == "g":
+            x_max = 1.4
+            XTICK_GAP = 0.2
+            precision_digits = 1
+        elif x_param.lower() in ["sa", "spectral acceleration", "spectral_acceleration"]:
+            x_max = 14
+            XTICK_GAP = 2
+            precision_digits = 0
+        elif x_unit.lower() in ["m/s^2", "m/s2", "m per sec^2", "m per sec2"]:
+            x_max = 14
+            XTICK_GAP = 2
+            precision_digits = 0
+        elif x_param.lower() in ["k", "k-out-of-n"]:
+            x_max = 5
+            XTICK_GAP = 1
+            precision_digits = 0
+
+    return x_max, XTICK_GAP, precision_digits
+
+
+# ====================================================================================
+
+
+def get_actual_precision(num: float):
+    """Calculates actual precision in decimal places"""
+    formatted_num = f"{num:.15f}"
+    actual_precision = len(formatted_num.rstrip("0").split(".")[1])
+    return actual_precision
+
+
+def calc_xtick_vals(x_max, XTICK_GAP, float_precision=1):
+    x_max = float(x_max)
+    float_precision = int(float_precision)
+    format_string = "{:." + str(float_precision) + "f}"
+
+    NUM_XTICKS = int(np.floor(x_max / XTICK_GAP)) + 1
+    xtick_seq = np.arange(0, NUM_XTICKS)
+    xtick_pos = XTICK_GAP * xtick_seq
+    xtick_val = [format_string.format(i) for i in xtick_pos]
+
+    x_max_gap = x_max - xtick_pos[-1]
+
+    nzd = get_actual_precision(x_max)
+    nzd = 4 if (nzd >= 4) else nzd
+    nzd = float_precision if (float_precision > nzd) else nzd
+    mod_str_format = "{:." + str(nzd) + "f}"
+
+    if x_max_gap >= XTICK_GAP * 0.4:
+        xtick_pos = np.append(xtick_pos, x_max)
+        xtick_val = np.append(xtick_val, mod_str_format.format(x_max))
+
+    return xtick_pos, xtick_val
+
+
+# ====================================================================================
+
+
 def plot_data_model(
     x_vals,
     y_vals,
@@ -423,15 +520,27 @@ def plot_data_model(
     PLOT_DATA=True,
     PLOT_MODEL=True,
     PLOT_EVENTS=False,
+    fig_style=None,  # "seaborn-v0_8-whitegrid"
+    XSTEPSIZE=0.01,
     **conf_data,
 ):
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     if sum([PLOT_DATA, PLOT_MODEL, PLOT_EVENTS]) == 0:
         raise AttributeError
 
+    # -------------------------------------------------------------------------
+
     model_name = conf_data.get("model_name")
     x_param = conf_data.get("x_param")
-    x_unit = conf_data.get("x_unit")
+    x_unit = str(conf_data.get("x_unit"))
+
+    XUNITS = ["g", "m/s^2", "m/s2", "k", "k-out-of-n", "none", "na", "nan"]
+    if x_unit.lower() not in XUNITS:
+        print(f"X-axis unit found is: {x_unit}.")
+        raise ValueError("X-axis unit must be g or m/s^2")
+
+    # -------------------------------------------------------------------------
+
     scenario_metrics = conf_data.get("scenario_metrics")
     scneario_names = conf_data.get("scneario_names")
 
@@ -448,128 +557,138 @@ def plot_data_model(
         rootLogger.warning(f"Invalid metrics found for scenario events: {e}")
         rootLogger.warning("Skipping plotting of scenario events.\n")
 
+    # -------------------------------------------------------------------------
+
+    x_max = float(max(x_vals))
+    (x_max_optimal, XTICK_GAP, float_format_digits) = get_optimal_ticks(x_max, x_unit, x_param)
+
+    if (x_max is None) or (x_max == ""):
+        x_max_required = x_max_optimal
+        x_max_display = x_max_optimal
+    elif (x_max <= XTICK_GAP) and (x_max > 0):
+        x_max_required = x_max_optimal
+        x_max_display = XTICK_GAP
+        XTICK_GAP = XTICK_GAP / 2.0
+    elif (x_max <= x_max_optimal) and (x_max > 0):
+        x_max_required = x_max_optimal
+        x_max_display = x_max
+    else:
+        x_max_required, XTICK_GAP, float_format_digits = get_optimal_ticks(x_max, x_unit, x_param)
+        x_max_display = x_max_required
+
+    if x_max_display <= 0.5:
+        float_format_digits = 3
+    elif x_max_display <= 1.0:
+        float_format_digits = 2
+
+    # -------------------------------------------------------------------------
+
+    def find_nearest_idx(array, value):
+        array = np.asarray(array)
+        idx = (np.abs(array - value)).argmin()
+        return idx
+
+    # -------------------------------------------------------------------------
+
+    NUM_DATA_POINTS = int(np.round(x_max_required / XSTEPSIZE))
+    x_data = np.linspace(0, x_max_required, NUM_DATA_POINTS + 1, endpoint=True)  # type: ignore
+
+    if x_max_display < x_data[-1]:
+        nearest_idx = find_nearest_idx(x_data, x_max_display)
+        x_dat_display = x_data[: nearest_idx + 1]
+    else:
+        x_dat_display = x_data
+
+    # =========================================================================
+    # Line plot for group of Fragility algorithms
+    # -------------------------------------------------------------------------
+
+    fig = plt.figure(figsize=(10, 5.5))
+    ax = fig.add_subplot(111)
+
+    # Set plot style
+    if fig_style not in plt.style.available:
+        fig_style = "ggplot"
+    mpl_style.use(fig_style)
     mpl.rc("grid", linewidth=0.7)
     mpl.rc("font", family="sans-serif")
 
+    # Set colour palette for line plots
     colours = spl.ColourPalettes()
     COLR_DS = colours.FiveLevels[-1 * len(SYS_DS) :]
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # -----------------------------------------------------------------------
+    # Title
+    # -----------------------------------------------------------------------
 
-    def calc_xtick_vals(x_max, XTICK_GAP, format_string="{:.1f}"):
-        NUM_XTICKS = int(np.round(x_max / XTICK_GAP) + 1)
-        xtick_pos = np.linspace(0.0, x_max, num=NUM_XTICKS, endpoint=True)
-        xtick_val = [format_string.format(i) for i in xtick_pos]
-        return xtick_pos, xtick_val
+    figtitle = f"System Fragility: {model_name}"
+    # ax.set_title(figtitle, loc="left", y=1.025, size=12, weight=600)
+    # ax.set_title(figtitle, loc="center", y=1.04, fontweight="bold", size=10)
 
-    x_max = float(max(x_vals))
-    if x_max <= 1.0:
-        XTICK_GAP = 0.1
-    elif x_max <= 3.0:
-        XTICK_GAP = 0.2
-    elif x_max <= 5.0:
-        XTICK_GAP = 0.5
-    elif x_max <= 10:
-        XTICK_GAP = 1
-    elif x_max <= 50:
-        XTICK_GAP = 5
-    elif x_max <= 100:
-        XTICK_GAP = 10
-    else:
-        XTICK_GAP = int(x_max / 10)
-    if x_max <= 1.0:
-        sfmt = "{:.2f}"
-    else:
-        sfmt = "{:.1f}"
-
-    x_unit = str(x_unit)
-    if x_max is None or x_max in ["", "nan", "na"]:
-        if x_unit.lower() == "g":
-            x_max = 1.4
-            XTICK_GAP = 0.2
-            sfmt = "{:.2f}"
-        elif x_param.lower() in ["sa", "spectral acceleration"]:
-            x_max = 15
-            XTICK_GAP = 1
-            sfmt = "{:.0f}"
-        elif x_unit.lower() in ["m/s^2", "m/s2"]:
-            x_max = 10
-            XTICK_GAP = 1
-            sfmt = "{:.0f}"
-        elif x_param.lower() in ["k", "k-out-of-n"]:
-            x_max = 5
-            XTICK_GAP = 1
-            sfmt = "{:.0f}"
-
-    if x_unit.lower() not in ["g", "m/s^2", "m/s2", "k", "k-out-of-n", "none", "na", "nan"]:
-        print(f"X-axis unit found is: {x_unit}.")
-        raise ValueError("X-axis unit must be g or m/s^2")
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    fig = plt.figure(figsize=(9, 5))
-    ax = fig.add_subplot(111)
-
-    # --------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # [Plot 1 of 3] The Data Points
 
     if PLOT_DATA:
-        spl.add_legend_subtitle("DATA")
-        for i in range(1, len(SYS_DS)):
+        spl.add_legend_subtitle(ax, "DATA")
+        for dx in range(1, len(SYS_DS)):
+            label_txt = spl.split_long_label(SYS_DS[dx], max_chars_per_line=25)
             ax.plot(
                 x_vals,
-                y_vals[i],
-                label=SYS_DS[i],
+                y_vals[dx],
+                label=label_txt,
                 clip_on=False,
-                color=COLR_DS[i],
+                color=COLR_DS[dx],
                 linestyle="",
                 alpha=0.6,
-                marker=markers[i - 1],
+                marker=markers[dx - 1],
                 markersize=3,
                 markeredgewidth=1,
                 markeredgecolor=None,
-                zorder=10,
+                zorder=9,
             )
 
     # --------------------------------------------------------------------------
     # [Plot 2 of 3] The Fitted Model
 
     if PLOT_MODEL:
-        spl.add_legend_subtitle("FITTED MODEL")
-        xformodel = np.linspace(0, x_max, 121, endpoint=True)
-        dmg_mdl_arr = np.zeros((len(SYS_DS), len(xformodel)), dtype=float)
+        spl.add_legend_subtitle(ax, "FRAGILITY MODEL")
+        # xformodel = np.linspace(0, x_max, 121, endpoint=True)
+        dmg_mdl_arr = np.zeros((len(SYS_DS), len(x_dat_display)), dtype=float)
 
         for dx in range(1, len(SYS_DS)):
             function_name = model_params[dx]["function"]
             params = model_params[dx]["parameters"]
             distribution = get_distribution_func(function_name)
-            dmg_mdl_arr[dx] = distribution(xformodel, **params)
+            dmg_mdl_arr[dx] = distribution(x_dat_display, **params)
+            label_txt = spl.split_long_label(SYS_DS[dx], max_chars_per_line=25)
 
             ax.plot(
-                xformodel,
+                x_dat_display,
                 dmg_mdl_arr[dx],
-                label=SYS_DS[dx],
+                label=label_txt,
                 clip_on=False,
                 color=COLR_DS[dx],
                 alpha=0.65,
                 linestyle="-",
-                linewidth=1.6,
-                zorder=9,
+                linewidth=1.8,
+                zorder=10,
             )
 
     # --------------------------------------------------------------------------
     # [Plot 3 of 3] The Scenario Events
 
     if PLOT_EVENTS:
-        spl.add_legend_subtitle("EVENTS")
+        spl.add_legend_subtitle(ax, "EVENTS")
+
         for i, haz in enumerate(scenario_metrics):  # type: ignore
             event_num = str(i + 1)
             event_intensity_str = "{:.3f}".format(float(haz))
             event_color = colours.GreenArmytage[i]
             try:
-                event_label = event_num + ". " + scneario_names[i] + " : " + event_intensity_str
+                event_label = f"{event_num}. {scneario_names[i]} : {event_intensity_str}"
             except ValueError:
-                event_label = event_num + " : " + event_intensity_str
+                event_label = f"{event_num} : {event_intensity_str}"
+            event_label = spl.split_long_label(event_label, max_chars_per_line=25)
 
             ax.plot(
                 float(haz),
@@ -615,7 +734,7 @@ def plot_data_model(
                     shrinkB=0.0,
                     connectionstyle="arc3,rad=0.0",
                     color=event_color,
-                    alpha=0.8,
+                    alpha=0.7,
                     linewidth=1.0,
                     linestyle="-",
                     path_effects=[PathEffects.withStroke(linewidth=2.5, foreground="w")],
@@ -623,60 +742,74 @@ def plot_data_model(
                 zorder=11,
             )
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    ax.set_axisbelow("line")
-
-    outfig = Path(out_path, file_name)
-    figtitle = f"System Fragility: {model_name}"
-
-    x_tick_pos, x_tick_val = calc_xtick_vals(x_max, XTICK_GAP=XTICK_GAP, format_string=sfmt)
-    # x_tick_pos = np.linspace(0.0, max(x_vals), num=6, endpoint=True)
-    # x_tick_val = ['{:.2f}'.format(i) for i in x_tick_pos]
-
-    y_tick_pos = np.linspace(0.0, 1.0, num=11, endpoint=True)
-    y_tick_val = ["{:.1f}".format(i) for i in y_tick_pos]
-
-    if x_unit is None or x_unit.lower() in ["none", "na"]:
-        x_lab = x_param
+    # -----------------------------------------------------------------------
+    if PLOT_EVENTS:
+        ax.set_title(figtitle, loc="center", y=1.06, size=12, weight=600)
     else:
-        x_lab = f"{x_param} ({x_unit})"
-    y_lab = "Probability of Exceedance  P($D_s$ > $d_s$)"
+        ax.set_title(figtitle, loc="center", y=1.03, size=12, weight=600)
 
-    ax.set_title(figtitle, loc="center", y=1.04, fontweight="bold", size=10)
-    ax.set_xlabel(x_lab, size=10, labelpad=10)  # type: ignore
-    ax.set_ylabel(y_lab, size=10, labelpad=10)
+    # -----------------------------------------------------------------------
+    # Axis Labels
+    # -----------------------------------------------------------------------
+
+    if x_unit is None or x_unit.lower() in ["none", "na", "nan", ""]:
+        x_label = x_param
+    else:
+        x_label = f"{x_param} (${x_unit}$)"
+
+    y_label = "Probability of Exceedance  P($D_s$ > $d_s$)"
+
+    ax.set_xlabel(x_label, size=11, labelpad=10)
+    ax.set_ylabel(y_label, size=11, labelpad=10)
+
+    # -----------------------------------------------------------------------
+    # Tick Labels
+    # -----------------------------------------------------------------------
+
+    x_tick_pos, x_tick_val = calc_xtick_vals(
+        x_max_display, XTICK_GAP=XTICK_GAP, float_precision=float_format_digits
+    )
+
+    y_tick_pos = np.linspace(0.0, 1.0, num=6, endpoint=True)
+    y_tick_val = ["{:.1f}".format(i) for i in y_tick_pos]
 
     ax.set_xlim(0, max(x_tick_pos))
     ax.set_xticks(x_tick_pos)
-    ax.set_xticklabels(x_tick_val, size=9)
+    ax.set_xticklabels(x_tick_val, size=10)
 
     ax.set_ylim(0, max(y_tick_pos))
     ax.set_yticks(y_tick_pos)
-    ax.set_yticklabels(y_tick_val, size=9)
+    ax.set_yticklabels(y_tick_val, size=10)
 
-    # ==============================================================
-    # Apply 'bokeh' style to axes
-    spl.prettify_axes(ax)
-    # ==============================================================
-    ax.tick_params(axis="both", pad=7)
     ax.margins(0, 0)
+    ax.tick_params(axis="both", pad=5)
 
-    # Shrink current axis width by 15%
-    box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.85, box.height])  # type: ignore
+    spl.prettify_axes(ax)
 
-    # Put a legend to the right of the current axis
-    ax.legend(
-        title="",
+    # -----------------------------------------------------------------------
+    # Legend
+    # -----------------------------------------------------------------------
+
+    # Place the legend outside the axes to the right.
+    # `bbox_inches="tight"` in savefig expands the canvas to fit the legend,
+    # so the axes (plot area) aspect ratio is preserved regardless of label length.
+    legend = ax.legend(
+        # title="Fragility Model",
         loc="upper left",
         ncol=1,
         bbox_to_anchor=(1.02, 1.0),
-        frameon=0,
-        prop={"size": 9},
+        borderaxespad=0,
+        frameon=False,
+        fontsize=9,
+        title_fontproperties={"weight": 600, "size": 10},
         alignment="left",
     )
+    title_obj = legend.get_title()
+    cur_x, cur_y = title_obj.get_position()
+    title_obj.set_position((cur_x, cur_y + 10))
 
-    plt.savefig(outfig, format="jpg", dpi=300, bbox_inches="tight")
+    outfig = Path(out_path, file_name)
+    plt.savefig(outfig, format="jpg", dpi=450, bbox_inches="tight")
     plt.close(fig)
 
 
