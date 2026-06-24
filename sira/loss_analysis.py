@@ -7,13 +7,14 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Dict, List
 
+import matplotlib as mpl
 import matplotlib.patheffects as PathEffects
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from colorama import Fore, init
-from matplotlib import cm, gridspec, transforms
+from matplotlib import gridspec, transforms
 
 import sira.tools.siraplot as spl
 
@@ -1151,12 +1152,10 @@ def component_criticality(
 
     nt_names = ctype_scenario_outcomes.index.tolist()
     nt_ids = list(range(1, len(nt_names) + 1))
-    autumn = cm.get_cmap("autumn")
 
-    clrmap = [
-        autumn(1.2 * x / float(len(ctype_scenario_outcomes.index)))
-        for x in range(len(ctype_scenario_outcomes.index))
-    ]
+    cmap = mpl.colormaps["autumn"]
+    n = len(ctype_scenario_outcomes.index)
+    clrmap = [cmap(v) for v in np.linspace(0, 1, n)] if n > 0 else []
 
     ax.scatter(
         rt_norm,
