@@ -8,6 +8,7 @@ using minimal mocks and test fixtures.
 from unittest.mock import Mock, patch
 
 import pytest
+import re
 
 from sira.recovery_analysis import (
     RecoveryAnalysisEngine,
@@ -409,7 +410,7 @@ def test_calculate_event_recovery_no_costed_components():
     components_costed = []
 
     # Current implementation raises ValueError on empty max()
-    with pytest.raises(ValueError, match="max.*empty sequence"):
+    with pytest.raises(ValueError, match=re.escape("max() iterable argument is empty")):
         calculate_event_recovery(
             mock_config,
             "event_001",

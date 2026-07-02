@@ -1,0 +1,904 @@
+{
+  "system_meta": {
+    "MODEL_NAME": {
+      "value": "Substation Median Caveat",
+      "notes": null
+    },
+    "INFRASTRUCTURE_LEVEL": {
+      "value": "facility",
+      "notes": null
+    },
+    "SYSTEM_CLASS": {
+      "value": "Substation",
+      "notes": null
+    },
+    "SYSTEM_SUBCLASS": {
+      "value": "Caveat Demo",
+      "notes": null
+    },
+    "SYSTEM_COMPONENT_LOCATION_CONF": {
+      "value": "defined",
+      "notes": null
+    },
+    "RESTORATION_TIME_UNIT": {
+      "value": "days",
+      "notes": null
+    },
+    "HAZARD_INTENSITY_MEASURE_PARAM": {
+      "value": "PGA",
+      "notes": null
+    },
+    "HAZARD_INTENSITY_MEASURE_UNIT": {
+      "value": "g",
+      "notes": null
+    }
+  },
+  "sysout_setup": {
+    "OUT": {
+      "production_node": "TX",
+      "output_node_capacity": 100,
+      "capacity_fraction": 1.0,
+      "priority": 1
+    }
+  },
+  "sysinp_setup": {
+    "SUPPLY": {
+      "input_capacity": 100,
+      "capacity_fraction": 1.0,
+      "commodity_type": "Electric Power"
+    }
+  },
+  "node_conn_df": {
+    "0": {
+      "origin": "SUPPLY",
+      "destination": "SW_1",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "1": {
+      "origin": "SW_1",
+      "destination": "SW_2",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "2": {
+      "origin": "SW_2",
+      "destination": "SW_3",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "3": {
+      "origin": "SW_3",
+      "destination": "TX",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "4": {
+      "origin": "TX",
+      "destination": "CB_1",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "5": {
+      "origin": "CB_1",
+      "destination": "CB_2",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "6": {
+      "origin": "CB_2",
+      "destination": "CB_3",
+      "link_capacity": 1,
+      "weight": 1
+    },
+    "7": {
+      "origin": "CB_3",
+      "destination": "OUT",
+      "link_capacity": 1,
+      "weight": 1
+    }
+  },
+  "component_list": {
+    "CB_1": {
+      "component_type": "Circuit Breaker 220kV",
+      "component_class": "Circuit Breaker",
+      "cost_fraction": 0.1,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 5,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 2.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.0,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "CB_2": {
+      "component_type": "Circuit Breaker 220kV",
+      "component_class": "Circuit Breaker",
+      "cost_fraction": 0.1,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 6,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 2.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.0,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "CB_3": {
+      "component_type": "Circuit Breaker 220kV",
+      "component_class": "Circuit Breaker",
+      "cost_fraction": 0.1,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 7,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 2.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.0,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "OUT": {
+      "component_type": "SYSTEM_OUTPUT",
+      "component_class": "MODEL ARTEFACT",
+      "cost_fraction": 0.0,
+      "node_type": "sink",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 8,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 101.0,
+            "location": 0,
+            "beta": 1.0,
+            "data_source": "invulnerable artefact",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 1.0,
+            "stddev": 1.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 101.0,
+            "location": 0,
+            "beta": 1.0,
+            "data_source": "invulnerable artefact",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 1.0,
+            "stddev": 1.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 101.0,
+            "location": 0,
+            "beta": 1.0,
+            "data_source": "invulnerable artefact",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 1.0,
+            "stddev": 1.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "SUPPLY": {
+      "component_type": "SYSTEM_INPUT",
+      "component_class": "MODEL ARTEFACT",
+      "cost_fraction": 0.0,
+      "node_type": "supply",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 0,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 101.0,
+            "location": 0,
+            "beta": 1.0,
+            "data_source": "invulnerable artefact",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 1.0,
+            "stddev": 1.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 101.0,
+            "location": 0,
+            "beta": 1.0,
+            "data_source": "invulnerable artefact",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 1.0,
+            "stddev": 1.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 101.0,
+            "location": 0,
+            "beta": 1.0,
+            "data_source": "invulnerable artefact",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 1.0,
+            "stddev": 1.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "SW_1": {
+      "component_type": "Disconnect Switch 220kV",
+      "component_class": "Disconnect Switch",
+      "cost_fraction": 0.1,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 1,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 2.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.0,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "SW_2": {
+      "component_type": "Disconnect Switch 220kV",
+      "component_class": "Disconnect Switch",
+      "cost_fraction": 0.1,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 2,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 2.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.0,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "SW_3": {
+      "component_type": "Disconnect Switch 220kV",
+      "component_class": "Disconnect Switch",
+      "cost_fraction": 0.1,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 3,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 2.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.0,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 3.5,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    },
+    "TX": {
+      "component_type": "Power Transformer 220kV",
+      "component_class": "Power Transformer",
+      "cost_fraction": 0.4,
+      "node_type": "transshipment",
+      "node_cluster": "A",
+      "operating_capacity": 1,
+      "pos_x": 4,
+      "pos_y": 0,
+      "site_id": 1,
+      "damages_states_constructor": {
+        "0": {
+          "damage_state_name": "DS0 None",
+          "functionality": 1.0,
+          "damage_ratio": 0.0,
+          "response_function_constructor": {
+            "function_name": "Level0Response",
+            "damage_state_definition": "Not Available."
+          },
+          "recovery_function_constructor": {
+            "function_name": "Level0Response",
+            "recovery_state_definition": "Not Available."
+          }
+        },
+        "1": {
+          "damage_state_name": "DS1 Minor",
+          "functionality": 1.0,
+          "damage_ratio": 0.1,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 0.15,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS1 Minor"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "2": {
+          "damage_state_name": "DS2 Extensive",
+          "functionality": 0.0,
+          "damage_ratio": 0.5,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 0.25,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS2 Extensive"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        },
+        "3": {
+          "damage_state_name": "DS3 Complete",
+          "functionality": 0.0,
+          "damage_ratio": 1.0,
+          "response_function_constructor": {
+            "function_name": "Lognormal",
+            "median": 0.35,
+            "location": 0,
+            "beta": 0.3,
+            "data_source": "synthetic caveat model",
+            "lower_limit": null,
+            "upper_limit": null,
+            "damage_state_definition": "DS3 Complete"
+          },
+          "recovery_function_constructor": {
+            "function_name": "Normal",
+            "mean": 10.0,
+            "stddev": 3.0,
+            "recovery_state_definition": "Unavailable."
+          }
+        }
+      }
+    }
+  }
+}
