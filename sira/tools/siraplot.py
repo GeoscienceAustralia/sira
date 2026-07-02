@@ -8,8 +8,11 @@ import re
 
 import matplotlib as mpl
 import matplotlib.font_manager as font_manager
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import seaborn as sns
+from matplotlib.legend import Legend
+from matplotlib.legend_handler import HandlerBase
 from matplotlib.ticker import AutoMinorLocator
 
 plt.switch_backend("agg")
@@ -462,11 +465,10 @@ class ColourPalettes(object):
 # ----------------------------------------------------------------------------
 
 
-def split_long_label(string, delims, max_chars_per_line=20):
+def split_long_label(string, delims=[" ", "_"], max_chars_per_line=15):
     """
     Splits long labels into smaller chunks for better print/display outcome
     """
-    delims = [" ", "_"]
     pattern = r"\s*(%s)\s*" % ("|".join((re.escape(d) for d in delims)))
     splt_str = [i for i in re.split(pattern, string) if i and i is not None]
 
@@ -486,16 +488,60 @@ def split_long_label(string, delims, max_chars_per_line=20):
 
 
 # ----------------------------------------------------------------------------
+# The code for the posiitoning fix for legend subtitles is adapted from an
+# answer by user "Domenico Di Nicola" and modified by AI, Claude Sonnet 4.6.
 
 
-def add_legend_subtitle(string):
+class SubtitleLine(mpl.lines.Line2D):
     """
-    Places a subtitle over the legend.
-    Useful for plots with multiple groups of legends.
-    :param str: sub-title for legend
+    Sentinel Line2D used as a legend section-header handle.
+    Pair with SubtitleHandler so the label renders flush-left in the legend.
+    """
+
+    pass
+
+
+class SubtitleHandler(HandlerBase):
+    """
+    Renders a SubtitleLine legend entry with zero handle width so the bold
+    section-header text aligns with the left edge of the legend box rather
+    than the indented label column.
+    """
+
+    def legend_artist(self, legend, orig_handle, fontsize, handlebox):
+        # Set the handle width to exactly -(handletextpad * fontsize) so that
+        # the HPacker places the TextArea at:
+        #   handlebox.width + row_sep = -(pad*fs) + (pad*fs) = 0
+        # This aligns the subtitle text with the left edge of the handle column,
+        # regardless of what handletextpad value is set on the legend.
+        handlebox.width = -(legend.handletextpad * fontsize)
+        handlebox.height = fontsize
+        return mpatches.Rectangle(
+            [handlebox.xdescent, handlebox.ydescent],
+            0,
+            0,
+            transform=handlebox.get_transform(),
+            visible=False,
+        )
+
+
+def add_legend_subtitle(ax, string):
+    """
+    Places a bold section header above a group of legend entries.
+    The header aligns with the left edge of the handle column (same as the
+    legend title), with no handle symbol shown.
+
+    :param ax:     matplotlib Axes to add the entry to
+    :param string: header text; rendered bold in the legend
     """
     label = "\n" + " ".join(["$\\bf{" + i + "}$" for i in string.split(" ")])
-    plt.plot([0], marker="None", linestyle="None", label=label)
+    line = SubtitleLine([0], [0], marker="None", linestyle="None", color="none", label=label)
+    ax.add_line(line)
+
+
+# Register SubtitleHandler globally so every ax.legend() call handles
+# SubtitleLine entries correctly without needing an explicit handler_map.
+Legend.update_default_handler_map({SubtitleLine: SubtitleHandler()})
 
 
 # ----------------------------------------------------------------------------
@@ -654,6 +700,7 @@ def format_fig(
 
 
 def prettify_axes(axis):
+
     GRID_COLOR = "#C6C6C6"  # '#E6E6E6'
     SPINE_COLOR = "black"  # '#555555'
 
@@ -664,44 +711,40 @@ def prettify_axes(axis):
     NUM_MINOR_XTICKS = 4
     NUM_MINOR_YTICKS = 4
 
-    spines_to_keep = ["bottom", "left", "top", "right"]
-    for spine in spines_to_keep:
+    axis.set_axisbelow(True)
+    axis.set_facecolor("white")
+
+    spines_invisible = ["top", "right"]
+    # "Invisible" spines styled like grid lines and drawn at a lower z-order so
+    # the solid visible spines always paint over them at the corners.
+    for spine in spines_invisible:
+        axis.spines[spine].set_visible(True)
+        axis.spines[spine].set_linewidth(GRID_LINEWIDTH)
+        axis.spines[spine].set_color(GRID_COLOR)
+        axis.spines[spine].set_zorder(1)
+
+    spines_visible = ["bottom", "left"]
+    for spine in spines_visible:
         axis.spines[spine].set_visible(True)
         axis.spines[spine].set_linewidth(SPINE_LINEWIDTH)
         axis.spines[spine].set_color(SPINE_COLOR)
+        axis.spines[spine].set_zorder(3)
 
-    # spines_to_remove = ["top", "right"]
-    # for spine in spines_to_remove:
-    #     axis.spines[spine].set_visible(False)
-
-    axis.xaxis.grid(
-        True,
-        which="major",
-        linestyle="-",
-        linewidth=GRID_LINEWIDTH,
-        color=GRID_COLOR,
-    )
-
-    axis.yaxis.grid(
-        True,
-        which="major",
-        linestyle="-",
-        linewidth=GRID_LINEWIDTH,
-        color=GRID_COLOR,
-    )
+    axis.xaxis.grid(True, which="major", linestyle="-", linewidth=GRID_LINEWIDTH, color=GRID_COLOR)
+    axis.yaxis.grid(True, which="major", linestyle="-", linewidth=GRID_LINEWIDTH, color=GRID_COLOR)
 
     axis.tick_params(
-        axis="x",
+        axis="x",  # changes apply to the x-axis
         which="major",  # ticks affected: major, minor, or both
         bottom=True,  # ticks along the bottom edge are on
         top=False,  # ticks along the top edge are off
-        labelbottom=True,
+        labelbottom=True,  # labels along the bottom edge are off
+        color=SPINE_COLOR,
         direction="out",
         labelsize=9,
         pad=0,
-        length=5,
-        color=SPINE_COLOR,
         width=TICK_LINEWIDTH,
+        length=5,
     )
 
     axis.tick_params(
@@ -711,26 +754,27 @@ def prettify_axes(axis):
         right=False,
         labelleft=True,
         labelright=False,
+        color=SPINE_COLOR,
         direction="out",
         labelsize=9,
         pad=0,
-        length=5,
-        color=SPINE_COLOR,
         width=TICK_LINEWIDTH,
+        length=5,
     )
 
     axis.tick_params(
         axis="both",
         which="minor",
+        bottom=True,
+        left=True,
+        top=False,
+        right=False,
         length=3,
         color=SPINE_COLOR,
-        width=TICK_LINEWIDTH,
     )
 
     axis.xaxis.set_minor_locator(AutoMinorLocator(NUM_MINOR_XTICKS))
     axis.yaxis.set_minor_locator(AutoMinorLocator(NUM_MINOR_YTICKS))
-
-    axis.set_axisbelow(True)
 
     # axis.xaxis.labelpad = 12
     # axis.yaxis.labelpad = 12
