@@ -753,7 +753,7 @@ def plot_data_model(
     # -----------------------------------------------------------------------
 
     if x_unit is None or x_unit.lower() in ["none", "na", "nan", ""]:
-        x_label = x_param
+        x_label = str(x_param)
     else:
         x_label = f"{x_param} (${x_unit}$)"
 
