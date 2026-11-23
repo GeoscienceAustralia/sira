@@ -200,7 +200,7 @@ uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </s
 </div>
 <p>Installation option #2 (for Linux workstations, needs to be adapted for HPC env):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-grep<span class="w"> </span>-vE<span class="w"> </span><span class="s1">&#39;^\s*#|^\s*$&#39;</span><span class="w"> </span>./installation/packagelist_linux.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+grep<span class="w"> </span>-vE<span class="w"> </span><span class="s1">'^\s*#|^\s*$'</span><span class="w"> </span>./installation/packagelist_linux.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 xargs<span class="w"> </span>-r<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends
 sudo<span class="w"> </span>apt-get<span class="w"> </span>clean
 
@@ -358,9 +358,9 @@ sira container.</p>
 <li><p>Default: <cite>0</cite> (disabled). When set to <cite>1</cite>, SIRA will attempt to detect CUDA GPUs via PyTorch (if installed) or TensorFlow (if installed). Detection is informational only; SIRA does not currently perform GPU-accelerated computation.</p></li>
 <li><p>Example (PowerShell):</p>
 <blockquote>
-<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_ENABLE_GPU_DETECT</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
-<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from sira.parallel_config import ParallelConfig;</span>
-<span class="s2">    ParallelConfig().print_config_summary()&quot;</span>
+<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_ENABLE_GPU_DETECT</span> <span class="p">=</span> <span class="s2">"1"</span>
+<span class="n">python</span> <span class="n">-c</span> <span class="s2">"from sira.parallel_config import ParallelConfig;</span>
+<span class="s2">    ParallelConfig().print_config_summary()"</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -372,7 +372,7 @@ sira container.</p>
 <li><p>Default: <cite>0</cite> (not forced). When set to <cite>1</cite>, SIRA treats the environment as non-MPI even if MPI-related variables are present, and falls back to multiprocessing.</p></li>
 <li><p>Example (PowerShell):</p>
 <blockquote>
-<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_FORCE_NO_MPI</span> <span class="p">=</span> <span class="s2">&quot;1&quot;</span>
+<div><div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:SIRA_FORCE_NO_MPI</span> <span class="p">=</span> <span class="s2">"1"</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -500,7 +500,7 @@ explicitly selected and available.</p></li>
 <p>Example (PBS + OpenMPI snippet):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_LOG_LEVEL</span><span class="o">=</span>INFO
 <span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_QUIET_MODE</span><span class="o">=</span><span class="m">1</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_STREAM_DIR</span><span class="o">=</span><span class="s2">&quot;/iointensive/sira_</span><span class="si">${</span><span class="nv">PBS_JOBID</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_STREAM_DIR</span><span class="o">=</span><span class="s2">"/iointensive/sira_</span><span class="si">${</span><span class="nv">PBS_JOBID</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_DEFER_CONSOLIDATION</span><span class="o">=</span><span class="m">1</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_SAVE_COMPTYPE_RESPONSE</span><span class="o">=</span><span class="m">1</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SIRA_SAVE_COMPONENT_RESPONSE</span><span class="o">=</span><span class="m">0</span>
